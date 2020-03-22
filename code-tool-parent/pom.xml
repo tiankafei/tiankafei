@@ -9,7 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>此工程是tiankafei的工具包集合</name>
+    <name>code-tool-parent</name>
+    <description>此工程是tiankafei的工具包集合</description>
     <url>https://github.com/tiankafei/tiankafei</url>
 
     <properties>
