@@ -1,0 +1,25 @@
+package com.greenpineyu.fel.compile;
+
+import com.greenpineyu.fel.common.*;
+import com.greenpineyu.fel.Expression;
+import com.greenpineyu.fel.context.*;
+import com.greenpineyu.fel.function.api.BaseTwoOperation;
+import com.greenpineyu.fel.function.api.BaseOneOperation;
+import com.greenpineyu.fel.function.api.BaseMoreOperation;
+${packagePath}
+import com.greenpineyu.fel.function.OperationFactory;
+import com.greenpineyu.fel.function.FunctionConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ${classname}  implements Expression{
+    ${attrs}
+    public Object eval(FelContext context) throws Exception {
+        ${localVars}
+        ${programList}
+        Object object = ${expression};
+        context.clearValue();
+        return object;
+    }
+}
