@@ -18,6 +18,8 @@
 
 ### ArrayList
 
+![ArrayList](.\images\ArrayList.png)
+
 1. 在不指定初始容量的时候，默认初始容量为10
 
 2. 集合的本质依然是数组，当数组长度不够时，会自动触发扩容（当数据的长度大于数组的长度时会自动触发扩容机制）：
@@ -28,3 +30,40 @@
    ```
 
    扩容是原来的数组长度的1.5倍，扩容之后就是把老数组的数据 copy 到新数组中。
+
+### Vector
+
+![Vector](.\images\Vector.png)
+
+1. 是线程安全的，与操作元素相关的方法都加上了锁，所以是线程安全的，但是性能较低。
+
+2. 在不指定初始容量的时候，默认初始容量为10。
+
+3. 集合的本质依然是数组，当数组长度不够时，会自动触发扩容（当数据的长度大于数组的长度时会自动触发扩容机制）：
+
+   ```java
+   // 当capacityIncrement大于0的时候，新容量=oldCapacity+oldCapacity，故容量翻倍
+   int newCapacity = oldCapacity + ((capacityIncrement > 0) ?
+                                    capacityIncrement : oldCapacity);
+   ```
+
+   扩容是原来的数组长度的2倍，扩容之后就是把老数组的数据 copy 到新数组中。
+
+### Stack
+
+![Stack](.\images\Stack.png)
+
+1. 从Vector继承而来，故拥有Vector的一切特定
+2. 拥有栈的特点：后进先出。
+3. pop() 会弹出栈顶元素并返回栈顶的值，
+4. peek() 只是获取栈顶的值，但是并不会把元素从栈顶弹出来
+
+### Collections.synchronizedList
+
+![SynchronizedList](.\images\SynchronizedList.png)
+
+1. 使用同步代码块，减少了锁影响的范围
+2. listlterator方法并没有做同步处理，所以在遍历的时候，需要手动加锁，所以可以指定锁对象
+3. SynchronizedList有很好的扩展和兼容功能, 可以将所有的List子类转成线程安全的类
+4. 扩容机制与ArrayList一样
+
