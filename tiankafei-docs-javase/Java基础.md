@@ -12,7 +12,7 @@
 | native                            | 用来声明一个方法是由与计算机相关的语言（如C/C++/FORTRAN语言）实现的 |
 | transient                         | 声明不用序列化的成员域                                       |
 | volatile                          | 内存屏障：1.保证不同线程之间的可见性（引用类型除外）；2.禁止指令重排序 |
-| <font color="red">strictfp</font> | <font color="red">用来声明FP_strict（单精度或双精度浮点数）表达式遵循[IEEE 754](https://baike.baidu.com/item/IEEE 754)算术规范 [1]</font> |
+| <font color="red">strictfp</font> | <font color="red">strictfp 关键字可应用于类、接口或方法。使用 strictfp 关键字声明一个方法时，该方法中所有的float和double表达式都严格遵守FP-strict的限制，符合IEEE-754规范。当对一个类或接口使用 strictfp 关键字时，该类中的所有代码，包括嵌套类型中的初始设定值和代码，都将严格地进行计算。严格约束意味着所有表达式的结果都必须是 IEEE 754 算法对操作数预期的结果，以单精度和双精度格式表示。如果你想让你的浮点运算更加精确，而且不会因为不同的硬件平台所执行的结果不一致的话，可以用关键字strictfp。</font> |
 
 ## java集合
 
@@ -300,7 +300,9 @@ public TreeMap(Map<? extends K, ? extends V> m) {
 2. 必须是同一类型的数据（不能两种及以上的数据类型）
 3. 按照默认的排序或者给定的排序规则使用红黑树的逻辑进行排序
 
-[ps: 参考红黑树的算法章节](### 红黑树)
+[ps: 参考红黑树的算法章节](###红黑树)
+
+锚点 = [ps: 参考红黑树的算法章节](###红黑树 "###红黑树")
 
 ### LinkedHashMap
 
