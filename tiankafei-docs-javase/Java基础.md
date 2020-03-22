@@ -18,7 +18,7 @@
 
 ### ArrayList
 
-![ArrayList](.\images\ArrayList.png)
+![ArrayList](./images/ArrayList.png)
 
 ```java
 // 用指定的初始容量构造一个空列表
@@ -72,7 +72,7 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 
 ### LinkedList
 
-![LinkedList](.\images\LinkedList.png)
+![LinkedList](./images/LinkedList.png)
 
 1. 基于链表的数据结构，双向链表。
 2. 对于随机访问get和set时，性能较低，因为要遍历指针，只能一个一个找。
@@ -81,7 +81,7 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 
 ### Vector
 
-![Vector](.\images\Vector.png)
+![Vector](./images/Vector.png)
 
 ```java
 // 构造一个新对象，指定初始化容量、容量增加的值（如果这个值大于0，则每次扩容这个数据量，否则扩容到原来的两倍）
@@ -127,7 +127,7 @@ public Vector(Collection<? extends E> c) {
 
 ### Stack
 
-![Stack](.\images\Stack.png)
+![Stack](./images/Stack.png)
 
 1. 从Vector继承而来，故拥有Vector的一切特定
 2. 拥有栈的特点：后进先出。
@@ -136,7 +136,7 @@ public Vector(Collection<? extends E> c) {
 
 ### HashTable
 
-![Hashtable](.\images\Hashtable.png)
+![Hashtable](./images/Hashtable.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -174,7 +174,7 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 
 ### HashMap
 
-![HashMap](.\images\HashMap.png)
+![HashMap](./images/HashMap.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -212,7 +212,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 
 ### ConcurrentHashMap
 
-![ConcurrentHashMap](.\images\ConcurrentHashMap.png)
+![ConcurrentHashMap](./images/ConcurrentHashMap.png)
 
 ```java
 // 构造一个新对象，默认初始化容量为：16
@@ -261,7 +261,7 @@ public ConcurrentHashMap(int initialCapacity,
 
 ### TreeMap
 
-![TreeMap](.\images\TreeMap.png)
+![TreeMap](./images/TreeMap.png)
 
 ```java
 // 构造一个新的，空的树映射集合，使用key的字典序
@@ -304,7 +304,7 @@ public TreeMap(Map<? extends K, ? extends V> m) {
 
 ### LinkedHashMap
 
-![LinkedHashMap](.\images\LinkedHashMap.png)
+![LinkedHashMap](./images/LinkedHashMap.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -341,7 +341,7 @@ public LinkedHashMap(Map<? extends K, ? extends V> m) {
 
 ### HashSet
 
-![HashSet](.\images\HashSet.png)
+![HashSet](./images/HashSet.png)
 
 ```java
 // 构造一个新对象，默认初始化容量为：16， 负载因子默认为：0.75
@@ -368,7 +368,7 @@ public HashSet(int initialCapacity) {
 
 ### TreeSet
 
-![TreeSet](.\images\TreeSet.png)
+![TreeSet](./images/TreeSet.png)
 
 ```java
 // 构造一个新的，空的树映射集合，使用key的字典序
@@ -404,7 +404,7 @@ public TreeSet(Collection<? extends E> c) {
 
 ### LinkedHashSet
 
-![LinkedHashSet](.\images\LinkedHashSet.png)
+![LinkedHashSet](./images/LinkedHashSet.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -432,7 +432,7 @@ public LinkedHashSet(Collection<? extends E> c) {
 
 ### Collections.synchronizedList
 
-![SynchronizedList](.\images\SynchronizedList.png)
+![SynchronizedList](./images/SynchronizedList.png)
 
 ```java
 //传入的集合
