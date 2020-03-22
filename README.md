@@ -57,5 +57,5 @@
 
 > 用到的各种算法的文档列表，包含以下：
 >
-> [二叉树-红黑树-AVL树-BST树](https://github.com/tiankafei/tiankafei/blob/master/tiankafei-docs-%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91-%E7%BA%A2%E9%BB%91%E6%A0%91-AVL%E6%A0%91-BST%E6%A0%91.md)
+> [二叉树-红黑树-AVL树-BST树](tiankafei-docs-算法/二叉树-红黑树-AVL树-BST树.md)
 
