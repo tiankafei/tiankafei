@@ -20,6 +20,12 @@
 # tiankafei-code-tool
 
 > 核心代码工具包
+>
+> | 工程名                                                       | 描述                                                         |
+> | ------------------------------------------------------------ | ------------------------------------------------------------ |
+> | [tiankafei-base](./tiankafei-code-tool/tiankafei-base)       | 基础工具包                                                   |
+> | [tiankafei-expression-fastel](./tiankafei-code-tool/tiankafei-expression-fastel) | 基于开源表达式引擎 fastel 进行再次封装增加一些常用的函数（根据规则表达式可以动态生成class类。执行的时候，直接通过反射进行调用） |
+> | [tiankafei-expression-aviator](./tiankafei-code-tool/tiankafei-expression-aviator) | 基于开源表达式引擎 aviator 进行再次封装增加一些常用的函数（根据规则表达式可以动态生成class类。执行的时候，直接通过反射进行调用） |
 
 # tiankafei-docs-io
 
