@@ -30,6 +30,8 @@
 # tiankafei-docs-javase
 
 > javase相关的技术文档列表，包含以下：
+>
+> [Java基础](https://github.com/tiankafei/tiankafei/blob/master/tiankafei-docs-javase/Java%E5%9F%BA%E7%A1%80.md)
 
 # tiankafei-docs-juc
 
@@ -54,4 +56,6 @@
 # tiankafei-docs-算法
 
 > 用到的各种算法的文档列表，包含以下：
+>
+> [二叉树-红黑树-AVL树-BST树](https://github.com/tiankafei/tiankafei/blob/master/tiankafei-docs-%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91-%E7%BA%A2%E9%BB%91%E6%A0%91-AVL%E6%A0%91-BST%E6%A0%91.md)
 

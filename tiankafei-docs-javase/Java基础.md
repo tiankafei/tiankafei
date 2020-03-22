@@ -461,6 +461,3 @@ SynchronizedCollection(Collection<E> c, Object mutex) {
 ### Collections.synchronizedSortedSet
 
 ### Collections.synchronizedCollection
-
-## JUC相关的集合
-
