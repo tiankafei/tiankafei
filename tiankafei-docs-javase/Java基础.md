@@ -234,14 +234,19 @@ public HashMap(Map<? extends K, ? extends V> m) {
 2. 初始默认容量为16
 3. 负载因子默认0.75，也可以自己指定。当数组的长度 = 容量 * 负载因子的时候，就开始扩容操作，扩容到原来的2倍
 4. 如果指定了初始容量，会自动转成与其最接近的2的n次幂，所以底层的数组长度时2的n次幂
-5. 对key值进行复杂运算，减少hash碰撞，使数据更加散列
-6. 与运算比取模运算效率高很多倍（hash & length - 1）（容量为2的n次幂的第一个原因）
+5. 对key值进行复杂位运算，减少hash碰撞，使数据更加散列
+6. 与运算比取模运算效率高很多倍(hash & length - 1)（容量为2的n次幂的第一个原因）
 7. 扩容之后涉及到元素的迁移：判断二进制位的前面那一位(因为每次扩容到原来的2倍，二进制只会增加1位)如果是0，则位置保持不变；如果是1，则移动到 原来在数组中的位置+原数组长度 的位置（容量为2的n次幂的第二个原因）
+8. put流程![jdk1.7-hashmap-put流程图](./images/jdk1.7-hashmap-put流程图.png)
+9. 数据移动流程（transfer）![jdk1.7-hashmap-transfer流程](./images/jdk1.7-hashmap-transfer流程.png)
+10. 出现死循环的情况![jdk1.7-hashmap的死循环问题](./images/jdk1.7-hashmap的死循环问题.png)
 
 #### 1.8
 
 1. 数据结构是：数组+单项链表+红黑树
-6. 
+6. put流程![jdk1.8-hashmap-put流程图](./images/jdk1.8-hashmap-put流程图.png)
+3. 数据移动流程（transfer）![jdk1.8-hashmap-transfer流程](./images/jdk1.8-hashmap-transfer流程.png)
+4. 
 
 ### ConcurrentHashMap
 
@@ -293,7 +298,7 @@ public ConcurrentHashMap(int initialCapacity,
 #### 特点
 
 1. 同步性能更好，因为它仅仅根据同步级别对Map的一部分进行上锁
-2. 
+2. put流程![jdk7-concurrenthashmap-put流程](./images/jdk7-concurrenthashmap-put流程.png)
 
 ### TreeMap
 
