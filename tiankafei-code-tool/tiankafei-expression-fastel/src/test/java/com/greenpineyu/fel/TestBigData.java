@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class TestBigData {
 
-    private int count = 10000 * 1;
+    private int count = 1 * 1;
 
     @Test
     public void test1() throws Exception {

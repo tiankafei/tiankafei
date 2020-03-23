@@ -42,8 +42,4 @@ public class AspectImpl implements IAspect {
         return null;
     }
 
-    @Override
-    public Object around(Object object, Method method, Object[] args, Map<String, Object> paramMap) {
-        return null;
-    }
 }

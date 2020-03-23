@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class TestBigData {
 
-    private int count = 10000 * 1000;
+    private int count = 1 * 1;
 
     /**
      * 直接执行

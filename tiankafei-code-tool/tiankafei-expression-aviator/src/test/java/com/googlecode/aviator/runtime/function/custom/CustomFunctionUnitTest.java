@@ -93,7 +93,7 @@ public class CustomFunctionUnitTest {
     }
 
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = Exception.class)
     public void testMyAddFunction() {
         assertEquals(10, AviatorEvaluator.execute("myadd(3,7)"));
         assertEquals(10, AviatorEvaluator.getInstance().exec("myadd(a,b)", 6, 4));
