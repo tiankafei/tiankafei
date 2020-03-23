@@ -88,3 +88,37 @@
 > 其他的一些相关文档列表，包含以下：
 >
 > [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
+
+# 网络上的优秀文章总结：
+
+## 架构
+
+1. [什么才是真正的架构设计？](https://www.toutiao.com/i6803176165226840589/)
+
+## 高并发
+
+1. [高并发下的抽奖优化](https://www.toutiao.com/i6780889261630554631/)
+
+## 消息中间件
+
+1. [曾经我以为我很懂Kafka，直到我看了这篇文章](https://www.toutiao.com/i6758731417548489229/)
+2. [全网最全RabbitMQ总结，别再说你不会RabbitMQ](https://www.toutiao.com/i6781284630222864903/)
+
+## JVM
+
+## 集合
+
+1. [HashSet、TreeSet 和HashMap 的实现与原理](https://www.toutiao.com/i6793542610330845700/)
+
+## 算法
+
+## 元数据
+
+1. [数据治理--元数据](https://www.toutiao.com/i6791272312415977997/)
+
+## Spring
+
+## 云
+
+1. [再见Docker！使用Podman、Skopeo和Buildah下一代容器新架构](https://www.toutiao.com/i6718935824110453252/)
+

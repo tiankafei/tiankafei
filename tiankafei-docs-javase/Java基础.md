@@ -18,6 +18,8 @@
 
 ### ArrayList
 
+#### 类继承关系图
+
 ![ArrayList](./images/ArrayList.png)
 
 ```java
@@ -44,7 +46,7 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 }
 ```
 
-#### 特点：
+#### 特点
 
 1. 数据结构采用的是数组集合
 
@@ -74,16 +76,18 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 
 ### LinkedList
 
+#### 类继承关系图
+
 ![LinkedList](./images/LinkedList.png)
 
-#### 特点：
+#### 特点
 
-1. 基于链表的数据结构，双向链表。
-2. 对于随机访问get和set时，性能较低，因为要遍历指针，只能一个一个找。
-3. 对于新增和删除操作 add 和 remove ，性能要高，不存在移动数据。
-4. 不存在扩容一说，能够动态的随数据量的变化而变化。
+1. 基于链表的据结构，双向链表。
+4. 会随着数据量的变化而变化。
 
 ### Vector
+
+#### 类继承关系图
 
 ![Vector](./images/Vector.png)
 
@@ -115,7 +119,7 @@ public Vector(Collection<? extends E> c) {
 }
 ```
 
-#### 特点：
+#### 特点
 
 1. 是线程安全的，与操作元素相关的方法都加上了锁，但是性能较低。
 
@@ -133,16 +137,19 @@ public Vector(Collection<? extends E> c) {
 
 ### Stack
 
+#### 类继承关系图
+
 ![Stack](./images/Stack.png)
 
-#### 特点：
+#### 特点
 
-1. 从Vector继承而来，故拥有Vector的一切特定
-2. 拥有栈的特点：后进先出。
+1. 从Vector继承而来，故拥有Vector的一切特性
 3. pop() 会弹出栈顶元素并返回栈顶的值，
 4. peek() 只是获取栈顶的值，但是并不会把元素从栈顶弹出来
 
 ### HashTable
+
+#### 类继承关系图
 
 ![Hashtable](./images/Hashtable.png)
 
@@ -175,14 +182,17 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 }
 ```
 
-#### 特点：
+#### 特点
 
-1. 是线程安全的，与操作元素相关的方法都加上了锁，但是性能较低。
-2. 并不允许值和键为空，若为空，则抛出空指针异常
-3. 为避免扩容带来的性能问题，建议指定合理容量
-4. 容量可以为任意整数，最小值为1
+1. 数据结构是：数组+单项链表
+2. 负载因子：默认0.75，也可以自己指定。当数组的长度 = 容量 * 负载因子的时候，就开始扩容操作。
+3. 容量可以为任意整数，最小值为1
+4. 是线程安全的，与操作元素相关的方法都加上了锁，但是性能较低。
+5. key 和 value 都不许为空，若为空，则抛出空指针异常
 
 ### HashMap
+
+#### 类继承关系图
 
 ![HashMap](./images/HashMap.png)
 
@@ -213,24 +223,29 @@ public HashMap(Map<? extends K, ? extends V> m) {
 }
 ```
 
-#### 特点：
+#### 特点
 
-1. key唯一的value可以重复，允许存储null 键null 值，元素无序
-2. HashMap不是线程安全的，因此如果在使用迭代器的过程中有其他线程修改了Map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast策略
-3. String、Integer这样的wrapper类作为HashMap的键是在适合不过了，而且String最为常用，因为String是不可变的，也是final的，而且已经重写了equals()和hashCode()方法了。其他的wrapper类也有这个特点。
-4. 底层数组的长度总是2的n次方，这是HashMap在速度上的优化，不同的Key算得的index相同的几率较小，那么数据在数组上分布就比较均匀，也就是碰撞的几率比较小
+1. 
+2. 
 
 #### 1.7
 
-1. 基于哈希表(散列表)，实现Map接口的双列集合，数据结构是“链表散列”，也就是数组+链表
-2. 
+1. 数据结构是：数组+单项链表
+2. 初始默认容量为16
+3. 负载因子默认0.75，也可以自己指定。当数组的长度 = 容量 * 负载因子的时候，就开始扩容操作，扩容到原来的2倍
+4. 如果指定了初始容量，会自动转成与其最接近的2的n次幂，所以底层的数组长度时2的n次幂
+5. 对key值进行复杂运算，减少hash碰撞，使数据更加散列
+6. 与运算比取模运算效率高很多倍（hash & length - 1）（容量为2的n次幂的第一个原因）
+7. 扩容之后涉及到元素的迁移：判断二进制位的前面那一位(因为每次扩容到原来的2倍，二进制只会增加1位)如果是0，则位置保持不变；如果是1，则移动到 原来在数组中的位置+原数组长度 的位置（容量为2的n次幂的第二个原因）
 
 #### 1.8
 
-1. 基于哈希表(散列表)，实现Map接口的双列集合，数据结构是“链表散列”，也就是数组+链表+红黑树
+1. 数据结构是：数组+单项链表+红黑树
 6. 
 
 ### ConcurrentHashMap
+
+#### 类继承关系图
 
 ![ConcurrentHashMap](./images/ConcurrentHashMap.png)
 
@@ -275,12 +290,14 @@ public ConcurrentHashMap(int initialCapacity,
 }
 ```
 
-#### 特点：
+#### 特点
 
 1. 同步性能更好，因为它仅仅根据同步级别对Map的一部分进行上锁
 2. 
 
 ### TreeMap
+
+#### 类继承关系图
 
 ![TreeMap](./images/TreeMap.png)
 
@@ -309,7 +326,7 @@ public TreeMap(SortedMap<K, ? extends V> m) {
 }
 ```
 
-#### 特点：
+#### 特点
 
 1. 必须是同一类型的数据（不能两种及以上的数据类型）
 
@@ -326,6 +343,8 @@ public TreeMap(SortedMap<K, ? extends V> m) {
 ps: 参考红黑树的算法实现
 
 ### LinkedHashMap
+
+#### 类继承关系图
 
 ![LinkedHashMap](./images/LinkedHashMap.png)
 
@@ -358,14 +377,15 @@ public LinkedHashMap(Map<? extends K, ? extends V> m) {
     }
 ```
 
-#### 特点：
+#### 特点
 
 1. 继承HashMap，拥有HashMap的数据结构，
 2. LinkedHashMap默认是按照插入的顺序。
 3. 
 
-
 ### HashSet
+
+#### 类继承关系图
 
 ![HashSet](./images/HashSet.png)
 
@@ -389,7 +409,7 @@ public HashSet(int initialCapacity) {
 }
 ```
 
-#### 特点：
+#### 特点
 
 1. 内部包含一个HashMap，使用HashMap的key保证不允许重复，且只能有一个空值。
 2. 通过 hashCode 和 equals 对数据进行相同判定，如果相同就不存进去。
@@ -399,6 +419,8 @@ public HashSet(int initialCapacity) {
 6. 当使用比较器的时候，不会调用equals。
 
 ### TreeSet
+
+#### 类继承关系图
 
 ![TreeSet](./images/TreeSet.png)
 
@@ -424,7 +446,7 @@ public TreeSet(SortedSet<E> s) {
 }
 ```
 
-#### 特点：
+#### 特点
 
 1. 采用二叉树（红黑树）的存储结构，
 2. 有序（排序后的升序），
@@ -434,6 +456,8 @@ public TreeSet(SortedSet<E> s) {
 6. 如果外面传了一个比较器，类里面依然有比较器，会自动使用外部的比较器。
 
 ### LinkedHashSet
+
+#### 类继承关系图
 
 ![LinkedHashSet](./images/LinkedHashSet.png)
 
@@ -457,13 +481,14 @@ public LinkedHashSet(Collection<? extends E> c) {
 }
 ```
 
-#### 特点：
+#### 特点
 
 1. 继承hashset，拥有hashset的数据结构
 2. 采用哈希表的存储结构
 
-
 ### Collections.synchronizedList
+
+#### 类继承关系图
 
 ![SynchronizedList](./images/SynchronizedList.png)
 
@@ -479,6 +504,8 @@ SynchronizedCollection(Collection<E> c, Object mutex) {
     this.mutex = Objects.requireNonNull(mutex);
 }
 ```
+
+#### 特点
 
 1. 使用同步代码块，减少了锁影响的范围
 2. listlterator方法并没有做同步处理，所以在遍历的时候，需要手动加锁，所以可以指定锁对象
