@@ -2,7 +2,9 @@ package cn.tiankafei.base;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -11,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.Spliterator;
 import java.util.TreeSet;
 
 /**
@@ -110,6 +111,44 @@ public class BaseTest {
         hashtable.put(1, null);
         hashtable.put(null, 1);
         System.out.println(hashtable);
+    }
+
+    @Test
+    public void test(){
+        int index = 0;
+        int a = index++;
+        System.out.println(index);
+        System.out.println(a);
+        System.out.println("=================");
+        index = 0;
+        a = ++index;
+        System.out.println(index);
+        System.out.println(a);
+    }
+
+    @Test
+    public void testCollections(){
+        List<String> dataList = new ArrayList<>();
+        dataList.add("3");
+        dataList.add("2");
+        dataList.add("1");
+        dataList.add("4");
+        Collections.addAll(dataList, "0");
+        dataList.forEach(System.out::println);
+
+        Collections.sort(dataList);
+        dataList.forEach(System.out::println);
+
+        Collections.sort(dataList, (a, b) -> {
+            return b.length() - a.length();
+        });
+        dataList.forEach(System.out::println);
+
+        File[] x = File.listRoots();
+        for (File file : x) {
+            String absolutePath = file.getAbsolutePath();
+            System.out.println(absolutePath);
+        }
     }
 
 }

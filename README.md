@@ -112,6 +112,8 @@
 
 ## 算法
 
+1. [javaHashMap的hash算法扰动函数](https://blog.csdn.net/qq_28523617/article/details/77533097)
+
 ## 元数据
 
 1. [数据治理--元数据](https://www.toutiao.com/i6791272312415977997/)

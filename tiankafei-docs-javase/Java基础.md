@@ -14,6 +14,18 @@
 | volatile                          | 内存屏障：1.保证不同线程之间的可见性（引用类型除外）；2.禁止指令重排序 |
 | <font color="red">strictfp</font> | <font color="red">strictfp 关键字可应用于类、接口或方法。使用 strictfp 关键字声明一个方法时，该方法中所有的float和double表达式都严格遵守FP-strict的限制，符合IEEE-754规范。当对一个类或接口使用 strictfp 关键字时，该类中的所有代码，包括嵌套类型中的初始设定值和代码，都将严格地进行计算。严格约束意味着所有表达式的结果都必须是 IEEE 754 算法对操作数预期的结果，以单精度和双精度格式表示。如果你想让你的浮点运算更加精确，而且不会因为不同的硬件平台所执行的结果不一致的话，可以用关键字strictfp。</font> |
 
+## Lambda表达式中，常用的接口
+
+### Supplier：没有输入，一个输出
+
+### Consumer：一个输入，没有输出
+
+### BiConsumer：两个输入，没有输出
+
+### Function：一个输入，一个输出
+
+### BiFunction：两个输入，一个输出
+
 ## java集合
 
 ### ArrayList
@@ -225,28 +237,166 @@ public HashMap(Map<? extends K, ? extends V> m) {
 
 #### 特点
 
-1. 
-2. 
+1. 初始默认容量为16
+2. 负载因子默认0.75，也可以自己指定。当数组的长度 = 容量 * 负载因子的时候，就开始扩容操作，扩容到原来的2倍
+3. 如果指定了初始容量，会自动转成与其最接近的2的n次幂，所以底层的数组长度时2的n次幂
+4. 对key值进行复杂位运算，减少hash碰撞，使数据更加散列
+5. 扩容之后涉及到元素的迁移：判断二进制位的前面那一位(因为每次扩容到原来的2倍，二进制只会增加1位)如果是0，则位置保持不变；如果是1，则移动到 原来在数组中的位置+原数组长度 的位置（容量为2的n次幂的第二个原因）
 
 #### 1.7
 
-1. 数据结构是：数组+单项链表
-2. 初始默认容量为16
-3. 负载因子默认0.75，也可以自己指定。当数组的长度 = 容量 * 负载因子的时候，就开始扩容操作，扩容到原来的2倍
-4. 如果指定了初始容量，会自动转成与其最接近的2的n次幂，所以底层的数组长度时2的n次幂
-5. 对key值进行复杂位运算，减少hash碰撞，使数据更加散列
-6. 与运算比取模运算效率高很多倍(hash & length - 1)（容量为2的n次幂的第一个原因）
-7. 扩容之后涉及到元素的迁移：判断二进制位的前面那一位(因为每次扩容到原来的2倍，二进制只会增加1位)如果是0，则位置保持不变；如果是1，则移动到 原来在数组中的位置+原数组长度 的位置（容量为2的n次幂的第二个原因）
-8. put流程![jdk1.7-hashmap-put流程图](./images/jdk1.7-hashmap-put流程图.png)
-9. 数据移动流程（transfer）![jdk1.7-hashmap-transfer流程](./images/jdk1.7-hashmap-transfer流程.png)
-10. 出现死循环的情况![jdk1.7-hashmap的死循环问题](./images/jdk1.7-hashmap的死循环问题.png)
+8. 数据结构是：数组+单项链表
+
+2. hash值计算
+
+   ```java
+   // 扰动函数 右移16位让高位参与运算，为了减少hash碰撞的几率
+   final int hash(Object k) {
+       int h = hashSeed;
+       if (0 != h && k instanceof String) {
+           return sun.misc.Hashing.stringHash32((String) k);
+       }
+       h ^= k.hashCode();
+       // This function ensures that hashCodes that differ only by
+       // constant multiples at each bit position have a bounded
+       // number of collisions (approximately 8 at default load factor).
+       h ^= (h >>> 20) ^ (h >>> 12);
+       return h ^ (h >>> 7) ^ (h >>> 4);
+   }
+   ```
+   
+3. put流程![jdk1.7-hashmap-put流程图](./images/jdk1.7-hashmap-put流程图.png)
+
+4. 数据迁移操作流程（transfer）：头插法
+
+   ```java
+       /**
+        * Transfers all entries from current table to newTable.
+        */
+       void transfer(Entry[] newTable, boolean rehash) {
+           int newCapacity = newTable.length;
+           for (Entry<K,V> e : table) {
+               while(null != e) {
+                   Entry<K,V> next = e.next;
+                   if (rehash) {
+                       e.hash = null == e.key ? 0 : hash(e.key);
+                   }
+                   int i = indexFor(e.hash, newCapacity);
+                   e.next = newTable[i];
+                   newTable[i] = e;
+                   e = next;
+               }
+           }
+       }
+   ```
+
+   ![jdk1.7-hashmap-transfer流程](./images/jdk1.7-hashmap-transfer流程.png)
+
+5. 出现死循环的情况![jdk1.7-hashmap的死循环问题](./images/jdk1.7-hashmap的死循环问题.png)
 
 #### 1.8
 
-1. 数据结构是：数组+单项链表+红黑树
+1. 数据结构是：数组+链表+红黑树
+
+2. 增加一个链表数据长度的阀值：8；当链表的长度超过这个长度时(>=7)，数据结构转为红黑树（根据泊松分布计算得来的）；超过这个值时，红黑树的时间复杂度要比链表的时间复杂度要低很多
+
+3. 转为红黑树后，树的最小容量为64
+
+4. 链表里面存放的数据名称更改为Node，1.7叫Entry
+
+5. hash值计算
+
+   ```java
+   // 扰动函数 右移16位让高位参与运算，为了减少hash碰撞的几率
+   static final int hash(Object key) {
+       int h;
+       return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+   }
+   ```
+
 6. put流程![jdk1.8-hashmap-put流程图](./images/jdk1.8-hashmap-put流程图.png)
-3. 数据移动流程（transfer）![jdk1.8-hashmap-transfer流程](./images/jdk1.8-hashmap-transfer流程.png)
-4. 
+
+7. 数据迁移操作流程（transfer）：尾插法；尾插法比头插法更加稳定
+
+   ```java
+   final Node<K,V>[] resize() {
+       Node<K,V>[] oldTab = table;
+       int oldCap = (oldTab == null) ? 0 : oldTab.length;
+       int oldThr = threshold;
+       int newCap, newThr = 0;
+       if (oldCap > 0) {
+           if (oldCap >= MAXIMUM_CAPACITY) {
+               threshold = Integer.MAX_VALUE;
+               return oldTab;
+           }
+           else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+                    oldCap >= DEFAULT_INITIAL_CAPACITY)
+               newThr = oldThr << 1; // double threshold
+       }
+       else if (oldThr > 0) // initial capacity was placed in threshold
+           newCap = oldThr;
+       else {               // zero initial threshold signifies using defaults
+           newCap = DEFAULT_INITIAL_CAPACITY;
+           newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+       }
+       if (newThr == 0) {
+           float ft = (float)newCap * loadFactor;
+           newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
+                     (int)ft : Integer.MAX_VALUE);
+       }
+       threshold = newThr;
+       @SuppressWarnings({"rawtypes","unchecked"})
+       Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+       table = newTab;
+       if (oldTab != null) {
+           for (int j = 0; j < oldCap; ++j) {
+               Node<K,V> e;
+               if ((e = oldTab[j]) != null) {
+                   oldTab[j] = null;
+                   if (e.next == null)
+                       newTab[e.hash & (newCap - 1)] = e;
+                   else if (e instanceof TreeNode)
+                       ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+                   else { // preserve order
+                       Node<K,V> loHead = null, loTail = null;
+                       Node<K,V> hiHead = null, hiTail = null;
+                       Node<K,V> next;
+                       do {
+                           next = e.next;
+                           if ((e.hash & oldCap) == 0) {
+                               if (loTail == null)
+                                   loHead = e;
+                               else
+                                   loTail.next = e;
+                               loTail = e;
+                           }
+                           else {
+                               if (hiTail == null)
+                                   hiHead = e;
+                               else
+                                   hiTail.next = e;
+                               hiTail = e;
+                           }
+                       } while ((e = next) != null);
+                       if (loTail != null) {
+                           loTail.next = null;
+                           newTab[j] = loHead;
+                       }
+                       if (hiTail != null) {
+                           hiTail.next = null;
+                           newTab[j + oldCap] = hiHead;
+                       }
+                   }
+               }
+           }
+       }
+       return newTab;
+   }
+   ```
+
+   ![jdk1.8-hashmap-transfer流程](./images/jdk1.8-hashmap-transfer流程.png)
+
+8. 
 
 ### ConcurrentHashMap
 
