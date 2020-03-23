@@ -23,6 +23,14 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
         <!--commons-lang工具类-->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -30,13 +38,13 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>
         <plugins>
-            <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+            &lt;!&ndash; clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle &ndash;&gt;
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
             </plugin>
-            <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+            &lt;!&ndash; default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging &ndash;&gt;
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
             </plugin>
@@ -61,7 +69,7 @@
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
-            <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+            &lt;!&ndash; site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle &ndash;&gt;
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
             </plugin>
@@ -69,5 +77,5 @@
                 <artifactId>maven-project-info-reports-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 </project>
