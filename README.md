@@ -77,3 +77,8 @@
 >
 > [二叉树-红黑树-AVL树-BST树](tiankafei-docs-算法/二叉树-红黑树-AVL树-BST树.md)
 
+# tiankafei-docs-other
+
+> 其他的一些相关文档列表，包含以下：
+>
+> [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
