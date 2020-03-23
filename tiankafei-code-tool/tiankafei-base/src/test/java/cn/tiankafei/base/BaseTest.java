@@ -4,7 +4,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -40,5 +43,21 @@ public class BaseTest {
         strSet.add("3");
         System.out.println(strSet);
     }
+
+    @Test
+    public void testLinkedHashMap(){
+        // 第三个参数默认为fasle，按照插入的顺序排序；为true表示不需要排序
+        Map map = new LinkedHashMap(16, 0.75f, true);
+        List dataList = new ArrayList();
+        for (int i = 0; i < 100; i++) {
+            int number = new Random().nextInt(100);
+            dataList.add(number);
+            map.put(number, number);
+        }
+        System.out.println(dataList);
+        System.out.println(map);
+    }
+
+
 
 }

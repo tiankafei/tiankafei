@@ -44,6 +44,8 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 }
 ```
 
+#### 特点：
+
 1. 数据结构采用的是数组集合
 
 2. 在不指定初始容量的时候，默认初始容量为10
@@ -73,6 +75,8 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 ### LinkedList
 
 ![LinkedList](./images/LinkedList.png)
+
+#### 特点：
 
 1. 基于链表的数据结构，双向链表。
 2. 对于随机访问get和set时，性能较低，因为要遍历指针，只能一个一个找。
@@ -111,6 +115,8 @@ public Vector(Collection<? extends E> c) {
 }
 ```
 
+#### 特点：
+
 1. 是线程安全的，与操作元素相关的方法都加上了锁，但是性能较低。
 
 2. 在不指定初始容量的时候，默认初始容量为10。
@@ -128,6 +134,8 @@ public Vector(Collection<? extends E> c) {
 ### Stack
 
 ![Stack](./images/Stack.png)
+
+#### 特点：
 
 1. 从Vector继承而来，故拥有Vector的一切特定
 2. 拥有栈的特点：后进先出。
@@ -167,6 +175,8 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 }
 ```
 
+#### 特点：
+
 1. 是线程安全的，与操作元素相关的方法都加上了锁，但是性能较低。
 2. 并不允许值和键为空，若为空，则抛出空指针异常
 3. 为避免扩容带来的性能问题，建议指定合理容量
@@ -203,11 +213,21 @@ public HashMap(Map<? extends K, ? extends V> m) {
 }
 ```
 
+#### 特点：
+
+1. key唯一的value可以重复，允许存储null 键null 值，元素无序
+2. HashMap不是线程安全的，因此如果在使用迭代器的过程中有其他线程修改了Map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast策略
+3. String、Integer这样的wrapper类作为HashMap的键是在适合不过了，而且String最为常用，因为String是不可变的，也是final的，而且已经重写了equals()和hashCode()方法了。其他的wrapper类也有这个特点。
+4. 底层数组的长度总是2的n次方，这是HashMap在速度上的优化，不同的Key算得的index相同的几率较小，那么数据在数组上分布就比较均匀，也就是碰撞的几率比较小
+
+#### 1.7
+
 1. 基于哈希表(散列表)，实现Map接口的双列集合，数据结构是“链表散列”，也就是数组+链表
-2. key唯一的value可以重复，允许存储null 键null 值，元素无序
-3. 底层数组的长度总是2的n次方，这是HashMap在速度上的优化，不同的Key算得的index相同的几率较小，那么数据在数组上分布就比较均匀，也就是碰撞的几率比较小
-4. HashMap不是线程安全的，因此如果在使用迭代器的过程中有其他线程修改了Map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast策略
-5. String、Integer这样的wrapper类作为HashMap的键是在适合不过了，而且String最为常用，因为String是不可变的，也是final的，而且已经重写了equals()和hashCode()方法了。其他的wrapper类也有这个特点。
+2. 
+
+#### 1.8
+
+1. 基于哈希表(散列表)，实现Map接口的双列集合，数据结构是“链表散列”，也就是数组+链表+红黑树
 6. 
 
 ### ConcurrentHashMap
@@ -255,9 +275,10 @@ public ConcurrentHashMap(int initialCapacity,
 }
 ```
 
-1. 
-2. 同步性能更好，因为它仅仅根据同步级别对Map的一部分进行上锁
-3. 
+#### 特点：
+
+1. 同步性能更好，因为它仅仅根据同步级别对Map的一部分进行上锁
+2. 
 
 ### TreeMap
 
@@ -277,28 +298,30 @@ public TreeMap(Map<? extends K, ? extends V> m) {
     comparator = null;
     putAll(m);
 }
-    /**
-     * Constructs a new tree map containing the same mappings and
-     * using the same ordering as the specified sorted map.  This
-     * method runs in linear time.
-     *
-     * @param  m the sorted map whose mappings are to be placed in this map,
-     *         and whose comparator is to be used to sort this map
-     * @throws NullPointerException if the specified map is null
-     */
-    public TreeMap(SortedMap<K, ? extends V> m) {
-        comparator = m.comparator();
-        try {
-            buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
-        }
+// 构造了一个包含相同映射的新的树映射，使用给定的排序比较器
+public TreeMap(SortedMap<K, ? extends V> m) {
+    comparator = m.comparator();
+    try {
+        buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
+    } catch (java.io.IOException cannotHappen) {
+    } catch (ClassNotFoundException cannotHappen) {
     }
+}
 ```
 
+#### 特点：
+
+1. 必须是同一类型的数据（不能两种及以上的数据类型）
+
+#### 1.7
+
+1. 
+2. 
+
+#### 1.8
+
 1. 默认的数据结构：基于 [`NavigableMap`](../../java/util/NavigableMap.html)实现红黑树
-3. 按照默认的排序或者给定的排序规则使用红黑树的逻辑进行排序
-3. 必须是同一类型的数据（不能两种及以上的数据类型）
+2. 
 
 ps: 参考红黑树的算法实现
 
@@ -328,15 +351,18 @@ public LinkedHashMap(Map<? extends K, ? extends V> m) {
     accessOrder = false;
     putMapEntries(m, false);
 }
-// 构造一个新对象，同时指定初始化容量、负载因子、访问集合是否要求按顺序（默认为false）
+// 构造一个新对象，同时指定初始化容量、负载因子、插入的排序顺序标识（默认为fasle，表示要排序；true不排序）
     public LinkedHashMap(int initialCapacity, float loadFactor, boolean accessOrder) {
         super(initialCapacity, loadFactor);
         this.accessOrder = accessOrder;
     }
 ```
 
-1. 继承HashMap，拥有HashMap的数据结构
-2. 
+#### 特点：
+
+1. 继承HashMap，拥有HashMap的数据结构，
+2. LinkedHashMap默认是按照插入的顺序。
+3. 
 
 
 ### HashSet
@@ -363,8 +389,14 @@ public HashSet(int initialCapacity) {
 }
 ```
 
+#### 特点：
+
 1. 内部包含一个HashMap，使用HashMap的key保证不允许重复，且只能有一个空值。
-2. 不对数据进行排序，通过 hashCode 和 equal 对数据进行相同判定，如果相同就不存进去。
+2. 通过 hashCode 和 equals 对数据进行相同判定，如果相同就不存进去。
+3. 如果放置对象的话，需要重写 hashCode 和 equals 方法，才能够保证属性相同时，只能存储一个。
+4. hashCode 相同时，才会判断 eqals，如果 hashCode 不同时，不会调用equals。
+5. hashCode 是为了判断放在索引（数组）的哪个位置。
+6. 当使用比较器的时候，不会调用equals。
 
 ### TreeSet
 
@@ -385,22 +417,21 @@ public TreeSet(Collection<? extends E> c) {
     this();
     addAll(c);
 }
-
-    /**
-     * Constructs a new tree set containing the same elements and
-     * using the same ordering as the specified sorted set.
-     *
-     * @param s sorted set whose elements will comprise the new set
-     * @throws NullPointerException if the specified sorted set is null
-     */
-    public TreeSet(SortedSet<E> s) {
-        this(s.comparator());
-        addAll(s);
-    }
+// 构造了一个包含相同映射的新的树映射，使用给定的排序比较器
+public TreeSet(SortedSet<E> s) {
+    this(s.comparator());
+    addAll(s);
+}
 ```
 
+#### 特点：
+
 1. 采用二叉树（红黑树）的存储结构，
-2. 有序（排序后的升序），查询速度比list快
+2. 有序（排序后的升序），
+3. 查询速度没有 hashset 快（hashset直接根据索引下标直接定位，treeset需要进行二叉树的查找）。
+4. 如果是基本数据类型，会自动比较。
+5. 如果是引用类型，需要实现 Comparable 排序比较器；或者传入一个Comparator比较器。
+6. 如果外面传了一个比较器，类里面依然有比较器，会自动使用外部的比较器。
 
 ### LinkedHashSet
 
@@ -425,6 +456,8 @@ public LinkedHashSet(Collection<? extends E> c) {
     addAll(c);
 }
 ```
+
+#### 特点：
 
 1. 继承hashset，拥有hashset的数据结构
 2. 采用哈希表的存储结构
