@@ -58,14 +58,4 @@ public interface IAspect {
      */
     Object returnBefore(Object object, Method method, Object[] args, Map<String, Object> paramMap, Object result);
 
-    /**
-     * 环形切面
-     * @param object
-     * @param method
-     * @param args
-     * @param paramMap  代理过程中用到的参数集合
-     * @return
-     */
-    Object around(Object object, Method method, Object[] args, Map<String, Object> paramMap);
-
 }
