@@ -62,6 +62,8 @@
 > [spring学习笔记](tiankafei-docs-spring/spring学习笔记.md)
 >
 > [spring源码分析](tiankafei-docs-spring/spring源码分析.md)
+>
+> [sharding-jdbc基于springboot的配置](tiankafei-docs-spring/sharding-jdbc基于springboot的配置.md)
 
 # tiankafei-docs-web
 
