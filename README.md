@@ -77,6 +77,12 @@
 >
 > [二叉树-红黑树-AVL树-BST树](tiankafei-docs-算法/二叉树-红黑树-AVL树-BST树.md)
 
+# tiankafei-docs-大数据
+
+> 大数据生态的技术文档列表，包含以下：
+>
+> [centos7安装配置Hadoop](tiankafei-docs-大数据/centos7安装配置Hadoop.md)
+
 # tiankafei-docs-other
 
 > 其他的一些相关文档列表，包含以下：
