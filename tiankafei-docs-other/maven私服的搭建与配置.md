@@ -120,6 +120,12 @@ https://maven.aliyun.com/repository/spring
 https://maven.aliyun.com/repository/spring-plugin
 ```
 
+#### jcenter
+
+```http
+https://maven.aliyun.com/repository/jcenter
+```
+
 ### 把新建的代理仓库加入maven-public组中
 
 ![nexus公共仓库](./images/nexus公共仓库.png)
