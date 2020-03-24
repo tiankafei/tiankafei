@@ -98,6 +98,8 @@
 > 其他的一些相关文档列表，包含以下：
 >
 > [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
+>
+> [maven私服的搭建与配置](tiankafei-docs-other/maven私服的搭建与配置.md)
 
 # 网络上的优秀文章总结：
 
