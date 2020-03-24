@@ -106,6 +106,7 @@
 ## 架构
 
 1. [什么才是真正的架构设计？](https://www.toutiao.com/i6803176165226840589/)
+2. [通过filebeat、logstash、rsyslog采集nginx日志的几种方式](https://www.toutiao.com/i6802419285617541639/)
 
 ## 高并发
 
@@ -115,8 +116,13 @@
 
 1. [曾经我以为我很懂Kafka，直到我看了这篇文章](https://www.toutiao.com/i6758731417548489229/)
 2. [全网最全RabbitMQ总结，别再说你不会RabbitMQ](https://www.toutiao.com/i6781284630222864903/)
+3. [Kafka基础知识大补](https://www.toutiao.com/i6793738120283030016/)
+4. [SpringBoot+RabbitMQ，保证消息100%投递成功并被消费](https://www.toutiao.com/i6780891320329175566/)
 
 ## JVM
+
+1. [Java并发编程之验证volatile指令重排-理论篇](https://www.toutiao.com/i6807257741199933966/)
+2. [这就是你需要的JVM性能调优，拿走不谢](https://www.toutiao.com/i6793265553684300292/)
 
 ## 集合
 
@@ -125,6 +131,7 @@
 ## 算法
 
 1. [javaHashMap的hash算法扰动函数](https://blog.csdn.net/qq_28523617/article/details/77533097)
+2. [浅谈 CAP 和 Paxos 共识算法](https://www.toutiao.com/i6802843072888570379/)
 
 ## 元数据
 
@@ -132,7 +139,14 @@
 
 ## Spring
 
+1. [5种分布式事务解决方案优缺点对比](https://www.toutiao.com/i6717432946736759299/)
+2. [如何提升springboot服务吞吐量](https://www.toutiao.com/i6789505761681605134/)
+
 ## 云
 
 1. [再见Docker！使用Podman、Skopeo和Buildah下一代容器新架构](https://www.toutiao.com/i6718935824110453252/)
+2. [完美的分布式监控系统——普罗米修斯](https://www.toutiao.com/i6695676145804771843/)
 
+## 大数据
+
+1. [Atlas从扫盲到和Hive、HBase、Kafka、Flink等集成开发](https://www.toutiao.com/i6803136002668888580/)
