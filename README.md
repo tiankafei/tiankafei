@@ -64,6 +64,14 @@
 > linux相关的技术文档列表，包含以下：
 >
 > [centos常用命令](tiankafei-docs-linux/centos常用命令.md)
+>
+> [centos6安装MySQL8](tiankafei-docs-linux/centos6安装MySQL8.md)
+>
+> [centos7安装MySQL8](tiankafei-docs-linux/centos7安装MySQL8.md)
+>
+> [centos7安装Nacos并设置开机启动](tiankafei-docs-linux/centos7安装Nacos并设置开机启动.md)
+>
+> [centos7安装Sentinel-dashboard并设置开机启动](tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动)
 
 # tiankafei-docs-spring
 
