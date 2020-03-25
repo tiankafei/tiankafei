@@ -71,7 +71,7 @@
 >
 > [centos7安装Nacos并设置开机启动](tiankafei-docs-linux/centos7安装Nacos并设置开机启动.md)
 >
-> [centos7安装Sentinel-dashboard并设置开机启动](tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动)
+> [centos7安装Sentinel-dashboard并设置开机启动](tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动.md)
 
 # tiankafei-docs-spring
 
