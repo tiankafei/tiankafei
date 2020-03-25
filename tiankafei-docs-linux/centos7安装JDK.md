@@ -27,7 +27,7 @@ tar -zxvf /home/tiankafei/jdk-8u211-linux-x64.tar.gz -C /usr/local/java
 > export JAVA_HOME=/usr/java/default
 > export JRE_HOME=$JAVA_HOME/jre 
 > export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib 
-> export PATH=$JAVA_HOME/bin:$PATH
+> export PATH=$PATH:$JAVA_HOME/bin
 > ```
 >
 > 设置软链接

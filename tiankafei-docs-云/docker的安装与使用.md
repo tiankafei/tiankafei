@@ -50,20 +50,15 @@ systemctl start docker.service
 ## 设置阿里云镜像加速
 
  ```sh
- sudo mkdir -p /etc/docker
- sudo tee /etc/docker/daemon.json <<-'EOF'
- {
- "registry-mirrors": [""]
- }
- EOF
- ```
-
-## 重新加载配置，并启动
-
-```sh
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://w116l1xs.mirror.aliyuncs.com"]
+}
+EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
-```
+ ```
 
 ## 设置docker开机启动
 
