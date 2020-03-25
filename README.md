@@ -73,6 +73,14 @@
 >
 > [centos7安装Sentinel-dashboard并设置开机启动](tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动.md)
 
+# tiankafei-docs-other
+
+> 其他的一些相关文档列表，包含以下：
+>
+> [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
+>
+> [maven私服的搭建与配置](tiankafei-docs-other/maven私服的搭建与配置.md)
+
 # tiankafei-docs-spring
 
 > spring相关的技术文档列表，包含以下：
@@ -89,31 +97,29 @@
 >
 > [filter-servlet-inteceptor-controller执行顺序图](tiankafei-docs-web/filter-servlet-inteceptor-controller执行顺序图.md)
 
-# tiankafei-docs-算法
-
-> 用到的各种算法的文档列表，包含以下：
->
-> [二叉树-红黑树-AVL树-BST树](tiankafei-docs-算法/二叉树-红黑树-AVL树-BST树.md)
-
 # tiankafei-docs-大数据
 
 > 大数据生态的技术文档列表，包含以下：
 >
 > [centos7安装配置Hadoop](tiankafei-docs-大数据/centos7安装配置Hadoop.md)
 
-## tiankafei-docs-云
+# tiankafei-docs-架构
+
+> 各种中间件的相关技术文档列表，包含一下：
+>
+> [redis学习笔记](tiankafei-docs-架构/redis学习笔记.md)
+
+# tiankafei-docs-算法
+
+> 用到的各种算法的文档列表，包含以下：
+>
+> [二叉树-红黑树-AVL树-BST树](tiankafei-docs-算法/二叉树-红黑树-AVL树-BST树.md)
+
+# tiankafei-docs-云
 
 > 与云原生，容器相关的技术文档列表，包含以下：
 >
 > [docker的安装与使用](tiankafei-docs-云/docker的安装与使用.md)
-
-# tiankafei-docs-other
-
-> 其他的一些相关文档列表，包含以下：
->
-> [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
->
-> [maven私服的搭建与配置](tiankafei-docs-other/maven私服的搭建与配置.md)
 
 # 网络上的优秀文章总结：
 
