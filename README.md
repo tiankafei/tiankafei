@@ -72,6 +72,12 @@
 > [centos7安装Nacos并设置开机启动](tiankafei-docs-linux/centos7安装Nacos并设置开机启动.md)
 >
 > [centos7安装Sentinel-dashboard并设置开机启动](tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动.md)
+>
+> [centos7安装Mongodb并设置开机启动](tiankafei-docs-linux/centos7安装Mongodb并设置开机启动.md)
+>
+> [centos7安装Neo4j并设置开机启动](tiankafei-docs-linux/centos7安装Neo4j并设置开机启动.md)
+>
+> [centos7安装RabbitMQ并设置开机启动](tiankafei-docs-linux/centos7安装RabbitMQ并设置开机启动.md)
 
 # tiankafei-docs-other
 
