@@ -267,3 +267,30 @@ HOSTNAME=主机名
 hostnamectl set-hostname 主机名
 ```
 
+## 网络配置
+
+### CentOS7
+
+```sh
+vi /etc/sysconfig/network-scripts/ifcfg-ens33
+```
+
+```sh
+BOOTPROTO="static"
+IPADDR=192.168.0.108
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.2
+```
+
+```shell
+service network restart
+```
+
+```sh
+vi /etc/resolv.conf
+```
+
+```sh
+nameserver 114.114.114.114
+```
+
