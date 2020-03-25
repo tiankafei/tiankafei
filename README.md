@@ -79,7 +79,7 @@
 >
 > [centos7安装RabbitMQ并设置开机启动](tiankafei-docs-linux/centos7安装RabbitMQ并设置开机启动.md)
 >
-> [ceentos7安装NodeJS](tiankafei-docs-linux/ceentos7安装NodeJS.md)
+> [centos7安装NodeJS](tiankafei-docs-linux/centos7安装NodeJS.md)
 >
 > [centos7安装Consul并设置开机启动](tiankafei-docs-linux/centos7安装Consul并设置开机启动.md)
 >
