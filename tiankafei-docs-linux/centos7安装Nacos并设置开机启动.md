@@ -29,7 +29,7 @@ mv nacos /opt/software/
 ### 进入目录
 
 ```shell
-mv nacos /opt/software/nacos/bin
+cd /opt/software/nacos/bin
 
 pwd
 /opt/software/nacos/bin

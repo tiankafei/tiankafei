@@ -250,6 +250,25 @@ yum makecache
 yum update -y
 ```
 
+### 问题恢复
+
+```shell
+cd /etc/yum.repos.d/backup
+
+\cp -rf CentOS-* /etc/yum.repos.d/
+
+# 执行清理缓存
+yum clean all
+# 重新构造yum源的缓存
+yum makecache
+
+# 查看源列表
+yum repolist
+
+# 使用新yum源更新已安装的软件
+yum update -y
+```
+
 ## 设置主机名
 
 ### CentOS6
@@ -264,7 +283,11 @@ HOSTNAME=主机名
 ### CentOS7
 
 ```shell
+# 设置主机名
 hostnamectl set-hostname 主机名
+
+# 查看主机名
+hostnamectl
 ```
 
 ## 网络配置
@@ -276,10 +299,12 @@ vi /etc/sysconfig/network-scripts/ifcfg-ens33
 ```
 
 ```sh
-BOOTPROTO="static"
-IPADDR=192.168.0.108
-NETMASK=255.255.255.0
-GATEWAY=192.168.0.2
+BOOTPROTO="none"
+ONBOOT="yes"
+IPADDR="192.168.0.108"
+PREFIX="24"
+GATEWAY="192.168.0.1"
+DNS1="192.168.0.1"
 ```
 
 ```shell
@@ -291,6 +316,8 @@ vi /etc/resolv.conf
 ```
 
 ```sh
-nameserver 114.114.114.114
+# 阿里云提供的
+nameserver 223.5.5.5
+nameserver 223.6.6.6
 ```
 

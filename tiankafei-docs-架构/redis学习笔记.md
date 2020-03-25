@@ -75,10 +75,9 @@
 > 6. 进入源码目录，查看是否生成了可执行程序
 >
 >    ```shell
->    cd redis-5.0.7/src
 >    ll
 >    ```
->
+>    
 > 7. 重新安装到制定目录
 >
 >    ```shell
@@ -123,7 +122,7 @@
 >     ```shell
 >     service redis_6379 stop
 >     ```
->     
+>
 > 11. 启动redis
 >
 >     ```shell
@@ -148,25 +147,29 @@
 >     redis-cli -h localhost -p 6379 -a password
 >     ```
 >
-> 15. 更新redis配置
+> 15. 更新redis配置，增加密码
+>
+>     ```sh
+>     vi /etc/redis/6379.conf
+>     ```
 >
 >     ```shell
->     vi /etc/redis/6379.conf
+>     bind 127.0.0.1 192.168.0.108
 >     
->     bind 127.0.0.1 192.168.0.111
+>     # masterauth <master-password>
 >     requirepass tiankafei
 >     ```
 >
 > 16. ```shell
 >     systemctl enable redis_6379.service
 >     ```
->     
+>
 > 17. 设置密码之后，停止服务会报错
 >
 >     ```shell
 >     vi /etc/init.d/redis_6379
 >     ```
->     
+>
 >     ```sh
 >     # 增加密码这一行
 >     PASSWORD=$(cat $CONF|grep '^\s*requirepass'|awk '{print $2}'|sed 's/"//g')
@@ -179,7 +182,7 @@
 >         $CLIEXEC -a $PASSWORD -p $REDISPORT shutdown
 >     fi
 >     ```
->     
+>
 > 18. 重新加载
 >
 >     ```
