@@ -78,6 +78,16 @@
 > [centos7安装Neo4j并设置开机启动](tiankafei-docs-linux/centos7安装Neo4j并设置开机启动.md)
 >
 > [centos7安装RabbitMQ并设置开机启动](tiankafei-docs-linux/centos7安装RabbitMQ并设置开机启动.md)
+>
+> [ceentos7安装NodeJS](tiankafei-docs-linux/ceentos7安装NodeJS.md)
+>
+> [centos7安装Consul并设置开机启动](tiankafei-docs-linux/centos7安装Consul并设置开机启动.md)
+>
+> [centos7安装Easy-Mock并设置开机启动](tiankafei-docs-linux/centos7安装Easy-Mock并设置开机启动.md)
+>
+> [centos7安装Nexus私服并设置开机启动](tiankafei-docs-linux/centos7安装Nexus私服并设置开机启动.md)
+>
+> [centos7安装禅道并开机启动](tiankafei-docs-linux/centos7安装禅道并开机启动.md)
 
 # tiankafei-docs-other
 
