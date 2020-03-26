@@ -151,4 +151,44 @@ public class BaseTest {
         }
     }
 
+    @Test
+    public void testInteger(){
+        int index = 1;
+        deal(index);
+        System.out.println(index);
+
+        Integer index1 = new Integer(1);
+        deal(index1);
+        System.out.println(index1);
+
+        String str = "111111";
+        deal(str);
+        System.out.println(str);
+
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(str);
+        deal(stringBuffer);
+        System.out.println(stringBuffer.toString());
+    }
+
+    private int deal(int index){
+        index = index + 4;
+        return 0;
+    }
+
+    private int deal(Integer index){
+        index = index + 4;
+        return 0;
+    }
+
+    private int deal(String str){
+        str = str + "123465";
+        return 0;
+    }
+
+    private int deal(StringBuffer str){
+        str.append(str).append("123456");
+        return 0;
+    }
+
 }

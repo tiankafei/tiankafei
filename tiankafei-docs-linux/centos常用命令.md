@@ -85,6 +85,7 @@ vi /etc/pam.d/login
 
 ```sh
 session    required     pam_limits.so
+session    required     /lib/security/pam_limits.so
 ```
 
 ## 关闭防火墙，开机不启动防火墙

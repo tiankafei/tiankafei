@@ -68,6 +68,12 @@ systemctl daemon-reload
 systemctl enable nacos.service
 # 启动nacos
 systemctl start nacos.service
+# 重启nacos
+systemctl restart nacos.service
+# 停止nacos
+systemctl stop nacos.service
+# 查看nacos状态
+systemctl status nacos.service
 
 ```
 
