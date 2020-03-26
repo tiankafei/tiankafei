@@ -87,6 +87,8 @@
 >
 > [centos7安装Nexus私服并设置开机启动](tiankafei-docs-linux/centos7安装Nexus私服并设置开机启动.md)
 >
+> [centos7安装Nexus私服及maven的配置](tiankafei-docs-linux/centos7安装Nexus私服及maven的配置.md)
+>
 > [centos7安装禅道并开机启动](tiankafei-docs-linux/centos7安装禅道并开机启动.md)
 
 # tiankafei-docs-other
@@ -94,8 +96,6 @@
 > 其他的一些相关文档列表，包含以下：
 >
 > [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
->
-> [maven私服的搭建与配置](tiankafei-docs-other/maven私服的搭建与配置.md)
 >
 > [git上fork后再更新](tiankafei-docs-other/git上fork后再更新.md)
 
@@ -137,7 +137,7 @@
 
 > 与云原生，容器相关的技术文档列表，包含以下：
 >
-> [docker的安装与使用](tiankafei-docs-云/docker的安装与使用.md)
+> [Centos7安装Docker并配置使用](tiankafei-docs-云/Centos7安装Docker并配置使用.md)
 >
 > [Centos7安装Jenkins并配置使用](tiankafei-docs-云/Centos7安装Jenkins并配置使用.md)
 >
