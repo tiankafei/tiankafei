@@ -136,6 +136,8 @@
 > 与云原生，容器相关的技术文档列表，包含以下：
 >
 > [docker的安装与使用](tiankafei-docs-云/docker的安装与使用.md)
+>
+> [Centos7安装Jenkins并配置使用](tiankafei-docs-云/Centos7安装Jenkins并配置使用.md)
 
 # 网络上的优秀文章总结：
 
