@@ -140,6 +140,12 @@
 > [Centos7安装Jenkins并配置使用](tiankafei-docs-云/Centos7安装Jenkins并配置使用.md)
 >
 > [Centos7安装Gitlab并汉化](tiankafei-docs-云/Centos7安装Gitlab并汉化.md)
+>
+> [k8s最新版安装过程](tiankafei-docs-云/k8s最新版安装过程.md)
+>
+> [k8s-nfs文件共享安装及使用](tiankafei-docs-云/k8s-nfs文件共享安装及使用.md)
+>
+> [k8s脚本部署](tiankafei-docs-云/k8s脚本部署.md)
 
 # 网络上的优秀文章总结：
 
