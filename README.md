@@ -96,6 +96,8 @@
 > [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
 >
 > [maven私服的搭建与配置](tiankafei-docs-other/maven私服的搭建与配置.md)
+>
+> [git上fork后再更新](tiankafei-docs-other/git上fork后再更新.md)
 
 # tiankafei-docs-spring
 
