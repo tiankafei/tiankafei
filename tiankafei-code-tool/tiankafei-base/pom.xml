@@ -38,44 +38,4 @@
         </dependency>
     </dependencies>
 
-    <!--<build>
-        <plugins>
-            &lt;!&ndash; clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle &ndash;&gt;
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-            </plugin>
-            &lt;!&ndash; default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging &ndash;&gt;
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-install-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-            &lt;!&ndash; site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle &ndash;&gt;
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>-->
 </project>
