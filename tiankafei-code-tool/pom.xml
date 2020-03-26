@@ -37,6 +37,22 @@
         <slf4j.version>1.7.26</slf4j.version>
     </properties>
 
+    <!-- 配置远程发布到私服，mvn deploy -->
+    <distributionManagement>
+        <!-- 发布版私服仓库 默认的-->
+        <repository>
+            <id>releases</id>
+            <name>releases</name>
+            <url>http://software:8081/repository/maven-releases/</url>
+        </repository>
+        <!-- 快照版私服仓库 默认的-->
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>snapshots</name>
+            <url>http://software:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
