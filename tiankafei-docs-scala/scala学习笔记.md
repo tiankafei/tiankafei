@@ -297,213 +297,674 @@ scala中的++是一个方法，所以不能使用i++的方式，要想实现i++�
 
 ### 定义方法函数
 
-1. 定义方法，默认返回值为unit，也就是()
+#### 定义方法，默认返回值为unit，也就是()
 
-   ```scala
-     def fun01(): Unit ={
-       println("执行了fun01")
-     }
-     private val unit: Unit = fun01()
-     println(unit)
-   ```
+```scala
+  def fun01(): Unit ={
+    println("执行了fun01")
+  }
+  private val unit: Unit = fun01()
+  println(unit)
+```
 
-2. 定义方法，返回指定类型
+#### 定义方法，返回指定类型
 
-   ```scala
-     def fun02(): Int ={
-       3
-     }
-     private val i: Int = fun02()
-     println(i)
-   ```
+```scala
+  def fun02(): Int ={
+    3
+  }
+  private val i: Int = fun02()
+  println(i)
+```
 
-3. 定义方法，带 return 返回的指定类型
+#### 定义方法，带 return 返回的指定类型
 
-   ```scala
-     def fun03(): Int ={
-       return 3
-     }
-     private val i1: Int = fun03()
-     println(i1)
-   ```
+```scala
+  def fun03(): Int ={
+    return 3
+  }
+  private val i1: Int = fun03()
+  println(i1)
+```
 
-4. 定义带参数的方法
+#### 定义带参数的方法
 
-   ```scala
-     def fun04(a:Int): Int = {
-       3 + a
-     }
-     private val i2: Int = fun04(1)
-     println(i2)
-   ```
+```scala
+  def fun04(a:Int): Int = {
+    3 + a
+  }
+  private val i2: Int = fun04(1)
+  println(i2)
+```
 
-5. 定义递归函数的调用
+#### 定义递归函数的调用
 
-   ```scala
-     def fun05(num:Int): Int = {
-       if(num == 1){
-         1
-       }else{
-         num * fun05(num - 1)
-       }
-     }
-     private val i3: Int = fun05(4)
-     println(i3)
-   ```
+```scala
+  def fun05(num:Int): Int = {
+    if(num == 1){
+      1
+    }else{
+      num * fun05(num - 1)
+    }
+  }
+  private val i3: Int = fun05(4)
+  println(i3)
+```
 
-6. 定义默认值函数
+#### 定义默认值函数
 
-   ```scala
-     def fun06(a:Int=8, b:String="abc"): Unit ={
-       println(s"$a\t$b")
-     }
-     //第一个传值，第二个使用默认值
-     private val unit1: Unit = fun06(2)
-     //第一个使用默认值，第二个传值，使用参数名=参数值
-     private val unit2: Unit = fun06(b="123")
-   ```
+```scala
+  def fun06(a:Int=8, b:String="abc"): Unit ={
+    println(s"$a\t$b")
+  }
+  //第一个传值，第二个使用默认值
+  private val unit1: Unit = fun06(2)
+  //第一个使用默认值，第二个传值，使用参数名=参数值
+  private val unit2: Unit = fun06(b="123")
+```
 
-7. 定义匿名函数
+#### 定义匿名函数
 
-   函数是第一类值；
+函数是第一类值；
 
-   函数的签名：(Int, Int) => Int
+函数的签名：(Int, Int) => Int
 
-   函数的实现：(a:Int, b:Int) => {a+b}
+函数的实现：(a:Int, b:Int) => {a+b}
 
-   ```scala
-     private val y: (Int, Int) => Int = (a:Int, b:Int) => {
-       a + b
-     }
-     private val i4: Int = y(2, 5)
-     println(i4)
-   ```
+```scala
+  private val y: (Int, Int) => Int = (a:Int, b:Int) => {
+    a + b
+  }
+  private val i4: Int = y(2, 5)
+  println(i4)
+```
 
-8. 嵌套函数
+#### 嵌套函数
 
-   定义到类里面的方法，定义到方法里面的叫函数，子作用于的函数能看到父作用域的参数和属性
+定义到类里面的方法，定义到方法里面的叫函数，子作用于的函数能看到父作用域的参数和属性
 
-   ```scala
-     def fun07(a:String): Unit = {
-       def fun06(): Unit ={
-         println(s"这是fun07里面的fun06：$a")
-       }
-       fun06()
-     }
-     fun07("hell0")
-   ```
+```scala
+  def fun07(a:String): Unit = {
+    def fun06(): Unit ={
+      println(s"这是fun07里面的fun06：$a")
+    }
+    fun06()
+  }
+  fun07("hell0")
+```
 
-9. 偏应用函数
+#### 偏应用函数
 
-   ```scala
-     def fun08(date:Date, tp:String, msg:String): Unit ={
-       println(s"$date\t$tp\t$msg")
-     }
-     // 直接调用
-     fun08(new Date(), "info", "OK")
-     // 再次封装函数info
-     var info = fun08(_:Date, "info", _:String)
-     // 再次封装函数error
-     var error = fun08(_:Date, "error", _:String)
-   
-     info(new Date(), "这是一个成功的日志")
-     error(new Date(), "这是一个错误的日志")
-   ```
+```scala
+  def fun08(date:Date, tp:String, msg:String): Unit ={
+    println(s"$date\t$tp\t$msg")
+  }
+  // 直接调用
+  fun08(new Date(), "info", "OK")
+  // 再次封装函数info
+  var info = fun08(_:Date, "info", _:String)
+  // 再次封装函数error
+  var error = fun08(_:Date, "error", _:String)
 
-10. 可变参数
+  info(new Date(), "这是一个成功的日志")
+  error(new Date(), "这是一个错误的日志")
+```
 
-    ```scala
-      def fun09(a:Int*): Unit ={
-        for (i <- a) println(i)
-    
-    //    匿名函数：(a:Int) => {}
-    //    签名：(f:Int)
-    //    函数具体实现：{}
-    //    (f:Int) => {}
-    //    正常的匿名函数应该这样写：
-    //    a.foreach( (x:Int)=> { println(x) })
-    //    匿名函数，当参数在函数体当中只会使用一次的时候，可以简写为以下的方式：
-    //    a.foreach( println(_))
-    //    foreach要接收一个函数，而println正好是一个函数，可以再次简写为以下的方式：
-        a.foreach( println )
-      }
-      fun09(1,2,3,4)
-    ```
+#### 可变参数
 
-11. 高阶函数
+```scala
+  def fun09(a:Int*): Unit ={
+    for (i <- a) println(i)
 
-    1. 函数做为参数
+//    匿名函数：(a:Int) => {}
+//    签名：(f:Int)
+//    函数具体实现：{}
+//    (f:Int) => {}
+//    正常的匿名函数应该这样写：
+//    a.foreach( (x:Int)=> { println(x) })
+//    匿名函数，当参数在函数体当中只会使用一次的时候，可以简写为以下的方式：
+//    a.foreach( println(_))
+//    foreach要接收一个函数，而println正好是一个函数，可以再次简写为以下的方式：
+    a.foreach( println )
+  }
+  fun09(1,2,3,4)
+```
 
-       ```scala
-         def computer(a:Int, b:Int, f:(Int,Int) => Int): Unit = {
-           val i5 = f(a, b)
-           println(i5)
-         }
-         computer(3, 8, (x:Int, y:Int) => {x+y})
-         computer(3, 8, (x:Int, y:Int) => {x*y})
-         //当参数的顺序，和后面使用的顺序一样的时候，可以使用以下面的语法糖
-         computer(3, 8, _+_)
-         computer(3, 8, _*_)
-       ```
 
-    2. 函数作为返回值
 
-       ```scala
-         def factory(i:String): (Int, Int) => Int = {
-           def add(x:Int, y:Int): Int ={
-             x+y
-           }
-           def sub(x:Int, y:Int): Int ={
-             x-y
-           }
-           def mul(x:Int, y:Int): Int ={
-             x*y
-           }
-           def div(x:Int, y:Int): Int ={
-             x/y
-           }
-           def mod(x:Int, y:Int): Int ={
-             x%y
-           }
-           def default(x:Int, y:Int): Int ={
-             -1
-           }
-       
-           if(i.equals("+")){
-             add
-           }else if(i.equals("-")){
-             sub
-           }else if(i.equals("*")) {
-             mul
-           }else if(i.equals("/")){
-             div
-           }else if(i.equals("%")){
-             mod
-           }else{
-             default
-           }
-         }
-         computer(3, 8, factory("+"))
-         computer(3, 8, factory("-"))
-         computer(3, 8, factory("*"))
-         computer(3, 8, factory("/"))
-         computer(3, 8, factory("%"))
-         computer(3, 8, factory("="))
-       ```
+#### 高阶函数：函数做为参数
 
-12. 柯里化，规整参数
+```scala
+  def computer(a:Int, b:Int, f:(Int,Int) => Int): Unit = {
+    val i5 = f(a, b)
+    println(i5)
+  }
+  computer(3, 8, (x:Int, y:Int) => {x+y})
+  computer(3, 8, (x:Int, y:Int) => {x*y})
+  //当参数的顺序，和后面使用的顺序一样的时候，可以使用以下面的语法糖
+  computer(3, 8, _+_)
+  computer(3, 8, _*_)
+```
 
-    ```scala
-      def fun10(a:Int)(b:Int)(c:String): Unit ={
-        println(s"$a\t$b\t$c")
-      }
-      fun10(3)(8)("asfdsa")
-    
-      def fun11(a:Int*)(b:String*): Unit ={
-        a.foreach(println)
-        b.foreach(println)
-      }
-      fun11(1,2,3)("a","b","c");
-    ```
+#### 高阶函数：函数作为返回值
 
-13. 
+```scala
+  def factory(i:String): (Int, Int) => Int = {
+    def add(x:Int, y:Int): Int ={
+      x+y
+    }
+    def sub(x:Int, y:Int): Int ={
+      x-y
+    }
+    def mul(x:Int, y:Int): Int ={
+      x*y
+    }
+    def div(x:Int, y:Int): Int ={
+      x/y
+    }
+    def mod(x:Int, y:Int): Int ={
+      x%y
+    }
+    def default(x:Int, y:Int): Int ={
+      -1
+    }
+
+    if(i.equals("+")){
+      add
+    }else if(i.equals("-")){
+      sub
+    }else if(i.equals("*")) {
+      mul
+    }else if(i.equals("/")){
+      div
+    }else if(i.equals("%")){
+      mod
+    }else{
+      default
+    }
+  }
+  computer(3, 8, factory("+"))
+  computer(3, 8, factory("-"))
+  computer(3, 8, factory("*"))
+  computer(3, 8, factory("/"))
+  computer(3, 8, factory("%"))
+  computer(3, 8, factory("="))
+```
+
+#### 柯里化，规整参数
+
+```scala
+  def fun10(a:Int)(b:Int)(c:String): Unit ={
+    println(s"$a\t$b\t$c")
+  }
+  fun10(3)(8)("asfdsa")
+
+  def fun11(a:Int*)(b:String*): Unit ={
+    a.foreach(println)
+    b.foreach(println)
+  }
+  fun11(1,2,3)("a","b","c");
+```
+
+### 集合
+
+#### 操作符的区别
+
+##### ++
+
+无论操作符左右是否是可变的集合，通过++之后，原集合没有变化，会进行集合合并，产生一个新的集合。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+
+    val result1 = list01 ++ list02
+    println(s"result1的结果$result1\tlist01的值$list01\tlist02的值$list02")
+
+    val result2 = list01 ++ listBuffer02
+    println(s"result2的结果$result2\tlist01的值$list01\tlistBuffer02的值$listBuffer02")
+
+    val result3 = listBuffer01 ++ list02
+    println(s"result3的结果$result3\tlistBuffer01的值$listBuffer01\tlist02的值$list02")
+
+    val result4 = listBuffer01 ++ listBuffer02
+    println(s"result4的结果$result4\tlistBuffer01的值$listBuffer01\tlistBuffer02的值$listBuffer02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result1的结果List(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	list02的值List(11, 22, 33)
+result2的结果List(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	listBuffer02的值ListBuffer(11, 22, 33)
+result3的结果ListBuffer(1, 2, 3, 11, 22, 33)	listBuffer01的值ListBuffer(1, 2, 3)	list02的值List(11, 22, 33)
+result4的结果ListBuffer(1, 2, 3, 11, 22, 33)	listBuffer01的值ListBuffer(1, 2, 3)	listBuffer02的值ListBuffer(11, 22, 33)
+```
+
+##### ++：
+
+无论操作符左右是否是可变的集合，通过++:之后，原集合没有变化，会进行集合合并，产生一个新的集合。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+
+    val result1 = list01 ++: list02
+    println(s"result1的结果$result1\tlist01的值$list01\tlist02的值$list02")
+
+    val result2 = list01 ++: listBuffer02
+    println(s"result2的结果$result2\tlist01的值$list01\tlistBuffer02的值$listBuffer02")
+
+    val result3 = listBuffer01 ++: list02
+    println(s"result3的结果$result3\tlistBuffer01的值$listBuffer01\tlist02的值$list02")
+
+    val result4 = listBuffer01 ++: listBuffer02
+    println(s"result4的结果$result4\tlistBuffer01的值$listBuffer01\tlistBuffer02的值$listBuffer02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result1的结果List(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	list02的值List(11, 22, 33)
+result2的结果ListBuffer(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	listBuffer02的值ListBuffer(11, 22, 33)
+result3的结果List(1, 2, 3, 11, 22, 33)	listBuffer01的值ListBuffer(1, 2, 3)	list02的值List(11, 22, 33)
+result4的结果ListBuffer(1, 2, 3, 11, 22, 33)	listBuffer01的值ListBuffer(1, 2, 3)	listBuffer02的值ListBuffer(11, 22, 33)
+```
+
+##### ++=
+
+操作符左右的集合必须是可变集合（如果写成了不变的集合，编译器就会提示报错），右侧跟不变的或者可变的集合都可以。此时改变的是左侧可变的集合。此时如果用一个新变量接收，那么就和左侧的集合一样了。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+
+    val result3 = listBuffer01 ++= list02
+    println(s"result3的结果$result3\tlistBuffer01的值$listBuffer01\tlist02的值$list02")
+    println("====================================")
+    val result4 = listBuffer01 ++= listBuffer02
+    println(s"result4的结果$result4\tlistBuffer01的值$listBuffer01\tlistBuffer02的值$listBuffer02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result3的结果ListBuffer(1, 2, 3, 11, 22, 33)	listBuffer01的值ListBuffer(1, 2, 3, 11, 22, 33)	list02的值List(11, 22, 33)
+====================================
+result4的结果ListBuffer(1, 2, 3, 11, 22, 33, 11, 22, 33)	listBuffer01的值ListBuffer(1, 2, 3, 11, 22, 33, 11, 22, 33)	listBuffer02的值ListBuffer(11, 22, 33)
+```
+
+##### ++=：
+
+操作符右侧的集合必须是可变集合（如果写成了不变的集合，编译器就会提示报错），左侧跟不变的或者可变的集合都可以。此时改变的是右侧可变的集合。此时如果用一个新变量接收，那么就和右侧的集合一样了。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+    val result2 = list01 ++=: listBuffer02
+    println(s"result2的结果$result2\tlist01的值$list01\tlistBuffer02的值$listBuffer02")
+    println("====================================")
+    val result4 = listBuffer01 ++=: listBuffer02
+    println(s"result4的结果$result4\tlistBuffer01的值$listBuffer01\tlistBuffer02的值$listBuffer02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result2的结果ListBuffer(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	listBuffer02的值ListBuffer(1, 2, 3, 11, 22, 33)
+====================================
+result4的结果ListBuffer(1, 2, 3, 1, 2, 3, 11, 22, 33)	listBuffer01的值ListBuffer(1, 2, 3)	listBuffer02的值ListBuffer(1, 2, 3, 1, 2, 3, 11, 22, 33)
+```
+
+##### +=
+
+单值插入尾部，操作符左侧的必须是一个可变的集合（如果写了不变的集合，编译期就会报错），操作符右侧必须是同类型的单值（如果不是单值或者不是同类型的单值，编译器就会报错），最终会改变左侧的集合（在后面追加一个单值）。此时如果用一个新变量接收，那么就和左侧的集合一样了。
+
+```scala
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+    val result3 = listBuffer01 += 4
+    println(s"result3的结果$result3\tlistBuffer01的值$listBuffer01")
+    println("====================================")
+    val result4 = listBuffer01 += 4
+    println(s"result4的结果$result4\tlistBuffer01的值$listBuffer01")
+```
+
+```
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result3的结果ListBuffer(1, 2, 3, 4)	listBuffer01的值ListBuffer(1, 2, 3, 4)
+====================================
+result4的结果ListBuffer(1, 2, 3, 4, 4)	listBuffer01的值ListBuffer(1, 2, 3, 4, 4)
+```
+
+##### +=:
+
+单值插入头部，操作符右侧的必须是一个可变的集合（如果写了不变的集合，编译期就会报错），操作符左侧必须是同类型的单值（如果不是单值或者不是同类型的单值，编译器就会报错），最终会改变右侧的集合（在前面追加一个单值）。此时如果用一个新变量接收，那么就和右侧的集合一样了。
+
+```scala
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+    val result3 = 0 +=: listBuffer01
+    println(s"result3的结果$result3\tlistBuffer01的值$listBuffer01")
+    println("====================================")
+    val result4 = 0 +=: listBuffer01
+    println(s"result4的结果$result4\tlistBuffer01的值$listBuffer01")
+```
+
+```
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result3的结果ListBuffer(0, 1, 2, 3)	listBuffer01的值ListBuffer(0, 1, 2, 3)
+====================================
+result4的结果ListBuffer(0, 0, 1, 2, 3)	listBuffer01的值ListBuffer(0, 0, 1, 2, 3)
+```
+
+##### --=
+
+左侧必须是一个可变集合（如果写了不变集合，编译期就会报错），右侧是不是可变集合都可以。从左侧集合中删除右侧集合中的元素，会改变左侧集合的值（删除从左至右第一次出现的值）。此时如果用一个新变量接收，那么就和左侧的集合一样了。
+
+```scala
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(1,2,11, 22, 33)
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+    val result4 = listBuffer01 --= listBuffer02
+    println(s"result4的结果$result4\tlistBuffer01的值$listBuffer01\tlistBuffer02的值$listBuffer02")
+```
+
+```
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(1, 2, 11, 22, 33)
+====================================
+result4的结果ListBuffer(3)	listBuffer01的值ListBuffer(3)	listBuffer02的值ListBuffer(1, 2, 11, 22, 33)
+```
+
+##### -=
+
+左侧必须是一个可变集合（如果写了一个不变的集合，编译期就会报错），右侧必须是一个同类型的单值（如果不是单值或者不是同类型的单值，编译期就会报错）。从左侧集合当中删除指定元素，会改变左侧集合的值（删除从左至右第一次出现的值）。此时如果用一个新变量接收，那么就和左侧的集合一样了。
+
+```scala
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 1, 2, 3)
+    println(s"listBuffer01的值$listBuffer01")
+    println("====================================")
+    val result3 = listBuffer01 -= 1
+    println(s"result3的结果$result3\tlistBuffer01的值$listBuffer01")
+```
+
+```
+listBuffer01的值ListBuffer(1, 1, 2, 3)
+====================================
+result3的结果ListBuffer(1, 2, 3)	listBuffer01的值ListBuffer(1, 2, 3)
+```
+
+##### +：
+
+一般用于单值头部插入集合，如果左侧值是一个集合，则这个集合作为第一个元素插入到右侧的集合当中。通过+:之后，原集合没有变化，产生一个新的集合。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+
+    val result1 = 0 +: list01
+    println(s"result1的结果$result1\tlist01的值$list01")
+
+    val result2 = 0 +: listBuffer01
+    println(s"result2的结果$result2\tlistBuffer01的值$listBuffer01")
+
+    val result3 = 0 +: list02
+    println(s"result3的结果$result3\tlist02的值$list02")
+
+    val result4 = 0 +: listBuffer02
+    println(s"result4的结果$result4\tlistBuffer02的值$listBuffer02")
+    println("====================================")
+
+    val result5 = list01 +: list02
+    println(s"result5的结果$result5\tlist01的值$list01\tlist02的值$list02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result1的结果List(0, 1, 2, 3)	list01的值List(1, 2, 3)
+result2的结果ListBuffer(0, 1, 2, 3)	listBuffer01的值ListBuffer(1, 2, 3)
+result3的结果List(0, 11, 22, 33)	list02的值List(11, 22, 33)
+result4的结果ListBuffer(0, 11, 22, 33)	listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result5的结果List(List(1, 2, 3), 11, 22, 33)	list01的值List(1, 2, 3)	list02的值List(11, 22, 33)
+```
+
+##### :+
+
+一般用于单值尾部插入集合，如果右侧值是一个集合，则这个集合作为最后一个元素插入到左侧的集合当中。通过:+之后，原集合没有变化，产生一个新的集合。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    //可变集合01
+    val listBuffer01 = ListBuffer(1, 2, 3)
+    //可变集合02
+    val listBuffer02 = ListBuffer(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println(s"listBuffer01的值$listBuffer01")
+    println(s"listBuffer02的值$listBuffer02")
+    println("====================================")
+
+    val result1 = list01 :+ 4
+    println(s"result1的结果$result1\tlist01的值$list01")
+
+    val result2 = listBuffer01 :+ 4
+    println(s"result2的结果$result2\tlistBuffer01的值$listBuffer01")
+
+    val result3 = list02 :+ 4
+    println(s"result3的结果$result3\tlist02的值$list02")
+
+    val result4 = listBuffer02 :+ 4
+    println(s"result4的结果$result4\tlistBuffer02的值$listBuffer02")
+    println("====================================")
+
+    val result5 = list01 :+ list02
+    println(s"result5的结果$result5\tlist01的值$list01\tlist02的值$list02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+listBuffer01的值ListBuffer(1, 2, 3)
+listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result1的结果List(1, 2, 3, 4)	list01的值List(1, 2, 3)
+result2的结果ListBuffer(1, 2, 3, 4)	listBuffer01的值ListBuffer(1, 2, 3)
+result3的结果List(11, 22, 33, 4)	list02的值List(11, 22, 33)
+result4的结果ListBuffer(11, 22, 33, 4)	listBuffer02的值ListBuffer(11, 22, 33)
+====================================
+result5的结果List(1, 2, 3, List(11, 22, 33))	list01的值List(1, 2, 3)	list02的值List(11, 22, 33)
+```
+
+##### ::
+
+单值插入头部，操作符右侧的必须是一个不变的集合（如果写了可变的集合，编译期就会报错），操作符左侧必须是同类型的单值（如果不是单值或者不是同类型的单值，编译器就会报错）。通过++之后，原集合没有变化，会进行集合合并，产生一个新的集合（如果左侧是一个不变的集合，则左侧集合作为第一个元素插入到最终的结果当中）。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println("====================================")
+
+    val result1 = 0 :: list02
+    println(s"result1的结果$result1\tlist02的值$list02")
+
+    val result3 = list01 :: list02
+    println(s"result3的结果$result3\tlist01的值$list01\tlist02的值$list02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+====================================
+result1的结果List(0, 11, 22, 33)	list02的值List(11, 22, 33)
+result3的结果List(List(1, 2, 3), 11, 22, 33)	list01的值List(1, 2, 3)	list02的值List(11, 22, 33)
+```
+
+##### :::
+
+集合合并，操作符左右两侧都必须是一个不变的集合（如果是可变的集合或者是一个单值，编译期就会报错）。通过:::之后，原集合没有变化，会进行集合合并，产生一个新的集合。
+
+```scala
+    //不可变集合01
+    val list01 = List(1, 2, 3)
+    //不可变集合02
+    val list02 = List(11, 22, 33)
+    println(s"list01的值$list01")
+    println(s"list02的值$list02")
+    println("====================================")
+
+    val result3 = list01 ::: list02
+    println(s"result3的结果$result3\tlist01的值$list01\tlist02的值$list02")
+```
+
+```
+list01的值List(1, 2, 3)
+list02的值List(11, 22, 33)
+====================================
+result3的结果List(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	list02的值List(11, 22, 33)
+```
+
+##### 图片总结
+
+![scala操作符](./images/scala操作符.png)
+
+#### 使用java语言中的LinkedList
+
+```scala
+    val strings = new util.LinkedList[String]()
+    strings.add("111")
+    strings.add("222")
+    strings.forEach(println)
+```
+
+#### 数组
+
+```scala
+    //    java泛型是<>，scala中是[]，所以数组用(n)
+    //    val 约等于 final 不可变描述的是：val指定的引用的值
+    //    数组
+    val arr01 = Array[Int](1, 2, 3, 4)
+    arr01(1) = 99
+    println(arr01(1))
+    for (elem <- arr01) {
+      println(elem)
+    }
+    // 遍历元素，需要函数接收元素
+    arr01.foreach(println)
+```
+
+#### 链表
+
+```scala
+    //    链表
+    // scala中collections中有2个包，immutable,mutable，默认是不可变的immutable
+    val list01 = List(1, 2, 3, 4, 1, 3, 2, 4, 2, 1)
+    for (i <- list01) println(i)
+    list01.foreach(println)
+
+    // 可变的list
+    val list02 = new ListBuffer[Int]()
+    list02.+=(33)
+    list02.+=(34)
+    list02.+=(35)
+    list02.+=(36)
+    list02.+=(37)
+    list02.foreach(println)
+```
