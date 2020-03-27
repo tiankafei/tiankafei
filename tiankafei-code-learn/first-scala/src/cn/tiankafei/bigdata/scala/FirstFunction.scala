@@ -178,10 +178,18 @@ object FirstFunction {
 
 
 
-
+ def testFunction(): Unit ={
+   println("测试方法")
+ }
 
 
   def main(args: Array[String]): Unit = {
+    println("主方法开始执行===================")
+    println("------------------")
+    val unit1 = testFunction
+    println(s"------------------$unit1")
+    val unit2 = testFunction _
+    println(s"------------------$unit2")
 
   }
 
