@@ -1,5 +1,11 @@
 # Scala学习
 
+## 分享一个学习scala基础语法的网站
+
+```http
+https://www.runoob.com/scala/scala-tutorial.html
+```
+
 ## 所有的值都是一个对象
 
 ## 所有的方法都是一个值
@@ -54,6 +60,16 @@ println(s"$name 这是主方法上面定义的输入$name")
 ​		在scala中，文件名不具有任何含义。在同一个包下面，同一个object类型的名字只能出现一次，同一个calss类型的名字也只能出现一次，但是object和class的名字是可以一样。
 
 ## Scala语法剖析
+
+### private和private[this]
+
+```scala
+// 只能在当前文件内部，通过对象进行访问
+private var name = "123456";
+
+// 只能在类内部使用，对象都不能直接使用
+private[this] var age = 10;
+```
 
 ### 定义一个入口方法
 
@@ -968,3 +984,83 @@ result3的结果List(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	list02的值
     list02.+=(37)
     list02.foreach(println)
 ```
+
+#### set
+
+```scala
+    // 默认不可变
+    val set01 = Set(1, 2, 3, 4, 3, 2, 1)
+    for (e <- set01) println(e)
+    set01.foreach(println)
+    println("----------------------")
+
+    // 导入可变的
+    import scala.collection.mutable.Set
+    val set02 = Set(11, 22, 33, 11, 22)
+    set02.add(44)
+    set02.add(33)
+    set02.foreach(println)
+
+    // 再次使用不可变的
+    val set03 = scala.collection.immutable.Set(111, 222, 333, 111)
+    set03.foreach(println)
+```
+
+#### tuple
+
+```scala
+    val tuple2 = new Tuple2(111, "abc")
+    val tuple3 = Tuple3(3, "asfdas", "dsgfd")
+    val tuple4 = (1, 2, 3, 4)
+    val tuple = ((a:Int) => a+8, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)
+    println(tuple2._1)
+    println(tuple4._3)
+    println(tuple._1(11))
+    println(tuple._1)
+    println("tuple----------------------")
+```
+
+#### map
+
+```scala
+    // 不可变map
+    val map01 = Map( ("a", 33), "b"->22, ("c",42), ("a", 333) )
+    println(map01.get("a").getOrElse("hello world"))
+    println(map01.get("w").getOrElse("hello world"))
+
+    val keys = map01.keys
+    for (key <- keys) {
+      println(s"key：$key\tvalue=${map01.get(key).get}")
+    }
+
+    // 可变map
+    val map02 = scala.collection.mutable.Map( ("a","b"), ("c","d") )
+    map02.put("e","f")
+    println(map02.get("a").get)
+    println(map02.get("s").getOrElse("hello world"))
+    val keys1 = map02.keys
+    for (key <- keys1) {
+      println(s"key：$key\tvalue=${map02.get(key).get}")
+    }
+    println("map----------------------")
+```
+
+#### 类java的StreamAPI
+
+```scala
+    val list = List("hello world", "hello mashibing", "goog idea")
+    val flatMap = list.flatMap(_.split(" ")).map((_, 1))
+    flatMap.foreach(println)
+    println("list直接调用--------------------------------")
+
+    val map = list.iterator.flatMap(_.split(" ")).map((_, 1))
+    map.foreach(println)
+    println("list的迭代器调用--------------------------------")
+```
+
+##### iterator迭代器模式
+
+
+
+
+
