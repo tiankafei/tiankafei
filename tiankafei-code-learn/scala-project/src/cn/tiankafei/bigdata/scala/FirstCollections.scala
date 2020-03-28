@@ -113,7 +113,7 @@ object FirstCollections {
     val unit = 1 + 2
     println(unit)
 
-//    val inclusive = 1.to(10)
+    //    val inclusive = 1.to(10)
     val inclusive = 1 to 10
     inclusive.foreach(println)
 
