@@ -1064,3 +1064,202 @@ result3的结果List(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	list02的值
 
 
 
+### 继承：trait   with
+
+```scala
+object TestExtends {
+
+  def main(args: Array[String]): Unit = {
+    val p = new Dog("abc");
+    p.test()
+    p.test1()
+    p.test2()
+    p.test3()
+  }
+  trait Dog3 {
+    def test3(): Unit ={
+      println("执行了test3方法")
+    }
+  }
+  trait Dog2 {
+    def test2(): Unit ={
+      println("执行了test2方法")
+    }
+  }
+  trait Dog1 {
+    def test1(): Unit ={
+      println("执行了tes1方法")
+    }
+  }
+  class Dog(name:String) extends Dog1 with Dog2 with Dog3 {
+    def test(): Unit ={
+      println(s"执行了test方法$name")
+    }
+  }
+
+}
+```
+
+### lombok增强版：case
+
+相当于java中的lombok，会自动生成toString，hashcode，equals等方法
+
+```scala
+object TestCaseClass {
+
+  def main(args: Array[String]): Unit = {
+    val person1 = new Person1("张三", 22)
+    val person2 = new Person1("张三", 22)
+    println(person1.equals(person2))
+    println(person1 == person2)
+
+    val person3 = Person2("张三", 22)
+    val person4 = Person2("张三", 22)
+    println(person3.equals(person4))
+    println(person3 == person4)
+  }
+
+  case class Person2(name:String, age:Int) {
+    println(s"name值为$name,age值为$age")
+  }
+
+  class Person1(name:String, age:Int) {
+    println(s"name值为$name,age值为$age")
+  }
+
+}
+```
+
+### switch增强版：match
+
+java中switch的增强版；match，只要上面的匹配到了，下面的就不会在匹配了
+
+```scala
+object TestMatch {
+
+  def main(args: Array[String]): Unit = {
+    val tuple = (1.0, 88, "abc", false)
+
+    val iterator = tuple.productIterator
+
+    val res = iterator.map((x) => {
+      x match {
+        case x: Int => x + 99
+        case x: Double => x + 100
+        case x: String => x + "def"
+        case x: Boolean => !x
+        case false => false
+        case 1 => 1 + 100
+        case _ => x
+      }
+    })
+//    res.foreach(println)
+
+    while (res.hasNext) {
+      println(res.next())
+    }
+  }
+
+}
+```
+
+### Lambda中的单进单出的Function的增强版
+
+```scala
+object TestPartiaFunction {
+
+  def main(args: Array[String]): Unit = {
+
+    def xxx:PartialFunction[ Any, Any ] = {
+      case x:String => s"$x 你好"
+      case 44 => 44 * 2
+      case _  => "none"
+    }
+    println(xxx("张三"))
+    println(xxx(44))
+    println(xxx(45))
+  }
+
+}
+```
+
+### 隐式方法转换
+
+implicit 方法的参数必须是精确匹配的类型
+
+```scala
+object TestImplicitMethod {
+
+  def main(args: Array[String]): Unit = {
+    implicit def cgfdghda[T](list: util.ArrayList[T]): xxx[T] ={
+      val iter:util.Iterator[T] = list.iterator()
+      new xxx(iter)
+    }
+    implicit def asfdasdfs[T](list: util.LinkedList[T]): xxx[T] ={
+      val iter:util.Iterator[T] = list.iterator()
+      new xxx(iter)
+    }
+    val linkedList = new util.LinkedList[Int]()
+    linkedList.add(1)
+    linkedList.add(2)
+    linkedList.add(3)
+    val listXXX = new xxx[Int](linkedList.iterator())
+    listXXX.foreach(println)
+    println("listXXX.foreach(println)--------------------------")
+    linkedList.foreach(println)
+    println("linkedList.foreach(println)--------------------------")
+
+    val arrayList = new util.ArrayList[Int]()
+    arrayList.add(11)
+    arrayList.add(22)
+    arrayList.add(33)
+    val arrayXXX = new xxx[Int](arrayList.iterator())
+    arrayXXX.foreach(println)
+    println("arrayXXX.foreach(println)--------------------------")
+    arrayList.foreach(println)
+    println("arrayList.foreach(println)--------------------------")
+  }
+
+  class xxx[T](list: util.Iterator[T]) {
+    def foreach(f: (T) => Unit): Unit = {
+      while (list.hasNext) {
+        f(list.next())
+      }
+    }
+  }
+
+}
+```
+
+### 隐式属性转换
+
+```scala
+object TestImplicitField {
+
+  def main(args: Array[String]): Unit = {
+
+    implicit val fdasfdasfdasf:String = "lisi"
+    def ooxx1(implicit name:String): Unit ={
+      println(name)
+    }
+    ooxx1("zhangsan")
+    ooxx1
+    println("-----------------------------")
+    implicit val sfdasfas:Int = 22
+    def ooxx2(implicit name:String, age:Int): Unit ={
+      println(s"$name\t$age")
+    }
+    ooxx2("abc", 33)
+    ooxx2
+    println("-----------------------------")
+    def ooxx3(age:Int)(implicit name:String): Unit ={
+      println(s"$name\t$age")
+    }
+    ooxx3(22)("abc")
+    ooxx3(12)
+  }
+
+}
+
+```
+
