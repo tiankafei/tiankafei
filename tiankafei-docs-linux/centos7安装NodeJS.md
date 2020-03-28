@@ -23,7 +23,10 @@ npm config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver
 
 ```shell
 wget https://nodejs.org/dist/v8.9.0/node-v8.9.0-linux-x64.tar.gz
-tar zxvf  node-v8.9.0-linux-x64.tar.gz
+
+cp node-v8.9.0-linux-x64.tar.gz /opt/software/
+cd /opt/software/
+tar -zxvf  node-v8.9.0-linux-x64.tar.gz
 
 ln -s /opt/software/node-v8.9.0-linux-x64/bin/node /usr/bin/node
 ln -s /opt/software/node-v8.9.0-linux-x64/bin/npm /usr/bin/npm

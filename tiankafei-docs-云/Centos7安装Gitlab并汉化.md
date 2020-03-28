@@ -19,7 +19,7 @@ vim  /etc/gitlab/gitlab.rb
 ```
 
 ```shell
-external_url 'http://192.168.0.108:8083'
+external_url 'http://192.168.0.101:8083'
 ```
 
 ## 重置并启动GitLab

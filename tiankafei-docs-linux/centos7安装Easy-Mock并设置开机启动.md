@@ -59,25 +59,52 @@ npm install pm2 -g
 
 ### 用 PM2 启动
 
-> ```
 > 设置pm2的环境变量
+>
+> ```shell
+>  # 设置软连接
+>  ln -s /opt/software/node-v8.9.0-linux-x64/bin/pm2 /usr/local/bin/
 > ```
 >
 > 启动项目
 >
 > ```
-> NODE_ENV=production 
-> pm2 start app.js
+> NODE_ENV=production pm2 start app.js
 > ```
 >
-> 保存当前进程状态
+> **开机自启动**
 >
 > ```
-> 保存当前进程状态
+> pm2 startup  # 创建开机自启动命令
+> pm2 save  # 保存当前应用列表
+> pm2 resurrect  # 重新加载保存的应用列表
+> pm2 unstartup  # 移除开机自启动
 > ```
 >
-> 启用开机自启
+> **删除**
 >
 > ```
-> systemctl enable pm2-root
+> pm2 delete app_name|app_id  # 从列表中删除指定的进程
+> pm2 delete all # 从列表中删除全部进程
+> pm2 kill # 杀死守护进程
 > ```
+>
+> **停止**
+>
+> ```
+> pm2 stop app_name|app_id
+> pm2 stop all  # 停止所有
+> ```
+>
+> **查看**
+>
+> ```
+> pm2 list # 查看进程
+> pm2 logs # 查看日志
+> pm2 show app_name|app_id # 查看进程详情
+> pm2 monit  # 查看CPU和内存资源占用
+> ```
+>
+> 
+>
+> 
