@@ -38,7 +38,8 @@ vi /etc/hosts
 
 ```shell
 # ip 别名
-192.168.0.121 node01
+192.168.0.101 software
+192.168.0.102 appserver
 ```
 
 ## 设置免密登录
@@ -241,6 +242,9 @@ cp CentOS-* ./backup/
 
 # 下载阿里云centos6的yum源覆盖本地文件
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+# 添加EPEL源
+wget -P /etc/yum.repos.d/ http://mirrors.aliyun.com/repo/epel-7.repo
 
 # 执行清理缓存
 yum clean all

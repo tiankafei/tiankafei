@@ -154,7 +154,7 @@
 >     ```
 >
 >     ```shell
->     bind 127.0.0.1 192.168.0.108
+>     bind 127.0.0.1 192.168.0.101
 >     
 >     # masterauth <master-password>
 >     requirepass tiankafei
