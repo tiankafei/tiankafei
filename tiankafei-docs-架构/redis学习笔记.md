@@ -103,6 +103,7 @@
 > 9. redis实例安装
 >
 >    ```shell
+>    cd
 >    cd redis-5.0.7/utils
 >    ./install_server.sh
 >    

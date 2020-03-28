@@ -4,7 +4,7 @@ package cn.tiankafei.bigdata.scala;
  * @author tiankafei
  * @since 1.0
  **/
-public class TestMain1 {
+public class TestJavaMain {
 
     public static void main(String[] args) {
         Outer1 outer1 = new Outer1();
