@@ -40,7 +40,7 @@ public class DeleteRepositoryTmpFileTest {
             for (int i = 0, lem = files.length; i < lem; i++) {
                 if (files[i].isDirectory()) {
                     String directoryName = files[i].getName();
-                    if (directoryName.contains("unknown")) {
+                    if (directoryName.contains("unknown") || directoryName.contains("${")) {
                         FileUtil.deleteRecursiveFile(files[i].getPath());
                         System.out.println(files[i].getPath());
                     } else {
