@@ -71,7 +71,30 @@ redis 启动的时候，先调用 epoll_create 创建一块内存空间5，
 
 ### ByteBuffer
 
+```java
+    public void testBuffer() throws Exception {
+        RandomAccessFile accessFile = new RandomAccessFile("D:\\test1.txt","rw");
 
+        accessFile.write("hello world\nhello mashibing\ngood idea".getBytes());
+        //在指定文件偏移量的位置添加ooxx，原来的数据被替换
+        accessFile.seek(3);
+        accessFile.write("ooxx".getBytes());
+
+        //在堆上分配空间（在java进程里面，受Xmx配置的影响）
+        ByteBuffer.allocate(4096);
+        //在堆外分配空间（在java进程里面）
+        ByteBuffer.allocateDirect(4096);
+
+        FileChannel fileChannel = accessFile.getChannel();
+        // 在堆外的MMAP上分配（在java进程外面）（只有文件才可以分配这样的区域）
+        MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 13, 4096);
+        // 会直接落到文件：从给指定偏移的位置开始添加，会替换要添加数据的长度的位置
+        // 1、如果要添加的数据长度超过了4096，就会报java.nio.BufferOverflowException
+        // 2、如果小于4096且大于原文件从偏移位置到文件末尾的长度，则会替换从偏移位置开始到文件末尾的所有数据，并从偏移位置开始占有4096个字节
+        // 3、如果小于4096且小于源文件从偏移位置到文件末尾的长度，则会替换从偏移位置开始，到数据长度的位置结束，后面的不会替换，但是从偏移位置开始仍然占有4096个字节
+        mappedByteBuffer.put("xxx".getBytes());
+    }
+```
 
 ## MMAP（一种内存映射文件的方法）
 
@@ -87,4 +110,4 @@ redis 启动的时候，先调用 epoll_create 创建一块内存空间5，
 
 5. kafka：数据从网卡进来，经过内核达到 kafka（recive），增加头部，然后通过mmap直接映射到文件，充分利用磁盘的顺序读写（会形成很多断文件），当缓存中满了，就falsh到磁盘。
 
-6. 内核多了一个 sendfile 的系统调用，可以由用户程序直接调用该系统调用（一般由是由框架封装的API），读取文件的时候，就不需要在经过一个用户空间的拷贝，故称零拷贝。
+6. 内核有一个 sendfile 的系统调用，可以由用户程序直接调用该系统调用（一般由是由框架封装的API），读取文件的时候，就不需要在经过一个用户空间的拷贝，故称零拷贝。
