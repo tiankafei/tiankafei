@@ -15,7 +15,7 @@ yum install unzip zip -y
 ## 解压
 
 ```shell
-unzip -d consul_1.6.2_linux_amd64.zip 
+unzip consul_1.6.2_linux_amd64.zip 
 ```
 
 ## 创建指定目录
@@ -47,7 +47,7 @@ vi /opt/software/consul-1.6.2/start.sh
 ## 给脚本赋权限
 
 ```shell
-chmod 777 start.sh
+chmod 777 /opt/software/consul-1.6.2/start.sh
 ```
 
 ## 新建开机启动脚本

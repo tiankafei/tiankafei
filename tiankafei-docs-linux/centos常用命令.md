@@ -40,6 +40,10 @@ vi /etc/hosts
 # ip 别名
 192.168.0.101 software
 192.168.0.102 appserver
+192.168.0.121 bigdata01
+192.168.0.122 bigdata02
+192.168.0.123 bigdata03
+192.168.0.124 bigdata04
 ```
 
 ## 设置免密登录
@@ -49,7 +53,7 @@ ssh localhost
 # 在本地机器用ssh-keygen 生成一个公私钥对
 ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
 # 把公钥加入authorized_keys中
-cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+ssh-copy-id root@bigdata01
 ```
 
 ## 关机命令
@@ -86,7 +90,6 @@ vi /etc/pam.d/login
 
 ```sh
 session    required     pam_limits.so
-session    required     /lib/security/pam_limits.so
 ```
 
 ## 关闭防火墙，开机不启动防火墙
