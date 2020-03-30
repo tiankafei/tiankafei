@@ -61,9 +61,10 @@
         <!--没有该配置，则src下的xml不会打进jar包中-->
         <resources>
             <resource>
-                <directory>src/main/java</directory>
+                <directory>src/main/*</directory>
                 <excludes>
                     <exclude>**/*.java</exclude>
+                    <exclude>**/*.scala</exclude>
                 </excludes>
             </resource>
             <resource>

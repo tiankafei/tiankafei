@@ -1,4 +1,4 @@
-package tiankafei.bigdata.scala
+package cn.tiankafei.bigdata.scala
 
 import java.util
 
