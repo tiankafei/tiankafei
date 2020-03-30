@@ -10,83 +10,83 @@ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
 
 ### 秘钥拷贝
 
-#### node01
+#### bigdata01
 
 ```shell
-scp ~/.ssh/id_dsa.pub node02:~/.ssh/node01.pub
-scp ~/.ssh/id_dsa.pub node03:~/.ssh/node01.pub
-scp ~/.ssh/id_dsa.pub node04:~/.ssh/node01.pub
+scp ~/.ssh/id_dsa.pub bigdata02:~/.ssh/bigdata01.pub
+scp ~/.ssh/id_dsa.pub bigdata03:~/.ssh/bigdata01.pub
+scp ~/.ssh/id_dsa.pub bigdata04:~/.ssh/bigdata01.pub
 ```
 
-#### node02
+#### bigdata02
 
 ```shell
-scp ~/.ssh/id_dsa.pub node01:~/.ssh/node02.pub
-scp ~/.ssh/id_dsa.pub node03:~/.ssh/node02.pub
-scp ~/.ssh/id_dsa.pub node04:~/.ssh/node02.pub
+scp ~/.ssh/id_dsa.pub bigdata01:~/.ssh/bigdata02.pub
+scp ~/.ssh/id_dsa.pub bigdata03:~/.ssh/bigdata02.pub
+scp ~/.ssh/id_dsa.pub bigdata04:~/.ssh/bigdata02.pub
 ```
 
-#### node03
+#### bigdata03
 
 ```shell
-scp ~/.ssh/id_dsa.pub node01:~/.ssh/node03.pub
-scp ~/.ssh/id_dsa.pub node02:~/.ssh/node03.pub
-scp ~/.ssh/id_dsa.pub node04:~/.ssh/node03.pub
+scp ~/.ssh/id_dsa.pub bigdata01:~/.ssh/bigdata03.pub
+scp ~/.ssh/id_dsa.pub bigdata02:~/.ssh/bigdata03.pub
+scp ~/.ssh/id_dsa.pub bigdata04:~/.ssh/bigdata03.pub
 ```
 
-#### node04
+#### bigdata04
 
 ```shell
-scp ~/.ssh/id_dsa.pub node01:~/.ssh/node04.pub
-scp ~/.ssh/id_dsa.pub node02:~/.ssh/node04.pub
-scp ~/.ssh/id_dsa.pub node03:~/.ssh/node04.pub
+scp ~/.ssh/id_dsa.pub bigdata01:~/.ssh/bigdata04.pub
+scp ~/.ssh/id_dsa.pub bigdata02:~/.ssh/bigdata04.pub
+scp ~/.ssh/id_dsa.pub bigdata03:~/.ssh/bigdata04.pub
 ```
 
 ### 增加认证
 
-#### node01
+#### bigdata01
 
 ```shell
-cat ~/.ssh/node02.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node03.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node04.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata02.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata03.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata04.pub >> ~/.ssh/authorized_keys
 ```
 
-#### node02
+#### bigdata02
 
 ```shell
-cat ~/.ssh/node01.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node03.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node04.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata01.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata03.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata04.pub >> ~/.ssh/authorized_keys
 ```
 
-#### node03
+#### bigdata03
 
 ```shell
-cat ~/.ssh/node01.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node02.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node04.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata01.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata02.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata04.pub >> ~/.ssh/authorized_keys
 ```
 
-#### node04
+#### bigdata04
 
 ```shell
-cat ~/.ssh/node01.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node02.pub >> ~/.ssh/authorized_keys
-cat ~/.ssh/node03.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata01.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata02.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/bigdata03.pub >> ~/.ssh/authorized_keys
 ```
 
 ## 安装jdk
 
-### node01上传jdk安装包
+### bigdata01上传jdk安装包
 
 ```shell
-scp ~/jdk-8u231-linux-x64.rpm node02:`pwd`
-scp ~/jdk-8u231-linux-x64.rpm node03:`pwd`
-scp ~/jdk-8u231-linux-x64.rpm node04:`pwd`
+scp ~/jdk-8u231-linux-x64.rpm bigdata02:`pwd`
+scp ~/jdk-8u231-linux-x64.rpm bigdata03:`pwd`
+scp ~/jdk-8u231-linux-x64.rpm bigdata04:`pwd`
 ```
 
-### 执行安装node01-node04
+### 执行安装bigdata01-bigdata04
 
 ```shell
 rpm -i jdk-8u231-linux-x64.rpm
@@ -129,29 +129,29 @@ source /etc/profile
 
 |        | NameNode | SecondaryNameNode | DataNode |
 | ------ | -------- | ----------------- | -------- |
-| node01 | 是       | 是                | 是       |
-| node02 |          |                   |          |
-| node03 |          |                   |          |
-| node04 |          |                   |          |
+| bigdata01 | 是       | 是                | 是       |
+| bigdata02 |          |                   |          |
+| bigdata03 |          |                   |          |
+| bigdata04 |          |                   |          |
 
 ### 环境安装
 
-#### node01上传安装包
+#### bigdata01上传安装包
 
 ```shell
 cd
-scp ~/hadoop-2.9.2.tar.gz node02:`pwd`
-scp ~/hadoop-2.9.2.tar.gz node03:`pwd`
-scp ~/hadoop-2.9.2.tar.gz node04:`pwd`
+scp ~/hadoop-2.8.3.tar.gz bigdata02:`pwd`
+scp ~/hadoop-2.8.3.tar.gz bigdata03:`pwd`
+scp ~/hadoop-2.8.3.tar.gz bigdata04:`pwd`
 
 ```
 
 #### 解压到指定目录
 
 ```shell
-mkdir -p /opt/bigdata/hadoop-2.9.2-local
-tar -zxvf /root/hadoop-2.9.2.tar.gz -C /opt/bigdata/hadoop-2.9.2-local
-cd /opt/bigdata/hadoop-2.9.2-local
+mkdir -p /opt/bigdata/hadoop-2.8.3-local
+tar -zxvf /root/hadoop-2.8.3.tar.gz -C /opt/bigdata/hadoop-2.8.3-local
+cd /opt/bigdata/hadoop-2.8.3-local
 ```
 
 #### 设置环境变量
@@ -164,7 +164,7 @@ cd /opt/bigdata/hadoop-2.9.2-local
 > export JAVA_HOME=/usr/java/default
 > export JRE_HOME=$JAVA_HOME/jre
 > export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
-> export HADOOP_HOME=/opt/bigdata/hadoop-2.9.2-local/hadoop-2.9.2
+> export HADOOP_HOME=/opt/bigdata/hadoop-2.8.3-local/hadoop-2.8.3
 > export PATH=$JAVA_HOME/bin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 > ```
 >
@@ -185,7 +185,7 @@ cd /opt/bigdata/hadoop-2.9.2-local
 > ```xml
 > 	<property>
 >    		<name>fs.defaultFS</name>
->    		<value>hdfs://node01:9000</value>
+>    		<value>hdfs://bigdata01:9000</value>
 >    	</property>
 > ```
 
@@ -210,7 +210,7 @@ cd /opt/bigdata/hadoop-2.9.2-local
 >    	<!-- SecondaryNameNode在哪个端口启动-->
 >    	<property>
 >    		<name>dfs.namenode.secondary.http-address</name>
->    		<value>node01:50090</value>
+>    		<value>bigdata01:50090</value>
 >    	</property>
 >    	<!-- SecondaryNameNode的路径-->
 >    	<property>
@@ -222,7 +222,7 @@ cd /opt/bigdata/hadoop-2.9.2-local
 > vi slaves
 >
 > ```shell
-> node01
+> bigdata01
 > ```
 
 ### 初始化
@@ -246,7 +246,7 @@ stop-dfs.sh
 ### 访问地址
 
 ```http
-http://node01:50070/
+http://bigdata01:50070/
 ```
 
 ### 遇到的问题
@@ -257,8 +257,8 @@ http://node01:50070/
 >
 > ```shell
 > wget http://dl.bintray.com/sequenceiq/sequenceiq-bin/hadoop-native-64-2.7.0.tar
-> tar -xvf hadoop-native-64-2.7.0.tar -C /opt/bigdata/hadoop-2.9.2-ha/hadoop-2.9.2/lib/native
-> tar -xvf hadoop-native-64-2.7.0.tar -C /opt/bigdata/hadoop-2.9.2-ha/hadoop-2.9.2/lib
+> tar -xvf hadoop-native-64-2.7.0.tar -C /opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3/lib/native
+> tar -xvf hadoop-native-64-2.7.0.tar -C /opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3/lib
 > # 环境变量
 > export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 > export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
@@ -279,19 +279,19 @@ hdfs dfs -ls /
 
 |        | NameNode | SecondaryNameNode | DataNode |
 | ------ | -------- | ----------------- | -------- |
-| node01 | 是       |                   |          |
-| node02 |          | 是                | 是       |
-| node03 |          |                   | 是       |
-| node04 |          |                   | 是       |
+| bigdata01 | 是       |                   |          |
+| bigdata02 |          | 是                | 是       |
+| bigdata03 |          |                   | 是       |
+| bigdata04 |          |                   | 是       |
 
 ### 环境安装
 
 #### 解压到指定目录
 
 ```shell
-mkdir -p /opt/bigdata/hadoop-2.9.2-full
-tar -zxvf /root/hadoop-2.9.2.tar.gz -C /opt/bigdata/hadoop-2.9.2-full
-cd /opt/bigdata/hadoop-2.9.2-full
+mkdir -p /opt/bigdata/hadoop-2.8.3-full
+tar -zxvf /root/hadoop-2.8.3.tar.gz -C /opt/bigdata/hadoop-2.8.3-full
+cd /opt/bigdata/hadoop-2.8.3-full
 ```
 
 #### 设置环境变量
@@ -304,7 +304,7 @@ cd /opt/bigdata/hadoop-2.9.2-full
 >export JAVA_HOME=/usr/java/default
 >export JRE_HOME=$JAVA_HOME/jre
 >export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
->export HADOOP_HOME=/opt/bigdata/hadoop-2.9.2-full/hadoop-2.9.2
+>export HADOOP_HOME=/opt/bigdata/hadoop-2.8.3-full/hadoop-2.8.3
 >export PATH=$JAVA_HOME/bin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 >```
 >
@@ -327,7 +327,7 @@ cd /opt/bigdata/hadoop-2.9.2-full
 > ```xml
 > 	<property>
 > 		<name>fs.defaultFS</name>
-> 		<value>hdfs://node01:9000</value>
+> 		<value>hdfs://bigdata01:9000</value>
 > 	</property>
 > ```
 >
@@ -352,7 +352,7 @@ cd /opt/bigdata/hadoop-2.9.2-full
 > 	<!-- SecondaryNameNode在哪个端口启动-->
 > 	<property>
 > 		<name>dfs.namenode.secondary.http-address</name>
-> 		<value>node02:50090</value>
+> 		<value>bigdata02:50090</value>
 > 	</property>
 > 	<!-- SecondaryNameNode的路径-->
 > 	<property>
@@ -364,18 +364,18 @@ cd /opt/bigdata/hadoop-2.9.2-full
 > vi slaves
 >
 > ```shell
-> node02
-> node03
-> node04
+> bigdata02
+> bigdata03
+> bigdata04
 > ```
 
 ### 配置分发
 
 ```shell
 cd $HADOOP_HOME/etc/hadoop
-scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves node02:`pwd`
-scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves node03:`pwd`
-scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves node04:`pwd`
+scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves bigdata02:`pwd`
+scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves bigdata03:`pwd`
+scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves bigdata04:`pwd`
 
 ```
 
@@ -400,7 +400,7 @@ stop-dfs.sh
 ### 访问地址
 
 ```http
-http://node01:50070/
+http://bigdata01:50070/
 ```
 
 ### 简单命令使用
@@ -418,10 +418,10 @@ hdfs dfs -ls /
 
 |        | NameNode | ZKFC | JournalNode | Zookeeper | DataNode |
 | ------ | -------- | ---- | ----------- | --------- | -------- |
-| node01 | 是       | 是   | 是          | 是        |          |
-| node02 | 是       | 是   | 是          | 是        | 是       |
-| node03 |          |      | 是          | 是        | 是       |
-| node04 |          |      |             | 是        | 是       |
+| bigdata01 | 是       | 是   | 是          | 是        |          |
+| bigdata02 | 是       | 是   | 是          | 是        | 是       |
+| bigdata03 |          |      | 是          | 是        | 是       |
+| bigdata04 |          |      |             | 是        | 是       |
 
 ### 环境安装
 
@@ -429,22 +429,22 @@ hdfs dfs -ls /
 
 ```shell
 cd
-scp -r ~/hadoop-2.9.2.tar.gz node02:`pwd`
-scp -r ~/hadoop-2.9.2.tar.gz node03:`pwd`
-scp -r ~/hadoop-2.9.2.tar.gz node04:`pwd`
+scp -r ~/hadoop-2.8.3.tar.gz bigdata02:`pwd`
+scp -r ~/hadoop-2.8.3.tar.gz bigdata03:`pwd`
+scp -r ~/hadoop-2.8.3.tar.gz bigdata04:`pwd`
 
-scp -r ~/zookeeper-3.4.9.tar.gz node02:`pwd`
-scp -r ~/zookeeper-3.4.9.tar.gz node03:`pwd`
-scp -r ~/zookeeper-3.4.9.tar.gz node04:`pwd`
+scp -r ~/zookeeper-3.4.9.tar.gz bigdata02:`pwd`
+scp -r ~/zookeeper-3.4.9.tar.gz bigdata03:`pwd`
+scp -r ~/zookeeper-3.4.9.tar.gz bigdata04:`pwd`
 
 ```
 
 #### hadoop解压到指定目录
 
 ```shell
-mkdir -p /opt/bigdata/hadoop-2.9.2-ha
-tar -zxvf /root/hadoop-2.9.2.tar.gz -C /opt/bigdata/hadoop-2.9.2-ha
-cd /opt/bigdata/hadoop-2.9.2-ha
+mkdir -p /opt/bigdata/hadoop-2.8.3-ha
+tar -zxvf /root/hadoop-2.8.3.tar.gz -C /opt/bigdata/hadoop-2.8.3-ha
+cd /opt/bigdata/hadoop-2.8.3-ha
 ```
 
 #### Zookeeper解压到指定目录
@@ -463,7 +463,7 @@ tar -zxvf /root/zookeeper-3.4.9.tar.gz -C /opt/bigdata
 > export JAVA_HOME=/usr/java/default
 > export JRE_HOME=$JAVA_HOME/jre
 > export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
-> export HADOOP_HOME=/opt/bigdata/hadoop-2.9.2-ha/hadoop-2.9.2
+> export HADOOP_HOME=/opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3
 > export ZOOKEEPER_HOME=/opt/bigdata/zookeeper-3.4.9
 > export PATH=$JAVA_HOME/bin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$ZOOKEEPER_HOME/bin
 > ```
@@ -490,24 +490,24 @@ vi zoo.cfg
 
 > ```shell
 >dataDir=/var/bigdata/hadoop/zk
-> server.1=node01:2888:3888
-> server.2=node02:2888:3888
-> server.3=node03:2888:3888
-> server.4=node04:2888:3888
+> server.1=bigdata01:2888:3888
+> server.2=bigdata02:2888:3888
+> server.3=bigdata03:2888:3888
+> server.4=bigdata04:2888:3888
 > ```
 
 #### 分发配置后的zookeeper
 
 ```shell
-scp -r zoo.cfg node02:`pwd`
-scp -r zoo.cfg node03:`pwd`
-scp -r zoo.cfg node04:`pwd`
+scp -r zoo.cfg bigdata02:`pwd`
+scp -r zoo.cfg bigdata03:`pwd`
+scp -r zoo.cfg bigdata04:`pwd`
 
 ```
 
 #### 配置myid
 
-##### node01
+##### bigdata01
 
 ```shell
 mkdir /var/bigdata/hadoop/zk
@@ -516,7 +516,7 @@ cat /var/bigdata/hadoop/zk/myid
 
 ```
 
-##### node02
+##### bigdata02
 
 ```shell
 mkdir /var/bigdata/hadoop/zk
@@ -525,7 +525,7 @@ cat /var/bigdata/hadoop/zk/myid
 
 ```
 
-##### node03
+##### bigdata03
 
 ```shell
 mkdir /var/bigdata/hadoop/zk
@@ -534,7 +534,7 @@ cat /var/bigdata/hadoop/zk/myid
 
 ```
 
-##### node04
+##### bigdata04
 
 ```shell
 mkdir /var/bigdata/hadoop/zk
@@ -545,7 +545,7 @@ cat /var/bigdata/hadoop/zk/myid
 
 ### 启动Zookeeper
 
-> node01-node04
+> bigdata01-bigdata04
 >
 > ```shell
 > zkServer.sh start
@@ -572,7 +572,7 @@ cat /var/bigdata/hadoop/zk/myid
 > 	</property>
 > 	<property>
 > 		<name>ha.zookeeper.quorum</name>
-> 		<value>node02:2181,node03:2181,node04:2181</value>
+> 		<value>bigdata02:2181,bigdata03:2181,bigdata04:2181</value>
 > 	</property>
 > ```
 > 
@@ -605,24 +605,24 @@ cat /var/bigdata/hadoop/zk/myid
 > 	</property>
 > 	<property>
 > 		<name>dfs.namenode.rpc-address.mycluster.nn1</name>
-> 		<value>node01:8020</value>
+> 		<value>bigdata01:8020</value>
 > 	</property>
 > 	<property>
 > 		<name>dfs.namenode.rpc-address.mycluster.nn2</name>
-> 		<value>node02:8020</value>
+> 		<value>bigdata02:8020</value>
 > 	</property>
 > 	<property>
 > 		<name>dfs.namenode.http-address.mycluster.nn1</name>
-> 		<value>node01:50070</value>
+> 		<value>bigdata01:50070</value>
 > 	</property>
 > 	<property>
 > 		<name>dfs.namenode.http-address.mycluster.nn2</name>
-> 		<value>node02:50070</value>
+> 		<value>bigdata02:50070</value>
 > 	</property>
 > 	<!-- 以下是JN在哪里启动，数据存那个磁盘-->
 > 	<property>
 > 		<name>dfs.namenode.shared.edits.dir</name>
-> 		<value>qjournal://node01:8485;node02:8485;node03:8485/mycluster</value>
+> 		<value>qjournal://bigdata01:8485;bigdata02:8485;bigdata03:8485/mycluster</value>
 > 	</property>
 > 	<property>
 > 		<name>dfs.journalnode.edits.dir</name>
@@ -652,18 +652,18 @@ cat /var/bigdata/hadoop/zk/myid
 > vi slaves
 >
 > ```shell
->node02
-> node03
-> node04
+>bigdata02
+> bigdata03
+> bigdata04
 > ```
 
 ### 配置分发
 
 ```shell
 cd $HADOOP_HOME/etc/hadoop
-scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves node02:`pwd`
-scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves node03:`pwd`
-scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves node04:`pwd`
+scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves bigdata02:`pwd`
+scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves bigdata03:`pwd`
+scp -r hadoop-env.sh core-site.xml hdfs-site.xml slaves bigdata04:`pwd`
 
 ```
 
@@ -689,7 +689,7 @@ hdfs namenode -bootstrapStandby
 hadoop-daemon.sh start namenode
 ```
 
-#### 在node01下格式化zk
+#### 在bigdata01下格式化zk
 
 ```shell
 hdfs zkfc -formatZK
@@ -709,7 +709,7 @@ stop-dfs.sh
 
 ### 再次启动时的启动顺序
 
-#### node01-04启动Zookeeper
+#### bigdata01-04启动Zookeeper
 
 ```shell
 zkServer.sh start
@@ -738,8 +738,8 @@ zkServer.sh stop
 ### 访问地址
 
 ```http
-http://node01:50070
-http://node02:50070
+http://bigdata01:50070
+http://bigdata02:50070
 ```
 
 ## Yarn安装
@@ -748,10 +748,10 @@ http://node02:50070
 
 |        | NameNode | ZKFC | JournalNode | Zookeeper | DataNode | ResourceManager | NodeManager |
 | ------ | -------- | ---- | ----------- | --------- | -------- | --------------- | ----------- |
-| node01 | 是       | 是   | 是          | 是        |          |                 |             |
-| node02 | 是       | 是   | 是          | 是        | 是       |                 | 是          |
-| node03 |          |      | 是          | 是        | 是       | 是              | 是          |
-| node04 |          |      |             | 是        | 是       | 是              | 是          |
+| bigdata01 | 是       | 是   | 是          | 是        |          |                 |             |
+| bigdata02 | 是       | 是   | 是          | 是        | 是       |                 | 是          |
+| bigdata03 |          |      | 是          | 是        | 是       | 是              | 是          |
+| bigdata04 |          |      |             | 是        | 是       | 是              | 是          |
 
 ### 修改配置
 
@@ -777,14 +777,13 @@ http://node02:50070
 >             <name>yarn.nodemanager.aux-services</name>
 >             <value>mapreduce_shuffle</value>
 >         </property>
-> 	
 > 	<property>
 > 		<name>yarn.resourcemanager.ha.enabled</name>
 > 		<value>true</value>
 > 	</property>
 > 	<property>
 > 		<name>yarn.resourcemanager.zk-address</name>
-> 		<value>node02:2181,node03:2181,node04:2181</value>
+> 		<value>bigdata01:2181,bigdata02:2181,bigdata03:2181,bigdata04:2181</value>
 > 	</property>
 > 	<property>
 > 		<name>yarn.resourcemanager.cluster-id</name>
@@ -796,28 +795,28 @@ http://node02:50070
 > 	</property>
 > 	<property>
 > 		<name>yarn.resourcemanager.hostname.rm1</name>
-> 		<value>node03</value>
+> 		<value>bigdata03</value>
 > 	</property>
 > 	<property>
 > 		<name>yarn.resourcemanager.hostname.rm2</name>
-> 		<value>node04</value>
+> 		<value>bigdata04</value>
 > 	</property>
 > 	<property>
 > 		<name>yarn.resourcemanager.webapp.address.rm1</name>
-> 		<value>node03:8088</value>
+> 		<value>bigdata03:8088</value>
 > 	</property>
 > 	<property>
 > 		<name>yarn.resourcemanager.webapp.address.rm2</name>
-> 		<value>node04:8088</value>
+> 		<value>bigdata04:8088</value>
 > 	</property>
 > ```
 
 ### 配置分发
 
 ```shell
-scp -r mapred-site.xml yarn-site.xml node02:`pwd`
-scp -r mapred-site.xml yarn-site.xml node03:`pwd`
-scp -r mapred-site.xml yarn-site.xml node04:`pwd`
+scp -r mapred-site.xml yarn-site.xml bigdata02:`pwd`
+scp -r mapred-site.xml yarn-site.xml bigdata03:`pwd`
+scp -r mapred-site.xml yarn-site.xml bigdata04:`pwd`
 
 ```
 
@@ -836,8 +835,8 @@ start-yarn.sh
 ### 访问地址
 
 ```http
-http://node03:8088/cluster
-http://node04:8088/cluster
+http://bigdata03:8088/cluster
+http://bigdata04:8088/cluster
 ```
 
 ## 高可用集群停止服务
@@ -882,18 +881,18 @@ start-yarn.sh
 
 |        | mysql | hive服务端 | hive客户端 |
 | ------ | ----- | ---------- | ---------- |
-| node01 |       | 是         | 是         |
-| node02 |       |            |            |
-| node03 |       |            |            |
-| node04 |       |            |            |
+| bigdata01 |       | 是         | 是         |
+| bigdata02 |       |            |            |
+| bigdata03 |       |            |            |
+| bigdata04 |       |            |            |
 
 #### 安装包分发
 
 ```shell
 cd
-scp -r ~/apache-hive-2.3.6-bin.tar.gz node02:`pwd`
-scp -r ~/apache-hive-2.3.6-bin.tar.gz node03:`pwd`
-scp -r ~/apache-hive-2.3.6-bin.tar.gz node04:`pwd`
+scp -r ~/apache-hive-2.3.6-bin.tar.gz bigdata02:`pwd`
+scp -r ~/apache-hive-2.3.6-bin.tar.gz bigdata03:`pwd`
+scp -r ~/apache-hive-2.3.6-bin.tar.gz bigdata04:`pwd`
 
 ```
 
@@ -916,7 +915,7 @@ mv apache-hive-2.3.6-bin/ apache-hive-2.3.6
 > export JAVA_HOME=/usr/java/default
 > export JRE_HOME=$JAVA_HOME/jre
 > export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
-> export HADOOP_HOME=/opt/bigdata/hadoop-2.9.2-ha/hadoop-2.9.2
+> export HADOOP_HOME=/opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3
 > export ZOOKEEPER_HOME=/opt/bigdata/zookeeper-3.4.9
 > export HIVE_HOME=/opt/bigdata/apache-hive-2.3.6
 > export PATH=$JAVA_HOME/bin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$ZOOKEEPER_HOME/bin:$HIVE_HOME/bin
@@ -967,9 +966,9 @@ mv apache-hive-2.3.6-bin/ apache-hive-2.3.6
 #### 分发配置
 
 ```shell
-scp -r hive-site.xml node02:`pwd`
-scp -r hive-site.xml node03:`pwd`
-scp -r hive-site.xml node04:`pwd`
+scp -r hive-site.xml bigdata02:`pwd`
+scp -r hive-site.xml bigdata03:`pwd`
+scp -r hive-site.xml bigdata04:`pwd`
 
 ```
 
@@ -977,13 +976,13 @@ scp -r hive-site.xml node04:`pwd`
 
 ```shell
 cd /opt/bigdata/apache-hive-2.3.6/lib
-scp -r mysql-connector-java-8.0.18.jar node02:`pwd`
-scp -r mysql-connector-java-8.0.18.jar node03:`pwd`
-scp -r mysql-connector-java-8.0.18.jar node04:`pwd`
+scp -r mysql-connector-java-8.0.18.jar bigdata02:`pwd`
+scp -r mysql-connector-java-8.0.18.jar bigdata03:`pwd`
+scp -r mysql-connector-java-8.0.18.jar bigdata04:`pwd`
 
 ```
 
-#### 在node01上初始化数据库
+#### 在bigdata01上初始化数据库
 
 ```shell
 schematool -dbType mysql -initSchema
@@ -999,19 +998,21 @@ hive
 
 |        | mysql | hive服务端 | hive客户端 |
 | ------ | ----- | ---------- | ---------- |
-| node01 |       |            |            |
-| node02 |       |            |            |
-| node03 |       | 是         |            |
-| node04 |       |            | 是         |
+| bigdata01 |       |            |            |
+| bigdata02 |       |            |            |
+| bigdata03 |       | 是         |            |
+| bigdata04 |       |            | 是         |
 
-#### node03配置
+#### bigdata02配置
 
+> cd $HIVE_HOME/conf
+>
 > vi hive-site.xml
 >
 > ```xml
 > 	<property>
 > 		<name>hive.metastore.warehouse.dir</name>
-> 		<value>/user/hive_remote/warehouse</value>
+> 		<value>/var/bigdata/hive/warehouse</value>
 > 	</property>
 > 	<property>
 > 		<name>javax.jdo.option.ConnectionURL</name>
@@ -1031,34 +1032,34 @@ hive
 > 	</property>
 > ```
 
-node04配置
+bigdata03-04配置
 
 > vi hive-site.xml
 >
 > ```xml
 > 	<property>
 > 		<name>hive.metastore.warehouse.dir</name>
-> 		<value>/user/hive_remote/warehouse</value>
+> 		<value>/var/bigdata/hive/warehouse</value>
 > 	</property>
 > 	<property>
 > 		<name>hive.metastore.uris</name>
-> 		<value>thrift://node03:9083</value>
+> 		<value>thrift://bigdata02:9083</value>
 > 	</property>
 > ```
 
-#### 在node03上初始化数据库
+#### 在bigdata02上初始化数据库
 
 ```shell
 schematool -dbType mysql -initSchema
 ```
 
-#### 在node03上阻塞式启动hive服务端
+#### 在bigdata02上阻塞式启动hive服务端
 
 ```shell
 hive --service metastore
 ```
 
-#### 在node04上启动Hive客户端
+#### 在bigdata03-04上启动Hive客户端
 
 ```shell
 hive
@@ -1066,7 +1067,7 @@ hive
 
 ### 解决root用户不能登录的问题，其他用户登录需要配置各种权限
 
-> cd /opt/bigdata/hadoop-2.9.2-ha/hadoop-2.9.2/etc/hadoop
+> cd /opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3/etc/hadoop
 >
 > vi core-site.xml
 >
@@ -1084,15 +1085,15 @@ hive
 > 配置完成之后重新启动集群，或者在namenode的节点上执行如下命令
 >
 > ```shell
-> hdfs dfsadmin -fs hdfs://node01:8020 -refreshSuperUserGroupsConfiguration
-> hdfs dfsadmin -fs hdfs://node02:8020 -refreshSuperUserGroupsConfiguration
+> hdfs dfsadmin -fs hdfs://bigdata01:8020 -refreshSuperUserGroupsConfiguration
+> hdfs dfsadmin -fs hdfs://bigdata02:8020 -refreshSuperUserGroupsConfiguration
 > ```
 
 ### 独立hiveserver2模式
 
-将现有的所有hive的服务停止，不需要修改任何服务，在node03机器上执行hiveserver2或者hive --service hiveserver2的命令，开始启动hiveserver2的服务，hiveserver2的服务也是一个阻塞式窗口，当开启服务后，会开启一个10000的端口，对外提供服务。
+将现有的所有hive的服务停止，不需要修改任何服务，在bigdata03机器上执行hiveserver2或者hive --service hiveserver2的命令，开始启动hiveserver2的服务，hiveserver2的服务也是一个阻塞式窗口，当开启服务后，会开启一个10000的端口，对外提供服务。
 
-#### node03上启动服务
+#### bigdata02上启动服务
 
 ```shell
 hiveserver2
@@ -1100,27 +1101,27 @@ hiveserver2
 hive --service hiveserver2
 ```
 
-#### node04上执行
+#### bigdata03-04上执行
 
 ```shell
 #1。直接在命令行执行
 # beeline -u jdbc:hive2://<host>:<port>/<db> -n name
-beeline -u jdbc:hive2://node03:10000/default -n root tiankafei
+beeline -u jdbc:hive2://bigdata02:10000/default -n root tiankafei
 #2。先通过beeline进入交互式窗口，然后再执行下面的命令
 beeline
 # !connect jdbc:hive2://<host>:<port>/<db> root 123
-!connect jdbc:hive2://node03:10000/default root tiankafei
+!connect jdbc:hive2://bigdata02:10000/default root tiankafei
 ```
 
 ### 共享metastore server的hiveserver2模式搭建
 
-#### 在node03上执行hive --service metastore启动元数据服务
+#### 在bigdata02上执行hive --service metastore启动元数据服务
 
 ```shell
 hive --service metastore
 ```
 
-#### 在node04上执行hiveserver2或者hive --service hiveserver2两个命令其中一个都可以
+#### 在bigdata03上执行hiveserver2或者hive --service hiveserver2两个命令其中一个都可以
 
 ```shell
 hiveserver2
@@ -1133,11 +1134,11 @@ hive --service hiveserver2
 ```shell
 #1。直接在命令行执行
 # beeline -u jdbc:hive2://<host>:<port>/<db> -n name
-beeline -u jdbc:hive2://node04:10000/default -n root tiankafei
+beeline -u jdbc:hive2://bigdata03:10000/default -n root tiankafei
 #2。先通过beeline进入交互式窗口，然后再执行下面的命令
 beeline
 # !connect jdbc:hive2://<host>:<port>/<db> root 123
-!connect jdbc:hive2://node04:10000/default root tiankafei
+!connect jdbc:hive2://bigdata03:10000/default root tiankafei
 ```
 
 

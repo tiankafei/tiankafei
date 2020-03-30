@@ -120,6 +120,8 @@
 > 大数据生态的技术文档列表，包含以下：
 >
 > [centos7安装配置Hadoop](tiankafei-docs-大数据/centos7安装配置Hadoop.md)
+>
+> [Hadoop程序运行的三种方式](tiankafei-docs-大数据/Hadoop程序运行的三种方式.md)
 
 # tiankafei-docs-架构
 

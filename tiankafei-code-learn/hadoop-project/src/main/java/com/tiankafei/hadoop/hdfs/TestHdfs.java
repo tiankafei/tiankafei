@@ -51,7 +51,7 @@ public class TestHdfs {
         FileInputStream fileInputStream = null;
         BufferedInputStream bufferedInputStream = null;
         try {
-            fileInputStream = new FileInputStream(new File("G:\\developmentTools\\linux-software\\hadoop-2.9.2.tar.gz"));
+            fileInputStream = new FileInputStream(new File("G:\\developmentTools\\bigdata\\hadoop-2.8.3.tar.gz"));
             bufferedInputStream = new BufferedInputStream(fileInputStream);
             FSDataOutputStream outputStream = fs.create(remoteFilePath);
 

@@ -9,6 +9,8 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 /**
+ * 打成jar包上传到集群环境上，在集群上通过java -jar 运行
+ *
  * @Author 魏双双
  * @Date 2019/12/13
  * @Version V1.0
