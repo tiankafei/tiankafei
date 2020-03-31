@@ -3,6 +3,9 @@ package cn.tiankafei.bigdata.spark.api
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
 
+/**
+ * RDD计算PV,UV
+ */
 object SparkSorted {
 
   def main(args: Array[String]): Unit = {
