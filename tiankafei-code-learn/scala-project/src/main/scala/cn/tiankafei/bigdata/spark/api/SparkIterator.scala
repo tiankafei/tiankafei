@@ -71,6 +71,41 @@ object SparkIterator {
       }
     )
     res03.foreach(println)
+    println("---------------------------------------------------")
+
+    val list = List("hello world","hello mashibing"," good idea", "hello spark", "hello1 world1","hello1 mashibing1"," good1 idea1", "hello1 spark1")
+
+    val data1 = sc.parallelize(list, 2)
+    val res04 = data1.mapPartitionsWithIndex(
+      (pindex, piter) => {
+
+        new Iterator[String] {
+          println(s"--------$pindex---con---mysql--------")
+
+          override def hasNext: Boolean = if(piter.hasNext) true else {close; false}
+
+          var concurrent:Iterator[String] = null
+
+          override def next(): String = {
+            val value = piter.next()
+            val array = value.split(" ")
+            val res = for (context <- array) yield {
+              println(s"--------$pindex---select---$context--------")
+
+              context + "selected"
+            }
+
+            value
+          }
+
+          def close: Unit = {
+            println(s"--------$pindex---close---mysql--------")
+          }
+        }
+      }
+    )
+    res04.foreach(println)
+
 
 
 
