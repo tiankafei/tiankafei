@@ -124,6 +124,8 @@
 > [Hadoop程序运行的三种方式](tiankafei-docs-大数据/Hadoop程序运行的三种方式.md)
 >
 > [scala学习笔记](tiankafei-docs-大数据/scala学习笔记.md)
+>
+> [centos7安装配置Spark](tiankafei-docs-大数据/centos7安装配置Spark.md)
 
 # tiankafei-docs-架构
 
