@@ -2,7 +2,7 @@ package cn.tiankafei.bigdata.spark.sql
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.types.{DataType, DataTypes, StructField, StructType}
-import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.{Dataset, Encoders, Row, SparkSession}
 
 import scala.beans.BeanProperty
 
@@ -36,37 +36,38 @@ object SparkSqlApi {
 
     session.catalog.listTables().show()
 
-    println("-------------------------------------------------")
+    println("------------------------person-------------------------")
 
-    val userSchema = Array("name string","age int", "sex int")
+    val userSchema = Array("name string", "age int", "sex int")
 
 
-    def toData(vv: (String, Int)) ={
+    def toData(vv: (String, Int)) = {
       userSchema(vv._2).split(" ")(1) match {
         case "string" => vv._1.toString
         case "int" => vv._1.toInt
       }
     }
 
-    val rddRow1 = rdd.map(_.split(" ")).map(_.zipWithIndex).map(x=>x.map(toData(_))).map(Row.fromSeq(_))
+    val rddRow1 = rdd.map(_.split(" ")).map(_.zipWithIndex).map(x => x.map(toData(_))).map(Row.fromSeq(_))
     rddRow1.foreach(println)
 
-    def toDataType(dataType:String): DataType ={
+    def toDataType(dataType: String): DataType = {
       dataType match {
         case "string" => DataTypes.StringType
         case "int" => DataTypes.IntegerType
       }
     }
-    val fields1 = userSchema.map(_.split(" ")).map( x=> StructField.apply(x(0), toDataType(x(1))))
+
+    val fields1 = userSchema.map(_.split(" ")).map(x => StructField.apply(x(0), toDataType(x(1))))
     val schema1 = StructType.apply(fields1)
     val dataFrame1 = session.createDataFrame(rddRow1, schema1)
     dataFrame1.show()
     dataFrame1.printSchema()
     dataFrame1.createTempView("person1")
     session.sql("select * from person1 t where t.name='zhangsan'").show()
-    println("-------------------------------------------------")
+    println("-----------------------------person1--------------------")
 
-    val p = new PersonTest()
+    val p = new SparkSqlApi()
     val beanRdd = rdd.map(line => {
       val strs = line.split(" ")
       p.setName(strs(0))
@@ -75,16 +76,37 @@ object SparkSqlApi {
       p
     })
 
-    val dataFrame2 = session.createDataFrame(beanRdd, classOf[PersonTest])
+    val dataFrame2 = session.createDataFrame(beanRdd, classOf[SparkSqlApi])
     dataFrame2.show()
     dataFrame2.printSchema()
     dataFrame2.createTempView("person2")
     session.sql("select * from person2 t where t.name='zhangsan'").show()
+    println("-----------------------------person2--------------------")
+
+
+    val data = session.read.textFile("data/person.txt")
+    import session.implicits._
+    val dataset = data.map(line => {
+      val strs = line.split(" ")
+      (strs(0), strs(1).toInt, strs(2).toInt)
+    })
+//    val dataset = data.map(line => {
+//      val strs = line.split(" ")
+//      (strs(0), strs(1).toInt, strs(2).toInt)
+//    })(Encoders.tuple(Encoders.STRING, Encoders.scalaInt, Encoders.scalaInt))
+    val dataFrame3 = dataset.toDF("name", "age", "sex")
+    dataFrame3.show()
+    dataFrame3.printSchema()
+    dataFrame3.createTempView("person3")
+    session.sql("select * from person3 t where t.name='zhangsan'").show()
+    println("-----------------------------person3--------------------")
+
+
   }
 
 }
 
-class PersonTest extends Serializable {
+class SparkSqlApi extends Serializable {
 
   @BeanProperty
   var name = ""
