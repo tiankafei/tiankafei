@@ -2,7 +2,7 @@ package cn.tiankafei.bigdata.spark.sql
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.types.{DataType, DataTypes, StructField, StructType}
-import org.apache.spark.sql.{Dataset, Encoders, Row, SparkSession}
+import org.apache.spark.sql.{Dataset, Encoders, Row, SaveMode, SparkSession}
 
 import scala.beans.BeanProperty
 
@@ -102,7 +102,39 @@ object SparkSqlApi {
     println("-----------------------------person3--------------------")
 
 
+    val dataList = List(
+      "hello world",
+      "hello world",
+      "hello mashibing",
+      "hello world",
+      "hello hive",
+      "hello sprak",
+      "hello world",
+      "hello hadoop",
+      "hello world",
+      "hello hbase",
+    ).toDF("line")
+    dataList.createTempView("words")
+    session.sql("select * from words").show()
+    println("-----------------------------words结果集--------------------")
+
+    val subTab = dataList.selectExpr("explode(split(line, ' ')) as word")
+    subTab.groupBy("word").count().show()
+    println("-----------------------------api方式wordcount--------------------")
+
+    session.sql("select word, count(1) from (select explode(split(line, ' ')) as word from words) group by word ").show()
+    println("-----------------------------sql方式wordcount--------------------")
+
+    val res = session.sql("select word, count(1) as count from (select explode(split(line, ' ')) as word from words) group by word ")
+    res.write.mode(SaveMode.Overwrite).parquet("./data/words")
+    println("-----------------------------测试结果集写文件--------------------")
+
+    val dataFrame4 = session.read.parquet("./data/words")
+    dataFrame4.show()
+    dataFrame4.printSchema()
+    println("-----------------------------测试结果集读文件--------------------")
   }
+
 
 }
 
