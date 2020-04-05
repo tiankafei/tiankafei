@@ -1,3 +1,2 @@
-**/**.crc
-**/**.parquet
-**/_SUCCESS
+metastore_db
+data/words
