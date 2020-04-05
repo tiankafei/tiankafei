@@ -25,3 +25,7 @@ hs_err_pid*
 **/.idea
 **/venv
 **/.iml
+tiankafei-code-learn/BigDataArchitect
+tiankafei-code-learn/hadoop
+tiankafei-code-learn/hive
+tiankafei-code-learn/spark
