@@ -15,7 +15,7 @@ object SparkStreamReceiverCustom {
 
   def main(args: Array[String]): Unit = {
     //local[n]  2个就够了：
-    val conf: SparkConf = new SparkConf().setAppName("Spark-Stream-Receiver").setMaster("local[8]")
+    val conf: SparkConf = new SparkConf().setAppName("Spark-Stream-Receiver-Custom").setMaster("local[8]")
 
     // 1个给receiverjob的task，
     // 另一个给beatch计算的job（只不过如果batch比较大，你期望n>2,因为多出来的线程可以跑并行的batch@job@task）
