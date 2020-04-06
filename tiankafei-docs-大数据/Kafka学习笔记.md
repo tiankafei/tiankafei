@@ -828,23 +828,202 @@ while(true){
 
 ![高水位数据丢失的问题](./images/高水位数据丢失的问题.png)
 
-
+> 当A带着自己的LEO=0进行Fetch时，Leader在返回消息m2时，会更新自己的HW=2。当A收到消息写入本地log后，还未更新HW之前发生了宕机，重启之后B会根据自己原本的HW截断消息m2，之后再次拿着LEO=0进行Fetch时，倘若此时B发生了宕机，那么A就变成了Leader，然后此时A的HW=1，消息m2便永久丢失了。
+>
+> 图解![高水位同步存在数据丢失的问题](./images/高水位同步存在数据丢失的问题.jpg)
 
 #### 高水位同步数据不一致的问题
 
 ![高水位数据不一致的问题](E:\gits\tiankafei\tiankafei-docs-大数据\images\高水位数据不一致的问题.png)
 
+> 当A带着自己的LEO=0进行Fetch时，Leader在返回消息m2时，会更新自己的HW=1。当A收到消息写入本地log后，还未更新HW之前，A和B都发生了宕机，然后将两者进行重启，假设A比B先重启完成，自然A就变成了Leader，根据HW=0把消息m2进行截断，假设此时生产者发送了一条m3的消息，A收到之后，更新了自己的HW=1，当B重启完成之后，拿着LEO=1进行Fetch，发现和Leader一样，所以就不做任何操作，此时LEO=1的位置A是m3，B是m2发生了不一致。
+>
+> 图解![高水位同步数据不一致的问题](./images/高水位同步数据不一致的问题.jpg)
+
+#### 规避数据丢失且不一致风险
+
+​		造成上述两个问题的根本原因在于HW值被用于衡量副本备份的成功与否以及在出现failture时作为日志截断的依据，但HW值的更新是异步延迟的，特别是需要额外的FETCH请求处理流程才能更新，故这中间发生的任何崩溃都可能导致HW值的过期。鉴于这些原因，Kafka 0.11引入了leader  epoch来取代HW值。Leader端多开辟一段内存区域专门保存leader的epoch信息，这样即使出现上面的两个场景也能很好地规避这些问题。
+
+​		所谓leader epoch实际上是一对值：（epoch，offset）。epoch表示leader的版本号，从0开始，当leader变更过1次时epoch就会+1，而offset则对应于该epoch版本的leader写入第一条消息的位移。因此假设有两对值：
+
+（0，0）
+
+（1，120）
+
+- 表示第一个leader从位移0开始写入消息；共写了120条[0, 119]；而第二个leader版本号是1，从位移120处开始写入消息。
+- leader broker中会保存这样的一个缓存，并定期地写入到一个checkpoint文件中。
+
+1. follower变成Leader（新开辟一条记录）
+
+   当Follower成为Leader时，它首先将新的Leader Epoch和副本的LEO添加到Leader Epoch Sequence序列文件的末尾并刷新数据。给Leader产生的每个新消息集都带有新的“Leader Epoch”标记。
+
+2. Leader变成Follower（更新）
+
+   如果需要需要从本地的Leader Epoch Sequence加载数据，将数据存储在内存中，给相应的分区的Leader发送epoch 请求，该请求包含最新的EpochID,StartOffset信息.Leader接收到信息以后返回该EpochID所对应的LastOffset信息。该信息可能是最新EpochID的StartOffset或者是当前EpochID的Log End Offset信息
+
+#### 数据丢失的问题解决
+
+![数据丢失的问题解决](./images/数据丢失的问题解决.png)
+
+> 
+
+#### 数据不一致的问题解决
+
+![数据不一致的问题解决](./images/数据不一致的问题解决.png)
+
 > 
 
 ### Kafka监控Eagle的使用
 
+#### 解压到指定目录
 
+```shell
+tar -zvxf /root/kafka-eagle-bin-1.4.5.tar.gz -C /opt/bigdata
+cd /opt/bigdata/kafka-eagle-bin-1.4.5
+tar -zvxf kafka-eagle-web-1.4.5-bin.tar.gz
+mkdir -p /opt/bigdata/kafka-eagle
+mv kafka-eagle-web-1.4.5/* /opt/bigdata/kafka-eagle
+rm -rf /opt/bigdata/kafka-eagle-bin-1.4.5/
+cd /opt/bigdata/kafka-eagle
+```
+
+#### 设置环境变量
+
+```shell
+vim /etc/profile
+```
+
+```shell
+export KE_HOME=/opt/bigdata/kafka-eagle
+export PATH=$PATH:$KE_HOME/bin
+```
+
+```shell
+source /etc/profile
+```
+
+#### 执行配置
+
+cd $KE_HOME/conf
+
+```shell
+vim system-config.properties
+```
+
+```properties
+######################################
+# multi zookeeper & kafka cluster list
+######################################
+kafka.eagle.zk.cluster.alias=cluster1
+cluster1.zk.list=bigdata01:2181,bigdata02:2181,bigdata03:2181,bigdata04:2181/kafka-ha
+#cluster2.zk.list=xdn10:2181,xdn11:2181,xdn12:2181
+
+######################################
+# broker size online list
+######################################
+cluster1.kafka.eagle.broker.size=20
+
+######################################
+# zk client thread limit
+######################################
+kafka.zk.limit.size=25
+
+######################################
+# kafka eagle webui port
+######################################
+kafka.eagle.webui.port=8048
+
+######################################
+# kafka offset storage
+######################################
+cluster1.kafka.eagle.offset.storage=kafka-ha
+#cluster2.kafka.eagle.offset.storage=zk
+
+######################################
+# kafka metrics, 30 days by default
+######################################
+kafka.eagle.metrics.charts=true
+kafka.eagle.metrics.retain=30
+
+
+######################################
+# kafka sql topic records max
+######################################
+kafka.eagle.sql.topic.records.max=5000
+kafka.eagle.sql.fix.error=false
+
+######################################
+# delete kafka topic token
+######################################
+kafka.eagle.topic.token=tiankafei
+
+######################################
+# kafka sasl authenticate
+######################################
+cluster1.kafka.eagle.sasl.enable=false
+cluster1.kafka.eagle.sasl.protocol=SASL_PLAINTEXT
+cluster1.kafka.eagle.sasl.mechanism=SCRAM-SHA-256
+cluster1.kafka.eagle.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="kafka" password="kafka-eagle";
+cluster1.kafka.eagle.sasl.client.id=
+cluster1.kafka.eagle.sasl.cgroup.enable=false
+cluster1.kafka.eagle.sasl.cgroup.topics=
+
+#cluster2.kafka.eagle.sasl.enable=false
+#cluster2.kafka.eagle.sasl.protocol=SASL_PLAINTEXT
+#cluster2.kafka.eagle.sasl.mechanism=PLAIN
+#cluster2.kafka.eagle.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka" password="kafka-eagle";
+#cluster2.kafka.eagle.sasl.client.id=
+#cluster2.kafka.eagle.sasl.cgroup.enable=false
+#cluster2.kafka.eagle.sasl.cgroup.topics=
+
+######################################
+# kafka sqlite jdbc driver address
+######################################
+kafka.eagle.driver=org.sqlite.JDBC
+kafka.eagle.url=jdbc:sqlite:/opt/bigdata/kafka-eagle/db/ke.db
+kafka.eagle.username=root
+kafka.eagle.password=tiankafei
+
+######################################
+# kafka mysql jdbc driver address
+######################################
+#kafka.eagle.driver=com.mysql.jdbc.Driver
+#kafka.eagle.url=jdbc:mysql://127.0.0.1:3306/ke?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+#kafka.eagle.username=root
+#kafka.eagle.password=123456
+```
+
+cd $KAFKA_HOME/bin
+
+上面配置文件这里设置为true之后，kafka的启动文件需要更改一下配置
+
+kafka.eagle.metrics.charts=true
+
+```shell
+vim kafka-server-start.sh
+```
+
+```shell
+if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
+    export KAFKA_HEAP_OPTS="-Xmx1G -Xms1G"
+    export JMX_PORT="7788"
+fi
+```
+
+#### 访问地址
+
+```http
+http://192.168.0.121:8048/ke/
+
+默认用户密码
+admin
+123456
+```
 
 ### Kafka与Flume的集成
 
 
 
 ### Springboot集成Kafka
-
 
 

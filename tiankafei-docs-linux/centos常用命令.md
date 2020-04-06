@@ -329,3 +329,20 @@ nameserver 223.5.5.5
 nameserver 223.6.6.6
 ```
 
+## 卸载指定安装包
+
+### 查看已安装的包
+
+```shell
+rpm -qa | grep xxx
+```
+
+### 执行卸载
+
+```shell
+rpm -e `rpm -qa | grep xxx`
+rpm -e xxx
+```
+
+
+
