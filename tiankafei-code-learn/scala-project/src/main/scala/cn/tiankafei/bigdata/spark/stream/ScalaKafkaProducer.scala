@@ -5,7 +5,7 @@ import java.util.Properties
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 import org.apache.kafka.common.serialization.StringSerializer
 
-object SparkStreramProducer {
+object ScalaKafkaProducer {
 
   def main(args: Array[String]): Unit = {
     val prop = new Properties()

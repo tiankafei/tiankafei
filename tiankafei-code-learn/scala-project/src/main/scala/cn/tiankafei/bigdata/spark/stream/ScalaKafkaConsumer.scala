@@ -9,7 +9,7 @@ import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRebalanceListe
 import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringDeserializer
 
-object SparkStreramConsumer {
+object ScalaKafkaConsumer {
 
   def main(args: Array[String]): Unit = {
     val prop = new Properties()
