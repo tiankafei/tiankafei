@@ -28,7 +28,7 @@ object ScalaKafkaProducer {
         val offset = metadata.offset()
         println(s"key:$key\tvalue:$value\tpatition$partition\toffset:$offset")
       }
-//      Thread.sleep(1000)
+      Thread.sleep(1000)
     }
 
 
