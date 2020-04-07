@@ -191,4 +191,36 @@ public class BaseTest {
         return 0;
     }
 
+    @Test
+    public void test1(){
+        System.out.println(get(10001));
+        System.out.println(get(10002));
+        System.out.println(get(20001));
+        System.out.println(get(20002));
+        System.out.println(get(20003));
+        System.out.println(get(20004));
+        System.out.println(get(20005));
+        System.out.println(get(30001));
+        System.out.println(get(30002));
+        System.out.println(get(30003));
+        System.out.println(get(30004));
+        System.out.println(get(30005));
+        System.out.println(get(40001));
+        System.out.println(get(50001));
+        System.out.println(get(50002));
+        System.out.println(get(50003));
+        System.out.println(get(50004));
+        System.out.println(get(60001));
+        System.out.println(get(60002));
+        System.out.println(get(60003));
+        System.out.println(get(60004));
+
+
+
+    }
+
+    private int get(int value){
+        return value - value % 10000;
+    }
+
 }
