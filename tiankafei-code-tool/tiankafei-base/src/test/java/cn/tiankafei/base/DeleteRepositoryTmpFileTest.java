@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class DeleteRepositoryTmpFileTest {
 
@@ -37,24 +38,24 @@ public class DeleteRepositoryTmpFileTest {
         File file = new File(directoryPath);
         if (file.exists()) {
             File[] files = file.listFiles();
-            for (int i = 0, lem = files.length; i < lem; i++) {
-                if (files[i].isDirectory()) {
-                    String directoryName = files[i].getName();
+            Arrays.stream(files).forEach((fi) -> {
+                if (fi.isDirectory()) {
+                    String directoryName = fi.getName();
                     if (directoryName.contains("unknown") || directoryName.contains("${")) {
-                        FileUtil.deleteRecursiveFile(files[i].getPath());
-                        System.out.println(files[i].getPath());
+                        FileUtil.deleteRecursiveFile(fi.getPath());
+                        System.out.println(fi.getPath());
                     } else {
-                        deleteRecursiveFile(files[i].getPath());
+                        deleteRecursiveFile(fi.getPath());
                     }
-                } else if (files[i].isFile()) {
-                    if (files[i].getName().endsWith(".lastUpdated")
-                            || files[i].getName().endsWith(".sha1-in-progress")
-                            || files[i].getName().endsWith("-lastUpdated.properties")) {
-                        System.out.println(files[i].getPath());
-                        files[i].delete();
+                } else if (fi.isFile()) {
+                    if (fi.getName().endsWith(".lastUpdated")
+                            || fi.getName().endsWith(".sha1-in-progress")
+                            || fi.getName().endsWith("-lastUpdated.properties")) {
+                        System.out.println(fi.getPath());
+                        fi.delete();
                     }
                 }
-            }
+            });
         }
     }
 
