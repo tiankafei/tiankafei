@@ -1,4 +1,4 @@
-# MySQL调优
+# 使用比主库更好的硬件设备作为slave，mysql压力小，延迟自然会变小。MySQL调优
 
 > 命令行连接mysql命令：
 >
@@ -2099,9 +2099,208 @@ innodb_file_per_table =
 
 ### 主从复制
 
+#### 为什么需要主从复制
+
+> 1. 在业务复杂的系统中，有这么一个情景，有一句sql语句需要锁表，导致暂时不能使用读的服务，那么就很影响运行中的业务，使用主从复制，让主库负责写，从库负责读，这样，即使主库出现了锁表的情景，通过读从库也可以保证业务的正常运作。
+> 2. 做数据的热备
+> 3. 架构的扩展。业务量越来越大，I/O访问频率过高，单机无法满足，此时做多库的存储，降低磁盘I/O访问的频率，提高单个机器的I/O性能。
+
+#### 什么是mysql的主从复制
+
+> MySQL 主从复制是指数据可以从一个MySQL数据库服务器主节点复制到一个或多个从节点。MySQL 默认采用异步复制方式，这样从节点不用一直访问主服务器来更新自己的数据，数据的更新可以在远程连接上进行，从节点可以复制主数据库中的所有数据库或者特定的数据库，或者特定的表。
+
+#### mysql复制原理
+
+##### 原理
+
+1. master服务器将数据的改变记录二进制binlog日志，当master上的数据发生改变时，则将其改变写入二进制日志中。
+2. slave服务器会在一定时间间隔内对master二进制日志进行探测其是否发生改变，如果发生改变，则开始一个I/O Thread请求master二进制事件。
+3. 同时主节点为每个I/O线程启动一个dump线程，用于向其发送二进制事件，并保存至从节点本地的中继日志中，从节点将启动SQL线程从中继日志中读取二进制日志，在本地重放，使得其数据和主节点的保持一致，最后I/O Thread和SQLThread将进入睡眠状态，等待下一次被唤醒。
+
+##### 也就是说
+
+1. 从库会生成两个线程,一个I/O线程,一个SQL线程;
+2. I/O线程会去请求主库的binlog,并将得到的binlog写到本地的relay-log(中继日志)文件中;
+3. 主库会生成一个log dump线程,用来给从库I/O线程传binlog;
+4. SQL线程,会读取relay log文件中的日志,并解析成sql语句逐一执行;
+
+##### 需要注意
+
+1. master将操作语句记录到binlog日志中，然后授予slave远程连接的权限（master一定要开启binlog二进制日志功能；通常为了数据安全考虑，slave也开启binlog功能）。
+2. slave开启两个线程：IO线程和SQL线程。其中：IO线程负责读取master的binlog内容到中继日志relay log里；SQL线程负责从relay log日志里读出binlog内容，并更新到slave的数据库里，这样就能保证slave数据和master数据保持一致了。
+3. Mysql复制至少需要两个Mysql的服务，当然Mysql服务可以分布在不同的服务器上，也可以在一台服务器上启动多个服务。
+4. Mysql复制最好确保master和slave服务器上的Mysql版本相同（如果不能满足版本一致，那么要保证master主节点的版本低于slave从节点的版本）。
+5. master和slave两节点间时间需同步。
+
+##### 具体步骤
+
+1. 从库通过手工执行change  master to 语句连接主库，提供了连接的用户一切条件（user 、password、port、ip），并且让从库知道，二进制日志的起点位置（file名 position 号）；    start  slave
+2. 从库的IO线程和主库的dump线程建立连接。
+3. 从库根据change  master  to 语句提供的file名和position号，IO线程向主库发起binlog的请求。
+4. 主库dump线程根据从库的请求，将本地binlog以events的方式发给从库IO线程。
+5. 从库IO线程接收binlog  events，并存放到本地relay-log中，传送过来的信息，会记录到master.info中
+6. 从库SQL线程应用relay-log，并且把应用过的记录到relay-log.info中，默认情况下，已经应用过的relay 会自动被清理purge
+
+#### mysql主从形式
+
+##### 一主一从
+
+![MySQL一主一从](./images/MySQL一主一从.png)
+
+##### 主主复制
+
+![MySQL主主复制](./images/MySQL主主复制.png)
+
+##### 一主多从
+
+![MySQL一主多从](./images/MySQL一主多从.png)
+
+##### 多主一从
+
+![MySQL多主一从](./images/MySQL多主一从.png)
+
+##### 联级复制
+
+![MySQL联机复制](./images/MySQL联机复制.png)
+
+#### mysql主从同步延时分析
+
+> mysql的主从复制都是单线程的操作，主库对所有DDL和DML产生的日志写进binlog，由于binlog是顺序写，所以效率很高，slave的sql thread线程将主库的DDL和DML操作事件在slave中重放。DML和DDL的IO操作是随机的，不是顺序，所以成本要高很多，另一方面，由于sql thread也是单线程的，当主库的并发较高时，产生的DML数量超过slave的SQL thread所能处理的速度，或者当slave中有大型query语句产生了锁等待，那么延时就产生了。
+
+##### 解决方案
+
+1. 业务的持久化层的实现采用分库架构，mysql服务可平行扩展，分散压力。
+2. 单个库读写分离，一主多从，主写从读，分散压力。这样从库压力比主库高，保护主库。
+3. 服务的基础架构在业务和mysql之间加入memcache或者redis的cache层。降低mysql的读压力。
+4. 不同业务的mysql物理上放在不同机器，分散压力。
+5. 使用比主库更好的硬件设备作为slave，mysql压力小，延迟自然会变小。
+6. 使用更加强劲的硬件设备
+
+##### MySQL5.6 基于schema的并行复制
+
+> ```properties
+> # 即可有4个SQL Thread（coordinator线程）来进行并行复制，其状态为：Waiting for an evant from Coordinator
+> slave_parallel_workers = 4
+> ```
+
+MySQL从5.6开始有了SQL Thread多个的概念，可以并发还原数据，即并行复制技术。其并行只是基于Schema的，也就是基于库的。如果数据库实例中存在多个Schema，这样设置对于Slave复制的速度可以有比较大的提升。通常情况下单库多表是更常见的一种情形，
+
+那基于库的并发就没有卵用。其核心思想是：不同 schema 下的表并发提交时的数据不会相互影响，即 slave 节点可以用对 relay log 中不同的 schema 各分配一个类似 SQL 功能的线程，来重放 relay log 中主库已经提交的事务，保持数据与主库一致。
+
+##### MySQL5.7 基于group commit的并行复制
+
+> ```properties
+> # 即可有4个SQL Thread（coordinator线程）来进行并行复制
+> slave_parallel_workers=4
+> # 变量slave-parallel-type可以有两个值：DATABASE 默认值，基于库的并行复制方式；LOGICAL_CLOCK：基于组提交的并行复制方式
+> slave_parallel_type=LOGICAL_CLOCK
+> ```
+
+一个组提交的事务都是可以并行回放，因为这些事务都已进入到事务的prepare阶段，则说明事务之间没有任何冲突（否则就不可能提交）。
+
+为了兼容MySQL 5.6基于库的并行复制，5.7引入了新的变量slave-parallel-type，其可以配置的值有：
+
+1. DATABASE：默认值，基于库的并行复制方式
+2. LOGICAL_CLOCK：基于组提交的并行复制方式
+
+由于MTS机制基于组提交实现，简单来说在主上是怎样并行执行的，从服务器上就怎么回放。这里存在一个可能，即若主服务器的并行度不够，则从机的并行机制效果就会大打折扣。
+
+##### MySQL8.0 基于write-set的并行复制
+
+> ```properties
+> # 用于控制如何决定事务的依赖关系。该值有三个选项：默认的 COMMIT_ORDERE 表示继续使用5.7中的基于组提交的方式决定事务的依赖关系；WRITESET 表示使用写集合来决定事务的依赖关系；还有一个选项 WRITESET_SESSION 表示使用 WriteSet 来决定事务的依赖关系，但是同一个Session内的事务不会有相同的 last_committed 值。
+> binlog_transaction_depandency_tracking = COMMIT_ORDERE
+> # 取值范围为 1-1000000 ，初始默认值为 25000
+> binlog_transaction_dependency_history_size = 
+> # 控制检测事务依赖关系时采用的HASH算法，有三个取值 OFF| XXHASH64 | MURMUR32
+> # 如果 binlog_transaction_depandency_tracking 取值为 WRITESET 或 WRITESET_SESSION, 那么该值取值不能为OFF，且不能变更。
+> transaction_write_set_extraction = 
+> ```
+
+​		WriteSet 是通过检测两个事务是否更新了相同的记录来判断事务能否并行回放的，因此需要在运行时保存已经提交的事务信息以记录历史事务更新了哪些行。记录历史事务的参数为 binlog_transaction_dependency_history_size. 该值越大可以记录更多的已经提交的事务信息，不过需要注意的是，这个值并非指事务大小，而是指追踪的事务更新信息的数量。在开启了 WRITESET 或 WRITESET_SESSION 后，MySQL 按以下的方式标识并记录事务的更新。
+
+- 如果事务当前更新的行有主键（Primary Key），则将 HASH(DB名，TABLE名，KEY名称，KEY_VALUE1, KEY_VALUE2,.....) 加入到当前事务的 vector write_set 中。
+- 如果事务当前更新的行有非空的唯一键 （Unique Key Not NULL）， 同样将 HASH(DB名, TABLE名，KEY名, KEY_VALUE1, ....)加入到当前事务的 write_set 中。
+- 如果事务更新的行有外键约束( FOREIGN KEY )且不为空，则将该 外键信息与VALUE 的HASH加到当前事务的 write_set 中
+- 如果事务当前更新的表的主键是其他某个表的外键，并设置当前事务 has_related_foreign_key = true
+- 如果事务更新了某一行且没有任何数据被加入到 write_set 中，则标记当前事务 has_missing_key = true
+
+​		在执行冲突检测的时候，先会检查 has_related_foreign_key 和 has_missing_key ， 如果为true， 则退到 COMMIT_ORDER 模式。否则，会依照事务的 write_set 中的HASH值与已提交的事务的 write_set 进行比对，如果没有冲突，则当前事务与最后一个已提交的事务共享相同的 last_commited, 否则将从全局已提交的 write_set 中删除那个冲突的事务之前提交的所有write_set，并退化到 COMMIT_ORDER 计算last_committed 。 每次计算完事务的 last_committed 值以后，检测当前全局已提交事务的 write_set 是否已经超过了 binlog_transaction_dependency_history_size 设置的值，如果超过，则清空已提交事务的全局 write_set。
+
+​		从检测条件上看，该特性依赖于 主键和唯一索引，如果事务涉及的表中没有主键且没有唯一非空索引，那么将无法从此特性中获得性能的提升。除此之外，还需要将 Binlog 格式设置为 Row 格式。
+
+##### 总结
+
+​		从 MySQL Hight Availability 的测试中可以看到，开启了基于 WriteSet 的事务依赖后，对Slave上RelayLog回放速度提升显著。Slave上的 RelayLog 回放速度将不再依赖于 Master 上提交时的并行程度，使得Slave上可以发挥其最大的吞吐能力， 这个特性在Slave上复制停止一段时间后恢复复制时尤其有效。
+
+​		这个特性使得 Slave 上可能拥有比 Master 上更大的吞吐量，同时可能在保证事务依赖关系的情况下，在 Slave 上产生 Master 上没有产生过的提交场景，事务的提交顺序可能会在 Slave 上发生改变。 虽然在5.7 的并行复制中就可能发生这种情况，不过在8.0中由于 Slave 上更高的并发能力，会使该场景更加常见。 通常情况下这不是什么大问题，不过如果在 Slave 上做基于 Binlog 的增量备份，可能就需要保证在 Slave 上与Master 上一致的提交顺序，这种情况下可以开启 `slave_preserve_commit_order` 这是一个 5.7 就引入的参数，可以保证 Slave 上并行回放的线程按 RelayLog 中写入的顺序 Commit。
+
 ### 读写分离
 
-### 分库分表
+> MySQL读写分离基本原理是让master数据库处理写操作，slave数据库处理读操作。master将写操作的变更同步到各个slave节点。
 
-## mysql事务传播
+#### MySQL读写分离能提高系统性能的原因
+
+1. 物理服务器增加，机器处理能力提升。拿硬件换性能。
+2. 主从只负责各自的读和写，极大程度缓解X锁和S锁争用。
+3. slave可以配置myiasm引擎，提升查询性能以及节约系统开销。
+4. master直接写是并发的，slave通过主库发送来的binlog恢复数据是异步。
+5. slave可以单独设置一些参数来提升其读的性能。
+6. 增加冗余，提高可用性。
+
+#### MySQL读写分离中间代理层
+
+1. mysql-proxy
+2. Amoeba
+3. MyCat
+
+## MySQL事务
+
+### 事务的处理
+
+1. 正常的事务提交(commit)或者回滚(rollback)
+2. 自动提交，但是一般情况下要将自动提交进行关闭，影响效率
+3. 用户关闭会话，会自动提交事务
+4. 系统崩溃或者断电的时候，自动回滚事务
+5. 当一次执行多条sql（同时包含DML语句和DDL语句）时，当在执行DDL语句之前，会自动提交事务，所以当遇到这种情况时，应当把DDL语句放在最后执行。
+6. sql分类：
+   1. DML 数据操控:如select,insert,update,delete
+   2. DCL 数据控制:如权限控制，grant,revoke
+   3. DDL 数据定义:如create,alter,drop等表定义语句
+
+### 事务的基本特性
+
+> 事务的基本特性<font color="red">ACID</font>：
+>
+> 1. **原子性（Atomicity）**：一个原子事务要么完整执行，要么干脆不执行。这意味着，工作单元中的每项任务都必须正确执行。如果有任一任务执行失败，则整个工作单元或事务就会被终止。即此前对数据所作的任何修改都将被撤销。如果所有任务都被成功执行，事务就会被提交，即对数据所作的修改将会是永久性的。
+> 2. **一致性（Consistency）**：一致性代表了底层数据存储的完整性。它必须由事务系统和应用开发人员共同来保证。事务系统通过保证事务的原子性，隔离性和持久性来满足这一要求; 应用开发人员则需要保证数据库有适当的约束(主键，引用完整性等)，并且工作单元中所实现的业务逻辑不会导致数据的不一致(即，数据预期所表达的现实业务情况不相一致)。例如，在一次转账过程中，从某一账户中扣除的金额必须与另一账户中存入的金额相等。支付宝账号100 你读到余额要取，有人向你转100 但是事物没提交（这时候你读到的余额应该是100，而不是200） 这种就是一致性。
+> 3. **隔离性（Isolation）**：隔离性意味着事务必须在不干扰其他进程或事务的前提下独立执行。换言之，在事务或工作单元执行完毕之前，其所访问的数据不能受系统其他部分的影响。
+> 4. **持久性（Durability）**：持久性表示在某个事务的执行过程中，对数据所作的所有改动都必须在事务成功结束前保存至某种物理存储设备。这样可以保证，所作的修改在任何系统瘫痪时不至于丢失。
+
+### 隔离级别
+
+> 1. **脏读**
+>
+> **所谓脏读，就是指事务A读到了事务B还没有提交的数据**，比如银行取钱，事务A开启事务，此时切换到事务B，事务B开启事务-->取走100元，此时切换回事务A，事务A读取的肯定是数据库里面的原始数据，因为事务B取走了100块钱，并没有提交，数据库里面的账务余额肯定还是原始余额，这就是脏读。
+>
+> 2. **不可重复读**
+>
+> 所谓不可重复读，就是指**在一个事务里面读取了两次某个数据，读出来的数据不一致**。还是以银行取钱为例，事务A开启事务-->查出银行卡余额为1000元，此时切换到事务B事务B开启事务-->事务B取走100元-->提交，数据库里面余额变为900元，此时切换回事务A，事务A再查一次查出账户余额为900元，这样对事务A而言，在同一个事务内两次读取账户余额数据不一致，这就是不可重复读。
+>
+> 3. **幻读**
+>
+> 所谓幻读，就是指**在一个事务里面的操作中发现了未被操作的数据**。比如学生信息，事务A开启事务-->修改所有学生当天签到状况为false，此时切换到事务B，事务B开启事务-->事务B插入了一条学生数据，此时切换回事务A，事务A提交的时候发现了一条自己没有修改过的数据，这就是幻读，就好像发生了幻觉一样。幻读出现的前提是并发的事务中有事务发生了插入、删除操作。
+
+| MySQL的事务隔离级别：默认可重复读 | 脏读 | 不可重复读 | 幻读 |
+| --------------------------------- | ---- | ---------- | ---- |
+| 读未提交（read-uncommitted）      | 是   | 是         | 是   |
+| 读已提交（read-committed）        | 否   | 是         | 是   |
+| 可重复读（repeatable-read）       | 否   | 否         | 是   |
+| 序列化（serializable）            | 否   | 否         | 否   |
+
+| Oracle的事务隔离级别:默认读已提交 | 脏读 | 不可重复读 | 幻读 |
+| --------------------------------- | ---- | ---------- | ---- |
+| 读已提交（read-committed）        | 否   | 是         | 是   |
+| 只读（read only）                 | 否   | 否         | 是   |
+| 序列化（serializable）            | 否   | 否         | 否   |
 

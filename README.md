@@ -134,6 +134,8 @@
 > 各种中间件的相关技术文档列表，包含一下：
 >
 > [redis学习笔记](tiankafei-docs-架构/redis学习笔记.md)
+>
+> [MySQL调优](tiankafei-docs-架构/MySQL调优.md)
 
 # tiankafei-docs-算法
 
