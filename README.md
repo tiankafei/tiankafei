@@ -128,6 +128,8 @@
 > [centos7安装配置Spark](tiankafei-docs-大数据/centos7安装配置Spark.md)
 >
 > [Kafka学习笔记](tiankafei-docs-大数据/Kafka学习笔记.md)
+>
+> [hive学习笔记](tiankafei-docs-大数据/hive学习笔记.md)
 
 # tiankafei-docs-架构
 
