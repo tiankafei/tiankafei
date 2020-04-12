@@ -13,6 +13,9 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <spark-version>2.4.5</spark-version>
+        <flink-version>1.9.2</flink-version>
     </properties>
 
     <dependencies>
@@ -20,31 +23,50 @@
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.12</artifactId>
-            <version>2.4.5</version>
+            <version>${spark-version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_2.12</artifactId>
-            <version>2.4.5</version>
+            <version>${spark-version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-streaming -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming_2.12</artifactId>
-            <version>2.4.5</version>
+            <version>${spark-version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka-0-10 -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming-kafka-0-10_2.12</artifactId>
-            <version>2.4.5</version>
+            <version>${spark-version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-hive -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-hive_2.12</artifactId>
-            <version>2.4.5</version>
+            <version>${spark-version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-scala -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-scala_2.12</artifactId>
+            <version>${flink-version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-scala -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-scala_2.12</artifactId>
+            <version>${flink-version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-clients_2.12</artifactId>
+            <version>${flink-version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -69,22 +91,44 @@
     </dependencies>
 
     <build>
-        <!--没有该配置，则src下的xml不会打进jar包中-->
-        <resources>
-            <resource>
-                <directory>src/main/*</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                    <exclude>**/*.scala</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>*.*</include>
-                    <include>**/*.*</include>
-                </includes>
-            </resource>
-        </resources>
+        <plugins>
+            <!-- 在maven项目中既有java又有scala代码时配置 maven-scala-plugin 插件打包时可以将两类代码一起打包 -->
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- maven 打jar包需要插件 -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <!-- 设置false后是去掉 MySpark-1.0-SNAPSHOT-jar-with-dependencies.jar 后的 “-jar-with-dependencies” -->
+                    <!--<appendAssemblyId>false</appendAssemblyId>-->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assembly</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
+
 </project>
