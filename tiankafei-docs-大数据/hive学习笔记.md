@@ -1355,3 +1355,472 @@ revoke update on psn from user abdc;
 
 ## Hive优化
 
+> Hive的存储层依托于HDFS，Hive的计算层依托于MapReduce，一般Hive的执行效率主要取决于SQL语句的执行效率，因此，Hive的优化的核心思想是MapReduce的优化。
+>
+> hive的sql转mr任务经历的5个步骤：
+>
+> 1. 抽象语法树
+> 2. 查新块
+> 3. 逻辑查询计划
+> 4. 物理查询计划
+> 5. 优化执行
+
+### 查看Hive执行计划（小白慎用）
+
+> Hive的SQL语句在执行之前需要将SQL语句转换成MapReduce任务，因此需要了解具体的转换过程，可以在SQL语句中输入如下命令查看具体的执行计划。
+
+```sql
+-- 查看执行计划，添加extended关键字可以查看更加详细的执行计划
+explain [extended] query
+```
+
+### Hive的抓取策略
+
+> Hive的某些SQL语句需要转换成MapReduce的操作，某些SQL语句就不需要转换成MapReduce操作，但是同学们需要注意，理论上来说，所有的SQL语句都需要转换成MapReduce操作，只不过Hive在转换SQL语句的过程中会做部分优化，使某些简单的操作不再需要转换成MapReduce，例如：
+>
+> 1. select 仅支持本表字段
+> 2. where仅对本表字段做条件过滤
+
+```sql
+-- 查看Hive的数据抓取策略（优化部分情况不用转换mr任务）
+Set hive.fetch.task.conversion=none/more;
+```
+
+### Hive本地模式
+
+> 类似于MapReduce的操作，Hive的运行也分为本地模式和集群模式，在开发阶段可以选择使用本地执行，提高SQL语句的执行效率，验证SQL语句是否正确。
+
+```sql
+-- 设置本地模式
+set hive.exec.mode.local.auto=true;
+```
+
+**需要注意的是：**
+
+> 要想使用Hive的本地模式，加载数据文件大小不能超过128M，或者文件个数不能超过4个，如果超过128M或者文件个数超过了4个，就算设置了本地模式，也会按照集群模式运行。
+
+```sql
+-- 设置读取数据量的大小限制
+set hive.exec.mode.local.auto.inputbytes.max=128M
+```
+
+### Hive并行模式
+
+> 在SQL语句足够复杂的情况下，可能在一个SQL语句中包含多个子查询语句，且多个子查询语句之间没有任何依赖关系，此时，可以Hive运行的并行度
+
+```sql
+-- 设置Hive SQL的并行度
+set hive.exec.parallel=true;
+```
+
+**需要注意的是：**
+
+> Hive的并行度并不是无限增加的，在一次SQL计算中，可以通过以下参数来设置并行的job的个数
+
+```sql
+-- 设置一次SQL计算允许并行执行的job个数的最大值，默认值8
+set hive.exec.parallel.thread.number
+```
+
+### Hive严格模式
+
+> Hive中为了提高SQL语句的执行效率，可以设置严格模式，充分利用Hive的某些特点。
+
+```sql
+-- 设置Hive的严格模式
+set hive.mapred.mode=strict;
+```
+
+**需要注意的是：**
+
+当设置严格模式之后，对于查询会有如下限制：
+
+1. 对于分区表，必须添加where对于分区字段的条件过滤
+2. order by语句必须包含limit输出限制
+3. 限制执行笛卡尔积的查询
+
+### Hive排序
+
+> 在编写SQL语句的过程中，很多情况下需要对数据进行排序操作，Hive中支持多种排序操作适合不同的应用场景。
+
+1. Order By - 对于查询结果做全排序，只允许有一个reduce处理
+
+   **（当数据量较大时，应慎用。严格模式下，必须结合limit来使用）**
+
+2. Sort By - 对于单个reduce的数据进行排序
+
+3. Distribute By - 分区排序，经常和Sort By结合使用
+
+4. Cluster By - 相当于 Sort By + Distribute By
+
+   **Cluster By不能通过asc、desc的方式指定排序规则；可通过 distribute by column sort by column asc|desc 的方式**
+
+### Hive join
+
+> Hive 在多个表的join操作时尽可能多的使用相同的连接键，这样在转换MR任务时会转换成少的MR的任务。
+
+#### 手动Map join:在map端完成join操作
+
+```sql
+-- SQL方式，在SQL语句中添加MapJoin标记（mapjoin hint）
+SELECT  /*+ MAPJOIN(smallTable) */  smallTable.key,  bigTable.value 
+FROM  smallTable  JOIN  bigTable  ON  smallTable.key  =  bigTable.key;
+```
+
+#### 开启自动的Map Join
+
+```sql
+-- 通过修改以下配置启用自动的mapjoin：
+-- 该参数为true时，Hive自动对左边的表统计量，如果是小表就加入内存，即对小表使用Map join（放入内存中）
+set hive.auto.convert.join = true;
+-- 大表小表判断的阈值，如果表的大小小于该值则会被加载到内存中运行，默认25000000，如果调大会占用map端很大内存
+hive.mapjoin.smalltable.filesize = 25000000;
+--（默认值：true，如果手动自动都有，自动优先；如果为false，手动优先）
+hive.ignore.mapjoin.hint = true;
+```
+
+#### 大表join大表
+
+1. 空key过滤：有时join超时是因为某些key对应的数据太多，而相同key对应的数据都会发送到相同的reducer上，从而导致内存不够。此时我们应该仔细分析这些异常的key，很多情况下，这些key对应的数据是异常数据，我们需要在SQL语句中进行过滤。
+2. 空key转换：有时虽然某个key为空对应的数据很多，但是相应的数据不是异常数据，必须要包含在join的结果中，此时我们可以表a中key为空的字段赋一个随机的值，使得数据随机均匀地分不到不同的reducer上
+
+### Map-Side聚合	
+
+> Hive的某些SQL操作可以实现map端的聚合，类似于MR的combine操作
+
+```sql
+-- 通过设置以下参数开启在Map端的聚合：
+set hive.map.aggr=true;
+-- 相关配置参数：
+-- map端group by执行聚合时处理的多少行数据（默认：100000）
+hive.groupby.mapaggr.checkinterval： 
+-- 进行聚合的最小比例（预先对100000条数据做聚合，若聚合之后的数据量/100000的值大于该配置0.5，则不会聚合）
+hive.map.aggr.hash.min.reduction： 
+--m ap端聚合使用的内存的最大值
+hive.map.aggr.hash.percentmemory： 
+-- 是否对GroupBy产生的数据倾斜做优化，默认为false
+hive.groupby.skewindata
+```
+
+### 合并小文件
+
+> Hive在操作的时候，如果文件数目小，容易在文件存储端造成压力，给hdfs造成压力，影响效率
+
+```sql
+-- 设置合并属性
+-- 是否合并map输出文件：
+set hive.merge.mapfiles=true
+-- 是否合并reduce输出文件：
+set hive.merge.mapredfiles=true;
+-- 合并文件的大小：
+set hive.merge.size.per.task=256*1000*1000
+```
+
+### 合理设置Map以及Reduce的数量
+
+```sql
+-- Map数量相关的参数
+-- 一个split的最大值，即每个map处理文件的最大值
+set mapred.max.split.size
+-- 一个节点上split的最小值
+set mapred.min.split.size.per.node
+-- 一个机架上split的最小值
+set mapred.min.split.size.per.rack
+-- Reduce数量相关的参数
+-- 强制指定reduce任务的数量
+set mapred.reduce.tasks
+-- 每个reduce任务处理的数据量
+set hive.exec.reducers.bytes.per.reducer
+-- 每个任务最大的reduce数
+set hive.exec.reducers.max
+```
+
+### JVM重用
+
+```sql
+/*
+适用场景：
+	1、小文件个数过多
+	2、task个数过多
+缺点：
+	设置开启之后，task插槽会一直占用资源，不论是否有task运行，直到所有的task即整个job全部执行完成时，才会释放所有的task插槽资源！
+*/
+set mapred.job.reuse.jvm.num.tasks=n;--（n为task插槽个数）
+```
+
+## Hadoop压缩配置
+
+###  MR支持的压缩编码
+
+| 压缩格式 | 工具  | 算法    | 文件扩展名 | 是否可切分 |
+| -------- | ----- | ------- | ---------- | ---------- |
+| DEFAULT  | 无    | DEFAULT | .deflate   | 否         |
+| Gzip     | gzip  | DEFAULT | .gz        | 否         |
+| bzip2    | bzip2 | bzip2   | .bz2       | 是         |
+| LZO      | lzop  | LZO     | .lzo       | 否         |
+| LZ4      | 无    | LZ4     | .lz4       | 否         |
+| Snappy   | 无    | Snappy  | .snappy    | 否         |
+
+**为了支持多种压缩/解压缩算法，Hadoop引入了编码/解码器，如下表所示：**
+
+| 压缩格式 | 对应的编码/解码器                          |
+| -------- | ------------------------------------------ |
+| DEFLATE  | org.apache.hadoop.io.compress.DefaultCodec |
+| gzip     | org.apache.hadoop.io.compress.GzipCodec    |
+| bzip2    | org.apache.hadoop.io.compress.BZip2Codec   |
+| LZO      | com.hadoop.compression.lzo.LzopCodec       |
+| LZ4      | org.apache.hadoop.io.compress.Lz4Codec     |
+| Snappy   | org.apache.hadoop.io.compress.SnappyCodec  |
+
+### 压缩配置参数
+
+> 要在Hadoop中启用压缩，可以配置如下参数（mapred-site.xml文件中）：
+
+| 参数                                                 | 默认值                                                       | 阶段        | 建议                                         |
+| ---------------------------------------------------- | ------------------------------------------------------------ | ----------- | -------------------------------------------- |
+| io.compression.codecs   <br/>(在core-site.xml中配置) | org.apache.hadoop.io.compress.DefaultCodec, <br/>org.apache.hadoop.io.compress.GzipCodec, <br/>org.apache.hadoop.io.compress.BZip2Codec,<br/>org.apache.hadoop.io.compress.Lz4Codec | 输入压缩    | Hadoop使用文件扩展名判断是否支持某种编解码器 |
+| mapreduce.map.output.compress                        | false                                                        | mapper输出  | 这个参数设为true启用压缩                     |
+| mapreduce.map.output.compress.codec                  | org.apache.hadoop.io.compress.DefaultCodec                   | mapper输出  | 使用LZO、LZ4或snappy编解码器在此阶段压缩数据 |
+| mapreduce.output.fileoutputformat.compress           | false                                                        | reducer输出 | 这个参数设为true启用压缩                     |
+| mapreduce.output.fileoutputformat.compress.codec     | org.apache.hadoop.io.compress. DefaultCodec                  | reducer输出 | 使用标准工具或者编解码器，如gzip和bzip2      |
+| mapreduce.output.fileoutputformat.compress.type      | RECORD                                                       | reducer输出 | SequenceFile输出使用的压缩类型：NONE和BLOCK  |
+
+### 开启Map输出阶段压缩
+
+> 开启map输出阶段压缩可以减少job中map和Reduce task间数据传输量。具体配置如下：
+
+```sql
+-- 1）开启hive中间传输数据压缩功能
+hive (default)>set hive.exec.compress.intermediate=true;
+-- 2）开启mapreduce中map输出压缩功能
+hive (default)>set mapreduce.map.output.compress=true;
+-- 3）设置mapreduce中map输出数据的压缩方式
+hive (default)>set mapreduce.map.output.compress.codec= org.apache.hadoop.io.compress.SnappyCodec;
+-- 4）执行查询语句
+hive (default)> select count(*) from aaaa;
+```
+
+### 开启Reduce输出阶段压缩
+
+> 当Hive将输出写入到表中时，输出内容同样可以进行压缩。属性hive.exec.compress.output控制着这个功能。用户可能需要保持默认设置文件中的默认值false，这样默认的输出就是非压缩的纯文本文件了。用户可以通过在查询语句或执行脚本中设置这个值为true，来开启输出结果压缩功能。
+
+```sql
+-- 1）开启hive最终输出数据压缩功能
+hive (default)>set hive.exec.compress.output=true;
+-- 2）开启mapreduce最终输出数据压缩
+hive (default)>set mapreduce.output.fileoutputformat.compress=true;
+-- 3）设置mapreduce最终数据输出压缩方式
+hive (default)> set mapreduce.output.fileoutputformat.compress.codec = org.apache.hadoop.io.compress.SnappyCodec;
+-- 4）设置mapreduce最终数据输出压缩为块压缩
+hive (default)> set mapreduce.output.fileoutputformat.compress.type=BLOCK;
+-- 5）测试一下输出结果是否是压缩文件
+hive (default)> insert overwrite local directory '/root/data' select * from aaaa;
+```
+
+## 文件存储格式
+
+> Hive支持的存储数的格式主要有：TEXTFILE 、SEQUENCEFILE、ORC、PARQUET。
+
+### 列式存储和行式存储
+
+**行存储的特点：** 查询满足条件的一整行数据的时候，列存储则需要去每个聚集的字段找到对应的每个列的值，行存储只需要找到其中一个值，其余的值都在相邻地方，所以此时行存储查询的速度更快。
+
+**列存储的特点：** 因为每个字段的数据聚集存储，在查询只需要少数几个字段的时候，能大大减少读取的数据量；每个字段的数据类型一定是相同的，列式存储可以针对性的设计更好的设计压缩算法。
+
+TEXTFILE 和 SEQUENCEFILE 的存储格式都是基于行存储的；
+
+ORC 和 PARQUET 是基于列式存储的。
+
+### TEXTFILE格式
+
+> 默认格式，数据不做压缩，磁盘开销大，数据解析开销大。可结合Gzip、Bzip2使用(系统自动检查，执行查询时自动解压)，但使用这种方式，hive不会对数据进行切分，从而无法对数据进行并行操作。
+
+### ORC格式
+
+> Orc (Optimized Row Columnar)是hive 0.11版里引入的新的存储格式。
+
+​		每个Orc文件由1个或多个stripe组成，每个stripe250MB大小，这个Stripe实际相当于RowGroup概念，不过大小由4MB->250MB，这样应该能提升顺序读的吞吐率。每个Stripe里有三部分组成，分别是Index Data,Row Data,Stripe Footer：
+
+![orc文件格式](./images/orc文件格式.png)
+
+1. Index Data：一个轻量级的index，默认是每隔1W行做一个索引。这里做的索引应该只是记录某行的各字段在Row Data中的offset。
+2. Row Data：存的是具体的数据，先取部分行，然后对这些行按列进行存储。对每个列进行了编码，分成多个Stream来存储。
+3. Stripe Footer：存的是各个Stream的类型，长度等信息。
+
+> 每个文件有一个File Footer，这里面存的是每个Stripe的行数，每个Column的数据类型信息等；每个文件的尾部是一个PostScript，这里面记录了整个文件的压缩类型以及FileFooter的长度信息等。在读取文件时，会seek到文件尾部读PostScript，从里面解析到File Footer长度，再读FileFooter，从里面解析到各个Stripe信息，再读各个Stripe，即从后往前读。
+
+### PARQUET格式
+
+> Parquet是面向分析型业务的列式存储格式，由Twitter和Cloudera合作开发，2015年5月从Apache的孵化器里毕业成为Apache顶级项目。
+
+​		Parquet文件是以二进制方式存储的，所以是不可以直接读取的，文件中包括该文件的数据和元数据，因此Parquet格式文件是自解析的。
+
+​		通常情况下，在存储Parquet数据的时候会按照Block大小设置行组的大小，由于一般情况下每一个Mapper任务处理数据的最小单位是一个Block，这样可以把每一个行组由一个Mapper任务处理，增大任务执行并行度。Parquet文件的格式如下图所示。
+
+![parquet文件格式](./images/parquet文件格式.png)
+
+​		上图展示了一个Parquet文件的内容，一个文件中可以存储多个行组，文件的首位都是该文件的Magic Code，用于校验它是否是一个Parquet文件，Footer length记录了文件元数据的大小，通过该值和文件长度可以计算出元数据的偏移量，文件的元数据中包括每一个行组的元数据信息和该文件存储数据的Schema信息。除了文件中每一个行组的元数据，每一页的开始都会存储该页的元数据，在Parquet中，有三种类型的页：数据页、字典页和索引页。数据页用于存储当前行组中该列的值，字典页存储该列值的编码字典，每一个列块中最多包含一个字典页，索引页用来存储当前行组下该列的索引，目前Parquet中还不支持索引页。
+
+### 主流文件存储格式对比实验
+
+从存储文件的压缩比和查询速度两个角度对比。存储文件的压缩比测试：
+
+```sql
+-- 1）TextFile
+--（1）创建表，存储数据格式为TEXTFILE
+create table log_text (track_time string,url string,session_id string,referer string,ip string,end_user_id string,city_id string)row format delimited fields terminated by '\t'stored as textfile ;
+--（2）向表中加载数据
+hive (default)> load data local inpath '/root/log' into table log_text ;
+--（3）查看表中数据大小
+dfs -du -h /user/hive/warehouse/log_text;
+18.1 M  /user/hive/warehouse/log_text/log.data
+-- 2）ORC
+--（1）创建表，存储数据格式为ORC
+create table log_orc(track_time string,url string,session_id string,referer string,ip string,end_user_id string,city_id string)row format delimited fields terminated by '\t'stored as orc ;
+--（2）向表中加载数据
+insert into table log_orc select * from log_text ;
+--（3）查看表中数据大小
+dfs -du -h /user/hive/warehouse/log_orc/ ;
+2.8 M  /user/hive/warehouse/log_orc/000000_0
+-- 3）Parquet
+--（1）创建表，存储数据格式为parquet
+create table log_parquet(track_time string,url string,session_id string,referer string,ip string,end_user_id string,city_id string)row format delimited fields terminated by '\t'stored as parquet ;	
+--（2）向表中加载数据
+insert into table log_parquet select * from log_text ;
+--（3）查看表中数据大小
+dfs -du -h /user/hive/warehouse/log_parquet/ ;
+13.1 M  /user/hive/warehouse/log_parquet/000000_0
+-- 存储文件的压缩比总结：
+ORC >  Parquet >  textFile
+```
+
+## 存储和压缩结合
+
+> 官网：https://cwiki.apache.org/confluence/display/Hive/LanguageManual+ORC
+
+ORC存储方式的压缩：
+
+| Key                      | Default    | Notes                                                        |
+| ------------------------ | ---------- | ------------------------------------------------------------ |
+| orc.compress             | ZLIB       | high level compression (one of NONE, ZLIB, SNAPPY)           |
+| orc.compress.size        | 262,144    | number of bytes in each compression chunk                    |
+| orc.stripe.size          | 67,108,864 | number of bytes in each stripe                               |
+| orc.row.index.stride     | 10,000     | number of rows between index entries (must be >= 1000)       |
+| orc.create.index         | true       | whether to create row indexes                                |
+| orc.bloom.filter.columns | ""         | comma separated list of column names for which bloom filter should be created |
+| orc.bloom.filter.fpp     | 0.05       | false positive probability for bloom filter (must >0.0 and <1.0) |
+
+```sql
+-- 1）创建一个非压缩的的ORC存储方式
+--（1）建表语句
+create table log_orc_none(track_time string,url string,session_id string,referer string,ip string,end_user_id string,city_id string)row format delimited fields terminated by '\t'stored as orc tblproperties ("orc.compress"="NONE");
+--（2）插入数据
+insert into table log_orc_none select * from log_text ;
+--（3）查看插入后数据
+dfs -du -h /user/hive/warehouse/log_orc_none/ ;
+7.7 M  /user/hive/warehouse/log_orc_none/000000_0
+-- 2）创建一个SNAPPY压缩的ORC存储方式
+--（1）建表语句
+create table log_orc_snappy(track_time string,url string,session_id string,referer string,ip string,end_user_id string,city_id string)row format delimited fields terminated by '\t'stored as orc tblproperties ("orc.compress"="SNAPPY");
+--（2）插入数据
+insert into table log_orc_snappy select * from log_text ;
+--（3）查看插入后数据
+dfs -du -h /user/hive/warehouse/log_orc_snappy/ ;
+3.8 M  /user/hive/warehouse/log_orc_snappy/000000_0
+-- 3）上一节中默认创建的ORC存储方式，导入数据后的大小为
+2.8 M  /user/hive/warehouse/log_orc/000000_0
+--总结
+比Snappy压缩的还小。原因是orc存储文件默认采用ZLIB压缩。比snappy压缩的小。
+```
+
+## hive—high Avaliable
+
+> 使用hiveserver2的优点如下
+>
+> 1. 在应用端不需要部署hadoop和hive的客户端
+> 2. hiveserver2不用直接将hdfs和metastore暴露给用户
+> 3. 有HA机制，解决应用端的并发和负载问题
+> 4. jdbc的连接方式，可以使用任何语言，方便与应用进行数据交互
+
+**本文主要介绍如何进行hive的HA的搭建：**
+
+如何进行搭建，参照之前hadoop的HA，使用zookeeper完成HA
+
+### 执行配置
+
+需要做HA的机器做如下配置
+
+```xml
+<property>  
+  <name>hive.metastore.warehouse.dir</name>  
+  <value>/var/bigdata/hive-ha/warehouse</value>  
+</property>  
+<property>  
+  <name>javax.jdo.option.ConnectionURL</name>  
+  <value>jdbc:mysql://software:3306/hive-ha?createDatabaseIfNotExist=true</value>  
+</property>  
+<property>  
+  <name>javax.jdo.option.ConnectionDriverName</name>  
+  <value>com.mysql.cj.jdbc.Driver</value>  
+</property>     
+<property>  
+  <name>javax.jdo.option.ConnectionUserName</name>  
+  <value>root</value>  
+</property>  
+<property>  
+  <name>javax.jdo.option.ConnectionPassword</name>  
+  <value>tiankafei</value>  
+</property>
+<property>
+  <name>hive.server2.support.dynamic.service.discovery</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.server2.zookeeper.namespace</name>
+  <value>hiveserver2_ha</value>
+</property>
+<property>
+  <name>hive.zookeeper.quorum</name>
+  <value>bigdata01:2181,bigdata02:2181,bigdata03:2181,bigdata04:2181</value>
+</property>
+<property>
+  <name>hive.zookeeper.client.port</name>
+  <value>2181</value>
+</property>
+<property>
+  <name>hive.server2.thrift.bind.host</name>
+  <value>当前主机名</value>
+</property>
+<property>
+  <name>hive.server2.thrift.port</name>
+  <value>10001</value> 
+</property>
+```
+
+### 使用jdbc或者beeline两种方式进行访问
+
+1. beeline
+
+   ```shell
+   !connect jdbc:hive2://bigdata01,bigdata02,bigdata03,bigdata04/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2_ha root tiankafei
+   ```
+
+2. jdbc
+
+   ```java
+   try {
+       Class.forName("org.apache.hive.jdbc.HiveDriver");
+   } catch (ClassNotFoundException e) {
+       e.printStackTrace();
+   }
+   
+   Connection conn = DriverManager.getConnection("jdbc:hive2://bigdata01,bigdata02,bigdata03,bigdata04/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2_ha", "root", "tiankafei");
+   Statement stmt = conn.createStatement();
+   String sql = "select * from psn limit 5";
+   ResultSet res = stmt.executeQuery(sql);
+   while (res.next()) {
+       System.out.println(res.getString(1));
+   }
+   ```
+
+   
