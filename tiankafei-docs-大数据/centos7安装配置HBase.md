@@ -1,9 +1,16 @@
 # centos7安装配置HBase
 
+> 面向列的数据存储（十亿级别的行，百万级别的列）
+
 ## 下载hbase
 
-```http
+选择对应的版本进行下载，这里选择的是2.2.4
 
+```http
+# hbase所有版本列表
+https://hbase.apache.org/downloads.html
+# tgz 解压包下载路径
+https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/2.2.4/hbase-2.2.4-bin.tar.gz
 ```
 
 ## 单机部署
