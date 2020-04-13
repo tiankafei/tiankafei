@@ -14,6 +14,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
+        <hive-version>2.3.6</hive-version>
         <spark-version>2.4.5</spark-version>
         <flink-version>1.9.2</flink-version>
     </properties>
@@ -74,6 +75,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.18</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.hive/hive-jdbc -->
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-jdbc</artifactId>
+            <version>${hive-version}</version>
         </dependency>
 
         <dependency>
