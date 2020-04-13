@@ -1244,6 +1244,10 @@ DROP INDEX IF EXISTS t1_index ON psn2;
 
 ### Hive权限配置
 
+cd $HIVE_HOME/conf
+
+vim hive-site.xml
+
 ```xml
 <property>
   <name>hive.security.authorization.enabled</name>
@@ -1271,15 +1275,25 @@ DROP INDEX IF EXISTS t1_index ON psn2;
 ```sql
 -- 角色的添加、删除、查看、设置：
 -- 创建角色
-CREATE ROLE role_name;  
+create role role_name;  
 -- 删除角色
-DROP ROLE role_name; 
+drop role role_name; 
 -- 设置角色
-SET ROLE (role_name|ALL|NONE); 
+set role (role_name|all|none); 
 -- 查看当前具有的角色
-SHOW CURRENT ROLES;  
--- 查看所有存在的角色
-SHOW ROLES;  
+show current roles;
+-- 查看所有存在的角色  
+show roles;
+-- 把admin角色授权给test用户
+-- show 角色名 to (role rolename|user username) with admin option;
+-- with admin option;让其他角色也有admin的能力
+show admin to role test with admin option;
+-- 查看角色的授权
+-- show role grant (user|role) 角色名称;
+show role grant role test;
+-- 权限回收
+-- 把admin角色从test角色中收回来
+revoke admin from role test;
 ```
 
 ### Hive权限分配图
@@ -1325,3 +1339,19 @@ SHOW ROLES;
 | SHOW TABLE STATUS                               | Y            |            |        |                   |                 |       |                                               |
 | TRUNCATE TABLE                                  |              |            |        |                   | Y               |       |                                               |
 | UPDATE                                          |              |            | Y      |                   |                 |       |                                               |
+
+```sql
+-- 给用户赋权
+-- grant select on 表名 to user 用户名 with grant option;
+-- with grant option;让其他用户也有授权的能力
+grant select on psn to user abcd with grant option;
+-- 查看用户有哪些权限
+-- show grant user 用户名 on 表名;
+show grant user abds on psm;
+--回收权限
+-- revoke update on 表名 from user 用户名;
+revoke update on psn from user abdc;
+```
+
+## Hive优化
+

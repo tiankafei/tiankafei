@@ -1067,7 +1067,7 @@ hive
 
 ### 解决root用户不能登录的问题，其他用户登录需要配置各种权限
 
-> cd /opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3/etc/hadoop
+> cd $HADOOP_HOME/etc/hadoop
 >
 > vi core-site.xml
 >
