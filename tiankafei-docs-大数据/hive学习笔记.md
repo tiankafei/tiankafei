@@ -279,7 +279,7 @@ location '/data';
 */	
 ```
 
-##### Hive分区表
+##### Hive分区表：一张表拆分成多个目录
 
 > hive的分区表：
 >
@@ -385,6 +385,113 @@ select * from psn7;
 问题：
 	以上面的方式创建hive的分区表会存在问题，每次插入的数据都是人为指定分区列的值，我们更加希望能够根据记录中的某一个字段来判断将数据插入到哪一个分区目录下，此时利用我们上面的分区方式是无法完成操作的，需要使用动态分区来完成相关操作。
 */
+```
+
+##### Hive动态分区
+
+> hive的静态分区需要用户在插入数据的时候必须手动指定hive的分区字段值，但是这样的话会导致用户的操作复杂度提高，而且在使用的时候会导致数据只能插入到某一个指定分区，无法让数据散列分布，因此更好的方式是当数据在进行插入的时候，根据数据的某一个字段或某几个字段值动态的将数据插入到不同的目录中，此时，引入动态分区。
+
+###### hive的动态分区配置
+
+```sql
+-- hive设置hive动态分区开启
+set hive.exec.dynamic.partition=true;
+默认：true
+-- hive的动态分区模式
+set hive.exec.dynamic.partition.mode=nostrict;
+默认：strict（至少有一个分区列是静态分区）
+-- 每一个执行mr节点上，允许创建的动态分区的最大数量(100)
+set hive.exec.max.dynamic.partitions.pernode;
+-- 所有执行mr节点上，允许创建的所有动态分区的最大数量(1000)	
+set hive.exec.max.dynamic.partitions;
+-- 所有的mr job允许创建的文件的最大数量(100000)	
+set hive.exec.max.created.files;
+```
+
+###### 案例：加载数据
+
+```sql
+-- 从psn21表加载数据到psn22
+from psn21
+insert overwrite table psn22 partition(age, sex)
+select id, name, age, sex, likes, address distribute by age, sex;
+```
+
+###### hive动态分区语法
+
+```sql
+--Hive extension (dynamic partition inserts):
+INSERT OVERWRITE TABLE tablename PARTITION (partcol1[=val1], partcol2[=val2] ...) 		select_statement FROM from_statement;
+INSERT INTO TABLE tablename PARTITION (partcol1[=val1], partcol2[=val2] ...) 			select_statement FROM from_statement;
+```
+
+##### Hive分桶：可以把一个文件拆分成多个文件
+
+> ​	Bucketed tables are fantastic in that they allow much more efficient sampling than do non-bucketed tables, and they may later allow for time saving operations such as mapside joins. However, the bucketing specified at table creation is not enforced when the table is written to, and so it is possible for the table's metadata to advertise properties which are not upheld by the table's actual layout. This should obviously be avoided. Here's how to do it right。
+
+**注意：**
+
+1. Hive分桶表是对列值取hash值得方式，将不同数据放到不同文件中存储
+2. 对于hive中每一个表、分区都可以进一步进行分桶
+3. 由列的hash值除以桶的个数来决定每条数据划分在哪个桶中
+
+**适用场景：**数据抽样（ sampling )
+
+###### Hive分桶的配置
+
+```sql
+-- 设置hive支持分桶
+set hive.enforce.bucketing=true;
+-- 默认：false；设置为true之后，mr运行时会根据bucket的个数自动分配reduce task个数。（用户也可以通过mapred.reduce.tasks自己设置reduce任务个数，但分桶时不推荐使用）
+-- 注意：一次作业产生的桶（文件数量）和reduce task个数一致。
+```
+
+###### 往分桶中加载数据
+
+```sql
+insert into table bucket_table select columns from tbl;
+
+insert overwrite table bucket_table select columns from tbl;
+```
+
+###### Hive分桶的抽样查询
+
+```sql
+-- 案例
+select * from bucket_table tablesample(bucket 1 out of 4 on columns)
+-- TABLESAMPLE语法：
+TABLESAMPLE(BUCKET x OUT OF y)
+	x：表示从哪个bucket开始抽取数据
+	y：必须为该表总bucket数的倍数或因子
+```
+
+###### 案例
+
+>当表的总bucket数为32时
+>TABLESAMPLE(BUCKET 3 OUT OF 8)，抽取哪些数据？
+>32/8=4个桶（抽取的是桶的个数/y）
+>3、11、19、27（跳的是y的值）
+>共抽取4个bucket的数据，抽取第3、11、19、27个bucket的数据
+
+```sql
+CREATE TABLE psn31( id INT, name STRING, age INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+-- 测试数据
+1,tom,11
+2,cat,22
+3,dog,33
+4,hive,44
+5,hbase,55
+6,mr,66
+7,alice,77
+8,scala,88
+
+-- 创建分桶表
+CREATE TABLE psnbucket( id INT, name STRING, age INT)CLUSTERED BY (age) INTO 4 BUCKETSROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+-- 加载数据：
+insert into table psnbucket select id, name, age from psn31;
+-- 抽样
+select id, name, age from psnbucket tablesample(bucket 2 out of 4 on age);
 ```
 
 ### Hive DML
@@ -670,5 +777,551 @@ while (res.next()) {
 
 ## Hive函数
 
+> 官方地址：
+>
+> ```http
+> https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF
+> ```
 
+Hive中提供了非常丰富的运算符和内置函数支撑，具体操作如下：
 
+### 内置运算符
+
+#### 关系运算符
+
+| 运算符        | 类型         | 说明                                                         |
+| ------------- | ------------ | ------------------------------------------------------------ |
+| A = B         | 所有原始类型 | 如果A与B相等,返回TRUE,否则返回FALSE                          |
+| A == B        | 无           | 失败，因为无效的语法。 SQL使用”=”，不使用”==”。              |
+| A <> B        | 所有原始类型 | 如果A不等于B返回TRUE,否则返回FALSE。<br/>如果A或B值为”NULL”，结果返回”NULL”。 |
+| A < B         | 所有原始类型 | 如果A小于B返回TRUE,否则返回FALSE。<br/>如果A或B值为”NULL”，结果返回”NULL”。 |
+| A <= B        | 所有原始类型 | 如果A小于等于B返回TRUE,否则返回FALSE。<br/>如果A或B值为”NULL”，结果返回”NULL”。 |
+| A > B         | 所有原始类型 | 如果A大于B返回TRUE,否则返回FALSE。<br/>如果A或B值为”NULL”，结果返回”NULL”。 |
+| A >= B        | 所有原始类型 | 如果A大于等于B返回TRUE,否则返回FALSE。<br/>如果A或B值为”NULL”，结果返回”NULL”。 |
+| A IS NULL     | 所有类型     | 如果A值为”NULL”，返回TRUE,否则返回FALSE                      |
+| A IS NOT NULL | 所有类型     | 如果A值不为”NULL”，返回TRUE,否则返回FALSE                    |
+| A LIKE B      | 字符串       | 如果A或B值为”NULL”，结果返回”NULL”。<br/>字符串A与B通过sql进行匹配，<br/>如果相符返回TRUE，不符返回FALSE。<br/>B字符串中的”_”代表任一字符，”%”则代表多个任意字符。<br/>例如：<br/>(‘foobar’ like ‘foo’)返回FALSE，<br/>(‘foobar’ like ‘foo_ _ _’或者 ‘foobar’ like ‘foo%’)则返回TURE |
+| A RLIKE B     | 字符串       | 如果A或B值为”NULL”，结果返回”NULL”。<br/>字符串A与B通过java进行匹配，<br/>如果相符返回TRUE，不符返回FALSE。<br/>例如：<br/>(‘foobar’ rlike ‘foo’)返回FALSE，<br/>(’foobar’ rlike ‘^f.*r$’)返回TRUE。 |
+| A REGEXP B    | 字符串       | 与RLIKE相同。                                                |
+
+#### 算数运算符
+
+| 运算符 | 类型         | 说明                                                         |
+| ------ | ------------ | ------------------------------------------------------------ |
+| A + B  | 所有数字类型 | A和B相加。结果的与操作数值有共同类型。<br/>例如每一个整数是一个浮点数，浮点数包含整数。<br/>所以，一个浮点数和一个整数相加结果也是一个浮点数。 |
+| A – B  | 所有数字类型 | A和B相减。结果的与操作数值有共同类型。                       |
+| A * B  | 所有数字类型 | A和B相乘，结果的与操作数值有共同类型。<br/>需要说明的是，如果乘法造成溢出，将选择更高的类型。 |
+| A / B  | 所有数字类型 | A和B相除，结果是一个double（双精度）类型的结果。             |
+| A % B  | 所有数字类型 | A除以B余数与操作数值有共同类型。                             |
+| A & B  | 所有数字类型 | 运算符查看两个参数的二进制表示法的值，并执行按位”与”操作。<br/>两个表达式的一位均为1时，则结果的该位为 1。否则，结果的该位为 0。 |
+| A\|B   | 所有数字类型 | 运算符查看两个参数的二进制表示法的值，并执行按位”或”操作。<br/>只要任一表达式的一位为 1，则结果的该位为 1。否则，结果的该位为 0。 |
+| A ^ B  | 所有数字类型 | 运算符查看两个参数的二进制表示法的值，并执行按位”异或”操作。<br/>当且仅当只有一个表达式的某位上为 1 时，结果的该位才为 1。否则结果的该位为 0。 |
+| ~A     | 所有数字类型 | 对一个表达式执行按位”非”（取反）。                           |
+
+#### 逻辑运算符
+
+| 运算符  | 类型   | 说明                                                         |
+| ------- | ------ | ------------------------------------------------------------ |
+| A AND B | 布尔值 | A和B同时正确时,返回TRUE,否则FALSE。如果A或B值为NULL，返回NULL。 |
+| A && B  | 布尔值 | 与”A AND B”相同                                              |
+| A OR B  | 布尔值 | A或B正确,或两者同时正确返返回TRUE,否则FALSE。如果A和B值同时为NULL，返回NULL。 |
+| A \| B  | 布尔值 | 与”A OR B”相同                                               |
+| NOT A   | 布尔值 | 如果A为NULL或错误的时候返回TURE，否则返回FALSE。             |
+| ! A     | 布尔值 | 与”NOT A”相同                                                |
+
+#### 复杂类型函数
+
+| 函数   | 类型                            | 说明                                                        |
+| ------ | ------------------------------- | ----------------------------------------------------------- |
+| map    | (key1, value1, key2, value2, …) | 通过指定的键/值对，创建一个map。                            |
+| struct | (val1, val2, val3, …)           | 通过指定的字段值，创建一个结构。结构字段名称将COL1，COL2，… |
+| array  | (val1, val2, …)                 | 通过指定的元素，创建一个数组。                              |
+
+#### 对复杂函数的操作
+
+| 函数   | 类型                  | 说明                                                         |
+| ------ | --------------------- | ------------------------------------------------------------ |
+| A[n]   | A是一个数组，n为int型 | 返回数组A的第n个元素，第一个元素的索引为0。<br/>如果A数组为['foo','bar']，则A[0]返回’foo’和A[1]返回”bar”。 |
+| M[key] | M是Map<K, V>，关键K型 | 返回关键值对应的值，<br/>例如<br/>mapM为 {‘f’ -> ‘foo’, ‘b’ -> ‘bar’, ‘all’ -> ‘foobar’}，<br/>则M['all'] 返回’foobar’。 |
+| S.x    | S为struct             | 返回结构x字符串在结构S中的存储位置。<br/>如 <br/>foobar {int foo, int bar} foobar.foo的领域中存储的整数。 |
+
+### 内置函数
+
+#### 数学函数
+
+| 返回类型   | 函数                                              | 说明                                                         |
+| ---------- | ------------------------------------------------- | ------------------------------------------------------------ |
+| BIGINT     | round(double a)                                   | 四舍五入                                                     |
+| DOUBLE     | round(double a, int d)                            | 小数部分d位之后数字四舍五入，例如round(21.263,2),返回21.26   |
+| BIGINT     | floor(double a)                                   | 对给定数据进行向下舍入最接近的整数。例如floor(21.2),返回21。 |
+| BIGINT     | ceil(double a), ceiling(double a)                 | 将参数向上舍入为最接近的整数。例如ceil(21.2),返回23.         |
+| double     | rand(), rand(int seed)                            | 返回大于或等于0且小于1的平均分布随机数（依重新计算而变）     |
+| double     | exp(double a)                                     | 返回e的n次方                                                 |
+| double     | ln(double a)                                      | 返回给定数值的自然对数                                       |
+| double     | log10(double a)                                   | 返回给定数值的以10为底自然对数                               |
+| double     | log2(double a)                                    | 返回给定数值的以2为底自然对数                                |
+| double     | log(double base, double a)                        | 返回给定底数及指数返回自然对数                               |
+| double     | pow(double a, double p) power(double a, double p) | 返回某数的乘幂                                               |
+| double     | sqrt(double a)                                    | 返回数值的平方根                                             |
+| string     | bin(BIGINT a)                                     | 返回二进制格式                                               |
+| string     | hex(BIGINT a) hex(string a)                       | 将整数或字符转换为十六进制格式                               |
+| string     | unhex(string a)                                   | 十六进制字符转换由数字表示的字符。                           |
+| string     | conv(BIGINT num, int from_base, int to_base)      | 将 指定数值，由原来的度量体系转换为指定的试题体系。<br/>例如CONV(‘a’,16,2),返回。<br/>参考：’1010′ http://dev.mysql.com/doc/refman/5.0/en/mathematical-functions.html#function_conv |
+| double     | abs(double a)                                     | 取绝对值                                                     |
+| int double | pmod(int a, int b) pmod(double a, double b)       | 返回a除b的余数的绝对值                                       |
+| double     | sin(double a)                                     | 返回给定角度的正弦值                                         |
+| double     | asin(double a)                                    | 返回x的反正弦，即是X。如果X是在-1到1的正弦值，返回NULL。     |
+| double     | cos(double a)                                     | 返回余弦                                                     |
+| double     | acos(double a)                                    | 返回X的反余弦，即余弦是X，，如果-1<= A <= 1，否则返回null.   |
+| int double | positive(int a) positive(double a)                | 返回A的值，例如positive(2)，返回2。                          |
+| int double | negative(int a) negative(double a)                | 返回A的相反数，例如negative(2),返回-2。                      |
+
+#### 收集函数
+
+| 返回类型 | 函数           | 说明                      |
+| -------- | -------------- | ------------------------- |
+| int      | size(Map<K.V>) | 返回的map类型的元素的数量 |
+| int      | size(Array<T>) | 返回数组类型的元素数量    |
+
+#### 类型转换函数
+
+| 返回类型    | 函数                 | 说明                                                         |
+| ----------- | -------------------- | ------------------------------------------------------------ |
+| 指定 “type” | cast(expr as <type>) | 类型转换。例如将字符”1″转换为整数:cast(’1′ as bigint)，如果转换失败返回NULL。 |
+
+#### 日期函数
+
+| 返回类型 | 函数                                            | 说明                                                         |
+| -------- | ----------------------------------------------- | ------------------------------------------------------------ |
+| string   | from_unixtime(bigint unixtime[, string format]) | UNIX_TIMESTAMP参数表示返回一个值’YYYY- MM – DD HH：MM：SS’或YYYYMMDDHHMMSS.uuuuuu格式，这取决于是否是在一个字符串或数字语境中使用的功能。该值表示在当前的时区。 |
+| bigint   | unix_timestamp()                                | 如果不带参数的调用，返回一个Unix时间戳（从’1970- 01 – 0100:00:00′到现在的UTC秒数）为无符号整数。 |
+| bigint   | unix_timestamp(string date)                     | 指定日期参数调用UNIX_TIMESTAMP（），它返回参数值’1970- 01 – 0100:00:00′到指定日期的秒数。 |
+| bigint   | unix_timestamp(string date, string pattern)     | 指定时间输入格式，返回到1970年秒数：unix_timestamp(’2009-03-20′, ‘yyyy-MM-dd’) = 1237532400 |
+| string   | to_date(string timestamp)                       | 返回时间中的年月日： to_date(“1970-01-01 00:00:00″) = “1970-01-01″ |
+| string   | to_dates(string date)                           | 给定一个日期date，返回一个天数（0年以来的天数）              |
+| int      | year(string date)                               | 返回指定时间的年份，范围在1000到9999，或为”零”日期的0。      |
+| int      | month(string date)                              | 返回指定时间的月份，范围为1至12月，或0一个月的一部分，如’0000-00-00′或’2008-00-00′的日期。 |
+| int      | day(string date) dayofmonth(date)               | 返回指定时间的日期                                           |
+| int      | hour(string date)                               | 返回指定时间的小时，范围为0到23。                            |
+| int      | minute(string date)                             | 返回指定时间的分钟，范围为0到59。                            |
+| int      | second(string date)                             | 返回指定时间的秒，范围为0到59。                              |
+| int      | weekofyear(string date)                         | 返回指定日期所在一年中的星期号，范围为0到53。                |
+| int      | datediff(string enddate, string startdate)      | 两个时间参数的日期之差。                                     |
+| int      | date_add(string startdate, int days)            | 给定时间，在此基础上加上指定的时间段。                       |
+| int      | date_sub(string startdate, int days)            | 给定时间，在此基础上减去指定的时间段。                       |
+
+#### 条件函数
+
+| 返回类型 | 函数                                                       | 说明                                                         |
+| -------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| T        | if(boolean testCondition, T valueTrue, T valueFalseOrNull) | 判断是否满足条件，如果满足返回一个值，如果不满足则返回另一个值。 |
+| T        | COALESCE(T v1, T v2, …)                                    | 返回一组数据中，第一个不为NULL的值，如果均为NULL,返回NULL。  |
+| T        | CASE a WHEN b THEN c [WHEN d THEN e]* [ELSE f] END         | 当a=b时,返回c；当a=d时，返回e，否则返回f。                   |
+| T        | CASE WHEN a THEN b [WHEN c THEN d]* [ELSE e] END           | 当值为a时返回b,当值为c时返回d。否则返回e。                   |
+
+#### 字符函数
+
+| 返回类型                     | 函数                                                         | 说明                                                         |
+| ---------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| int                          | length(string A)                                             | 返回字符串的长度                                             |
+| string                       | reverse(string A)                                            | 返回倒序字符串                                               |
+| string                       | concat(string A, string B…)                                  | 连接多个字符串，合并为一个字符串，可以接受任意数量的输入字符串 |
+| string                       | concat_ws(string SEP, string A, string B…)                   | 链接多个字符串，字符串之间以指定的分隔符分开。               |
+| string                       | substr(string A, int start) substring(string A, int start)   | 从文本字符串中指定的起始位置后的字符。                       |
+| string                       | substr(string A, int start, int len) substring(string A, int start, int len) | 从文本字符串中指定的位置指定长度的字符。                     |
+| string                       | upper(string A) ucase(string A)                              | 将文本字符串转换成字母全部大写形式                           |
+| string                       | lower(string A) lcase(string A)                              | 将文本字符串转换成字母全部小写形式                           |
+| string                       | trim(string A)                                               | 删除字符串两端的空格，字符之间的空格保留                     |
+| string                       | ltrim(string A)                                              | 删除字符串左边的空格，其他的空格保留                         |
+| string                       | rtrim(string A)                                              | 删除字符串右边的空格，其他的空格保留                         |
+| string                       | regexp_replace(string A, string B, string C)                 | 字符串A中的B字符被C字符替代                                  |
+| string                       | regexp_extract(string subject, string pattern, int index)    | 通过下标返回正则表达式指定的部分。regexp_extract(‘foothebar’, ‘foo(.*?)(bar)’, 2) returns ‘bar.’ |
+| string                       | parse_url(string urlString, string partToExtract [, string keyToExtract]) | 返回URL指定的部分。parse_url(‘http://facebook.com/path1/p.php?k1=v1&k2=v2#Ref1′, ‘HOST’) 返回：’facebook.com’ |
+| string                       | get_json_object(string json_string, string path)             | select a.timestamp, get_json_object(a.appevents, ‘$.eventid’), get_json_object(a.appenvets, ‘$.eventname’) from log a; |
+| string                       | space(int n)                                                 | 返回指定数量的空格                                           |
+| string                       | repeat(string str, int n)                                    | 重复N次字符串                                                |
+| int                          | ascii(string str)                                            | 返回字符串中首字符的数字值                                   |
+| string                       | lpad(string str, int len, string pad)                        | 返回指定长度的字符串，给定字符串长度小于指定长度时，由指定字符从左侧填补。 |
+| string                       | rpad(string str, int len, string pad)                        | 返回指定长度的字符串，给定字符串长度小于指定长度时，由指定字符从右侧填补。 |
+| array                        | split(string str, string pat)                                | 将字符串转换为数组。                                         |
+| int                          | find_in_set(string str, string strList)                      | 返回字符串str第一次在strlist出现的位置。如果任一参数为NULL,返回NULL；如果第一个参数包含逗号，返回0。 |
+| array<array<string>>         | sentences(string str, string lang, string locale)            | 将字符串中内容按语句分组，每个单词间以逗号分隔，最后返回数组。 例如sentences(‘Hello there! How are you?’) 返回：( (“Hello”, “there”), (“How”, “are”, “you”) ) |
+| array<struct<string,double>> | ngrams(array<array<string>>, int N, int K, int pf)           | SELECT ngrams(sentences(lower(tweet)), 2, 100 [, 1000]) FROM twitter; |
+| array<struct<string,double>> | context_ngrams(array<array<string>>, array<string>, int K, int pf) | SELECT context_ngrams(sentences(lower(tweet)), array(null,null), 100, [, 1000]) FROM twitter; |
+
+### 内置的聚合函数（UDAF）
+
+| 返回类型                 | 函数                                                         | 说明                                                         |
+| ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| bigint                   | count(*) , count(expr), count(DISTINCT expr[, expr_., expr_.]) | 返回记录条数。                                               |
+| double                   | sum(col), sum(DISTINCT col)                                  | 求和                                                         |
+| double                   | avg(col), avg(DISTINCT col)                                  | 求平均值                                                     |
+| double                   | min(col)                                                     | 返回指定列中最小值                                           |
+| double                   | max(col)                                                     | 返回指定列中最大值                                           |
+| double                   | var_pop(col)                                                 | 返回指定列的方差                                             |
+| double                   | var_samp(col)                                                | 返回指定列的样本方差                                         |
+| double                   | stddev_pop(col)                                              | 返回指定列的偏差                                             |
+| double                   | stddev_samp(col)                                             | 返回指定列的样本偏差                                         |
+| double                   | covar_pop(col1, col2)                                        | 两列数值协方差                                               |
+| double                   | covar_samp(col1, col2)                                       | 两列数值样本协方差                                           |
+| double                   | corr(col1, col2)                                             | 返回两列数值的相关系数                                       |
+| double                   | percentile(col, p)                                           | 返回数值区域的百分比数值点。0<=P<=1,否则返回NULL,不支持浮点型数值。 |
+| array<double>            | percentile(col, array(p~1,,\ [, p,,2,,]…))                   | 返回数值区域的一组百分比值分别对应的数值点。0<=P<=1,否则返回NULL,不支持浮点型数值。 |
+| double                   | percentile_approx(col, p[, B])                               | Returns an approximate p^th^ percentile of a numeric column (including floating point types) in the group. The B parameter controls approximation accuracy at the cost of memory. Higher values yield better approximations, and the default is 10,000. When the number of distinct values in col is smaller than B, this gives an exact percentile value. |
+| array<double>            | percentile_approx(col, array(p~1,, [, p,,2_]…) [, B])        | Same as above, but accepts and returns an array of percentile values instead of a single one. |
+| array<struct\{‘x’,'y’\}> | histogram_numeric(col, b)                                    | Computes a histogram of a numeric column in the group using b non-uniformly spaced bins. The output is an array of size b of double-valued (x,y) coordinates that represent the bin centers and heights |
+| array                    | collect_set(col)                                             | 返回无重复记录                                               |
+
+### 内置表生成函数（UDTF）
+
+| 返回类型 | 函数                   | 说明                                                         |
+| -------- | ---------------------- | ------------------------------------------------------------ |
+| 数组     | explode(array<TYPE> a) | 数组一条记录中有多个参数，将参数拆分，每个参数生成一列。     |
+|          | json_tuple             | get_json_object 语句：<br/>select a.timestamp, get_json_object(a.appevents, ‘$.eventid’), get_json_object(a.appenvets, ‘$.eventname’) from log a; <br/>json_tuple语句: <br/>select a.timestamp, b.* from log a lateral view json_tuple(a.appevent, ‘eventid’, ‘eventname’) b as f1, f2 |
+
+### 自定义函数
+
+**自定义函数包括三种UDF、UDAF、UDTF**
+
+1. UDF(User-Defined-Function) ：一进一出
+2. UDAF(User- Defined Aggregation Funcation) ：聚集函数，多进一出。Count/max/min
+3. UDTF(User-Defined Table-Generating Functions) :一进多出，如explore()
+
+#### UDF 开发
+
+1. UDF函数可以直接应用于select语句，对查询结构做格式化处理后，再输出内容。
+2. 编写UDF函数的时候需要注意一下几点：
+   - 自定义UDF需要继承org.apache.hadoop.hive.ql.UDF。
+   - 需要实现evaluate函数，evaluate函数支持重载。
+
+#### 将jar包上传到虚拟机中
+
+> 注意：此种方式创建的函数属于临时函数，当关闭了当前会话之后，函数会无法使用，因为jar的引用没有了，无法找到对应的java文件进行处理，因此不推荐使用。
+
+1. 把程序打包放到目标机器上去；
+
+2. 进入hive客户端，添加jar包：add jar /run/jar/udf_test.jar;
+
+3. 创建临时函数：CREATE TEMPORARY FUNCTION add_example AS 'hive.udf.Add';
+
+4. 查询HQL语句：
+
+   ```sql
+   SELECT add_example(8, 9) FROM scores;
+   SELECT add_example(scores.math, scores.art) FROM scores;
+   SELECT add_example(6, 7, 8, 6.8) FROM scores;
+   ```
+
+5. 销毁临时函数：DROP TEMPORARY FUNCTION add_example;
+
+#### 将jar包上传到hdfs集群中
+
+1. 把程序打包上传到hdfs的某个目录下
+
+2. 创建函数：CREATE FUNCTION add_example AS 'hive.udf.Add' using jar "hdfs://mycluster/jar/udf_test.jar";
+
+3. 查询HQL语句：
+
+   ```sql
+   SELECT add_example(8, 9) FROM scores;
+   SELECT add_example(scores.math, scores.art) FROM scores;
+   SELECT add_example(6, 7, 8, 6.8) FROM scores;
+   ```
+
+4. 销毁临时函数：DROP  FUNCTION add_example;
+
+### hive使用sql计算word count
+
+```sql
+from (select explode(split(要计算的列名, ' ')) word from 表名) t
+insert into 结果表名 select word, count(word) group by t.word
+```
+
+### hive - sql解析工具
+
+```
+calcite
+```
+
+> [Apache Calcite](https://links.jianshu.com/go?to=https%3A%2F%2Fcalcite.apache.org%2F) 是一款开源SQL解析工具, 可以将各种SQL语句解析成抽象语法术AST(Abstract Syntax Tree), 之后通过操作AST就可以把SQL中所要表达的算法与关系体现在具体代码之中。
+
+## Hive参数操作
+
+### hive参数介绍
+
+hive当中的参数、变量都是以命名空间开头的，详情如下表所示：
+
+| **命名空间** | **读写权限** | **含义**                                                     |
+| ------------ | ------------ | ------------------------------------------------------------ |
+| hiveconf     | 可读写       | hive-site.xml当中的各配置变量例：hive --hiveconf hive.cli.print.header=true |
+| system       | 可读写       | 系统变量，包含JVM运行参数等例：system:user.name=root         |
+| env          | 只读         | 环境变量例：env：JAVA_HOME                                   |
+| hivevar      | 可读写       | 例：hive -d val=key                                          |
+
+hive的变量可以通过${}方式进行引用，其中system、env下的变量必须以前缀开头
+
+### hive参数的设置方式
+
+1. 在${HIVE_HOME}/conf/hive-site.xml文件中添加参数设置
+
+   **注意：永久生效，所有的hive会话都会加载对应的配置**
+
+2. 在启动hive cli时，通过--hiveconf key=value的方式进行设置
+
+   例如：hive --hiveconf hive.cli.print.header=true
+
+   **注意：只在当前会话有效，退出会话之后参数失效**
+
+3. 在进入到cli之后，通过set命令设置
+
+   例如：set hive.cli.print.header=true;
+
+   ```sql
+   -- 在hive cli控制台可以通过set对hive中的参数进行查询设置
+   -- set设置
+   set hive.cli.print.header=true;
+   -- set查看
+   set hive.cli.print.header
+   -- set查看全部属性
+   set
+   ```
+
+   **注意：只在当前会话有效，退出会话之后参数失效**
+
+4. hive参数初始化设置
+
+   在当前用户的家目录下创建**.hiverc**文件，在当前文件中设置hive参数的命令，每次进入hive cli的时候，都会加载.hiverc的文件，执行文件中的命令。
+
+   **注意：在当前用户的家目录下还会存在.hivehistory文件，此文件中保存了hive cli中执行的所有命令**
+
+## Hive运行方式
+
+### 命令行方式或者控制台模式
+
+1. 在命令行中可以直接输入SQL语句，例如：select * from table_name
+
+2. 在命令行中可以与HDFS交互，例如：dfs ls /
+
+3. 在命令行中可以与linux交互，例如：! pwd或者! ls /
+
+   **注意：与linux交互的时候必须要加!**
+
+### 脚本运行方式（实际生产环境中用最多）
+
+```sql
+-- hive直接执行sql命令，可以写一个sql语句，也可以使用;分割写多个sql语句
+hive -e ""
+-- hive执行sql命令，将sql语句执行的结果重定向到某一个文件中
+hive -e "">aaa
+-- hive静默输出模式(-S)，输出的结果中不包含ok，time token等关键字
+hive -S -e "">aaa
+-- hive可以直接读取文件中的sql命令，进行执行
+hive -f file
+-- hive可以从文件中读取命令，并且执行初始化操作
+hive -i /home/my/hive-init.sql
+-- 在hive的命令行中也可以执行外部文件中的命令
+source file (在hive cli中运行)
+```
+
+### JDBC方式：hiveserver2
+
+程序开发通过jdbc方式进行访问。
+
+### web GUI接口（hwi、hue等）
+
+hwi在2.2版本以后，已经删除了，
+
+#### 搭建Hue
+
+## Hive视图
+
+### Hive Lateral View
+
+> 1. Lateral View用于和UDTF函数（explode、split）结合来使用。
+> 2. 首先通过UDTF函数拆分成多行，再将多行结果组合成一个支持别名的虚拟表。
+> 3. 主要解决在select使用UDTF做查询过程中，查询只能包含单个UDTF，不能包含其他字段、以及多个UDTF的问题。
+
+#### 语法
+
+```sql
+LATERAL VIEW udtf(expression) tableAlias AS columnAlias (',' columnAlias)
+```
+
+#### 案例
+
+统计人员表中共有多少种爱好、多少个城市?
+
+![Hive-Lateral-View案例](./images/Hive-Lateral-View案例.png)
+
+```sql
+select count(distinct(myCol1)), count(distinct(myCol2)) from psn2 
+LATERAL VIEW explode(likes) myTable1 AS myCol1 
+LATERAL VIEW explode(address) myTable2 AS myCol2, myCol3;
+```
+
+### Hive普通视图
+
+> Hive 中的视图和RDBMS中视图的概念一致，都是一组数据的逻辑表示，本质上就是一条SELECT语句的结果集。视图是纯粹的逻辑对象，没有关联的存储(Hive 3.0.0引入的物化视图除外)，当查询引用视图时，Hive可以将视图的定义与查询结合起来，例如将查询中的过滤器推送到视图中。
+
+#### Hive视图特点
+
+1. 不支持物化视图
+2. 只能查询，不能做加载数据操作
+3. 视图的创建，只是保存一份元数据，查询视图时才执行对应的子查询
+4. view定义中若包含了ORDER BY/LIMIT语句，当查询视图时也进行ORDER BY/LIMIT语句操作，view当中			  定义的优先级更高
+5. view支持迭代视图
+
+#### Hive视图语法
+
+```sql
+-- 创建视图：
+CREATE VIEW [IF NOT EXISTS] [db_name.]view_name 
+  [(column_name [COMMENT column_comment], ...) ]
+  [COMMENT view_comment]
+  [TBLPROPERTIES (property_name = property_value, ...)]
+  AS SELECT ... ;
+-- 查询视图：
+select colums from view;
+-- 删除视图：
+DROP VIEW [IF EXISTS] [db_name.]view_name;
+```
+
+## Hive索引
+
+> 为了提高数据的检索效率，可以使用hive的索引
+
+```sql
+--创建索引：
+create index t1_index on table psn2(name) as 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' with deferred rebuild in table    t1_index_table;
+--as：指定索引器；
+--in table：指定索引表，若不指定默认生成在default__psn2_t1_index__表中
+create index t1_index on table psn2(name) as 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' with deferred rebuild;
+--查询索引
+show index on psn2;
+--重建索引（建立索引之后必须重建索引才能生效）
+ALTER INDEX t1_index ON psn2 REBUILD;
+--删除索引
+DROP INDEX IF EXISTS t1_index ON psn2;
+```
+
+## Hive权限管理
+
+### hive授权模型介绍
+
+1. Storage Based Authorization in the Metastore Server
+
+   基于存储的授权 - 可以对Metastore中的元数据进行保护，但是没有提供更加细粒度的访问控制（例如：列级别、行级别）
+
+2. SQL Standards Based Authorization in HiveServer2
+
+   基于SQL标准的Hive授权 - 完全兼容SQL的授权模型，推荐使用该模式。
+
+3. Default Hive Authorization (Legacy Mode)
+
+   hive默认授权 - 设计目的仅仅只是为了防止用户产生误操作，而不是防止恶意用户访问未经授权的数据。
+
+### 基于SQL标准的Hive授权 	
+
+1. 完全兼容SQL的授权模型
+2. 除支持对于用户的授权认证，还支持角色role的授权认证
+   - role可理解为是一组权限的集合，通过role为用户授权
+   - 一个用户可以具有一个或多个角色
+   - 默认包含另种角色：public、admin
+
+**限制：**
+
+1. 启用当前认证方式之后，dfs, add, delete, compile, and reset等命令被禁用。
+
+2. 通过set命令设置hive configuration的方式被限制某些用户使用。
+
+   (可通过修改配置文件hive-site.xml中hive.security.authorization.sqlstd.confwhitelist进行配置)
+
+3. 添加、删除函数以及宏的操作，仅为具有admin的用户开放。
+
+4. 用户自定义函数（开放支持永久的自定义函数），可通过具有admin角色的用户创建，其他用户都可以使用。
+
+5. Transform功能被禁用。
+
+### Hive权限配置
+
+```xml
+<property>
+  <name>hive.security.authorization.enabled</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.server2.enable.doAs</name>
+  <value>false</value>
+</property>
+<property>
+  <name>hive.users.in.admin.role</name>
+  <value>root</value>
+</property>
+<property>
+  <name>hive.security.authorization.manager</name>  <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory</value>
+</property>
+<property>
+  <name>hive.security.authenticator.manager</name>
+  <value>org.apache.hadoop.hive.ql.security.SessionStateUserAuthenticator</value>
+</property>
+```
+
+### Hive权限管理命令
+
+```sql
+-- 角色的添加、删除、查看、设置：
+-- 创建角色
+CREATE ROLE role_name;  
+-- 删除角色
+DROP ROLE role_name; 
+-- 设置角色
+SET ROLE (role_name|ALL|NONE); 
+-- 查看当前具有的角色
+SHOW CURRENT ROLES;  
+-- 查看所有存在的角色
+SHOW ROLES;  
+```
+
+### Hive权限分配图
+
+| Action                                          | Select       | Insert     | Update | Delete            | Owership        | Admin | URL Privilege(RWX Permission + Ownership)     |
+| ----------------------------------------------- | ------------ | ---------- | ------ | ----------------- | --------------- | ----- | --------------------------------------------- |
+| ALTER DATABASE                                  |              |            |        |                   |                 | Y     |                                               |
+| ALTER INDEX PROPERTIES                          |              |            |        |                   | Y               |       |                                               |
+| ALTER INDEX REBUILD                             |              |            |        |                   | Y               |       |                                               |
+| ALTER PARTITION LOCATION                        |              |            |        |                   | Y               |       | Y (for new partition location)                |
+| ALTER TABLE (all of them except the ones above) |              |            |        |                   | Y               |       |                                               |
+| ALTER TABLE ADD PARTITION                       |              | Y          |        |                   |                 |       | Y (for partition location)                    |
+| ALTER TABLE DROP PARTITION                      |              |            |        | Y                 |                 |       |                                               |
+| ALTER TABLE LOCATION                            |              |            |        |                   | Y               |       | Y (for new location)                          |
+| ALTER VIEW PROPERTIES                           |              |            |        |                   | Y               |       |                                               |
+| ALTER VIEW RENAME                               |              |            |        |                   | Y               |       |                                               |
+| ANALYZE TABLE                                   | Y            | Y          |        |                   |                 |       |                                               |
+| CREATE DATABASE                                 |              |            |        |                   |                 |       | Y (if custom location specified)              |
+| CREATE FUNCTION                                 |              |            |        |                   |                 | Y     |                                               |
+| CREATE INDEX                                    |              |            |        |                   | Y (of table)    |       |                                               |
+| CREATE MACRO                                    |              |            |        |                   |                 | Y     |                                               |
+| CREATE TABLE                                    |              |            |        |                   | Y (of database) |       | Y  (for create external table – the location) |
+| CREATE TABLE AS SELECT                          | Y (of input) |            |        |                   | Y (of database) |       |                                               |
+| CREATE VIEW                                     | Y + G        |            |        |                   |                 |       |                                               |
+| DELETE                                          |              |            |        | Y                 |                 |       |                                               |
+| DESCRIBE TABLE                                  | Y            |            |        |                   |                 |       |                                               |
+| DROP DATABASE                                   |              |            |        |                   | Y               |       |                                               |
+| DROP FUNCTION                                   |              |            |        |                   |                 | Y     |                                               |
+| DROP INDEX                                      |              |            |        |                   | Y               |       |                                               |
+| DROP MACRO                                      |              |            |        |                   |                 | Y     |                                               |
+| DROP TABLE                                      |              |            |        |                   | Y               |       |                                               |
+| DROP VIEW                                       |              |            |        |                   | Y               |       |                                               |
+| DROP VIEW PROPERTIES                            |              |            |        |                   | Y               |       |                                               |
+| EXPLAIN                                         | Y            |            |        |                   |                 |       |                                               |
+| INSERT                                          |              | Y          |        | Y (for OVERWRITE) |                 |       |                                               |
+| LOAD                                            |              | Y (output) |        | Y (output)        |                 |       | Y (input location)                            |
+| MSCK (metastore check)                          |              |            |        |                   |                 | Y     |                                               |
+| SELECT                                          | Y            |            |        |                   |                 |       |                                               |
+| SHOW COLUMNS                                    | Y            |            |        |                   |                 |       |                                               |
+| SHOW CREATE TABLE                               | Y+G          |            |        |                   |                 |       |                                               |
+| SHOW PARTITIONS                                 | Y            |            |        |                   |                 |       |                                               |
+| SHOW TABLE PROPERTIES                           | Y            |            |        |                   |                 |       |                                               |
+| SHOW TABLE STATUS                               | Y            |            |        |                   |                 |       |                                               |
+| TRUNCATE TABLE                                  |              |            |        |                   | Y               |       |                                               |
+| UPDATE                                          |              |            | Y      |                   |                 |       |                                               |
