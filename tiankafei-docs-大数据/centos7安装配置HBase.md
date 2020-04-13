@@ -23,16 +23,8 @@ vi /etc/profile
 ```
 
 ```shell
-export JAVA_HOME=/usr/java/default
-export JRE_HOME=$JAVA_HOME/jre
-export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
-#export HADOOP_HOME=/opt/bigdata/hadoop-2.8.3-local/hadoop-2.8.3
-#export HADOOP_HOME=/opt/bigdata/hadoop-2.8.3-full/hadoop-2.8.3
-export HADOOP_HOME=/opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3
-export ZOOKEEPER_HOME=/opt/bigdata/zookeeper-3.4.9
-export HIVE_HOME=/opt/bigdata/apache-hive-2.3.6
 export HBASE_HOME=/opt/bigdata/hbase-2.2.4-local/hbase-2.2.4
-export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$ZOOKEEPER_HOME/bin:$HIVE_HOME/bin:$HBASE_HOME/bin
+export PATH=$PATH:$HBASE_HOME/bin
 ```
 
 ```shell
