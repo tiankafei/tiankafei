@@ -15,6 +15,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <hive-version>2.3.6</hive-version>
+        <hbase-version>2.2.4</hbase-version>
         <spark-version>2.4.5</spark-version>
         <flink-version>1.9.2</flink-version>
     </properties>
@@ -83,18 +84,23 @@
             <artifactId>hive-jdbc</artifactId>
             <version>${hive-version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>${hbase-version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.4</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.specs</groupId>
             <artifactId>specs</artifactId>
             <version>1.2.5</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -138,3 +138,364 @@
 
 6. 频繁的溢写会导致产生很多的小文件，因此会进行文件的合并，文件在合并的时候有两种方式，minor和major，minor表示小范围文件的合并，major表示将所有的storefile文件都合并成一个，具体详细的过程，后续会讲解。
 
+## HBase基本操作
+
+### 通用命令
+
+```java
+//展示regionserver的task列表
+processlist
+//展示集群的状态
+status
+//table命令的帮助手册
+table_help
+//显示hbase的版本
+version
+//展示当前hbase的用户
+whoami
+```
+
+### namespace操作（相当于数据库的概念）
+
+```java
+//创建命名空间
+create_namespace 'my_ns'
+//修改命名空间的属性
+alter_namespace 'my_ns', {METHOD => 'set', 'PROPERTY_NAME' => 'PROPERTY_VALUE'}
+//删除命名空间
+drop_namespace 'my_ns'
+
+//获取命名空间的描述信息
+describe_namespace 'hbase'
+//展示所有的命名空间
+list_namespace
+//展示某个命名空间下的所有表
+list_namespace_tables 'hbase'
+//扫描表的全部数据
+scan 'hbase:meta'
+```
+
+### DDL操作
+
+```java
+//修改表的属性
+alter 't1', NAME => 'f1', VERSIONS => 5
+//创建表
+create 'test', 'cf'
+//查看表描述，只会展示列族的详细信息
+describe 'test'
+//禁用表
+disable 'test'
+//禁用所有表
+disable_all
+//删除表
+drop 'test'
+//删除所有表
+drop_all
+//启用表
+enable 'test'
+//启用所有表
+enable_all
+//判断表是否存在
+exists 'test'
+//获取表
+get_table 'test'
+//判断表是否被禁用
+is_disabled 'test'
+//判断表是否被启用
+is_enabled 'test'
+//展示所有表
+list
+//展示表占用的region
+list_regions 'test'
+//定位某个rowkey所在的行在哪一个region
+locate_region 'test'
+//展示所有的过滤器
+show_filters
+```
+
+### dml操作
+
+```java
+//向表中的某一个列插入值
+put 'test', 'key1', 'cf:name', 'zhangsan'
+put 'test', 'key1', 'cf:age', '13'
+put 'test', 'key2', 'cf:name', 'lisi'
+put 'test', 'key2', 'cf:age', '12'
+put 'test', 'key2', 'cf:sex', 'man'
+put 'test', 'key3', 'cf:name', 'wagnwu'
+put 'test', 'key3', 'cf:age', '10'
+//扫描表的全部数据
+scan 'test'
+//统计表的记录条数，默认一千条输出一次
+count 'test'
+//获取表的一行记录
+get 'test', 'key1'
+//删除表的某一个值
+delete 'test', 'key2', 'cf:sex'
+//向表中追加一个具体的值
+append 'test', 'key1', 'cf:name', '111'
+//删除指定行的所有元素值
+deleteall 'test', 'key3'
+//清空表的所有数据
+truncate 'test'
+//获取表的切片
+get_splits 'test'
+// 手动落磁盘命令
+flush 'test'
+
+// 查看hbase文件内容命令
+hbase hfile -p -f /hbase/data/default/test/cdf8d76af8eaef52133fb6c95d28fe60/cf/ba154563be134c52a75586f204b3dc68
+```
+
+## HBase Java API
+
+### 初始化系统环境
+
+```java
+Configuration conf = null;
+Connection conn = null;
+//表的管理对象
+Admin admin = null;
+Table table = null;
+//创建表的对象
+TableName tableName = TableName.valueOf("phone");
+@Before
+public void init() throws IOException {
+    //创建配置文件对象
+    conf = HBaseConfiguration.create();
+    //加载zookeeper的配置
+    conf.set("hbase.zookeeper.quorum","bigdata01,bigdata02,bigdata03,bigdata04");
+    //获取连接
+    conn = ConnectionFactory.createConnection(conf);
+    //获取对象
+    admin = conn.getAdmin();
+    //获取数据操作对象
+    table = conn.getTable(tableName);
+}
+```
+
+### 创建表
+
+```java
+@Test
+public void createTable() throws IOException {
+    //定义表描述对象
+    TableDescriptorBuilder tableDescriptorBuilder = TableDescriptorBuilder.newBuilder(tableName);
+    //定义列族描述对象
+    ColumnFamilyDescriptorBuilder columnFamilyDescriptorBuilder = ColumnFamilyDescriptorBuilder.newBuilder("cf".getBytes());
+    //添加列族信息给表
+    tableDescriptorBuilder.setColumnFamily(columnFamilyDescriptorBuilder.build());
+    if(admin.tableExists(tableName)){
+        //禁用表
+        admin.disableTable(tableName);
+        admin.deleteTable(tableName);
+    }
+    //创建表
+    admin.createTable(tableDescriptorBuilder.build());
+}
+```
+
+### 插入数据
+
+```java
+@Test
+public void insert() throws IOException {
+    Put put = new Put(Bytes.toBytes("2222"));
+    put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("name"),Bytes.toBytes("lisi"));
+    put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("age"),Bytes.toBytes("341"));
+    put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("sex"),Bytes.toBytes("women"));
+    table.put(put);
+}
+```
+
+### 通过get获取数据
+
+```java
+/**
+ * 通过get获取数据
+ * @throws IOException
+ */
+@Test
+public void get() throws IOException {
+	Get get = new Get(Bytes.toBytes("1111"));
+	//在服务端做数据过滤，挑选出符合需求的列
+	get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("name"));
+	get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("age"));
+	get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
+	Result result = table.get(get);
+	Cell cell1 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
+	Cell cell2 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
+	Cell cell3 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
+	String name = Bytes.toString(CellUtil.cloneValue(cell1));
+	String age = Bytes.toString(CellUtil.cloneValue(cell2));
+	String sex = Bytes.toString(CellUtil.cloneValue(cell3));
+	System.out.println(name);
+	System.out.println(age);
+	System.out.println(sex);
+}
+```
+
+### 获取表中所有的记录
+
+```java
+/**
+ * 获取表中所有的记录
+ */
+@Test
+public void scan() throws IOException {
+	Scan scan = new Scan();
+//        scan.withStartRow();
+//        scan.withStopRow();
+	ResultScanner rss = table.getScanner(scan);
+	for (Result rs: rss) {
+		Cell cell1 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
+		Cell cell2 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
+		Cell cell3 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
+		String name = Bytes.toString(CellUtil.cloneValue(cell1));
+		String age = Bytes.toString(CellUtil.cloneValue(cell2));
+		String sex = Bytes.toString(CellUtil.cloneValue(cell3));
+		System.out.println(name);
+		System.out.println(age);
+		System.out.println(sex);
+	}
+}
+```
+
+### 假设有10个用户，每个用户一年产生10000条记录
+
+```java
+SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+Random random = new Random();
+private String getDate(String s) {
+	return s+String.format("%02d%02d%02d%02d%02d",random.nextInt(12)+1,random.nextInt(31),random.nextInt(24),random.nextInt(60),random.nextInt(60));
+}
+public String getNumber(String str){
+	return str+String.format("%08d",random.nextInt(99999999));
+}
+/**
+ * 假设有10个用户，每个用户一年产生10000条记录
+ */
+@Test
+public void insertMangData() throws Exception {
+	for(int i = 0;i<10;i++){
+		List<Put> puts = new ArrayList<>();
+		String phoneNumber = getNumber("158");
+		for(int j = 0 ;j<10000;j++){
+			String dnum = getNumber("177");
+			String length = String.valueOf(random.nextInt(100));
+			String date = getDate("2019");
+			String type = String.valueOf(random.nextInt(2));
+			//rowkey
+			String rowkey = phoneNumber+"_"+(Long.MAX_VALUE-sdf.parse(date).getTime());
+			Put put = new Put(Bytes.toBytes(rowkey));
+			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("dnum"),Bytes.toBytes(dnum));
+			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("length"),Bytes.toBytes(length));
+			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("date"),Bytes.toBytes(date));
+			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("type"),Bytes.toBytes(type));
+			puts.add(put);
+		}
+		table.put(puts);
+	}
+}
+```
+
+### 查询某一个用户3月份的通话记录
+
+```java
+/**
+ * 查询某一个用户3月份的通话记录
+ */
+@Test
+public void scanByCondition() throws Exception {
+	Scan scan = new Scan();
+	String startRow = "15883348450_"+(Long.MAX_VALUE-sdf.parse("20190331000000").getTime());
+	String stopRow = "15883348450_"+(Long.MAX_VALUE-sdf.parse("20190301000000").getTime());
+	scan.withStartRow(Bytes.toBytes(startRow));
+	scan.withStopRow(Bytes.toBytes(stopRow));
+	ResultScanner rss = table.getScanner(scan);
+	for (Result rs:rss) {
+		System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
+		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
+		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
+		System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
+	}
+}
+```
+
+### 查询某个用户所有的主叫电话（type=1）
+
+```java
+/**
+ * 查询某个用户所有的主叫电话（type=1）
+ *  某个用户
+ *  type=1
+ *
+ */
+@Test
+public void getType() throws IOException {
+	Scan scan = new Scan();
+	//创建过滤器集合
+	FilterList filters = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+	//创建过滤器
+	SingleColumnValueFilter filter1 = new SingleColumnValueFilter(Bytes.toBytes("cf"),Bytes.toBytes("type"),CompareOperator.EQUAL,Bytes.toBytes("1"));
+	filters.addFilter(filter1);
+	//前缀过滤器
+	PrefixFilter filter2 = new PrefixFilter(Bytes.toBytes("15883348450"));
+	filters.addFilter(filter2);
+	scan.setFilter(filters);
+	ResultScanner rss = table.getScanner(scan);
+	for (Result rs:rss) {
+		System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
+		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
+		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
+		System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
+	}
+}
+```
+
+### 使用ProtoBuf插入
+
+```java
+@Test
+public void insertByProtoBuf() throws ParseException, IOException {
+    List<Put> puts = new ArrayList<>();
+    for(int i = 0;i<10;i++){
+        String phoneNumber = getNumber("158");
+        for(int j = 0 ;j<10000;j++){
+            String dnum = getNumber("177");
+            String length = String.valueOf(random.nextInt(100));
+            String date = getDate("2019");
+            String type = String.valueOf(random.nextInt(2));
+            //rowkey
+            String rowkey = phoneNumber+"_"+(Long.MAX_VALUE-sdf.parse(date).getTime());
+
+            Phone.PhoneDetail.Builder builder = Phone.PhoneDetail.newBuilder();
+            builder.setDate(date);
+            builder.setDnum(dnum);
+            builder.setLength(length);
+            builder.setType(type);
+            Put put = new Put(Bytes.toBytes(rowkey));
+            put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("phone"),builder.build().toByteArray());
+            puts.add(put);
+        }
+    }
+    table.put(puts);
+}
+```
+
+### 获取protoBuf存储的数据
+
+```java
+@Test
+public void getByProtoBuf() throws IOException {
+    Get get = new Get("15899309685_9223370490668224807".getBytes());
+    Result rs = table.get(get);
+    byte[] b = CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("phone")));
+    Phone.PhoneDetail phoneDetail = Phone.PhoneDetail.parseFrom(b);
+    System.out.println(phoneDetail);
+}
+```
+
+
+
