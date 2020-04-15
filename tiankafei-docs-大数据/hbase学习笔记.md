@@ -57,14 +57,14 @@
 3. 实时监控region server的上线和下线信息，并实时通知master
 4. 存储HBase的schema和table元数据
 
-#### Master
+#### HMaster
 
 1. 为region server分配region
 2. 负责region server的负载均衡
 3. 发现失效的region server并重新分配其上的region
-4. 管理用户对table的增删改操作
+4. 管理用户对table的增删改操作；负责管理HBase元数据，即表的结构、表存储的Region等元信息
 
-#### RegionServer
+#### HRegionServer
 
 1. region server维护region，处理对这些region的IO请求
 2. region server负责切分在运行过程中变得过大的region
@@ -98,41 +98,25 @@
 
 ### 读流程
 
-1. 客户端从zookeeper中获取meta表所在的regionserver节点信息（元数据存储地址）
+1. 客户端从zookeeper中获取meta表所在的regionserver节点的位置信息（`hbase:meta`存储在hbase命名空间中）
 
-   **`hbase:meta` 表是存储在 ZooKeeper 中的，故不会存储大量的元数据信息**
-
-2. 客户端访问meta表所在的regionserver节点，获取到region所在的regionserver信息
-
-   **根据`hbase:meta`获取详细的元数据信息**
+2. 客户端读取meta表，再根据meta表中查询得到的Namespace、表名和RowKey等相关信息，获取将要写入region所在的regionserver的位置信息
 
 3. 客户端访问具体的region所在的regionserver，找到对应的region及store
-
-   **拿到具体的元数据信息，下一步开始读数据了**
-
 4. 首先从memstore中读取数据，如果读取到了那么直接将数据返回，如果没有，则去blockcache读取数据
-
 5. 如果blockcache中读取到数据，则直接返回数据给客户端，如果读取不到，则遍历storefile文件，查找数据
-
 6. 如果从storefile中读取不到数据，则返回客户端为空，如果读取到数据，那么需要将数据先缓存到blockcache中（方便下一次读取），然后再将数据返回给客户端。
-
 7. blockcache是内存空间，如果缓存的数据比较多，满了之后会采用LRU策略，将比较老的数据进行删除。
 
 ### 写流程
 
-1. 客户端从zookeeper中获取meta表所在的regionserver节点信息（元数据存储地址）
+1. 客户端从zookeeper中获取meta表所在的regionserver节点的位置信息（`hbase:meta`存储在hbase命名空间中）
 
-   **`hbase:meta` 表是存储在 ZooKeeper 中的，故不会存储大量的元数据信息**
-
-2. 客户端访问meta表所在的regionserver节点，获取到region所在的regionserver信息
-
-   **需要根据`hbase:meta`获取详细的元数据信息**
+2. 客户端读取meta表，再根据meta表中查询得到的Namespace、表名和RowKey等相关信息，获取将要写入region所在的regionserver的位置信息
 
 3. 客户端访问具体的region所在的regionserver，找到对应的region及store
 
-   **拿到具体的元数据信息，下一步开始写入**
-
-4. 开始写数据，写数据的时候会先向hlog中写一份数据（方便memstore中数据丢失后能够根据hlog恢复数据，向hlog中写数据的时候也是优先写入内存，后台会有一个线程定期（每隔1秒）异步刷写数据到hdfs，如果hlog的数据也写入失败，那么数据就会发生丢失）
+4. 开始写数据，写数据的时候会先向hlog中写一份数据（预写日志，Write Ahead Log，WAL）。目的：方便memstore中数据丢失后能够根据hlog恢复数据。向hlog中写数据的时候也是优先写入内存，后台会有一个线程定期（每隔1秒）异步刷写数据到hdfs，如果hlog的数据也写入失败，那么数据就会发生丢失
 
 5. hlog写数据完成之后，会先将数据写入到memstore，memstore默认大小是64M，当memstore满了之后会进行统一的溢写操作，将memstore中的数据持久化到hdfs中
 
@@ -497,5 +481,23 @@ public void getByProtoBuf() throws IOException {
 }
 ```
 
+### Protobuf序列化
 
+> **简介：**Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。目前提供了 C++、Java、Python 三种语言的 API。
+
+关于Protobuf序列化的只是，自行搜索学习，这里不做过多介绍
+
+## HBase与MapReduce整合
+
+
+
+## HBase表设计
+
+
+
+## HBase优化
+
+
+
+## LSM树
 
