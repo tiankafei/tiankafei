@@ -21,7 +21,7 @@ hdfs dfs -put data.txt /data/wc/input
 ### 执行命令
 
 ```java
-java -jar jar包的名称
+hadoop -jar jar包的名称
 ```
 
 ### 可以在yarn上看到执行过程
