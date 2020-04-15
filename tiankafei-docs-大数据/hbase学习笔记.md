@@ -1,5 +1,9 @@
 # HBase学习笔记
 
+英文文档：[http://hbase.apache.org/book.html](http://hbase.apache.org/book.html)
+
+中文文档：[http://abloz.com/hbase/book.html](http://abloz.com/hbase/book.html)
+
 ## HBase简介
 
 > ​	Use Apache HBase™ when you need random, realtime read/write access to your Big Data. This project's goal is the hosting of very large tables -- billions of rows X millions of columns -- atop clusters of commodity hardware. Apache HBase is an open-source, distributed, versioned, non-relational database modeled after Google's Bigtable: A Distributed Storage System for Structured Data by Chang et al. Just as Bigtable leverages the distributed data storage provided by the Google File System, Apache HBase provides Bigtable-like capabilities on top of Hadoop and HDFS.
@@ -489,9 +493,232 @@ public void getByProtoBuf() throws IOException {
 
 ## HBase与MapReduce整合
 
-
+> [http://hbase.apache.org/book.html#mapreduce](http://hbase.apache.org/book.html#mapreduce)
 
 ## HBase表设计
+
+### 案例1：人员-角色（多对多）
+
+```
+人员有多个角色		角色有优先级
+角色有多个人员
+人员 添加删除角色
+角色 添加删除人员
+
+数据
+人员编号
+001
+002
+003
+
+角色编号
+100
+200
+300
+```
+
+#### HBase表结构设计
+
+##### 人员表:person
+
+```sql
+disable 'person'
+drop 'person'
+
+create 'person', 'cf1', 'cf2'
+put 'person', '001', 'cf1:name', '张三'
+put 'person', '001', 'cf1:age', '12'
+put 'person', '001', 'cf1:sex', 'man'
+put 'person', '002', 'cf1:name', '李四'
+put 'person', '002', 'cf1:age', '21'
+put 'person', '002', 'cf1:sex', 'mv'
+put 'person', '003', 'cf1:name', '王五'
+put 'person', '003', 'cf1:age', '31'
+put 'person', '003', 'cf1:sex', 'man'
+
+put 'person', '001', 'cf2:100', '1'
+put 'person', '001', 'cf2:200', '2'
+put 'person', '002', 'cf2:200', '1'
+put 'person', '003', 'cf2:300', '2'
+
+scan 'person'
+```
+
+| rowkey（pid） | cf1（基本属性）                  | cf2（角色列表）               |
+| ------------- | -------------------------------- | ----------------------------- |
+| 001           | cf1:name='',cf:age=‘’,cf1:sex='' | cf2:rid=优先级,cf3:rid=优先级 |
+| 002           |                                  |                               |
+| 003           |                                  |                               |
+
+##### 角色表:rule
+
+```sql
+disable 'rule'
+drop 'rule'
+
+create 'rule', 'cf1', 'cf2'
+put 'rule', '100', 'cf1:name', '教授'
+put 'rule', '100', 'cf1:description', '教授的描述'
+put 'rule', '200', 'cf1:name', '老师'
+put 'rule', '200', 'cf1:description', '老师的描述'
+put 'rule', '300', 'cf1:name', '学生'
+put 'rule', '300', 'cf1:description', '学生的描述'
+
+put 'rule', '100', 'cf2:001', '张三'
+put 'rule', '200', 'cf2:001', '张三'
+put 'rule', '200', 'cf2:002', '李四'
+put 'rule', '300', 'cf2:003', '王五'
+
+scan 'rule'
+```
+
+| rowkey（rid） | cf1（角色属性）                | cf2（人员列表）                   |
+| ------------- | ------------------------------ | --------------------------------- |
+| 100           | cf1:name='',cf2:description='' | cf2:pid=人员名称;cf2:pid=人员名称 |
+| 200           |                                |                                   |
+| 300           |                                |                                   |
+
+#### 删除人员的逻辑
+
+1. 根据人员id可以去cf2中找到所有的key值集合，
+
+   ```sql
+   get 'person', '001'
+   ```
+
+2. 遍历得到的key值集合，能够拿到角色id，然后去角色表中，删除cf2指定key值等于当前人员id的数据
+
+   ```sql
+   delete 'rule', '100', 'cf2:001'
+   delete 'rule', '200', 'cf2:001'
+   ```
+
+3. 根据人员id删除人员信息
+
+   ```sql
+   deleteall 'person', '001'
+   
+   scan 'person'
+   scan 'rule'
+   ```
+
+#### 删除角色的逻辑
+
+1. 根据角色id可以去cf2中找到所有的key值集合
+
+   ```sql
+   get 'rule', '200'
+   ```
+
+2. 遍历得到的key值集合，能够拿到人员id，然后去人员表中，删除cf2指定key值等于当前角色id的数据
+
+   ```sql
+   delete 'person', '002', 'cf2:200'
+   ```
+
+3. 根据角色id删除角色信息
+
+   ```sql
+   deleteall 'rule', '200'
+   
+   scan 'person'
+   scan 'rule'
+   ```
+
+### 案例2：部门-子部门（一对多）
+
+```
+查询 顶级部门
+查询 每个部门的所有子部门
+部门 添加、删除子部门
+部门 添加、删除
+```
+
+#### HBase表结构设计
+
+```sql
+disable 'dept'
+drop 'dept'
+
+create 'dept', 'cf1', 'cf2'
+put 'dept', '0_000', 'cf1:name', 'CEO'
+put 'dept', '0_000', 'cf2:1_001', '开发部'
+put 'dept', '0_000', 'cf2:1_002', '前端'
+
+put 'dept', '1_001', 'cf1:name', '开发部'
+put 'dept', '1_001', 'cf1:pid', '0_000'
+put 'dept', '1_001', 'cf2:2_001_001', '开发部1'
+put 'dept', '1_001', 'cf2:2_001_002', '开发部2'
+
+put 'dept', '2_001_001', 'cf1:name', '开发部1'
+put 'dept', '2_001_001', 'cf1:pid', '1_001'
+
+put 'dept', '2_001_002', 'cf1:name', '开发部2'
+put 'dept', '2_001_002', 'cf1:pid', '1_001'
+
+put 'dept', '1_002', 'cf1:name', '前端'
+put 'dept', '1_002', 'cf1:pid', '0_000'
+put 'dept', '1_002', 'cf2:2_002_001', '前端1'
+
+put 'dept', '2_002_001', 'cf1:name', '前端1'
+put 'dept', '2_002_001', 'cf1:pid', '1_002'
+
+scan 'dept'
+```
+
+| rowkey（层级id_部门id） | cf1（部门基本信息）               | cf2（子部门列表）       |
+| ----------------------- | --------------------------------- | ----------------------- |
+| 0_000                   | cf1:name='',,,,cf1:pid='父部门id' | cf2:子部门id=子部门名称 |
+| 1_001                   |                                   |                         |
+| 2_001_001               |                                   |                         |
+| 2_001_002               |                                   |                         |
+| 1_002                   |                                   |                         |
+| 2_002_001               |                                   |                         |
+
+#### 删除部门逻辑：如果有子部门也允许删除
+
+1. 根据部门id从cf1中查询pid，从cf2中查询子部门列表
+2. 根据pid查询父记录的子部门列表，把当前部门id，从父部门的子部门列表中删除
+3. 遍历当前部门的子部门列表，获取到其中一个子部门，再根据当前子部门id重复第3步，直到没有子部门为止，然后进行删除子部门，
+4. 最后根据当前部门id，删除本部门
+
+### 案例3：微博表设计
+
+```
+添加删除关注
+粉丝列表
+写微博
+查看首页，所有关注过的好友发布的最新微博
+查看某个用户发布的所有微博，降序排序
+```
+
+#### HBase表结构设计
+
+##### 粉丝和关注表
+
+| rowkey（pid） | cf1（关注列表）           | cf2（粉丝列表）           |
+| ------------- | ------------------------- | ------------------------- |
+| 001（小红）   | cf1:002=小黑,             | cf2:002=小黑,cf2:003=小白 |
+| 002（小黑）   | cf1:001=小红,cf1:003=小白 | cf2:001=小红,cf2:003=小白 |
+| 003（小白）   | cf1:001=小红,cf1:002=小黑 | cf2:002=小黑              |
+
+##### 微博表
+
+| rowkey（pid_(long.maxValue-时间戳)）->wid | cf1（微博信息）                             |
+| ----------------------------------------- | ------------------------------------------- |
+| pid_1561231321001213                      | cf1:name='',cf1:context='',cf1:timestamp='' |
+|                                           |                                             |
+|                                           |                                             |
+
+##### 微博收取表
+
+> 当前用户pid发了微博，就根据pid查询粉丝列表，给列表中的每一个用户的cf1增加一列，key为wid，值顺序自增。
+
+| rowkey（pid） | cf1（所有关注人发布微博的排序） |
+| ------------- | ------------------------------- |
+| pid           | cf1:wid=0,cf1:wid=1,cf1:wid=2   |
+| pid           |                                 |
+| pid           |                                 |
 
 
 
