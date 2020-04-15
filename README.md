@@ -149,7 +149,7 @@
 
 > 用到的各种算法的文档列表，包含以下：
 >
-> [二叉树-红黑树-AVL树-BST树](tiankafei-docs-算法/二叉树-红黑树-AVL树-BST树.md)
+> [数据结构与算法](tiankafei-docs-算法/数据结构与算法.md)
 
 # tiankafei-docs-云
 
