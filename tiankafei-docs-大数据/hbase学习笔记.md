@@ -714,15 +714,84 @@ scan 'dept'
 
 > 当前用户pid发了微博，就根据pid查询粉丝列表，给列表中的每一个用户的cf1增加一列，key为wid，值顺序自增。
 
-| rowkey（pid） | cf1（所有关注人发布微博的排序） |
-| ------------- | ------------------------------- |
-| pid           | cf1:wid=0,cf1:wid=1,cf1:wid=2   |
-| pid           |                                 |
-| pid           |                                 |
+```sql
+disable 'wbsq'
+drop 'wbsq'
+//创建表
+create 'wbsq', NAME => 'cf1', VERSIONS => 10000
+describe 'wbsq'
 
+put 'wbsq', '000', 'cf1:sq', '001'
+put 'wbsq', '000', 'cf1:sq', '002'
+put 'wbsq', '000', 'cf1:sq', '003'
+put 'wbsq', '000', 'cf1:sq', '004'
+put 'wbsq', '000', 'cf1:sq', '005'
+put 'wbsq', '000', 'cf1:sq', '006'
 
+-- 查看指定表，指定rowkey，指定列簇，指定列的所有版本的历史数据
+get 'wbsq', '000', {COLUMN=>'cf1:sq', VERSIONS=>10000}
+```
+
+> 版本会自动根据时间戳排序
+
+| rowkey（pid） | cf1（所有关注人发布微博的排序）（设置version=10000） |
+| ------------- | ---------------------------------------------------- |
+| pid           | cf1:sq=wid,cf1:sq=wid,cf1:sq=wid,cf1:sq=wid          |
+| pid           |                                                      |
+| pid           |                                                      |
 
 ## HBase优化
+
+### Pre-Creating Regions：与分区
+
+> 默认情况下，在创建HBase表的时候会自动创建一个region分区，当导入数据的时候，所有的HBase客户端都向这一个region写数据，直到这个region足够大了才进行切分。一种可以加快批量写入速度的方法是通过预先创建一些空的regions，这样当数据写入HBase时，会按照region分区情况，在集群内做数据的负载均衡。
+
+```java
+//第一种实现方式是使用admin对象的切分策略
+byte[] startKey = ...;      // your lowest key
+byte[] endKey = ...;        // your highest key
+int numberOfRegions = ...;  // # of regions to create
+admin.createTable(table, startKey, endKey, numberOfRegions);
+//第二种实现方式是用户自定义切片
+byte[][] splits = ...;   // create your own splits
+/*
+byte[][] splits = new byte[][] { Bytes.toBytes("100"),
+                Bytes.toBytes("200"), Bytes.toBytes("400"),
+                Bytes.toBytes("500") };
+*/
+admin.createTable(table, splits);
+```
+
+### Rowkey设计
+
+#### row key用来检索记录的三种方式
+
+1. 通过单个row key访问：即按照某个row key键值进行get操作；
+2. 通过row key的range进行scan：即通过设置startRowKey和endRowKey，在这个范围内进行扫描；
+3. 全表扫描：即直接扫描整张表中所有行记录。
+
+> 在HBase中，rowkey可以是任意字符串，最大长度64KB，实际应用中一般为10~100bytes，存为byte[]字节数组，一般设计成定长的。rowkey是按照字典序存储，因此，设计row key时，要充分利用这个排序特点，将经常一起读取的数据存储到一块，将最近可能会被访问的数据放在一块。
+
+#### Rowkey设计原则
+
+##### 越短越好，提高效率
+
+1. 数据的持久化文件HFile中是按照KeyValue存储的，如果rowkey过长，比如操作100字节，1000万行数据，单单是存储rowkey的数据就要占用10亿个字节，将近1G数据，这样会影响HFile的存储效率。
+2. HBase中包含缓存机制，每次会将查询的结果暂时缓存到HBase的内存中，如果rowkey字段过长，内存的利用率就会降低，系统不能缓存更多的数据，这样会降低检索效率。
+
+##### 散列原则--实现负载均衡
+
+> 如果Rowkey是按时间戳的方式递增，不要将时间放在二进制码的前面，建议将Rowkey的高位作为散列字段，由程序循环生成，低位放时间字段，这样将提高数据均衡分布在每个Regionserver实现负载均衡的几率。如果没有散列字段，首字段直接是时间信息将产生所有新数据都在一个 RegionServer上堆积的热点现象，这样在做数据检索的时候负载将会集中在个别RegionServer，降低查询效率。
+
+1. 加盐：添加随机值
+2. hash：采用md5散列算法取前4位做前缀
+3. 反转：将手机号反转
+
+##### 唯一原则--字典序排序存储
+
+> 必须在设计上保证其唯一性，rowkey是按照字典顺序排序存储的，因此，设计rowkey的时候，要充分利用这个排序的特点，将经常读取的数据存储到一块，将最近可能会被访问的数据放到一块。	
+
+### 列簇的设计
 
 
 
