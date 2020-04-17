@@ -134,12 +134,12 @@
             </plugin>
 
             <!-- maven 打jar包需要插件 -->
-            <plugin>
+            <!--<plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <!-- 设置false后是去掉 MySpark-1.0-SNAPSHOT-jar-with-dependencies.jar 后的 “-jar-with-dependencies” -->
-                    <!--<appendAssemblyId>false</appendAssemblyId>-->
+                    &lt;!&ndash; 设置false后是去掉 MySpark-1.0-SNAPSHOT-jar-with-dependencies.jar 后的 “-jar-with-dependencies” &ndash;&gt;
+                    &lt;!&ndash;<appendAssemblyId>false</appendAssemblyId>&ndash;&gt;
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
@@ -158,7 +158,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
