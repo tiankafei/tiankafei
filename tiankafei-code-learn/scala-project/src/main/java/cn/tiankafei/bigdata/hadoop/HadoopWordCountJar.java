@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
@@ -31,6 +32,11 @@ public class HadoopWordCountJar {
         }
         TextOutputFormat.setOutputPath(job, outFile);
 
+
+        job.setInputFormatClass(TextInputFormat.class);
+        TextInputFormat.setMinInputSplitSize(job, 111);
+        TextInputFormat.setMaxInputSplitSize(job, 111);
+        conf.set(FileInputFormat.SPLIT_MINSIZE, "111");
         // 指定Map处理类
         job.setMapperClass(HadoopMapper.class);
         // 指定map的输出key类型
