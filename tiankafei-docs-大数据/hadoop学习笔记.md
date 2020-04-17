@@ -347,6 +347,63 @@ public void getFileBlock() throws Exception {
 
 ![MapReduce](./images/MapReduce.png)
 
+### MapReduce详细的计算过程
+
+![MapReduce详细的计算过程](./images/MapReduce详细的计算过程.png)
+
+> 数据以一条记录为单位经过Map方法映射成KV，相同的key为一组，这一组数据调用一次Reduce方法，在方法内迭代计算这一组的数据。
+
+1. 一个 split（切片）对应一个Map任务
+
+2. 一个文件在HDFS中会根据blockSize切成N多个块
+
+3. 默认情况下，一个 split（切片）对应一个block块
+
+   **加入 split（切片）的概念是为了和block块解耦，可以支持动态调整切片大小**
+
+4. 所有的Map执行完成之后，才能进行Reduce环节执行（线性依赖关系）
+
+5. 有几个Reduce，就可以按照key的hash模上几，拉取到不同的Reduce进程里（Reduce中组是不能再分的）
+
+6. Map的并行度有split（切片）来决定，Reduce的并行度（默认一个）有人来决定
+
+7. 一个Reduce执行的任务交一个分区
+
+**比例关系：**
+
+1. block > split
+   - 1:1（默认）
+   - N:1
+   - 1:N（CPU密集型）
+2. split > map
+   - 1:1
+3. map > reduce
+   - N:1（默认）
+   - N:N（人为指定多个Reduce，同一个组不能被打散到不同的 partition（分区，task任务，一个Reduce任务）里）
+   - 1:1
+   - 1:N（人为指定map为1个，多个reduce处理不同的组）
+4. group(key) > partition
+   - 1:1（一个组去到一个partition）
+   - N:1（一个partition（task任务，Reduce任务）处理所有的组）
+   - N:N
+
+### MapReduce详细拆解过程
+
+> <font color="red">**迭代器模式是批量计算中非常优美的实现形！！！**</font>
+
+![MapReduce详细拆解过程](./images/MapReduce详细拆解过程.png)
+
+1. 切片会格式化出记录，以记录为单位调用map方法
+2. map的输出映射成KV，kv会参与分区计算，拿着key算出P，分区号，K,V,P
+3. 内存缓冲区溢写磁盘时：<font color="red">**做一个2次排序：分区有序，且分区内key有序**</font>；未来相同的一组key会相邻的排在一起
+   - 如果此时不做排序，当执行Reduce时，每一个Reduce都要全量遍历该文件，增大磁盘IO
+   - 当内存缓存区溢写磁盘时，进行一次排序（内存比磁盘快了10万倍，在内存中排序不影响性能，缓冲区有大小限制，不会特别大）
+4. reduce的归并排序其实可以和reduce方法的计算同时发生，尽量减少IO。因为有迭代器模式的支持！！！
+
+
+
+
+
 
 
 ## Yarn
