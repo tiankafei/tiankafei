@@ -25,28 +25,26 @@ public class HadoopWordCountCluster {
         // 把本地jar包上传到hadoop上
         job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\scala-project\\target\\scala-project-1.0-SNAPSHOT-jar-with-dependencies.jar");
         job.setJarByClass(HadoopWordCountCluster.class);
+        // 指定job的名称
         job.setJobName("tiankafei-wordcount");
-
-//        hdfs dfs -mkdir /data/wc/input
-//        hdfs dfs -mkdir /data/wc/output
-
-//        hdfs dfs -ls /
-//        hdfs dfs -ls /data/wc/input
-//        hdfs dfs -ls /data/wc/output
-
-//        hdfs dfs -put data.txt /data/wc/input
+        // 指定输入文件的路径
         Path inFile = new Path("/data/wc/input");
         TextInputFormat.addInputPath(job, inFile);
-
+        // 指定输出文件的路径
         Path outFile = new Path("/data/wc/output");
         if (outFile.getFileSystem(conf).exists(outFile)) {
             outFile.getFileSystem(conf).delete(outFile, true);
         }
         TextOutputFormat.setOutputPath(job, outFile);
 
+        // 指定Map处理类
         job.setMapperClass(HadoopMapper.class);
+        // 指定map的输出key类型
         job.setMapOutputKeyClass(Text.class);
+        // 指定map的输出value类型
         job.setMapOutputValueClass(IntWritable.class);
+
+        // 指定reduce处理类
         job.setReducerClass(HadoopReduce.class);
 
         job.waitForCompletion(true);
