@@ -414,6 +414,8 @@ hdfs dfs -ls /
 
 ## 高可用 HA 配置
 
+![HDFS-HA解决方案](./images/HDFS-HA解决方案.jpg)
+
 ### 部署策略
 
 |        | NameNode | ZKFC | JournalNode | Zookeeper | DataNode |
