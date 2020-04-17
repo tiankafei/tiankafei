@@ -32,11 +32,6 @@ public class HadoopWordCountJar {
         }
         TextOutputFormat.setOutputPath(job, outFile);
 
-
-        job.setInputFormatClass(TextInputFormat.class);
-        TextInputFormat.setMinInputSplitSize(job, 111);
-        TextInputFormat.setMaxInputSplitSize(job, 111);
-        conf.set(FileInputFormat.SPLIT_MINSIZE, "111");
         // 指定Map处理类
         job.setMapperClass(HadoopMapper.class);
         // 指定map的输出key类型
