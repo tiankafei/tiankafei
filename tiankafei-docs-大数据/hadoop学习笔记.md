@@ -400,10 +400,393 @@ public void getFileBlock() throws Exception {
    - 当内存缓存区溢写磁盘时，进行一次排序（内存比磁盘快了10万倍，在内存中排序不影响性能，缓冲区有大小限制，不会特别大）
 4. reduce的归并排序其实可以和reduce方法的计算同时发生，尽量减少IO。因为有迭代器模式的支持！！！
 
+## 计算向数据移动
 
+> HDFS肯定会暴露block块的位置
+>
+> 1. DataNode负责管理Block
+> 2. TaskTracker一般会和DataNode部署在一起，主要负责任务的执行
+>
+> 最终计算向数据移动的实现：**代码在某一个节点被启动，通过cli上传，TaskTracker下载，并启动相应的任务**
 
+![JobTracker](./images/计算如何向数据移动.png)
 
+### Client
 
+1. 有执行逻辑（MR）
+2. 会根据每次的计算数据，咨询NameNode获取元数据的Block信息（offset，locations），并计算split（切片），最终得到一个切片的清单（包含：split的偏移量，以及对应的map任务应该移动到哪些节点 locations ）
+3. 生成计算程序未来运行时的相关配置文件
+4. 未来的移动应该相对可靠：**client会将jar，split清单，配置文件，上传到HDFS的目录中，此时的副本默认数是10**
+5. 调用JobTracker，通知要启动一个计算程序了，并且告诉文件放在了HDFS的哪些地方
 
+### JobTracker
 
-## Yarn
+**作用**
+
+1. 资源管理
+2. 任务调度
+
+**存在的问题**
+
+1. 单点故障
+
+2. 压力过大
+
+3. 集成了资源管理和任务调度，两者耦合
+
+   **未来新的计算框架不能复用资源管理**
+
+   - 重复造轮子
+   - 因为各自实现资源管理，但是他们不熟在同一批硬件上，因为隔离，所以不能感知对方的使用，会造成资源争抢
+
+**执行流程：**
+
+1. 从HDFS中取回split清单
+2. 根据自己收到的TaskTracker汇报的资源，最终确定每一个split对应的map应该去到哪一个节点，得到一个确定的清单
+3. 未来TaskTracker在做心跳的时候，会取回分配给自己的任务信息
+
+### TaskTracker
+
+1. 任务管理
+2. 资源汇报
+
+**执行流程：**
+
+1. 在心跳取回任务信息
+2. 从HDFS中下载jar和相关配置文件到本地
+3. 最终启动任务描述中的Map/Reduce
+
+## Yarn：资源管理
+
+### 架构图
+
+> 1. MR-cli （切片清单 / 配置 / jar / 上传到HDFS）
+> 2. 访问RM申请AppMaster
+> 3. RM选择一台不忙的节点通知NM启动一个Container，在里面反射生成一个MRAppMaster
+> 4. 启动MRAppMaster，从HDFS上下载切片清单，向RM申请资源
+> 5. RM根据自己掌握的资源情况得到一个确定的清单，通知NM来启动container
+> 6. container启动后会反向注册到已经启动的MRAppMaster进程
+> 7. MRAppMaster（更像曾经的JobTracker阉割版(不带资源管理)）最终会将任务Task发送给container（消息）
+> 8. container会反射相应的Task类为对象，调用方法执行，其结果就是执行我们的业务逻辑代码
+> 9. 计算框架都有Task失败重试的机制。
+
+![yarn架构-资源管理](./images/yarn架构-资源管理.gif)
+
+> **结论：**
+>
+> 1. 单点故障
+>    - 曾经是全局的，JobTracker如果挂了，整个计算层没有了调度
+>    - yarn：每一个app都有一个自己的AppMaster调度，AppMaster支持失败重试
+> 2. 压力过大
+>    - yarn中每个计算程序自由AppMaster，每个AppMaster只负责自己计算程序的任务调度，AppMaster是在不同的节点中启动的，默认有了负载的光环
+> 3. 集成了资源管理和任务调度，两者耦合
+>    - 因为yarn只是资源管理，不负责具体的任务调度；只要计算框架继承了yarn的AppMaster，大家都可以使用一个统一视图的资源层。
+
+### 模型
+
+#### ResourceManager
+
+> ResourceManager支持HA模式
+
+**作用：**
+
+1. 与客户端进行交互，处理来自于客户端的请求，如查询应用的运行情况等。
+2. 启动和管理各个应用的ApplicationMaster，并且为ApplicationMaster申请第一个Container用于启动和在它运行失败时将它重新启动。
+3. 管理NodeManager，接收来自NodeManager的资源和节点健康情况汇报，并向NodeManager下达管理资源命令，例如kill掉某个container。
+4. 资源管理和调度，接收来自ApplicationMaster的资源申请，并且为其进行分配。这个是它的最重要的职能。
+
+#### NodeManager
+
+**作用：**
+
+1. NodeManager通过**ResourceTrackerProtocol**协议向RM注册，汇报节点的健康状态以及Container的运行状态，并领取RM下发的命令例如重新初始化Container，清理Container等；在这个协议中NodeManager主动向RM发请求，RM响应NodeManager的请求。
+2. 应用程序的ApplicationMaster通过**ContainerManagementProtocol**协议与NodeManager通信发起针对Container的命令操作，例如：启动，杀死Container，获取Container的运行状态等；在该协议中ApplicationMaster主动向NodeManager发送请求，NodeManager接收到请求做出响应。
+
+#### ApplicationMaster
+
+> ApplicationMaster实际上是特定计算框架的一个实例，每种计算框架都有自己独特的ApplicationMaster，负责与ResourceManager协商资源，并和NodeManager协同来执行和监控Container。MapReduce只是可以运行在YARN上一种计算框架。
+
+**作用：**
+
+1. 初始化向ResourceManager报告自己的活跃信息的进程
+2. 计算应用程序的的资源需求。
+   - 静态资源：在任务提交时就能确定，并且在AM运行时不再变化的资源，比如MapReduce程序中的Map的数量
+   - 动态资源： AM在运行时确定要请求数量的资源是动态资源。
+3. 将需求转换为YARN调度器可以理解的ResourceRequest，与调度器协商申请资源
+4. 与NodeManager协同合作使用分配的Container
+5. 跟踪正在运行的Container状态，监控它的运行。
+6. 对Container或者节点失败的情况进行处理，在必要的情况下重新申请资源。
+
+#### container
+
+> 可以让JVM进程在上面运行；被NodeManager监控资源使用情况，如果发现有超额，NodeManager直接把该进程 kill 掉；使用 cgroup 内核级技术，在启动JVM进程时，由Kernel 约束死使用的资源。
+
+1. 是集群中单个节点上的一组资源（内存，CPU，归属于哪个NM），由NM监控，由RM调度
+2. 接收ApplicationMaster的任务启动命令
+3. 主动拉取HDFS上的jar和相关的配置，作为任务运行环境
+
+### 总结
+
+1. 1.x 中 JobTracker、TaskTracker是常服务。
+2. 2.x 只有没有了这些服务；相对的，MR的cli、【调度】、【任务】，这些都是临时的服务了。
+
+## MapReduce的Java实现
+
+### WordCount
+
+#### Map
+
+```java
+package cn.tiankafei.bigdata.hadoop;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HadoopMapper extends Mapper<Object, Text, Text, IntWritable> {
+    //hadoop框架中，它是一个分布式  数据 ：序列化、反序列化
+    //hadoop有自己一套可以序列化、反序列化
+    //或者自己开发类型必须：实现序列化，反序列化接口，实现比较器接口
+    //排序 -》  比较  这个世界有2种顺序：  8  11，    字典序、数值顺序
+
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    /**
+     * 对key进行分组
+     * @param key           是每一行字符串自己第一个字节面向源文件的偏移量
+     * @param value         每一行的字符串
+     * @param context       上下文对象
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+        StringTokenizer stringTokenizer = new StringTokenizer(value.toString());
+        while (stringTokenizer.hasMoreTokens()) {
+            word.set(stringTokenizer.nextToken());
+            context.write(word, one);
+        }
+    }
+
+}
+```
+
+#### Reduce
+
+```java
+package cn.tiankafei.bigdata.hadoop;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+import java.io.IOException;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HadoopReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+
+    private IntWritable result = new IntWritable();
+
+    /**
+     * 相同的key为一组 ，这一组数据调用一次reduce
+     * @param key          map阶段的key值
+     * @param values       map阶段的value值
+     * @param context      上下文对象
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        int sum = 0;
+        for (IntWritable intWritable : values) {
+            sum += intWritable.get();
+        }
+        result.set(sum);
+        context.write(key, result);
+    }
+
+}
+
+```
+
+#### 打成jar包上传到集群环境上
+
+```java
+package cn.tiankafei.bigdata.hadoop;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+/**
+ * 打成jar包上传到集群环境上，在集群上通过 hadoop -jar 运行
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HadoopWordCountJar {
+
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration(true);
+        Job job = Job.getInstance(conf);
+        job.setJarByClass(HadoopWordCountJar.class);
+        // 指定job的名称
+        job.setJobName("tiankafei-wordcount");
+        // 指定输入文件的路径
+        Path inFile = new Path("/data/wc/input");
+        TextInputFormat.addInputPath(job, inFile);
+        // 指定输出文件的路径
+        Path outFile = new Path("/data/wc/output");
+        if (outFile.getFileSystem(conf).exists(outFile)) {
+            outFile.getFileSystem(conf).delete(outFile, true);
+        }
+        TextOutputFormat.setOutputPath(job, outFile);
+
+        // 指定Map处理类
+        job.setMapperClass(HadoopMapper.class);
+        // 指定map的输出key类型
+        job.setMapOutputKeyClass(Text.class);
+        // 指定map的输出value类型
+        job.setMapOutputValueClass(IntWritable.class);
+
+        // 指定reduce处理类
+        job.setReducerClass(HadoopReduce.class);
+
+        job.waitForCompletion(true);
+    }
+
+}
+```
+
+#### 客户端在windows上执行，map,reduce在集群环境上运行
+
+```java
+package cn.tiankafei.bigdata.hadoop;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+/**
+ * 客户端在windows上执行，map,reduce在集群环境上运行
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HadoopWordCountCluster {
+
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration(true);
+        System.setProperty("HADOOP_USER_NAME", "root");
+        // 让框架知道在windows上执行，需要设置为true
+        conf.set("mapreduce.app-submission.cross-platform", "true");
+
+        Job job = Job.getInstance(conf);
+        // 把本地jar包上传到hadoop上
+        job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\scala-project\\target\\scala-project-1.0-SNAPSHOT-jar-with-dependencies.jar");
+        job.setJarByClass(HadoopWordCountCluster.class);
+        // 指定job的名称
+        job.setJobName("tiankafei-wordcount");
+        // 指定输入文件的路径
+        Path inFile = new Path("/data/wc/input");
+        TextInputFormat.addInputPath(job, inFile);
+        // 指定输出文件的路径
+        Path outFile = new Path("/data/wc/output");
+        if (outFile.getFileSystem(conf).exists(outFile)) {
+            outFile.getFileSystem(conf).delete(outFile, true);
+        }
+        TextOutputFormat.setOutputPath(job, outFile);
+
+        // 指定Map处理类
+        job.setMapperClass(HadoopMapper.class);
+        // 指定map的输出key类型
+        job.setMapOutputKeyClass(Text.class);
+        // 指定map的输出value类型
+        job.setMapOutputValueClass(IntWritable.class);
+
+        // 指定reduce处理类
+        job.setReducerClass(HadoopReduce.class);
+
+        job.waitForCompletion(true);
+    }
+
+}
+```
+
+#### 完全本地执行
+
+```java
+package cn.tiankafei.bigdata.hadoop;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+/**
+ * 客户端在windows上执行，map,reduce也在windows上运行
+ * 需要配置本地hadoop环境变量，且hadoop的bin目录需要有winutils.exe这个文件
+ *
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HadoopWordCountLocal {
+
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration(true);
+        System.setProperty("HADOOP_USER_NAME", "root");
+        // 让框架知道在windows上执行，需要设置为true
+        conf.set("mapreduce.app-submission.cross-platform", "true");
+        // 让框架在本地运行
+        conf.set("mapreduce.framework.name", "local");
+
+        Job job = Job.getInstance(conf);
+        job.setJarByClass(HadoopWordCountLocal.class);
+        // 指定job的名称
+        job.setJobName("tiankafei-wordcount");
+        // 指定输入文件的路径
+        Path inFile = new Path("/data/wc/input");
+        TextInputFormat.addInputPath(job, inFile);
+        // 指定输出文件的路径
+        Path outFile = new Path("/data/wc/output");
+        if (outFile.getFileSystem(conf).exists(outFile)) {
+            outFile.getFileSystem(conf).delete(outFile, true);
+        }
+        TextOutputFormat.setOutputPath(job, outFile);
+
+        // 指定Map处理类
+        job.setMapperClass(HadoopMapper.class);
+        // 指定map的输出key类型
+        job.setMapOutputKeyClass(Text.class);
+        // 指定map的输出value类型
+        job.setMapOutputValueClass(IntWritable.class);
+
+        // 指定reduce处理类
+        job.setReducerClass(HadoopReduce.class);
+
+        job.waitForCompletion(true);
+    }
+
+}
+```
+
