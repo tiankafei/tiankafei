@@ -530,6 +530,938 @@ public void getFileBlock() throws Exception {
 1. 1.x 中 JobTracker、TaskTracker是常服务。
 2. 2.x 只有没有了这些服务；相对的，MR的cli、【调度】、【任务】，这些都是临时的服务了。
 
+## Client源码分析
+
+> ```
+> 没有计算发生
+> 很重要：支撑了计算向数据移动和计算的并行度
+> 1，Checking the input and output specifications of the job.
+> 2，Computing the InputSplits for the job.  // split  ->并行度和计算向数据移动就可以实现了
+> 3，Setup the requisite accounting information for the DistributedCache of the job, if necessary.
+> 4，Copying the job's jar and configuration to the map-reduce system directory on the distributed file-system.
+> 5，Submitting the job to the JobTracker and optionally monitoring it's status
+> MR框架默认的输入格式化类： TextInputFormat < FileInputFormat < InputFormat
+>                   						getSplits()
+>    minSize = 1
+>    maxSize = Long.Max
+>    blockSize = file
+>    splitSize = Math.max(minSize, Math.min(maxSize, blockSize));  //默认split大小等于block大小
+>       切片split是一个窗口机制：（调大split改小，调小split改大）
+>          如果我想得到一个比block大的split：
+>    if ((blkLocations[i].getOffset() <= offset < blkLocations[i].getOffset() + blkLocations[i].getLength()))
+>    split：解耦 存储层和计算层
+>       1，file
+>       2，offset
+>       3，length
+>       4，hosts    //支撑的计算向数据移动
+> ```
+
+![split切片主要流程](./images/split切片主要流程.png)
+
+### 默认输入格式化类
+
+```java
+// 输入格式化类，默认为TextInputFormat.class
+// 可以通过以下几种方式进行干预
+// 1. job.setInputFormatClass(TextInputFormat.class);
+return (Class<? extends InputFormat<?,?>>) 
+      conf.getClass(INPUT_FORMAT_CLASS_ATTR, TextInputFormat.class);
+```
+
+### 计算切片
+
+```java
+/** 
+  * Generate the list of files and make them into FileSplits.
+  * @param job the job context
+  * @throws IOException
+  */
+public List<InputSplit> getSplits(JobContext job) throws IOException {
+    StopWatch sw = new StopWatch().start();
+    // 默认值：1，
+    // 可以通过以下几种方式进行干预
+    // 1. TextInputFormat.setMinInputSplitSize(job, 111);
+    // 2. conf.set(FileInputFormat.SPLIT_MINSIZE, "111");
+    // 3. 也可以通过运行主方法时外部传参
+    long minSize = Math.max(getFormatMinSplitSize(), getMinSplitSize(job));
+    // 默认值：Long.MAX_VALUE
+    // 可以通过以下几种方式进行干预
+    // 1. TextInputFormat.setMaxInputSplitSize(job, 111);
+    // 2. conf.set(FileInputFormat.SPLIT_MAXSIZE, "111");
+    // 3. 也可以通过运行主方法时外部传参
+    long maxSize = getMaxSplitSize(job);
+
+    // generate splits
+    List<InputSplit> splits = new ArrayList<InputSplit>();
+    // 获取当前job计算需要的所有文件的状态列表
+    List<FileStatus> files = listStatus(job);
+    for (FileStatus file: files) {
+        Path path = file.getPath();
+        long length = file.getLen();
+        if (length != 0) {
+            // 每一个文件所有的block块信息
+            BlockLocation[] blkLocations;
+            if (file instanceof LocatedFileStatus) {
+                blkLocations = ((LocatedFileStatus) file).getBlockLocations();
+            } else {
+                FileSystem fs = path.getFileSystem(job.getConfiguration());
+                blkLocations = fs.getFileBlockLocations(file, 0, length);
+            }
+            // 是否可以做切片，分布式文件可以做切片
+            if (isSplitable(job, path)) {
+                // 块文件大小
+                long blockSize = file.getBlockSize();
+                // 计算切片大小：splitSize = Math.max(minSize, Math.min(maxSize, blockSize));
+                // minSize默认是1，maxSize默认事Long.MAX_VALUE
+                // block只要有内容，blockSize肯定大于1，故默认 splitSize = blockSize
+                // 切片 split 是一个窗口机制（调大split改小值，调小split改大值）
+                // 如果我想得到一个比block大的split,
+                // 人为干预 minSize 的大小，只要比 blockSize 大即可
+                // 如果我想得到一个比block小的split,
+                // 人为干预 maxSize 的大小，只要比 blockSize 小即可
+                long splitSize = computeSplitSize(blockSize, minSize, maxSize);
+                
+                // 找到每一个切片对应的块的偏移量的算法
+                // 切片最重要的四个属性：1.file;2.offset;3.length;4.hosts//支持计算向数据移动
+// blkLocations[i].getOffset() <= offset < blkLocations[i].getOffset() + blkLocations[i].getLength()
+                long bytesRemaining = length;
+                while (((double) bytesRemaining)/splitSize > SPLIT_SLOP) {
+                    int blkIndex = getBlockIndex(blkLocations, length-bytesRemaining);
+                    splits.add(makeSplit(path, length-bytesRemaining, splitSize,
+                                         blkLocations[blkIndex].getHosts(),
+                                         blkLocations[blkIndex].getCachedHosts()));
+                    bytesRemaining -= splitSize;
+                }
+                // 处理最后一个block块
+                if (bytesRemaining != 0) {
+                    int blkIndex = getBlockIndex(blkLocations, length-bytesRemaining);
+                    splits.add(makeSplit(path, length-bytesRemaining, bytesRemaining,
+                                         blkLocations[blkIndex].getHosts(),
+                                         blkLocations[blkIndex].getCachedHosts()));
+                }
+// 经过上面的算法实例demo
+// 文件大小：100
+// 块大小：　10
+// 切片大小：15
+// offset,splitSize,	blockIndex
+// 0,15					0
+// 15,15				1
+// 30,15				3
+// 45,15				4
+// 60,15				6
+// 75,15				7
+// 90,10,				9
+            } else { // not splitable
+                splits.add(makeSplit(path, 0, length, blkLocations[0].getHosts(),
+                                     blkLocations[0].getCachedHosts()));
+            }
+        } else { 
+            //Create empty hosts array for zero length files
+            splits.add(makeSplit(path, 0, length, new String[0]));
+        }
+    }
+    // Save the number of input files for metrics/loadgen
+    job.getConfiguration().setLong(NUM_INPUT_FILES, files.size());
+    sw.stop();
+    if (LOG.isDebugEnabled()) {
+        LOG.debug("Total # of splits generated by getSplits: " + splits.size()
+                  + ", TimeTaken: " + sw.now(TimeUnit.MILLISECONDS));
+    }
+    return splits;
+}
+```
+
+### 上传切片清单和配置
+
+```java
+List<InputSplit> splits = input.getSplits(job);
+T[] array = (T[]) splits.toArray(new InputSplit[splits.size()]);
+
+// sort the splits into order based on size, so that the biggest
+// go first
+Arrays.sort(array, new SplitComparator());
+// 切片清单和配置写入hdfs
+JobSplitWriter.createSplitFiles(jobSubmitDir, conf, 
+                                jobSubmitDir.getFileSystem(conf), array);
+```
+
+## MapTask源码分析
+
+> ```
+> input ->  map  -> output
+> input:(split+format)  通用的知识，未来的spark底层也是
+> 	来自于我们的输入格式化类给我们实际返回的记录读取器对象
+> 		TextInputFormat->LineRecordreader
+> 			split: file , offset , length
+> 			init():
+> 				in = fs.open(file).seek(offset)
+> 				除了第一个切片对应的map，之后的map都在init环节，
+> 				从切片包含的数据中，让出第一行，并把切片的起始更新为切片的第二行。
+> 				换言之，前一个map会多读取一行，来弥补hdfs把数据切割的问题~！
+> 			nextKeyValue():
+> 				1，读取数据中的一条记录对key，value赋值
+> 				2，返回布尔值
+> 			getCurrentKey():
+> 			getCurrentValue():
+> 
+> output：
+> NewOutputCollector
+> 	partitioner
+> 	collector
+> 		MapOutputBuffer:
+> 		*：
+> 		map输出的KV会序列化成字节数组，算出P，最中是3元组：K,V,P
+> 		buffer是使用的环形缓冲区：
+> 		1，本质还是线性字节数组
+> 		2，赤道，两端方向放KV,索引
+> 		3，索引：是固定宽度：16B：4个int
+> 			a)P
+> 			b)KS
+> 			c)VS
+> 			d)VL
+> 		5,如果数据填充到阈值：80%，启动线程：
+> 			快速排序80%数据，同时map输出的线程向剩余的空间写
+> 			快速排序的过程：是比较key排序，但是移动的是索引
+> 		6，最终，溢写时只要按照排序的索引，卸下的文件中的数据就是有序的
+> 			注意：排序是二次排序（索引里有P，排序先比较索引的P决定顺序，然后在比较相同P中的Key的顺序）
+> 				分区有序  ： 最后reduce拉取是按照分区的
+> 				分区内key有序： 因为reduce计算是按分组计算，分组的语义（相同的key排在了一起）
+> 		7，调优：combiner
+> 			1，其实就是一个map里的reduce
+> 				按组统计
+> 			2，发生在哪个时间点：
+> 				a)内存溢写数据之前排序之后
+> 					溢写的io变少~！
+> 				b)最终map输出结束，过程中，buffer溢写出多个小文件（内部有序）
+> 					minSpillsForCombine = 3
+> 					map最终会把溢写出来的小文件合并成一个大文件：
+> 						避免小文件的碎片化对未来reduce拉取数据造成的随机读写
+> 					也会触发combine
+> 			3，combine注意
+> 				必须幂等
+> 				例子：
+> 					1，求和计算
+> 					1，平均数计算
+> 						80：数值和，个数和
+> 		init():
+> 			spillper = 0.8
+> 			sortmb = 100M
+> 			sorter = QuickSort
+> 			comparator = job.getOutputKeyComparator();
+> 				1，优先取用户覆盖的自定义排序比较器
+> 				2，保底，取key这个类型自身的比较器
+> 			combiner ？reduce
+> 				minSpillsForCombine = 3
+> 
+> 			SpillThread
+> 				sortAndSpill()
+> 					if (combinerRunner == null)
+> ```
+
+### Map主要流程：MapTask.run();
+
+```java
+try {
+    input.initialize(split, mapperContext);
+    // 调用map的run方法
+    mapper.run(mapperContext);
+    // 计算完成
+    mapPhase.complete();
+    // 执行排序
+    setPhase(TaskStatus.Phase.SORT);
+    // 状态更新
+    statusUpdate(umbilical);
+    // 关闭输入流
+    input.close();
+    input = null;
+    // 关闭输出流
+    output.close(mapperContext);
+    output = null;
+} finally {
+    closeQuietly(input);
+    closeQuietly(output, mapperContext);
+}
+```
+
+### 前置参数组装：MapTask.runNewMapper();
+
+```java
+// make a task context so we can get the classes
+// 构造一个任务的上下文对象，方便在后续的处理逻辑中拿到相关的配置
+org.apache.hadoop.mapreduce.TaskAttemptContext taskContext =
+    new org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl(job, 
+                                                                getTaskID(),
+                                                                reporter);
+// make a mapper
+// 根据指定的 MapperClass 类反射出对象
+org.apache.hadoop.mapreduce.Mapper<INKEY,INVALUE,OUTKEY,OUTVALUE> mapper =
+    (org.apache.hadoop.mapreduce.Mapper<INKEY,INVALUE,OUTKEY,OUTVALUE>)
+    ReflectionUtils.newInstance(taskContext.getMapperClass(), job);
+// make the input format
+// 根据指定的或者默认的输入格式化类，反射出具体的输入对象
+org.apache.hadoop.mapreduce.InputFormat<INKEY,INVALUE> inputFormat =
+    (org.apache.hadoop.mapreduce.InputFormat<INKEY,INVALUE>)
+    ReflectionUtils.newInstance(taskContext.getInputFormatClass(), job);
+// rebuild the input split
+// 根据当前map获取要读取文件块的切片（此时计算已经移动到对应的节点上了）
+org.apache.hadoop.mapreduce.InputSplit split = null;
+split = getSplitDetails(new Path(splitIndex.getSplitLocation()),
+                        splitIndex.getStartOffset());
+LOG.info("Processing split: " + split);
+// 构造一个记录读取器：把切片和输入格式化类传了进去，就意味着，这个类可以进行制定偏移位置的数据读取了
+org.apache.hadoop.mapreduce.RecordReader<INKEY,INVALUE> input =
+    new NewTrackingRecordReader<INKEY,INVALUE>
+    (split, inputFormat, reporter, taskContext);
+
+job.setBoolean(JobContext.SKIP_RECORDS, isSkipping());
+org.apache.hadoop.mapreduce.RecordWriter output = null;
+
+// get an output object
+// 构造输出格式化类
+if (job.getNumReduceTasks() == 0) {
+    output = 
+        new NewDirectOutputCollector(taskContext, job, umbilical, reporter);
+} else {
+    // 引用！！！Map输出的处理：创建分区器！！！
+    output = new NewOutputCollector(taskContext, job, umbilical, reporter);
+}
+// 包装 MapContext 的上下文对象
+org.apache.hadoop.mapreduce.MapContext<INKEY, INVALUE, OUTKEY, OUTVALUE> 
+    mapContext = 
+    new MapContextImpl<INKEY, INVALUE, OUTKEY, OUTVALUE>(job, getTaskID(), 
+                                                         input, output, 
+                                                         committer, 
+                                                         reporter, split);
+// 再包装 Mapper 的上下文对象
+org.apache.hadoop.mapreduce.Mapper<INKEY,INVALUE,OUTKEY,OUTVALUE>.Context 
+    mapperContext = 
+    new WrappedMapper<INKEY, INVALUE, OUTKEY, OUTVALUE>().getMapContext(
+    mapContext);
+```
+
+### Map的run方法
+
+```java
+/**
+  * Expert users can override this method for more complete control over the
+  * execution of the Mapper.
+  * @param context
+  * @throws IOException
+  */
+public void run(Context context) throws IOException, InterruptedException {
+    setup(context);
+    try {
+        // 这个context里面包装了很多层对象，最重要的是包装了 记录读取器以及切片
+        while (context.nextKeyValue()) {
+            map(context.getCurrentKey(), context.getCurrentValue(), context);
+        }
+    } finally {
+        cleanup(context);
+    }
+}
+```
+
+### RecordReader初始化对于切割字符串的处理
+
+```java
+public void initialize(InputSplit genericSplit,
+                       TaskAttemptContext context) throws IOException {
+    // 先拿到切片
+    FileSplit split = (FileSplit) genericSplit;
+    Configuration job = context.getConfiguration();
+    this.maxLineLength = job.getInt(MAX_LINE_LENGTH, Integer.MAX_VALUE);
+    // 拿到切片的起始位置（也就是offset）
+    start = split.getStart();
+    // 计算切片的终止位置
+    end = start + split.getLength();
+    final Path file = split.getPath();
+
+    // open the file and seek to the start of the split（打开文件系统，并seek到切片的起始位置）
+    // 拿到分布式文件系统的文件对象
+    final FileSystem fs = file.getFileSystem(job);
+    // 打开要读取的文件（面向文件的输入流）
+    fileIn = fs.open(file);
+
+    CompressionCodec codec = new CompressionCodecFactory(job).getCodec(file);
+    if (null!=codec) {
+        isCompressedInput = true;
+        decompressor = CodecPool.getDecompressor(codec);
+        if (codec instanceof SplittableCompressionCodec) {
+            final SplitCompressionInputStream cIn =
+                ((SplittableCompressionCodec)codec).createInputStream(
+                fileIn, decompressor, start, end,
+                SplittableCompressionCodec.READ_MODE.BYBLOCK);
+            in = new CompressedSplitLineReader(cIn, job,
+                                               this.recordDelimiterBytes);
+            start = cIn.getAdjustedStart();
+            end = cIn.getAdjustedEnd();
+            filePosition = cIn;
+        } else {
+            if (start != 0) {
+                // So we have a split that is only part of a file stored using
+                // a Compression codec that cannot be split.
+                throw new IOException("Cannot seek in " +
+                                      codec.getClass().getSimpleName() + " compressed stream");
+            }
+            in = new SplitLineReader(codec.createInputStream(fileIn,
+                                                             decompressor), job, this.recordDelimiterBytes);
+            filePosition = fileIn;
+        }
+    } else {
+        // seek到自己要读的切片的起始位置
+        fileIn.seek(start);
+        in = new UncompressedSplitLineReader(
+            fileIn, job, this.recordDelimiterBytes, split.getLength());
+        filePosition = fileIn;
+    }
+    // If this is not the first split, we always throw away first record
+    // because we always (except the last split) read one extra line in
+    // next() method.
+    if (start != 0) {
+        // 非第一个block块，读取第一行数据丢弃，更改偏移量的起始（从第二行开始）
+        // 意味着每一个map都会读取下一个block块的第一行数据
+        // 或多或少都会有一部分数据移动的过程，但这个数据不是全量，只是一部分，总的来说要比单机快很多
+        start += in.readLine(new Text(), 0, maxBytesToConsume(start));
+    }
+    this.pos = start;
+}
+```
+
+### RecordReader的nextKeyValue方法
+
+```java
+public boolean nextKeyValue() throws IOException {
+    if (key == null) {
+        // map任务第一次进来，key为空，创建一个LongWritable对象，（）
+        key = new LongWritable();
+    }
+    // 设置起始偏移量
+    key.set(pos);
+    if (value == null) {
+        value = new Text();
+    }
+    int newSize = 0;
+    // We always read one extra line, which lies outside the upper
+    // split limit i.e. (end - 1)
+    while (getFilePosition() <= end || in.needAdditionalRecordAfterSplit()) {
+        if (pos == 0) {
+            newSize = skipUtfByteOrderMark();
+        } else {
+            // 读出一行，value的引用指向了行记录，
+            newSize = in.readLine(value, maxLineLength, maxBytesToConsume(pos));
+            // 更改起始位置偏移量，因为这一行已经读过了
+            pos += newSize;
+        }
+
+        if ((newSize == 0) || (newSize < maxLineLength)) {
+            break;
+        }
+
+        // line too long. try again
+        LOG.info("Skipped line of size " + newSize + " at pos " + 
+                 (pos - newSize));
+    }
+    // 只要能够拿到行大小（newSize），就返回true，同时给key，value进行赋值
+    if (newSize == 0) {
+        key = null;
+        value = null;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+@Override
+public LongWritable getCurrentKey() {
+    return key;
+}
+
+@Override
+public Text getCurrentValue() {
+    return value;
+}
+```
+
+### Map输出的处理：创建分区器
+
+```java
+NewOutputCollector(org.apache.hadoop.mapreduce.JobContext jobContext,
+                   JobConf job,
+                   TaskUmbilicalProtocol umbilical,
+                   TaskReporter reporter
+                  ) throws IOException, ClassNotFoundException {
+    // 构造 MapOutputBuffer 对象
+    // Class<?>[] collectorClasses = job.getClasses(
+  	// 			JobContext.MAP_OUTPUT_COLLECTOR_CLASS_ATTR, MapOutputBuffer.class);
+    collector = createSortingCollector(job, reporter);
+    // 有多少个reduce任务，就有多少个分区
+    partitions = jobContext.getNumReduceTasks();
+    if (partitions > 1) {
+        // 创建多分区的分区器，默认：Partitioner.class
+        // 可通过job.setPartitionerClass(clc.class);进行干预；
+        partitioner = (org.apache.hadoop.mapreduce.Partitioner<K,V>)
+            ReflectionUtils.newInstance(jobContext.getPartitionerClass(), job);
+    } else {
+        // 创建单分区的分区器为0
+        partitioner = new org.apache.hadoop.mapreduce.Partitioner<K,V>() {
+            @Override
+            public int getPartition(K key, V value, int numPartitions) {
+                return partitions - 1;
+            }
+        };
+    }
+}
+// 获取分区器对象
+public Class<? extends Partitioner<?,?>> getPartitionerClass() 
+    throws ClassNotFoundException {
+    // 默认分区器：HashPartitioner
+    return (Class<? extends Partitioner<?,?>>) 
+        conf.getClass(PARTITIONER_CLASS_ATTR, HashPartitioner.class);
+}
+
+public class HashPartitioner<K, V> extends Partitioner<K, V> {
+    /** Use {@link Object#hashCode()} to partition. */
+    public int getPartition(K key, V value,
+                            int numReduceTasks) {
+        // HashPartitioner分区器：
+        // 计算分区个数：key.hashCode() & Integer.MAX_VALUE得到一个非负的整数 模上 reduce 任务的个数
+        return (key.hashCode() & Integer.MAX_VALUE) % numReduceTasks;
+    }
+
+}
+```
+
+### Map输出的缓冲区初始化：MapOutputBuffer.init
+
+```java
+public void init(MapOutputCollector.Context context
+				) throws IOException, ClassNotFoundException {
+  job = context.getJobConf();
+  reporter = context.getReporter();
+  mapTask = context.getMapTask();
+  mapOutputFile = mapTask.getMapOutputFile();
+  sortPhase = mapTask.getSortPhase();
+  spilledRecordsCounter = reporter.getCounter(TaskCounter.SPILLED_RECORDS);
+  partitions = job.getNumReduceTasks();
+  rfs = ((LocalFileSystem)FileSystem.getLocal(job)).getRaw();
+
+  //sanity checks
+  // 溢写的阈值，默认0.8
+  final float spillper =
+	job.getFloat(JobContext.MAP_SORT_SPILL_PERCENT, (float)0.8);
+  // 缓冲区总大小，默认100M
+  final int sortmb = job.getInt(JobContext.IO_SORT_MB, 100);
+  // 内存缓存
+  indexCacheMemoryLimit = job.getInt(JobContext.INDEX_CACHE_MEMORY_LIMIT,
+									 INDEX_CACHE_MEMORY_LIMIT_DEFAULT);
+  if (spillper > (float)1.0 || spillper <= (float)0.0) {
+	throw new IOException("Invalid \"" + JobContext.MAP_SORT_SPILL_PERCENT +
+		"\": " + spillper);
+  }
+  if ((sortmb & 0x7FF) != sortmb) {
+	throw new IOException(
+		"Invalid \"" + JobContext.IO_SORT_MB + "\": " + sortmb);
+  }
+  // 排序器，默认快排：QuickSort.class
+  sorter = ReflectionUtils.newInstance(job.getClass("map.sort.class",
+		QuickSort.class, IndexedSorter.class), job);
+  // buffers and accounting
+  int maxMemUsage = sortmb << 20;
+  maxMemUsage -= maxMemUsage % METASIZE;
+  kvbuffer = new byte[maxMemUsage];
+  bufvoid = kvbuffer.length;
+  kvmeta = ByteBuffer.wrap(kvbuffer)
+	 .order(ByteOrder.nativeOrder())
+	 .asIntBuffer();
+  setEquator(0);
+  bufstart = bufend = bufindex = equator;
+  kvstart = kvend = kvindex;
+
+  maxRec = kvmeta.capacity() / NMETA;
+  softLimit = (int)(kvbuffer.length * spillper);
+  bufferRemaining = softLimit;
+  LOG.info(JobContext.IO_SORT_MB + ": " + sortmb);
+  LOG.info("soft limit at " + softLimit);
+  LOG.info("bufstart = " + bufstart + "; bufvoid = " + bufvoid);
+  LOG.info("kvstart = " + kvstart + "; length = " + maxRec);
+
+  // k/v serialization
+  // 获取比较器，默认：Map输出的Key类型自身的比较器
+  comparator = job.getOutputKeyComparator();
+  // 获取map输出的key的类型
+  keyClass = (Class<K>)job.getMapOutputKeyClass();
+  // 获取map输出的value的类型
+  valClass = (Class<V>)job.getMapOutputValueClass();
+  // 序列化key、value进行输出
+  serializationFactory = new SerializationFactory(job);
+  keySerializer = serializationFactory.getSerializer(keyClass);
+  keySerializer.open(bb);
+  valSerializer = serializationFactory.getSerializer(valClass);
+  valSerializer.open(bb);
+
+  // output counters
+  mapOutputByteCounter = reporter.getCounter(TaskCounter.MAP_OUTPUT_BYTES);
+  mapOutputRecordCounter =
+	reporter.getCounter(TaskCounter.MAP_OUTPUT_RECORDS);
+  fileOutputByteCounter = reporter
+	  .getCounter(TaskCounter.MAP_OUTPUT_MATERIALIZED_BYTES);
+
+  // compression
+  if (job.getCompressMapOutput()) {
+	Class<? extends CompressionCodec> codecClass =
+	  job.getMapOutputCompressorClass(DefaultCodec.class);
+	codec = ReflectionUtils.newInstance(codecClass, job);
+  } else {
+	codec = null;
+  }
+
+  // combiner 优化器（也是一个比例问题（优化前和优化后的记录条数比），达到一定的比例，才会进行优化）
+  // 对map进行自身数据的reduce处理，可以减少io传输
+  final Counters.Counter combineInputCounter =
+	reporter.getCounter(TaskCounter.COMBINE_INPUT_RECORDS);
+  combinerRunner = CombinerRunner.create(job, getTaskID(), 
+										 combineInputCounter,
+										 reporter, null);
+  if (combinerRunner != null) {
+	final Counters.Counter combineOutputCounter =
+	  reporter.getCounter(TaskCounter.COMBINE_OUTPUT_RECORDS);
+	combineCollector= new CombineOutputCollector<K,V>(combineOutputCounter, reporter, job);
+  } else {
+	combineCollector = null;
+  }
+  spillInProgress = false;
+  minSpillsForCombine = job.getInt(JobContext.MAP_COMBINE_MIN_SPILLS, 3);
+  spillThread.setDaemon(true);
+  spillThread.setName("SpillThread");
+  spillLock.lock();
+  try {
+    // 溢写线程（排序，combiner、溢写）（combiner是在溢写的线程中执行的）
+	spillThread.start();
+	while (!spillThreadRunning) {
+	  spillDone.await();
+	}
+  } catch (InterruptedException e) {
+	throw new IOException("Spill thread failed to initialize", e);
+  } finally {
+	spillLock.unlock();
+  }
+  if (sortSpillException != null) {
+	throw new IOException("Spill thread failed to initialize",
+		sortSpillException);
+  }
+}
+```
+
+### Map输出的处理：SpillThread溢写线程
+
+```java
+// 溢写线程
+protected class SpillThread extends Thread {
+    @Override
+    public void run() {
+        spillLock.lock();
+        spillThreadRunning = true;
+        try {
+            while (true) {
+                spillDone.signal();
+                while (!spillInProgress) {
+                    spillReady.await();
+                }
+                try {
+                    spillLock.unlock();
+                    sortAndSpill();
+                } catch (Throwable t) {
+                    sortSpillException = t;
+                } finally {
+                    spillLock.lock();
+                    if (bufend < bufstart) {
+                        bufvoid = kvbuffer.length;
+                    }
+                    kvstart = kvend;
+                    bufstart = bufend;
+                    spillInProgress = false;
+                }
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            spillLock.unlock();
+            spillThreadRunning = false;
+        }
+    }
+}
+```
+
+```java
+// 排序并溢写
+private void sortAndSpill() throws IOException, ClassNotFoundException,
+InterruptedException {
+    //approximate the length of the output file to be the length of the
+    //buffer + header lengths for the partitions
+    final long size = distanceTo(bufstart, bufend, bufvoid) +
+        partitions * APPROX_HEADER_LENGTH;
+    FSDataOutputStream out = null;
+    try {
+        // create spill file
+        final SpillRecord spillRec = new SpillRecord(partitions);
+        final Path filename =
+            mapOutputFile.getSpillFileForWrite(numSpills, size);
+        out = rfs.create(filename);
+
+        final int mstart = kvend / NMETA;
+        final int mend = 1 + // kvend is a valid record
+            (kvstart >= kvend
+             ? kvstart
+             : kvmeta.capacity() + kvstart) / NMETA;
+        sorter.sort(MapOutputBuffer.this, mstart, mend, reporter);
+        int spindex = mstart;
+        final IndexRecord rec = new IndexRecord();
+        final InMemValBytes value = new InMemValBytes();
+        for (int i = 0; i < partitions; ++i) {
+            IFile.Writer<K, V> writer = null;
+            try {
+                long segmentStart = out.getPos();
+                FSDataOutputStream partitionOut = CryptoUtils.wrapIfNecessary(job, out);
+                writer = new Writer<K, V>(job, partitionOut, keyClass, valClass, codec,
+                                          spilledRecordsCounter);
+                // 溢写过程中调用 combiner 优化器
+                if (combinerRunner == null) {
+                    // spill directly
+                    DataInputBuffer key = new DataInputBuffer();
+                    while (spindex < mend &&
+                           kvmeta.get(offsetFor(spindex % maxRec) + PARTITION) == i) {
+                        final int kvoff = offsetFor(spindex % maxRec);
+                        int keystart = kvmeta.get(kvoff + KEYSTART);
+                        int valstart = kvmeta.get(kvoff + VALSTART);
+                        key.reset(kvbuffer, keystart, valstart - keystart);
+                        getVBytesForOffset(kvoff, value);
+                        writer.append(key, value);
+                        ++spindex;
+                    }
+                } else {
+                    int spstart = spindex;
+                    while (spindex < mend &&
+                           kvmeta.get(offsetFor(spindex % maxRec)
+                                      + PARTITION) == i) {
+                        ++spindex;
+                    }
+                    // Note: we would like to avoid the combiner if we've fewer
+                    // than some threshold of records for a partition
+                    if (spstart != spindex) {
+                        combineCollector.setWriter(writer);
+                        RawKeyValueIterator kvIter =
+                            new MRResultIterator(spstart, spindex);
+                        combinerRunner.combine(kvIter, combineCollector);
+                    }
+                }
+
+                // close the writer
+                writer.close();
+
+                // record offsets
+                rec.startOffset = segmentStart;
+                rec.rawLength = writer.getRawLength() + CryptoUtils.cryptoPadding(job);
+                rec.partLength = writer.getCompressedLength() + CryptoUtils.cryptoPadding(job);
+                spillRec.putIndex(rec, i);
+
+                writer = null;
+            } finally {
+                if (null != writer) writer.close();
+            }
+        }
+
+        if (totalIndexCacheMemory >= indexCacheMemoryLimit) {
+            // create spill index file
+            Path indexFilename =
+                mapOutputFile.getSpillIndexFileForWrite(numSpills, partitions
+                                                        * MAP_OUTPUT_INDEX_RECORD_LENGTH);
+            spillRec.writeToFile(indexFilename, job);
+        } else {
+            indexCacheList.add(spillRec);
+            totalIndexCacheMemory +=
+                spillRec.size() * MAP_OUTPUT_INDEX_RECORD_LENGTH;
+        }
+        LOG.info("Finished spill " + numSpills);
+        ++numSpills;
+    } finally {
+        if (out != null) out.close();
+    }
+}
+```
+
+### Map输出的处理：context.write(key, value);
+
+```java
+// WrappedMapper 的 write方法
+@Override
+public void write(KEYOUT key, VALUEOUT value) throws IOException,
+InterruptedException {
+    mapContext.write(key, value);
+}
+
+// MapContextImpl 父类 TaskInputOutputContextImpl 的 write方法
+/**
+  * Generate an output key/value pair.
+  */
+public void write(KEYOUT key, VALUEOUT value
+                 ) throws IOException, InterruptedException {
+    output.write(key, value);
+}
+// NewOutputCollector 的 write方法
+@Override
+public void write(K key, V value) throws IOException, InterruptedException {
+    // key value partition
+    collector.collect(key, value,
+                      partitioner.getPartition(key, value, partitions));
+}
+```
+
+### Map输出的缓冲区：MapOutputBuffer
+
+```java
+/**
+ * Serialize the key, value to intermediate storage.
+ * When this method returns, kvindex must refer to sufficient unused
+ * storage to store one METADATA.
+ */
+// key value partition
+public synchronized void collect(K key, V value, final int partition
+								 ) throws IOException {
+  reporter.progress();
+  if (key.getClass() != keyClass) {
+	throw new IOException("Type mismatch in key from map: expected "
+						  + keyClass.getName() + ", received "
+						  + key.getClass().getName());
+  }
+  if (value.getClass() != valClass) {
+	throw new IOException("Type mismatch in value from map: expected "
+						  + valClass.getName() + ", received "
+						  + value.getClass().getName());
+  }
+  if (partition < 0 || partition >= partitions) {
+	throw new IOException("Illegal partition for " + key + " (" +
+		partition + ")");
+  }
+  checkSpillException();
+  bufferRemaining -= METASIZE;
+  if (bufferRemaining <= 0) {
+	// start spill if the thread is not running and the soft limit has been
+	// reached
+	spillLock.lock();
+	try {
+	  do {
+		if (!spillInProgress) {
+		  final int kvbidx = 4 * kvindex;
+		  final int kvbend = 4 * kvend;
+		  // serialized, unspilled bytes always lie between kvindex and
+		  // bufindex, crossing the equator. Note that any void space
+		  // created by a reset must be included in "used" bytes
+		  final int bUsed = distanceTo(kvbidx, bufindex);
+		  final boolean bufsoftlimit = bUsed >= softLimit;
+		  if ((kvbend + METASIZE) % kvbuffer.length !=
+			  equator - (equator % METASIZE)) {
+			// spill finished, reclaim space
+			resetSpill();
+			bufferRemaining = Math.min(
+				distanceTo(bufindex, kvbidx) - 2 * METASIZE,
+				softLimit - bUsed) - METASIZE;
+			continue;
+		  } else if (bufsoftlimit && kvindex != kvend) {
+			// spill records, if any collected; check latter, as it may
+			// be possible for metadata alignment to hit spill pcnt
+			startSpill();
+			final int avgRec = (int)
+			  (mapOutputByteCounter.getCounter() /
+			  mapOutputRecordCounter.getCounter());
+			// leave at least half the split buffer for serialization data
+			// ensure that kvindex >= bufindex
+			final int distkvi = distanceTo(bufindex, kvbidx);
+			final int newPos = (bufindex +
+			  Math.max(2 * METASIZE - 1,
+					  Math.min(distkvi / 2,
+							   distkvi / (METASIZE + avgRec) * METASIZE)))
+			  % kvbuffer.length;
+			setEquator(newPos);
+			bufmark = bufindex = newPos;
+			final int serBound = 4 * kvend;
+			// bytes remaining before the lock must be held and limits
+			// checked is the minimum of three arcs: the metadata space, the
+			// serialization space, and the soft limit
+			bufferRemaining = Math.min(
+				// metadata max
+				distanceTo(bufend, newPos),
+				Math.min(
+				  // serialization max
+				  distanceTo(newPos, serBound),
+				  // soft limit
+				  softLimit)) - 2 * METASIZE;
+		  }
+		}
+	  } while (false);
+	} finally {
+	  spillLock.unlock();
+	}
+  }
+
+  try {
+	// 序列化 key bytes into buffer
+	int keystart = bufindex;
+	keySerializer.serialize(key);
+	if (bufindex < keystart) {
+	  // wrapped the key; must make contiguous
+	  bb.shiftBufferedKey();
+	  keystart = 0;
+	}
+	// 序列化 value bytes into buffer
+	final int valstart = bufindex;
+	valSerializer.serialize(value);
+	// It's possible for records to have zero length, i.e. the serializer
+	// will perform no writes. To ensure that the boundary conditions are
+	// checked and that the kvindex invariant is maintained, perform a
+	// zero-length write into the buffer. The logic monitoring this could be
+	// moved into collect, but this is cleaner and inexpensive. For now, it
+	// is acceptable.
+	bb.write(b0, 0, 0);
+
+	// the record must be marked after the preceding write, as the metadata
+	// for this record are not yet written
+	int valend = bb.markRecord();
+
+	mapOutputRecordCounter.increment(1);
+	mapOutputByteCounter.increment(
+		distanceTo(keystart, valend, bufvoid));
+
+	// write accounting info
+	kvmeta.put(kvindex + PARTITION, partition);
+	kvmeta.put(kvindex + KEYSTART, keystart);
+	kvmeta.put(kvindex + VALSTART, valstart);
+	kvmeta.put(kvindex + VALLEN, distanceTo(valstart, valend));
+	// advance kvindex
+	kvindex = (kvindex - NMETA + kvmeta.capacity()) % kvmeta.capacity();
+  } catch (MapBufferTooSmallException e) {
+	LOG.info("Record too large for in-memory buffer: " + e.getMessage());
+	spillSingleRecord(key, value, partition);
+	mapOutputRecordCounter.increment(1);
+	return;
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+## ReduceTask源码分析
+
+
+
+
+
+
 ## MapReduce的Java实现
 
 ### WordCount
@@ -556,7 +1488,9 @@ public class HadoopMapper extends Mapper<Object, Text, Text, IntWritable> {
     //或者自己开发类型必须：实现序列化，反序列化接口，实现比较器接口
     //排序 -》  比较  这个世界有2种顺序：  8  11，    字典序、数值顺序
 
+    // value 会被序列化，所以放在外面，可以减少对象的创建，减少gc的发生
     private final static IntWritable one = new IntWritable(1);
+    // key 会被序列化，所以放在外面，可以减少对象的创建，减少gc的发生
     private Text word = new Text();
 
     /**
@@ -790,142 +1724,13 @@ public class HadoopWordCountLocal {
 }
 ```
 
-## Client源码分析
-
-![split切片主要流程](./images/split切片主要流程.png)
-
-### 默认输入格式化类
-
-```java
-// 输入格式化类，默认为TextInputFormat.class
-// 可以通过以下几种方式进行干预
-// 1. job.setInputFormatClass(TextInputFormat.class);
-return (Class<? extends InputFormat<?,?>>) 
-      conf.getClass(INPUT_FORMAT_CLASS_ATTR, TextInputFormat.class);
-```
-
-### 计算切片
-
-```java
-/** 
-  * Generate the list of files and make them into FileSplits.
-  * @param job the job context
-  * @throws IOException
-  */
-public List<InputSplit> getSplits(JobContext job) throws IOException {
-    StopWatch sw = new StopWatch().start();
-    // 默认值：1，
-    // 可以通过以下几种方式进行干预
-    // 1. TextInputFormat.setMinInputSplitSize(job, 111);
-    // 2. conf.set(FileInputFormat.SPLIT_MINSIZE, "111");
-    // 3. 也可以通过运行主方法时外部传参
-    long minSize = Math.max(getFormatMinSplitSize(), getMinSplitSize(job));
-    // 默认值：Long.MAX_VALUE
-    // 可以通过以下几种方式进行干预
-    // 1. TextInputFormat.setMaxInputSplitSize(job, 111);
-    // 2. conf.set(FileInputFormat.SPLIT_MAXSIZE, "111");
-    // 3. 也可以通过运行主方法时外部传参
-    long maxSize = getMaxSplitSize(job);
-
-    // generate splits
-    List<InputSplit> splits = new ArrayList<InputSplit>();
-    // 获取当前job计算需要的所有文件的状态列表
-    List<FileStatus> files = listStatus(job);
-    for (FileStatus file: files) {
-        Path path = file.getPath();
-        long length = file.getLen();
-        if (length != 0) {
-            // 每一个文件所有的block块信息
-            BlockLocation[] blkLocations;
-            if (file instanceof LocatedFileStatus) {
-                blkLocations = ((LocatedFileStatus) file).getBlockLocations();
-            } else {
-                FileSystem fs = path.getFileSystem(job.getConfiguration());
-                blkLocations = fs.getFileBlockLocations(file, 0, length);
-            }
-            // 是否可以做切片，分布式文件可以做切片
-            if (isSplitable(job, path)) {
-                // 块文件大小
-                long blockSize = file.getBlockSize();
-                // 计算切片大小：splitSize = Math.max(minSize, Math.min(maxSize, blockSize));
-                // minSize默认是1，maxSize默认事Long.MAX_VALUE
-                // block只要有内容，blockSize肯定大于1，故默认 splitSize = blockSize
-                // 切片 split 是一个窗口机制（调大split改小值，调小split改大值）
-                // 如果我想得到一个比block大的split,
-                // 人为干预 minSize 的大小，只要比 blockSize 大即可
-                // 如果我想得到一个比block小的split,
-                // 人为干预 maxSize 的大小，只要比 blockSize 小即可
-                long splitSize = computeSplitSize(blockSize, minSize, maxSize);
-                
-                // 找到每一个切片对应的块的偏移量的算法
-                // 切片最重要的四个属性：1.file;2.offset;3.length;4.hosts//支持计算向数据移动
-// blkLocations[i].getOffset() <= offset < blkLocations[i].getOffset() + blkLocations[i].getLength()
-                long bytesRemaining = length;
-                while (((double) bytesRemaining)/splitSize > SPLIT_SLOP) {
-                    int blkIndex = getBlockIndex(blkLocations, length-bytesRemaining);
-                    splits.add(makeSplit(path, length-bytesRemaining, splitSize,
-                                         blkLocations[blkIndex].getHosts(),
-                                         blkLocations[blkIndex].getCachedHosts()));
-                    bytesRemaining -= splitSize;
-                }
-                // 处理最后一个block块
-                if (bytesRemaining != 0) {
-                    int blkIndex = getBlockIndex(blkLocations, length-bytesRemaining);
-                    splits.add(makeSplit(path, length-bytesRemaining, bytesRemaining,
-                                         blkLocations[blkIndex].getHosts(),
-                                         blkLocations[blkIndex].getCachedHosts()));
-                }
-// 经过上面的算法实例demo
-// 文件大小：100
-// 块大小：　10
-// 切片大小：15
-// offset,splitSize,	blockIndex
-// 0,15					0
-// 15,15				1
-// 30,15				3
-// 45,15				4
-// 60,15				6
-// 75,15				7
-// 90,10,				9
-            } else { // not splitable
-                splits.add(makeSplit(path, 0, length, blkLocations[0].getHosts(),
-                                     blkLocations[0].getCachedHosts()));
-            }
-        } else { 
-            //Create empty hosts array for zero length files
-            splits.add(makeSplit(path, 0, length, new String[0]));
-        }
-    }
-    // Save the number of input files for metrics/loadgen
-    job.getConfiguration().setLong(NUM_INPUT_FILES, files.size());
-    sw.stop();
-    if (LOG.isDebugEnabled()) {
-        LOG.debug("Total # of splits generated by getSplits: " + splits.size()
-                  + ", TimeTaken: " + sw.now(TimeUnit.MILLISECONDS));
-    }
-    return splits;
-}
-```
-
-### 上传切片清单和配置
-
-```java
-List<InputSplit> splits = input.getSplits(job);
-T[] array = (T[]) splits.toArray(new InputSplit[splits.size()]);
-
-// sort the splits into order based on size, so that the biggest
-// go first
-Arrays.sort(array, new SplitComparator());
-// 切片清单和配置写入hdfs
-JobSplitWriter.createSplitFiles(jobSubmitDir, conf, 
-                                jobSubmitDir.getFileSystem(conf), array);
-```
-
-## MapTask源码分析
-
-## ReduceTask源码分析
+### TopN
 
 
+
+
+
+### 大数据思维模式
 
 
 
