@@ -715,10 +715,10 @@ JobSplitWriter.createSplitFiles(jobSubmitDir, conf,
 > 		1，本质还是线性字节数组
 > 		2，赤道，两端方向放KV,索引
 > 		3，索引：是固定宽度：16B：4个int
-> 			a)P
-> 			b)KS
-> 			c)VS
-> 			d)VL
+> 			a)Partition		分区号
+> 			b)Key Start		key的起始位置
+> 			c)Value Start	value的起始位置
+> 			d)Value Length	value的长度
 > 		5,如果数据填充到阈值：80%，启动线程：
 > 			快速排序80%数据，同时map输出的线程向剩余的空间写
 > 			快速排序的过程：是比较key排序，但是移动的是索引
@@ -1154,6 +1154,8 @@ public void init(MapOutputCollector.Context context
 
 ### Map输出的处理：SpillThread溢写线程
 
+![Map输出环形缓冲区及排序](./images/Map输出环形缓冲区及排序.png)
+
 ```java
 // 溢写线程
 protected class SpillThread extends Thread {
@@ -1254,22 +1256,18 @@ InterruptedException {
                         combinerRunner.combine(kvIter, combineCollector);
                     }
                 }
-
                 // close the writer
                 writer.close();
-
                 // record offsets
                 rec.startOffset = segmentStart;
                 rec.rawLength = writer.getRawLength() + CryptoUtils.cryptoPadding(job);
                 rec.partLength = writer.getCompressedLength() + CryptoUtils.cryptoPadding(job);
                 spillRec.putIndex(rec, i);
-
                 writer = null;
             } finally {
                 if (null != writer) writer.close();
             }
         }
-
         if (totalIndexCacheMemory >= indexCacheMemoryLimit) {
             // create spill index file
             Path indexFilename =
