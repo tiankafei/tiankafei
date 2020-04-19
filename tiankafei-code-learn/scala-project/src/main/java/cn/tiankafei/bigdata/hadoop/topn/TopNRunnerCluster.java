@@ -22,6 +22,7 @@ public class TopNRunnerCluster {
         Job job = Job.getInstance(conf);
         // 把本地jar包上传到hadoop上
         job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\scala-project\\target\\scala-project-1.0-SNAPSHOT.jar");
+        job.addCacheFile(new Path("/data/topn/dict/dict.txt").toUri());
         job.setJarByClass(TopNRunnerCluster.class);
         // 指定job的名称
         job.setJobName("tiankafei-topn");

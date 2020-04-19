@@ -31,14 +31,14 @@ public class TopNReduce extends Reducer<TopNKey, IntWritable, Text, IntWritable>
             int wd = key.getWd();
 
             if(index == 0){
-                reduceKey.set(year + "-" + month + "-" + day);
+                reduceKey.set(year + "-" + month + "-" + day + "----" + key.getLocation());
                 reduceValue.set(wd);
                 context.write(reduceKey, reduceValue);
                 dayFlag = day;
             }
 
             if(index != 0 && dayFlag != day){
-                reduceKey.set(year + "-" + month + "-" + day);
+                reduceKey.set(year + "-" + month + "-" + day + "----" + key.getLocation());
                 reduceValue.set(wd);
                 context.write(reduceKey, reduceValue);
                 break;

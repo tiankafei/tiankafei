@@ -2352,6 +2352,75 @@ public class TopNGroupingComparator extends WritableComparator {
 }
 ```
 
+#### Mapper端的Join操作
+
+##### 运行主类需要修改的内容
+
+```java
+// 去掉让框架在本地运行的配置
+conf.set("mapreduce.framework.name", "local");
+// 把本地jar包上传到hadoop上
+job.setJar("jar包路径");
+job.addCacheFile(new Path("/data/topn/dict/dict.txt").toUri());
+```
+
+##### Key
+
+```java
+// 增加属性
+private String location;
+// 属性增加序列化
+out.writeUTF(this.location);
+// 属性增加反序列化
+this.location = in.readUTF();
+```
+
+##### Mapper增加逻辑代码
+
+```java
+private Map<String, String> dictMap = new HashMap<>();
+
+@Override
+protected void setup(Context context) throws IOException, InterruptedException {
+    URI[] cacheFiles = context.getCacheFiles();
+    Path path = new Path(cacheFiles[0].getPath());
+
+    FileReader fileReader = null;
+    BufferedReader bufferedReader = null;
+
+    try {
+        fileReader = new FileReader(new File(path.getName()));
+        bufferedReader = new BufferedReader(fileReader);
+
+        String line = null;
+        while((line = bufferedReader.readLine()) != null){
+            String[] split = StringUtils.split(line, '\t');
+            dictMap.put(split[0], split[1]);
+        }
+    }catch (Exception e){
+        e.printStackTrace();
+    }finally {
+        if(fileReader != null){
+            fileReader.close();
+        }
+        if(bufferedReader != null){
+            bufferedReader.close();
+        }
+    }
+}
+
+// 并给key赋值
+mapKey.setLocation(dictMap.get("代码"))
+```
+
+##### Reduce增加输出
+
+```java
+reduceKey.set(year + "-" + month + "-" + day + "----" + key.getLocation());
+reduceValue.set(wd);
+context.write(reduceKey, reduceValue);
+```
+
 ### 大数据思维模式
 
 

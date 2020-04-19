@@ -21,6 +21,7 @@ public class TopNKey implements WritableComparable<TopNKey> {
     private int month;
     private int day;
     private int wd;
+    private String location;
 
     @Override
     public int compareTo(TopNKey that) {
@@ -40,6 +41,7 @@ public class TopNKey implements WritableComparable<TopNKey> {
         out.writeInt(this.month);
         out.writeInt(this.day);
         out.writeInt(this.wd);
+        out.writeUTF(this.location);
     }
 
     @Override
@@ -48,5 +50,6 @@ public class TopNKey implements WritableComparable<TopNKey> {
         this.month = in.readInt();
         this.day = in.readInt();
         this.wd = in.readInt();
+        this.location = in.readUTF();
     }
 }
