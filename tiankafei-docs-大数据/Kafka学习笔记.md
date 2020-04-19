@@ -1010,6 +1010,14 @@ if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
 fi
 ```
 
+#### 启动ke
+
+```shell
+# 启动kafkaUI
+/opt/bigdata/kafka-eagle/bin
+./ke.sh start
+```
+
 #### 访问地址
 
 ```http
