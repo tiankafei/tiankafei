@@ -808,7 +808,7 @@ org.apache.hadoop.mapreduce.InputSplit split = null;
 split = getSplitDetails(new Path(splitIndex.getSplitLocation()),
                         splitIndex.getStartOffset());
 LOG.info("Processing split: " + split);
-// 构造一个记录读取器：把切片和输入格式化类传了进去，就意味着，这个类可以进行制定偏移位置的数据读取了
+// 构造一个记录读取器：把切片和输入格式化类传了进去，就意味着，这个类可以读取指定偏移位置的数据了
 org.apache.hadoop.mapreduce.RecordReader<INKEY,INVALUE> input =
     new NewTrackingRecordReader<INKEY,INVALUE>
     (split, inputFormat, reporter, taskContext);
@@ -1051,7 +1051,6 @@ public void init(MapOutputCollector.Context context
 	job.getFloat(JobContext.MAP_SORT_SPILL_PERCENT, (float)0.8);
   // 缓冲区总大小，默认100M
   final int sortmb = job.getInt(JobContext.IO_SORT_MB, 100);
-  // 内存缓存
   indexCacheMemoryLimit = job.getInt(JobContext.INDEX_CACHE_MEMORY_LIMIT,
 									 INDEX_CACHE_MEMORY_LIMIT_DEFAULT);
   if (spillper > (float)1.0 || spillper <= (float)0.0) {
@@ -2019,9 +2018,324 @@ public class HadoopWordCountLocal {
 
 ### TopN
 
+#### 运行主类
 
+```java
+package cn.tiankafei.bigdata.hadoop.topn;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class TopNRunner {
+
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration(true);
+        System.setProperty("HADOOP_USER_NAME", "root");
+        // 让框架知道在windows上执行，需要设置为true
+        conf.set("mapreduce.app-submission.cross-platform", "true");
+        // 让框架在本地运行
+        conf.set("mapreduce.framework.name", "local");
+
+        Job job = Job.getInstance(conf);
+        job.setJarByClass(TopNRunner.class);
+        // 指定job的名称
+        job.setJobName("tiankafei-topn");
+        // 指定输入文件的路径
+        Path inFile = new Path("/data/topn/input");
+        TextInputFormat.addInputPath(job, inFile);
+        // 指定输出文件的路径
+        Path outFile = new Path("/data/topn/output");
+        if (outFile.getFileSystem(conf).exists(outFile)) {
+            outFile.getFileSystem(conf).delete(outFile, true);
+        }
+        TextOutputFormat.setOutputPath(job, outFile);
+
+        // mapper
+        job.setMapperClass(TopNMapper.class);
+        // 自定义分区器
+        job.setPartitionerClass(TopNPartitioner.class);
+        // 自定义mapper的key类型
+        job.setMapOutputKeyClass(TopNKey.class);
+        job.setMapOutputValueClass(IntWritable.class);
+        // 自定义mapper端的排序
+        job.setSortComparatorClass(TopNSortComparator.class);
+        // combine job.setCombinerClass();
+
+        // 自定义reduce端的排序
+        job.setGroupingComparatorClass(TopNGroupingComparator.class);
+        // reduce
+        job.setReducerClass(TopNReduce.class);
+
+        job.waitForCompletion(true);
+    }
+
+}
+```
+
+#### Mapper的Key
+
+```java
+package cn.tiankafei.bigdata.hadoop.topn;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+import org.apache.hadoop.io.WritableComparable;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+
+/**
+ * 使用默认通用的排序比较器：按照年月日正序
+ * @author tiankafei
+ * @since 1.0
+ **/
+@Data
+@Accessors(chain = true)
+public class TopNKey implements WritableComparable<TopNKey> {
+
+    private int year;
+    private int month;
+    private int day;
+    private int wd;
+
+    @Override
+    public int compareTo(TopNKey that) {
+        int c1 = Integer.compare(this.year, that.getYear());
+        if(c1 == 0){
+            int c2 = Integer.compare(this.month, that.getMonth());
+            if(c2 == 0){
+                return Integer.compare(this.day, that.getDay());
+            }
+        }
+        return c1;
+    }
+
+    @Override
+    public void write(DataOutput out) throws IOException {
+        out.writeInt(this.year);
+        out.writeInt(this.month);
+        out.writeInt(this.day);
+        out.writeInt(this.wd);
+    }
+
+    @Override
+    public void readFields(DataInput in) throws IOException {
+        this.year = in.readInt();
+        this.month = in.readInt();
+        this.day = in.readInt();
+        this.wd = in.readInt();
+    }
+}
+```
+
+#### Mapper
+
+```java
+package cn.tiankafei.bigdata.hadoop.topn;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class TopNMapper extends Mapper<LongWritable, Text, TopNKey, IntWritable> {
+
+    private TopNKey mapKey = new TopNKey();
+    private IntWritable mapValue = new IntWritable();
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Calendar calendar = Calendar.getInstance();
+
+    @Override
+    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        // 2019-6-1 22:22:22	1	39
+        String[] arr = StringUtils.split(value.toString(), '\t');
+
+        try {
+            Date date = formatter.parse(arr[0]);
+            calendar.setTime(date);
+
+            int year = calendar.get(Calendar.YEAR);
+            int monthValue = calendar.get(Calendar.MONTH) + 1;
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            int wd = Integer.valueOf(arr[2]);
+
+            mapKey.setYear(year).setMonth(monthValue).setDay(dayOfMonth).setWd(wd);
+            mapValue.set(wd);
+            context.write(mapKey, mapValue);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+```
+
+#### Mapper分区器
+
+```java
+package cn.tiankafei.bigdata.hadoop.topn;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.mapreduce.Partitioner;
+
+/**
+ * 按照年月进行分区，年月会拉到一个组里
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class TopNPartitioner extends Partitioner<TopNKey, IntWritable> {
+
+    @Override
+    public int getPartition(TopNKey topNKey, IntWritable intWritable, int numPartitions) {
+        return (topNKey.getYear() + topNKey.getMonth()) % numPartitions;
+    }
+}
+```
+
+#### Mapper的排序器
+
+```java
+package cn.tiankafei.bigdata.hadoop.topn;
+
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.io.WritableComparator;
+
+/**
+ * map端排序：按照年月正序，温度倒序，减少reduce端IO的拉取
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class TopNSortComparator extends WritableComparator {
+
+    public TopNSortComparator() {
+        super(TopNKey.class, true);
+    }
+
+    @Override
+    public int compare(WritableComparable a, WritableComparable b) {
+        TopNKey k1 = (TopNKey) a;
+        TopNKey k2 = (TopNKey) b;
+
+        int c1 = Integer.compare(k1.getYear(), k2.getYear());
+        if(c1 == 0){
+            int c2 = Integer.compare(k1.getMonth(), k2.getMonth());
+            if(c2 == 0){
+                return -Integer.compare(k1.getWd(), k2.getWd());
+            }
+            return c2;
+        }
+        return c1;
+    }
+}
+```
+
+#### Reduce
+
+```jav
+package cn.tiankafei.bigdata.hadoop.topn;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+import java.io.IOException;
+import java.util.Iterator;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class TopNReduce extends Reducer<TopNKey, IntWritable, Text, IntWritable> {
+
+    private Text reduceKey = new Text();
+    private IntWritable reduceValue = new IntWritable();
+
+    @Override
+    protected void reduce(TopNKey key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        // 因为是按照年月进行的分区，故每次迭代value，key会跟着发生变化；如果是根据key进行分区的，则值不会变化
+        int index = 0;
+        int dayFlag = 0;
+        Iterator<IntWritable> iterator = values.iterator();
+        while(iterator.hasNext()){
+            IntWritable next = iterator.next();
+
+            int year = key.getYear();
+            int month = key.getMonth();
+            int day = key.getDay();
+            int wd = key.getWd();
+
+            if(index == 0){
+                reduceKey.set(year + "-" + month + "-" + day);
+                reduceValue.set(wd);
+                context.write(reduceKey, reduceValue);
+                dayFlag = day;
+            }
+
+            if(index != 0 && dayFlag != day){
+                reduceKey.set(year + "-" + month + "-" + day);
+                reduceValue.set(wd);
+                context.write(reduceKey, reduceValue);
+                break;
+            }
+            index++;
+        }
+    }
+}
+```
+
+#### Reduce的排序器
+
+```java
+package cn.tiankafei.bigdata.hadoop.topn;
+
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.io.WritableComparator;
+
+/**
+ * reduce端按照年月分组排序
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class TopNGroupingComparator extends WritableComparator {
+
+    public TopNGroupingComparator() {
+        super(TopNKey.class, true);
+    }
+
+    @Override
+    public int compare(WritableComparable a, WritableComparable b) {
+        TopNKey k1 = (TopNKey) a;
+        TopNKey k2 = (TopNKey) b;
+
+        int c1 = Integer.compare(k1.getYear(), k2.getYear());
+        if(c1 == 0){
+            int c2 = Integer.compare(k1.getMonth(), k2.getMonth());
+            return c2;
+        }
+        return c1;
+    }
+}
+```
 
 ### 大数据思维模式
 
