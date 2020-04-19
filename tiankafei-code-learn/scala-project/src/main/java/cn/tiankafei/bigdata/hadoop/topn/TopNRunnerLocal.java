@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
  * @author tiankafei
  * @since 1.0
  **/
-public class TopNRunner {
+public class TopNRunnerLocal {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration(true);
@@ -22,7 +22,7 @@ public class TopNRunner {
         conf.set("mapreduce.framework.name", "local");
 
         Job job = Job.getInstance(conf);
-        job.setJarByClass(TopNRunner.class);
+        job.setJarByClass(TopNRunnerLocal.class);
         // 指定job的名称
         job.setJobName("tiankafei-topn");
         // 指定输入文件的路径

@@ -1,19 +1,17 @@
-package cn.tiankafei.bigdata.hadoop;
+package cn.tiankafei.bigdata.hadoop.topn;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 /**
- * 客户端在windows上执行，map,reduce在集群环境上运行
  * @author tiankafei
  * @since 1.0
  **/
-public class HadoopWordCountCluster {
+public class TopNRunnerCluster {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration(true);
@@ -24,28 +22,34 @@ public class HadoopWordCountCluster {
         Job job = Job.getInstance(conf);
         // 把本地jar包上传到hadoop上
         job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\scala-project\\target\\scala-project-1.0-SNAPSHOT.jar");
-        job.setJarByClass(HadoopWordCountCluster.class);
+        job.setJarByClass(TopNRunnerCluster.class);
         // 指定job的名称
-        job.setJobName("tiankafei-wordcount");
+        job.setJobName("tiankafei-topn");
         // 指定输入文件的路径
-        Path inFile = new Path("/data/wc/input");
+        Path inFile = new Path("/data/topn/input");
         TextInputFormat.addInputPath(job, inFile);
         // 指定输出文件的路径
-        Path outFile = new Path("/data/wc/output");
+        Path outFile = new Path("/data/topn/jonioutput");
         if (outFile.getFileSystem(conf).exists(outFile)) {
             outFile.getFileSystem(conf).delete(outFile, true);
         }
         TextOutputFormat.setOutputPath(job, outFile);
 
-        // 指定Map处理类
-        job.setMapperClass(HadoopMapper.class);
-        // 指定map的输出key类型
-        job.setMapOutputKeyClass(Text.class);
-        // 指定map的输出value类型
+        // mapper
+        job.setMapperClass(TopNMapper.class);
+        // 自定义分区器
+        job.setPartitionerClass(TopNPartitioner.class);
+        // 自定义mapper的key类型
+        job.setMapOutputKeyClass(TopNKey.class);
         job.setMapOutputValueClass(IntWritable.class);
+        // 自定义mapper端的排序
+        job.setSortComparatorClass(TopNSortComparator.class);
+//        job.setCombinerClass(TopNReduce.class);
 
-        // 指定reduce处理类
-        job.setReducerClass(HadoopReduce.class);
+        // 自定义reduce端的排序
+        job.setGroupingComparatorClass(TopNGroupingComparator.class);
+        // reduce
+        job.setReducerClass(TopNReduce.class);
 
         job.waitForCompletion(true);
     }
