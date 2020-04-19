@@ -44,7 +44,7 @@ public class TopNRunner {
         job.setMapOutputValueClass(IntWritable.class);
         // 自定义mapper端的排序
         job.setSortComparatorClass(TopNSortComparator.class);
-        // combine job.setCombinerClass();
+//        job.setCombinerClass(TopNReduce.class);
 
         // 自定义reduce端的排序
         job.setGroupingComparatorClass(TopNGroupingComparator.class);
