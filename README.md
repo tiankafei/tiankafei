@@ -129,13 +129,15 @@
 >
 > [centos7安装配置Flink](tiankafei-docs-大数据/centos7安装配置Flink.md)
 >
-> [scala学习笔记](tiankafei-docs-大数据/scala学习笔记.md)
->
-> [Kafka学习笔记](tiankafei-docs-大数据/Kafka学习笔记.md)
+> [hadoop学习笔记](tiankafei-docs-大数据/hadoop学习笔记.md)
 >
 > [hive学习笔记](tiankafei-docs-大数据/hive学习笔记.md)
 >
 > [hbase学习笔记](tiankafei-docs-大数据/hbase学习笔记.md)
+>
+> [scala学习笔记](tiankafei-docs-大数据/scala学习笔记.md)
+>
+> [Kafka学习笔记](tiankafei-docs-大数据/Kafka学习笔记.md)
 
 # tiankafei-docs-架构
 
