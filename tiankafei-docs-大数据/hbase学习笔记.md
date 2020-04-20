@@ -300,53 +300,46 @@ public void insert() throws IOException {
 ### 通过get获取数据
 
 ```java
-/**
- * 通过get获取数据
- * @throws IOException
- */
 @Test
 public void get() throws IOException {
-	Get get = new Get(Bytes.toBytes("1111"));
-	//在服务端做数据过滤，挑选出符合需求的列
-	get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("name"));
-	get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("age"));
-	get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
-	Result result = table.get(get);
-	Cell cell1 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
-	Cell cell2 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
-	Cell cell3 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
-	String name = Bytes.toString(CellUtil.cloneValue(cell1));
-	String age = Bytes.toString(CellUtil.cloneValue(cell2));
-	String sex = Bytes.toString(CellUtil.cloneValue(cell3));
-	System.out.println(name);
-	System.out.println(age);
-	System.out.println(sex);
+    Get get = new Get(Bytes.toBytes("2222"));
+    //在服务端做数据过滤，挑选出符合需求的列
+    get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("name"));
+    get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("age"));
+    get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
+    Result result = table.get(get);
+    Cell cell1 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
+    Cell cell2 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
+    Cell cell3 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
+    String name = Bytes.toString(CellUtil.cloneValue(cell1));
+    String age = Bytes.toString(CellUtil.cloneValue(cell2));
+    String sex = Bytes.toString(CellUtil.cloneValue(cell3));
+    System.out.println(name);
+    System.out.println(age);
+    System.out.println(sex);
 }
 ```
 
 ### 获取表中所有的记录
 
 ```java
-/**
- * 获取表中所有的记录
- */
 @Test
 public void scan() throws IOException {
-	Scan scan = new Scan();
-//        scan.withStartRow();
-//        scan.withStopRow();
-	ResultScanner rss = table.getScanner(scan);
-	for (Result rs: rss) {
-		Cell cell1 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
-		Cell cell2 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
-		Cell cell3 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
-		String name = Bytes.toString(CellUtil.cloneValue(cell1));
-		String age = Bytes.toString(CellUtil.cloneValue(cell2));
-		String sex = Bytes.toString(CellUtil.cloneValue(cell3));
-		System.out.println(name);
-		System.out.println(age);
-		System.out.println(sex);
-	}
+    Scan scan = new Scan();
+    //        scan.withStartRow();
+    //        scan.withStopRow();
+    ResultScanner rss = table.getScanner(scan);
+    for (Result rs: rss) {
+        Cell cell1 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
+        Cell cell2 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
+        Cell cell3 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
+        String name = Bytes.toString(CellUtil.cloneValue(cell1));
+        String age = Bytes.toString(CellUtil.cloneValue(cell2));
+        String sex = Bytes.toString(CellUtil.cloneValue(cell3));
+        System.out.println(name);
+        System.out.println(age);
+        System.out.println(sex);
+    }
 }
 ```
 
@@ -354,91 +347,79 @@ public void scan() throws IOException {
 
 ```java
 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-Random random = new Random();
 private String getDate(String s) {
-	return s+String.format("%02d%02d%02d%02d%02d",random.nextInt(12)+1,random.nextInt(31),random.nextInt(24),random.nextInt(60),random.nextInt(60));
+    return s+String.format("%02d%02d%02d%02d%02d",random.nextInt(12)+1,random.nextInt(31),random.nextInt(24),random.nextInt(60),random.nextInt(60));
 }
+Random random = new Random();
 public String getNumber(String str){
-	return str+String.format("%08d",random.nextInt(99999999));
+    return str+String.format("%08d",random.nextInt(99999999));
 }
-/**
- * 假设有10个用户，每个用户一年产生10000条记录
- */
 @Test
 public void insertMangData() throws Exception {
-	for(int i = 0;i<10;i++){
-		List<Put> puts = new ArrayList<>();
-		String phoneNumber = getNumber("158");
-		for(int j = 0 ;j<10000;j++){
-			String dnum = getNumber("177");
-			String length = String.valueOf(random.nextInt(100));
-			String date = getDate("2019");
-			String type = String.valueOf(random.nextInt(2));
-			//rowkey
-			String rowkey = phoneNumber+"_"+(Long.MAX_VALUE-sdf.parse(date).getTime());
-			Put put = new Put(Bytes.toBytes(rowkey));
-			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("dnum"),Bytes.toBytes(dnum));
-			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("length"),Bytes.toBytes(length));
-			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("date"),Bytes.toBytes(date));
-			put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("type"),Bytes.toBytes(type));
-			puts.add(put);
-		}
-		table.put(puts);
-	}
+    for(int i = 0;i<10;i++){
+        List<Put> puts = new ArrayList<>();
+        String phoneNumber = getNumber("158");
+        for(int j = 0 ;j<10000;j++){
+            String dnum = getNumber("177");
+            String length = String.valueOf(random.nextInt(100));
+            String date = getDate("2019");
+            String type = String.valueOf(random.nextInt(2));
+            //rowkey
+            String rowkey = phoneNumber+"_"+(Long.MAX_VALUE-sdf.parse(date).getTime());
+            Put put = new Put(Bytes.toBytes(rowkey));
+            put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("dnum"),Bytes.toBytes(dnum));
+            put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("length"),Bytes.toBytes(length));
+            put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("date"),Bytes.toBytes(date));
+            put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("type"),Bytes.toBytes(type));
+            puts.add(put);
+        }
+        table.put(puts);
+    }
 }
 ```
 
 ### 查询某一个用户3月份的通话记录
 
 ```java
-/**
- * 查询某一个用户3月份的通话记录
- */
 @Test
 public void scanByCondition() throws Exception {
-	Scan scan = new Scan();
-	String startRow = "15883348450_"+(Long.MAX_VALUE-sdf.parse("20190331000000").getTime());
-	String stopRow = "15883348450_"+(Long.MAX_VALUE-sdf.parse("20190301000000").getTime());
-	scan.withStartRow(Bytes.toBytes(startRow));
-	scan.withStopRow(Bytes.toBytes(stopRow));
-	ResultScanner rss = table.getScanner(scan);
-	for (Result rs:rss) {
-		System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
-		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
-		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
-		System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
-	}
+    Scan scan = new Scan();
+    String startRow = "15895704016_"+(Long.MAX_VALUE-sdf.parse("20190331000000").getTime());
+    String stopRow = "15895704016_"+(Long.MAX_VALUE-sdf.parse("20190301000000").getTime());
+    scan.withStartRow(Bytes.toBytes(startRow));
+    scan.withStopRow(Bytes.toBytes(stopRow));
+    ResultScanner rss = table.getScanner(scan);
+    for (Result rs:rss) {
+        System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
+        System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
+        System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
+        System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
+    }
 }
 ```
 
 ### 查询某个用户所有的主叫电话（type=1）
 
 ```java
-/**
- * 查询某个用户所有的主叫电话（type=1）
- *  某个用户
- *  type=1
- *
- */
 @Test
 public void getType() throws IOException {
-	Scan scan = new Scan();
-	//创建过滤器集合
-	FilterList filters = new FilterList(FilterList.Operator.MUST_PASS_ALL);
-	//创建过滤器
-	SingleColumnValueFilter filter1 = new SingleColumnValueFilter(Bytes.toBytes("cf"),Bytes.toBytes("type"),CompareOperator.EQUAL,Bytes.toBytes("1"));
-	filters.addFilter(filter1);
-	//前缀过滤器
-	PrefixFilter filter2 = new PrefixFilter(Bytes.toBytes("15883348450"));
-	filters.addFilter(filter2);
-	scan.setFilter(filters);
-	ResultScanner rss = table.getScanner(scan);
-	for (Result rs:rss) {
-		System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
-		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
-		System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
-		System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
-	}
+    Scan scan = new Scan();
+    //创建过滤器集合
+    FilterList filters = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+    //创建过滤器
+    SingleColumnValueFilter filter1 = new SingleColumnValueFilter(Bytes.toBytes("cf"),Bytes.toBytes("type"),CompareOperator.EQUAL,Bytes.toBytes("1"));
+    filters.addFilter(filter1);
+    //前缀过滤器
+    PrefixFilter filter2 = new PrefixFilter(Bytes.toBytes("15895704016"));
+    filters.addFilter(filter2);
+    scan.setFilter(filters);
+    ResultScanner rss = table.getScanner(scan);
+    for (Result rs:rss) {
+        System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
+        System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
+        System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
+        System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
+    }
 }
 ```
 
@@ -494,6 +475,131 @@ public void getByProtoBuf() throws IOException {
 ## HBase与MapReduce整合
 
 > [http://hbase.apache.org/book.html#mapreduce](http://hbase.apache.org/book.html#mapreduce)
+
+### 运行主类
+
+```java
+package cn.tiankafei.bigdata.hbase.wordcount;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HBaseWordCountLocal {
+
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration(true);
+        System.setProperty("HADOOP_USER_NAME", "root");
+        conf.set("hbase.zookeeper.quorum","bigdata01,bigdata02,bigdata03,bigdata04");
+        // 让框架知道在windows上执行，需要设置为true
+        conf.set("mapreduce.app-submission.cross-platform", "true");
+        // 让框架在本地运行
+        conf.set("mapreduce.framework.name", "local");
+
+        Job job = Job.getInstance(conf);
+        job.setJarByClass(HBaseWordCountLocal.class);
+        // 指定job的名称
+        job.setJobName("tiankafei-hbase");
+        // 指定输入文件的路径
+        Path inFile = new Path("/data/wc/input");
+        TextInputFormat.addInputPath(job, inFile);
+
+        // 指定Map处理类
+        job.setMapperClass(HBaseWordCountMapper.class);
+        // 指定map的输出key类型
+        job.setMapOutputKeyClass(Text.class);
+        // 指定map的输出value类型
+        job.setMapOutputValueClass(IntWritable.class);
+
+        // 指定reduce处理类
+        TableMapReduceUtil.initTableReducerJob("wc", HBaseWordCountReduce.class, job, null, null, null, null, false);
+        job.setOutputKeyClass(NullWritable.class);
+        job.setOutputValueClass(Put.class);
+
+        job.waitForCompletion(true);
+    }
+
+}
+```
+
+### Mapper
+
+```java
+package cn.tiankafei.bigdata.hbase.wordcount;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HBaseWordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    @Override
+    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        StringTokenizer stringTokenizer = new StringTokenizer(value.toString());
+        while (stringTokenizer.hasMoreTokens()) {
+            word.set(stringTokenizer.nextToken());
+            context.write(word, one);
+        }
+    }
+}
+```
+
+### Reduce
+
+```java
+package cn.tiankafei.bigdata.hbase.wordcount;
+
+import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.mapreduce.TableReducer;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+
+import java.io.IOException;
+import java.util.Iterator;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class HBaseWordCountReduce extends TableReducer<Text, IntWritable, ImmutableBytesWritable> {
+
+    @Override
+    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        int sum = 0;
+        Iterator<IntWritable> iterator = values.iterator();
+        if(iterator.hasNext()){
+            IntWritable next = iterator.next();
+            sum += next.get();
+        }
+        Put put = new Put(Bytes.toBytes(key.toString()));
+        put.addColumn(Bytes.toBytes("cf"), Bytes.toBytes("word"), Bytes.toBytes(sum+""));
+        context.write(null, put);
+    }
+}
+```
 
 ## HBase表设计
 
