@@ -1,264 +1,526 @@
 package cn.tiankafei.bigdata.hbase;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
+import org.apache.hadoop.hbase.CompareOperator;
+import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
- * 如果遇到特别慢的情况，设置DNS服务器地址
- *      223.5.5.5
- *      223.6.6.6
- *
- *
+ * HBase工具类
+ * @author tiankafei
  */
 public class HBaseUtil {
 
     Configuration conf = null;
     Connection conn = null;
-    //表的管理对象
-    Admin admin = null;
-    Table table = null;
-    //创建表的对象
-    TableName tableName = TableName.valueOf("phone");
-    @Before
-    public void init() throws IOException {
-        //创建配置文件对象
-        conf = HBaseConfiguration.create();
-        //加载zookeeper的配置
-        conf.set("hbase.zookeeper.quorum","bigdata01,bigdata02,bigdata03,bigdata04");
-        //获取连接
-        conn = ConnectionFactory.createConnection(conf);
-        //获取对象
-        admin = conn.getAdmin();
-        //获取数据操作对象
-        table = conn.getTable(tableName);
-    }
 
-    @Test
-    public void createTable() throws IOException {
-        //定义表描述对象
-        TableDescriptorBuilder tableDescriptorBuilder = TableDescriptorBuilder.newBuilder(tableName);
-        //定义列族描述对象
-        ColumnFamilyDescriptorBuilder columnFamilyDescriptorBuilder = ColumnFamilyDescriptorBuilder.newBuilder("cf".getBytes());
-        //添加列族信息给表
-        tableDescriptorBuilder.setColumnFamily(columnFamilyDescriptorBuilder.build());
-        if(admin.tableExists(tableName)){
-            //禁用表
-            admin.disableTable(tableName);
-            admin.deleteTable(tableName);
-        }
-        //创建表
-        admin.createTable(tableDescriptorBuilder.build());
-    }
-
-    @Test
-    public void insert() throws IOException {
-        Put put = new Put(Bytes.toBytes("2222"));
-        put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("name"),Bytes.toBytes("lisi"));
-        put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("age"),Bytes.toBytes("341"));
-        put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("sex"),Bytes.toBytes("women"));
-        table.put(put);
-    }
-
-    /**
-     * 通过get获取数据
-     * @throws IOException
-     */
-    @Test
-    public void get() throws IOException {
-        Get get = new Get(Bytes.toBytes("2222"));
-        //在服务端做数据过滤，挑选出符合需求的列
-        get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("name"));
-        get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("age"));
-        get.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
-        Result result = table.get(get);
-        Cell cell1 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
-        Cell cell2 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
-        Cell cell3 = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
-        String name = Bytes.toString(CellUtil.cloneValue(cell1));
-        String age = Bytes.toString(CellUtil.cloneValue(cell2));
-        String sex = Bytes.toString(CellUtil.cloneValue(cell3));
-        System.out.println(name);
-        System.out.println(age);
-        System.out.println(sex);
-    }
-
-    /**
-     * 获取表中所有的记录
-     */
-    @Test
-    public void scan() throws IOException {
-        Scan scan = new Scan();
-//        scan.withStartRow();
-//        scan.withStopRow();
-        ResultScanner rss = table.getScanner(scan);
-        for (Result rs: rss) {
-            Cell cell1 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("name"));
-            Cell cell2 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("age"));
-            Cell cell3 = rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("sex"));
-            String name = Bytes.toString(CellUtil.cloneValue(cell1));
-            String age = Bytes.toString(CellUtil.cloneValue(cell2));
-            String sex = Bytes.toString(CellUtil.cloneValue(cell3));
-            System.out.println(name);
-            System.out.println(age);
-            System.out.println(sex);
-        }
-    }
-
-    /**
-     * 假设有10个用户，每个用户一年产生10000条记录
-     */
-    @Test
-    public void insertMangData() throws Exception {
-        for(int i = 0;i<10;i++){
-            List<Put> puts = new ArrayList<>();
-            String phoneNumber = getNumber("158");
-            for(int j = 0 ;j<10000;j++){
-                String dnum = getNumber("177");
-                String length = String.valueOf(random.nextInt(100));
-                String date = getDate("2019");
-                String type = String.valueOf(random.nextInt(2));
-                //rowkey
-                String rowkey = phoneNumber+"_"+(Long.MAX_VALUE-sdf.parse(date).getTime());
-                Put put = new Put(Bytes.toBytes(rowkey));
-                put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("dnum"),Bytes.toBytes(dnum));
-                put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("length"),Bytes.toBytes(length));
-                put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("date"),Bytes.toBytes(date));
-                put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("type"),Bytes.toBytes(type));
-                puts.add(put);
-            }
-            table.put(puts);
-        }
-    }
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-
-    private String getDate(String s) {
-        return s+String.format("%02d%02d%02d%02d%02d",random.nextInt(12)+1,random.nextInt(31),random.nextInt(24),random.nextInt(60),random.nextInt(60));
-    }
-
-    Random random = new Random();
-    public String getNumber(String str){
-        return str+String.format("%08d",random.nextInt(99999999));
-
-    }
-
-    /**
-     * 查询某一个用户3月份的通话记录
-     */
-    @Test
-    public void scanByCondition() throws Exception {
-        Scan scan = new Scan();
-        String startRow = "15895704016_"+(Long.MAX_VALUE-sdf.parse("20190331000000").getTime());
-        String stopRow = "15895704016_"+(Long.MAX_VALUE-sdf.parse("20190301000000").getTime());
-        scan.withStartRow(Bytes.toBytes(startRow));
-        scan.withStopRow(Bytes.toBytes(stopRow));
-        ResultScanner rss = table.getScanner(scan);
-        for (Result rs:rss) {
-            System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
-            System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
-            System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
-            System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
-        }
-    }
-
-    /**
-     * 查询某个用户所有的主叫电话（type=1）
-     *  某个用户
-     *  type=1
-     *
-     */
-    @Test
-    public void getType() throws IOException {
-        Scan scan = new Scan();
-        //创建过滤器集合
-        FilterList filters = new FilterList(FilterList.Operator.MUST_PASS_ALL);
-        //创建过滤器
-        SingleColumnValueFilter filter1 = new SingleColumnValueFilter(Bytes.toBytes("cf"),Bytes.toBytes("type"),CompareOperator.EQUAL,Bytes.toBytes("1"));
-        filters.addFilter(filter1);
-        //前缀过滤器
-        PrefixFilter filter2 = new PrefixFilter(Bytes.toBytes("15895704016"));
-        filters.addFilter(filter2);
-        scan.setFilter(filters);
-        ResultScanner rss = table.getScanner(scan);
-        for (Result rs:rss) {
-            System.out.print(Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("dnum")))));
-            System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("type")))));
-            System.out.print("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("length")))));
-            System.out.println("--"+Bytes.toString(CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("date")))));
-        }
-    }
-
-//    public void delete() throws IOException {
-//        Delete delete = new Delete("111".getBytes());
-//        table.delete(delete);
-//    }
-
-    @Test
-    public void insertByProtoBuf() throws ParseException, IOException {
-        List<Put> puts = new ArrayList<>();
-        for(int i = 0;i<10;i++){
-            String phoneNumber = getNumber("158");
-            for(int j = 0 ;j<10000;j++){
-                String dnum = getNumber("177");
-                String length = String.valueOf(random.nextInt(100));
-                String date = getDate("2019");
-                String type = String.valueOf(random.nextInt(2));
-                //rowkey
-                String rowkey = phoneNumber+"_"+(Long.MAX_VALUE-sdf.parse(date).getTime());
-
-                Phone.PhoneDetail.Builder builder = Phone.PhoneDetail.newBuilder();
-                builder.setDate(date);
-                builder.setDnum(dnum);
-                builder.setLength(length);
-                builder.setType(type);
-                Put put = new Put(Bytes.toBytes(rowkey));
-                put.addColumn(Bytes.toBytes("cf"),Bytes.toBytes("phone"),builder.build().toByteArray());
-                puts.add(put);
-            }
-        }
-        table.put(puts);
-    }
-
-    @Test
-    public void getByProtoBuf() throws IOException {
-        Get get = new Get("15899309685_9223370490668224807".getBytes());
-        Result rs = table.get(get);
-        byte[] b = CellUtil.cloneValue(rs.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("phone")));
-        Phone.PhoneDetail phoneDetail = Phone.PhoneDetail.parseFrom(b);
-        System.out.println(phoneDetail);
-    }
-
-    @After
-    public void destory(){
+    public HBaseUtil() {
+        conf = new Configuration();
+        String zk_list = "bigdata01,bigdata02,bigdata03,bigdata04";
+        conf.set("hbase.zookeeper.quorum", zk_list);
         try {
-            table.close();
+            conn = ConnectionFactory.createConnection(conf);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void save(Put put, String tableName) {
+        Table table = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            table.put(put);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 插入put集合
+     *
+     * @param Put
+     * @param tableName
+     */
+    public void save(List<Put> Put, String tableName) {
+        Table table = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            table.put(Put);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * 插入一个cell
+     *
+     * @param tableName
+     * @param rowKey
+     * @param family
+     * @param quailifer
+     * @param value
+     */
+    public void insert(String tableName, String rowKey, String family,
+                       String quailifer, String value) {
+        Table table = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            Put put = new Put(rowKey.getBytes());
+            put.addColumn(family.getBytes(), quailifer.getBytes(), value.getBytes());
+            table.put(put);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 在一个列族下插入多个单元格
+     *
+     * @param tableName
+     * @param rowKey
+     * @param family
+     * @param quailifer
+     * @param value
+     */
+    public void insert(String tableName, String rowKey, String family, String quailifer[], String value[]) {
+        Table table = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            Put put = new Put(rowKey.getBytes());
+            // 批量添加
+            for (int i = 0; i < quailifer.length; i++) {
+                String col = quailifer[i];
+                String val = value[i];
+                put.addColumn(family.getBytes(), col.getBytes(), val.getBytes());
+            }
+            table.put(put);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 根据rowkey获取表中的一行数据
+     *
+     * @param tableName
+     * @param rowKey
+     * @return
+     */
+    public Result getOneRow(String tableName, String rowKey) {
+        Table table = null;
+        Result rsResult = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            Get get = new Get(rowKey.getBytes());
+            rsResult = table.get(get);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return rsResult;
+    }
+
+    /**
+     * 最常用的方法，优化查询
+     * 查询一行数据，
+     *
+     * @param tableName
+     * @param rowKey
+     * @param cols
+     * @return
+     */
+    public Result getOneRowAndMultiColumn(String tableName, String rowKey, String[] cols) {
+        Table table = null;
+        Result rsResult = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            Get get = new Get(rowKey.getBytes());
+            for (int i = 0; i < cols.length; i++) {
+                get.addColumn("cf".getBytes(), cols[i].getBytes());
+            }
+            rsResult = table.get(get);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return rsResult;
+    }
+
+    /**
+     * 根据rowkey进行前缀匹配
+     *
+     * @param tableName
+     * @param rowKeyLike
+     * @return
+     */
+    public List<Result> getRows(String tableName, String rowKeyLike) {
+        Table table = null;
+        List<Result> list = null;
+        try {
+            FilterList fl = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+            table = conn.getTable(TableName.valueOf(tableName));
+            PrefixFilter filter = new PrefixFilter(rowKeyLike.getBytes());
+            SingleColumnValueFilter filter1 = new SingleColumnValueFilter(
+                    "order".getBytes(),
+                    "order_type".getBytes(),
+                    CompareOperator.EQUAL,
+                    Bytes.toBytes("1")
+            );
+            fl.addFilter(filter);
+            fl.addFilter(filter1);
+            Scan scan = new Scan();
+            scan.setFilter(fl);
+            ResultScanner scanner = table.getScanner(scan);
+            list = new ArrayList<Result>();
+            for (Result rs : scanner) {
+                list.add(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 根据前缀匹配rowkey且获取部分列数据
+     *
+     * @param tableName
+     * @param rowKeyLike
+     * @param cols
+     * @return
+     */
+    public List<Result> getRows(String tableName, String rowKeyLike, String cols[]) {
+        Table table = null;
+        List<Result> list = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            PrefixFilter filter = new PrefixFilter(rowKeyLike.getBytes());
+
+            Scan scan = new Scan();
+            for (int i = 0; i < cols.length; i++) {
+                scan.addColumn("cf".getBytes(), cols[i].getBytes());
+            }
+            scan.setFilter(filter);
+            ResultScanner scanner = table.getScanner(scan);
+            list = new ArrayList<Result>();
+            for (Result rs : scanner) {
+                list.add(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 范围查询
+     *
+     * @param tableName
+     * @param startRow
+     * @param stopRow
+     * @return
+     */
+    public List<Result> getRows(String tableName, String startRow, String stopRow) {
+        Table table = null;
+        List<Result> list = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            Scan scan = new Scan();
+            scan.withStartRow(startRow.getBytes());
+            scan.withStopRow(stopRow.getBytes());
+            ResultScanner scanner = table.getScanner(scan);
+            list = new ArrayList<Result>();
+            for (Result rsResult : scanner) {
+                list.add(rsResult);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 根据rowkey删除数据
+     *
+     * @param tableName
+     * @param rowKeyLike
+     */
+    public void deleteRecords(String tableName, String rowKeyLike) {
+        Table table = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            PrefixFilter filter = new PrefixFilter(rowKeyLike.getBytes());
+            Scan scan = new Scan();
+            scan.setFilter(filter);
+            ResultScanner scanner = table.getScanner(scan);
+            List<Delete> list = new ArrayList<Delete>();
+            for (Result rs : scanner) {
+                Delete del = new Delete(rs.getRow());
+                list.add(del);
+            }
+            table.delete(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * 删除cell
+     *
+     * @param tableName
+     * @param rowkey
+     * @param cf
+     * @param column
+     */
+    public void deleteCell(String tableName, String rowkey, String cf, String column) {
+        Table table = null;
+        try {
+            table = conn.getTable(TableName.valueOf(tableName));
+            Delete del = new Delete(rowkey.getBytes());
+            del.addColumn(cf.getBytes(), column.getBytes());
+            table.delete(del);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                table.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * 创建表
+     *
+     * @param tableName
+     * @param columnFamilys
+     */
+    public void createTable(String tableName, String[] columnFamilys) {
+        try {
+            // admin 对象
+            Admin admin = conn.getAdmin();
+            if (admin.tableExists(TableName.valueOf(tableName))) {
+                System.err.println("此表，已存在！");
+            } else {
+                TableDescriptorBuilder tableDesc = TableDescriptorBuilder.newBuilder(TableName.valueOf(tableName));
+
+                for (String columnFamily : columnFamilys) {
+                    tableDesc.setColumnFamily(ColumnFamilyDescriptorBuilder.newBuilder(columnFamily.getBytes()).build());
+                }
+
+                admin.createTable(tableDesc.build());
+                System.out.println("建表成功!");
+            }
+            admin.close();// 关闭释放资源
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 删除一个表
+     *
+     * @param tableName 删除的表名
+     */
+    public void deleteTable(String tableName) {
+        TableName tn = TableName.valueOf(tableName);
         try {
+            Admin admin = conn.getAdmin();
+            if (admin.tableExists(tn)) {
+                // 禁用表
+                admin.disableTable(tn);
+                // 删除表
+                admin.deleteTable(tn);
+                System.err.println("删除表成功!");
+            } else {
+                System.err.println("删除的表不存在！");
+            }
             admin.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 查询表中所有行
+     *
+     * @param tablename
+     */
+    public void scaner(String tablename) {
         try {
-            conn.close();
+            Table table = conn.getTable(TableName.valueOf(tablename));
+            Scan s = new Scan();
+//	        s.addColumn(family, qualifier)
+//	        s.addColumn(family, qualifier)
+            ResultScanner rs = table.getScanner(s);
+            for (Result r : rs) {
+
+                for (Cell cell : r.rawCells()) {
+                    System.out.println("RowName:" + new String(CellUtil.cloneRow(cell)) + " ");
+                    System.out.println("Timetamp:" + cell.getTimestamp() + " ");
+                    System.out.println("column Family:" + new String(CellUtil.cloneFamily(cell)) + " ");
+                    System.out.println("row Name:" + new String(CellUtil.cloneQualifier(cell)) + " ");
+                    System.out.println("value:" + new String(CellUtil.cloneValue(cell)) + " ");
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 筛选表的部分列
+     *
+     * @param tablename
+     */
+    public void scanerByColumn(String tablename) {
+        try {
+            Table table = conn.getTable(TableName.valueOf(tablename));
+            Scan s = new Scan();
+            s.addColumn("cf".getBytes(), "201504052237".getBytes());
+            s.addColumn("cf".getBytes(), "201504052237".getBytes());
+            ResultScanner rs = table.getScanner(s);
+            for (Result r : rs) {
+                for (Cell cell : r.rawCells()) {
+                    System.out.println("RowName:" + new String(CellUtil.cloneRow(cell)) + " ");
+                    System.out.println("Timetamp:" + cell.getTimestamp() + " ");
+                    System.out.println("column Family:" + new String(CellUtil.cloneFamily(cell)) + " ");
+                    System.out.println("row Name:" + new String(CellUtil.cloneQualifier(cell)) + " ");
+                    System.out.println("value:" + new String(CellUtil.cloneValue(cell)) + " ");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        HBaseUtil dao = new HBaseUtil();
+
+//        创建表
+        String tableName = "test";
+        String cfs[] = {"cf"};
+        dao.createTable(tableName, cfs);
+
+//        存入一条数据
+        Put put = new Put("msb".getBytes());
+        put.addColumn("cf".getBytes(), "name".getBytes(), "cai10".getBytes());
+        dao.save(put, "test");
+
+//        插入多列数据
+        Put puts = new Put("msb".getBytes());
+        List<Put> lists = new ArrayList<Put>();
+        puts.addColumn("cf".getBytes(), "addr".getBytes(), "shanghai1".getBytes());
+        puts.addColumn("cf".getBytes(), "age".getBytes(), "30".getBytes());
+        puts.addColumn("cf".getBytes(), "tel".getBytes(), "13889891818".getBytes());
+        lists.add(puts);
+        dao.save(lists, "test");
+
+//        插入单行数据
+        dao.insert("test", "testrow", "cf", "age", "35");
+        dao.insert("test", "testrow", "cf", "cardid", "12312312335");
+        dao.insert("test", "testrow", "cf", "tel", "13512312345");
+
+
+        List<Result> list = dao.getRows("test", "testrow", new String[]{"age"});
+        for (Result rs : list) {
+            for (Cell cell : rs.rawCells()) {
+                System.out.println("RowName:" + new String(CellUtil.cloneRow(cell)) + " ");
+                System.out.println("Timetamp:" + cell.getTimestamp() + " ");
+                System.out.println("column Family:" + new String(CellUtil.cloneFamily(cell)) + " ");
+                System.out.println("row Name:" + new String(CellUtil.cloneQualifier(cell)) + " ");
+                System.out.println("value:" + new String(CellUtil.cloneValue(cell)) + " ");
+            }
+        }
+
+        Result rs = dao.getOneRow("test", "testrow");
+        System.out.println(new String(rs.getValue("cf".getBytes(), "age".getBytes())));
+
+        Result rss = dao.getOneRowAndMultiColumn("test", "testrow", new String[]{"age", "cardid"});
+        for (Cell cell : rss.rawCells()) {
+            System.out.println("RowName:" + new String(CellUtil.cloneRow(cell)) + " ");
+            System.out.println("Timetamp:" + cell.getTimestamp() + " ");
+            System.out.println("column Family:" + new String(CellUtil.cloneFamily(cell)) + " ");
+            System.out.println("row Name:" + new String(CellUtil.cloneQualifier(cell)) + " ");
+            System.out.println("value:" + new String(CellUtil.cloneValue(cell)) + " ");
+        }
+
+        dao.deleteTable("test");
+    }
 }
+
