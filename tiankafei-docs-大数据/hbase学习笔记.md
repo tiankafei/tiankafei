@@ -472,7 +472,7 @@ public void getByProtoBuf() throws IOException {
 
 关于Protobuf序列化的只是，自行搜索学习，这里不做过多介绍
 
-## HBase与MapReduce整合
+## HBase与MapReduce整合：读hdfs，写hbase 
 
 > [http://hbase.apache.org/book.html#mapreduce](http://hbase.apache.org/book.html#mapreduce)
 
@@ -599,6 +599,26 @@ public class HBaseWordCountReduce extends TableReducer<Text, IntWritable, Immuta
         context.write(null, put);
     }
 }
+```
+
+## HBase与MapReduce整合：读hbase，写hdfs
+
+### 运行主类
+
+```java
+
+```
+
+### Mapper
+
+```java
+
+```
+
+### Reduce
+
+```java
+
 ```
 
 ## HBase表设计
