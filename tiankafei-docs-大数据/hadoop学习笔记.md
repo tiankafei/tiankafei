@@ -2423,5 +2423,175 @@ context.write(reduceKey, reduceValue);
 
 ### 大数据思维模式
 
+> 大数据推荐好友：只能推荐陌生人
+>
+> 好友列表：
+>
+> ```
+> 好友1 好友2 好友3 好友4
+> 好友2 好友1 好友3
+> 好友3 好友1 好友2 好友5 好友6
+> 好友4 好友1 好友5
+> 好友5 好友3 好友4
+> 好友6 好友3 好友7
+> 好友7 好友6
+> ```
 
+#### 运行主类
+
+```java
+package cn.tiankafei.bigdata.hadoop.thinking;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class ThinkingRunnerLocal {
+
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration(true);
+        System.setProperty("HADOOP_USER_NAME", "root");
+        // 让框架知道在windows上执行，需要设置为true
+        conf.set("mapreduce.app-submission.cross-platform", "true");
+        // 让框架在本地运行
+        conf.set("mapreduce.framework.name", "local");
+
+        Job job = Job.getInstance(conf);
+        job.setJarByClass(ThinkingRunnerLocal.class);
+        // 指定job的名称
+        job.setJobName("tiankafei-fof");
+        // 指定输入文件的路径
+        Path inFile = new Path("/data/fof/input");
+        TextInputFormat.addInputPath(job, inFile);
+        // 指定输出文件的路径
+        Path outFile = new Path("/data/fof/output");
+        if (outFile.getFileSystem(conf).exists(outFile)) {
+            outFile.getFileSystem(conf).delete(outFile, true);
+        }
+        TextOutputFormat.setOutputPath(job, outFile);
+
+        // mapper
+        job.setMapperClass(ThinkingMapper.class);
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(IntWritable.class);
+
+        // reduce
+        job.setReducerClass(ThinkingReduce.class);
+
+        job.waitForCompletion(true);
+    }
+
+}
+
+```
+
+#### Mapper
+
+```java
+package cn.tiankafei.bigdata.hadoop.thinking;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.util.StringUtils;
+
+import java.io.IOException;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class ThinkingMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+
+    private Text mapKey = new Text();
+    private IntWritable mapValue = new IntWritable();
+
+    @Override
+    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        // 好友1 好友2 好友3 好友4
+
+        String[] arr = StringUtils.split(value.toString(), ' ');
+        for (int i = 0, length = arr.length; i < length; i++) {
+            String v1 = arr[i];
+            for (int j = i + 1; j < length; j++) {
+                String v2 = arr[j];
+
+                String key1 = "";
+                int c1 = v1.compareTo(v2);
+                if(c1 > 0){
+                    key1 = v1 + " " + v2;
+                }else{
+                    key1 = v2 + " " + v1;
+                }
+                if(i == 0){
+                    // 直接好友是0
+                    mapKey.set(key1);
+                    mapValue.set(0);
+                    context.write(mapKey, mapValue);
+                }else{
+                    // 间接好友是1
+                    mapKey.set(key1);
+                    mapValue.set(1);
+                    context.write(mapKey, mapValue);
+                }
+            }
+        }
+    }
+}
+
+```
+
+#### Reduce
+
+```java
+package cn.tiankafei.bigdata.hadoop.thinking;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+import java.io.IOException;
+import java.util.Iterator;
+
+/**
+ * @author tiankafei
+ * @since 1.0
+ **/
+public class ThinkingReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+
+    private IntWritable reduceValue = new IntWritable();
+
+    @Override
+    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        int sum = 0;
+        Iterator<IntWritable> iterator = values.iterator();
+        while(iterator.hasNext()){
+            IntWritable next = iterator.next();
+
+            int v = next.get();
+            if(v == 0){
+                // 如果是直接好友，则直接跳出
+                break;
+            }
+            // 间接好友+1，数值越大，共同好友越多
+            sum += v;
+        }
+        if(sum != 0){
+            // 只输出间接好友
+            reduceValue.set(sum);
+            context.write(key, reduceValue);
+        }
+    }
+}
+
+```
 
