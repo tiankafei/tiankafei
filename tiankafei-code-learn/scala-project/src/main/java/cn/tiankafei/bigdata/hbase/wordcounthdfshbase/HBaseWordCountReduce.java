@@ -1,4 +1,4 @@
-package cn.tiankafei.bigdata.hbase.wordcount;
+package cn.tiankafei.bigdata.hbase.wordcounthdfshbase;
 
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
