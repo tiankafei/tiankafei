@@ -43,7 +43,10 @@ public class HBaseWordCountLocal {
         TableMapReduceUtil.initTableMapperJob("line", scan, HBaseWordCountMapper.class, Text.class, IntWritable.class, job);
 
         // 指定reduce处理类
+//        job.setNumReduceTasks(0);
         job.setReducerClass(HBaseWordCountReduce.class);
+        job.setOutputValueClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
 
         job.waitForCompletion(true);
     }
