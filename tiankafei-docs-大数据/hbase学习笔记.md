@@ -6,9 +6,23 @@
 
 ## HBase简介
 
-> ​	Use Apache HBase™ when you need random, realtime read/write access to your Big Data. This project's goal is the hosting of very large tables -- billions of rows X millions of columns -- atop clusters of commodity hardware. Apache HBase is an open-source, distributed, versioned, non-relational database modeled after Google's Bigtable: A Distributed Storage System for Structured Data by Chang et al. Just as Bigtable leverages the distributed data storage provided by the Google File System, Apache HBase provides Bigtable-like capabilities on top of Hadoop and HDFS.
+​		HBASE是一个高可靠性、高性能、面向列、可伸缩的分布式存储系统，利用HBASE技术可在廉价PC Server上搭建起大规模结构化存储集群。HBASE的目标是存储并处理大型的数据，更具体来说是仅需使用普通的硬件配置，就能够处理由成千上万的行和列所组成的大型数据。
 
-​		HBase的全称是Hadoop Database,是一个高可靠性，高性能、面向列、可伸缩、实时读写的分布式数据库。利用Hadoop HDFS作为其文件存储系统，利用Hadoop MapReduce来处理HBase中的海量数据，利用Zookeeper作为其分布式协同服务。主要用来存储非结构化和半结构化数据的松散数据（列存NoSQL数据库）。
+​		HBASE是Google Bigtable的开源实现，但是也有很多不同之处。比如：Google Bigtable使用GFS作为其文件存储系统，HBASE利用Hadoop HDFS作为其文件存储系统；Google运行MAPREDUCE来处理Bigtable中的海量数据，HBASE同样利用Hadoop MapReduce来处理HBASE中的海量数据；Google Bigtable利用Chubby作为协同服务，HBASE利用Zookeeper作为协同服务。
+
+## 与传统数据库的对比
+
+### 传统数据库遇到的问题
+
+1. 数据量很大的时候无法存储；
+2. 没有很好的备份机制；
+3. 数据达到一定数量开始缓慢，很大的话基本无法支撑；
+
+### HBASE优势
+
+1. 线性扩展，随着数据量增多可以通过节点扩展进行支撑；
+2. 数据存储在hdfs上，备份机制健全；
+3. 通过zookeeper协调查找数据，访问速度快。
 
 ## HBase数据模型
 
@@ -46,37 +60,41 @@
 
 ## HBase架构
 
-![hbase架构图](./images/hbase架构图.png)
+![hbase架构图](./images/hbase架构图1.png)
 
 ### 角色介绍
 
 #### Client
 
-1. 包含访问HBase的接口并维护cache（元数据存储地址）来加快对HBase的访问。
+1. 使用HBase RPC机制与HMaster和HRegionServer进行通信
+2. Client与HMaster进行管理类操作
+3. Client与HRegionServer进行数据读写类操作
 
 #### Zookeeper
 
-1. 保证任何时候，集群中只有一个活跃master
-2. 存储所有region的寻址入口
-3. 实时监控region server的上线和下线信息，并实时通知master
-4. 存储HBase的schema和table元数据
+1. Zookeeper避免HMaster单点问题
+2. HRegionServer把自己注册到Zookeeper中，HMaster随时感知各个HRegionServer的健康状况
+4. 存储HBase的schema和table元数据（Zookeeper Quorum存储-ROOT-表地址、HMaster地址）
 
 #### HMaster
 
-1. 为region server分配region
-2. 负责region server的负载均衡
-3. 发现失效的region server并重新分配其上的region
-4. 管理用户对table的增删改操作；负责管理HBase元数据，即表的结构、表存储的Region等元信息
+HMaster没有单点问题，HBase可以启动多个HMaster，通过Zookeeper的Master Election机制保证总有一个Master在运行。主要负责Table和Region的管理工作：
+
+1. 管理用户对表的增删改查操作
+2. 管理HRegionServer的负载均衡，调整Region分布
+3. Region Split后，负责新Region的分布
+4. 在HRegionServer停机后，负责失效HRegionServer上Region迁移
 
 #### HRegionServer
 
-1. region server维护region，处理对这些region的IO请求
-2. region server负责切分在运行过程中变得过大的region
-3. 维护Hlog的flush磁盘
+HBase中最核心的模块，主要负责响应用户I/O请求，向HDFS文件系统中读写![HRegionServer1](./images/HRegionServer1.png)
 
-### regionserver组件介绍
+1. HRegionServer管理一系列HRegion对象
+2. 每个HRegion对应Table中一个Region，HRegion由多个HStore组成
+3. 每个HStore对应Table中一个Column Family的存储
+4. Column Family就是一个集中的存储单元，故将具有相同IO特性的Column放在一个Column Family会更高效
 
-#### region
+#### HRegion
 
 1. HBase自动把表水平划分成多个区域(region)，每个region会保存一个表里某段连续的数据
 2. 每个表一开始只有一个region，随着数据不断插入表，region不断增大，当增大到一个阈值的时候，region就会等分会两个新的region（裂变）
@@ -102,29 +120,79 @@
 
 ### 读流程
 
-1. 客户端从zookeeper中获取meta表所在的regionserver节点的位置信息（`hbase:meta`存储在hbase命名空间中）
+![HBase读取数据流程](./images/HBase读取数据流程.png)
 
-2. 客户端读取meta表，再根据meta表中查询得到的Namespace、表名和RowKey等相关信息，获取将要写入region所在的regionserver的位置信息
+1. Client访问zookeeper，获取hbase:meta所在RegionServer的节点信息
+2. Client访问hbase:meta所在的RegionServer，获取hbase:meta记录的元数据后先加载到内存中，然后再从内存中根据需要查询的RowKey查询出RowKey所在的Region的相关信息（Region所在RegionServer）
+3. Client访问RowKey所在Region对应的RegionServer，发起数据读取请求
+4. RegionServer构建RegionScanner（需要查询的RowKey分布在多少个Region中就需要构建多少个RegionScanner），用于对该Region的数据检索
+5. RegionScanner构建StoreScanner（Region中有多少个Store就需要构建多少个StoreScanner，Store的数量取决于Table的ColumnFamily的数量），用于对该列族的数据检索
+6. 多个StoreScanner合并构建最小堆（已排序的完全二叉树）StoreHeap:PriorityQueue<StoreScanner>
+7. StoreScanner构建一个MemStoreScanner和一个或多个StoreFileScanner（数量取决于StoreFile数量）
+8. 过滤掉某些能够确定所要查询的RowKey一定不在StoreFile内的对应的StoreFileScanner或MemStoreScanner
+9. 经过筛选后留下的Scanner开始做读取数据的准备，将对应的StoreFile定位到满足的RowKey的起始位置
+10. 将所有的StoreFileScanner和MemStoreScanner合并构建最小堆KeyValueHeap:PriorityQueue<KeyValueScanner>，排序的规则按照KeyValue从小到大排序
+11. 从KeyValueHeap:PriorityQueue<KeyValueScanner>中经过一系列筛选后一行行的得到需要查询的KeyValue。
 
-3. 客户端访问具体的region所在的regionserver，找到对应的region及store
-4. 首先从memstore中读取数据，如果读取到了那么直接将数据返回，如果没有，则去blockcache读取数据
-5. 如果blockcache中读取到数据，则直接返回数据给客户端，如果读取不到，则遍历storefile文件，查找数据
-6. 如果从storefile中读取不到数据，则返回客户端为空，如果读取到数据，那么需要将数据先缓存到blockcache中（方便下一次读取），然后再将数据返回给客户端。
-7. blockcache是内存空间，如果缓存的数据比较多，满了之后会采用LRU策略，将比较老的数据进行删除。
+#### 步骤答疑解释
+
+##### 1. 为什么Scanner需要有小到大排序？
+
+最直接的解释是scan的结果需要由小到大输出给用户，当然，这并不全面，最合理的解释是只有由小到大排序才能使得scan效率最高。举个简单的例子，HBase支持数据多版本，假设用户只想获取最新版本，那只需要将这些数据由最新到最旧进行排序，然后取队首元素返回就可以。那么，如果不排序，就只能遍历所有元素，查看符不符合用户查询条件。
+
+##### 2. HBase中KeyValue是什么样的结构？
+
+![hbase-keyvalue](./images/hbase-keyvalue.png)
+
+1. KeyValue由Key length、value length、key、value组成
+2. 其中key又由RowKey length、RowKey、ColumnFamily length、ColumnFamily、ColumnQualifier、TimeStamp、KeyType组成
+   - RowKey length：RowKey长度
+   - RowKey：RowKey内容
+   - ColumnFamily length：列族长度
+   - ColumnFamily：列族
+   - ColumnQualifier：列名
+   - Timestamp：时间戳
+   - KeyType：表示类型，取值有Put/Delete/Delete Column/Delete Family
+
+##### 3. 不同KeyValue之间如何进行大小比较？
+
+key的内容包括RowKey、ColumnFamuly、ColumnQualifier、Timestamp、KeyType。所以keyValue的大小比较规则如下：
+
+1. 比较RowKey，RowKey越小则KeyValue越小
+2. RowKey相同情况下，比较ColumnFamily，ColumnFamily越小，KeyValue越小
+3. ColumnFamily相同情况下，比较ColumnQualifier，ColumnQualifier越小，KeyValue越小
+4. ColumnQualifier相同情况下，比较Timestamp越大，KeyValue越小
+5. Timestamp相同情况下，比较KeyType（DeleteFamily -> DeleteColumn -> Delete -> Put），KeyType级别从左到右对应的KeyValue从小到大
+
+##### 4. 数据是如何从最小堆<KeyValueScanner>中一行行获取的？
+
+![hbase-scan案例](./images/hbase-scan案例.png)
+
+这三个Scanner组成的heap为<MemstoreScanner，StoreFileScanner2, StoreFileScanner1>，Scanner由小到大排列。查询的时候首先pop出heap的堆顶元素，即MemstoreScanner，得到keyvalue = r2:cf1:name:v3:name23的数据，拿到这个keyvalue之后，需要进行如下判定：
+
+1. 检查该KeyValue的KeyType是否是Deleted/DeletedCol等，如果是就直接忽略该列所有其他版本，跳到下列（列族）
+2. 检查该KeyValue的Timestamp是否在用户设定的Timestamp Range范围，如果不在该范围，忽略
+3. 检查该KeyValue是否满足用户设置的各种filter过滤器，如果不满足，忽略
+4. 检查该KeyValue是否满足用户查询中设定的版本数，比如用户只查询最新版本，则忽略该cell的其他版本；反正如果用户查询所有版本，则还需要查询该cell的其他版本
+
+现在假设用户查询所有版本而且该keyvalue检查通过，此时当前的堆顶元素需要执行next方法去检索下一个值，并重新组织最小堆。即图中MemstoreScanner将会指向r4，重新组织最小堆之后最小堆将会变为<StoreFileScanner2, StoreFileScanner1, MemstoreScanner>，堆顶元素变为StoreFileScanner2，得到keyvalue＝r2:cf1:name:v2:name22，进行一系列判定，再next，再重新组织最小堆…
+
+不断重复这个过程，直至一行数据全部被检索得到。继续下一行…
 
 ### 写流程
 
-1. 客户端从zookeeper中获取meta表所在的regionserver节点的位置信息（`hbase:meta`存储在hbase命名空间中）
+![hbase写流程](./images/hbase写流程.png)
 
-2. 客户端读取meta表，再根据meta表中查询得到的Namespace、表名和RowKey等相关信息，获取将要写入region所在的regionserver的位置信息
-
-3. 客户端访问具体的region所在的regionserver，找到对应的region及store
-
+1. Client访问zookeeper，获取hbase:meta所在RegionServer的节点信息
+2. Client访问hbase:meta所在的RegionServer，获取hbase:meta记录的元数据后先加载到内存中，获取将要写入region所在的regionserver的位置信息（Region所在RegionServer）
+3. 客户端访问具体的region所在的regionserver，找到对应的region及store，发起数据写入请求，在Region中写数据
 4. 开始写数据，写数据的时候会先向hlog中写一份数据（预写日志，Write Ahead Log，WAL）。目的：方便memstore中数据丢失后能够根据hlog恢复数据。向hlog中写数据的时候也是优先写入内存，后台会有一个线程定期（每隔1秒）异步刷写数据到hdfs，如果hlog的数据也写入失败，那么数据就会发生丢失
+5. Hlog写数据完成之后，会先将数据写入到MemStore，MemStore默认大小是64M，当MemStore满了之后，数据被Flush成一个StoreFile（将MemStore中的数据持久化到hdfs中）
+6. 随着StoreFile文件的不断增多，当其数量增长到一定阀值后，触发Compact合并操作，将多个StoreFile合并成一个StoreFile，同时进行版本合并和数据删除
+7. StoreFiles通过不断的Compact合并操作，逐步形成越来越大的StoreFile
+8. 单个StoreFile大小超过一定阀值后，触发Split操作，把当前Region Split成2个新的Region。父Region会下线，新Split出的2个子Region会被HMaster分配到相应的RegionServer上，使得原先1个Region的压力得以分流到2个Region上
 
-5. hlog写数据完成之后，会先将数据写入到memstore，memstore默认大小是64M，当memstore满了之后会进行统一的溢写操作，将memstore中的数据持久化到hdfs中
-
-6. 频繁的溢写会导致产生很多的小文件，因此会进行文件的合并，文件在合并的时候有两种方式，minor和major，minor表示小范围文件的合并，major表示将所有的storefile文件都合并成一个，具体详细的过程，后续会讲解。
+**可以看出HBase只有增添数据，所有的更新和删除操作都是在后续的Compact历程中举行的，使得用户的写操作只要进入内存就可以立刻返回，实现了HBase I/O的高性能。**
 
 ## HBase基本操作
 
