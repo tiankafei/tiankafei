@@ -868,7 +868,7 @@ get 'wbsq', '000', {COLUMN=>'cf1:sq', VERSIONS=>10000}
 
 ## HBase优化
 
-### Pre-Creating Regions：预分区
+### 1. Pre-Creating Regions：预分区
 
 > 默认情况下，在创建HBase表的时候会自动创建一个region分区，当导入数据的时候，所有的HBase客户端都向这一个region写数据，直到这个region足够大了才进行切分。一种可以加快批量写入速度的方法是**通过预先创建一些空的regions**，这样当数据写入HBase时，**会按照region分区情况，在集群内做数据的负载均衡。**
 
@@ -888,7 +888,7 @@ byte[][] splits = new byte[][] { Bytes.toBytes("100"),
 admin.createTable(table, splits);
 ```
 
-### Rowkey设计
+### 2. Rowkey设计
 
 #### row key用来检索记录的三种方式
 
@@ -917,7 +917,7 @@ admin.createTable(table, splits);
 
 > 必须在设计上保证其唯一性，rowkey是按照字典顺序排序存储的，因此，设计rowkey的时候，要充分利用这个排序的特点，将经常读取的数据存储到一块，将最近可能会被访问的数据放到一块。	
 
-### 列族的设计
+### 3. 列族的设计
 
 #### 不要在一张表里定义太多的column family
 
@@ -930,7 +930,7 @@ admin.createTable(table, splits);
 3. 与 Flush 操作一样，目前 HBase 的 Compaction (合并)操作也是 Region 级别的，过多的列族也会产生不必要的 IO。
 4. HDFS 其实对一个目录下的文件数有限制的（`dfs.namenode.fs-limits.max-directory-items`）。如果我们有 N 个列族，M 个 Region，那么我们持久化到 HDFS 至少会产生 NM 个文件；而每个列族对应底层的 HFile 文件往往不止一个，我们假设为 K 个，那么最终表在 HDFS 目录下的文件数将是 NMK，这可能会操作 HDFS 的限制。
 
-### in memory：查询缓存
+### 4. in memory：查询缓存
 
 > hbase在LRU缓存基础之上采用了分层设计，整个blockcache分成了三个部分，分别是single、multi和inMemory。
 
@@ -940,18 +940,18 @@ admin.createTable(table, splits);
 2. multi：如果一个block被多次访问，则从single队列转移到multi队列
 3. inMemory：优先级最高，常驻cache，因此一般只有hbase系统的元数据，如meta表之类的才会放到inMemory队列中。
 
-### Max Version：最大版本
+### 5. Max Version：最大版本
 
 > 创建表的时候，可以通过ColumnFamilyDescriptorBuilder.setMaxVersions(int maxVersions)设置表中数据的最大版本，如果只需要保存最新版本的数据，那么可以设置setMaxVersions(1)，保留更多的版本信息会占用更多的存储空间。
 
 1. 命令行方式：create 'wbsq', NAME => 'cf1', VERSIONS => 10000
 2. javaAPI方式：ColumnFamilyDescriptorBuilder.setMaxVersions(int maxVersions)
 
-### Time to Live：声明周期
+### 6. Time to Live：声明周期
 
 > 创建表的时候，可以通过ColumnFamilyDescriptorBuilder.setTimeToLive(int timeToLive)设置表中数据的存储生命期，过期数据将自动被删除，例如如果只需要存储最近两天的数据，那么可以设置setTimeToLive(2 * 24 * 60 * 60)。
 
-### Compaction：合并操作
+### 7. Compaction：合并操作
 
 > 在HBase中，数据在更新时首先写入WAL 日志(HLog)和内存(MemStore)中，MemStore中的数据是排序的，当MemStore累计到一定阈值时，就会创建一个新的MemStore，并且将老的MemStore添加到flush队列，由单独的线程flush到磁盘上，成为一个StoreFile。于此同时， 系统会在zookeeper中记录一个redo point，表示这个时刻之前的变更已经持久化了**(minor compact)**。
 
@@ -987,7 +987,7 @@ admin.createTable(table, splits);
 
 ## hbase写表操作	
 
-### 是否需要写WAL？WAL是否需要同步写入？
+### 1. 是否需要写WAL？WAL是否需要同步写入？
 
 #### 优化原理
 
@@ -997,7 +997,7 @@ admin.createTable(table, splits);
 
 ​		根据业务关注点在WAL机制与写入吞吐量之间做出选择  
 
-### Put是否可以同步批量提交？
+### 2. Put是否可以同步批量提交？
 
 #### 优化原理
 
@@ -1007,7 +1007,7 @@ admin.createTable(table, splits);
 
 ​		使用批量put进行写入请求
 
-### Put是否可以异步批量提交？
+### 3. Put是否可以异步批量提交？
 
 #### 优化原理
 
@@ -1021,7 +1021,7 @@ admin.createTable(table, splits);
 
 ​		setAutoFlush(false)
 
-### Region是否太少？
+### 4. Region是否太少？
 
 #### 优化原理
 
@@ -1031,7 +1031,7 @@ admin.createTable(table, splits);
 
 ​		在Num(Region of Table) < Num(RegionServer)的场景下切分部分请求负载高的Region并迁移到其他RegionServer；
 
-### 写入请求是否不均衡？
+### 5. 写入请求是否不均衡？
 
 #### 优化原理
 
@@ -1041,21 +1041,21 @@ admin.createTable(table, splits);
 
 ​		检查RowKey设计以及预分区策略，保证写入请求均衡。
 
-### 写入KeyValue数据是否太大？
+### 6. 写入KeyValue数据是否太大？
 
 ​		KeyValue大小对写入性能的影响巨大，一旦遇到写入性能比较差的情况，需要考虑是否由于写入KeyValue数据太大导致。
 
-### Utilize Flash storage for WAL(HBASE-12848)
+### 7. Utilize Flash storage for WAL(HBASE-12848)
 
 ​		这个特性意味着可以将WAL单独置于SSD上，这样即使在默认情况下（WALSync），写性能也会有很大的提升。需要注意的是，该特性建立在HDFS 2.6.0+的基础上，HDFS以前版本不支持该特性。具体可以参考官方jira：https://issues.apache.org/jira/browse/HBASE-12848
 
-### Multiple WALs(HBASE-14457)
+### 8. Multiple WALs(HBASE-14457)
 
 ​		该特性也是对WAL进行改造，当前WAL设计为一个RegionServer上所有Region共享一个WAL，可以想象在写入吞吐量较高的时候必然存在资源竞争，降低整体性能。针对这个问题，社区小伙伴（阿里巴巴大神）提出Multiple WALs机制，管理员可以为每个Namespace下的所有表设置一个共享WAL，通过这种方式，写性能大约可以提升20%～40%左右。具体可以参考官方jira：https://issues.apache.org/jira/browse/HBASE-14457
 
 ## hbase读表优化
 
-### scan缓存是否设置合理？
+### 1. scan缓存是否设置合理？
 
 #### 优化原理
 
@@ -1067,7 +1067,7 @@ admin.createTable(table, splits);
 
 ​		大scan场景下将scan缓存从100增大到500或者1000，用以减少RPC次数
 
-### get请求是否可以使用批量请求？
+### 2. get请求是否可以使用批量请求？
 
 #### 优化原理
 
@@ -1077,7 +1077,7 @@ admin.createTable(table, splits);
 
 ​		使用批量get进行读取请求
 
-### 请求是否可以显示指定列族或者列？
+### 3. 请求是否可以显示指定列族或者列？
 
 #### 优化原理
 
@@ -1087,7 +1087,7 @@ admin.createTable(table, splits);
 
 ​		可以指定列族或者列进行精确查找的尽量指定查找
 
-### 离线批量读取请求是否设置禁止缓存？ 
+### 4. 离线批量读取请求是否设置禁止缓存？ 
 
 #### 优化原理
 
@@ -1097,7 +1097,7 @@ admin.createTable(table, splits);
 
 ​		离线批量读取请求设置禁用缓存，scan.setBlockCache(false)
 
-### 读请求是否均衡？
+### 5. 读请求是否均衡？
 
 #### 优化原理
 
@@ -1111,7 +1111,7 @@ admin.createTable(table, splits);
 
 ​		RowKey必须进行散列化处理（比如MD5散列），同时建表必须进行预分区处理
 
-### BlockCache是否设置合理？
+### 6. BlockCache是否设置合理？
 
 #### 优化原理
 
@@ -1125,7 +1125,7 @@ admin.createTable(table, splits);
 
 ​		JVM内存配置量 < 20G，BlockCache策略选择LRUBlockCache；否则选择BucketCache策略的offheap模式。
 
-### HFile文件是否太多？
+### 7. HFile文件是否太多？
 
 #### 优化原理
 
@@ -1139,7 +1139,7 @@ admin.createTable(table, splits);
 
 ​		hbase.hstore.compaction.min设置不能太大，默认是3个；设置需要根据Region大小确定，通常可以简单的认为hbase.hstore.compaction.max.size = RegionSize / hbase.hstore.compaction.min
 
-### Compaction是否消耗系统资源过多？
+### 8. Compaction是否消耗系统资源过多？
 
 #### 优化原理
 
@@ -1154,7 +1154,7 @@ admin.createTable(table, splits);
 1. Minor Compaction设置：hbase.hstore.compaction.min设置不能太小，又不能设置太大，因此建议设置为5～6；hbase.hstore.compaction.max.size = RegionSize / hbase.hstore.compaction.min
 2. Major Compaction设置：大Region读延迟敏感业务（ 100G以上）通常不建议开启自动Major Compaction，手动低峰期触发。小Region或者延迟不敏感业务可以开启Major Compaction，但建议限制流量；
 
-### 数据本地率是否太低？
+### 9. 数据本地率是否太低？
 
 > 数据本地率：HDFS数据通常存储三份，假如当前RegionA处于Node1上，数据a写入的时候三副本为(Node1,Node2,Node3)，数据b写入三副本是(Node1,Node4,Node5)，数据c写入三副本(Node1,Node3,Node5)，可以看出来所有数据写入本地Node1肯定会写一份，数据都在本地可以读到，因此数据本地率是100%。现在假设RegionA被迁移到了Node2上，只有数据a在该节点上，其他数据（b和c）读取只能远程跨节点读，本地率就为33%（假设a，b和c的数据大小相同）。
 
