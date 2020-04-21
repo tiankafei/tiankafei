@@ -1,36 +1,8 @@
-# java基础
+# java集合
 
-## 特殊关键字解释
+## ArrayList
 
-| 关键字                            | 描述                                                         |
-| --------------------------------- | ------------------------------------------------------------ |
-| default                           | 默认，1.用在switch语句中，表明一个默认的分支；2.接口的默认实现 |
-| do                                | 用在do-while循环结构中                                       |
-| const                             | 保留关键字，没有具体含义                                     |
-| goto                              | 保留关键字，没有具体含义                                     |
-| instanceof                        | 用来测试一个对象是否是指定类型的实例对象                     |
-| native                            | 用来声明一个方法是由与计算机相关的语言（如C/C++/FORTRAN语言）实现的 |
-| transient                         | 声明不用序列化的成员域                                       |
-| volatile                          | 内存屏障：1.保证不同线程之间的可见性（引用类型除外）；2.禁止指令重排序 |
-| <font color="red">strictfp</font> | <font color="red">strictfp 关键字可应用于类、接口或方法。使用 strictfp 关键字声明一个方法时，该方法中所有的float和double表达式都严格遵守FP-strict的限制，符合IEEE-754规范。当对一个类或接口使用 strictfp 关键字时，该类中的所有代码，包括嵌套类型中的初始设定值和代码，都将严格地进行计算。严格约束意味着所有表达式的结果都必须是 IEEE 754 算法对操作数预期的结果，以单精度和双精度格式表示。如果你想让你的浮点运算更加精确，而且不会因为不同的硬件平台所执行的结果不一致的话，可以用关键字strictfp。</font> |
-
-## Lambda表达式中，常用的接口
-
-### Supplier：没有输入，一个输出
-
-### Consumer：一个输入，没有输出
-
-### BiConsumer：两个输入，没有输出
-
-### Function：一个输入，一个输出
-
-### BiFunction：两个输入，一个输出
-
-## java集合
-
-### ArrayList
-
-#### 类继承关系图
+### 类继承关系图
 
 ![ArrayList](./images/ArrayList.png)
 
@@ -58,7 +30,7 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 数据结构采用的是数组集合
 
@@ -86,20 +58,20 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 
 4. 遍历删除时，应使用 listIterator() 迭代器进行，同时使用 iterator.remove() 方法进行删除。
 
-### LinkedList
+## LinkedList
 
-#### 类继承关系图
+### 类继承关系图
 
 ![LinkedList](./images/LinkedList.png)
 
-#### 特点
+### 特点
 
 1. 基于链表的据结构，双向链表。
 4. 会随着数据量的变化而变化。
 
-### Vector
+## Vector
 
-#### 类继承关系图
+### 类继承关系图
 
 ![Vector](./images/Vector.png)
 
@@ -131,7 +103,7 @@ public Vector(Collection<? extends E> c) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 是线程安全的，与操作元素相关的方法都加上了锁，但是性能较低。
 
@@ -147,21 +119,21 @@ public Vector(Collection<? extends E> c) {
 
    扩容是原来的数组长度的2倍，扩容之后就是把老数组的数据 copy 到新数组中。
 
-### Stack
+## Stack
 
-#### 类继承关系图
+### 类继承关系图
 
 ![Stack](./images/Stack.png)
 
-#### 特点
+### 特点
 
 1. 从Vector继承而来，故拥有Vector的一切特性
 3. pop() 会弹出栈顶元素并返回栈顶的值，
 4. peek() 只是获取栈顶的值，但是并不会把元素从栈顶弹出来
 
-### HashTable
+## HashTable
 
-#### 类继承关系图
+### 类继承关系图
 
 ![Hashtable](./images/Hashtable.png)
 
@@ -194,7 +166,7 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 数据结构是：数组+单项链表
 2. 负载因子：默认0.75，也可以自己指定。当数组的长度 = 容量 * 负载因子的时候，就开始扩容操作。
@@ -202,9 +174,9 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 4. 是线程安全的，与操作元素相关的方法都加上了锁，但是性能较低。
 5. key 和 value 都不许为空，若为空，则抛出空指针异常
 
-### HashMap
+## HashMap
 
-#### 类继承关系图
+### 类继承关系图
 
 ![HashMap](./images/HashMap.png)
 
@@ -235,7 +207,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 初始默认容量为16
 2. 负载因子默认0.75，也可以自己指定。当数组的长度 = 容量 * 负载因子的时候，就开始扩容操作，扩容到原来的2倍
@@ -243,7 +215,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 4. 对key值进行复杂位运算，减少hash碰撞，使数据更加散列
 5. 扩容之后涉及到元素的迁移：判断二进制位的前面那一位(因为每次扩容到原来的2倍，二进制只会增加1位)如果是0，则位置保持不变；如果是1，则移动到 原来在数组中的位置+原数组长度 的位置（容量为2的n次幂的第二个原因）
 
-#### 1.7
+### 1.7
 
 8. 数据结构是：数组+单项链表
 
@@ -294,7 +266,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 
 5. 出现死循环的情况![jdk1.7-hashmap的死循环问题](./images/jdk1.7-hashmap的死循环问题.png)
 
-#### 1.8
+### 1.8
 
 1. 数据结构是：数组+链表+红黑树
 
@@ -398,9 +370,9 @@ public HashMap(Map<? extends K, ? extends V> m) {
 
 8. 
 
-### ConcurrentHashMap
+## ConcurrentHashMap
 
-#### 类继承关系图
+### 类继承关系图
 
 ![ConcurrentHashMap](./images/ConcurrentHashMap.png)
 
@@ -445,14 +417,14 @@ public ConcurrentHashMap(int initialCapacity,
 }
 ```
 
-#### 特点
+### 特点
 
 1. 同步性能更好，因为它仅仅根据同步级别对Map的一部分进行上锁
 2. put流程![jdk7-concurrenthashmap-put流程](./images/jdk7-concurrenthashmap-put流程.png)
 
-### TreeMap
+## TreeMap
 
-#### 类继承关系图
+### 类继承关系图
 
 ![TreeMap](./images/TreeMap.png)
 
@@ -481,25 +453,25 @@ public TreeMap(SortedMap<K, ? extends V> m) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 必须是同一类型的数据（不能两种及以上的数据类型）
 
-#### 1.7
+### 1.7
 
 1. 
 2. 
 
-#### 1.8
+### 1.8
 
 1. 默认的数据结构：基于 [`NavigableMap`](../../java/util/NavigableMap.html)实现红黑树
 2. 
 
 ps: 参考红黑树的算法实现
 
-### LinkedHashMap
+## LinkedHashMap
 
-#### 类继承关系图
+### 类继承关系图
 
 ![LinkedHashMap](./images/LinkedHashMap.png)
 
@@ -532,15 +504,15 @@ public LinkedHashMap(Map<? extends K, ? extends V> m) {
     }
 ```
 
-#### 特点
+### 特点
 
 1. 继承HashMap，拥有HashMap的数据结构，
 2. LinkedHashMap默认是按照插入的顺序。
 3. 
 
-### HashSet
+## HashSet
 
-#### 类继承关系图
+### 类继承关系图
 
 ![HashSet](./images/HashSet.png)
 
@@ -564,7 +536,7 @@ public HashSet(int initialCapacity) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 内部包含一个HashMap，使用HashMap的key保证不允许重复，且只能有一个空值。
 2. 通过 hashCode 和 equals 对数据进行相同判定，如果相同就不存进去。
@@ -573,9 +545,9 @@ public HashSet(int initialCapacity) {
 5. hashCode 是为了判断放在索引（数组）的哪个位置。
 6. 当使用比较器的时候，不会调用equals。
 
-### TreeSet
+## TreeSet
 
-#### 类继承关系图
+### 类继承关系图
 
 ![TreeSet](./images/TreeSet.png)
 
@@ -601,7 +573,7 @@ public TreeSet(SortedSet<E> s) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 采用二叉树（红黑树）的存储结构，
 2. 有序（排序后的升序），
@@ -610,9 +582,9 @@ public TreeSet(SortedSet<E> s) {
 5. 如果是引用类型，需要实现 Comparable 排序比较器；或者传入一个Comparator比较器。
 6. 如果外面传了一个比较器，类里面依然有比较器，会自动使用外部的比较器。
 
-### LinkedHashSet
+## LinkedHashSet
 
-#### 类继承关系图
+### 类继承关系图
 
 ![LinkedHashSet](./images/LinkedHashSet.png)
 
@@ -636,14 +608,14 @@ public LinkedHashSet(Collection<? extends E> c) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 继承hashset，拥有hashset的数据结构
 2. 采用哈希表的存储结构
 
-### Collections.synchronizedList
+## Collections.synchronizedList
 
-#### 类继承关系图
+### 类继承关系图
 
 ![SynchronizedList](./images/SynchronizedList.png)
 
@@ -660,19 +632,19 @@ SynchronizedCollection(Collection<E> c, Object mutex) {
 }
 ```
 
-#### 特点
+### 特点
 
 1. 使用同步代码块，减少了锁影响的范围
 2. listlterator方法并没有做同步处理，所以在遍历的时候，需要手动加锁，所以可以指定锁对象
 3. SynchronizedList有很好的扩展和兼容功能, 可以将所有的List子类转成线程安全的类
 4. 扩容机制与ArrayList一样
 
-### Collections.synchronizedMap
+## Collections.synchronizedMap
 
-### Collections.synchronizedSortedMap
+## Collections.synchronizedSortedMap
 
-### Collections.synchronizedSet
+## Collections.synchronizedSet
 
-### Collections.synchronizedSortedSet
+## Collections.synchronizedSortedSet
 
-### Collections.synchronizedCollection
+## Collections.synchronizedCollection
