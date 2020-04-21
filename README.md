@@ -43,18 +43,6 @@
 >
 > [IO详情介绍](tiankafei-docs-io/IO详情介绍.md)
 
-# tiankafei-docs-javase
-
-> javase相关的技术文档列表，包含以下：
->
-> [Java基础](tiankafei-docs-javase/Java基础.md)
->
-> [常用正则表达式](tiankafei-docs-javase/常用正则表达式.md)
-
-# tiankafei-docs-juc
-
-> juc相关的技术文档列表，包含以下：
-
 # tiankafei-docs-jvm
 
 > jvm相关的技术文档列表，包含以下：
@@ -94,6 +82,10 @@
 # tiankafei-docs-other
 
 > 其他的一些相关文档列表，包含以下：
+>
+> [Java基础](tiankafei-docs-other/Java基础.md)
+>
+> [常用正则表达式](tiankafei-docs-other/常用正则表达式.md)
 >
 > [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
 >
@@ -135,9 +127,13 @@
 >
 > [hbase学习笔记](tiankafei-docs-大数据/hbase学习笔记.md)
 >
+> [flume学习笔记](tiankafei-docs-大数据/flume学习笔记.md)
+>
 > [scala学习笔记](tiankafei-docs-大数据/scala学习笔记.md)
 >
 > [Kafka学习笔记](tiankafei-docs-大数据/Kafka学习笔记.md)
+>
+> [大数据项目-日志收集分析](tiankafei-docs-大数据/大数据项目-日志收集分析.md)
 
 # tiankafei-docs-架构
 
@@ -147,11 +143,15 @@
 >
 > [MySQL调优](tiankafei-docs-架构/MySQL调优.md)
 
-# tiankafei-docs-算法
+# tiankafei-docs-数据结构与算法
 
 > 用到的各种算法的文档列表，包含以下：
 >
-> [数据结构与算法](tiankafei-docs-算法/数据结构与算法.md)
+> [java集合](tiankafei-docs-数据结构与算法/java集合.md)
+>
+> [Lambda表达式和StreamAPI用法](tiankafei-docs-数据结构与算法/Lambda表达式和StreamAPI用法.md)
+>
+> [数据结构与算法](tiankafei-docs-数据结构与算法/数据结构与算法.md)
 
 # tiankafei-docs-云
 
