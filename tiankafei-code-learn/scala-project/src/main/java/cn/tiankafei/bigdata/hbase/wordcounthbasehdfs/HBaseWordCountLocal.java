@@ -40,7 +40,7 @@ public class HBaseWordCountLocal {
         scan.setCacheBlocks(false);
 
         // 指定Map处理类
-        TableMapReduceUtil.initTableMapperJob("line", scan, HBaseWordCountMapper.class, Text.class, IntWritable.class, job);
+        TableMapReduceUtil.initTableMapperJob("line", scan, HBaseWordCountMapper.class, Text.class, IntWritable.class, job, false);
 
         // 指定reduce处理类
 //        job.setNumReduceTasks(0);

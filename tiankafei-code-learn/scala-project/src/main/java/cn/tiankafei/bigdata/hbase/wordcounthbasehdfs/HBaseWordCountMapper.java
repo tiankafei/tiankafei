@@ -17,13 +17,15 @@ import java.io.IOException;
  **/
 public class HBaseWordCountMapper extends TableMapper<Text, IntWritable> {
 
+    private final static byte[] cf = Bytes.toBytes("cf");
+    private final static byte[] col = Bytes.toBytes("word");
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
 
     @Override
     protected void map(ImmutableBytesWritable key, Result result, Context context) throws IOException, InterruptedException {
         String mapKey = Bytes.toString(key.get());
-        Cell cell = result.getColumnLatestCell(Bytes.toBytes("cf"),Bytes.toBytes("word"));
+        Cell cell = result.getColumnLatestCell(cf, col);
         String line = Bytes.toString(CellUtil.cloneValue(cell));
         word.set(mapKey + "---" + line);
         context.write(word, one);
