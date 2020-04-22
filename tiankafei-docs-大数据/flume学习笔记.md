@@ -118,3 +118,6 @@ Flume采用了事务的方式来保证Event的可靠性传输，保证Event集�
 
 # 配置
 
+参考官方案例：
+
+[https://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html](https://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html)
