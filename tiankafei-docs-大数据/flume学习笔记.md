@@ -116,8 +116,159 @@ Flume采用了事务的方式来保证Event的可靠性传输，保证Event集�
 | Spillable Memory Channel   | Event数据存储在内存中和磁盘上，当内存队列满了，会持久化到磁盘文件（当前试验性的，不建议生产环境使用） |
 | Pseudo Transaction Channel | 仅用于单元测试，不能用于生产环境。                           |
 
-# 配置
+# Flume测试
 
-参考官方案例：
+Flume 的配置参考官方案例：
 
 [https://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html](https://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html)
+
+## Flume单台节点
+
+![flume-单agent](./images/flume-单agent.png)
+
+### 配置
+
+```properties
+# example.conf: A single-node Flume configuration
+
+# Name the components on this agent
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+
+# Describe/configure the source
+a1.sources.r1.type = netcat
+a1.sources.r1.bind = bigdata01
+a1.sources.r1.port = 44444
+
+# Describe the sink
+a1.sinks.k1.type = logger
+
+# Use a channel which buffers events in memory
+a1.channels.c1.type = memory
+a1.channels.c1.capacity = 1000
+a1.channels.c1.transactionCapacity = 100
+
+# Bind the source and sink to the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1
+```
+
+### 执行启动命令
+
+```shell
+flume-ng agent --conf-file option-netcat --name a1 -Dflume.root.logger=INFO,console
+```
+
+### 测试
+
+```shell
+# 安装telnet
+yum install -y telnet
+# 使用telnet连接flume节点，可以从控制台发送消息
+telnet bigdata01 44444
+
+# 验证 bigdata01 是否可以打印输入的字符串，如果能正常输出，说明正常运行
+```
+
+## 两台Flume节点
+
+![flume-串联agent](./images/flume-串联agent.png)
+
+### bigdata01 配置
+
+```properties
+# example.conf: A single-node Flume configuration
+
+# Name the components on this agent
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+
+# Describe/configure the source
+a1.sources.r1.type = netcat
+a1.sources.r1.bind = bigdata01
+a1.sources.r1.port = 44444
+
+# Describe the sink
+a1.sinks.k1.type = avro
+a1.sinks.k1.hostname = bigdata02
+a1.sinks.k1.port = 4545
+
+# Use a channel which buffers events in memory
+a1.channels.c1.type = memory
+a1.channels.c1.capacity = 1000
+a1.channels.c1.transactionCapacity = 100
+
+# Bind the source and sink to the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1
+```
+
+### bigdata02 配置
+
+```properties
+# example.conf: A single-node Flume configuration
+
+# Name the components on this agent
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+
+# Describe/configure the source
+a1.sources.r1.type = avro
+a1.sources.r1.bind = bigdata02
+a1.sources.r1.port = 4545
+
+# Describe the sink
+a1.sinks.k1.type = logger
+
+# Use a channel which buffers events in memory
+a1.channels.c1.type = memory
+a1.channels.c1.capacity = 1000
+a1.channels.c1.transactionCapacity = 100
+
+# Bind the source and sink to the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1
+```
+
+### 启动 bigdata02 的 flume
+
+```shell
+flume-ng agent --conf-file option-avro --name a1 -Dflume.root.logger=INFO,console
+```
+
+### 启动 bigdata01 的 flume
+
+```shell
+flume-ng agent --conf-file option-avro --name a1 -Dflume.root.logger=INFO,console
+```
+
+### 测试
+
+```shell
+# 使用telnet连接flume节点，可以从控制台发送消息
+telnet bigdata01 44444
+
+# 验证 bigdata02 是否可以打印输入的字符串，如果能正常输出，说明正常运行
+```
+
+## 多台 Flume 节点（存在单点故障的问题）
+
+> 一个 flume 配置多个 source
+
+![flume-并联agent](./images/flume-并联agent.png)
+
+
+
+## 正儿八经的配置
+
+> 一个 flume 配置多个 sinks
+
+![flume-多sink的agent](./images/flume-多sink的agent.png)
+
+
+
+
+
