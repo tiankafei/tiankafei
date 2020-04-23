@@ -129,6 +129,8 @@
 >
 > [flume学习笔记](tiankafei-docs-大数据/flume学习笔记.md)
 >
+> [sqoop学习笔记](tiankafei-docs-大数据/sqoop学习笔记.md)
+>
 > [scala学习笔记](tiankafei-docs-大数据/scala学习笔记.md)
 >
 > [Kafka学习笔记](tiankafei-docs-大数据/Kafka学习笔记.md)
