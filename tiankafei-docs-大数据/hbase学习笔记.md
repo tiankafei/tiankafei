@@ -304,6 +304,70 @@ flush 'test'
 hbase hfile -p -f /hbase/data/default/test/cdf8d76af8eaef52133fb6c95d28fe60/cf/ba154563be134c52a75586f204b3dc68
 ```
 
+## HBase与Hive整合
+
+### 单节点hbase与hive整合
+
+```shell
+$HIVE_HOME/bin/hive \
+--auxpath \
+$HIVE_HOME/lib/hive-hbase-handler-2.3.6.jar,\
+$HIVE_HOME/lib/hbase-server-1.1.1.jar,\
+$HIVE_HOME/lib/zookeeper-3.4.6.jar,\
+$HIVE_HOME/lib/guava-14.0.1.jar \
+--hiveconf hbase.master=bigdata01:60000
+```
+
+### 集群HBase与Hive整合
+
+```shell
+$HIVE_HOME/bin/hive \
+--auxpath \
+$HIVE_HOME/lib/hive-hbase-handler-2.3.6.jar,\
+$HIVE_HOME/lib/hbase-server-1.1.1.jar,\
+$HIVE_HOME/lib/zookeeper-3.4.6.jar,\
+$HIVE_HOME/lib/guava-14.0.1.jar \
+--hiveconf hbase.zookeeper.quorum=bigdata01,bigdata02,bigdata03,bigdata04
+```
+
+### 修改集群配置文件
+
+```shell
+cd $HIVE_HOME/conf
+vim hive-site.xml
+```
+
+```xml
+<property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>bigdata01,bigdata02,bigdata03,bigdata04</value>
+</property>
+```
+
+### hive创建与HBase的关联表（内部表）
+
+```sql
+CREATE TABLE hbase_table_1(key int, value string) 
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ("hbase.columns.mapping" = ":key,cf1:val")
+TBLPROPERTIES ("hbase.table.name" = "xyz", "hbase.mapred.output.outputtable" = "xyz");
+```
+
+### hive创建与HBase的关联表（外部表）
+
+```sql
+-- 外部表需要先在HBase创建对应的表
+create 'some_existing_table', 'cf1'
+```
+
+```sql
+-- 创建外部表时关联HBase中已经存在的表
+CREATE EXTERNAL TABLE hbase_table_2(key int, value string) 
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ("hbase.columns.mapping" = "cf1:val")
+TBLPROPERTIES("hbase.table.name" = "some_existing_table", "hbase.mapred.output.outputtable" = "some_existing_table");
+```
+
 ## HBase Java API
 
 ### 初始化系统环境
