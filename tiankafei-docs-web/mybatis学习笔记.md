@@ -3492,3 +3492,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     }
 ```
 
+## MyBatis源码分析流程
+
+![mybatis流程图](./images/mybatis流程图.jpg)
