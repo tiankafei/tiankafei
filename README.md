@@ -91,21 +91,17 @@
 >
 > [git上fork后再更新](tiankafei-docs-other/git上fork后再更新.md)
 
-# tiankafei-docs-spring
-
-> spring相关的技术文档列表，包含以下：
->
-> [spring学习笔记](tiankafei-docs-spring/spring学习笔记.md)
->
-> [spring源码分析](tiankafei-docs-spring/spring源码分析.md)
->
-> [sharding-jdbc基于springboot的配置](tiankafei-docs-spring/sharding-jdbc基于springboot的配置.md)
-
 # tiankafei-docs-web
 
 > web相关的技术文档列表，包含以下：
 >
 > [filter-servlet-inteceptor-controller执行顺序图](tiankafei-docs-web/filter-servlet-inteceptor-controller执行顺序图.md)
+>
+> [spring学习笔记](tiankafei-docs-web/spring学习笔记.md)
+>
+> [spring源码分析](tiankafei-docs-web/spring源码分析.md)
+>
+> [sharding-jdbc基于springboot的配置](tiankafei-docs-web/sharding-jdbc基于springboot的配置.md)
 
 # tiankafei-docs-大数据
 
