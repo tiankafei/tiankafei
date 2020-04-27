@@ -575,55 +575,55 @@ public class MyTest {
 ioc.xml
 
 ```xml
-	<!--给person类添加构造方法-->
-	<bean id="person2" class="com.mashibing.bean.Person">
-        <constructor-arg name="id" value="1"></constructor-arg>
-        <constructor-arg name="name" value="lisi"></constructor-arg>
-        <constructor-arg name="age" value="20"></constructor-arg>
-        <constructor-arg name="gender" value="女"></constructor-arg>
-    </bean>
+<!--给person类添加构造方法-->
+<bean id="person2" class="com.mashibing.bean.Person">
+    <constructor-arg name="id" value="1"></constructor-arg>
+    <constructor-arg name="name" value="lisi"></constructor-arg>
+    <constructor-arg name="age" value="20"></constructor-arg>
+    <constructor-arg name="gender" value="女"></constructor-arg>
+</bean>
 
-	<!--在使用构造器赋值的时候可以省略name属性，但是此时就要求必须严格按照构造器参数的顺序来填写了-->
-	<bean id="person3" class="com.mashibing.bean.Person">
-        <constructor-arg value="1"></constructor-arg>
-        <constructor-arg value="lisi"></constructor-arg>
-        <constructor-arg value="20"></constructor-arg>
-        <constructor-arg value="女"></constructor-arg>
-    </bean>
+<!--在使用构造器赋值的时候可以省略name属性，但是此时就要求必须严格按照构造器参数的顺序来填写了-->
+<bean id="person3" class="com.mashibing.bean.Person">
+    <constructor-arg value="1"></constructor-arg>
+    <constructor-arg value="lisi"></constructor-arg>
+    <constructor-arg value="20"></constructor-arg>
+    <constructor-arg value="女"></constructor-arg>
+</bean>
 
-	<!--如果想不按照顺序来添加参数值，那么可以搭配index属性来使用-->
-    <bean id="person4" class="com.mashibing.bean.Person">
-        <constructor-arg value="lisi" index="1"></constructor-arg>
-        <constructor-arg value="1" index="0"></constructor-arg>
-        <constructor-arg value="女" index="3"></constructor-arg>
-        <constructor-arg value="20" index="2"></constructor-arg>
-    </bean>
-	<!--当有多个参数个数相同，不同类型的构造器的时候，可以通过type来强制类型-->
-	将person的age类型设置为Integer类型
-	public Person(int id, String name, Integer age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        System.out.println("Age");
-    }
+<!--如果想不按照顺序来添加参数值，那么可以搭配index属性来使用-->
+<bean id="person4" class="com.mashibing.bean.Person">
+    <constructor-arg value="lisi" index="1"></constructor-arg>
+    <constructor-arg value="1" index="0"></constructor-arg>
+    <constructor-arg value="女" index="3"></constructor-arg>
+    <constructor-arg value="20" index="2"></constructor-arg>
+</bean>
+<!--当有多个参数个数相同，不同类型的构造器的时候，可以通过type来强制类型-->
+将person的age类型设置为Integer类型
+public Person(int id, String name, Integer age) {
+this.id = id;
+this.name = name;
+this.age = age;
+System.out.println("Age");
+}
 
-    public Person(int id, String name, String gender) {
-        this.id = id;
-        this.name = name;
-        this.gender = gender;
-        System.out.println("gender");
-    }
-	<bean id="person5" class="com.mashibing.bean.Person">
-        <constructor-arg value="1"></constructor-arg>
-        <constructor-arg value="lisi"></constructor-arg>
-        <constructor-arg value="20" type="java.lang.Integer"></constructor-arg>
-    </bean>
-	<!--如果不修改为integer类型，那么需要type跟index组合使用-->
-	 <bean id="person5" class="com.mashibing.bean.Person">
-        <constructor-arg value="1"></constructor-arg>
-        <constructor-arg value="lisi"></constructor-arg>
-        <constructor-arg value="20" type="int" index="2"></constructor-arg>
-    </bean>
+public Person(int id, String name, String gender) {
+this.id = id;
+this.name = name;
+this.gender = gender;
+System.out.println("gender");
+}
+<bean id="person5" class="com.mashibing.bean.Person">
+    <constructor-arg value="1"></constructor-arg>
+    <constructor-arg value="lisi"></constructor-arg>
+    <constructor-arg value="20" type="java.lang.Integer"></constructor-arg>
+</bean>
+<!--如果不修改为integer类型，那么需要type跟index组合使用-->
+<bean id="person5" class="com.mashibing.bean.Person">
+    <constructor-arg value="1"></constructor-arg>
+    <constructor-arg value="lisi"></constructor-arg>
+    <constructor-arg value="20" type="int" index="2"></constructor-arg>
+</bean>
 ```
 
 ### 4. 通过命名空间为bean赋值，简化配置文件中属性声明的写法
@@ -863,16 +863,16 @@ ioc.xml
 如果想实现Java文件的抽象类，不需要将当前bean实例化的话，可以使用abstract属性
 
 ```xml
- 	<bean id="person" class="com.mashibing.bean.Person" abstract="true">
-        <property name="id" value="1"></property>
-        <property name="name" value="zhangsan"></property>
-        <property name="age" value="21"></property>
-        <property name="gender" value="男"></property>
-    </bean>
-    <!--parent:指定bean的配置信息继承于哪个bean-->
-    <bean id="person2" class="com.mashibing.bean.Person" parent="person">
-        <property name="name" value="lisi"></property>
-    </bean>
+<bean id="person" class="com.mashibing.bean.Person" abstract="true">
+    <property name="id" value="1"></property>
+    <property name="name" value="zhangsan"></property>
+    <property name="age" value="21"></property>
+    <property name="gender" value="男"></property>
+</bean>
+<!--parent:指定bean的配置信息继承于哪个bean-->
+<bean id="person2" class="com.mashibing.bean.Person" parent="person">
+    <property name="name" value="lisi"></property>
+</bean>
 ```
 
 ### 7. bean对象创建的依赖关系
