@@ -1,6 +1,7 @@
 package cn.tiankafei.spring;
 
 import cn.tiankafei.spring.entity.Person001;
+import cn.tiankafei.spring.entity.Person002;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -49,6 +50,16 @@ public class SpringTest2 {
         ApplicationContext context = new ClassPathXmlApplicationContext("ioc1.xml");
         Person001 person001 = (Person001) context.getBean("person4");
         System.out.println(person001);
+    }
+
+    /**
+     * 如果不修改为integer类型，那么需要type跟index组合使用
+     */
+    @Test
+    public void test05(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("ioc1.xml");
+        Person002 person002 = (Person002) context.getBean("person5");
+        System.out.println(person002);
     }
 
 }
