@@ -62,4 +62,14 @@ public class SpringTest2 {
         System.out.println(person002);
     }
 
+    /**
+     * 通过命名空间为bean赋值，简化配置文件中属性声明的写法
+     */
+    @Test
+    public void test06(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("ioc1.xml");
+        Person001 person001 = (Person001) context.getBean("person6");
+        System.out.println(person001);
+    }
+
 }

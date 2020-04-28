@@ -43,4 +43,7 @@
         <constructor-arg value="20"></constructor-arg>
     </bean>
 
+    <!--通过命名空间为bean赋值，简化配置文件中属性声明的写法-->
+    <bean id="person6" class="cn.tiankafei.spring.entity.Person001" p:id="3" p:name="wangwu" p:age="22" p:gender="男"></bean>
+
 </beans>
