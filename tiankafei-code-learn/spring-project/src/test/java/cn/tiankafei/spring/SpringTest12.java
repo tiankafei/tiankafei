@@ -12,7 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SpringTest12 {
 
     /**
-     * 配置bean对象初始化方法的前后处理方法
+     * b配置bean对象初始化方法的前后处理方法
      */
     @Test
     public void test01(){

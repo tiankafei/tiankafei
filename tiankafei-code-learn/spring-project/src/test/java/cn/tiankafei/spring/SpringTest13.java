@@ -13,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class SpringTest13 {
 
     /**
-     * 配置bean对象初始化方法的前后处理方法
+     * spring创建第三方bean对象
      */
     @Test
     public void test01() throws SQLException {
