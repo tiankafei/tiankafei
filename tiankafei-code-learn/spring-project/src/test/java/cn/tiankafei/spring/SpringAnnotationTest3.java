@@ -1,5 +1,6 @@
 package cn.tiankafei.spring;
 
+import cn.tiankafei.spring.controller.Person1Controller;
 import cn.tiankafei.spring.controller.PersonController;
 import cn.tiankafei.spring.dao.impl.PersonDao;
 import cn.tiankafei.spring.service.impl.PersonService;
@@ -82,6 +83,33 @@ public class SpringAnnotationTest3 {
 
         PersonController personController1 = context.getBean(PersonController.class);
         PersonController personController2 = context.getBean(PersonController.class);
+        System.out.println(personController1 == personController2);
+        personController1.test(personDao1);
+        personController1.test2(personService1);
+    }
+
+    /**
+     * 自动装配的注解@AutoWired，@Resource
+     *
+     * 在使用自动装配的时候，出了可以使用@AutoWired注解之外，还可以使用@Resource注解，大家需要知道这两个注解的区别。
+     *
+     * 1. @AutoWired:是spring中提供的注解，@Resource:是jdk中定义的注解，依靠的是java的标准
+     * 2. @AutoWired默认是按照类型进行装配，默认情况下要求依赖的对象必须存在，@Resource默认是按照名字进行匹配的，同时可以指定name属性。
+     * 3. @AutoWired只适合spring框架，而@Resource扩展性更好
+     *
+     */
+    @Test
+    public void test05(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext3.xml");
+        PersonServiceExt personService1 = context.getBean(PersonServiceExt.class);
+        PersonServiceExt personService2 = context.getBean(PersonServiceExt.class);
+        System.out.println(personService1 == personService2);
+        PersonDao personDao1 = context.getBean(PersonDao.class);
+        PersonDao personDao2 = context.getBean(PersonDao.class);
+        System.out.println(personDao1 == personDao2);
+
+        Person1Controller personController1 = context.getBean(Person1Controller.class);
+        Person1Controller personController2 = context.getBean(Person1Controller.class);
         System.out.println(personController1 == personController2);
         personController1.test(personDao1);
         personController1.test2(personService1);
