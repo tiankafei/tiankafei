@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    静态工厂的使用：
+    class:指定静态工厂类
+    factory-method:指定哪个方法是工厂方法
+    -->
+    <bean id="person5" class="cn.tiankafei.spring.factory.PersonStaticFactory" factory-method="getPerson">
+        <!--constructor-arg：可以为方法指定参数-->
+        <constructor-arg value="lisi"></constructor-arg>
+    </bean>
+</beans>
