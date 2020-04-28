@@ -250,6 +250,8 @@ docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}
 ```shell
 ## 停止一个运行中的容器
 docker stop redis
+## 停止所有正在运行的容器
+docker stop $(docker ps -q)
 ## 杀掉一个运行中的容器
 docker kill redis
 ## 删除一个已停止的容器

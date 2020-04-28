@@ -1,14 +1,12 @@
 package cn.tiankafei.spring.service.impl;
 
 import cn.tiankafei.spring.dao.UserDao;
+import cn.tiankafei.spring.dao.impl.UserDaoImpl;
 import cn.tiankafei.spring.service.UserService;
 
-public class UserServiceImpl implements UserService {
-    private UserDao userDao;
+public class UserService1Impl implements UserService {
+    private UserDao userDao = new UserDaoImpl();
 
-    public void setUserDao(UserDao userDao){
-        this.userDao = userDao;
-    }
     @Override
     public void getUser() {
         userDao.getUser();
