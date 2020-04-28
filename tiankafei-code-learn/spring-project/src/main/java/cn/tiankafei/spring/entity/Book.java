@@ -10,12 +10,12 @@ import lombok.experimental.Accessors;
 public class Book {
     private String name;
     private String author;
-    private double price;
+    private Double price;
 
     public Book() {
     }
 
-    public Book(String name, String author, double price) {
+    public Book(String name, String author, Double price) {
         this.name = name;
         this.author = author;
         this.price = price;
