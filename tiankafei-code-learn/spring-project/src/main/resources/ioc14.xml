@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="person4" class="cn.tiankafei.spring.entity.Person003">
+        <!--支持任何运算符-->
+        <property name="age" value="#{12*2}"></property>
+        <!--可以引用其他bean的某个属性值-->
+        <property name="name" value="#{address.province}"></property>
+        <!--引用其他bean-->
+        <property name="address" value="#{address}"></property>
+        <!--调用静态方法-->
+        <property name="hobbies" value="#{T(java.util.UUID).randomUUID().toString().substring(0,4)}"></property>
+        <!--调用非静态方法-->
+        <property name="gender" value="#{address.getCity()}"></property>
+    </bean>
+
+    <bean id="address" class="cn.tiankafei.spring.entity.Address">
+        <property name="province" value="河北"></property>
+        <property name="city" value="邯郸"></property>
+        <property name="town" value="武安"></property>
+    </bean>
+</beans>
