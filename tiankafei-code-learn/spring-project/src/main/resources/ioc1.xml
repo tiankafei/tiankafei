@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--给person类添加构造方法-->
+    <bean id="person1" class="cn.tiankafei.spring.entity.Person001">
+        <constructor-arg name="id" value="1"></constructor-arg>
+        <constructor-arg name="name" value="lisi"></constructor-arg>
+        <constructor-arg name="age" value="20"></constructor-arg>
+        <constructor-arg name="gender" value="女"></constructor-arg>
+    </bean>
+
+
+</beans>
