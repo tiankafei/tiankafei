@@ -31,4 +31,14 @@ public class SpringTest2 {
         System.out.println(person001);
     }
 
+    /**
+     * 如果想不按照顺序来添加参数值，那么可以搭配index属性来使用
+     */
+    @Test
+    public void test03(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("ioc1.xml");
+        Person001 person001 = (Person001) context.getBean("person3");
+        System.out.println(person001);
+    }
+
 }

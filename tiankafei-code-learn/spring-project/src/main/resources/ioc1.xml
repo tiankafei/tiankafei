@@ -21,5 +21,12 @@
         <constructor-arg value="女"></constructor-arg>
     </bean>
 
+    <!--如果想不按照顺序来添加参数值，那么可以搭配index属性来使用-->
+    <bean id="person3" class="cn.tiankafei.spring.entity.Person001">
+        <constructor-arg value="lisi" index="1"></constructor-arg>
+        <constructor-arg value="1" index="0"></constructor-arg>
+        <constructor-arg value="女" index="3"></constructor-arg>
+        <constructor-arg value="20" index="2"></constructor-arg>
+    </bean>
 
 </beans>
