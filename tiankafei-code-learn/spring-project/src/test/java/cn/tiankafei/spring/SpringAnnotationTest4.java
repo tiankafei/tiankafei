@@ -7,6 +7,7 @@ import cn.tiankafei.spring.inter.impl.MyCalculator5;
 import cn.tiankafei.spring.inter.impl.MyCalculator6;
 import cn.tiankafei.spring.inter.impl.MyCalculator7;
 import cn.tiankafei.spring.inter.impl.MyCalculator8;
+import cn.tiankafei.spring.inter.impl.MyCalculator9;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -82,6 +83,15 @@ public class SpringAnnotationTest4 {
     public void test08(){
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext4.xml");
         MyCalculator8 bean = context.getBean(MyCalculator8.class);
+        System.out.println(bean.add(1, 1));
+        System.out.println(bean);
+        System.out.println(bean.getClass());
+    }
+
+    @Test
+    public void test09(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext5.xml");
+        MyCalculator9 bean = context.getBean(MyCalculator9.class);
         System.out.println(bean.add(1, 1));
         System.out.println(bean);
         System.out.println(bean.getClass());
