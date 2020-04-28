@@ -41,4 +41,14 @@ public class SpringTest2 {
         System.out.println(person001);
     }
 
+    /**
+     * 当有多个参数个数相同，不同类型的构造器的时候，可以通过type来强制类型
+     */
+    @Test
+    public void test04(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("ioc1.xml");
+        Person001 person001 = (Person001) context.getBean("person4");
+        System.out.println(person001);
+    }
+
 }

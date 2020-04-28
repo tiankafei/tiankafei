@@ -16,6 +16,12 @@ public class Person001 {
     public Person001() {
     }
 
+    public Person001(Integer id, String name, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
     public Person001(Integer id, String name, Integer age, String gender) {
         this.id = id;
         this.name = name;
