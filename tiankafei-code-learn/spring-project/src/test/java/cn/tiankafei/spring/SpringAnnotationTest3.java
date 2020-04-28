@@ -5,6 +5,8 @@ import cn.tiankafei.spring.controller.PersonController;
 import cn.tiankafei.spring.dao.impl.PersonDao;
 import cn.tiankafei.spring.service.impl.PersonService;
 import cn.tiankafei.spring.service.impl.PersonServiceExt;
+import cn.tiankafei.spring.service.impl.StudentService;
+import cn.tiankafei.spring.service.impl.TeacherService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -115,4 +117,16 @@ public class SpringAnnotationTest3 {
         personController1.test2(personService1);
     }
 
+    /**
+     * 泛型依赖注入
+     */
+    @Test
+    public void test06(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext3.xml");
+        StudentService studentService = context.getBean("studentService",StudentService.class);
+        studentService.save();
+
+        TeacherService teacherService = context.getBean("teacherService",TeacherService.class);
+        teacherService.save();
+    }
 }
