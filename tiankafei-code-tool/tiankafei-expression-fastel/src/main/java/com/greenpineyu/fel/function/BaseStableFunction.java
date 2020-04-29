@@ -6,6 +6,12 @@ import com.greenpineyu.fel.parser.Stable;
  * @author tiankafei
  */
 public abstract class BaseStableFunction implements Function, Stable {
+
+    @Override
+    public String getJsFunName() {
+        return "RULE_" + getName();
+    }
+
     /**
      * 求函数值是否固定不变
      * <p>

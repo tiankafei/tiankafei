@@ -22,6 +22,11 @@ public class Sub extends BaseTwo {
     }
 
     @Override
+    public String getJsFunName() {
+        return "RULE_SUB";
+    }
+
+    @Override
     public Object call(FelNode node, FelContext context) throws Exception {
         List<FelNode> children = node.getChildren();
         int number = 2;

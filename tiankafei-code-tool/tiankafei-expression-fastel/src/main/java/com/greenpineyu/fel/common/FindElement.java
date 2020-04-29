@@ -2,9 +2,9 @@ package com.greenpineyu.fel.common;
 
 import com.greenpineyu.fel.Fel;
 import com.greenpineyu.fel.parser.FelNode;
+import com.greenpineyu.fel.parser.FunNode;
 import com.greenpineyu.fel.parser.Parser;
 import com.greenpineyu.fel.parser.VarAstNode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +31,11 @@ public class FindElement {
         List<String> expressionList = new ArrayList<>();
 
         FelNode felNode = parser.parse(exp);
-        parse(felNode.getChildren(), expressionList);
-
+        if(felNode instanceof VarAstNode){
+            expressionList.add(felNode.getText());
+        }else if(felNode instanceof FunNode){
+            parse(felNode.getChildren(), expressionList);
+        }
         return expressionList;
     }
 

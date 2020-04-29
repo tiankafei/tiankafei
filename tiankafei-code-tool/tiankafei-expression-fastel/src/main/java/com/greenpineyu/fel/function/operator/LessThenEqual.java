@@ -13,4 +13,9 @@ public class LessThenEqual extends BaseTwo {
         return FunctionConstants.LESS_THEN_EQUALS;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_LESSTHAN_EQUAL";
+    }
+
 }

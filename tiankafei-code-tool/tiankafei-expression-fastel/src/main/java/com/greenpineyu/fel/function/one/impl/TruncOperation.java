@@ -4,7 +4,6 @@ import com.greenpineyu.fel.common.NumberUtil;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.function.FunctionUtils;
 import com.greenpineyu.fel.function.api.BaseOneOperation;
-
 import java.math.BigDecimal;
 
 /**

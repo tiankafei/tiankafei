@@ -19,7 +19,6 @@ public class ${classname}  implements Expression{
         ${localVars}
         ${programList}
         Object object = ${expression};
-        context.clearValue();
         return object;
     }
 }

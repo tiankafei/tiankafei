@@ -13,4 +13,9 @@ public class GreaterThenEqual extends BaseTwo {
         return FunctionConstants.GREATER_THEN_EQUALS;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_GREATERTHAN_EQUAL";
+    }
+
 }

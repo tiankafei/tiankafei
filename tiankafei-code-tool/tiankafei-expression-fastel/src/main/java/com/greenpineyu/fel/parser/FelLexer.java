@@ -1,6 +1,10 @@
 // $ANTLR 3.4 D:\\129\\ws\\fel\\Fel.g 2012-03-22 14:56:55
 package com.greenpineyu.fel.parser;
 
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
+
 import org.antlr.runtime.BaseRecognizer;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.DFA;

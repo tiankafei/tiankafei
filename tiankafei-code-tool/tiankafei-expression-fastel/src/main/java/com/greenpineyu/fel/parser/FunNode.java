@@ -1,14 +1,15 @@
 package com.greenpineyu.fel.parser;
 
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.CommonTree;
+
 import com.greenpineyu.fel.compile.FelMethod;
 import com.greenpineyu.fel.compile.InterpreterSourceBuilder;
 import com.greenpineyu.fel.compile.SourceBuilder;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.exception.EvalException;
-import com.greenpineyu.fel.function.FunMgr;
 import com.greenpineyu.fel.function.Function;
-import org.antlr.runtime.Token;
-import org.antlr.runtime.tree.CommonTree;
+import com.greenpineyu.fel.function.FunMgr;
 
 /**
  * 函数节点
@@ -30,12 +31,22 @@ public class FunNode extends BaseAbstFelNode {
         }
 
         @Override
+        public String getJsFunName() {
+            return "未知函数";
+        }
+
+        @Override
         public Object call(FelNode node, FelContext context) {
             throw new EvalException("找不到函数[" + node.getText() + "]", null);
         }
 
         @Override
         public FelMethod toMethod(FelNode node, FelContext ctx) {
+            return null;
+        }
+
+        @Override
+        public SourceBuilder toJsMethod(FelNode node, FelContext ctx) throws Exception {
             return null;
         }
     };
@@ -75,6 +86,17 @@ public class FunNode extends BaseAbstFelNode {
             return InterpreterSourceBuilder.getInstance();
         }
         return this.fun.toMethod(this, ctx);
+    }
+
+    @Override
+    public SourceBuilder toJsMethod(FelContext ctx) throws Exception {
+        if (this.builder != null) {
+            return builder;
+        }
+        if (!this.isDefaultInterpreter()) {
+            return InterpreterSourceBuilder.getInstance();
+        }
+        return this.fun.toJsMethod(this, ctx);
     }
 
     @Override

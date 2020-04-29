@@ -13,4 +13,8 @@ public class Equal extends BaseTwo {
         return FunctionConstants.EQUALS;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_EQUALS";
+    }
 }

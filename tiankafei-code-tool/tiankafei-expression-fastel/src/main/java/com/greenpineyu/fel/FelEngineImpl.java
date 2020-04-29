@@ -100,9 +100,31 @@ public class FelEngineImpl implements FelEngine {
     }
 
     @Override
+    public String compileJs(String exp, FelContext ctx, Optimizer... opts) throws Exception {
+        if (ctx == null) {
+            ctx = this.context;
+        }
+        FelNode node = parse(exp);
+        if (opts != null) {
+            for (Optimizer opt : opts) {
+                if (opt != null) {
+                    node = opt.call(ctx, node);
+                }
+            }
+        }
+        return compiler.compileJs(ctx, node, exp);
+    }
+
+    @Override
     public Expression compile(String exp, FelContext ctx, CompileParamVo compileParamVo, Optimizer... opts) throws Exception {
         compiler.setCompileParamVo(compileParamVo);
         return this.compile(exp, ctx, opts);
+    }
+
+    @Override
+    public String compileJs(String exp, FelContext ctx, CompileParamVo compileParamVo, Optimizer... opts) throws Exception {
+        compiler.setCompileParamVo(compileParamVo);
+        return this.compileJs(exp, ctx, opts);
     }
 
     @Override

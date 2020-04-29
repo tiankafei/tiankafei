@@ -19,6 +19,15 @@ public interface SourceGenerator {
     JavaSource getSource(FelContext ctx, FelNode node, CompileParamVo compileParamVo) throws Exception;
 
     /**
+     * 获取表达式JAVA源代码
+     *
+     * @param ctx
+     * @param node
+     * @return
+     */
+    String getJsSource(FelContext ctx, FelNode node, CompileParamVo compileParamVo) throws Exception;
+
+    /**
      * 添加优化器
      *
      * @param opti

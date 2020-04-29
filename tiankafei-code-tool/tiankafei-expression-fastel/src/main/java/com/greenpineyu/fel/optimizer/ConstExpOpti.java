@@ -30,6 +30,11 @@ public class ConstExpOpti implements Optimizer {
                 }
 
                 @Override
+                public String sourceJs(FelContext ctx, FelNode node) throws Exception {
+                    return VarBuffer.push(value, Object.class);
+                }
+
+                @Override
                 public Class<?> returnType(FelContext ctx, FelNode node) {
                     if (value != null) {
                         Class<?> cls = value.getClass();

@@ -1,5 +1,7 @@
 package com.greenpineyu.fel.parser;
 
+import org.antlr.runtime.Token;
+
 import com.greenpineyu.fel.common.Null;
 import com.greenpineyu.fel.common.ReflectUtil;
 import com.greenpineyu.fel.compile.FelMethod;
@@ -7,7 +9,6 @@ import com.greenpineyu.fel.compile.InterpreterSourceBuilder;
 import com.greenpineyu.fel.compile.SourceBuilder;
 import com.greenpineyu.fel.compile.VarBuffer;
 import com.greenpineyu.fel.context.FelContext;
-import org.antlr.runtime.Token;
 
 /**
  * 常量节点
@@ -30,6 +31,17 @@ public class ConstNode extends BaseAbstFelNode {
 
     @Override
     public SourceBuilder toMethod(FelContext ctx) {
+        if (this.builder != null) {
+            return this.builder;
+        }
+        if (!this.isDefaultInterpreter()) {
+            return InterpreterSourceBuilder.getInstance();
+        }
+        return new FelMethod(this.getValueType(), this.toJavaSrc(ctx));
+    }
+
+    @Override
+    public SourceBuilder toJsMethod(FelContext ctx) throws Exception {
         if (this.builder != null) {
             return this.builder;
         }

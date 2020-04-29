@@ -1,16 +1,5 @@
 package com.greenpineyu.fel.compile;
 
-import com.greenpineyu.fel.common.Callable;
-import com.greenpineyu.fel.common.StringUtils;
-import com.greenpineyu.fel.context.FelContext;
-import com.greenpineyu.fel.optimizer.ConstExpOpti;
-import com.greenpineyu.fel.optimizer.ConstOpti;
-import com.greenpineyu.fel.optimizer.Optimizer;
-import com.greenpineyu.fel.parser.BaseAbstFelNode;
-import com.greenpineyu.fel.parser.ConstNode;
-import com.greenpineyu.fel.parser.FelNode;
-import com.greenpineyu.fel.parser.VarAstNode;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,16 +10,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.greenpineyu.fel.common.Callable;
+import com.greenpineyu.fel.common.StringUtils;
+import com.greenpineyu.fel.context.FelContext;
+import com.greenpineyu.fel.optimizer.ConstExpOpti;
+import com.greenpineyu.fel.optimizer.ConstOpti;
+import com.greenpineyu.fel.optimizer.Optimizer;
+import com.greenpineyu.fel.parser.BaseAbstFelNode;
+import com.greenpineyu.fel.parser.ConstNode;
+import com.greenpineyu.fel.parser.FelNode;
+import com.greenpineyu.fel.parser.VarAstNode;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author tiankafei
  */
+@Slf4j
 public class SourceGeneratorImpl implements SourceGenerator {
 
     private List<Optimizer> opt;
 
     private static String template;
+    private static String jsTemplate;
 
     private static int count = 0;
+    private static int jsCount = 0;
 
     private Map<String, StringKeyValue> localvars;
 
@@ -49,9 +53,14 @@ public class SourceGeneratorImpl implements SourceGenerator {
         String fullName = SourceGeneratorImpl.class.getName();
         PACKAGE = fullName.substring(0, fullName.lastIndexOf("."));
 
+        template = getTemplate("java.template");
+        jsTemplate = getTemplate("js.template");
+    }
+
+    private static String getTemplate(String templatePath){
         StringBuilder sb = new StringBuilder();
         InputStream in = SourceGeneratorImpl.class
-                .getResourceAsStream("java.template");
+                .getResourceAsStream(templatePath);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String line = null;
         try {
@@ -61,7 +70,7 @@ public class SourceGeneratorImpl implements SourceGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        template = sb.toString();
+        return sb.toString();
     }
 
     @Override
@@ -81,12 +90,34 @@ public class SourceGeneratorImpl implements SourceGenerator {
             src = buildsource(exp, className, programList, compileParamVo);
             this.localvars.clear();
         }
-        System.out.println("****************\n" + src);
+        log.info("****************{}\n", src);
         JavaSource returnMe = new JavaSource();
         returnMe.setSimpleName(className);
         returnMe.setSource(src);
         returnMe.setPackageName(PACKAGE);
         return returnMe;
+    }
+
+    @Override
+    public String getJsSource(FelContext ctx, FelNode node, CompileParamVo compileParamVo) throws Exception {
+        String src = "";
+        String funName = getFunName(compileParamVo);
+        synchronized (this) {
+            node = optimize(ctx, node);
+            if (node instanceof ConstNode) {
+                ConstNode n = (ConstNode) node;
+                src = buildJsSource(funName, n.eval(ctx).toString());
+            }else{
+                SourceBuilder builder = node.toJsMethod(ctx);
+                String exp = builder.source(ctx, node);
+                List<String> programList = getProgramList(builder);
+                log.info("表达式：{}, 方法名：{}, 参数集合：{}, 编译对象：{}", exp, funName, programList, compileParamVo);
+                src = buildJsSource(exp, funName, programList, compileParamVo);
+                this.localvars.clear();
+            }
+        }
+        log.info("****************{}\n", src);
+        return src;
     }
 
     private List<String> getProgramList(SourceBuilder builder) {
@@ -109,6 +140,20 @@ public class SourceGeneratorImpl implements SourceGenerator {
             }
         }
         return stringBuffer.toString();
+    }
+
+    private String buildJsSource(String funName, String obj) {
+        String src = StringUtils.replace(jsTemplate, "${funname}", funName);
+        src = StringUtils.replace(src, "${programList}", "");
+        src = StringUtils.replace(src, "${expression}", obj.toString());
+        return src;
+    }
+
+    private String buildJsSource(String expression, String funName, List<String> programList, CompileParamVo compileParamVo) {
+        String src = StringUtils.replace(jsTemplate, "${funname}", funName);
+        src = StringUtils.replace(src, "${programList}", getProgramList(programList));
+        src = StringUtils.replace(src, "${expression}", expression);
+        return src;
     }
 
     private String buildsource(String expression, String className, List<String> programList, CompileParamVo compileParamVo) {
@@ -145,6 +190,18 @@ public class SourceGeneratorImpl implements SourceGenerator {
             className = "Fel_" + count++;
         }
         return className;
+    }
+
+    private String getFunName(CompileParamVo compileParamVo) {
+        if(compileParamVo != null){
+            return "fun_" + compileParamVo.getId();
+        }else{
+            String className = null;
+            synchronized (SourceGeneratorImpl.class) {
+                className = "Fel_" + jsCount++;
+            }
+            return className;
+        }
     }
 
     private String getLocalVarsCode() {
@@ -260,6 +317,31 @@ public class SourceGeneratorImpl implements SourceGenerator {
 
                     @Override
                     public String source(FelContext ctx, FelNode node) throws Exception {
+                        String text = node.getText();
+                        if (localvars.containsKey(text)) {
+                            StringKeyValue kv = localvars.get(text);
+                            return kv.key;
+                        }
+                        String varName = text;
+//                        Class<?> type = this.returnType(ctx, node);
+                        String declare = "";
+//                        String typeDeclare = type.getCanonicalName();
+//                        if (ReflectUtil.isPrimitiveOrWrapNumber(type)) {
+//                            Class<?> primitiveClass = ReflectUtil.toPrimitiveClass(type);
+//                            typeDeclare = primitiveClass.getSimpleName();
+//                        } else if (Number.class.isAssignableFrom(type)) {
+//                            typeDeclare = "double";
+//                        }
+
+                        declare = "Object" + " " + varName + " = "
+                                + old.source(ctx, node) + ";   //" + text;
+                        StringKeyValue kv = new StringKeyValue(varName, declare);
+                        localvars.put(text, kv);
+                        return varName;
+                    }
+
+                    @Override
+                    public String sourceJs(FelContext ctx, FelNode node) throws Exception {
                         String text = node.getText();
                         if (localvars.containsKey(text)) {
                             StringKeyValue kv = localvars.get(text);

@@ -51,4 +51,9 @@ public class InterpreterSourceBuilder implements SourceBuilder {
         return code;
     }
 
+    @Override
+    public String sourceJs(FelContext ctx, FelNode node) throws Exception {
+        return null;
+    }
+
 }

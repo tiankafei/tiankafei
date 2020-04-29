@@ -13,4 +13,8 @@ public class Add extends BaseTwo {
         return FunctionConstants.ADD;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_ADD";
+    }
 }

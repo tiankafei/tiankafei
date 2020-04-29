@@ -8,6 +8,11 @@ package com.greenpineyu.fel.compile;
 public class CompileParamVo {
 
     /**
+     * ID
+     */
+    private String id;
+
+    /**
      * 包路径
      */
     private String packagePath;
@@ -18,5 +23,13 @@ public class CompileParamVo {
 
     public void setPackagePath(String packagePath) {
         this.packagePath = packagePath;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

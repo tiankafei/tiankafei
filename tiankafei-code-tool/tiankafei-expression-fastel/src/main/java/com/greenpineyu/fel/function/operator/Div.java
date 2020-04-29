@@ -12,4 +12,10 @@ public class Div extends BaseTwo {
     public String getName() {
         return FunctionConstants.DIV;
     }
+
+    @Override
+    public String getJsFunName() {
+        return "RULE_DIV";
+    }
+
 }

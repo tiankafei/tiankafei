@@ -2,11 +2,10 @@ package com.greenpineyu.fel.function.more.impl;
 
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.function.api.BaseMoreOperation;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * VERIFYCH函数

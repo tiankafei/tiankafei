@@ -13,4 +13,9 @@ public class Mod extends BaseTwo {
         return FunctionConstants.MOD;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_MOD";
+    }
+
 }

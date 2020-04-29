@@ -1,12 +1,12 @@
 package com.greenpineyu.fel;
 
 import com.greenpineyu.fel.compile.CompileParamVo;
+import java.util.Map;
+
 import com.greenpineyu.fel.context.ArrayCtxImpl;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.context.MapContext;
 import com.greenpineyu.fel.context.Var;
-
-import java.util.Map;
 
 /**
  * @author tiankafei
@@ -39,8 +39,16 @@ public class Fel {
         return engine.compile(exp, new MapContext(vars), compileParamVo);
     }
 
+    public static String compileJs(String exp, Map<String, Object> vars, CompileParamVo compileParamVo) throws Exception {
+        return engine.compileJs(exp, new MapContext(vars), compileParamVo);
+    }
+
     public static FelContext getContext() {
-        return engine.getContext();
+        return new MapContext();
+    }
+
+    public static FelContext getContext(Map map) {
+        return new MapContext(map);
     }
 
     public static FelEngine newEngine() {

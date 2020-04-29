@@ -3,12 +3,11 @@ package com.greenpineyu.fel.function.more.impl;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.function.FunctionUtils;
 import com.greenpineyu.fel.function.api.BaseMoreOperation;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 正则表达式函数:根据正则表达式模式，判断文本字符串是否从指定位置之后存在匹配

@@ -82,6 +82,17 @@ public class CompileService {
         return null;
     }
 
+    public String compileJs(FelContext ctx, FelNode node, String originalExp) {
+        try {
+            String src = srcGen.getJsSource(ctx, node, compileParamVo);
+            System.out.println("****************\n" + src);
+            return src;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         System.getProperties().list(System.out);
     }

@@ -3,6 +3,8 @@
 package com.greenpineyu.fel.parser;
 
 
+import java.util.HashMap;
+
 import org.antlr.runtime.BitSet;
 import org.antlr.runtime.MismatchedSetException;
 import org.antlr.runtime.NoViableAltException;
@@ -14,8 +16,6 @@ import org.antlr.runtime.TokenStream;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeAdaptor;
 import org.antlr.runtime.tree.TreeAdaptor;
-
-import java.util.HashMap;
 
 
 @SuppressWarnings({"all", "warnings", "unchecked"})

@@ -48,6 +48,11 @@ public class FelMethod implements SourceBuilder {
         return code;
     }
 
+    @Override
+    public String sourceJs(FelContext ctx, FelNode node) throws Exception {
+        return code;
+    }
+
     public List<String> getProgramList() {
         return programList;
     }

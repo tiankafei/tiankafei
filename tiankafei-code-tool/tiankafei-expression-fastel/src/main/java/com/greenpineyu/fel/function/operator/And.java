@@ -15,4 +15,9 @@ public class And extends BaseTwo {
         return FunctionConstants.AND;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_AND";
+    }
+
 }

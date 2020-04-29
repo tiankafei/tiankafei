@@ -1,14 +1,14 @@
 package com.greenpineyu.fel.function;
 
+import java.lang.reflect.Method;
+import java.util.List;
+
 import com.greenpineyu.fel.compile.FelMethod;
 import com.greenpineyu.fel.compile.SourceBuilder;
 import com.greenpineyu.fel.compile.VarBuffer;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.function.operator.Dot;
 import com.greenpineyu.fel.parser.FelNode;
-
-import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * 此类用于保存用户注册的java method。
@@ -50,7 +50,27 @@ public class JavaMethod implements Function {
     }
 
     @Override
+    public String getJsFunName() {
+        return name;
+    }
+
+    @Override
     public SourceBuilder toMethod(FelNode node, FelContext context) throws Exception {
+        StringBuilder code = new StringBuilder();
+        String classOrObjCode = getClassOrObjCode();
+        code.append(classOrObjCode);
+        code.append(".");
+        String methodName = method.getName();
+        code.append(methodName);
+        StringBuilder methodParams = getParamsCode(node, context);
+        code.append("(").append(methodParams).append(")");
+        FelMethod returnMe = new FelMethod(method
+                .getReturnType(), code.toString());
+        return returnMe;
+    }
+
+    @Override
+    public SourceBuilder toJsMethod(FelNode node, FelContext context) throws Exception {
         StringBuilder code = new StringBuilder();
         String classOrObjCode = getClassOrObjCode();
         code.append(classOrObjCode);

@@ -20,6 +20,11 @@ public class Dollar implements Function {
     }
 
     @Override
+    public String getJsFunName() {
+        return null;
+    }
+
+    @Override
     public Object call(FelNode node, FelContext context) {
         String txt = getChildText(node);
 
@@ -95,4 +100,16 @@ public class Dollar implements Function {
         return new FelMethod(cls, code);
     }
 
+    @Override
+    public SourceBuilder toJsMethod(FelNode node, FelContext ctx) throws Exception {
+        String txt = getChildText(node);
+
+        boolean isNew = isNew(txt);
+        Class<?> cls = getClass(txt, isNew);
+        String code = cls.getName();
+        if (isNew) {
+            code = "new " + code + "()";
+        }
+        return new FelMethod(cls, code);
+    }
 }

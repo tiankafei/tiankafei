@@ -1,0 +1,4 @@
+function ${funname}(obj){
+    ${programList}
+    return ${expression};
+}

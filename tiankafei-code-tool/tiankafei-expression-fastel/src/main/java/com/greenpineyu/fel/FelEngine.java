@@ -62,6 +62,16 @@ public interface FelEngine {
     Expression compile(String exp, FelContext ctx, Optimizer... opts) throws Exception;
 
     /**
+     * 编译js表达式
+     * @param exp
+     * @param ctx
+     * @param opts
+     * @return
+     * @throws Exception
+     */
+    String compileJs(String exp, FelContext ctx, Optimizer... opts) throws Exception;
+
+    /**
      * 编译表达式
      *
      * @param exp
@@ -72,6 +82,8 @@ public interface FelEngine {
      * @throws Exception
      */
     Expression compile(String exp, FelContext ctx, CompileParamVo compileParamVo, Optimizer... opts) throws Exception;
+
+    String compileJs(String exp, FelContext ctx, CompileParamVo compileParamVo, Optimizer... opts) throws Exception ;
 
     /**
      * 获取引擎执行环境

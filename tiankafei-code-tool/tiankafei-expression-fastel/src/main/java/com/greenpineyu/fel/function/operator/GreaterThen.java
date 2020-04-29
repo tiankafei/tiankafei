@@ -8,10 +8,13 @@ import com.greenpineyu.fel.function.api.BaseTwo;
  */
 public class GreaterThen extends BaseTwo {
 
-
     @Override
     public String getName() {
         return FunctionConstants.GREATER_THEN;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_GREATERTHAN";
+    }
 }

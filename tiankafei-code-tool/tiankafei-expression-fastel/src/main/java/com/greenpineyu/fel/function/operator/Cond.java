@@ -1,13 +1,13 @@
 package com.greenpineyu.fel.function.operator;
 
+import java.util.List;
+
 import com.greenpineyu.fel.compile.FelMethod;
 import com.greenpineyu.fel.compile.SourceBuilder;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.exception.ParseException;
 import com.greenpineyu.fel.function.BaseStableFunction;
 import com.greenpineyu.fel.parser.FelNode;
-
-import java.util.List;
 
 /**
  * 三元表达式操作符
@@ -66,6 +66,11 @@ public class Cond extends BaseStableFunction {
         }
 
         return new FelMethod(type, sb.toString());
+    }
+
+    @Override
+    public SourceBuilder toJsMethod(FelNode node, FelContext ctx) throws Exception {
+        return null;
     }
 
     private List<FelNode> ensureValid(FelNode node) {

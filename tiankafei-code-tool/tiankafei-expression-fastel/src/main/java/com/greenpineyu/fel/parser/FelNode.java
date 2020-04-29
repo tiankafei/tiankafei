@@ -1,12 +1,13 @@
 package com.greenpineyu.fel.parser;
 
+import java.util.List;
+
+import org.antlr.runtime.tree.Tree;
+
 import com.greenpineyu.fel.Expression;
 import com.greenpineyu.fel.compile.SourceBuilder;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.interpreter.Interpreter;
-import org.antlr.runtime.tree.Tree;
-
-import java.util.List;
 
 /**
  * 解析后的节点，组成表达式的元素都会被解析成节点。
@@ -64,6 +65,15 @@ public interface FelNode extends Expression, Tree, Stable {
      * @return
      */
     SourceBuilder toMethod(FelContext ctx) throws Exception;
+
+
+    /**
+     * 编译执行逻辑
+     *
+     * @param ctx
+     * @return
+     */
+    SourceBuilder toJsMethod(FelContext ctx) throws Exception;
 
 
 }

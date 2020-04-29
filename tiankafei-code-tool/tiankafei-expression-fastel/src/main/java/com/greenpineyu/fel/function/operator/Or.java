@@ -13,4 +13,9 @@ public class Or extends BaseTwo {
         return FunctionConstants.OR;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_OR";
+    }
+
 }

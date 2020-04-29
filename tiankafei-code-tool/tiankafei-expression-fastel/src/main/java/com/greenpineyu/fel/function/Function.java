@@ -18,6 +18,13 @@ public interface Function {
     String getName();
 
     /**
+     * 获取js函数的名称
+     *
+     * @return
+     */
+    String getJsFunName();
+
+    /**
      * 调用函数
      *
      * @param node
@@ -35,6 +42,15 @@ public interface Function {
      * @return
      */
     SourceBuilder toMethod(FelNode node, FelContext ctx) throws Exception;
+
+    /**
+     * 编译执行
+     *
+     * @param node
+     * @param ctx
+     * @return
+     */
+    SourceBuilder toJsMethod(FelNode node, FelContext ctx) throws Exception;
 
 
 }

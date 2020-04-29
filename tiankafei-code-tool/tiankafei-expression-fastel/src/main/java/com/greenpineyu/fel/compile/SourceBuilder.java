@@ -28,4 +28,13 @@ public interface SourceBuilder {
      */
     String source(FelContext ctx, FelNode node) throws Exception;
 
+    /**
+     * 构建源码
+     *
+     * @param ctx
+     * @param node
+     * @return
+     */
+    String sourceJs(FelContext ctx, FelNode node) throws Exception;
+
 }

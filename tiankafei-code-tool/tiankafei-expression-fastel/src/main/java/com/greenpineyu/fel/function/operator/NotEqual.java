@@ -13,4 +13,9 @@ public class NotEqual extends BaseTwo {
         return FunctionConstants.NO_EQUALS;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_NOTEQUAL";
+    }
+
 }

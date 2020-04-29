@@ -13,4 +13,9 @@ public class Mul extends BaseTwo {
         return FunctionConstants.MUL;
     }
 
+    @Override
+    public String getJsFunName() {
+        return "RULE_MUL";
+    }
+
 }
