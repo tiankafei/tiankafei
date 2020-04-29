@@ -198,6 +198,7 @@
 
 1. [javaHashMap的hash算法扰动函数](https://blog.csdn.net/qq_28523617/article/details/77533097)
 2. [浅谈 CAP 和 Paxos 共识算法](https://www.toutiao.com/i6802843072888570379/)
+3. [5分钟理解一致性哈希算法](https://segmentfault.com/a/1190000017847097)
 
 ## 元数据
 
