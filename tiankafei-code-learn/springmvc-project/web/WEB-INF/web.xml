@@ -36,4 +36,17 @@
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+<!--    <servlet>
+        <servlet-name>defaultServlet</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>defaultServlet</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>defaultServlet</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>-->
 </web-app>
