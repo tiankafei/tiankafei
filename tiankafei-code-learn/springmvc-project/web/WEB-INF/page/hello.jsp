@@ -10,7 +10,15 @@
 <head>
     <title>Title</title>
 </head>
+
+<%
+    pageContext.setAttribute("path", request.getContextPath());
+%>
 <body>
 spring-url返回的消息${msg}
+
+<form action="${path}/tiankafei/hello2" method="post">
+    <input type="submit" value="提交">
+</form>
 </body>
 </html>

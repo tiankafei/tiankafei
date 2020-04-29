@@ -21,21 +21,24 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <!--匹配servlet的请求，
-    /：标识匹配所有请求，但是不会jsp页面
-    /*：拦截所有请求，拦截jsp页面
-
-     但是需要注意的是，当配置成index.html的时候，会发现请求不到
-     原因在于，tomcat下也有一个web.xml文件，所有的项目下web.xml文件都需要继承此web.xml
-     在服务器的web.xml文件中有一个DefaultServlet用来处理静态资源，但是url-pattern是/
-     而我们在自己的配置文件中如果添加了url-pattern=/会覆盖父类中的url-pattern，此时在请求的时候
-     DispatcherServlet会去controller中做匹配，找不到则直接报404
-     而在服务器的web.xml文件中包含了一个JspServlet的处理，所以不过拦截jsp请求
-    -->
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <!-- 转换前台的请求为rest的请求
+        表单元素中需要有一个隐藏的元素
+            <input name="_method" value="put" type="hidden">
+            <input name="_method" value="delete" type="hidden">
+     -->
+    <filter>
+        <filter-name>hiddenFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>hiddenFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 <!--    <servlet>
         <servlet-name>defaultServlet</servlet-name>
