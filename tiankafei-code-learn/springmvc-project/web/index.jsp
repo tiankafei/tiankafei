@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>$Title$</title>
+  <title>Title</title>
 </head>
 <body>
-${msg}
+返回的消息内容：${msg}
 </body>
 </html>

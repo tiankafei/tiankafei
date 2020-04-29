@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-${msg}
+spring-url返回的消息${msg}
 </body>
 </html>

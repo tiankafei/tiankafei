@@ -26,4 +26,13 @@
     <!--自动扫描包，由IOC容器进行控制管理-->
     <context:component-scan base-package="cn.tiankafei.springmvc"></context:component-scan>
 
+    <!--
+    此配置表示  我们自己配置的请求由controller来处理，但是不能请求的处理交由tomcat来处理
+    静态资源可以访问，但是动态请求无法访问
+    -->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <!--保证静态资源和动态请求都能够访问-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
 </beans>
