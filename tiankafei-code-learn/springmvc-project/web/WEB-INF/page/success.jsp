@@ -11,6 +11,12 @@
     <title>Title</title>
 </head>
 <body>
-这是一个成功的页面！
+这是一个成功的页面！<br />
+requestScope.get("requestParam")：${requestScope.get("requestParam")}<br />
+sessionScope.get("requestParam")：${sessionScope.get("sessionParam")}<br />
+
+msg：${msg}<br />
+requestScope.get("msg")：${requestScope.get("msg")}<br />
+sessionScope.get("msg")：${sessionScope.get("msg")}<br />
 </body>
 </html>

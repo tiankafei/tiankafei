@@ -4,6 +4,25 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <!--乱码的过滤器要配置在所有过滤器的最上面，优先执行-->
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <!--解决post请求乱码-->
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <!--解决响应乱码-->
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 <!--    <servlet>
         <servlet-name>HelloServlet</servlet-name>
         <servlet-class>cn.tiankafei.springmvc.controller.HelloServlet</servlet-class>
@@ -51,5 +70,9 @@
     <servlet-mapping>
         <servlet-name>defaultServlet</servlet-name>
         <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>defaultServlet</servlet-name>
+        <url-pattern>*.png</url-pattern>
     </servlet-mapping>-->
 </web-app>
