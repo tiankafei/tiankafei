@@ -17,12 +17,17 @@ public class RestController {
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public String delete(@PathVariable("id") Integer id) {
         System.out.println("删除：" + id);
-        return "success";
+        return "redirect:/success";
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     public String update(@PathVariable("id") Integer id) {
         System.out.println("更新：" + id);
+        return "redirect:/success";
+    }
+
+    @RequestMapping(value = "/success")
+    public String success(){
         return "success";
     }
 
