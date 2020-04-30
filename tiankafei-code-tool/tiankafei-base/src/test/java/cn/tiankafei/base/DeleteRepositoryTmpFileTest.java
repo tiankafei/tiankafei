@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class DeleteRepositoryTmpFileTest {
 
@@ -38,7 +38,7 @@ public class DeleteRepositoryTmpFileTest {
         File file = new File(directoryPath);
         if (file.exists()) {
             File[] files = file.listFiles();
-            Arrays.stream(files).forEach((fi) -> {
+            Stream.of(files).forEach((fi) -> {
                 if (fi.isDirectory()) {
                     String directoryName = fi.getName();
                     if (directoryName.contains("unknown") || directoryName.contains("${")) {
