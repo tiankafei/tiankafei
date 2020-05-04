@@ -43,10 +43,6 @@
 >
 > [IO详情介绍](tiankafei-docs-io/IO详情介绍.md)
 
-# tiankafei-docs-jvm
-
-> jvm相关的技术文档列表，包含以下：
-
 # tiankafei-docs-linux
 
 > linux相关的技术文档列表，包含以下：
@@ -149,7 +145,13 @@
 >
 > [Lambda表达式和StreamAPI用法](tiankafei-docs-数据结构与算法/Lambda表达式和StreamAPI用法.md)
 >
-> [数据结构与算法](tiankafei-docs-数据结构与算法/数据结构与算法.md)
+> [树结构](tiankafei-docs-数据结构与算法/树结构.md)
+>
+> [多线程与高并发](tiankafei-docs-数据结构与算法/多线程与高并发 - JUC.md)
+>
+> [JVM从入门到精通](tiankafei-docs-数据结构与算法/JVM从入门到精通.md)
+>
+> [设计模式](tiankafei-docs-数据结构与算法/设计模式.md)
 
 # tiankafei-docs-云
 
