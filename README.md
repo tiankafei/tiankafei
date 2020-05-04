@@ -147,7 +147,7 @@
 >
 > [树结构](tiankafei-docs-数据结构与算法/树结构.md)
 >
-> [多线程与高并发](tiankafei-docs-数据结构与算法/多线程与高并发 - JUC.md)
+> [多线程与高并发-JUC](tiankafei-docs-数据结构与算法/多线程与高并发-JUC.md)
 >
 > [JVM从入门到精通](tiankafei-docs-数据结构与算法/JVM从入门到精通.md)
 >
