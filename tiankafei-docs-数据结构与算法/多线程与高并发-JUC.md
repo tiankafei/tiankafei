@@ -381,7 +381,364 @@ public class CyclicBarrierTest {
 
 和await()类似，只不过等待一定的时间后到达的线程个数少于指定的线程个数时也会继续执行。
 
-### (5) 
+### (5) Phaser：阶段栅栏的作用（1.7加入的）
+
+> 深入理解：Phaser
+>
+> [https://www.jianshu.com/p/e5794645ca8d](https://www.jianshu.com/p/e5794645ca8d)
+>
+> [https://www.jianshu.com/p/e5794645ca8d](https://www.jianshu.com/p/e5794645ca8d)
+
+```java
+public class PhaserTest {
+    MarriagePhaser phaser = new MarriagePhaser();
+    public static void main(String[] args) {
+        new PhaserTest().testPhaser();
+    }
+    private void testPhaser(){
+        phaser.bulkRegister(5);
+        for(int i=0; i<5; i++) {
+            final int nameIndex = i;
+            new Thread(()->{
+                Person p = new Person("person " + nameIndex);
+                p.arrive();
+                phaser.arriveAndAwaitAdvance();
+
+                p.eat();
+                phaser.arriveAndAwaitAdvance();
+
+                p.leave();
+                phaser.arriveAndAwaitAdvance();
+            }).start();
+        }
+    }
+    class MarriagePhaser extends Phaser {
+        @Override
+        protected boolean onAdvance(int phase, int registeredParties) {
+            switch (phase) {
+                case 0:
+                    System.out.println("所有人到齐了！");
+                    return false;
+                case 1:
+                    System.out.println("所有人吃完了！");
+                    return false;
+                case 2:
+                    System.out.println("所有人离开了！");
+                    System.out.println("婚礼结束！");
+                    return true;
+                default:
+                    return true;
+            }
+        }
+    }
+    class Person {
+        String name;
+        Random r = new Random();
+        public Person(String name) {
+            this.name = name;
+        }
+        public void arrive() {
+            milliSleep(r.nextInt(1000));
+            System.out.printf("%s 到达现场！\n", name);
+        }
+        public void eat() {
+            milliSleep(r.nextInt(1000));
+            System.out.printf("%s 吃完!\n", name);
+        }
+        public void leave() {
+            milliSleep(r.nextInt(1000));
+            System.out.printf("%s 离开！\n", name);
+        }
+        void milliSleep(int milli) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(milli);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+```java
+public class Phaser2Test {
+    MarriagePhaser phaser = new MarriagePhaser();
+    public static void main(String[] args) {
+        new Phaser2Test().testPhaser();
+    }
+    private void testPhaser(){
+        phaser.bulkRegister(7);
+        for(int i=0; i<5; i++) {
+            new Thread(new Person("p" + i)).start();
+        }
+        new Thread(new Person("新郎")).start();
+        new Thread(new Person("新娘")).start();
+    }
+    class MarriagePhaser extends Phaser {
+        @Override
+        protected boolean onAdvance(int phase, int registeredParties) {
+            switch (phase) {
+                case 0:
+                    System.out.println("所有人到齐了！" + registeredParties);
+                    System.out.println();
+                    return false;
+                case 1:
+                    System.out.println("所有人吃完了！" + registeredParties);
+                    System.out.println();
+                    return false;
+                case 2:
+                    System.out.println("所有人离开了！" + registeredParties);
+                    System.out.println();
+                    return false;
+                case 3:
+                    System.out.println("婚礼结束！新郎新娘抱抱！" + registeredParties);
+                    return true;
+                default:
+                    return true;
+            }
+        }
+    }
+    class Person implements Runnable {
+        String name;
+        Random r = new Random();
+        public Person(String name) {
+            this.name = name;
+        }
+        public void arrive() {
+            milliSleep(r.nextInt(1000));
+            System.out.printf("%s 到达现场！\n", name);
+            phaser.arriveAndAwaitAdvance();
+        }
+        public void eat() {
+            milliSleep(r.nextInt(1000));
+            System.out.printf("%s 吃完!\n", name);
+            phaser.arriveAndAwaitAdvance();
+        }
+        public void leave() {
+            milliSleep(r.nextInt(1000));
+            System.out.printf("%s 离开！\n", name);
+            phaser.arriveAndAwaitAdvance();
+        }
+        private void hug() {
+            if(name.equals("新郎") || name.equals("新娘")) {
+                milliSleep(r.nextInt(1000));
+                System.out.printf("%s 洞房！\n", name);
+                phaser.arriveAndAwaitAdvance();
+            } else {
+                phaser.arriveAndDeregister();
+            }
+        }
+        void milliSleep(int milli) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(milli);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        public void run() {
+            arrive();
+            eat();
+            leave();
+            hug();
+        }
+    }
+}
+```
+
+#### arriveAndAwaitAdvance()
+
+到达并等待下一个任务的开始
+
+#### arriveAndDeregister()
+
+到达就完成，不再参与下一个任务了
+
+#### onAdvance()
+
+在Phaser类中，在每个线程中，每个线程完成一个阶段后都会等待其他线程完成后再一起进行，当所有线程都完成了一个任务的时候，会调用Phaser的onAdvance方法。如果我们想在每个阶段，所有线程都完成他们的阶段工作后做点啥事的话，那就得继承Phaser类来重写Onadvance这个方法来实现我们的目的，
+
+### (6) ReentrantReadWriteLock：读写锁
+
+```java
+public class ReentrantReadWriteLockTest {
+    static Lock lock = new ReentrantLock();
+    private static int value;
+    static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    static Lock readLock = readWriteLock.readLock();
+    static Lock writeLock = readWriteLock.writeLock();
+    public static void read(Lock lock) {
+        try {
+            lock.lock();
+            Thread.sleep(1000);
+            System.out.println("read over!");
+            //模拟读取操作
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+    public static void write(Lock lock, int v) {
+        try {
+            lock.lock();
+            Thread.sleep(1000);
+            value = v;
+            System.out.println("write over!");
+            //模拟写操作
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+    public static void main(String[] args) {
+        //Runnable readR = ()-> read(lock);
+        Runnable readR = () -> read(readLock);
+        //Runnable writeR = ()->write(lock, new Random().nextInt());
+        Runnable writeR = () -> write(writeLock, new Random().nextInt());
+        for (int i = 0; i < 18; i++) new Thread(readR).start();
+        for (int i = 0; i < 2; i++) new Thread(writeR).start();
+    }
+}
+```
+
+#### 共享锁
+
+当一个线程进行读取的时候，其他线程如果是读请求，则可以直接进行读取，如果是写锁，则需要等待所有的读请求完成之后，才允许写
+
+#### 排他锁
+
+当一个线程进行写操作时，其他线程无论是读还是写，都将被阻塞，只有等写线程完成之后，才允许其他线程获得锁
+
+### (7) Semaphore：信号灯（限流、收费站）
+
+```java
+public class SemaphoreTest {
+    public static void main(String[] args) {
+        // 允许 n 个线程同时执行
+        // 是否公平锁，默认非公平锁
+        Semaphore semaphore = new Semaphore(1, true);
+        new Thread(()->{
+            try {
+                semaphore.acquire();
+                System.out.println("T1 running...");
+                Thread.sleep(200);
+                System.out.println("T1 running...");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                semaphore.release();
+            }
+        }).start();
+        new Thread(()->{
+            try {
+                semaphore.acquire();
+                System.out.println("T2 running...");
+                Thread.sleep(200);
+                System.out.println("T2 running...");
+                semaphore.release();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+}
+```
+
+#### semaphore.acquire();
+
+获取执行的许可：每次执行，信号量-1，如果减到0，后面的线程将会被阻塞
+
+#### semaphore.release();
+
+每次执行，信号量+1，加1以后，后面阻塞的线程将有机会被执行
+
+### (8) Exchanger：两者交换
+
+```java
+public class ExchangerTest {
+    public static void main(String[] args) {
+        Exchanger<String> exchanger = new Exchanger<>();
+        new Thread(()->{
+            String s = "T1";
+            try {
+                // 阻塞，直到另外一个线程执行了 exchange 进行交换后，会继续执行
+                s = exchanger.exchange(s);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + " " + s);
+        }, "t1").start();
+        new Thread(()->{
+            String s = "T2";
+            try {
+                // 阻塞，直到另外一个线程执行了 exchange 进行交换后，会继续执行
+                s = exchanger.exchange(s);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + " " + s);
+        }, "t2").start();
+    }
+}
+```
+
+#### exchange
+
+阻塞，直到另外一个线程执行了 exchange 进行交换后，会继续执行
+
+### (9) LockSupport
+
+> `LockSupport`是一个线程阻塞工具类，所有的方法都是静态方法，可以让线程在任意位置阻塞，当然阻塞之后肯定得有唤醒的方法。
+
+```java
+public class LockSupportTest {
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new Thread(()->{
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i);
+                if(i == 5) {
+                    LockSupport.park();
+                }
+            }
+        });
+        t.start();
+        Thread.sleep(2000);
+        LockSupport.unpark(t);
+    }
+}
+```
+
+#### LockSupport.park(Object blocker)
+
+暂停当前线程
+
+#### LockSupport.parkNanos(Object blocker, long nanos)
+
+暂停当前线程，不过有超时时间的限制
+
+#### LockSupport.parkUntil(Object blocker, long deadline)
+
+暂停当前线程，直到某个时间
+
+#### LockSupport.park()
+
+无期限暂停当前线程
+
+#### LockSupport.parkNanos(long nanos)
+
+暂停当前线程，不过有超时时间的限制
+
+#### LockSupport.parkUntil(long deadline)
+
+暂停当前线程，直到某个时间
+
+#### LockSupport.unpark(t)
+
+恢复当前线程
+
+### (10) AQS
 
 
 
