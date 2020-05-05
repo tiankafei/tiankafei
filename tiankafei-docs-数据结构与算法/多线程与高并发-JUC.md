@@ -755,9 +755,57 @@ public class LockSupportTest {
 4. 唤醒当前对象锁的等待线程使用notify或notifyAll方法，也必须拥有相同的对象锁
 5. notify()不会释放锁
 
-### (11) AbstractQueuedSynchronizer：AQS
+### (11) AbstractQueuedSynchronizer： AQS
 
+>AQS的核心思想是：如果被请求的共享资源空闲，则将当前请求资源的线程设置为有效的工作线程，并将共享资源设置为锁定状态，如果被请求的共享资源被占用，那么就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制AQS是用CLH队列锁实现的，即将暂时获取不到锁的线程加入到队列中。
+>AQS是将每一条请求共享资源的线程封装成一个CLH锁队列的一个结点（Node），来实现锁的分配。
+>用大白话来说，AQS就是基于CLH队列，用volatile修饰共享变量state，线程通过CAS去改变状态符，成功则获取锁成功，失败则进入等待队列，等待被唤醒。
+>AQS是自旋锁：在等待唤醒的时候，使用自旋（while(!cas())）的方式，不停地尝试获取锁，直到被其他线程获取成功。
 
+**核心数据结构：双向链表 + （volatile）state(锁状态)**
+
+**底层操作：CAS**
+
+![AQS结构图](./images/AQS实现.png)
+
+#### 重要的API
+
+##### 1. isHeldExclusively()
+
+该线程是否正在独占资源。只有用到condition才需要去实现它。
+
+##### 2. tryAcquire(int)
+
+独占方式。尝试获取资源，成功则返回true，失败则返回false。
+
+##### 3. tryRelease(int)
+
+独占方式。尝试释放资源，成功则返回true，失败则返回false。
+
+##### 4. tryAcquireShared(int)
+
+共享方式。尝试获取资源。负数表示失败；0表示成功，但没有剩余可用资源；正数表示成功，且有剩余资源。
+
+##### 5. tryReleaseShared(int)
+
+共享方式。尝试释放资源，如果释放后允许唤醒后续等待结点返回true，否则返回false。
+
+##### 6. addWaiter(Node)
+
+将当前线程加入上面锁的双向链表（等待队列）中
+
+##### 7. acquireQueued(Node, int)
+
+通过自旋，判断当前队列节点是否可以获取锁。
+
+#### 实现了AQS的锁有
+
+1. 自旋锁
+2. 互斥锁
+3. 读锁写锁
+4. 条件产量
+5. 信号量
+6. 栅栏
 
 ## 三、volatile 
 
