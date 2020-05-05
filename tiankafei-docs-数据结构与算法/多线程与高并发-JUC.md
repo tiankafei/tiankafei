@@ -1294,8 +1294,119 @@ public class ThreadLocalTest {
 1. Thread中有一个map，就是ThreadLocalMap
 2. ThreadLocalMap的key是ThreadLocal，值是我们自己设定的
 3. ThreadLocal是一个弱引用，当为null时，会被当成垃圾回收
-4. 重点来了，突然我们ThreadLocal是null了，也就是要被垃圾回收器回收了，但是此时我们的ThreadLocalMap生命周期和Thread的一样，它不会回收，这时候就出现了一个现象。那就是ThreadLocalMap的key没了，但是value还在，这就造成了内存泄漏。
+4. 重点来了，突然我们ThreadLocal是null了，也就是要被垃圾回收器回收了，但是此时我们的ThreadLocalMap生命周期和Thread的一样，它不会回收，这时候就出现了一个现象。那就是ThreadLocalMap的key没了，但是value还在，这就造成了内存泄漏（永远不会被回收）。
 5. 解决办法：使用完ThreadLocal后，执行remove操作，避免出现内存溢出情况。
 
 ## 八、强软弱虚引用
+
+### 1. 概述
+
+
+
+![强软弱虚引用类型](./images/强软弱虚引用类型.jpg)
+
+### 2. 强引用
+
+平时我们编程的时候例如：Object object=new Object（）；那object就是一个强引用了。当内存空 间不足，Java虚拟机宁愿抛出OutOfMemoryError错误，使程序异常终止，也不会靠随意回收具有强引用的对象来解决内存不足问题。
+
+```java
+public class ObjectTest {
+    public static void main(String[] args) throws IOException {
+        M m = new M();
+        m = null;
+        System.gc(); //DisableExplicitGC
+        System.in.read();
+    }
+}
+```
+
+### 3. 软引用：SoftReference
+
+如果一个对象只具有软引用，如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。只要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存。 
+
+一般用于缓存
+
+```java
+// 启动参数增加堆内存的大小限制
+public class SoftReferenceTest {
+    public static void main(String[] args) {
+        SoftReference<byte[]> m = new SoftReference<>(new byte[1024 * 1024 * 10]);
+        //m = null;
+        System.out.println(m.get());
+        System.gc();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(m.get());
+        //再分配一个数组，heap将装不下，这时候系统会垃圾回收，先回收一次，如果不够，会把软引用干掉
+        byte[] b = new byte[1024 * 1024 * 15];
+        System.out.println(m.get());
+    }
+}
+```
+
+### 4. 弱引用：WeakReference
+
+弱引用与软引用的区别在于：弱引用的对象拥有更短暂的生命周期。在垃圾回收器进行线程扫描的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。
+
+ThreadLocal使用了弱引用
+
+![弱引用](./images/弱引用.png)
+
+```java
+public class WeakReferenceTest {
+    public static void main(String[] args) {
+        WeakReference<M> m = new WeakReference<>(new M());
+        System.out.println(m.get());
+        System.gc();
+        System.out.println(m.get());
+        ThreadLocal<M> tl = new ThreadLocal<>();
+        tl.set(new M());
+        tl.remove();
+    }
+}
+```
+
+### 5. 虚引用：PhantomReference
+
+如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收。 虚引用主要用来跟踪对象被垃圾回收的活动。虚引用与软引用和弱引用的一个区别在于：虚引用必须和引用队列（ReferenceQueue）联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。
+
+一般用来管理堆外内存
+
+```java
+public class PhantomReferenceTest {
+    private static final List<Object> LIST = new LinkedList<>();
+    private static final ReferenceQueue<M> QUEUE = new ReferenceQueue<>();
+    public static void main(String[] args) {
+        PhantomReference<M> phantomReference = new PhantomReference<>(new M(), QUEUE);
+        new Thread(() -> {
+            while (true) {
+                LIST.add(new byte[1024 * 1024]);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
+                }
+                System.out.println(phantomReference.get());
+            }
+        }).start();
+        new Thread(() -> {
+            while (true) {
+                Reference<? extends M> poll = QUEUE.poll();
+                if (poll != null) {
+                    System.out.println("--- 虚引用对象被jvm回收了 ---- " + poll);
+                }
+            }
+        }).start();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
 
