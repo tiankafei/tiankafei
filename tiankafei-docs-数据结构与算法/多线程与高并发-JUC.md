@@ -48,9 +48,16 @@ Executors.newCachedThreadPool().submit(()->{System.out.println("使用 线程池
 
 使当前正在运行的线程以指定的毫秒数暂停一段时间，也就是暂时停止执行，**进入阻塞状态，不会释放CPU资源。**
 
+1. 在指定时间内让当前正在执行的线程暂停执行，但不会释放“锁标志”,在指定时间内不会执行
+2. sleep()方法给其他线程运行机会时不考虑线程的优先级
+
 #### 2. Thread.yield();
 
 使当前正在运行线程由执行状态，**进入就绪状态**（进入一个等待队列中），**释放CPU资源**，在下一次CPU进行调度的时候，此线程有可能被执行，也有可能没有被执行。
+
+1. yield()只是使当前线程重新回到可执行状态，所以执行yield()的线程有可能在进入到可执行状态后马上又被执行
+2. 调用yield方法并不会让线程进入阻塞状态，而是让线程重回就绪状态
+3. yield()方法只会给相同优先级或更高优先级的线程有执行的机会
 
 #### 3. 线程对象.join();
 
@@ -167,6 +174,8 @@ private static void exe22(){
 
 #### 3. 锁升级
 
+> 锁升级过程：<font color="red">无锁——>偏向锁——>轻量级锁（CAS）——>重量级锁</font>
+>
 > JDK早期，是重量级锁，需要找OS申请锁
 
 ![java-synchronized升级的原理](./images/java-synchronized升级的原理.png)
@@ -738,7 +747,15 @@ public class LockSupportTest {
 
 恢复当前线程
 
-### (10) AQS
+### (10) Object.wait()、Object.notify()
+
+1. 当前线程必须拥有当前对象锁
+2. wait()和notify()必须在synchronized函数或synchronized代码块中进行调用
+3. wait()让当前线程等待，会释放锁，从而使别的线程有机会抢占该锁
+4. 唤醒当前对象锁的等待线程使用notify或notifyAll方法，也必须拥有相同的对象锁
+5. notify()不会释放锁
+
+### (11) AbstractQueuedSynchronizer：AQS
 
 
 
@@ -815,6 +832,10 @@ new 一个对象的指令会分成三步
 
 假如说线程A在做了i+1，但未赋值的时候，线程B就开始读取i，那么当线程A赋值i=1，并回写到主内存，而此时线程B已经不再需要i的值了，而是直接交给处理器去做+1的操作，于是当线程B执行完并回写到主内存，i的值仍然是1，而不是预期的2。也就是说，volatile缩短了普通变量在不同线程之间执行的时间差，但仍然存有漏洞，依然不能保证原子性。
 
+### 4. 缓存一致性协议：MESI
+
+
+
 ## 四、CAS：无锁优化、自旋锁、乐观锁
 
 <font color="red">**CAS操作是CPU原语的支持，中间的指令不会被打断**</font>
@@ -866,4 +887,248 @@ LongAdder在高并发的场景下会比它的前辈——AtomicLong 具有更好
 **LongAdder**的基本思路就是**分散热点**，将value值分散到一个数组中，不同线程会命中到数组的不同槽中，各个线程只对自己槽中的那个值进行CAS操作，这样热点就被分散了，冲突的概率就小很多。如果要获取真正的long值，只要将各个槽中的变量值累加返回。**（分段锁）**
 
 这种做法有没有似曾相识的感觉？没错，ConcurrentHashMap 中的“分段锁”其实就是类似的思路。
+
+## 五、两个线程之间等待输出
+
+### 1. LockSupport方式
+
+```java
+public class Demo1 {
+    private Thread t1 = null;
+    private Thread t2 = null;
+    public static void main(String[] args) {
+        Demo1 demo = new Demo1();
+        demo.execute();
+    }
+    private void execute() {
+        t1 = new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i);
+                ThreadSleepUtil.sleepSeconds(1);
+                if (i == 5) {
+                    LockSupport.unpark(t2);
+                    LockSupport.park();
+                }
+            }
+        });
+        t2 = new Thread(() -> {
+            LockSupport.park();
+            System.out.println("............");
+            LockSupport.unpark(t1);
+        });
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+### 2. CountDownLatch的方式
+
+```java
+public class Demo2 {
+    private Thread t1 = null;
+    private Thread t2 = null;
+    private CountDownLatch countDownLatch1 = new CountDownLatch(1);
+    private CountDownLatch countDownLatch2 = new CountDownLatch(1);
+    public static void main(String[] args) {
+        Demo2 demo = new Demo2();
+        demo.execute();
+    }
+    private void execute() {
+        t1 = new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i);
+                ThreadSleepUtil.sleepSeconds(1);
+                if (i == 5) {
+                    countDownLatch1.countDown();
+                    try {
+                        countDownLatch2.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t2 = new Thread(() -> {
+            try {
+                countDownLatch1.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("............");
+            countDownLatch2.countDown();
+        });
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+### 3. Object.wait()、Object.notify()方式
+
+```java
+public class Demo3 {
+    private Thread t1 = null;
+    private Thread t2 = null;
+    private Object o1 = new Object();
+    public static void main(String[] args) {
+        Demo3 demo = new Demo3();
+        demo.execute();
+    }
+    private void execute() {
+        t1 = new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i);
+                ThreadSleepUtil.sleepSeconds(1);
+                if (i == 5) {
+                    synchronized (o1) {
+                        try {
+                            o1.notify();
+                            o1.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        t2 = new Thread(() -> {
+            synchronized (o1) {
+                try {
+                    o1.wait();
+                    System.out.println("............");
+                    o1.notify();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+### 4. Semaphore方式
+
+```java
+public class Demo4 {
+    private Thread t1 = null;
+    private Thread t2 = null;
+    private Semaphore semaphore = new Semaphore(1);
+    public static void main(String[] args) {
+        Demo4 demo = new Demo4();
+        demo.execute();
+    }
+    private void execute() {
+        t1 = new Thread(() -> {
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < 6; i++) {
+                System.out.println(i);
+                ThreadSleepUtil.sleepSeconds(1);
+            }
+            semaphore.release();
+            try {
+                t2.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (int i = 6; i < 10; i++) {
+                System.out.println(i);
+                ThreadSleepUtil.sleepSeconds(1);
+            }
+            semaphore.release();
+        });
+        t2 = new Thread(() -> {
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("............");
+            semaphore.release();
+        });
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+## 六、生产者消费者问题
+
+> 写一个固定容量同步容器，拥有get和put方法，以及getCount方法，能够支持2个生产者和10个消费者线程的阻塞调用
+
+### 1. ReentrantLock.newCondition方式
+
+```java
+public class Demo8 {
+    final private LinkedList<String> lists = new LinkedList<>();
+    //最多10个元素
+    final private int MAX = 10;
+    private Lock lock = new ReentrantLock();
+    private Condition producer = lock.newCondition();
+    private Condition consumer = lock.newCondition();
+    public static void main(String[] args) {
+        Demo8 c = new Demo8();
+        //启动消费者线程
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> {
+                while (true) {
+                    c.get();
+                }
+            }, "c" + i).start();
+        }
+        //启动生产者线程
+        for (int i = 0; i < 2; i++) {
+            new Thread(() -> {
+                while (true) {
+                    c.put(Thread.currentThread().getName());
+                }
+            }, "p" + i).start();
+        }
+    }
+    public void put(String str) {
+        try {
+            lock.lock();
+            //想想为什么用while而不是用if？
+            while (lists.size() == MAX) {
+                producer.await();
+            }
+            lists.add(str);
+            System.out.println("生产者生产完成后剩余:" + lists.size());
+            ThreadSleepUtil.sleepMilliSeconds(300);
+            consumer.signalAll(); //通知消费者线程进行消费
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+    public void get() {
+        try {
+            lock.lock();
+            while (lists.size() == 0) {
+                consumer.await();
+            }
+            lists.removeFirst();
+            System.out.println("消费者消费完成后剩余:" + lists.size());
+            ThreadSleepUtil.sleepSeconds(1);
+            producer.signalAll(); //通知生产者进行生产
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+```
 
