@@ -395,8 +395,6 @@ public class CyclicBarrierTest {
 > 深入理解：Phaser
 >
 > [https://www.jianshu.com/p/e5794645ca8d](https://www.jianshu.com/p/e5794645ca8d)
->
-> [https://www.jianshu.com/p/e5794645ca8d](https://www.jianshu.com/p/e5794645ca8d)
 
 ```java
 public class PhaserTest {
@@ -794,9 +792,72 @@ public class LockSupportTest {
 
 将当前线程加入上面锁的双向链表（等待队列）中
 
+```java
+private Node addWaiter(Node mode) {
+    // 要加入的节点
+    Node node = new Node(Thread.currentThread(), mode);
+    // 一个中间变量指向最后一个节点
+    Node pred = tail;
+    if (pred != null) {
+        // 当前节点的前一个节点指向中间变量（也就是最后一个节点）
+        node.prev = pred;
+        // CAS操作
+        if (compareAndSetTail(pred, node)) {
+            // 中间变量的下一个节点指向当前节点（加入队列成功）
+            pred.next = node;
+            return node;
+        }
+    }
+    enq(node);
+    return node;
+}
+```
+
 ##### 7. acquireQueued(Node, int)
 
 通过自旋，判断当前队列节点是否可以获取锁。
+
+```java
+// 公平锁的获取
+final boolean acquireQueued(final Node node, int arg) {
+    boolean failed = true;
+    try {
+        boolean interrupted = false;
+        // 死循环，每个节点都有机会执行下面的逻辑
+        for (;;) {
+            // 获取当前节点的前一个节点
+            final Node p = node.predecessor();
+            // 前一个节点是头节点，并且已经获取到锁的时候
+            if (p == head && tryAcquire(arg)) {
+                // 把当前节点设置为头结点
+                setHead(node);
+                // 设置为空，help GC
+                p.next = null; 
+                failed = false;
+                return interrupted;
+            }
+            // 进入阻塞状态，进行等待
+            if (shouldParkAfterFailedAcquire(p, node) && parkAndCheckInterrupt())
+                interrupted = true;
+        }
+    } finally {
+        if (failed)
+            cancelAcquire(node);
+    }
+}
+```
+
+##### 8. VarHandle：变量句柄
+
+>VarHandle 的出现替代了java.util.concurrent.atomic和sun.misc.Unsafe的部分操作。并且提供了一系列标准的内存屏障操作，用于更加细粒度的控制内存排序。在安全性、可用性、性能上都要优于现有的API。
+
+```java
+int STATE = MethodHandles.lookup().findVarHandle(Class, "state", int.class);
+```
+
+1. JKD9发布的新特性
+2. 可以对普通属性做一些原子性操作
+3. 比反射快，直接操作二进制码
 
 #### 实现了AQS的锁有
 
@@ -1179,4 +1240,6 @@ public class Demo8 {
     }
 }
 ```
+
+## 七、ThreadLocal
 
