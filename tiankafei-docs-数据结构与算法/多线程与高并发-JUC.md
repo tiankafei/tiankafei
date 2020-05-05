@@ -1243,3 +1243,59 @@ public class Demo8 {
 
 ## 七、ThreadLocal
 
+ThreadLocal叫做线程变量，意思是ThreadLocal中填充的变量属于**当前**线程，该变量对其他线程而言是隔离的。ThreadLocal为变量在每个线程中都创建了一个副本，那么每个线程可以访问自己内部的副本变量。
+
+```java
+public class ThreadLocalTest {
+    public static void main(String[] args) {
+        new ThreadLocalTest().testThreadLocal();
+    }
+    private void testThreadLocal(){
+        ThreadLocal<Person> tl = new ThreadLocal<>();
+        new Thread(()->{
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(tl.get());
+        }).start();
+        new Thread(()->{
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            tl.set(new Person());
+        }).start();
+    }
+    class Person {
+        String name = "zhangsan";
+    }
+}
+```
+
+### ThreadLocal应用场景：
+
+1. 在进行对象跨层传递的时候，使用ThreadLocal可以避免多次传递，打破层次间的约束
+2. 线程间数据隔离
+3. 进行事务操作，用于存储线程事务信息
+4. 数据库连接，Session会话管理
+
+### ThreadLocal需要注意的点
+
+那就是内存泄漏问题。我们先来看下面这张图
+
+![ThreadLocal](./images/ThreadLocal.jpeg)
+
+上面这张图详细的揭示了ThreadLocal和Thread以及ThreadLocalMap三者的关系。
+
+1. Thread中有一个map，就是ThreadLocalMap
+2. ThreadLocalMap的key是ThreadLocal，值是我们自己设定的
+3. ThreadLocal是一个弱引用，当为null时，会被当成垃圾回收
+4. 重点来了，突然我们ThreadLocal是null了，也就是要被垃圾回收器回收了，但是此时我们的ThreadLocalMap生命周期和Thread的一样，它不会回收，这时候就出现了一个现象。那就是ThreadLocalMap的key没了，但是value还在，这就造成了内存泄漏。
+5. 解决办法：使用完ThreadLocal后，执行remove操作，避免出现内存溢出情况。
+
+## 八、强软弱虚引用
+
