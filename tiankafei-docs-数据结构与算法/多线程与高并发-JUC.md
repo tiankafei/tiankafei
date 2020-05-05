@@ -118,7 +118,7 @@ park的字面量意思是指停车场的意思，使用park来挂起线程后需
 
 ## 二、锁
 
-###  synchronized
+###  (1) synchronized
 
 > synchronized关键字是用来控制线程同步的，就是在多线程的环境下，控制synchronized代码段不被多个线程同时执行。**锁的是对象，而不是代码**
 
@@ -191,6 +191,199 @@ private static void exe22(){
 
 1. **执行时间长**或者**线程数量多**的尽量用系统锁
 2. **执行时间短**且**线程数量少**的情况下，适合使用自旋锁，因为自旋为一直占用CPU
+
+#### 6. 可重入
+
+```java
+public class SynchronizedLockTest {
+    synchronized void m1() {
+        for(int i=0; i<10; i++) {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(i);
+            if(i == 2) m2();
+        }
+    }
+    synchronized void m2() {
+        System.out.println("m2 ...");
+    }
+    public static void main(String[] args) {
+        SynchronizedLockTest synchronizedLockTest = new SynchronizedLockTest();
+        new Thread(synchronizedLockTest::m1).start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### (2) ReentrantLock：可重入锁
+
+```java
+public class ReentrantLockTest {
+    Lock lock = new ReentrantLock();
+    void m1() {
+        try {
+            lock.lock();
+            for(int i=0; i<10; i++) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(i);
+                if(i == 2) m2();
+            }
+        }finally {
+            lock.unlock();
+        }
+    }
+    void m2() {
+        try {
+            lock.lock();
+            System.out.println("m2 ...");
+        }finally {
+            lock.unlock();
+        }
+    }
+    public static void main(String[] args) {
+        ReentrantLockTest reentrantLockTest = new ReentrantLockTest();
+        new Thread(reentrantLockTest::m1).start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+#### 比synchronized有更好用的API
+
+##### 1. 尝试获取锁
+
+**lock.tryLock()**
+
+使用tryLock进行尝试锁定，不管锁定与否，方法都将继续执行
+可以根据tryLock的返回值来判定是否锁定
+也可以指定tryLock的时间，由于tryLock(time)抛出异常，所以要注意unclock的处理，必须放到finally中
+
+##### 2. 可以被打断的锁
+
+**lock.lockInterruptibly()**
+
+如果当前线程未被中断，则可以获取锁，如果已被中断则会排除 InterruptedException 异常。但是使用lock.lock()时，当前线程被中断，不会报错。打断线程的方法：线程对象.interrupt()
+
+##### 3. 可以指定为公平锁
+
+**默认为不公平锁**
+
+```java
+// 指定为公平锁
+Lock lock = new ReentrantLock(true);
+```
+
+1. 公平锁则在于每次都是依次从队首取值，严格按照线程启动的顺序来执行的，不允许插队。
+
+   首先判断当前AQS的state是否等于0，锁是否被占用，如果没有被占用的话，继续判断队列中是否有排在前面的线程在等待锁，没有的话就修改statte状态；然后将当前线程记录为独占锁的线程，继续判断当前线程是否为独断锁的线程，ReentrantLock是可重入的，线程可以不停地Lock来增加state的值，对应的需要unlock来解锁，减少state的值， 如果上面的条件判断失败，即获取锁失败，则将线程加入到等待线程队列队尾，然后阻塞线程，等待被唤醒。
+
+2. 非公平锁在等待锁的过程中， 如果有任意新的线程妄图获取锁，都是有很大的几率直接获取到锁的，允许插队。
+
+   非公平锁逻辑基本跟公平锁一致，最本质的区别是，当前的锁状态没有被占用时，当前线程可以直接占用，而不需要判断当前队列中是否有等待线程。
+
+ReentrantLock默认使用非公平锁是基于性能考虑，公平锁为了保证线程规规矩矩地排队，需要增加阻塞和唤醒的时间开销。如果直接插队获取非公平锁，跳过了对队列的处理，速度会更快。
+
+### (3) CountDownLatch：倒数计时器
+
+<font color="red">**CountDownLatch是一个计数器，线程完成一个记录一个，计数器递减，只能只用一次**</font>
+
+> 是通过一个计数器来实现的，计数器的初始值是线程的数量。每当一个线程执行完毕后，计数器的值就-1，当计数器的值为0时，表示所有线程都执行完毕，然后在闭锁上等待的线程就可以恢复工作了。
+
+```java
+public class CountDownLatchTest {
+    public static void main(String[] args) {
+        usingCountDownLatch();
+    }
+    private static void usingCountDownLatch() {
+        Thread[] threads = new Thread[100];
+        CountDownLatch latch = new CountDownLatch(threads.length);
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new Thread(() -> {
+                int result = 0;
+                for (int j = 0; j < 10000; j++) result += j;
+                latch.countDown();
+            });
+        }
+        for (int i = 0; i < threads.length; i++) {
+            threads[i].start();
+        }
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("end latch");
+    }
+}
+```
+
+#### countDown()
+
+将count值减1（原子性操作）。
+
+#### await()
+
+调用await()方法的线程会被挂起，它会等待直到count值为0才继续执行。
+
+#### await(long timeout, TimeUnit unit)
+
+和await()类似，只不过等待一定的时间后count值还没变为0的话就会继续执行。
+
+### (4) CyclicBarrier：循环栅栏
+
+<font color="red">**它的作用就是会让所有线程都等待完成后才会继续下一步行动。**</font>
+
+> 举个例子，就像生活中我们会约朋友们到某个餐厅一起吃饭，有些朋友可能会早到，有些朋友可能会晚到，但是这个餐厅规定必须等到所有人到齐之后才会让我们进去。这里的朋友们就是各个线程，餐厅就是 CyclicBarrier。
+>
+> 深入理解：CyclicBarrier [https://blog.csdn.net/qq_39241239/article/details/87030142](https://blog.csdn.net/qq_39241239/article/details/87030142)
+
+```java
+public class CyclicBarrierTest {
+    public static void main(String[] args) {
+        // parties 是参与线程的个数
+        // Runnable 参数，这个参数的意思是最后一个到达后，线程要做的任务
+        CyclicBarrier barrier = new CyclicBarrier(20, () -> System.out.println("满人"));
+        for(int i=0; i<100; i++) {
+            new Thread(()->{
+                try {
+                    barrier.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+    }
+}
+```
+
+#### await()
+
+线程调用 await() 表示自己已经到达栅栏
+
+#### await(long timeout, TimeUnit unit)
+
+和await()类似，只不过等待一定的时间后到达的线程个数少于指定的线程个数时也会继续执行。
+
+### (5) 
+
+
 
 ## 三、volatile 
 
@@ -265,8 +458,6 @@ new 一个对象的指令会分成三步
 
 假如说线程A在做了i+1，但未赋值的时候，线程B就开始读取i，那么当线程A赋值i=1，并回写到主内存，而此时线程B已经不再需要i的值了，而是直接交给处理器去做+1的操作，于是当线程B执行完并回写到主内存，i的值仍然是1，而不是预期的2。也就是说，volatile缩短了普通变量在不同线程之间执行的时间差，但仍然存有漏洞，依然不能保证原子性。
 
-### 4. 缓存一致性协议：MESI
-
 ## 四、CAS：无锁优化、自旋锁、乐观锁
 
 <font color="red">**CAS操作是CPU原语的支持，中间的指令不会被打断**</font>
@@ -306,6 +497,16 @@ Unsafe.getUnsafe().compareAndSwapObject();
 ### 2. 使用CAS操作的 JDK 内部类
 
 1. AtomicInteger
-2. AtomicBoolean
-3. AtomicLong
+2. AtomicLong
+3. AtomicBoolean
+
+### 3. LongAdder
+
+LongAdder在高并发的场景下会比它的前辈——AtomicLong 具有更好的性能，代价是消耗更多的内存空间。
+
+在并发量较低的环境下，线程冲突的概率比较小，自旋的次数不会很多。但是，高并发环境下，N个线程同时进行自旋操作，会出现大量失败并不断自旋的情况，此时**AtomicLong**的自旋会成为瓶颈。
+
+**LongAdder**的基本思路就是**分散热点**，将value值分散到一个数组中，不同线程会命中到数组的不同槽中，各个线程只对自己槽中的那个值进行CAS操作，这样热点就被分散了，冲突的概率就小很多。如果要获取真正的long值，只要将各个槽中的变量值累加返回。**（分段锁）**
+
+这种做法有没有似曾相识的感觉？没错，ConcurrentHashMap 中的“分段锁”其实就是类似的思路。
 
