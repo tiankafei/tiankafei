@@ -1603,5 +1603,33 @@ private void set(ThreadLocal<?> key, Object value) {
 4. 重点来了，如果ThreadLocal是null了，也就是要被垃圾回收器回收了，但是此时我们的ThreadLocalMap生命周期和Thread的一样，它不会回收，这时候就出现了一个现象。那就是ThreadLocalMap的key没了，但是value还在，这就造成了内存泄漏（永远不会被回收）。
 5. 解决办法：使用完ThreadLocal后，执行remove操作，避免出现内存溢出情况。
 
+## 九、队列
+
+### 1. Deque
+
+#### (1). ArrayDeque
+
+#### (2). BlockingDeque
+
+### 2. BlockingQueue
+
+#### (1). ArrayBlockingQueue
+
+#### (2). PriorityBlockingQueue
+
+#### (3). LinkedBlockingQueue
+
+#### (4). TransferQueue
+
+#### (5). SynchronousQueue
+
+### 3. PriorityQueue
+
+### 4. ConcurrentLinkedQueue
+
+### 5. DelayQueue
+
+
+
 
 
