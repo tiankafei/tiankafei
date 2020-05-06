@@ -1603,33 +1603,264 @@ private void set(ThreadLocal<?> key, Object value) {
 4. 重点来了，如果ThreadLocal是null了，也就是要被垃圾回收器回收了，但是此时我们的ThreadLocalMap生命周期和Thread的一样，它不会回收，这时候就出现了一个现象。那就是ThreadLocalMap的key没了，但是value还在，这就造成了内存泄漏（永远不会被回收）。
 5. 解决办法：使用完ThreadLocal后，执行remove操作，避免出现内存溢出情况。
 
-## 九、队列
+## 九、队列的接口
 
-### 1. Deque
+### 1. Queue：队列
 
-#### (1). ArrayDeque
+![Queue](./images/Queue.png)
 
-#### (2). BlockingDeque
+#### add(E)
 
-### 2. BlockingQueue
+增加一个元索；如果队列已满，则抛出一个IIIegaISlabEepeplian异常
 
-#### (1). ArrayBlockingQueue
+#### element()
 
-#### (2). PriorityBlockingQueue
+返回队列头部的元素；如果队列为空，则抛出一个NoSuchElementException异常
 
-#### (3). LinkedBlockingQueue
+#### offer(E)
 
-#### (4). TransferQueue
+添加一个元素并返回true；如果队列已满，则返回false
 
-#### (5). SynchronousQueue
+#### peek()
 
-### 3. PriorityQueue
+返回队列头部的元素；如果队列为空，则返回null
 
-### 4. ConcurrentLinkedQueue
+#### poll()
 
-### 5. DelayQueue
+移除并返回队列头部的元素；如果队列为空，则返回null
+
+#### remove()
+
+移除并返回队列头部的元素；如果队列为空，则抛出一个NoSuchElementException异常
+
+### 2. Deque：双端队列（extends Queue）
+
+![Deque](./images/Deque.png)
+
+#### addFirst(E)
+
+在双端队列的前面增加一个元索；如果队列已满，则抛出一个IIIegaISlabEepeplian异常。当使用容量限制的deque时，通常最好使用方法offerFirst(E)。
+
+#### addLast(E);
+
+在双端队列的后面增加一个元索；如果队列已满，则抛出一个IIIegaISlabEepeplian异常。当使用容量限制的deque时，通常最好使用方法offerLast(E)。
+
+#### offerFirst(E);
+
+在双端队列的前面添加一个元素并返回true；如果队列已满，则返回false
+
+#### offerLast(E);
+
+在双端队列的后面添加一个元素并返回true；如果队列已满，则返回false
+
+#### removeFirst()
+
+移除并返回队列头部的元素；如果队列为空，则抛出一个NoSuchElementException异常
+
+#### removeLast()
+
+移除并返回队列尾部的元素；如果队列为空，则抛出一个NoSuchElementException异常
+
+#### pollFirst()
+
+移除并返回队列头部的元素；如果队列为空，则返回null
+
+#### pollLast()
+
+移除并返回队列尾部的元素；如果队列为空，则返回null
+
+#### getFirst()
+
+返回队列头部的元素；如果队列为空，则抛出一个NoSuchElementException异常
+
+#### getLast()
+
+返回队列尾部的元素；如果队列为空，则抛出一个NoSuchElementException异常
+
+#### peekFirst()
+
+返回队列头部的元素；如果队列为空，则返回null
+
+#### peekLast()
+
+返回队列尾部的元素；如果队列为空，则返回null
+
+#### removeFirstOccurrence(Object)
+
+删除指定元素第一次出现的位置所在的元素，删除成功返回true，否则返回false
+
+#### removeLastOccurrence(Object)
+
+删除指定元素最后一次出现的位置所在的元素，删除成功返回true，否则返回false
+
+#### push(E)
+
+将元素推送到此双端队列的头部；如果队列已满，则抛出一个IIIegaISlabEepeplian异常。此方法相当于addFirst(E)。
+
+#### pop()
+
+从这个双端队列中弹出一个元素，也就是说删除并返回此双端队列的第一个元素；如果队列为空，则抛出一个NoSuchElementException异常。 此方法相当于removeFirst() 。 
+
+### 3. BlockingQueue：阻塞队列（extends Queue）
+
+![BlockingQueue](./images/BlockingQueue.png)
+
+#### put(E)
+
+将指定的元素插入到此队列中，如果队列已满，则进行阻塞等待
+
+#### take()
+
+移除并返回队列头部的元素；如果队列为空，则进行阻塞等待
+
+### 4. BlockingDeque：阻塞的双端队列（extends BlockingQueue, Deque）
+
+![BlockingDeque](./images/BlockingDeque.png)
+
+#### offer(E e, long timeout, TimeUnit unit) 
+
+添加一个元素到双端队列的尾部。如果队列不满，则直接返回true；如果队列满了，在指定的时间内，队列依然是满的，则返回false，否则返回true。
+
+#### offerFirst(E e, long timeout, TimeUnit unit) 
+
+添加一个元素到双端队列的头部。如果队列不满，则直接返回true；如果队列满了，在指定的时间内，队列依然是满的，则返回false，否则返回true。
+
+#### offerLast(E e, long timeout, TimeUnit unit) 
+
+添加一个元素到双端队列的尾部。如果队列不满，则直接返回true；如果队列满了，在指定的时间内，队列依然是满的，则返回false，否则返回true。
+
+#### poll(long timeout, TimeUnit unit) 
+
+移除并返回队列头部的元素；如果队列为空，在指定的时间内，队列依然是空的，则返回null，否则返回指定的元素。 
+
+#### pollFirst(long timeout, TimeUnit unit)
+
+移除并返回队列头部的元素；如果队列为空，在指定的时间内，队列依然是空的，则返回null，否则返回指定的元素。 
+
+#### pollLast(long timeout, TimeUnit unit) 
+
+移除并返回队列尾部的元素；如果队列为空，在指定的时间内，队列依然是空的，则返回null，否则返回指定的元素。 
+
+#### putFirst(E e)
+
+将指定的元素插入到此双端队列的头部，如果队列已满，则进行阻塞等待
+
+#### putLast(E e) 
+
+将指定的元素插入到此双端队列的尾部，如果队列已满，则进行阻塞等待
+
+#### takeFirst() 
+
+移除并返回队列头部的元素；如果队列为空，则进行阻塞等待
+
+#### takeLast() 
+
+移除并返回队列尾部的元素；如果队列为空，则进行阻塞等待
+
+## 十、BlockingQueue的实现类
+
+### ArrayBlockingQueue
+
+根据 ArrayBlockingQueue 的名字我们都可以看出，它是一个队列，并且是一个基于数组的阻塞队列。同时也是一个有界队列，有界也就意味着，它不能够存储无限多数量的对象。所以在创建 ArrayBlockingQueue 时，必须要给它指定一个队列的大小。
+
+ArrayBlockingQueue 使用场景：
+
+1. 先进先出队列（队列头的是最先进队的元素；队列尾的是最后进队的元素）
+2. 有界队列（即初始化时指定的容量，就是队列最大的容量，不会出现扩容，容量满，则阻塞进队操作；容量空，则阻塞出队操作）
+3. 队列不支持空元素
+
+### SynchronousQueue
+
+SynchronousQueue 是一个内部只能包含一个元素的队列。插入元素到队列的线程被阻塞，直到另一个线程从队列中获取了队列中存储的元素。同样，如果线程尝试获取元素并且当前不存在任何元素，则该线程将被阻塞，直到线程将元素插入队列。将这个类称为队列有点夸大其词。这更像是一个点。
+
+#### demo示例
+
+```java
+public class SynchronousQueueDemo {
+    public static void main(String[] args) throws InterruptedException {
+        final SynchronousQueue<Integer> queue = new SynchronousQueue<Integer>();
+        Thread putThread = new Thread(() -> {
+            System.out.println("put thread start");
+            try {
+                queue.put(1);
+            } catch (InterruptedException e) {
+            }
+            System.out.println("put thread end");
+        });
+        Thread takeThread = new Thread(() -> {
+            System.out.println("take thread start");
+            try {
+                System.out.println("take from putThread: " + queue.take());
+            } catch (InterruptedException e) {
+            }
+            System.out.println("take thread end");
+        });
+        putThread.start();
+        Thread.sleep(1000);
+        takeThread.start();
+    }
+}
+```
+
+输出结果：
+
+```java
+put thread start
+take thread start
+take from putThread: 1
+put thread end
+take thread end
+```
+
+从结果可以看出，put线程执行queue.put(1) 后就被阻塞了，只有take线程进行了消费，put线程才可以返回。可以认为这是一种线程与线程间一对一传递消息的模型。
+
+参考：[https://zhuanlan.zhihu.com/p/29227508](https://zhuanlan.zhihu.com/p/29227508)
+
+### DelayQueue
 
 
+
+### LinkedTransferQueue
+
+
+
+### LinkedBlockingQueue
+
+LinkedBlockingQueue 不同于 ArrayBlockingQueue，它如果不指定容量，默认为`Integer.MAX_VALUE`，也就是无界队列。所以为了避免队列过大造成机器负载或者内存爆满的情况出现，我们在使用的时候建议手动传一个队列的大小。
+
+参考：[https://blog.csdn.net/tonywu1992/article/details/83419448](https://blog.csdn.net/tonywu1992/article/details/83419448)
+
+### PriorityBlockingQueue
+
+
+
+## 十一、BlockingDeque的实现类
+
+### LinkedBlockingDeque
+
+
+
+## 十二、Queue的实现类
+
+### PriorityQueue
+
+
+
+### ConcurrentLinkedQueue
+
+根据API解释，ConcurrentLinkedQueue 是一个基于链接节点的无界线程安全的队列，按照先进先出原则对元素进行排序。新元素从队列尾部插入，而获取队列元素，则需要从队列头部获取。
+
+## 十三、Deque的实现类
+
+### ArrayDeque
+
+
+
+### IdentityLinkedList
+
+
+
+### ConcurrentLinkedDeque
 
 
 
