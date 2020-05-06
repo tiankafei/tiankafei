@@ -1795,51 +1795,114 @@ ArrayBlockingQueue 使用场景：
 
 ### SynchronousQueue
 
-SynchronousQueue 是一个内部只能包含一个元素的队列（容量为0）。插入元素到队列的线程被阻塞，直到另一个线程从队列中获取了队列中存储的元素。同样，如果线程尝试获取元素并且当前不存在任何元素，则该线程将被阻塞，直到线程将元素插入队列。将这个类称为队列有点夸大其词。这更像是一个点。
+#### 1. 概述
+
+SynchronousQueue，实际上它不是一个真正的队列，因为它不会为队列中元素维护存储空间。与其他队列不同的是，它维护一组线程，这些线程在等待着把元素加入或移出队列。
+
+因为SynchronousQueue没有存储功能，因此put和take会一直阻塞，直到有另一个线程已经准备好参与到交付过程中。仅当有足够多的消费者，并且总是有一个消费者准备好获取交付的工作时，才适合使用同步队列。
+
+>如果以洗盘子的比喻为例，那么这就相当于没有盘架，而是将洗好的盘子直接放入下一个空闲的烘干机中。这种实现队列的方式看似很奇怪，但由于可以直接交付工作，从而降低了将数据从生产者移动到消费者的延迟。（在传统的队列中，在一个工作单元可以交付之前，必须通过串行方式首先完成入列[Enqueue]或者出列[Dequeue]等操作）。
+>
+>直接交付方式还会将更多关于任务状态的信息反馈给生产者。当交付被接受时，它就知道消费者已经得到了任务，而不是简单地把任务放入一个队列——这种区别就好比将文件直接交给同事，还是将文件放到她的邮箱中并希望她能尽快拿到文件。
+
+#### 2. 示例demo
 
 ```java
-public class SynchronousQueueDemo {
-    // 手递手把任务交给消费者
-    public static void main(String[] args) throws InterruptedException {
-        final SynchronousQueue<Integer> queue = new SynchronousQueue<Integer>();
-        Thread putThread = new Thread(() -> {
-            System.out.println("put thread start");
-            try {
-                // 因为容量为0，所以当没有take时，会在此阻塞
-                queue.put(1);
-            } catch (InterruptedException e) {
+public class SynchronousQueueTest2 {
+
+    static class SynchronousQueueProducer implements Runnable {
+
+        protected BlockingQueue<String> blockingQueue;
+
+        public SynchronousQueueProducer(BlockingQueue<String> queue) {
+            this.blockingQueue = queue;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    String data = UUID.randomUUID().toString();
+                    System.out.println("Put: " + data);
+                    blockingQueue.put(data);
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            System.out.println("put thread end");
-        });
-        Thread takeThread = new Thread(() -> {
-            System.out.println("take thread start");
-            try {
-                // 如果先执行take时，当没有进行put时，也会在此阻塞
-                System.out.println("take from putThread: " + queue.take());
-            } catch (InterruptedException e) {
+        }
+    }
+
+    static class SynchronousQueueConsumer implements Runnable {
+
+        protected BlockingQueue<String> blockingQueue;
+
+        public SynchronousQueueConsumer(BlockingQueue<String> queue) {
+            this.blockingQueue = queue;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    String data = blockingQueue.take();
+                    System.out.println(Thread.currentThread().getName() + " take(): " + data);
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            System.out.println("take thread end");
-        });
-        putThread.start();
-        Thread.sleep(1000);
-        takeThread.start();
+        }
+    }
+
+    public static void main(String[] args) {
+        final BlockingQueue<String> synchronousQueue = new SynchronousQueue<String>();
+
+        SynchronousQueueProducer queueProducer = new SynchronousQueueProducer(synchronousQueue);
+        new Thread(queueProducer).start();
+
+        SynchronousQueueConsumer queueConsumer1 = new SynchronousQueueConsumer(synchronousQueue);
+        new Thread(queueConsumer1).start();
+
+        SynchronousQueueConsumer queueConsumer2 = new SynchronousQueueConsumer(synchronousQueue);
+        new Thread(queueConsumer2).start();
     }
 }
 ```
 
-输出结果：
+> 插入数据的线程和获取数据的线程，交替执行
+
+#### 3. 应用场景
+
+Executors.newCachedThreadPool()
 
 ```java
-put thread start
-take thread start
-take from putThread: 1
-put thread end
-take thread end
+/**
+ * Creates a thread pool that creates new threads as needed, but
+ * will reuse previously constructed threads when they are
+ * available, and uses the provided
+ * ThreadFactory to create new threads when needed.
+ * @param threadFactory the factory to use when creating new threads
+ * @return the newly created thread pool
+ * @throws NullPointerException if threadFactory is null
+ */
+public static ExecutorService newCachedThreadPool(ThreadFactory threadFactory) {
+	return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+								  60L, TimeUnit.SECONDS,
+								  new SynchronousQueue<Runnable>(),
+								  threadFactory);
+}
 ```
 
-从结果可以看出，put线程执行queue.put(1) 后就被阻塞了，只有take线程进行了消费，put线程才可以返回。可以认为这是一种线程与线程间一对一传递消息的模型。
+由于ThreadPoolExecutor内部实现任务提交的时候调用的是工作队列（BlockingQueue接口的实现类）的非阻塞式入队列方法（offer方法），因此，在使用SynchronousQueue作为工作队列的前提下，客户端代码向线程池提交任务时，而线程池中又没有空闲的线程能够从SynchronousQueue队列实例中取一个任务，那么相应的offer方法调用就会失败（即任务没有被存入工作队列）。此时，ThreadPoolExecutor会新建一个新的工作者线程用于对这个入队列失败的任务进行处理（假设此时线程池的大小还未达到其最大线程池大小）。
 
-参考：[https://zhuanlan.zhihu.com/p/29227508](https://zhuanlan.zhihu.com/p/29227508)
+所以，使用SynchronousQueue作为工作队列，工作队列本身并不限制待执行的任务的数量。但此时需要限定线程池的最大大小为一个合理的有限值，而不是Integer.MAX_VALUE，否则可能导致线程池中的工作者线程的数量一直增加到系统资源所无法承受为止。
+
+> 如果应用程序确实需要比较大的工作队列容量，而又想避免无界工作队列可能导致的问题，不妨考虑SynchronousQueue。SynchronousQueue实现上并不使用存储空间。
+>
+> 使用SynchronousQueue的目的就是保证“对于提交的任务，如果有空闲线程，则使用空闲线程来处理；否则新建一个线程来处理任务”。
+
+参考文档：[https://www.jianshu.com/p/b7f7eb2bc778](https://www.jianshu.com/p/b7f7eb2bc778)
 
 ### DelayQueue
 
