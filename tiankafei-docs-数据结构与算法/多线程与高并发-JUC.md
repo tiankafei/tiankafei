@@ -1795,19 +1795,64 @@ ArrayBlockingQueue 使用场景：
 
 ### SynchronousQueue
 
-
-
 #### 1. 概述
 
-SynchronousQueue，实际上它不是一个真正的队列，因为它不会为队列中元素维护存储空间。与其他队列不同的是，它维护一组线程，这些线程在等待着把元素加入或移出队列。
+SynchronousQueue是无界的，同时也是一个同步阻塞队列，但它的特别之处在于**它内部没有容器**。每一个 put操作都必须等待一个take操作。每一个take操作也必须等待一个put操作。
 
-因为SynchronousQueue没有存储功能，因此put和take会一直阻塞，直到有另一个线程已经准备好参与到交付过程中。仅当有足够多的消费者，并且总是有一个消费者准备好获取交付的工作时，才适合使用同步队列。
+SynchronousQueue是没有容量的，无法存储元素节点信息，不能通过peek方法获取元素，peek方法会直接返回null。由于没有元素，所以不能被迭代，它的iterator方法会返回一个空的迭代器`Collections.emptyIterator();`
 
->如果以洗盘子的比喻为例，那么这就相当于没有盘架，而是将洗好的盘子直接放入下一个空闲的烘干机中。这种实现队列的方式看似很奇怪，但由于可以直接交付工作，从而降低了将数据从生产者移动到消费者的延迟。（在传统的队列中，在一个工作单元可以交付之前，必须通过串行方式首先完成入列[Enqueue]或者出列[Dequeue]等操作）。
->
->直接交付方式还会将更多关于任务状态的信息反馈给生产者。当交付被接受时，它就知道消费者已经得到了任务，而不是简单地把任务放入一个队列——这种区别就好比将文件直接交给同事，还是将文件放到她的邮箱中并希望她能尽快拿到文件。
+#### 2. 用途
 
-#### 2. 示例demo
+SynchronousQueue比较适合**线程通信**、**传递信息**、**状态切换**等应用场景，一个线程必须等待另一个线程传递某些信息给他才可以继续执行。
+
+#### 3. 数据结构
+
+##### 1. 堆栈
+
+先进后出（LIFO），非公平模式，TransferStack
+
+##### 2. 队列
+
+先进先出（FIFO），公平模式，TransferQueue
+
+```java
+// Transferer有两个实现类：TransferQueue 和 TransferStack
+public SynchronousQueue() {
+    this(false);
+}
+//构造函数指定公平策略。默认是非公平
+public SynchronousQueue(boolean fair) {
+    transferer = fair ? new TransferQueue<E>() : new TransferStack<E>();
+}
+```
+
+##### 3. Transferer
+
+Transferer是SynchronousQueue的内部抽象类，双栈和双队列算法共享该类。他只有一个transfer方法，用于转移元素，从生产者转移到消费者；或者消费者调用该方法从生产者取数据。
+
+```java
+abstract static class Transferer<E> {
+    abstract E transfer(E e, boolean timed, long nanos);
+}
+```
+
+1. e：若不为空，就是put数据，但是当前线程需要等待消费者取走数据才可以返回。若为空，就是消费者来取数据，如果没有数据可以取就阻塞。他取走的数据就是生产者put进来的数据。
+2. timed：是否设置超时时间
+3. nanos：超时时间
+4. transfer方法返回值如果为空，代表超时或者中断
+
+transfer的基本思想：循环处理下面两种情况
+
+1. 如果队列是空的，或者队列中都是相同模式（same-mode）的节点，则将当前节点添加到等待队列。等待完成或取消，然后返回匹配的item
+2. 如果队列中已经存在等待的节点，并且等待的节点与当前节点的模式不同，则将等待队列对头节点出队，返回匹配项。
+
+**解释**
+
+由于`SynchronousQueue`是同步阻塞队列，他又不存储任何的数据（等待队列中存的是线程，不是数据队列），那么当队列空时，来了一个put请求，那么他就入队，等待take将数据取走。如果一个put请求来时，队列中已经存在了很多的put线程等待，那么这个线程直接入队，如果已经有很多take线程等待，说明有很多线程等着取数据，那么直接将数据给等待的第一个线程即可，反之亦然。
+
+这里隐含告诉我们：**如果队列不为空，那么他们的模式（读还是写）肯定相同。**
+
+#### 4. 简单demo
 
 ```java
 public class SynchronousQueueTest2 {
@@ -1874,7 +1919,7 @@ public class SynchronousQueueTest2 {
 
 > 插入数据的线程和获取数据的线程，交替执行
 
-#### 3. 应用场景
+#### 5. 应用场景
 
 Executors.newCachedThreadPool()
 
@@ -1906,11 +1951,11 @@ public static ExecutorService newCachedThreadPool(ThreadFactory threadFactory) {
 
 参考文档：
 
-[https://www.jianshu.com/p/b7f7eb2bc778](https://www.jianshu.com/p/b7f7eb2bc778)
+SynchronousQueue实现原理：https://zhuanlan.zhihu.com/p/29227508
 
-[https://zhuanlan.zhihu.com/p/29227508](https://zhuanlan.zhihu.com/p/29227508)
+SynchronousQueue原理解析：https://www.jianshu.com/p/af6f83c78506
 
-[https://www.cnblogs.com/hongdada/p/6147834.html](https://www.cnblogs.com/hongdada/p/6147834.html)
+Java阻塞队列SynchronousQueue详解：https://www.jianshu.com/p/376d368cb44f
 
 ### DelayQueue
 
