@@ -1795,6 +1795,8 @@ ArrayBlockingQueue 使用场景：
 
 ### SynchronousQueue
 
+
+
 #### 1. 概述
 
 SynchronousQueue，实际上它不是一个真正的队列，因为它不会为队列中元素维护存储空间。与其他队列不同的是，它维护一组线程，这些线程在等待着把元素加入或移出队列。
@@ -1902,7 +1904,13 @@ public static ExecutorService newCachedThreadPool(ThreadFactory threadFactory) {
 >
 > 使用SynchronousQueue的目的就是保证“对于提交的任务，如果有空闲线程，则使用空闲线程来处理；否则新建一个线程来处理任务”。
 
-参考文档：[https://www.jianshu.com/p/b7f7eb2bc778](https://www.jianshu.com/p/b7f7eb2bc778)
+参考文档：
+
+[https://www.jianshu.com/p/b7f7eb2bc778](https://www.jianshu.com/p/b7f7eb2bc778)
+
+[https://zhuanlan.zhihu.com/p/29227508](https://zhuanlan.zhihu.com/p/29227508)
+
+[https://www.cnblogs.com/hongdada/p/6147834.html](https://www.cnblogs.com/hongdada/p/6147834.html)
 
 ### DelayQueue
 
