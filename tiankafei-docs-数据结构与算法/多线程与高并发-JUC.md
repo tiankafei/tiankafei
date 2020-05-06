@@ -1757,6 +1757,30 @@ private void set(ThreadLocal<?> key, Object value) {
 
 移除并返回队列尾部的元素；如果队列为空，则进行阻塞等待
 
+### 5. TransferQueue
+
+![TransferQueue](./images/TransferQueue.png)
+
+#### tryTransfer(E e)
+
+如果可能，立即将元素转移给等待的消费者，如果没有正在等待接收消息的消费者，则返回false。
+
+#### tryTransfer(E e, long timeout, TimeUnit unit)
+
+如果可能，立即将元素转移给等待的消费者，如果没有正在等待接收消息的消费者，则在指定的时间内进行等待，如果超时，则返回false。
+
+#### transfer(E e)
+
+将元素转移给消费者，如果没有消费者则一直持续等待，直到有消费者接收。也就是说如果一个消费者已经在等待接收它，则立即传送指定的元素，否则一直等待直到元素由消费者接收。
+
+#### hasWaitingConsumer()
+
+如果至少有一位消费者在等待，则返回 true
+
+#### getWaitingConsumerCount()
+
+返回等待消费者人数的估计值
+
 ## 十、BlockingQueue的实现类
 
 ### ArrayBlockingQueue
@@ -1771,17 +1795,17 @@ ArrayBlockingQueue 使用场景：
 
 ### SynchronousQueue
 
-SynchronousQueue 是一个内部只能包含一个元素的队列。插入元素到队列的线程被阻塞，直到另一个线程从队列中获取了队列中存储的元素。同样，如果线程尝试获取元素并且当前不存在任何元素，则该线程将被阻塞，直到线程将元素插入队列。将这个类称为队列有点夸大其词。这更像是一个点。
-
-#### demo示例
+SynchronousQueue 是一个内部只能包含一个元素的队列（容量为0）。插入元素到队列的线程被阻塞，直到另一个线程从队列中获取了队列中存储的元素。同样，如果线程尝试获取元素并且当前不存在任何元素，则该线程将被阻塞，直到线程将元素插入队列。将这个类称为队列有点夸大其词。这更像是一个点。
 
 ```java
 public class SynchronousQueueDemo {
+    // 手递手把任务交给消费者
     public static void main(String[] args) throws InterruptedException {
         final SynchronousQueue<Integer> queue = new SynchronousQueue<Integer>();
         Thread putThread = new Thread(() -> {
             System.out.println("put thread start");
             try {
+                // 因为容量为0，所以当没有take时，会在此阻塞
                 queue.put(1);
             } catch (InterruptedException e) {
             }
@@ -1790,6 +1814,7 @@ public class SynchronousQueueDemo {
         Thread takeThread = new Thread(() -> {
             System.out.println("take thread start");
             try {
+                // 如果先执行take时，当没有进行put时，也会在此阻塞
                 System.out.println("take from putThread: " + queue.take());
             } catch (InterruptedException e) {
             }
@@ -1822,11 +1847,162 @@ take thread end
 
 ### LinkedTransferQueue
 
+#### 1. 关键源码分析
 
+> 阻塞队列不外乎`put ，take，offer ，poll`等方法，再加上`TransferQueue`的 几个 `tryTransfer` 方法。我们看看这几个方法的实现。
+
+##### 1. put方法分析
+
+```java
+public void put(E e) {
+     xfer(e, true, ASYNC, 0);
+}
+```
+
+##### 2. take方法分析
+
+```java
+public E take() throws InterruptedException {
+    E e = xfer(null, false, SYNC, 0);
+    if (e != null)
+        return e;
+    Thread.interrupted();
+    throw new InterruptedException();
+}
+```
+
+##### 3. offer方法分析
+
+```java
+public boolean offer(E e) {
+    xfer(e, true, ASYNC, 0);
+    return true;
+}
+```
+
+##### 4. poll方法分析
+
+```java
+public E poll() {
+    return xfer(null, false, NOW, 0);
+}
+```
+
+##### 5. tryTransfer方法分析
+
+```java
+public boolean tryTransfer(E e) {
+    return xfer(e, true, NOW, 0) == null;
+}
+```
+
+##### 6. transfer方法分析
+
+```java
+public void transfer(E e) throws InterruptedException {
+    if (xfer(e, true, SYNC, 0) != null) {
+        Thread.interrupted(); // failure possible only due to interrupt
+        throw new InterruptedException();
+    }
+}
+```
+
+可怕，所有方法都指向了`xfer` 方法，只不过传入的不同的参数。
+
+1. 第一个参数，如果是 `put` 类型，就是实际的值，反之就是 null。
+2. 第二个参数，是否包含数据，put 类型就是 true，take 就是 false。
+3. 第三个参数，执行类型，有立即返回的`NOW`，有异步的`ASYNC`，有阻塞的`SYNC`， 有带超时的 `TIMED`。
+4. 第四个参数，只有在 `TIMED`类型才有作用
+
+##### 7. xfer 方法分析
+
+```java
+private E xfer(E e, boolean haveData, int how, long nanos) {
+    if (haveData && (e == null))
+        throw new NullPointerException();
+    Node s = null;                        // the node to append, if needed
+
+    retry:
+    for (;;) {                            // restart on append race
+        // 从  head 开始
+        for (Node h = head, p = h; p != null;) { // find & match first node
+            // head 的类型。
+            boolean isData = p.isData;
+            // head 的数据
+            Object item = p.item;
+            // item != null 有 2 种情况,一是 put 操作, 二是 take 的 itme 被修改了(匹配成功)
+            // (itme != null) == isData 要么表示 p 是一个 put 操作, 要么表示 p 是一个还没匹配成功的 take 操作
+            if (item != p && (item != null) == isData) { 
+                // 如果当前操作和 head 操作相同，就没有匹配上，结束循环，进入下面的 if 块。
+                if (isData == haveData)   // can't match
+                    break;
+                // 如果操作不同,匹配成功, 尝试替换 item 成功,
+                if (p.casItem(item, e)) { // match
+                    // 更新 head
+                    for (Node q = p; q != h;) {
+                        Node n = q.next;  // update by 2 unless singleton
+                        if (head == h && casHead(h, n == null ? q : n)) {
+                            h.forgetNext();
+                            break;
+                        }                 // advance and retry
+                        if ((h = head)   == null ||
+                            (q = h.next) == null || !q.isMatched())
+                            break;        // unless slack < 2
+                    }
+                    // 唤醒原 head 线程.
+                    LockSupport.unpark(p.waiter);
+                    return LinkedTransferQueue.<E>cast(item);
+                }
+            }
+            // 找下一个
+            Node n = p.next;
+            p = (p != n) ? n : (h = head); // Use head if p offlist
+        }
+        // 如果这个操作不是立刻就返回的类型    
+        if (how != NOW) {                 // No matches available
+            // 且是第一次进入这里
+            if (s == null)
+                // 创建一个 node
+                s = new Node(e, haveData);
+            // 尝试将 node 追加对队列尾部，并返回他的上一个节点。
+            Node pred = tryAppend(s, haveData);
+            // 如果返回的是 null, 表示不能追加到 tail 节点,因为 tail 节点的模式和当前模式相反.
+            if (pred == null)
+                // 重来
+                continue retry;           // lost race vs opposite mode
+            // 如果不是异步操作(即立刻返回结果)
+            if (how != ASYNC)
+                // 阻塞等待匹配值
+                return awaitMatch(s, pred, e, (how == TIMED), nanos);
+        }
+        return e; // not waiting
+    }
+}
+```
+
+逻辑如下：
+
+找到 `head` 节点,如果 `head` 节点是匹配的操作，就直接赋值，如果不是，添加到队列中。
+
+> 注意：队列中永远只有一种类型的操作，要么是 `put` 类型，要么是 `take` 类型。
+
+##### 8. 整个过程如下图：
+
+![LinkedTransferQueue-xfer.webp](./images/LinkedTransferQueue-xfer.webp.jpg)
+
+相比较 `SynchronousQueue` 多了一个可以存储的队列，相比较 `LinkedBlockingQueue` 多了直接传递元素，少了用锁来同步。性能更高，用处更大。
+
+#### 2. 总结
+
+`LinkedTransferQueue`是 `SynchronousQueue` 和 `LinkedBlockingQueue` 的合体，性能比 `LinkedBlockingQueue` 更高（没有锁操作），比 `SynchronousQueue`能存储更多的元素。
+
+当 `put` 时，如果有等待的线程，就直接将元素 “交给” 等待者， 否则直接进入队列。
+
+`put`和 `transfer` 方法的区别是，put 是立即返回的， transfer 是阻塞等待消费者拿到数据才返回。`transfer`方法和 `SynchronousQueue`的 put 方法类似。
+
+参考文档：[https://www.jianshu.com/p/ae6977886cec](https://www.jianshu.com/p/ae6977886cec)
 
 ### LinkedBlockingQueue
-
-LinkedBlockingQueue 不同于 ArrayBlockingQueue，它如果不指定容量，默认为`Integer.MAX_VALUE`，也就是无界队列。所以为了避免队列过大造成机器负载或者内存爆满的情况出现，我们在使用的时候建议手动传一个队列的大小。
 
 参考：[https://blog.csdn.net/tonywu1992/article/details/83419448](https://blog.csdn.net/tonywu1992/article/details/83419448)
 
