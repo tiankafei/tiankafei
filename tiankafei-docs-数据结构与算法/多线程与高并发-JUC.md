@@ -1785,13 +1785,40 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ### ArrayBlockingQueue
 
+#### 1. 概述
+
 根据 ArrayBlockingQueue 的名字我们都可以看出，它是一个队列，并且是一个基于数组的阻塞队列。同时也是一个有界队列，有界也就意味着，它不能够存储无限多数量的对象。所以在创建 ArrayBlockingQueue 时，必须要给它指定一个队列的大小。
 
-ArrayBlockingQueue 使用场景：
+#### 2. 使用场景
 
 1. 先进先出队列（队列头的是最先进队的元素；队列尾的是最后进队的元素）
 2. 有界队列（即初始化时指定的容量，就是队列最大的容量，不会出现扩容，容量满，则阻塞进队操作；容量空，则阻塞出队操作）
 3. 队列不支持空元素
+
+#### 3. 锁类型
+
+单锁 + 两个condition
+
+### LinkedBlockingQueue
+
+#### 1. 概述
+
+LinkedBlockingQueue不同于ArrayBlockingQueue，它如果不指定容量，默认为`Integer.MAX_VALUE`，也就是无界队列。所以为了避免队列过大造成机器负载或者内存爆满的情况出现，我们在使用的时候建议手动传一个队列的大小。
+
+#### 2. 和 ArrayBlockingQueue 的区别
+
+LinkedBlockingQueue是一个阻塞队列，内部由两个ReentrantLock来实现出入队列的线程安全，由各自的Condition对象的await和signal来实现等待和唤醒功能。它和ArrayBlockingQueue的不同点在于：
+
+1. 队列大小有所不同，ArrayBlockingQueue是有界的初始化必须指定大小，而LinkedBlockingQueue可以是有界的也可以是无界的(Integer.MAX_VALUE)，对于后者而言，当添加速度大于移除速度时，在无界的情况下，可能会造成内存溢出等问题。
+2. 数据存储容器不同，ArrayBlockingQueue采用的是数组作为数据存储容器，而LinkedBlockingQueue采用的则是以Node节点作为连接对象的链表。
+3. 由于ArrayBlockingQueue采用的是数组的存储容器，因此在插入或删除元素时不会产生或销毁任何额外的对象实例，而LinkedBlockingQueue则会生成一个额外的Node对象。这可能在长时间内需要高效并发地处理大批量数据的时，对于GC可能存在较大影响。
+4. 两者的实现队列添加或移除的锁不一样，ArrayBlockingQueue实现的队列中的锁是没有分离的，即添加操作和移除操作采用的同一个ReenterLock锁，而LinkedBlockingQueue实现的队列中的锁是分离的，其添加采用的是putLock，移除采用的则是takeLock，这样能大大提高队列的吞吐量，也意味着在高并发的情况下生产者和消费者可以并行地操作队列中的数据，以此来提高整个队列的并发性能。
+
+#### 3. 锁类型
+
+双锁 + 每个condition
+
+参考：[https://blog.csdn.net/tonywu1992/article/details/83419448](https://blog.csdn.net/tonywu1992/article/details/83419448)
 
 ### SynchronousQueue
 
@@ -1957,9 +1984,6 @@ SynchronousQueue原理解析：https://www.jianshu.com/p/af6f83c78506
 
 Java阻塞队列SynchronousQueue详解：https://www.jianshu.com/p/376d368cb44f
 
-### DelayQueue
-
-
 
 ### LinkedTransferQueue
 
@@ -2118,12 +2142,10 @@ private E xfer(E e, boolean haveData, int how, long nanos) {
 
 参考文档：[https://www.jianshu.com/p/ae6977886cec](https://www.jianshu.com/p/ae6977886cec)
 
-### LinkedBlockingQueue
-
-参考：[https://blog.csdn.net/tonywu1992/article/details/83419448](https://blog.csdn.net/tonywu1992/article/details/83419448)
-
 ### PriorityBlockingQueue
 
+
+### DelayQueue
 
 
 ## 十一、BlockingDeque的实现类
