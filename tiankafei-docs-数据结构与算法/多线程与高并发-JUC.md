@@ -3642,31 +3642,749 @@ Thread-6 finished
 
 ## 十一、BlockingDeque的实现类
 
-### LinkedBlockingDeque
+### (1). LinkedBlockingDeque
+
+#### 1. 概述
+
+LinkedBlockingDeque是双向链表实现的双向并发阻塞队列。该阻塞队列同时支持FIFO和FILO两种操作方式，即可以从队列的头和尾同时操作(插入/删除)；并且，该阻塞队列是支持线程安全。还有，LinkedBlockingDeque还是可选容量的(防止过度膨胀)，即可以指定队列的容量。如果不指定，默认容量大小等于Integer.MAX_VALUE。
+
+#### 2. 示例代码
+
+```java
+import java.util.Iterator;
+import java.util.concurrent.LinkedBlockingDeque;
+
+/**
+ * @Author tiankafei
+ * @Date 2020/5/7
+ * @Version V1.0
+ **/
+public class LinkedBlockingDequeTest {
+    public static void main(String[] args) {
+        /**
+         * 1.1、LinkedBlockingDeque():
+         *           创建一个容量为 Integer.MAX_VALUE 的 LinkedBlockingDeque。
+         * 1.2、LinkedBlockingDeque(int capacity):
+         *           创建一个具有给定（固定）容量的 LinkedBlockingDeque。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque = new LinkedBlockingDeque<>();
+        /**
+         * 1、add(E e):在不违反容量限制的情况下，将指定的元素插入此双端队列的末尾，返回值为Boolean。
+         */
+        Boolean addBoolean = linkedBlockingDeque.add(5);
+        System.out.println("是否添加成功：" + addBoolean);
 
 
+        /**
+         *  2、addFirst(E e)：如果立即可行且不违反容量限制，则将指定的元素插入此双端队列的开头；
+         *                   如果当前没有空间可用，则抛出 IllegalStateException。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque1 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque1.addFirst(1);
+        linkedBlockingDeque1.addFirst(2);
+        linkedBlockingDeque1.addFirst(3);
+
+
+        /**
+         * 3、iterator()：返回在此双端队列元素上以恰当顺序进行迭代的迭代器。
+         */
+        Iterator<Integer> iterator = linkedBlockingDeque1.iterator();
+        while (iterator.hasNext()){
+            System.out.println("Iterator的addFirst结果：" + iterator.next());
+        }
+
+
+        /**
+         * 4、addLast(E e) ：如果立即可行且不违反容量限制，则将指定的元素插入此双端队列的末尾；
+         *                   如果当前没有空间可用，则抛出 IllegalStateException
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque2 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque2.addLast(1);
+        linkedBlockingDeque2.addLast(2);
+        linkedBlockingDeque2.addLast(3);
+        Iterator<Integer> iterator1 = linkedBlockingDeque2.iterator();
+        while (iterator1.hasNext()){
+            System.out.println("Iterator的addLast结果：" + iterator1.next());
+        }
+
+
+        /**
+         * 5、clear()：以原子方式 (atomically) 从此双端队列移除所有元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque3 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque3.add(1);
+        linkedBlockingDeque3.add(2);
+        linkedBlockingDeque3.add(3);
+        linkedBlockingDeque3.clear();
+        System.out.println("================");
+        Iterator<Integer> iterator2 = linkedBlockingDeque3.iterator();
+        while (iterator2.hasNext()){
+            System.out.println("Iterator的clear结果：" + iterator2.next());
+        }
+        System.out.println("================");
+
+        /**
+         * 6、contains(Object o) ：如果此双端队列包含指定的元素，则返回 true
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque4 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque4.add(1);
+        linkedBlockingDeque4.add(2);
+        linkedBlockingDeque4.add(3);
+        Boolean contains3Boolean = linkedBlockingDeque4.contains(3);
+        Boolean contains4Boolean = linkedBlockingDeque4.contains(4);
+        System.out.println("是否包含3：" + contains3Boolean + " 是否包含4：" + contains4Boolean);
+
+        /**
+         * 7、element()：获取但不移除此双端队列表示的队列的头部
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque5 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque5.add(1);
+        linkedBlockingDeque5.add(2);
+        linkedBlockingDeque5.add(3);
+        Integer elementResult = linkedBlockingDeque5.element();
+        System.out.println("队列的头部: " + elementResult);
+
+        /**
+         * 8、getFirst() ：获取，但不移除此双端队列的第一个元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque6 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque6.add(1);
+        linkedBlockingDeque6.add(2);
+        linkedBlockingDeque6.add(3);
+        Integer firstResult = linkedBlockingDeque6.getFirst();
+        System.out.println("双端队列的第一个元素: " + firstResult);
+
+
+        /**
+         * 9、	getLast() :获取，但不移除此双端队列的最后一个元素
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque7 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque7.add(3);
+        linkedBlockingDeque7.add(4);
+        linkedBlockingDeque7.add(5);
+        Integer lastResult = linkedBlockingDeque7.getLast();
+        System.out.println("双端队列的最后一个元素: " + lastResult);
+
+
+        /**
+         * 10.1、offer(E e) :如果立即可行且不违反容量限制，
+         *                  则将指定的元素插入此双端队列表示的队列中（即此双端队列的尾部），
+         *                  并在成功时返回 true；如果当前没有空间可用，则返回 false
+         *
+         * 10.2、offer(E e, long timeout, TimeUnit unit) :
+         *                  将指定的元素插入此双端队列表示的队列中（即此双端队列的尾部），
+         *                  必要时将在指定的等待时间内一直等待可用空间,返回值为Boolean。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque8 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque8.offer(1);
+        linkedBlockingDeque8.offer(2);
+        linkedBlockingDeque8.offer(3);
+        Iterator<Integer> iterator3 = linkedBlockingDeque8.iterator();
+        while (iterator3.hasNext()){
+            System.out.println("Iterator的offer结果：" + iterator3.next());
+        }
+
+
+        /**
+         * 11.1、offerFirst(E e) ：
+         *           如果立即可行且不违反容量限制，则将指定的元素插入此双端队列的开头，
+         *           并在成功时返回 true；如果当前没有空间可用，则返回 false。
+         * 11.2、fferFirst(E e, long timeout, TimeUnit unit)：
+         *           将指定的元素插入此双端队列的开头，必要时将在指定的等待时间内等待可用空间。
+         *           返回值为Boolean。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque9 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque9.offerFirst(1);
+        linkedBlockingDeque9.offerFirst(2);
+        linkedBlockingDeque9.offerFirst(3);
+        Iterator<Integer> iterator4 = linkedBlockingDeque9.iterator();
+        while (iterator4.hasNext()){
+            System.out.println("Iterator的offerFirst结果：" + iterator4.next());
+        }
+
+
+
+        /**
+         * 12.1、offerLast(E e):
+         *           如果立即可行且不违反容量限制，则将指定的元素插入此双端队列的末尾，并在成功时返回 true；如果当前没有空间可用，则返回 false。
+         * 12.2、offerLast(E e, long timeout, TimeUnit unit):
+         *           将指定的元素插入此双端队列的末尾，必要时将在指定的等待时间内等待可用空间。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque10 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque10.offerLast(1);
+        linkedBlockingDeque10.offerLast(2);
+        linkedBlockingDeque10.offerLast(3);
+        Iterator<Integer> iterator5 = linkedBlockingDeque10.iterator();
+        while (iterator5.hasNext()){
+            System.out.println("Iterator的offerLast结果：" + iterator5.next());
+        }
+
+
+        /**
+         * 13、peek():获取但不移除此双端队列表示的队列的头部（即此双端队列的第一个元素）；
+         *            如果此双端队列为空，则返回 null
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque11 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque11.add(1);
+        linkedBlockingDeque11.add(2);
+        linkedBlockingDeque11.add(3);
+        Integer peekResult = linkedBlockingDeque11.peek();
+        System.out.println("peekResult的结果：" + peekResult);
+
+        /**
+         * 14、peekFirst():获取，但不移除此双端队列的第一个元素；如果此双端队列为空，则返回 null。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque12 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque12.add(3);
+        linkedBlockingDeque12.add(4);
+        linkedBlockingDeque12.add(5);
+        Integer peekFirstResult = linkedBlockingDeque12.peekFirst();
+        System.out.println("peekFirstResult的结果：" + peekFirstResult);
+
+
+        /**
+         * 15、peekLast() ：获取，但不移除此双端队列的最后一个元素；如果此双端队列为空，则返回 null。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque13 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque13.add(6);
+        linkedBlockingDeque13.add(7);
+        linkedBlockingDeque13.add(8);
+        Integer peekLastResult = linkedBlockingDeque13.peekLast();
+        System.out.println("peekLastResult的结果：" + peekLastResult);
+
+        /**
+         * 16.1、poll() :获取并移除此双端队列表示的队列的头部（即此双端队列的第一个元素）；
+         *            如果此双端队列为空，则返回 null。
+         * 16.2、poll(long timeout, TimeUnit unit)：
+         *           获取并移除此双端队列表示的队列的头部（即此双端队列的第一个元素），
+         *           如有必要将在指定的等待时间内等待可用元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque14 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque14.add(9);
+        linkedBlockingDeque14.add(10);
+        linkedBlockingDeque14.add(11);
+        Integer pollResult = linkedBlockingDeque14.poll();
+        System.out.println("peekLastResult的结果：" + pollResult);
+        System.out.println("linkedBlockingDeque14是否还包含9：" + linkedBlockingDeque14.contains(9));
+
+
+        /**
+         * 17.1、pollFirst() ：
+         *           获取并移除此双端队列的第一个元素；如果此双端队列为空，则返回 null。
+         * 17.2、pollFirst(long timeout, TimeUnit unit) :
+         *           获取并移除此双端队列的第一个元素，必要时将在指定的等待时间等待可用元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque15 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque15.addFirst(9);
+        linkedBlockingDeque15.addFirst(10);
+        linkedBlockingDeque15.addFirst(11);
+        Integer pollFirstResult = linkedBlockingDeque15.pollFirst();
+        System.out.println("pollFirstResult的结果：" + pollFirstResult);
+        System.out.println("linkedBlockingDeque15是否还包含11：" + linkedBlockingDeque15.contains(11));
+
+        /**
+         * 18.1、pollLast()
+         *           获取并移除此双端队列的最后一个元素；如果此双端队列为空，则返回 null。
+         * 18.2、pollLast(long timeout, TimeUnit unit)
+         *           获取并移除此双端队列的最后一个元素，必要时将在指定的等待时间内等待可用元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque16 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque16.add(9);
+        linkedBlockingDeque16.add(10);
+        linkedBlockingDeque16.add(11);
+        Integer pollLastResult = linkedBlockingDeque16.pollLast();
+        System.out.println("pollLastResult的结果：" + pollLastResult);
+        System.out.println("linkedBlockingDeque16是否还包含11：" + linkedBlockingDeque16.contains(11));
+
+        /**
+         * 19、	pop() :从此双端队列所表示的堆栈中弹出一个元素（移除效果）
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque17 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque17.addFirst(1);
+        linkedBlockingDeque17.addFirst(2);
+        linkedBlockingDeque17.addFirst(3);
+        Integer pop1Result = linkedBlockingDeque17.pop();
+        System.out.println("pop2Result的结果：" + pop1Result);
+        Integer pop2Result = linkedBlockingDeque17.pop();
+        System.out.println("pop2Result的结果：" + pop2Result);
+        System.out.println("linkedBlockingDeque17是否还包含2：" + linkedBlockingDeque17.contains(2));
+
+        /**
+         * 20、push(E e) ：将元素推入此双端队列表示的栈。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque18 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque18.push(1);
+        linkedBlockingDeque18.push(2);
+        linkedBlockingDeque18.push(3);
+        Iterator<Integer> iterator6 = linkedBlockingDeque18.iterator();
+        while (iterator6.hasNext()){
+            System.out.println("Iterator的push结果：" + iterator6.next());
+        }
+
+        /**
+         * 21、put(E e) :将指定的元素插入此双端队列表示的队列中（即此双端队列的尾部），
+         *               必要时将一直等待可用空间。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque19 = new LinkedBlockingDeque<>();
+        try {
+            linkedBlockingDeque19.put(1);
+            linkedBlockingDeque19.put(2);
+            linkedBlockingDeque19.put(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Iterator<Integer> iterator7 = linkedBlockingDeque19.iterator();
+        while (iterator7.hasNext()){
+            System.out.println("Iterator的put结果：" + iterator7.next());
+        }
+
+        /**
+         * 22、putFirst(E e) :将指定的元素插入此双端队列的开头，必要时将一直等待可用空间。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque20 = new LinkedBlockingDeque<>();
+        try {
+            linkedBlockingDeque20.putFirst(1);
+            linkedBlockingDeque20.putFirst(2);
+            linkedBlockingDeque20.putFirst(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Iterator<Integer> iterator8 = linkedBlockingDeque20.iterator();
+        while (iterator8.hasNext()){
+            System.out.println("Iterator的putFirst结果：" + iterator8.next());
+        }
+
+        /**
+         * 23、putLast(E e) :将指定的元素插入此双端队列的末尾，必要时将一直等待可用空间。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque21 = new LinkedBlockingDeque<>();
+        try {
+            linkedBlockingDeque21.putLast(1);
+            linkedBlockingDeque21.putLast(2);
+            linkedBlockingDeque21.putLast(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Iterator<Integer> iterator9 = linkedBlockingDeque21.iterator();
+        while (iterator9.hasNext()){
+            System.out.println("Iterator的putLast结果：" + iterator9.next());
+        }
+
+
+        /**
+         * 24、remove():获取并移除此双端队列表示的队列的头部。返回一个E
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque22 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque22.addFirst(1);
+        linkedBlockingDeque22.addFirst(2);
+        linkedBlockingDeque22.addFirst(3);
+        Integer removeResult = linkedBlockingDeque22.remove();
+        System.out.println("removeResult的结果：" + removeResult);
+        System.out.println("linkedBlockingDeque22是否还包含3：" + linkedBlockingDeque22.contains(3));
+
+
+        /**
+         * 25、remove(Object o) :从此双端队列移除第一次出现的指定元素,返回值为Boolean。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque23 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque23.addFirst(1);
+        linkedBlockingDeque23.addFirst(2);
+        linkedBlockingDeque23.addFirst(3);
+        Boolean removeBoolean = linkedBlockingDeque23.remove(3);
+        System.out.println("是否remove了3 ：" + removeBoolean);
+
+        /**
+         * 26、removeFirst():获取并移除此双端队列第一个元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque24 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque24.addLast(1);
+        linkedBlockingDeque24.addLast(2);
+        linkedBlockingDeque24.addLast(3);
+        Integer removeFirstResult = linkedBlockingDeque24.removeFirst();
+        System.out.println("removeFirstResult：" + removeFirstResult);
+        System.out.println("linkedBlockingDeque24是否还包含1：" + linkedBlockingDeque24.contains(1));
+
+
+        /**
+         * 27、	removeLast():获取并移除此双端队列的最后一个元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque25 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque25.addLast(4);
+        linkedBlockingDeque25.addLast(5);
+        linkedBlockingDeque25.addLast(6);
+        Integer removeLastResult = linkedBlockingDeque25.removeLast();
+        System.out.println("removeLastResult：" + removeLastResult);
+        System.out.println("linkedBlockingDeque25是否还包含6：" + linkedBlockingDeque25.contains(6));
+
+
+        /**
+         * 28、take():获取并移除此双端队列表示的队列的头部（即此双端队列的第一个元素），
+         *           必要时将一直等待可用元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque26 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque26.push(4);
+        linkedBlockingDeque26.push(5);
+        linkedBlockingDeque26.push(6);
+        Integer takeResult = null;
+        try {
+            takeResult = linkedBlockingDeque26.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("takeResult：" + takeResult);
+        System.out.println("linkedBlockingDeque26是否还包含6：" + linkedBlockingDeque26.contains(6));
+
+        /**
+         * 29、takeFirst() :获取并移除此双端队列的第一个元素，必要时将一直等待可用元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque27 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque27.push(7);
+        linkedBlockingDeque27.push(8);
+        linkedBlockingDeque27.push(9);
+        Integer takeFirstResult = null;
+        try {
+            takeFirstResult = linkedBlockingDeque27.takeFirst();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("takeFirst：" + takeFirstResult);
+        System.out.println("linkedBlockingDeque27是否还包含9：" + linkedBlockingDeque27.contains(9));
+
+
+        /**
+         * 30、takeLast():获取并移除此双端队列的最后一个元素，必要时将一直等待可用元素。
+         */
+        LinkedBlockingDeque<Integer> linkedBlockingDeque28 = new LinkedBlockingDeque<>();
+        linkedBlockingDeque28.push(10);
+        linkedBlockingDeque28.push(11);
+        linkedBlockingDeque28.push(12);
+        Integer takeLastResult = null;
+        try {
+            takeLastResult = linkedBlockingDeque28.takeLast();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("takeLastResult：" + takeLastResult);
+        System.out.println("linkedBlockingDeque28是否还包含10：" + linkedBlockingDeque28.contains(10));
+    }
+}
+```
+
+#### 3. 总结
+
+LinkedBlockingDeque和LinkedBlockingQueue的**相同点**在于：
+
+1. 基于链表
+2. 通过ReentrantLock实现锁
+3. 利用Condition实现队列的阻塞等待，唤醒
+4. 容量可选，不设置的话，就是Int的最大值
+
+LinkedBlockingDeque和LinkedBlockingQueue的**不同点**在于：
+
+1. LinkedBlockingQueue只能一端出一端如的单向队列结构，是有FIFO特性的，并且是通过两个ReentrantLock和两个Condition来实现的
+2. LinkedBlockingQueue采用了两把锁来对队列进行操作，也就是队尾添加的时候，队头仍然可以删除等操作
+3. 对于LinkedBlockingQueue来说，有两个ReentrantLock分别控制队头和队尾，这样就可以使得添加操作分开来做，一般的操作是获取一把锁就可以，但有些操作例如remove操作，则需要同时获取两把锁
+
+1. LinkedBlockingDeque就是一个双端队列，任何一端都可以进行元素的出入
+2. LinkedBlockingDeque 和 ArrayBlockingQueue 结构还是很类似的，也是一个ReentrantLock和两个Condition使用，但是仅仅是在这二者使用上，其实内部运转还是很大不同的
+
+参考文档：
+
+[https://blog.csdn.net/qq_38293564/article/details/80592429](https://blog.csdn.net/qq_38293564/article/details/80592429)
+
+[https://www.jianshu.com/p/91d9f434da91](https://www.jianshu.com/p/91d9f434da91)
 
 ## 十二、Queue的实现类
 
-### PriorityQueue
+### (1). PriorityQueue
+
+#### 1. 概述
+
+PriorityQueue 一个基于优先级的无界队列。优先级队列的元素按照其自然顺序进行排序，或者根据构造队列时提供的 Comparator 进行排序，具体取决于所使用的构造方法。该队列不允许使用 null 元素也不允许插入不可比较的对象(没有实现Comparable接口的对象)。PriorityQueue 队列的头指排序规则最小那个元素。如果多个元素都是最小值则随机选一个。PriorityQueue 是一个无界队列，但是初始的容量11(实际是一个Object[])，随着不断向优先级队列添加元素，其容量会自动扩容。
+
+#### 2. 基本使用
+
+PriorityQueue使用跟普通队列一样，唯一区别是PriorityQueue会根据排序规则决定谁在队头，谁在队尾。
+
+往队列中添加可比较的对象String
+
+```java
+public class PriorityQueueTest {
+    public static void main(String[] args) {
+        PriorityQueue<String> q = new PriorityQueue<String>();
+        //入列
+        q.offer("1");
+        q.offer("2");
+        q.offer("5");
+        q.offer("3");
+        q.offer("4");
+        //出列
+        System.out.println(q.poll());  //1
+        System.out.println(q.poll());  //2
+        System.out.println(q.poll());  //3
+        System.out.println(q.poll());  //4
+        System.out.println(q.poll());  //5
+    }
+}
+```
+
+观察打印结果， 入列：12534， 出列是12345， 也是说出列时做了相关判断，将最小的值返回。默认情况下PriorityQueue使用自然排序法，最小元素先出列。
+
+自定义排序规则
+
+```java
+public class Student {
+    private String name;  //名字
+    private int score;    //分数
+
+    public Student(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", score=" + score +
+                '}';
+    }
+}
+```
+
+```java
+public class PriorityQueueTest1 {
+    public static void main(String[] args) {
+        //通过改造器指定排序规则
+        PriorityQueue<Student> q = new PriorityQueue<Student>(new Comparator<Student>() {
+            public int compare(Student o1, Student o2) {
+                //按照分数低到高，分数相等按名字
+                if(o1.getScore() == o2.getScore()){
+                    return o1.getName().compareTo(o2.getName());
+                }
+                return o1.getScore() - o2.getScore();
+            }
+        });
+        //入列
+        q.offer(new Student("dafei", 20));
+        q.offer(new Student("will", 17));
+        q.offer(new Student("setf", 30));
+        q.offer(new Student("bunny", 20));
+        //出列
+        System.out.println(q.poll());  //Student{name='will', score=17}
+        System.out.println(q.poll());  //Student{name='bunny', score=20}
+        System.out.println(q.poll());  //Student{name='dafei', score=20}
+        System.out.println(q.poll());  //Student{name='setf', score=30}
+    }
+}
+```
+
+PriorityQueue优先级规则可以由我们根据具体需求而定制， 方式有2种：
+
+1. 添加元素自身实现了Comparable接口，确保元素是可排序的对象
+2. 如果添加元素没有实现Comparable接口，可以在创建PriorityQueue队列时直接指定比较器。
+
+#### 3. 源码剖析
+
+##### 1. 重要属性
+
+```java
+public class PriorityQueue<E> extends AbstractQueue<E>
+    implements java.io.Serializable {
+    transient Object[] queue;    //队列容器， 默认是11
+    private int size = 0;  //队列长度
+    private final Comparator<? super E> comparator;  //队列比较器， 为null使用自然排序
+    //....
+}
+```
+
+##### 2. 入列
+
+```java
+public boolean offer(E e) {
+    if (e == null)
+        throw new NullPointerException();
+    modCount++;
+    int i = size;
+    if (i >= queue.length)
+        grow(i + 1);      //当队列长度大于等于容量值时，自动拓展
+    size = i + 1;
+    if (i == 0)
+        queue[0] = e;
+    else
+        siftUp(i, e); //
+    return true;
+}
+```
+
+```java
+private void siftUp(int k, E x) {
+    if (comparator != null)
+        siftUpUsingComparator(k, x);   //指定比较器
+    else
+        siftUpComparable(k, x);   //没有指定比较器，使用默认的自然比较器
+}
+```
+
+##### 3. 使用默认的自然比较器
+
+```java
+private void siftUpComparable(int k, E x) {
+    Comparable<? super E> key = (Comparable<? super E>) x;
+    while (k > 0) {
+        int parent = (k - 1) >>> 1;
+        Object e = queue[parent];
+        if (key.compareTo((E) e) >= 0)
+            break;
+        queue[k] = e;
+        k = parent;
+    }
+    queue[k] = key;
+}
+```
+
+##### 4. 使用指定的比较器
+
+```java
+private void siftUpUsingComparator(int k, E x) {
+    while (k > 0) {
+        int parent = (k - 1) >>> 1;
+        Object e = queue[parent];
+        if (comparator.compare(x, (E) e) >= 0)
+            break;
+        queue[k] = e;
+        k = parent;
+    }
+    queue[k] = x;
+}
+```
+
+从源码上看PriorityQueue的入列操作并没对所有加入的元素进行优先级排序。仅仅保证数组第一个元素是最小的即可。
+
+##### 5. 出列
+
+```java
+public E poll() {
+    if (size == 0)
+        return null;
+    int s = --size;
+    modCount++;
+    E result = (E) queue[0];
+    E x = (E) queue[s];
+    queue[s] = null;
+    if (s != 0)
+        siftDown(0, x);
+    return result;
+}
+```
+
+```java
+private void siftDown(int k, E x) {
+    if (comparator != null)
+        siftDownUsingComparator(k, x);  //指定比较器
+    else
+        siftDownComparable(k, x);    //默认比较器
+}
+```
+
+##### 6. 使用默认的自然比较器
+
+```java
+private void siftDownComparable(int k, E x) {
+    Comparable<? super E> key = (Comparable<? super E>)x;
+    int half = size >>> 1;        // loop while a non-leaf
+    while (k < half) {
+        int child = (k << 1) + 1; // assume left child is least
+        Object c = queue[child];
+        int right = child + 1;
+        if (right < size &&
+            ((Comparable<? super E>) c).compareTo((E) queue[right]) > 0)
+            c = queue[child = right];
+        if (key.compareTo((E) c) <= 0)
+            break;
+        queue[k] = c;
+        k = child;
+    }
+    queue[k] = key;
+}
+```
+
+##### 7. 使用指定的比较器
+
+```java
+private void siftDownUsingComparator(int k, E x) {
+    int half = size >>> 1;
+    while (k < half) {
+        int child = (k << 1) + 1;
+        Object c = queue[child];
+        int right = child + 1;
+        if (right < size &&
+            comparator.compare((E) c, (E) queue[right]) > 0)
+            c = queue[child = right];
+        if (comparator.compare(x, (E) c) <= 0)
+            break;
+        queue[k] = c;
+        k = child;
+    }
+    queue[k] = x;
+}
+```
+
+上面源码，当第一个元素出列之后，对剩下的元素进行再排序，挑选出最小的元素排在数组第一个位置。
+
+通过上面源码，也可看出PriorityQueue并不是线程安全队列，因为offer/poll都没有对队列进行锁定，所以，如果要拥有线程安全的优先级队列，需要额外进行加锁操作。
+
+#### 4. 总结
+
+1. PriorityQueue是一种无界的，**线程不安全的队列**
+2. PriorityQueue是一种通过数组实现的，并拥有优先级的队列
+3. PriorityQueue存储的元素要求必须是可比较的对象， 如果不是就必须明确指定比较器
+
+参考文档：[https://www.jianshu.com/p/f1fd9b82cb72](https://www.jianshu.com/p/f1fd9b82cb72)
+
+### (2). ConcurrentLinkedQueue
+
+#### 1. 概述
 
 
 
-### ConcurrentLinkedQueue
 
-根据API解释，ConcurrentLinkedQueue 是一个基于链接节点的无界线程安全的队列，按照先进先出原则对元素进行排序。新元素从队列尾部插入，而获取队列元素，则需要从队列头部获取。
 
 ## 十三、Deque的实现类
 
-### ArrayDeque
+### (1). ArrayDeque
+
+#### 1. 概述
 
 
 
-### IdentityLinkedList
+
+
+### (2). IdentityLinkedList
+
+#### 1. 概述
 
 
 
-### ConcurrentLinkedDeque
 
 
+### (3). ConcurrentLinkedDeque
+
+#### 1. 概述
 
