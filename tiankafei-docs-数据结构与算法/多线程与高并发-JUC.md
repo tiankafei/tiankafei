@@ -3379,9 +3379,265 @@ JUC之阻塞队列PriorityBlockingQueue：[https://www.jianshu.com/p/43954715aa2
 
 #### 1. 概述
 
+DelayQueue是一个无界的BlockingQueue实现，加入其中的元素必需实现Delayed接口。当生产者线程调用put之类的方法加入元素时，会触发Delayed接口中的compareTo方法进行排序，也就是说队列中元素的顺序是按到期时间排序的，而非它们进入队列的顺序。排在队列头部的元素是最早到期的，越往后到期时间赿晚。
 
+**执行过程描述**
 
+消费者线程查看队列头部的元素，注意是查看不是取出。然后调用元素的getDelay方法，如果此方法返回的值小０或者等于０，则消费者线程会从队列中取出此元素，并进行处理。如果getDelay方法返回的值大于0，则消费者线程wait返回的时间值后，再从队列头部取出元素，此时元素应该已经到期。
 
+DelayQueue是Leader-Followr模式的变种，消费者线程处于等待状态时，总是等待最先到期的元素，而不是长时间的等待。消费者线程尽量把时间花在处理任务上，最小化空等的时间，以提高线程的利用效率。
+
+以下通过队列及消费者线程状态变化大致说明一下DelayQueue的运行过程。
+
+#### 2. 初始状态
+
+![delayQueue-初始状态](./images/delayQueue-初始状态.png)
+
+因为队列是没有边界的，向队列中添加元素的线程不会阻塞，添加操作相对简单，所以此图不考虑向队列添加元素的生产者线程。假设现在共有三个消费者线程。
+
+队列中的元素按到期时间排序，队列头部的元素2s以后到期。消费者线程１查看了头部元素以后，发现还需要2s才到期，于是它进入等待状态，2s以后醒来，等待头部元素到期的线程称为Leader线程。
+
+消费者线程2与消费者线程3处于待命状态，它们不等待队列中的非头部元素。当消费者线程１拿到对象5以后，会向它们发送signal。这个时候两个中的一个会结束待命状态而进入等待状态。
+
+#### 3. 2s以后
+
+![delayQueue-2s以后](./images/delayQueue-2s以后.png)
+
+消费者线程１已经拿到了对象５，从等待状态进入处理状态，处理它取到的对象５，同时向消费者线程2与消费者线程3发送signal。
+
+消费者线程2与消费者线程3会争抢领导权，这里是消费者线程2进入等待状态，成为Leader线程，等待2s以后对象4到期。而消费者线程3则继续处于待命状态。
+
+此时队列中加入了一个新元素对象６，它10s后到期，排在队尾。
+
+#### 4. 又2s之后
+
+![delayQueue-又2s以后](./images/delayQueue-又2s以后.png)
+
+先看线程１，如果它已经结束了对象5的处理，则进入待命状态。如果还没有结束，则它继续处理对象5。
+
+消费线程２取到对象4以后，也进入处理状态，同时给处于待命状态的消费线程３发送信号，消费线程３进入等待状态，成为新的Leader。现在头部元素是新插入的对象7，因为它1s以后就过期，要早于其它所有元素，所以排到了队列头部。
+
+#### 5. 又1s之后
+
+**一种不好的结果：**
+
+![delayQueue-又1s以后-不好的结果](./images/delayQueue-又1s以后-不好的结果.png)
+
+消费线程３一定正在处理对象7。消费线程１与消费线程２还没有处理完它们各自取得的对象，无法进入待命状态，也更加进入不了等待状态。此时对象3马上要到期，那么如果它到期时没有消费者线程空下来，则它的处理一定会延期。
+
+可以想见，如果元素进入队列的速度很快，元素之间的到期时间相对集中，而处理每个到期元素的速度又比较慢的话，则队列会越来越大，队列后边的元素延期处理的时间会越来越长。
+
+**好的结果：**
+
+![delayQueue-又1s以后-好的结果](./images/delayQueue-又1s以后-好的结果.png)
+
+消费线程１与消费线程２很快的完成对取出对象的处理，及时返回重新等待队列中的到期元素。一个处于等待状态(Leader)，对象3一到期就立刻处理。另一个则处于待命状态。这样，每一个对象都能在到期时被及时处理，不会发生明显的延期。
+
+所以，消费者线程的数量要够，处理任务的速度要快。否则，队列中的到期元素无法被及时取出并处理，造成任务延期、队列元素堆积等情况。
+
+#### 6. 示例代码
+
+DelayQueue的一个应用场景是定时任务调度。本例中先让主线程向DelayQueue添加１０个任务，任务之间的启动间隔在1~2s之间，每个任务的执行时间固定为2s，代码如下：
+
+```java
+package com.zhangdb.thread;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+class DelayTask implements Delayed {
+    private static long currentTime = System.currentTimeMillis();
+    protected final String taskName;
+    protected final int timeCost;
+    protected final long scheduleTime;
+
+    protected static final AtomicInteger taskCount = new AtomicInteger(0);
+
+    // 定时任务之间的启动时间间隔在1~2s之间，timeCost表示处理此任务需要的时间，本示例中为2s
+    public DelayTask(String taskName, int timeCost) {
+        this.taskName = taskName;
+        this.timeCost = timeCost;
+        taskCount.incrementAndGet();
+        currentTime += 1000 + (long) (Math.random() * 1000);
+        scheduleTime = currentTime;
+    }
+
+    @Override
+    public int compareTo(Delayed o) {
+        return (int) (this.scheduleTime - ((DelayTask) o).scheduleTime);
+    }
+
+    @Override
+    public long getDelay(TimeUnit unit) {
+        long expirationTime = scheduleTime - System.currentTimeMillis();
+        return unit.convert(expirationTime, TimeUnit.MILLISECONDS);
+    }
+
+    public void execTask() {
+        long startTime = System.currentTimeMillis();
+        System.out.println("Task " + taskName + ": schedule_start_time=" + scheduleTime + ",real start time="
+                           + startTime + ",delay=" + (startTime - scheduleTime));
+        try {
+            Thread.sleep(timeCost);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class DelayTaskComsumer extends Thread {
+    private final BlockingQueue<DelayTask> queue;
+
+    public DelayTaskComsumer(BlockingQueue<DelayTask> queue) {
+        this.queue = queue;
+    }
+
+    @Override
+    public void run() {
+        DelayTask task = null;
+        try {
+            while (true) {
+                task = queue.take();
+                task.execTask();
+                DelayTask.taskCount.decrementAndGet();
+            }
+        } catch (InterruptedException e) {
+            System.out.println(getName() + " finished");
+        }
+    }
+}
+
+public class DelayQueueExample {
+
+    public static void main(String[] args) {
+
+        BlockingQueue<DelayTask> queue = new DelayQueue<DelayTask>();
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                queue.put(new DelayTask("work " + i, 2000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        ThreadGroup g = new ThreadGroup("Consumers");
+
+        for (int i = 0; i < 1; i++) {
+            new Thread(g, new DelayTaskComsumer(queue)).start();
+        }
+
+        while (DelayTask.taskCount.get() > 0) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        g.interrupt();
+        System.out.println("Main thread finished");
+    }
+}
+```
+
+首先启动一个消费者线程。因为消费者线程处单个任务的时间为2s，而任务的调度间隔为1~2s。这种情况下，每当消费者线程处理完一个任务，回头再从队列中新取任务时，新任务肯定延期了，无法按给定的时间调度任务。而且越往后情况越严重。运行代码看一下输出：
+
+```java
+Task work 0: schedule_start_time=1554203579096,real start time=1554203579100,delay=4
+Task work 1: schedule_start_time=1554203580931,real start time=1554203581101,delay=170
+Task work 2: schedule_start_time=1554203582884,real start time=1554203583101,delay=217
+Task work 3: schedule_start_time=1554203584660,real start time=1554203585101,delay=441
+Task work 4: schedule_start_time=1554203586075,real start time=1554203587101,delay=1026
+Task work 5: schedule_start_time=1554203587956,real start time=1554203589102,delay=1146
+Task work 6: schedule_start_time=1554203589041,real start time=1554203591102,delay=2061
+Task work 7: schedule_start_time=1554203590127,real start time=1554203593102,delay=2975
+Task work 8: schedule_start_time=1554203591903,real start time=1554203595102,delay=3199
+Task work 9: schedule_start_time=1554203593577,real start time=1554203597102,delay=3525
+Main thread finished
+Thread-0 finished
+```
+
+最后一个任务的延迟时间已经超过3.5s了。
+
+再作一次测试，将消费者线程的个数调整为２，这时任务应该能按时启动，延迟应该很小，运行程序看一下结果：
+
+```java
+Task work 0: schedule_start_time=1554204395427,real start time=1554204395430,delay=3
+Task work 1: schedule_start_time=1554204396849,real start time=1554204396850,delay=1
+Task work 2: schedule_start_time=1554204398050,real start time=1554204398051,delay=1
+Task work 3: schedule_start_time=1554204399590,real start time=1554204399590,delay=0
+Task work 4: schedule_start_time=1554204401289,real start time=1554204401289,delay=0
+Task work 5: schedule_start_time=1554204402883,real start time=1554204402883,delay=0
+Task work 6: schedule_start_time=1554204404663,real start time=1554204404664,delay=1
+Task work 7: schedule_start_time=1554204406154,real start time=1554204406154,delay=0
+Task work 8: schedule_start_time=1554204407991,real start time=1554204407991,delay=0
+Task work 9: schedule_start_time=1554204409540,real start time=1554204409540,delay=0
+Main thread finished
+Thread-0 finished
+Thread-2 finished
+```
+
+基本上按时启动，最大延迟为3毫秒，大部分都是0毫秒。
+
+将消费者线程个数调整成３个，运行看一下结果：
+
+```java
+Task work 0: schedule_start_time=1554204499695,real start time=1554204499698,delay=3
+Task work 1: schedule_start_time=1554204501375,real start time=1554204501376,delay=1
+Task work 2: schedule_start_time=1554204503370,real start time=1554204503371,delay=1
+Task work 3: schedule_start_time=1554204504860,real start time=1554204504861,delay=1
+Task work 4: schedule_start_time=1554204506419,real start time=1554204506420,delay=1
+Task work 5: schedule_start_time=1554204508191,real start time=1554204508192,delay=1
+Task work 6: schedule_start_time=1554204509495,real start time=1554204509496,delay=1
+Task work 7: schedule_start_time=1554204510663,real start time=1554204510664,delay=1
+Task work 8: schedule_start_time=1554204512598,real start time=1554204512598,delay=0
+Task work 9: schedule_start_time=1554204514276,real start time=1554204514277,delay=1
+Main thread finished
+Thread-0 finished
+Thread-2 finished
+Thread-4 finished
+```
+
+大部分延迟时间变成1毫秒，情况好像还不如2个线程的情况。
+
+将消费者线程数调整成5，运行看一下结果：
+
+```java
+Task work 0: schedule_start_time=1554204635015,real start time=1554204635019,delay=4
+Task work 1: schedule_start_time=1554204636856,real start time=1554204636857,delay=1
+Task work 2: schedule_start_time=1554204637968,real start time=1554204637970,delay=2
+Task work 3: schedule_start_time=1554204639758,real start time=1554204639759,delay=1
+Task work 4: schedule_start_time=1554204641089,real start time=1554204641090,delay=1
+Task work 5: schedule_start_time=1554204642879,real start time=1554204642880,delay=1
+Task work 6: schedule_start_time=1554204643941,real start time=1554204643942,delay=1
+Task work 7: schedule_start_time=1554204645006,real start time=1554204645007,delay=1
+Task work 8: schedule_start_time=1554204646309,real start time=1554204646310,delay=1
+Task work 9: schedule_start_time=1554204647537,real start time=1554204647538,delay=1
+Thread-2 finished
+Thread-0 finished
+Main thread finished
+Thread-8 finished
+Thread-4 finished
+Thread-6 finished
+```
+
+与３个消费者线程的情况差不多。
+
+#### 7. 结论
+
+最优的消费者线程的个数与任务启动的时间间隔好像存在这样的关系：单个任务处理时间的最大值　/  相邻任务的启动时间最小间隔　＝　最优线程数，如果最优线程数是小数，则取整数后加１，比如1.3的话，那么最优线程数应该是2。
+
+本例中，单个任务处理时间的最大值固定为2s。
+相邻任务的启动时间最小间隔为1s。
+则消费者线程数为2/1=2。
+
+如果消费者线程数小于此值，则来不及处理到期的任务。如果大于此值，线程太多，在调度、同步上花更多的时间，无益改善性能。
+
+参考文档：[https://blog.csdn.net/dkfajsldfsdfsd/article/details/88966814](https://blog.csdn.net/dkfajsldfsdfsd/article/details/88966814)
 
 
 ## 十一、BlockingDeque的实现类
