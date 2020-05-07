@@ -1763,23 +1763,23 @@ private void set(ThreadLocal<?> key, Object value) {
 
 #### tryTransfer(E e)
 
-如果可能，立即将元素转移给等待的消费者，如果没有正在等待接收消息的消费者，则返回false。
+如果存在一个消费者已经等待接收它，则立即传送指定的元素，否则返回false，并且不进入队列。
 
 #### tryTransfer(E e, long timeout, TimeUnit unit)
 
-如果可能，立即将元素转移给等待的消费者，如果没有正在等待接收消息的消费者，则在指定的时间内进行等待，如果超时，则返回false。
+在上述方法的基础上设置超时时间
 
 #### transfer(E e)
 
-将元素转移给消费者，如果没有消费者则一直持续等待，直到有消费者接收。也就是说如果一个消费者已经在等待接收它，则立即传送指定的元素，否则一直等待直到元素由消费者接收。
+如果存在一个消费者已经等待接收它，则立即传送指定的元素，否则等待直到元素被消费者接收。
 
 #### hasWaitingConsumer()
 
-如果至少有一位消费者在等待，则返回 true
+如果至少有一位消费者在等待，则返回true
 
 #### getWaitingConsumerCount()
 
-返回等待消费者人数的估计值
+获取所有等待获取元素的消费线程数量
 
 ## 十、BlockingQueue的实现类
 
@@ -1801,11 +1801,478 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ### LinkedBlockingQueue
 
+> 内部存储是基于链表的无界阻塞队列，由于使用了两个ReentrantLock来实现出入队列的线程安全，比ArrayBlockingQueue的吞吐量要高很多。
+
 #### 1. 概述
 
 LinkedBlockingQueue不同于ArrayBlockingQueue，它如果不指定容量，默认为`Integer.MAX_VALUE`，也就是无界队列。所以为了避免队列过大造成机器负载或者内存爆满的情况出现，我们在使用的时候建议手动传一个队列的大小。
 
-#### 2. 和 ArrayBlockingQueue 的区别
+#### 2. 源码分析
+
+##### 1. 属性
+
+```java
+/**
+ * 节点类，用于存储数据
+ */
+static class Node<E> {
+    E item;
+    Node<E> next;
+
+    Node(E x) { item = x; }
+}
+
+/** 阻塞队列的大小，默认为Integer.MAX_VALUE */
+private final int capacity;
+
+/** 当前阻塞队列中的元素个数 */
+private final AtomicInteger count = new AtomicInteger();
+
+/**
+ * 阻塞队列的头结点
+ */
+transient Node<E> head;
+
+/**
+ * 阻塞队列的尾节点
+ */
+private transient Node<E> last;
+
+/** 获取并移除元素时使用的锁，如take, poll, etc */
+private final ReentrantLock takeLock = new ReentrantLock();
+
+/** notEmpty条件对象，当队列没有数据时用于挂起执行删除的线程 */
+private final Condition notEmpty = takeLock.newCondition();
+
+/** 添加元素时使用的锁如 put, offer, etc */
+private final ReentrantLock putLock = new ReentrantLock();
+
+/** notFull条件对象，当队列数据已满时用于挂起执行添加的线程 */
+private final Condition notFull = putLock.newCondition();
+```
+
+从上面的属性我们知道，每个添加到LinkedBlockingQueue队列中的数据都将被封装成Node节点，添加的链表队列中，其中head和last分别指向队列的头结点和尾结点。与ArrayBlockingQueue不同的是，LinkedBlockingQueue内部分别使用了takeLock 和 putLock 对并发进行控制，也就是说，添加和删除操作并不是互斥操作，可以同时进行，这样也就可以大大提高吞吐量。
+
+这里如果不指定队列的容量大小，也就是使用默认的Integer.MAX_VALUE，如果存在添加速度大于删除速度时候，有可能会内存溢出，这点在使用前希望慎重考虑。
+
+另外，LinkedBlockingQueue对每一个lock锁都提供了一个Condition用来挂起和唤醒其他线程。
+
+##### 2. 构造函数
+
+```java
+public LinkedBlockingQueue() {
+    // 默认大小为Integer.MAX_VALUE
+    this(Integer.MAX_VALUE);
+}
+
+public LinkedBlockingQueue(int capacity) {
+    if (capacity <= 0) throw new IllegalArgumentException();
+    this.capacity = capacity;
+    last = head = new Node<E>(null);
+}
+
+public LinkedBlockingQueue(Collection<? extends E> c) {
+    this(Integer.MAX_VALUE);
+    final ReentrantLock putLock = this.putLock;
+    putLock.lock();
+    try {
+        int n = 0;
+        for (E e : c) {
+            if (e == null)
+                throw new NullPointerException();
+            if (n == capacity)
+                throw new IllegalStateException("Queue full");
+            enqueue(new Node<E>(e));
+            ++n;
+        }
+        count.set(n);
+    } finally {
+        putLock.unlock();
+    }
+}
+```
+
+默认的构造函数和最后一个构造函数创建的队列大小都为Integer.MAX_VALUE，只有第二个构造函数用户可以指定队列的大小。第二个构造函数最后初始化了last和head节点，让它们都指向了一个元素为null的节点。
+
+![LinkedBlockingQueue-init](./images/LinkedBlockingQueue-init.png)
+
+最后一个构造函数使用了putLock来进行加锁，但是这里并不是为了多线程的竞争而加锁，只是为了放入的元素能立即对其他线程可见。
+
+##### 3. 入队方法
+
+LinkedBlockingQueue提供了多种入队操作的实现来满足不同情况下的需求，入队操作有如下几种：
+
+###### 1. put(E e)
+
+```java
+public void put(E e) throws InterruptedException {
+    if (e == null) throw new NullPointerException();
+    int c = -1;
+    Node<E> node = new Node<E>(e);
+    final ReentrantLock putLock = this.putLock;
+    final AtomicInteger count = this.count;
+    // 获取锁中断
+    putLock.lockInterruptibly();
+    try {
+        //判断队列是否已满，如果已满阻塞等待
+        while (count.get() == capacity) {
+            notFull.await();
+        }
+        // 把node放入队列中
+        enqueue(node);
+        c = count.getAndIncrement();
+        // 再次判断队列是否有可用空间，如果有唤醒下一个线程进行添加操作
+        if (c + 1 < capacity)
+            notFull.signal();
+    } finally {
+        putLock.unlock();
+    }
+    // 如果队列中有一条数据，唤醒消费线程进行消费
+    if (c == 0)
+        signalNotEmpty();
+}
+```
+
+小结put方法来看，它总共做了以下情况的考虑：
+
+1. 队列已满，阻塞等待。
+2. 队列未满，创建一个node节点放入队列中，如果放完以后队列还有剩余空间，继续唤醒下一个添加线程进行添加。如果放之前队列中没有元素，放完以后要唤醒消费线程进行消费。
+
+###### 2. enqueue(Node node)
+
+我们来看看该方法中用到的几个其他方法，先来看看enqueue(Node node)方法：
+
+```java
+private void enqueue(Node<E> node) {
+    last = last.next = node;
+}
+```
+
+该方法可能有些同学看不太懂，我们用一张图来看看往队列里依次放入元素A和元素B，毕竟无图无真相：
+
+![LinkedBlockingQueue-enqueue](./images/LinkedBlockingQueue-enqueue.png)
+
+接下来我们看看signalNotEmpty，顺带着看signalNotFull方法：
+
+```java
+private void signalNotEmpty() {
+    final ReentrantLock takeLock = this.takeLock;
+    takeLock.lock();
+    try {
+        notEmpty.signal();
+    } finally {
+        takeLock.unlock();
+    }
+}
+
+private void signalNotFull() {
+    final ReentrantLock putLock = this.putLock;
+    putLock.lock();
+    try {
+        notFull.signal();
+    } finally {
+        putLock.unlock();
+    }
+}
+```
+
+为什么要这么写？因为signal的时候要获取到该signal对应的Condition对象的锁才行。
+
+###### 3. offer(E e)
+
+```java
+public boolean offer(E e) {
+    if (e == null) throw new NullPointerException();
+    final AtomicInteger count = this.count;
+    if (count.get() == capacity)
+        return false;
+    int c = -1;
+    Node<E> node = new Node<E>(e);
+    final ReentrantLock putLock = this.putLock;
+    putLock.lock();
+    try {
+        // 队列有可用空间，放入node节点，判断放入元素后是否还有可用空间，
+        // 如果有，唤醒下一个添加线程进行添加操作。
+        if (count.get() < capacity) {
+            enqueue(node);
+            c = count.getAndIncrement();
+            if (c + 1 < capacity)
+                notFull.signal();
+        }
+    } finally {
+        putLock.unlock();
+    }
+    if (c == 0)
+        signalNotEmpty();
+    return c >= 0;
+}
+```
+
+可以看到offer仅仅对put方法改动了一点点，当队列没有可用元素的时候，不同于put方法的阻塞等待，offer方法直接方法false。
+
+###### 4. offer(E e, long timeout, TimeUnit unit)
+
+```java
+public boolean offer(E e, long timeout, TimeUnit unit)
+        throws InterruptedException {
+
+    if (e == null) throw new NullPointerException();
+    long nanos = unit.toNanos(timeout);
+    int c = -1;
+    final ReentrantLock putLock = this.putLock;
+    final AtomicInteger count = this.count;
+    putLock.lockInterruptibly();
+    try {
+        // 等待超时时间nanos，超时时间到了返回false
+        while (count.get() == capacity) {
+            if (nanos <= 0)
+                return false;
+            nanos = notFull.awaitNanos(nanos);
+        }
+        enqueue(new Node<E>(e));
+        c = count.getAndIncrement();
+        if (c + 1 < capacity)
+            notFull.signal();
+    } finally {
+        putLock.unlock();
+    }
+    if (c == 0)
+        signalNotEmpty();
+    return true;
+}
+```
+
+该方法只是对offer方法进行了阻塞超时处理，使用了Condition的awaitNanos来进行超时等待，这里为什么要用while循环？因为awaitNanos方法是可中断的，为了防止在等待过程中线程被中断，这里使用while循环进行等待过程中中断的处理，继续等待剩下需等待的时间。
+
+##### 4. 出队方法
+
+LinkedBlockingQueue提供了多种出队操作的实现来满足不同情况下的需求
+
+###### 1. take()
+
+```java
+public E take() throws InterruptedException {
+    E x;
+    int c = -1;
+    final AtomicInteger count = this.count;
+    final ReentrantLock takeLock = this.takeLock;
+    takeLock.lockInterruptibly();
+    try {
+        // 队列为空，阻塞等待
+        while (count.get() == 0) {
+            notEmpty.await();
+        }
+        x = dequeue();
+        c = count.getAndDecrement();
+        // 队列中还有元素，唤醒下一个消费线程进行消费
+        if (c > 1)
+            notEmpty.signal();
+    } finally {
+        takeLock.unlock();
+    }
+    // 移除元素之前队列是满的，唤醒生产线程进行添加元素
+    if (c == capacity)
+        signalNotFull();
+    return x;
+}
+```
+
+take方法看起来就是put方法的逆向操作，它总共做了以下情况的考虑：
+
+1. 队列为空，阻塞等待。
+2. 队列不为空，从队首获取并移除一个元素，如果消费后还有元素在队列中，继续唤醒下一个消费线程进行元素移除。如果放之前队列是满元素的情况，移除完后要唤醒生产线程进行添加元素。
+
+###### 2. dequeue()
+
+我们来看看dequeue方法
+
+```java
+private E dequeue() {
+    // 获取到head节点
+    Node<E> h = head;
+    // 获取到head节点指向的下一个节点
+    Node<E> first = h.next;
+    // head节点原来指向的节点的next指向自己，等待下次gc回收
+    h.next = h; // help GC
+    // head节点指向新的节点
+    head = first;
+    // 获取到新的head节点的item值
+    E x = first.item;
+    // 新head节点的item值设置为null
+    first.item = null;
+    return x;
+}
+```
+
+可能有些童鞋链表算法不是很熟悉，我们可以结合注释和图来看就清晰很多了。
+
+![LinkedBlockingQueue-enqueue-take](./images/LinkedBlockingQueue-enqueue-take.png)
+
+其实这个写法看起来很绕，我们其实也可以这么写：
+
+```java
+private E dequeue() {
+    // 获取到head节点
+    Node<E> h = head;
+    // 获取到head节点指向的下一个节点，也就是节点A
+    Node<E> first = h.next;
+    // 获取到下下个节点，也就是节点B
+    Node<E> next = first.next;
+    // head的next指向下下个节点，也就是图中的B节点
+    h.next = next;
+    // 得到节点A的值
+    E x = first.item;
+    first.item = null; // help GC
+    first.next = first; // help GC
+    return x;
+}
+```
+
+###### 3. poll()
+
+```java
+public E poll() {
+    final AtomicInteger count = this.count;
+    if (count.get() == 0)
+        return null;
+    E x = null;
+    int c = -1;
+    final ReentrantLock takeLock = this.takeLock;
+    takeLock.lock();
+    try {
+        if (count.get() > 0) {
+            x = dequeue();
+            c = count.getAndDecrement();
+            if (c > 1)
+                notEmpty.signal();
+        }
+    } finally {
+        takeLock.unlock();
+    }
+    if (c == capacity)
+        signalNotFull();
+    return x;
+}
+```
+
+poll方法去除了take方法中元素为空后阻塞等待这一步骤，这里也就不详细说了。同理，poll(long timeout, TimeUnit unit)也和offer(E e, long timeout, TimeUnit unit)一样，利用了Condition的awaitNanos方法来进行阻塞等待直至超时。这里就不列出来说了。
+
+##### 5. 获取元素方法
+
+```java
+public E peek() {
+    if (count.get() == 0)
+        return null;
+    final ReentrantLock takeLock = this.takeLock;
+    takeLock.lock();
+    try {
+        Node<E> first = head.next;
+        if (first == null)
+            return null;
+        else
+            return first.item;
+    } finally {
+        takeLock.unlock();
+    }
+}
+```
+
+加锁后，获取到head节点的next节点，如果为空返回null，如果不为空，返回next节点的item值。
+
+##### 6. 删除元素方法
+
+```java
+public boolean remove(Object o) {
+    if (o == null) return false;
+    // 两个lock全部上锁
+    fullyLock();
+    try {
+        // 从head开始遍历元素，直到最后一个元素
+        for (Node<E> trail = head, p = trail.next;
+             p != null;
+             trail = p, p = p.next) {
+            // 如果找到相等的元素，调用unlink方法删除元素
+            if (o.equals(p.item)) {
+                unlink(p, trail);
+                return true;
+            }
+        }
+        return false;
+    } finally {
+        // 两个lock全部解锁
+        fullyUnlock();
+    }
+}
+
+void fullyLock() {
+    putLock.lock();
+    takeLock.lock();
+}
+
+void fullyUnlock() {
+    takeLock.unlock();
+    putLock.unlock();
+}
+```
+
+因为remove方法使用两个锁全部上锁，所以其他操作都需要等待它完成，而该方法需要从head节点遍历到尾节点，所以时间复杂度为O(n)。我们来看看unlink方法。
+
+```java
+void unlink(Node<E> p, Node<E> trail) {
+    // p的元素置为null
+    p.item = null;
+    // p的前一个节点的next指向p的next，也就是把p从链表中去除了
+    trail.next = p.next;
+    // 如果last指向p，删除p后让last指向trail
+    if (last == p)
+        last = trail;
+    // 如果删除之前元素是满的，删除之后就有空间了，唤醒生产线程放入元素
+    if (count.getAndDecrement() == capacity)
+        notFull.signal();
+}
+```
+
+##### 7. 看源码的时候，我给自己抛出了一个问题
+
+1. 为什么dequeue里的h.next不指向null，而指向h？
+2. 为什么unlink里没有p.next = null或者p.next = p这样的操作？
+
+这个疑问一直困扰着我，直到我看了迭代器的部分源码后才豁然开朗，下面放出部分迭代器的源码：
+
+```java
+private Node<E> current;
+private Node<E> lastRet;
+private E currentElement;
+
+Itr() {
+    fullyLock();
+    try {
+        current = head.next;
+        if (current != null)
+            currentElement = current.item;
+    } finally {
+        fullyUnlock();
+    }
+}
+
+private Node<E> nextNode(Node<E> p) {
+    for (;;) {
+        // 解决了问题1
+        Node<E> s = p.next;
+        if (s == p)
+            return head.next;
+        if (s == null || s.item != null)
+            return s;
+        p = s;
+    }
+}
+```
+
+迭代器的遍历分为两步，第一步加双锁把元素放入临时变量中，第二部遍历临时变量的元素。也就是说remove可能和迭代元素同时进行，很有可能remove的时候，有线程在进行迭代操作，而如果unlink中改变了p的next，很有可能在迭代的时候会造成错误，造成不一致问题。这个解决了问题2。
+
+而问题1其实在nextNode方法中也能找到，为了正确遍历，nextNode使用了 s == p的判断，当下一个元素是自己本身时，返回head的下一个节点。
+
+##### 8. 总结
 
 LinkedBlockingQueue是一个阻塞队列，内部由两个ReentrantLock来实现出入队列的线程安全，由各自的Condition对象的await和signal来实现等待和唤醒功能。它和ArrayBlockingQueue的不同点在于：
 
@@ -1814,7 +2281,7 @@ LinkedBlockingQueue是一个阻塞队列，内部由两个ReentrantLock来实现
 3. 由于ArrayBlockingQueue采用的是数组的存储容器，因此在插入或删除元素时不会产生或销毁任何额外的对象实例，而LinkedBlockingQueue则会生成一个额外的Node对象。这可能在长时间内需要高效并发地处理大批量数据的时，对于GC可能存在较大影响。
 4. 两者的实现队列添加或移除的锁不一样，ArrayBlockingQueue实现的队列中的锁是没有分离的，即添加操作和移除操作采用的同一个ReenterLock锁，而LinkedBlockingQueue实现的队列中的锁是分离的，其添加采用的是putLock，移除采用的则是takeLock，这样能大大提高队列的吞吐量，也意味着在高并发的情况下生产者和消费者可以并行地操作队列中的数据，以此来提高整个队列的并发性能。
 
-#### 3. 锁类型
+##### 9. 锁类型
 
 双锁 + 每个condition
 
@@ -1984,104 +2451,257 @@ SynchronousQueue原理解析：https://www.jianshu.com/p/af6f83c78506
 
 Java阻塞队列SynchronousQueue详解：https://www.jianshu.com/p/376d368cb44f
 
-
 ### LinkedTransferQueue
 
-#### 1. 关键源码分析
+#### 1. 概述
+
+LinkedTransferQueue是一个由链表结构组成的无界阻塞TransferQueue队列。相对于其他阻塞队列，LinkedTransferQueue多了tryTransfer和transfer方法。
+
+LinkedTransferQueue采用一种预占模式。意思就是消费者线程取元素时，如果队列不为空，则直接取走数据，若队列为空，那就生成一个节点（节点元素为null）入队，然后消费者线程被等待在这个节点上，后面生产者线程入队时发现有一个元素为null的节点，生产者线程就不入队了，直接就将元素填充到该节点，并唤醒该节点等待的线程，被唤醒的消费者线程取走元素，从调用的方法返回。我们称这种节点操作为“匹配”方式。
+
+LinkedTransferQueue是ConcurrentLinkedQueue、SynchronousQueue（公平模式下转交元素）、LinkedBlockingQueue（阻塞Queue的基本方法）的超集。而且LinkedTransferQueue更好用，因为它不仅仅综合了这几个类的功能，同时也提供了更高效的实现。
+
+#### 2. 关键源码分析
 
 > 阻塞队列不外乎`put ，take，offer ，poll`等方法，再加上`TransferQueue`的 几个 `tryTransfer` 方法。我们看看这几个方法的实现。
 
-##### 1. put方法分析
+##### 1. Node
 
 ```java
+static final class Node {
+    // 如果是消费者请求的节点，则isData为false，否则该节点为生产（数据）节点为true
+    final boolean isData;   // false if this is a request node
+    // 数据节点的值，若是消费者节点，则item为null
+    volatile Object item;   // initially non-null if isData; CASed to match
+    // 指向下一个节点
+    volatile Node next;
+    // 等待线程
+    volatile Thread waiter; // null until waiting
+ 
+    // CAS设置next
+    final boolean casNext(Node cmp, Node val) {
+        return UNSAFE.compareAndSwapObject(this, nextOffset, cmp, val);
+    }
+ 
+    // CAS设置item
+    final boolean casItem(Object cmp, Object val) {
+        // assert cmp == null || cmp.getClass() != Node.class;
+        return UNSAFE.compareAndSwapObject(this, itemOffset, cmp, val);
+    }
+ 
+    // 构造方法
+    Node(Object item, boolean isData) {
+        UNSAFE.putObject(this, itemOffset, item); // relaxed write
+        this.isData = isData;
+    }
+ 
+    // 将next指向自己
+    final void forgetNext() {
+        UNSAFE.putObject(this, nextOffset, this);
+    }
+ 
+    // 匹配或者节点被取消的时候会调用，设置item自连接，waiter为null
+    final void forgetContents() {
+        UNSAFE.putObject(this, itemOffset, this);
+        UNSAFE.putObject(this, waiterOffset, null);
+    }
+ 
+    // 节点是否被匹配过了
+    final boolean isMatched() {
+        Object x = item;
+        return (x == this) || ((x == null) == isData);
+    }
+ 
+    // 是否是一个未匹配的请求节点
+    // 如果是的话，则isData为false，且item为null，因为如果被匹配过了，item就不再为null，而是指向自己
+    final boolean isUnmatchedRequest() {
+        return !isData && item == null;
+    }
+ 
+    // 如果给定节点不能连接在当前节点后则返回true
+    final boolean cannotPrecede(boolean haveData) {
+        boolean d = isData;
+        Object x;
+        return d != haveData && (x = item) != this && (x != null) == d;
+    }
+ 
+    // 匹配一个数据节点
+    final boolean tryMatchData() {
+        // assert isData;
+        Object x = item;
+        if (x != null && x != this && casItem(x, null)) {
+            LockSupport.unpark(waiter);
+            return true;
+        }
+        return false;
+    }
+ 
+    private static final long serialVersionUID = -3375979862319811754L;
+ 
+    // Unsafe mechanics
+    private static final sun.misc.Unsafe UNSAFE;
+    private static final long itemOffset;
+    private static final long nextOffset;
+    private static final long waiterOffset;
+    static {
+        try {
+            UNSAFE = sun.misc.Unsafe.getUnsafe();
+            Class<?> k = Node.class;
+            itemOffset = UNSAFE.objectFieldOffset
+                (k.getDeclaredField("item"));
+            nextOffset = UNSAFE.objectFieldOffset
+                (k.getDeclaredField("next"));
+            waiterOffset = UNSAFE.objectFieldOffset
+                (k.getDeclaredField("waiter"));
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+    }
+}
+```
+
+匹配前后节点item的变化，其中node1为数据节点，node2为消费者请求的占位节点：
+
+| Node   | node1（isData-item） | node2（isData-item） |
+| ------ | -------------------- | -------------------- |
+| 匹配前 | true-item            | false-null           |
+| 匹配后 | true-null            | false-this           |
+
+1. 数据节点，则匹配前item不为null且不为自身，匹配后设置为null。
+2. 占位请求节点，匹配前item为null，匹配后自连接。
+
+##### 2. 重要属性
+
+```java
+// 是否为多核
+private static final boolean MP =
+Runtime.getRuntime().availableProcessors() > 1;
+ 
+// 作为第一个等待节点在阻塞之前的自旋次数
+private static final int FRONT_SPINS   = 1 << 7;
+ 
+// 前驱节点正在处理，当前节点在阻塞之前的自旋次数
+private static final int CHAINED_SPINS = FRONT_SPINS >>> 1;
+ 
+// sweepVotes的阈值
+static final int SWEEP_THRESHOLD = 32;
+ 
+// 队列首节点
+transient volatile Node head;
+ 
+// 队列尾节点
+private transient volatile Node tail;
+ 
+// 断开被删除节点失败的次数
+private transient volatile int sweepVotes;
+ 
+// xfer方法的how参数的可能取值
+// 用于无等待的poll、tryTransfer
+private static final int NOW   = 0; // for untimed poll, tryTransfer
+// 用于offer、put、add
+private static final int ASYNC = 1; // for offer, put, add
+// 用于无超时的阻塞transfer、take
+private static final int SYNC  = 2; // for transfer, take
+// 用于超时等待的poll、tryTransfer
+private static final int TIMED = 3; // for timed poll, tryTransfer
+```
+
+##### 3. 入队出队方法
+
+```java
+// 入队方法
 public void put(E e) {
-     xfer(e, true, ASYNC, 0);
+    xfer(e, true, ASYNC, 0);
 }
-```
-
-##### 2. take方法分析
-
-```java
-public E take() throws InterruptedException {
-    E e = xfer(null, false, SYNC, 0);
-    if (e != null)
-        return e;
-    Thread.interrupted();
-    throw new InterruptedException();
+ 
+public boolean offer(E e, long timeout, TimeUnit unit) {
+    xfer(e, true, ASYNC, 0);
+    return true;
 }
-```
-
-##### 3. offer方法分析
-
-```java
+ 
 public boolean offer(E e) {
-    xfer(e, true, ASYNC, 0);
-    return true;
+    xfer(e, true, ASYNC, 0);
+    return true;
 }
-```
-
-##### 4. poll方法分析
-
-```java
-public E poll() {
-    return xfer(null, false, NOW, 0);
+ 
+public boolean add(E e) {
+    xfer(e, true, ASYNC, 0);
+    return true;
 }
-```
 
-##### 5. tryTransfer方法分析
-
-```java
 public boolean tryTransfer(E e) {
     return xfer(e, true, NOW, 0) == null;
 }
-```
-
-##### 6. transfer方法分析
-
-```java
+ 
 public void transfer(E e) throws InterruptedException {
     if (xfer(e, true, SYNC, 0) != null) {
         Thread.interrupted(); // failure possible only due to interrupt
         throw new InterruptedException();
     }
 }
+ 
+public boolean tryTransfer(E e, long timeout, TimeUnit unit)
+    throws InterruptedException {
+    if (xfer(e, true, TIMED, unit.toNanos(timeout)) == null)
+        return true;
+    if (!Thread.interrupted())
+        return false;
+    throw new InterruptedException();
+}
+ 
+// 出队方法
+public E take() throws InterruptedException {
+    E e = xfer(null, false, SYNC, 0);
+    if (e != null)
+        return e;
+    Thread.interrupted();
+    throw new InterruptedException();
+}
+ 
+public E poll() {
+    return xfer(null, false, NOW, 0);
+}
+ 
+public E poll(long timeout, TimeUnit unit) throws InterruptedException {
+    E e = xfer(null, false, TIMED, unit.toNanos(timeout));
+    if (e != null || !Thread.interrupted())
+        return e;
+    throw new InterruptedException();
+}
 ```
 
-可怕，所有方法都指向了`xfer` 方法，只不过传入的不同的参数。
+我们可以看到，这些出队、入队方法都会调用xfer方法，因为LinkedTransferQueue是无界的，入队操作都会成功，所以入队操作都是ASYNC的，而出队方法，则是根据不同的要求传入不同的值，比如需要阻塞的出队方法就传入SYNC，需要加入超时控制的就传入TIMED。
 
-1. 第一个参数，如果是 `put` 类型，就是实际的值，反之就是 null。
-2. 第二个参数，是否包含数据，put 类型就是 true，take 就是 false。
-3. 第三个参数，执行类型，有立即返回的`NOW`，有异步的`ASYNC`，有阻塞的`SYNC`， 有带超时的 `TIMED`。
-4. 第四个参数，只有在 `TIMED`类型才有作用
-
-##### 7. xfer 方法分析
+##### 4. xfer方法
 
 ```java
 private E xfer(E e, boolean haveData, int how, long nanos) {
+    // 如果haveData但是e为null，则抛出NullPointerException异常
     if (haveData && (e == null))
         throw new NullPointerException();
+    // s是将要被添加的节点，如果需要
     Node s = null;                        // the node to append, if needed
-
+ 
     retry:
     for (;;) {                            // restart on append race
-        // 从  head 开始
+        // 从首节点开始匹配
         for (Node h = head, p = h; p != null;) { // find & match first node
-            // head 的类型。
             boolean isData = p.isData;
-            // head 的数据
             Object item = p.item;
-            // item != null 有 2 种情况,一是 put 操作, 二是 take 的 itme 被修改了(匹配成功)
-            // (itme != null) == isData 要么表示 p 是一个 put 操作, 要么表示 p 是一个还没匹配成功的 take 操作
-            if (item != p && (item != null) == isData) { 
-                // 如果当前操作和 head 操作相同，就没有匹配上，结束循环，进入下面的 if 块。
+            // 判断节点是否被匹配过
+            // item != null有2种情况：一是put操作，二是take的item被修改了(匹配成功)
+            // (itme != null) == isData 要么表示p是一个put操作，要么表示p是一个还没匹配成功的take操作
+            if (item != p && (item != null) == isData) { // unmatched
+                // 节点与此次操作模式一致，无法匹配
                 if (isData == haveData)   // can't match
                     break;
-                // 如果操作不同,匹配成功, 尝试替换 item 成功,
+                // 匹配成功
                 if (p.casItem(item, e)) { // match
-                    // 更新 head
                     for (Node q = p; q != h;) {
                         Node n = q.next;  // update by 2 unless singleton
+                        // 更新head为匹配节点的next节点
                         if (head == h && casHead(h, n == null ? q : n)) {
+                            // 将旧节点自连接
                             h.forgetNext();
                             break;
                         }                 // advance and retry
@@ -2089,50 +2709,225 @@ private E xfer(E e, boolean haveData, int how, long nanos) {
                             (q = h.next) == null || !q.isMatched())
                             break;        // unless slack < 2
                     }
-                    // 唤醒原 head 线程.
+                    // 匹配成功，则唤醒阻塞的线程
                     LockSupport.unpark(p.waiter);
+                    // 类型转换，返回匹配节点的元素
                     return LinkedTransferQueue.<E>cast(item);
                 }
             }
-            // 找下一个
+            // 若节点已经被匹配过了，则向后寻找下一个未被匹配的节点
             Node n = p.next;
+            // 如果当前节点已经离队，则从head开始寻找
             p = (p != n) ? n : (h = head); // Use head if p offlist
         }
-        // 如果这个操作不是立刻就返回的类型    
+ 
+        // 若整个队列都遍历之后，还没有找到匹配的节点，则进行后续处理
+        // 把当前节点加入到队列尾
         if (how != NOW) {                 // No matches available
-            // 且是第一次进入这里
             if (s == null)
-                // 创建一个 node
                 s = new Node(e, haveData);
-            // 尝试将 node 追加对队列尾部，并返回他的上一个节点。
+            // 将新节点s添加到队列尾并返回s的前驱节点
             Node pred = tryAppend(s, haveData);
-            // 如果返回的是 null, 表示不能追加到 tail 节点,因为 tail 节点的模式和当前模式相反.
+            // 前驱节点为null，说明有其他线程竞争，并修改了队列，则从retry重新开始
             if (pred == null)
-                // 重来
                 continue retry;           // lost race vs opposite mode
-            // 如果不是异步操作(即立刻返回结果)
+            // 不为ASYNC方法，则同步阻塞等待
             if (how != ASYNC)
-                // 阻塞等待匹配值
                 return awaitMatch(s, pred, e, (how == TIMED), nanos);
         }
+        // how == NOW，则立即返回
         return e; // not waiting
     }
 }
 ```
 
-逻辑如下：
+xfer方法的整个操作流程如下所示：
 
-找到 `head` 节点,如果 `head` 节点是匹配的操作，就直接赋值，如果不是，添加到队列中。
+1. 寻找和操作匹配的节点
+   - 从head开始向后遍历寻找未被匹配的节点，找到一个未被匹配并且和本次操作的模式不同的节点，匹配节点成功就通过CAS 操作将匹配节点的item字段设置为e，若修改失败，则继续向后寻找节点
+   - 通过CAS操作更新head节点为匹配节点的next节点，旧head节点进行自连接，唤醒匹配节点的等待线程waiter，返回匹配的 item。如果CAS失败，并且松弛度大于等于2，就需要重新获取head重试。
+2. 如果在上述操作中没有找到匹配节点，则根据参数how做不同的处理：
+   - NOW：立即返回，也不会插入节点
+   - SYNC：插入一个item为e（isData = haveData）到队列的尾部，然后自旋或阻塞当前线程直到节点被匹配或者取消。
+   - ASYNC：插入一个item为e（isData = haveData）到队列的尾部，不阻塞直接返回。
 
-> 注意：队列中永远只有一种类型的操作，要么是 `put` 类型，要么是 `take` 类型。
+上面提到了一个松弛度的概念，它是什么作用呢？
 
-##### 8. 整个过程如下图：
+在节点被匹配（被删除）之后，不会立即更新head/tail，而是当 head/tail 节点和最近一个未匹配的节点之间的距离超过一个“松弛阀值”之后才会更新（在LinkedTransferQueue中，这个值为 2）。这个“松弛阀值”一般为1-3，如果太大会降低缓存命中率，并且会增加遍历链的长度；太小会增加 CAS 的开销。
+
+##### 5. 入队操作则是调用了tryAppend方法
+
+```java
+private Node tryAppend(Node s, boolean haveData) {
+    // 从尾节点开始
+    for (Node t = tail, p = t;;) {        // move p to last node and append
+        Node n, u;                        // temps for reads of next & tail
+        // 队列为空，则将s设置为head并返回s
+        if (p == null && (p = head) == null) {
+            if (casHead(null, s))
+                return s;                 // initialize
+        }
+        else if (p.cannotPrecede(haveData))
+            return null;                  // lost race vs opposite mode
+        // 不是最后一个节点
+        else if ((n = p.next) != null)    // not last; keep traversing
+            p = p != t && t != (u = tail) ? (t = u) : // stale tail
+                (p != n) ? n : null;      // restart if off list
+        // CAS失败
+        else if (!p.casNext(null, s))
+            p = p.next;                   // re-read on CAS failure
+        else {
+            // 更新tail
+            if (p != t) {                 // update if slack now >= 2
+                while ((tail != t || !casTail(t, s)) &&
+                        (t = tail)   != null &&
+                        (s = t.next) != null && // advance and retry
+                        (s = s.next) != null && s != t);
+            }
+            return p;
+        }
+    }
+}
+```
+
+该方法主要逻辑为：添加节点s到队列尾并返回s的前继节点，失败时（与其他不同模式线程竞争失败）返回null，没有前继节点则返回自身。
+
+加入队列后，如果how还不是ASYNC则调用awaitMatch()方法阻塞等待：
+
+##### 6. awaitMatch阻塞等待
+
+```java
+private E awaitMatch(Node s, Node pred, E e, boolean timed, long nanos) {
+    // 计算超时时间点
+    final long deadline = timed ? System.nanoTime() + nanos : 0L;
+    // 获取当前线程对象
+    Thread w = Thread.currentThread();
+    // 自旋次数
+    int spins = -1; // initialized after first item and cancel checks
+    // 随机数
+    ThreadLocalRandom randomYields = null; // bound if needed
+ 
+    for (;;) {
+        Object item = s.item;
+        // 若有其它线程匹配了该节点
+        if (item != e) {                  // matched
+            // assert item != s;
+            // 撤销该节点，并返回匹配值
+            s.forgetContents();           // avoid garbage
+            return LinkedTransferQueue.<E>cast(item);
+        }
+        // 线程中断或者超时，则将s的节点item设置为s
+        if ((w.isInterrupted() || (timed && nanos <= 0)) &&
+                s.casItem(e, s)) {        // cancel
+            // 断开节点
+            unsplice(pred, s);
+            return e;
+        }
+ 
+        // 自旋
+        if (spins < 0) {                  // establish spins at/near front
+            // 计算自旋次数
+            if ((spins = spinsFor(pred, s.isData)) > 0)
+                randomYields = ThreadLocalRandom.current();
+        }
+        else if (spins > 0) {             // spin
+            --spins;
+            // 生成随机数来让出CPU时间
+            if (randomYields.nextInt(CHAINED_SPINS) == 0)
+                Thread.yield();           // occasionally yield
+        }
+        // 将s的waiter设置为当前线程
+        else if (s.waiter == null) {
+            s.waiter = w;                 // request unpark then recheck
+        }
+        // 超时阻塞
+        else if (timed) {
+            nanos = deadline - System.nanoTime();
+            if (nanos > 0L)
+                LockSupport.parkNanos(this, nanos);
+        }
+        // 非超时阻塞
+        else {
+            LockSupport.park(this);
+        }
+    }
+}
+```
+
+当前操作为同步操作时，会调用awaitMatch方法阻塞等待匹配，成功返回匹配节点 item，失败返回给定参数e（s.item）。在等待期间如果线程被中断或等待超时，则取消匹配，并调用unsplice方法解除节点s和其前继节点的链接。
+
+##### 7. unsplice解除节点链接
+
+```java
+final void unsplice(Node pred, Node s) {
+    // 设置item自连接，waiter为null
+    s.forgetContents(); // forget unneeded fields
+    
+    if (pred != null && pred != s && pred.next == s) {
+        // 获取s的后继节点
+        Node n = s.next;
+        // s的后继节点为null，或不为null，就将s的前驱节点的后继节点设置为n
+        if (n == null ||
+            (n != s && pred.casNext(s, n) && pred.isMatched())) {
+            for (;;) {               // check if at, or could be, head
+                Node h = head;
+                if (h == pred || h == s || h == null)
+                    return;          // at head or list empty
+                if (!h.isMatched())
+                    break;
+                Node hn = h.next;
+                if (hn == null)
+                    return;          // now empty
+                if (hn != h && casHead(h, hn))
+                    h.forgetNext();  // advance head
+            }
+            if (pred.next != pred && s.next != s) { // recheck if offlist
+                for (;;) {           // sweep now if enough votes
+                    int v = sweepVotes;
+                    if (v < SWEEP_THRESHOLD) {
+                        if (casSweepVotes(v, v + 1))
+                            break;
+                    }
+                    // 达到阀值，进行“大扫除”，清除队列中的无效节点
+                    else if (casSweepVotes(v, 0)) {
+                        sweep();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+如果s的前继节点pred还是指向s（pred.next == s），尝试解除s的链接，若s不是自连接节点，就把pred的next引用指向s的next节点。如果s不能被解除（由于它是尾节点或者pred可能被解除链接，并且pred和s都不是head节点或已经出列），则添加到sweepVotes，sweepVotes累计到阀值SWEEP_THRESHOLD之后就调用sweep()对队列进行一次“大扫除”，清除队列中所有的无效节点：
+
+##### 8. sweep清除无效节点
+
+```java
+private void sweep() {
+    for (Node p = head, s, n; p != null && (s = p.next) != null; ) {
+        if (!s.isMatched())
+            // Unmatched nodes are never self-linked
+            p = s;
+        else if ((n = s.next) == null) // trailing node is pinned
+            break;
+        else if (s == n)    // stale
+            // No need to also check for p == s, since that implies s == n
+            p = head;
+        else
+            p.casNext(s, n);
+    }
+}
+```
+
+##### 9. 整个过程如下图：
 
 ![LinkedTransferQueue-xfer.webp](./images/LinkedTransferQueue-xfer.webp.jpg)
 
 相比较 `SynchronousQueue` 多了一个可以存储的队列，相比较 `LinkedBlockingQueue` 多了直接传递元素，少了用锁来同步。性能更高，用处更大。
 
-#### 2. 总结
+##### 10. 总结
 
 `LinkedTransferQueue`是 `SynchronousQueue` 和 `LinkedBlockingQueue` 的合体，性能比 `LinkedBlockingQueue` 更高（没有锁操作），比 `SynchronousQueue`能存储更多的元素。
 
@@ -2140,7 +2935,9 @@ private E xfer(E e, boolean haveData, int how, long nanos) {
 
 `put`和 `transfer` 方法的区别是，put 是立即返回的， transfer 是阻塞等待消费者拿到数据才返回。`transfer`方法和 `SynchronousQueue`的 put 方法类似。
 
-参考文档：[https://www.jianshu.com/p/ae6977886cec](https://www.jianshu.com/p/ae6977886cec)
+参考文档：
+
+[https://blog.csdn.net/qq_38293564/article/details/80593821](https://blog.csdn.net/qq_38293564/article/details/80593821)
 
 ### PriorityBlockingQueue
 
