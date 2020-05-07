@@ -1783,7 +1783,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ## 十、BlockingQueue的实现类
 
-### ArrayBlockingQueue
+### (1). ArrayBlockingQueue
 
 #### 1. 概述
 
@@ -1799,7 +1799,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 单锁 + 两个condition
 
-### LinkedBlockingQueue
+### (2). LinkedBlockingQueue
 
 > 内部存储是基于链表的无界阻塞队列，由于使用了两个ReentrantLock来实现出入队列的线程安全，比ArrayBlockingQueue的吞吐量要高很多。
 
@@ -1807,7 +1807,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 LinkedBlockingQueue不同于ArrayBlockingQueue，它如果不指定容量，默认为`Integer.MAX_VALUE`，也就是无界队列。所以为了避免队列过大造成机器负载或者内存爆满的情况出现，我们在使用的时候建议手动传一个队列的大小。
 
-#### 2. 源码分析
+#### 2. 源码剖析
 
 ##### 1. 属性
 
@@ -2287,7 +2287,7 @@ LinkedBlockingQueue是一个阻塞队列，内部由两个ReentrantLock来实现
 
 参考：[https://blog.csdn.net/tonywu1992/article/details/83419448](https://blog.csdn.net/tonywu1992/article/details/83419448)
 
-### SynchronousQueue
+### (3). SynchronousQueue
 
 #### 1. 概述
 
@@ -2451,7 +2451,7 @@ SynchronousQueue原理解析：https://www.jianshu.com/p/af6f83c78506
 
 Java阻塞队列SynchronousQueue详解：https://www.jianshu.com/p/376d368cb44f
 
-### LinkedTransferQueue
+### (4). LinkedTransferQueue
 
 #### 1. 概述
 
@@ -2461,7 +2461,7 @@ LinkedTransferQueue采用一种预占模式。意思就是消费者线程取元�
 
 LinkedTransferQueue是ConcurrentLinkedQueue、SynchronousQueue（公平模式下转交元素）、LinkedBlockingQueue（阻塞Queue的基本方法）的超集。而且LinkedTransferQueue更好用，因为它不仅仅综合了这几个类的功能，同时也提供了更高效的实现。
 
-#### 2. 关键源码分析
+#### 2. 关键源码剖析
 
 > 阻塞队列不外乎`put ，take，offer ，poll`等方法，再加上`TransferQueue`的 几个 `tryTransfer` 方法。我们看看这几个方法的实现。
 
@@ -2939,10 +2939,449 @@ private void sweep() {
 
 [https://blog.csdn.net/qq_38293564/article/details/80593821](https://blog.csdn.net/qq_38293564/article/details/80593821)
 
-### PriorityBlockingQueue
+### (5). PriorityBlockingQueue
+
+#### 1. 概述
+
+PriorityBlockingQueue是一个支持优先级的无界阻塞队列，直到系统资源耗尽。默认情况下元素采用自然顺序升序排列。也可以自定义类实现compareTo()方法来指定元素排序规则，或者初始化PriorityBlockingQueue时，指定构造参数Comparator来对元素进行排序。但需要注意的是不能保证同优先级元素的顺序。PriorityBlockingQueue也是基于最小二叉堆实现，使用基于CAS实现的自旋锁来控制队列的动态扩容，保证了扩容操作不会阻塞take操作的执行。
+
+#### 2. 前置知识：优先队列(堆)
+
+##### 1. 队列与优先队列的区别
+
+1. **队列**是一种**FIFO**（First-In-First-Out）先进先出的数据结构，对应于生活中的排队的场景，排在前面的人总是先通过，**依次进行**。
+2. **优先队列**是特殊的队列，从“优先”一词，可看出**有“插队现象”**。比如在火车站排队进站时，就会有些比较急的人来插队，他们就在前面先通过验票。优先队列**至少含有两种操作**的数据结构：**insert（插入）**，即将元素插入到优先队列中（入队）；以及**deleteMin（删除最小者）**，它的作用是找出、删除优先队列中的最小的元素（出队）。
+
+![优先队列基本模型](./images/优先队列基本模型.jpg)
+
+##### 2. 优先队列（堆）的特性
+
+优先队列的实现常选用**二叉堆**，**在数据结构中，优先队列一般也是指堆**。
+
+**堆的两个性质：**
+
+1. **结构性**：**堆是一颗除底层外被完全填满的二叉树，底层的节点从左到右填入，**这样的树叫做**完全二叉树。**
+2. **堆序性：**由于我们想很快找出最小元，则最小元应该在根上，**任意节点都小于它的后裔**，这就是**小顶堆（Min-Heap）**；如果是查找最大元，则最大元应该在根上，**任意节点都要大于它的后裔**，这就是**大顶堆(Max-heap)。**
+
+##### 3. 结构性
+
+![一颗 完全二叉树的结构性](./images/一颗完全二叉树的结构性.jpg)
+
+通过观察发现，**完全二叉树可以直接使用一个数组表示**而不需要使用其他数据结构。所以我们只需要传入一个size就可以构建优先队列的结构（元素之间使用compareTo方法进行比较）。
+
+![完全二叉树的数组实现](./images/完全二叉树的数组实现.jpg)
+
+对于数组中的任意位置 i 的元素，其**左儿子**在位置 **2i** 上，则**右儿子**在 **2i+1** 上，**父节点**在 在 **i/2**（向下取整）上。通常从数组下标1开始存储，这样的好处在于很方便找到左右、及父节点。如果从0开始，左儿子在2i+1,右儿子在2i+2,父节点在(i-1)/2（向下取整）。
+
+##### 4. 堆序性
+
+我们这建立**最小堆，即对于每一个元素X，X的父亲中的关键字小于（或等于）X中的关键字，根节点除外（它没有父节点）。**
+
+![一颗完全二叉树的堆序性](./images/一颗完全二叉树的堆序性.jpg)
+
+如图所示，只有左边是堆，右边红色节点违反堆序性。根据堆序性，只需要常O(1)找到最小元。
+
+##### 5. 堆的基本操作：insert（插入）
+
+**上滤**：**为了插入元素X，我们在下一个可用的位置建立空穴**（否则会破坏结构性，不是完全二叉树）。**如果此元素放入空穴不破坏堆序性，则插入完成；否则，将父节点下移到空穴，即空穴向根的方向上冒一步。**继续该过程，直到X插入空穴为止。这样的过程称为上滤。
+
+![二叉堆尝试插入-1](./images/二叉堆尝试插入-1.jpg)
+
+![二叉堆尝试插入-2](./images/二叉堆尝试插入-2.jpg)
+
+图中演示了18插入的过程，**在下一个可用的位置建立空穴（满足结构性），发现不能直接插入，将父节点移下来，空穴上冒。继续这个过程，直到满足堆序性。**这样就实现了元素插入到优先队列（堆）中。
+
+##### 6. java实现上滤
+
+```java
+/**
+ * 插入到优先队列，维护堆序性
+ *
+ * @param x ：插入的元素
+ */
+public void insert(T x) {
+	if (null == x) {
+		return;
+	}
+	//扩容
+	if (currentSize == array.length - 1) {
+		enlargeArray(array.length * 2 + 1);
+	}
+	//上滤
+	int hole = ++currentSize;
+	for (array[0] = x; x.compareTo(array[hole / 2]) < 0; hole /= 2) {
+		array[hole] = array[hole / 2];
+	}
+	array[hole] = x;
+}
+
+/**
+ * 扩容方法
+ *
+ * @param newSize ：扩容后的容量，为原来的2倍+1
+ */
+private void enlargeArray(int newSize) {
+	T[] old = array;
+	array = (T[]) new Comparable[newSize];
+	System.arraycopy(old, 0, array, 0, old.length);
+}
+```
+
+可以反复使用交换操作来进行上滤过程，但如果插入X上滤d层，则需要3d次赋值；我们这种方式只需要d+1次赋值。
+
+如果插入的元素是新的最小元从而一直上滤到根处，那么这种插入的时间长达O(logN)。但平均来看，上滤终止得要早。**业已证明，执行依次插入平均需要2.607次比较，因此平均insert操作上移元素1.607层。**上滤次数只比插入次数少一次。
+
+##### 7. 堆的基本操作：deleteMin（删除）
+
+**下滤**：类似于上滤操作。因为我们建立的是最小堆，所以删除最小元，就是将根节点删掉，这样就破坏了结构性。所以**我们在根节点处建立空穴，为了满足结构性，堆中最后一个元素X必须移动到合适的位置，如果可以直接放到空穴，则删除完成（一般不可能）；否则，将空穴的左右儿子中较小者移到空穴，即空穴下移了一层。继续这样的操作，直到X可以放入到空穴中。**这样就可以满足结构性与堆序性。这个过程称为下滤。
+
+![二叉堆删除最小元-1](./images/二叉堆删除最小元-1.jpg)
+
+![二叉堆删除最小元-2](./images/二叉堆删除最小元-2.jpg)
+
+如图所示：**在根处建立空穴，将最后一个元素放到空穴，已满足结构性；为满足堆序性，需要将空穴下移到合适的位置。**
+
+**注意：堆**的实现中，经常发生的错误是**只有偶数个元素**，**即有一个节点只有一个儿子。**所以**需要测试右儿子的存在性。**
+
+##### 8. java实现下滤
+
+```java
+/**
+ * 删除最小元
+ * 若优先队列为空，抛出UnderflowException
+ *
+ * @return ：返回最小元
+ */
+public T deleteMin() {
+	if (isEmpty()) {
+		throw new UnderflowException();
+	}
+
+	T minItem = findMin();
+	array[1] = array[currentSize--];
+	percolateDown(1);
+
+	return minItem;
+}
+
+ /**
+ * 下滤方法
+ *
+ * @param hole ：从数组下标hole1开始下滤
+ */
+private void percolateDown(int hole) {
+	int child;
+	T tmp = array[hole];
+
+	for (; hole * 2 <= currentSize; hole = child) {
+		//左儿子
+		child = hole * 2;
+		//判断右儿子是否存在
+		if (child != currentSize &&
+				array[child + 1].compareTo(array[child]) < 0) {
+			child++;
+		}
+		if (array[child].compareTo(tmp) < 0) {
+			array[hole] = array[child];
+		} else {
+			break;
+		}
+	}
+	array[hole] = tmp;
+}
+```
+
+**这种操作最坏时间复杂度是O(logN)。平均而言，被放到根处的元素几乎下滤到底层（即来自的那层），所以平均时间复杂度是O(logN)。**
+
+##### 7. 总结
+
+优先队列常使用二叉堆实现，本篇图解了二叉堆最基本的两个操作：插入及删除最小元。insert以O(1)常数时间执行，deleteMin以O(logN)执行。
+
+#### 3. 源码剖析
+
+##### 1. 定义的重要属性
+
+```java
+// 默认容量
+private static final int DEFAULT_INITIAL_CAPACITY = 11;
+
+// 最大容量
+private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
+// 二叉堆数组
+private transient Object[] queue;
+
+// 队列元素的个数
+private transient int size;
+
+// 比较器，如果为空，则为自然顺序
+private transient Comparator<? super E> comparator;
+
+// 内部锁
+private final ReentrantLock lock;
+
+private final Condition notEmpty;
+
+// 
+private transient volatile int allocationSpinLock;
+
+// 优先队列：主要用于序列化，这是为了兼容之前的版本。只有在序列化和反序列化才非空
+private PriorityQueue<E> q;
+```
+
+内部仍然采用可重入锁ReentrantLock来实现同步机制，但是这里只有一个notEmpty的Condition，了解了ArrayBlockingQueue我们知道它定义了两个Condition，之类为何只有一个呢？原因就在于PriorityBlockingQueue是一个无界队列，插入总是会成功，除非消耗尽了资源导致服务器挂。
+
+##### 2. 入列：put
+
+put(E e) ：将指定元素插入此优先级队列。
+
+```java
+public void put(E e) {
+    offer(e); // never need to block
+}
+```
+
+PriorityBlockingQueue是无界的，所以不可能会阻塞。内部调用offer(E e)：
+
+##### 3. 入列：offer
+
+```java
+public boolean offer(E e) {
+    // 不能为null
+    if (e == null)
+        throw new NullPointerException();
+    // 获取锁
+    final ReentrantLock lock = this.lock;
+    lock.lock();
+    int n, cap;
+    Object[] array;
+    // 扩容
+    while ((n = size) >= (cap = (array = queue).length))
+        tryGrow(array, cap);
+    try {
+        Comparator<? super E> cmp = comparator;
+        // 根据比较器是否为null，做不同的处理
+        if (cmp == null)
+            siftUpComparable(n, e, array);
+        else
+            siftUpUsingComparator(n, e, array, cmp);
+        size = n + 1;
+        // 唤醒正在等待的消费者线程
+        notEmpty.signal();
+    } finally {
+        lock.unlock();
+    }
+    return true;
+}
+```
+
+##### 4. siftUpComparable
+
+当比较器comparator为null时，采用自然排序，调用siftUpComparable方法：
+
+```java
+private static <T> void siftUpComparable(int k, T x, Object[] array) {
+    Comparable<? super T> key = (Comparable<? super T>) x;
+    // “上冒”过程
+    while (k > 0) {
+        // 父级节点 （n - ） / 2
+        int parent = (k - 1) >>> 1;
+        Object e = array[parent];
+
+        // key >= parent 完成（最大堆）
+        if (key.compareTo((T) e) >= 0)
+            break;
+        // key < parant 替换
+        array[k] = e;
+        k = parent;
+    }
+    array[k] = key;
+}
+```
+
+这段代码所表示的意思：将元素X插入到数组中，然后进行调整以保持二叉堆的特性。
+
+##### 5. siftUpUsingComparator
+
+当比较器不为null时，采用所指定的比较器，调用siftUpUsingComparator方法：
+
+```java
+private static <T> void siftUpUsingComparator(int k, T x, Object[] array,
+                                              Comparator<? super T> cmp) {
+    while (k > 0) {
+        int parent = (k - 1) >>> 1;
+        Object e = array[parent];
+        if (cmp.compare(x, (T) e) >= 0)
+            break;
+        array[k] = e;
+        k = parent;
+    }
+    array[k] = x;
+}
+```
+
+##### 6. tryGrow：扩容
+
+```java
+private void tryGrow(Object[] array, int oldCap) {
+    lock.unlock();      // 扩容操作使用自旋，不需要锁主锁，释放
+    Object[] newArray = null;
+    // CAS 占用
+    if (allocationSpinLock == 0 && UNSAFE.compareAndSwapInt(this, allocationSpinLockOffset, 0, 1)) {
+        try {
+
+            // 新容量  最小翻倍
+            int newCap = oldCap + ((oldCap < 64) ? (oldCap + 2) :  (oldCap >> 1));
+
+            // 超过
+            if (newCap - MAX_ARRAY_SIZE > 0) {    // possible overflow
+                int minCap = oldCap + 1;
+                if (minCap < 0 || minCap > MAX_ARRAY_SIZE)
+                    throw new OutOfMemoryError();
+                newCap = MAX_ARRAY_SIZE;        // 最大容量
+            }
+            if (newCap > oldCap && queue == array)
+                newArray = new Object[newCap];
+        } finally {
+            allocationSpinLock = 0;     // 扩容后allocationSpinLock = 0 代表释放了自旋锁
+        }
+    }
+    // 到这里如果是本线程扩容newArray肯定是不为null，为null就是其他线程在处理扩容，那就让给别的线程处理
+    if (newArray == null)
+        Thread.yield();
+    // 主锁获取锁
+    lock.lock();
+    // 数组复制
+    if (newArray != null && queue == array) {
+        queue = newArray;
+        System.arraycopy(array, 0, newArray, 0, oldCap);
+    }
+}
+```
+
+整个添加元素的过程和上面二叉堆一模一样：先将元素添加到数组末尾，然后采用“上冒”的方式将该元素尽量往上冒。
+
+##### 7. 出列：poll
+
+```java
+public E poll() {
+    final ReentrantLock lock = this.lock;
+    lock.lock();
+    try {
+        return dequeue();
+    } finally {
+        lock.unlock();
+    }
+}
+```
+
+先获取锁，然后调用dequeue()方法：
+
+##### 8. dequeue
+
+```java
+private E dequeue() {
+    // 没有元素 返回null
+    int n = size - 1;
+    if (n < 0)
+        return null;
+    else {
+        Object[] array = queue;
+        // 出对元素
+        E result = (E) array[0];
+        // 最后一个元素（也就是插入到空穴中的元素）
+        E x = (E) array[n];
+        array[n] = null;
+        // 根据比较器释放为null，来执行不同的处理
+        Comparator<? super E> cmp = comparator;
+        if (cmp == null)
+            siftDownComparable(0, x, array, n);
+        else
+            siftDownUsingComparator(0, x, array, n, cmp);
+        size = n;
+        return result;
+    }
+}
+```
+
+##### 9. siftDownComparable
+
+如果比较器为null，则调用siftDownComparable来进行自然排序处理：
+
+```java
+private static <T> void siftDownComparable(int k, T x, Object[] array,
+                                           int n) {
+    if (n > 0) {
+        Comparable<? super T> key = (Comparable<? super T>)x;
+        // 最后一个叶子节点的父节点位置
+        int half = n >>> 1;
+        while (k < half) {
+            int child = (k << 1) + 1;       // 待调整位置左节点位置
+            Object c = array[child];        //左节点
+            int right = child + 1;          //右节点
+
+            //左右节点比较，取较小的
+            if (right < n &&
+                ((Comparable<? super T>) c).compareTo((T) array[right]) > 0)
+                c = array[child = right];
+
+            //如果待调整key最小，那就退出，直接赋值
+            if (key.compareTo((T) c) <= 0)
+                break;
+            //如果key不是最小，那就取左右节点小的那个放到调整位置，然后小的那个节点位置开始再继续调整
+            array[k] = c;
+            k = child;
+        }
+        array[k] = key;
+    }
+}
+```
+
+处理思路和二叉堆删除节点的逻辑一样：就第一个元素定义为空穴，然后把最后一个元素取出来，尝试插入到空穴位置，并与两个子节点值进行比较，如果不符合，则与其中较小的子节点进行替换，然后继续比较调整。
+
+##### 10. siftDownUsingComparator
+
+如果指定了比较器，则采用比较器来进行调整：
+
+```java
+private static <T> void siftDownUsingComparator(int k, T x, Object[] array,
+                                                int n,
+                                                Comparator<? super T> cmp) {
+    if (n > 0) {
+        int half = n >>> 1;
+        while (k < half) {
+            int child = (k << 1) + 1;
+            Object c = array[child];
+            int right = child + 1;
+            if (right < n && cmp.compare((T) c, (T) array[right]) > 0)
+                c = array[child = right];
+            if (cmp.compare(x, (T) c) <= 0)
+                break;
+            array[k] = c;
+            k = child;
+        }
+        array[k] = x;
+    }
+}
+```
+
+PriorityBlockingQueue采用二叉堆来维护，所以整个处理过程不是很复杂，添加操作则是不断“上冒”，而删除操作则是不断“下掉”。掌握二叉堆就掌握了PriorityBlockingQueue，无论怎么变还是。对于PriorityBlockingQueue需要注意的是他是一个无界队列，所以添加操作是不会失败的，除非资源耗尽。
+
+#### 4. 参考文档：
+
+最详细版图解优先队列（堆）：[https://www.cnblogs.com/9dragon/p/10739121.html](https://www.cnblogs.com/9dragon/p/10739121.html)
+
+PriorityBlockingQueue 源码分析：[https://www.cnblogs.com/yaowen/p/10708249.html](https://www.cnblogs.com/yaowen/p/10708249.html)
+
+JUC之阻塞队列PriorityBlockingQueue：[https://www.jianshu.com/p/43954715aa28](https://www.jianshu.com/p/43954715aa28)
+
+### (6). DelayQueue
+
+#### 1. 概述
 
 
-### DelayQueue
+
+
 
 
 ## 十一、BlockingDeque的实现类
