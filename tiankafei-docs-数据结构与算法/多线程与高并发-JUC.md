@@ -4733,9 +4733,207 @@ ConcurrentLinkedQueue 的非阻塞算法实现可概括为下面 5 点：
 
 #### 1. 概述
 
+ArrayDeque 是 Deque 接口的一种具体实现，是依赖于可变数组来实现的。ArrayDeque 没有容量限制，可根据需求自动进行扩容。ArrayDeque 可以作为栈来使用，效率要高于 Stack；ArrayDeque 也可以作为队列来使用，效率相较于基于双向链表的 LinkedList 也要更好一些。注意，ArrayDeque 不支持为 null 的元素。<font color="red">**非线程安全**</font>
 
+#### 2. 实现思路
 
+我先来总结下ArrayDeque的实现思路。
 
+首先，ArrayDeque内部是拥有一个内部数组用于存储数据。其次，假设采用简单的方案，即队列数组按顺序在数组里排开，那么：
+
+1. 由于ArrayDeque的两端都能增删数据，那么把数据插入到队列头部也就是数组头部，会造成O(N)的时间复杂度。
+2. 假设只再队尾加入而只从队头删除，队头就会空出越来越多的空间。
+
+那么该怎么实现？也很简单。将物理上的连续数组回绕，形成逻辑上的一个 **环形结构**。即a[size - 1]的下一个位置是a[0].
+之后，使用头尾指针标识队列头尾，在队列头尾增删元素，反映在头尾指针上就是这两个指针绕着环赛跑。
+
+这个是大体思路，具体的还有一些细节，后面代码里分析：
+
+1. head和tail的具体概念是如何界定？
+2. 如果判断队满和队空？
+3. 数组满了怎么办？
+
+#### 3. 源码剖析
+
+##### 1. 重要的属性
+
+```java
+//数据存放数组,默认初始容量为16，每次扩容都是容量翻倍
+transient Object[] elements;
+//头部元素下标
+transient int head;
+//尾部元素下标
+transient int tail;
+```
+
+![ArrayDeque结构](./images/ArrayDeque结构.png)
+
+##### 2. 构造函数
+
+```java
+public ArrayDeque() {
+    elements = new Object[16]; // 默认的数组长度大小  
+}
+
+public ArrayDeque(int numElements) {
+    allocateElements(numElements);// 需要的数组长度大小  
+}
+
+private void allocateElements(int numElements) {
+    elements = new Object[calculateSize(numElements)];
+}
+```
+
+1. 如果没有指定内部数组的初始大小，默认为16。
+2. 如果指定了内部数组的初始大小，则通过`calculateSize`函数二次计算出大小。
+
+##### 3. calculateSize函数
+
+```java
+private static final int MIN_INITIAL_CAPACITY = 8;
+
+private static int calculateSize(int numElements) {
+    int initialCapacity = MIN_INITIAL_CAPACITY;
+    // 找到大于需要长度的最小的2的幂整数。  
+    // Tests "<=" because arrays aren't kept full.
+    if (numElements >= initialCapacity) {
+        initialCapacity = numElements;
+        initialCapacity |= (initialCapacity >>>  1);
+        initialCapacity |= (initialCapacity >>>  2);
+        initialCapacity |= (initialCapacity >>>  4);
+        initialCapacity |= (initialCapacity >>>  8);
+        initialCapacity |= (initialCapacity >>> 16);
+        initialCapacity++;
+
+        if (initialCapacity < 0)   // Too many elements, must back off
+            initialCapacity >>>= 1;// Good luck allocating 2 ^ 30 elements
+    }
+    return initialCapacity;
+}
+```
+
+1. 如果小于8，那么大小就为8。
+2. 如果大于等于8，则按照2的幂对齐。
+
+##### 4. 入队
+
+```java
+public void addFirst(E e) {
+    if (e == null)
+        throw new NullPointerException();
+    elements[head = (head - 1) & (elements.length - 1)] = e;
+    if (head == tail)
+        doubleCapacity();
+}
+
+public void addLast(E e) {
+    if (e == null)
+        throw new NullPointerException();
+    elements[tail] = e;
+    if ( (tail = (tail + 1) & (elements.length - 1)) == head)
+        doubleCapacity();
+}
+```
+
+`addFirst`是从队头插入，`addLast`是从队尾插入。
+
+从该代码能够分析出head和tail指针的含义：
+
+1. head指针指向的是队头元素的位置，除非队列为空。
+2. tail指针指向的是队尾元素后一格的位置，即尾后指针。
+
+因此：
+
+1. 如果队列没有满，tail指向的是空位置，head指向的是队头元素，永远不可能一样。
+2. 但是当队列满时，tail回绕会追上head，当tail等于head时，表示队列满了。
+
+理清楚了这一点，上面的代码也就十分容易理解了：
+
+1. 对应位置插入位置，移动指针。
+2. 当tail和head相等时，扩容。
+
+最后，这句：
+
+```java
+(head - 1) & (elements.length - 1)
+```
+
+假如被余数是2的幂次方，那么模运算就能够优化成按位与运算。也即相当于：
+
+```java
+(head - 1) % elements.length
+```
+
+##### 5. 出队
+
+```java
+public E pollFirst() {
+    int h = head;
+    @SuppressWarnings("unchecked")
+    E result = (E) elements[h];
+    // Element is null if deque empty
+    if (result == null)
+        return null;
+    elements[h] = null;     // Must null out slot
+    head = (h + 1) & (elements.length - 1);
+    return result;
+}
+
+public E pollLast() {
+    int t = (tail - 1) & (elements.length - 1);
+    @SuppressWarnings("unchecked")
+    E result = (E) elements[t];
+    if (result == null)
+        return null;
+    elements[t] = null;
+    tail = t;
+    return result;
+}
+```
+
+##### 6. 扩容
+
+```java
+// 扩容为原来的2倍。  
+private void doubleCapacity() {
+    assert head == tail;
+    int p = head;
+    int n = elements.length;
+    int r = n - p; // number of elements to the right of p
+    int newCapacity = n << 1;
+    // 扩容后的大小小于0（溢出），也即队列最大应该是2的30次方
+    if (newCapacity < 0)
+        throw new IllegalStateException("Sorry, deque too big");
+    Object[] a = new Object[newCapacity];
+    // 既然是head和tail已经重合了，说明tail是在head的左边。
+    System.arraycopy(elements, p, a, 0, r); // 拷贝原数组从head位置到结束的数据  
+    System.arraycopy(elements, 0, a, r, p); // 拷贝原数组从开始到head的数据  
+    elements = a;
+    head = 0;// 重置head和tail为数据的开始和结束索引  
+    tail = n;
+}
+// 拷贝该数组的所有元素到目标数组
+private <T> T[] copyElements(T[] a) {
+    if (head < tail) { // 开始索引大于结束索引，一次拷贝  
+        System.arraycopy(elements, head, a, 0, size());
+    } else if (head > tail) {// 开始索引在结束索引的右边，分两段拷贝  
+        int headPortionLen = elements.length - head;
+        System.arraycopy(elements, head, a, 0, headPortionLen);
+        System.arraycopy(elements, 0, a, headPortionLen, tail);
+    }
+    return a;
+}
+```
+
+![ArrayDeque扩容](./images/ArrayDeque扩容.png)
+
+扩容的实现为按 **两倍** 扩容原数组，将原数倍拷贝过去。
+
+其中值得注意的是对数组大小溢出的处理。
+
+#### 4. 总结
+
+参考文档：[https://segmentfault.com/a/1190000016330001](https://segmentfault.com/a/1190000016330001)
 
 ### (2). IdentityLinkedList
 
@@ -4748,4 +4946,52 @@ ConcurrentLinkedQueue 的非阻塞算法实现可概括为下面 5 点：
 ### (3). ConcurrentLinkedDeque
 
 #### 1. 概述
+
+
+
+
+
+## 十四、其他重要的容器
+
+### (1). ConcurrentHashMap
+
+#### 1. 概述
+
+
+
+
+
+### (2). ConcurrentSkipListMap
+
+#### 1. 概述
+
+
+
+
+
+### (3). ConcurrentSkipListSet
+
+#### 1. 概述
+
+
+
+
+
+### (4). CopyOnWriteArrayList
+
+#### 1. 概述
+
+
+
+
+
+### (5). CopyOnWriteArraySet
+
+#### 1. 概述
+
+
+
+
+
+## 十五、线程池
 
