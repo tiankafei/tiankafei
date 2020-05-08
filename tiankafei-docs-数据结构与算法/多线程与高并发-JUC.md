@@ -5514,6 +5514,8 @@ void unlink(Node<E> x) {
 
 `ConcurrentSkipListMap`是线程安全的有序的哈希表，适用于高并发的场景。跳表（跳跃表）是一种数据结构，改进自链表，用于存储有序的数据，跳跃表通过空间换时间的方法来提高数据检索的速度。空间换时间的算法是：建立多级索引，实现以二分查找遍历一个有序链表。时间复杂度等同于红黑树的 O(log n)。但实现却远远比红黑树要简单。
 
+>ConcurrentSkipListMap其实是TreeMap的并发版本。TreeMap使用的是红黑树，并且按照key的顺序排序（自然顺序、自定义顺序），但是他是非线程安全的，如果在并发环境下，建议使用ConcurrentHashMap或者[ConcurrentSkipListMap](https://www.jianshu.com/p/62e0b119a968)。
+
 #### 2. 跳跃表的数据结构介绍
 
 ##### 1. 跳跃表具有以下几个必备的性质
@@ -6126,9 +6128,15 @@ public Collection<V> values() {
 
 #### 1. 概述
 
+`ConcurrentSkipListSet`是线程安全的有序的集合，适用于高并发的场景。`ConcurrentSkipListSet`也是基于`ConcurrentSkipListMap`实现的。上面已经详细讲述了`ConcurrentSkipListMap`的原理及源码，故在此不做过多描述。
 
+>`ConcurrentSkipListSet`其实是`TreeSet`的并发版本。`TreeSet`底层使用红黑树，并且按照key的顺序排序（自然顺序、自定义顺序），但是他是非线程安全的，如果在并发环境下`ConcurrentSkipListSet`。
 
+#### 2. 总结
 
+参考文档
+
+[https://www.jianshu.com/p/2f0c5a2c2dc4](https://www.jianshu.com/p/2f0c5a2c2dc4)
 
 ### (4). CopyOnWriteArrayList
 
