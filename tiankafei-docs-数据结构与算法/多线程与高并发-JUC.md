@@ -4378,7 +4378,7 @@ private void siftDownUsingComparator(int k, E x) {
 
 上面源码，当第一个元素出列之后，对剩下的元素进行再排序，挑选出最小的元素排在数组第一个位置。
 
-通过上面源码，也可看出PriorityQueue并不是线程安全队列，因为offer/poll都没有对队列进行锁定，所以，如果要拥有线程安全的优先级队列，需要额外进行加锁操作。
+通过上面源码，也可看出`PriorityQueue`并**不是线程安全队列**，因为offer/poll都没有对队列进行锁定，所以，如果要拥有线程安全的优先级队列，需要**额外进行加锁**操作。
 
 #### 4. 总结
 
@@ -4446,8 +4446,6 @@ private static class Node<E> {
     }
 }
 ```
-
-
 
 ##### 2. 构造方法
 
@@ -4577,14 +4575,14 @@ public boolean offer(E e) {
 从源代码角度来看整个入队过程主要做两件事情：
 
 1. 第一是定位出尾节点
-2. 第二是使用CAS算法能将入队节点设置成尾节点的next节点，如不成功则重试。
+2. 第二是使用 CAS 算法能将入队节点设置成尾节点的next节点，如不成功则重试。
 
 第一步定位尾节点。tail节点并不总是尾节点，所以每次入队都必须先通过tail节点来找到尾节点，尾节点可能就是tail节点，也可能是tail节点的next节点。代码中循环体中的第一个if就是判断tail是否有next节点，有则表示next节点可能是尾节点。获取tail节点的next节点需要注意的是p节点等于q节点的情况，出现这种情况的原因我们后续再来介绍。
 第二步设置入队节点为尾节点。p.casNext(null, newNode)方法用于将入队节点设置为当前队列尾节点的next节点，q如果是null表示p是当前队列的尾节点，如果不为null表示有其他线程更新了尾节点，则需要重新获取当前队列的尾节点。
 
 ##### 5. tail节点不一定为尾节点的设计意图
 
-对于先进先出的队列入队所要做的事情就是将入队节点设置成尾节点，doug lea写的代码和逻辑还是稍微有点复杂。那么我用以下方式来实现行不行？
+对于先进先出的队列入队所要做的事情就是将入队节点设置成尾节点，作者写的代码和逻辑还是稍微有点复杂。那么我用以下方式来实现行不行？
 
 ```java
 public boolean offer(E e) {
@@ -4601,11 +4599,11 @@ public boolean offer(E e) {
 }
 ```
 
-让tail节点永远作为队列的尾节点，这样实现代码量非常少，而且逻辑非常清楚和易懂。但是这么做有个缺点就是每次都需要使用循环CAS更新tail节点。如果能减少CAS更新tail节点的次数，就能提高入队的效率。
+让 tail 节点永远作为队列的尾节点，这样实现代码量非常少，而且逻辑非常清楚和易懂。但是这么做有个缺点就是每次都需要使用循环 CAS 更新 tail 节点。如果能减少 CAS 更新 tail 节点的次数，就能提高入队的效率。
 
-在JDK 1.7的实现中，作者使用hops变量来控制并减少tail节点的更新频率，并不是每次节点入队后都将 tail节点更新成尾节点，而是当tail节点和尾节点的距离大于等于常量HOPS的值（默认等于1）时才更新tail节点，tail和尾节点的距离越长使用CAS更新tail节点的次数就会越少，但是距离越长带来的负面效果就是每次入队时定位尾节点的时间就越长，因为循环体需要多循环一次来定位出尾节点，但是这样仍然能提高入队的效率，因为从本质上来看它通过增加对volatile变量的读操作来减少了对volatile变量的写操作，而对volatile变量的写操作开销要远远大于读操作，所以入队效率会有所提升。
+在JDK 1.7的实现中，作者使用hops变量来控制并减少 tail 节点的更新频率，并不是每次节点入队后都将 tail 节点更新成尾节点，而是当tail节点和尾节点的距离大于等于常量 HOPS 的值（默认等于1）时才更新 tail 节点，tail 和尾节点的距离越长使用 CAS 更新 tail 节点的次数就会越少，但是距离越长带来的负面效果就是每次入队时定位尾节点的时间就越长，因为循环体需要多循环一次来定位出尾节点，但是这样仍然能提高入队的效率，因为从本质上来看它通过增加对 volatile变量的读操作来减少了对 volatile 变量的写操作，而对 volatile 变量的写操作开销要远远大于读操作，所以入队效率会有所提升。
 
-在JDK 1.8的实现中，tail的更新时机是通过p和t是否相等来判断的，其实现结果和JDK 1.7相同，即当tail节点和尾节点的距离大于等于1时，更新tail。
+在JDK 1.8的实现中，tail 的更新时机是通过p和t是否相等来判断的，其实现结果和JDK 1.7相同，即当tail节点和尾节点的距离大于等于1时，更新tail。
 
 ##### 6. 入队操作整体逻辑如下图所示：
 
@@ -4617,7 +4615,7 @@ public boolean offer(E e) {
 
 ![ConcurrentLinkedQueue-出队](./images/ConcurrentLinkedQueue-出队.png)
 
-从上图可知，并不是每次出队时都更新head节点，当head节点里有元素时，直接弹出head节点里的元素，而不会更新head节点。只有当head节点里没有元素时，出队操作才会更新head节点。采用这种方式也是为了减少使用CAS更新head节点的消耗，从而提高出队效率。让我们再通过源码来深入分析下出队过程。
+从上图可知，并不是每次出队时都更新 head 节点，当 head 节点里有元素时，直接弹出head节点里的元素，而不会更新head 节点。只有当head节点里没有元素时，出队操作才会更新head节点。采用这种方式也是为了减少使用 CAS 更新head 节点的消耗，从而提高出队效率。让我们再通过源码来深入分析下出队过程。
 
 ##### 8. 出队方法
 
@@ -4662,7 +4660,7 @@ public E poll() {
 
 ![ConcurrentLinkedQueue](./images/ConcurrentLinkedQueue.png)
 
-在弹出一个节点之后，tail节点有一条指向自己的虚线，这是什么意思呢？我们来看poll()方法，在该方法中，移除元素之后，会调用updateHead方法：
+在弹出一个节点之后，tai l节点有一条指向自己的虚线，这是什么意思呢？我们来看poll()方法，在该方法中，移除元素之后，会调用updateHead方法：
 
 ```java
 final void updateHead(Node<E> h, Node<E> p) {
@@ -4781,7 +4779,7 @@ ConcurrentLinkedQueue 的非阻塞算法实现可概括为下面 5 点：
 
 1. 使用 CAS 原子指令来处理对数据的并发访问，这是非阻塞算法得以实现的基础。
 2. head/tail 并非总是指向队列的头 / 尾节点，也就是说允许队列处于不一致状态。 这个特性把入队 / 出队时，原本需要一起原子化执行的两个步骤分离开来，从而缩小了入队 / 出队时需要原子化更新值的范围到唯一变量。这是非阻塞算法得以实现的关键。
-3. 由于队列有时会处于不一致状态。为此，ConcurrentLinkedQueue 使用[三个不变式](https://www.ibm.com/developerworks/cn/java/j-lo-concurrent/index.html)来维护非阻塞算法的正确性。
+3. 由于队列有时会处于不一致状态。为此，ConcurrentLinkedQueue 使用**三个不变式(p,t,q)**来维护非阻塞算法的正确性。
 4. 以批处理方式来更新 head/tail，从整体上减少入队 / 出队操作的开销。
 5. 为了有利于垃圾收集，队列使用特有的 head 更新机制；为了确保从已删除节点向后遍历，可到达所有的非删除节点，队列使用了特有的向后推进策略。
 
@@ -4906,7 +4904,7 @@ System.arraycopy(elements, p, a, 0, r);
 System.arraycopy(elements, 0, a, r, p);
 ```
 
-相比ArrayList，我们可以看到ArrayDeque大量减少了System.arrayCopy的使用，只在delete、clone、扩容和toArray函数中使用了这个函数，其他操作中都不需要大量移动数组元素，这也可以说明ArrayDeque这个数据集合的性能非常优良。
+相比ArrayList，我们可以看到ArrayDeque大量减少了System.arrayCopy的使用，只在delete、clone、扩容和 toArray 函数中使用了这个函数，其他操作中都不需要大量移动数组元素，这也可以说明 ArrayDeque 这个数据集合的性能非常优良。
 
 #### 3. 实现思路
 
@@ -5022,18 +5020,18 @@ public void addLast(E e) {
 
 从该代码能够分析出head和tail指针的含义：
 
-1. head指针指向的是队头元素的位置，除非队列为空。
-2. tail指针指向的是队尾元素后一格的位置，即尾后指针。
+1. head 指针指向的是队头元素的位置，除非队列为空。
+2. tail 指针指向的是队尾元素后一格的位置，即尾后指针。
 
 因此：
 
-1. 如果队列没有满，tail指向的是空位置，head指向的是队头元素，永远不可能一样。
-2. 但是当队列满时，tail回绕会追上head，当tail等于head时，表示队列满了。
+1. 如果队列没有满，tail 指向的是空位置，head 指向的是队头元素，永远不可能一样。
+2. 但是当队列满时，tail 回绕会追上 head，当 tail 等于 head 时，表示队列满了。
 
 理清楚了这一点，上面的代码也就十分容易理解了：
 
 1. 对应位置插入位置，移动指针。
-2. 当tail和head相等时，扩容。
+2. 当 tail 和 head 相等时，扩容。
 
 最后，这句：
 
@@ -5124,7 +5122,7 @@ private <T> T[] copyElements(T[] a) {
 
 #### 1. 概述
 
-`ConcurrentLinkedDeque`是双向链表结构的无界并发队列。从JDK 7开始加入到JUC的行列中。使用CAS实现并发安全，与`ConcurrentLinkedQueue`的区别是该阻塞队列同时支持**FIFO**和**FILO**两种操作方式，即可以从队列的头和尾同时操作(插入/删除)。适合“多生产，多消费”的场景。内存一致性遵循对`ConcurrentLinkedDeque`的插入操作先行发生于(happen-before)访问或移除操作。**注意：size方法不是一个准确的操作**
+`ConcurrentLinkedDeque`是双向链表结构的无界并发队列。从JDK 7开始加入到JUC的行列中。**使用CAS实现并发安全**，与`ConcurrentLinkedQueue`的区别是该阻塞队列同时支持**FIFO**和**FILO**两种操作方式，即可以从队列的头和尾同时操作(插入/删除)。适合“多生产，多消费”的场景。内存一致性遵循对`ConcurrentLinkedDeque`的插入操作先行发生于(happen-before)访问或移除操作。**注意：size方法不是一个准确的操作**
 
 `ConcurrentLinkedDeque`（后面称CLD） 的实现方式继承了`ConcurrentLinkedQueue`和`LinkedTransferQueue`的思想，在非阻塞算法的实现方面与`ConcurrentLinkedQueue`基本一致。
 
@@ -5143,7 +5141,7 @@ private static final Node<Object> PREV_TERMINATOR, NEXT_TERMINATOR;
 private static final int HOPS = 2;
 ```
 
-和ConcurrentLinkedQueue一样，CLD 内部也只维护了`head`和`tail`属性，对 head/tail 节点也使用了“不变性”和“可变性”约束，不过跟 ConcurrentLinkedQueue 有些许差异，我们来看一下：
+和`ConcurrentLinkedQueue`一样，CLD 内部也只维护了`head`和`tail`属性，对 head/tail 节点也使用了“不变性”和“可变性”约束，不过跟 ConcurrentLinkedQueue 有些许差异，我们来看一下：
 
 **head/tail 的不变性：**
 
@@ -5490,7 +5488,7 @@ void unlink(Node<E> x) {
 
 #### 3. 总结
 
-1. 基于链接节点的无界并发deque 。 并发插入，删除和访问操作可以跨多个线程安全执行。 一个 `ConcurrentLinkedDeque`是许多线程将共享对公共集合的访问的适当选择。 像大多数其他并发集合实现一样，此类不允许使用null元素， `ConcurrentLinkedDeque`是一个双向链表 。
+1. 基于链接节点的无界并发 deque 。 并发插入，删除和访问操作可以跨多个线程安全执行。 一个 `ConcurrentLinkedDeque`是许多线程将共享对公共集合的访问的适当选择。 像大多数其他并发集合实现一样，此类不允许使用null元素， `ConcurrentLinkedDeque`是一个双向链表 。
 2. `ConcurrentLinkedDeque`使用了自旋+CAS的非阻塞算法来保证线程并发访问时的数据一致性。由于队列本身是一种双链表结构，所以虽然算法看起来很简单，但其实需要考虑各种并发的情况，实现复杂度较高，并且`ConcurrentLinkedDeque`不具备实时的数据一致性，实际运用中，如果需要一种线程安全的栈结构，可以使用`ConcurrentLinkedDeque`。
 3. 关于`ConcurrentLinkedDeque`还有以下需要注意的几点
    - `ConcurrentLinkedDeque`的迭代器是弱一致性的，这在并发容器中是比较普遍的现象，主要是指在一个线程在遍历队列结点而另一个线程尝试对某个队列结点进行修改的话不会抛出`ConcurrentModificationException`，这也就造成在遍历某个尚未被修改的结点时，在next方法返回时可以看到该结点的修改，但在遍历后再对该结点修改时就看不到这种变化。
@@ -5514,9 +5512,615 @@ void unlink(Node<E> x) {
 
 #### 1. 概述
 
+`ConcurrentSkipListMap`是线程安全的有序的哈希表，适用于高并发的场景。跳表（跳跃表）是一种数据结构，改进自链表，用于存储有序的数据，跳跃表通过空间换时间的方法来提高数据检索的速度。空间换时间的算法是：建立多级索引，实现以二分查找遍历一个有序链表。时间复杂度等同于红黑树的 O(log n)。但实现却远远比红黑树要简单。
 
+#### 2. 跳跃表的数据结构介绍
 
+##### 1. 跳跃表具有以下几个必备的性质
 
+![ConcurrentSkipListMap-1](./images/ConcurrentSkipListMap-1.jpg)
+
+1. 最底层包含所有节点的一个有序的链表
+2. 每一层都是一个有序的链表
+3. 每个节点都有两个指针，一个指向右侧节点（没有则为空），一个指向下层节点（没有则为空）
+4. 必备一个头节点指向最高层的第一个节点，通过它可以遍历整张表
+
+##### 2. 查找一个元素
+
+![ConcurrentSkipListMap-2](./images/ConcurrentSkipListMap-2.jpg)
+
+查找的过程有点像我们的二分查找，不过这里我们是通过为链表建立多级索引，以空间换时间来实现二分查找。所以，跳表的查询操作的时间复杂度为 O(logN)。
+
+##### 3. 跳表的插入操作
+
+首先，跳表的插入必然会在底层增加一个节点，但是往上的层次是否需要增加节点则完全是随机的，SkipList 通过概率保证整张表的节点分布均匀，它不像红黑树是通过人为的 rebalance 操作来保证二叉树的平衡性。（数学对于计算机还是很重要的）。通过概率算法得到新插入节点的一个 level 值，如果小于当前表的最大 level，从最底层到 level 层都添加一个该节点。例如：
+
+![ConcurrentSkipListMap-3](./images/ConcurrentSkipListMap-3.jpg)
+
+如图，首先 119 节点会被添加到最底层链表的合适位置，然后通过概率算法得到 level 为 2，于是 1—2 层中的每一层都添加了 119 节点。
+
+如果概率算法得到的 level 大于当前表的最大 level 值的话，那么将会新增一个 level，并且将新节点添加到该 level 上。
+
+![ConcurrentSkipListMap-4](./images/ConcurrentSkipListMap-4.jpg)
+
+##### 4. 跳表的删除操作
+
+跳表的删除操作其实就是一个查找加删除节点的操作
+
+![ConcurrentSkipListMap-5](./images/ConcurrentSkipListMap-5.jpg)
+
+#### 3. ConcurrentSkipListMap 的前导知识预备
+
+在实际分析 put 方法之前，有一些预备的知识需要先有个大致的了解，否则在实际分析源码的时候会感觉吃力些。
+
+首先是删除操作，在我们上述的跳表数据结构中谈及的删除操作主要是**定位待删结点** + **删除该结点**的一个复合操作。而在我们的**并发跳表**中，删除操作相对复杂点，需要分为以下三个步骤：
+
+1. 找到待删结点并将其 value 属性值由 notnull 置为 null，整个过程是基于 CAS 无锁式算法的
+2. 向待删结点的 next 位置新增一个 marker 标记结点，整个过程也是基于 CAS 无锁式算法
+3. CAS 式删除具体的结点，实际上也就是跳过该待删结点，让待删结点的前驱节点直接越过本身指向待删结点的后继结点即可
+
+例如我们有以下三个结点，n 为待删除的结点。
+
+```java
++——+ +——+ +——+
+… | b |——>| n |—–>| f | …
++——+ +——+ +——+
+```
+
+第一步是找到 n ，然后 CAS 该结点的 value 值为 null。如果该步骤失败了，那么 ConcurrentSkipListMap 会通过循环再次尝试 CAS 将 n 的 value 属性赋值为 null。
+
+第二步是建立在第一步成功的前提下的，n 的当前 value 属性的值为 null，ConcurrentSkipListMap 试图在 n 的后面增加一个空的 node 结点（marker）以分散下一步的并发冲突性。
+
+```java
++------+       +------+      +------+       +------+
+...  |   b  |------>|   n  |----->|marker|---->|   f  | ...
++------+       +------+      +------+       +------+
+```
+
+第三步，断链操作。如果 marker 添加失败，将不会有第三步，直接回重新回到第一步。如果成功添加，那么将试图断开 b 到 n 的链接，直接绕过 n，让 b 的 next 指向 f。那么，这个 n 结点将作为内存中的一个游离结点，最终被 GC 掉。断开失败的话，也将回到第一步。
+
+```java
++------+                                    +------+
+...  |   b  |----------------------->|   f  | ...
++------+                                    +------+
+```
+
+#### 5. 源码剖析
+
+##### 1. node 结点类型的定义
+
+这是 node 结点类型的定义，是最基本的数据存储单元。
+
+```java
+static final class Node<K,V> {
+    final K key;
+    volatile Object value;
+    volatile Node<K,V> next;
+
+    Node(K key, Object value, Node<K,V> next) {
+        this.key = key;
+        this.value = value;
+        this.next = next;
+    }
+    //省略其它的一些基于当前结点的 CAS 方法
+}
+```
+
+##### 2. Index 结点
+
+Index 结点封装了 node 结点，作为跳表的最基本组成单元。
+
+```java
+static class Index<K,V> {
+    final Node<K,V> node;
+    final Index<K,V> down;
+    volatile Index<K,V> right;
+
+    Index(Node<K,V> node, Index<K,V> down, Index<K,V> right) {
+        this.node = node;
+        this.down = down;
+        this.right = right;
+    }
+    //省略其它的一些基于当前结点的 CAS 方法
+}
+```
+
+##### 3. HeadIndex：头结点
+
+HeadIndex 封装了 Index 结点，作为每层的头结点，level 属性用于标识当前层次的序号。
+
+```java
+static final class HeadIndex<K,V> extends Index<K,V> {
+    final int level;
+    HeadIndex(Node<K,V> node, Index<K,V> down, Index<K,V> right, int level) {
+        super(node, down, right);
+        this.level = level;
+    }
+}
+```
+
+##### 4. 重要的属性
+
+```java
+// 整个跳表的头结点，通过它可以遍历访问整张跳表。
+private transient volatile HeadIndex<K,V> head;
+// 比较器，用于比较两个元素的键值大小，如果没有显式传入则默认为自然排序
+final Comparator<? super K> comparator;
+// 特殊的值，用于初始化跳表
+private static final Object BASE_HEADER = new Object();
+```
+
+##### 5. 构造函数
+
+```java
+//未传入比较器，则为默认值
+public ConcurrentSkipListMap() {
+    this.comparator = null;
+    initialize();
+}
+public ConcurrentSkipListMap(Comparator<? super K> comparator) {
+    this.comparator = comparator;
+    initialize();
+}
+//所有的构造器都会调用这个初始化的方法
+private void initialize() {
+    keySet = null;
+    entrySet = null;
+    values = null;
+    descendingMap = null;
+    head = new HeadIndex<K,V>(new Node<K,V>(null, BASE_HEADER, null),null, null, 1);
+}
+```
+
+这个初始化方法主要完成的是对整张跳表的一个初始化操作，head 头指针指向这个并没有什么实际意义的头结点。
+重点还是那三个内部类，都分别代表了什么样的结点类型，都使用在何种场景下。
+
+##### 6. put 并发添加的内部实现
+
+```java
+//基本的 put 方法，向跳表中添加一个节点
+public V put(K key, V value) {
+    if (value == null)
+        throw new NullPointerException();
+    return doPut(key, value, false);
+}
+```
+
+put 方法的内部调用的是 doPut 方法来实现添加元素的，但是由于 doPut 方法的方法体很长，我们分几个部分进行分析。
+
+```java
+//第一部分
+private V doPut(K key, V value, boolean onlyIfAbsent) {
+    Node<K,V> z;
+    //边界值判断，空的 key 自然是不允许插入的
+    if (key == null)
+        throw new NullPointerException();
+    //拿到比较器的引用
+    Comparator<? super K> cmp = comparator;
+    outer: for (;;) {
+        //根据 key，找到待插入的位置
+        //b 叫做前驱节点，将来作为新加入结点的前驱节点
+        //n 叫做后继结点，将来作为新加入结点的后继结点
+        //也就是说，新节点将插入在 b 和 n 之间
+        for (Node<K,V> b = findPredecessor(key, cmp), n = b.next;;) {
+            //如果 n 为 null，那么说明 b 是链表的最尾端的结点，这种情况比较简单，直接构建新节点插入即可
+            //否则走下面的判断体
+            if (n != null) {
+                Object v; int c;
+                Node<K,V> f = n.next;
+                //如果 n 不再是 b 的后继结点了，说明有其他线程向 b 后面添加了新元素
+                //那么我们直接退出内循环，重新计算新节点将要插入的位置
+                if (n != b.next)
+                    break;
+                //value =0 说明 n 已经被标识位待删除，其他线程正在进行删除操作
+                //调用 helpDelete 帮助删除，并退出内层循环重新计算待插入位置
+                if ((v = n.value) == null) { 
+                    n.helpDelete(b, f);
+                    break;
+                }
+                //b 已经被标记为待删除，前途结点 b 都丢了，可不得重新计算待插入位置吗
+                if (b.value == null || v == n) 
+                    break;
+                //如果新节点的 key 大于 n 的 key 说明找到的前驱节点有误，按序往后挪一个位置即可
+                //回到内层循环重新试图插入
+                if ((c = cpr(cmp, key, n.key)) > 0) {
+                    b = n;
+                    n = f;
+                    continue;
+                }
+                //新节点的 key 等于 n 的 key，这是一次 update 操作，CAS 更新即可
+                //如果更新失败，重新进循环再来一次
+                if (c == 0) {
+                    if (onlyIfAbsent || n.casValue(v, value)) {
+                        @SuppressWarnings("unchecked") V vv = (V)v;
+                        return vv;
+                    }
+                    break; 
+                }
+            }
+            //无论遇到何种问题，到这一步说明待插位置已经确定
+            z = new Node<K,V>(key, value, n);
+            if (!b.casNext(n, z))
+                break;
+            //如果成功了，退出最外层循环，完成了底层的插入工作        
+            break outer;
+        }
+    }
+```
+
+以上这一部分主要完成了向底层链表插入一个节点，至于其中具体的怎么找前驱节点的方法稍后介绍。但这其实只不过才完成一小半的工作，就像红黑树在插入后需要 rebalance 一样，我们的跳表需要根据概率算法保证节点分布稳定，它的调节措施相对于红黑树来说就简单多了，通过往上层索引层添加相关引用即可，以空间换时间。具体的我们来看：
+
+```java
+//第二部分
+//获取一个线程无关的随机数，占四个字节，32 个比特位
+int rnd = ThreadLocalRandom.nextSecondarySeed();
+    //和 1000 0000 0000 0000 0000 0000 0000 0001 与
+    //如果等于 0，说明这个随机数最高位和最低位都为 0，这种概率很大
+    //如果不等于 0，那么将仅仅把新节点插入到最底层的链表中即可，不会往上层递归
+    if ((rnd & 0x80000001) == 0) { 
+        int level = 1, max;
+        //用低位连续为 1 的个数作为 level 的值，也是一种概率策略
+        while (((rnd >>>= 1) & 1) != 0)
+            ++level;
+        Index<K,V> idx = null;
+        HeadIndex<K,V> h = head;
+        //如果概率算得的 level 在当前跳表 level 范围内
+        //构建一个从 1 到 level 的纵列 index 结点引用
+        if (level <= (max = h.level)) {
+            for (int i = 1; i <= level; ++i)
+                idx = new Index<K,V>(z, idx, null);
+        }
+        //否则需要新增一个 level 层
+        else { 
+            level = max + 1; 
+            @SuppressWarnings("unchecked")
+            Index<K,V>[] idxs =(Index<K,V>[])new Index<?,?>[level+1];
+            for (int i = 1; i <= level; ++i)
+                idxs[i] = idx = new Index<K,V>(z, idx, null);
+            for (;;) {
+                h = head;
+                int oldLevel = h.level;
+                //level 肯定是比 oldLevel 大一的，如果小了说明其他线程更新过表了
+                if (level <= oldLevel) 
+                    break;
+                HeadIndex<K,V> newh = h;
+                Node<K,V> oldbase = h.node;
+                //正常情况下，循环只会执行一次，如果由于其他线程的并发操作导致 oldLevel 的值不稳定，那么会执行多次循环体
+                for (int j = oldLevel+1; j <= level; ++j)
+                    newh = new HeadIndex<K,V>(oldbase, newh, idxs[j], j);
+                //更新头指针
+                if (casHead(h, newh)) {
+                    h = newh;
+                    idx = idxs[level = oldLevel];
+                    break;
+                }
+            }
+        }
+```
+
+这一部分的代码主要完成的是根据 level 的值，确认是否需要增加一层索引，如果不需要则构建好底层到 level 层的 index 结点的纵向引用。如果需要，则新创建一层索引，完成 head 结点的指针转移，并构建好纵向的 index 结点引用。
+
+```java
+//第三部分
+if ((rnd & 0x80000001) == 0){
+//省略第二部分的代码段
+//第三部分的代码是紧接着第二部分代码段后面的
+    splice: for (int insertionLevel = level;;) {
+            int j = h.level;
+            for (Index<K,V> q = h, r = q.right, t = idx;;) {
+                //其他线程并发操作导致头结点被删除，直接退出外层循环
+                //这种情况发生的概率很小，除非并发量实在太大
+                if (q == null || t == null)
+                    break splice;
+                if (r != null) {
+                    Node<K,V> n = r.node;
+                    int c = cpr(cmp, key, n.key);
+                    //如果 n 正在被其他线程删除，那么调用 unlink 去删除它
+                    if (n.value == null) {
+                        if (!q.unlink(r))
+                            break;
+                        //重新获取 q 的右结点，再次进入循环
+                        r = q.right;
+                        continue;
+                    }
+                    //c > 0 说明前驱结点定位有误，重新进入
+                    if (c > 0) {
+                        q = r;
+                        r = r.right;
+                        continue;
+                    }
+                }
+                if (j == insertionLevel) {
+                    //尝试着将 t 插在 q 和 r 之间，如果失败了，退出内循环重试
+                    if (!q.link(r, t))
+                        break; // restart
+                    //如果插入完成后，t 结点被删除了，那么结束插入操作
+                    if (t.node.value == null) {
+                        findNode(key);
+                        break splice;
+                    }
+                    // insertionLevel-- 处理底层链接
+                    if (--insertionLevel == 0)
+                        break splice;
+                }
+                //--j，j 应该与 insertionLevel 同步，它代表着我们创建的那个纵向的结点数组的索引
+                //并完成层次下移操作
+                if (--j >= insertionLevel && j < level)
+                    t = t.down;
+                //至此，新节点在当前层次的前后引用关系已经被链接完成，现在处理下一层
+                q = q.down;
+                r = q.right;
+            }
+        }
+    }
+    return null;
+}
+```
+
+我们根据概率算法得到了一个 level 值，并且通过第二步创建了 level 个新节点并构成了一个纵向的引用关联，但是这些纵向的结点并没有链接到每层中。而我们的第三部分代码就是完成的这个工作，将我们的新节点在每个索引层都构建好前后的链接关系。下面用三张图描述着三个部分所完成的主要工作。
+
+##### 7. 图解
+
+初始化的跳表如下：
+
+![ConcurrentSkipListMap-1](./images/ConcurrentSkipListMap-1.png)
+
+第一部分，新增一个结点到最底层的链表上。
+
+![ConcurrentSkipListMap-2](./images/ConcurrentSkipListMap-2.png)
+
+第二部分，假设概率得出一个 level 值为 10，那么根据跳表的算法描述需要新建一层索引层。
+
+![ConcurrentSkipListMap-3](./images/ConcurrentSkipListMap-3.png)
+
+第三步，链接各个索引层次上的新节点。
+
+![ConcurrentSkipListMap-4](./images/ConcurrentSkipListMap-4.png)
+
+这样就完成了新增结点到跳表中的全部过程，大体上已如上图描述，至于 ConcurrentSkipListMap 中关于并发处理的细节之处，图中无法展示，大家可据此重新感受下源码的实现过程。下面我们着重描述下整个 doPut 方法中还涉及的其他几个方法的具体实现。
+
+##### 8. findPredecessor()方法
+
+**首先是 findPredecessor 方法**，我们说该方法将根据给定的 key，为我们返回最合适的前驱节点。
+
+```java
+private Node<K,V> findPredecessor(Object key, Comparator<? super K> cmp) {
+    if (key == null)
+        throw new NullPointerException(); 
+    for (;;) {
+        for (Index<K,V> q = head, r = q.right, d;;) {
+            //r 为空说明 head 后面并没有其他节点了
+            if (r != null) {
+                Node<K,V> n = r.node;
+                // r 节点处于待删除状态，那么尝试 unlink 它，失败了将重新进入循环再此尝试
+                //否则重新获取 q 的右结点并重新进入循环查找前驱节点
+                if (n.value == null) {
+                    if (!q.unlink(r))
+                        break;           // restart
+                    r = q.right;         // reread r
+                    continue;
+                }
+                //大于零说明当前位置上的 q 还不是我们要的前驱节点，继续往后找
+                if (cpr(cmp, key, k) > 0) {
+                    q = r;
+                    r = r.right;
+                    continue;
+                }
+            }
+            //如果当前的 level 结束了或者 cpr(cmp, key, k) <= 0 会达到此位置
+            //往低层递归，如果没有低层了，那么当前的 q 就是最合适的前驱节点
+            //整个循环只有这一个出口，无论如何最终都会从此处结束方法
+            if ((d = q.down) == null)
+                return q.node;
+           //否则向低层递归并重置 q 和 r
+            q = d;
+            r = d.right;
+        }
+    }
+}
+```
+
+最后总结下 findPredecessor 方法的大体逻辑，首先程序会从 head 节点开始在当前的索引层上寻找最后一个比给定 key 小的结点，它就是我们需要的前驱节点（q），我们只需要返回它即可。
+
+##### 9. helpDelete()方法
+
+**其次我们看看 helpDelete 方法**，当检测到某个结点的 value 属性值为 null 的时候，一般都会调用这个方法来删除该结点。
+
+```java
+/*
+   一般的调用形式如下：
+   n.helpDelete(b, f);
+*/
+void helpDelete(Node<K,V> b, Node<K,V> f) {
+    if (f == next && this == b.next) {
+       if (f == null || f.value != f) 
+            casNext(f, new Node<K,V>(f));
+        else
+            b.casNext(this, f.next);
+    }
+}
+```
+
+该方法是 Node 结点的内部实例方法，逻辑相对简单，此处不再赘述。通过该方法可以完成将 b.next 指向 f，完成对 n 结点的删除。
+
+至此，有关 put 方法的源码分析就简单到这，大部分的代码还是用于实现跳表这种数据结构的构建和插入，关于并发的处理，你会发现基本都是双层 for 循环+ CAS 无锁式更新，如果遇到竞争失利将退出里层循环重新进行尝试，否则成功的话就会直接 return 或者退出外层循环并结束 CAS 操作。下面我们看删除操作是如何实现的。
+
+##### 10. remove 并发删除操作的内部实现
+
+remove 方法的部分内容我们在介绍相关预备知识中已经提及过，此处的理解想必会容易些。
+
+```java
+public V remove(Object key) {
+    return doRemove(key, null);
+}
+```
+
+```java
+//代码比较多，建议读者结合自己的 jdk 源码共同来分析
+final V doRemove(Object key, Object value) {
+    if (key == null)
+        throw new NullPointerException();
+    Comparator<? super K> cmp = comparator;
+    outer: for (;;) {
+        //找到 key 的前驱节点
+        //因为删除不单单是根据 key 找到对应的结点，然后赋 null 就完事的，还要负责链接该结点前后的关联
+        for (Node<K,V> b = findPredecessor(key, cmp), n = b.next;;) {
+            Object v; int c;
+            //目前 n 基本上就是我们要删除的结点，它为 null，那自然不用继续了，已经被删除了
+            if (n == null)
+                break outer;
+            Node<K,V> f = n.next;
+            //再次确认 n 还是不是 b 的后继结点，如果不是将退出里层循环重新进入
+            if (n != b.next)               
+                break;
+            //如果有人正在删除 n，那么帮助它删除
+            if ((v = n.value) == null) {     
+                n.helpDelete(b, f);
+                break;
+            }
+            //b 被删除了，重新定位前驱节点
+            if (b.value == null || v == n)     
+                break;
+            //正常情况下，key 应该等于 n.key
+            //key 大于 n.key 说明我们要找的结点可能在 n 的后面，往后递归即可
+            //key 小于 n.key 说明 key 所代表的结点根本不存在
+            if ((c = cpr(cmp, key, n.key)) < 0)
+                break outer;
+            if (c > 0) {
+                b = n;
+                n = f;
+                continue;
+            }
+            //如果删除是根据键和值两个参数来删除的话，value 是不为 null 的
+            //这种情况下，如果 n 的 value 属性不等于我们传入的 value ，那么是不进行删除的
+            if (value != null && !value.equals(v))
+                break outer;
+            //下面三个步骤才是整个删除操作的核心，大致的逻辑我们也在上文提及过了，此处想必会容易理解些
+            //第一步，尝试将待删结点的 value 属性赋值 null，失败将退出重试
+            if (!n.casValue(v, null))
+                break;
+            //第二步和第三步如果有一步由于竞争失败，将调用 findNode 方法根据我们第一步的成果，也就是删除所有 value 为 null 的结点
+            if (!n.appendMarker(f) || !b.casNext(n, f))
+                findNode(key);  
+            //否则说明三个步骤都成功完成了   
+            else {
+                findPredecessor(key, cmp);  
+                //判断此次删除后是否导致某一索引层没有其他节点了，并适情况删除该层索引  
+                if (head.right == null)
+                    tryReduceLevel();
+            }
+            @SuppressWarnings("unchecked") V vv = (V)v;
+            return vv;
+        }
+    }
+    return null;
+}
+```
+
+remove 方法其实从整体上来看，首先会有一堆的判断，根据给定的 key 和 value 会判断是否存在与 key 对应的一个节点，也会判断和待删结点相关的前后结点是否正在被删除，并适情况帮助删除。其次才是删除的三大步骤，核心步骤还是将待删结点的 value 属性赋 null 以标记该结点无用了，至于这个 marker 也是为了分散并发冲突的，最后通过 casNext 完成结点的删除。
+
+##### 11. get 方法获取指定结点的 value
+
+```java
+public V get(Object key) {
+    return doGet(key);
+}
+private V doGet(Object key) {
+    if (key == null)
+        throw new NullPointerException();
+    Comparator<? super K> cmp = comparator;
+    //依然是双层循环来处理并发
+    outer: for (;;) {
+        for (Node<K,V> b = findPredecessor(key, cmp), n = b.next;;) {
+            Object v; int c;
+            //以下的一些判断的作用已经描述了多次，此处不再赘述了
+            if (n == null)
+                break outer;
+            Node<K,V> f = n.next;
+            if (n != b.next)           
+                break;
+            if ((v = n.value) == null) {    
+                n.helpDelete(b, f);
+                break;
+            }
+            if (b.value == null || v == n)  
+                break;
+            //c = 0 说明 n 就是我们要的结点
+            if ((c = cpr(cmp, key, n.key)) == 0) {
+                @SuppressWarnings("unchecked") V vv = (V)v;
+                return vv;
+            }
+            //c < 0 说明不存在这个 key 所对应的结点
+            if (c < 0)
+                break outer;
+            b = n;
+            n = f;
+        }
+    }
+    return null;
+}
+```
+
+doGet 方法的实现相对还是比较简单的，所以并没有给出太多的注释，主要还是由于大量的并发判断的代码都是一样的，大多都已经在 doPut 方法中给予了详细的注释了。
+
+##### 12. 其它的一些方法的简单描述
+
+```java
+//是否包含指定 key 的结点
+public boolean containsKey(Object key) {
+    return doGet(key) != null;
+}
+//根据 key 返回该 key 所代表的结点的 value 值，不存在该结点则返回默认的 defaultValue
+public V getOrDefault(Object key, V defaultValue) {
+    V v;
+    return (v = doGet(key)) == null ? defaultValue : v;
+}
+//返回跳表的实际存储元素个数，采取遍历来进行统计
+public int size() {
+    long count = 0;
+    for (Node<K,V> n = findFirst(); n != null; n = n.next) {
+        if (n.getValidValue() != null)
+            ++count;
+    }
+    return (count >= Integer.MAX_VALUE) ? Integer.MAX_VALUE : (int) count;
+}
+//返回所有键的集
+public NavigableSet<K> keySet() {
+    KeySet<K> ks = keySet;
+    return (ks != null) ? ks : (keySet = new KeySet<K>(this));
+}
+//返回所有值的集
+public Collection<V> values() {
+    Values<V> vs = values;
+    return (vs != null) ? vs : (values = new Values<V>(this));
+}
+```
+
+这里需要说明一点的是，虽然返回来的是键或者值的一个集合，但是无论你是通过这个集合获取键或者值，还是删除集合中的键或者值，都会直接映射到当前跳表实例中。原因是这个集合中没有一个方法是自己实现的，都是调用传入的跳表实例的内部方法，具体的大家查看源码即可知晓，此处不再贴出源码。
+
+#### 6. 跳跃表的应用场景大概是这样的
+
+1. 有序
+2. 频繁插入和删除
+3. 频繁查询
+
+#### 7. 使用建议
+
+1. 在非多线程的情况下，应当尽量使用TreeMap。
+
+2. 对于并发性相对较低的并行程序可以使用Collections.synchronizedSortedMap将TreeMap进行包装，也可以提供较好的效率。
+
+3. 对于高并发程序，应当使用ConcurrentSkipListMap，能够提供更高的并发度。
+
+4. 所以在多线程程序中，如果需要对Map的键值进行排序时，请尽量使用ConcurrentSkipListMap，可能得到更好的并发度。
+
+   > 注意，调用ConcurrentSkipListMap的size时，由于多个线程可以同时对映射表进行操作，所以映射表需要遍历整个链表才能返回元素个数，这个操作是个O(log(n))的操作。
+
+参考：
+
+[https://blog.csdn.net/qq_35326718/article/details/78870658](https://blog.csdn.net/qq_35326718/article/details/78870658)
+
+[https://blog.csdn.net/vernonzheng/article/details/8244984](https://blog.csdn.net/vernonzheng/article/details/8244984)
 
 ### (3). ConcurrentSkipListSet
 
