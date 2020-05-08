@@ -6142,17 +6142,140 @@ public Collection<V> values() {
 
 #### 1. 概述
 
+CopyOnWriteArrayList这是一个ArrayList的线程安全的变体，其原理大概可以通俗的理解为:初始化的时候只有一个容器，很常一段时间，这个容器数据、数量等没有发生变化的时候，大家(多个线程)，都是读取(假设这段时间里只发生读取的操作)同一个容器中的数据，所以这样大家读到的数据都是唯一、一致、安全的，但是后来有人往里面增加了一个数据，这个时候CopyOnWriteArrayList 底层实现添加的原理是先copy出一个容器(可以简称副本)，再往新的容器里添加这个新的数据，最后把新的容器的引用地址赋值给了之前那个旧的的容器地址，但是在添加这个数据的期间，其他线程如果要去读取数据，仍然是读取到旧的容器里的数据。
 
+>为了将读取的性能发挥到极致，jdk中提供了CopyOnWriteArrayList类。对它来说，读取是完全不用加锁的，写入也不会阻塞读取操作。只有写入与写入之间需要进行同步等待。那么它是如何做到的呢？从这个类的名字中可以看出，CopyOnWrite就是在写入操作时，进行一次自我复制。也就是对原有的数据进行一次复制，将修改的内容写入副本中。写完之后，再将修改完的副本替换原来的数据。这样就可以保证写操作不影响读了。
 
+#### 2. 读取操作
 
+```java
+private transient volatile Object[] array;
+final Object[] getArray() {
+    return array;
+}
+public E get(int index) {
+    return get(getArray(), index);
+}
+private E get(Object[] a, int index) {
+    return (E) a[index];
+}
+```
+
+可以看到，读取代码没有任何同步控制和锁操作，因为内部数组array不会发生修改，只会被另一个array替换，可以保证数据安全。
+
+#### 3. 增删改操作
+
+```java
+// 在最后面加入一个元素
+public boolean add(E e) {
+	final ReentrantLock lock = this.lock;
+	//获得锁
+	lock.lock();
+	try {
+		Object[] elements = getArray();
+	    int len = elements.length;
+	    //复制一个新的数组
+	    Object[] newElements = Arrays.copyOf(elements, len + 1);
+	    //插入新值
+	    newElements[len] = e;
+	    //将新的数组指向原来的引用
+	    setArray(newElements);
+	    return true;
+	} finally {
+		//释放锁
+	    lock.unlock();
+	}
+}
+// 指定位置加入一个元素
+public void add(int index, E element) {
+    final ReentrantLock lock = this.lock;
+    lock.lock();
+    try {
+        Object[] elements = getArray();
+        int len = elements.length;
+        if (index > len || index < 0)
+            throw new IndexOutOfBoundsException("Index: "+index+
+                                                ", Size: "+len);
+        Object[] newElements;
+        int numMoved = len - index;
+        if (numMoved == 0)
+            newElements = Arrays.copyOf(elements, len + 1);
+        else {
+            newElements = new Object[len + 1];
+            System.arraycopy(elements, 0, newElements, 0, index);
+            System.arraycopy(elements, index, newElements, index + 1,
+                             numMoved);
+        }
+        newElements[index] = element;
+        setArray(newElements);
+    } finally {
+        lock.unlock();
+    }
+}
+// 删除指定位置的元素
+public E remove(int index) {
+    final ReentrantLock lock = this.lock;
+    //获得锁
+    lock.lock();
+    try {
+        Object[] elements = getArray();
+        int len = elements.length;
+        E oldValue = get(elements, index);
+        int numMoved = len - index - 1;
+        if (numMoved == 0)
+	        //如果删除的元素是最后一个，直接复制该元素前的所有元素到新的数组
+            setArray(Arrays.copyOf(elements, len - 1));
+        else {
+	        //创建新的数组
+            Object[] newElements = new Object[len - 1];
+            //将index+1至最后一个元素向前移动一格
+            System.arraycopy(elements, 0, newElements, 0, index);
+            System.arraycopy(elements, index + 1, newElements, index,
+                             numMoved);
+            setArray(newElements);
+        }
+        return oldValue;
+    } finally {
+        lock.unlock();
+    }
+}
+// 更新指定位置的元素
+public E set(int index, E element) {
+    final ReentrantLock lock = this.lock;
+    //获得锁
+    lock.lock();
+    try {
+        Object[] elements = getArray();
+        E oldValue = get(elements, index);
+
+        if (oldValue != element) {
+            int len = elements.length;
+            //创建新数组
+            Object[] newElements = Arrays.copyOf(elements, len);
+            //替换元素
+            newElements[index] = element;
+            //将新数组指向原来的引用
+            setArray(newElements);
+        } else {
+            setArray(elements);
+        }
+        return oldValue;
+    } finally {
+	    //释放锁
+        lock.unlock();
+    }
+}
+```
+
+可以看到，增删改操作使用了锁，重点在 Object[] newElements = Arrays.copyOf(elements, len + 1);这里在生成一个新的数组，然后将新的元素加入到newElements中，再将新的数组替换成老的数组，修改就完成了。整个过程不会影响到读取的线程。当修改完成后，读取线程可以立即察觉到这个修改，因为array被volatile修饰了。
 
 ### (5). CopyOnWriteArraySet
 
 #### 1. 概述
 
+`CopyOnWriteArraySet`这是一个HashSet的线程安全的变体，其原理大概可以通俗的理解为:初始化的时候只有一个容器，很常一段时间，这个容器数据、数量等没有发生变化的时候，大家(多个线程)，都是读取(假设这段时间里只发生读取的操作)同一个容器中的数据，所以这样大家读到的数据都是唯一、一致、安全的，但是后来有人往里面增加了一个数据，这个时候`CopyOnWriteArraySet`底层实现添加的原理是先 copy 出一个容器(可以简称副本)，再往新的容器里添加这个新的数据，最后把新的容器的引用地址赋值给了之前那个旧的的容器地址，但是在添加这个数据的期间，其他线程如果要去读取数据，仍然是读取到旧的容器里的数据。
 
-
-
+`CopyOnWriteArraySet`是通过`CopyOnWriteArrayList`实现的，它的API基本上都是通过调用`CopyOnWriteArrayList`的API来实现的。上面已经详细讲述了`CopyOnWriteArrayList`的原理及源码，故在此不做过多描述。
 
 ## 十五、线程池
 
