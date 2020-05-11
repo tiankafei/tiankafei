@@ -1,8 +1,47 @@
 package cn.tiankafei.antlr4.expression;
 
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+/**
+ * @author tiankafei
+ */
 public class EvalVisitor extends RuleSetBaseVisitor<Integer> {
     private boolean result = false;
+    private ParseTree tree;
+    public EvalVisitor(String exp){
+        CodePointCharStream input = CharStreams.fromString(exp);
+        RuleSetLexer lexer = new RuleSetLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        RuleSetParser parser = new RuleSetParser(tokens);
+        tree = parser.stmt();
+    }
+    public EvalVisitor(CharStream input){
+        RuleSetLexer lexer = new RuleSetLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        RuleSetParser parser = new RuleSetParser(tokens);
+        tree = parser.stmt();
+    }
+    public EvalVisitor(RuleSetLexer lexer){
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        RuleSetParser parser = new RuleSetParser(tokens);
+        tree = parser.stmt();
+    }
+    public EvalVisitor(CommonTokenStream tokens){
+        RuleSetParser parser = new RuleSetParser(tokens);
+        tree = parser.stmt();
+    }
+    public EvalVisitor(RuleSetParser parser){
+        this.tree = parser.stmt();
+    }
+    public EvalVisitor(ParseTree tree){
+        this.tree = tree;
+    }
     public boolean getResult() {
+        this.visit(tree);
         return result;
     }
     public void setResult(boolean result) {

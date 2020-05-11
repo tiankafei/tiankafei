@@ -2,9 +2,7 @@ package cn.tiankafei.antlr4.expression;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
+
 /**
  * The Interpreter
  *
@@ -14,7 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class Calc {
     static String NEWLINE = "\r\n";
     public static void main(String[] args) {
-        System.out.println(eval("123=100+12+11" + NEWLINE, "124 + 125 = 123 + 126" + NEWLINE, "345 <= 346 + 347 + 348" + NEWLINE));
+        System.out.println(eval("123=100+12+12" + NEWLINE, "124 + 125 = 123 + 126" + NEWLINE, "345 <= 346 + 347 + 348" + NEWLINE));
     }
     static List<Boolean> eval(String... stmts) {
         if (stmts != null && stmts.length > 0) {
@@ -29,15 +27,9 @@ public class Calc {
     static boolean eval(String stmt) {
         boolean result = false;
         if (stmt != null && stmt.length() > 0) {
-            ANTLRInputStream input = new ANTLRInputStream(stmt);
-            RuleSetLexer lexer = new RuleSetLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            RuleSetParser parser = new RuleSetParser(tokens);
-            ParseTree tree = parser.stmt(); // parse
-            EvalVisitor eval = new EvalVisitor();
-            System.out.println(eval.visit(tree));
-            // get the final result
+            EvalVisitor eval = new EvalVisitor(stmt);
             result = eval.getResult();
+            System.out.println(result);
         }
         return result;
     }
