@@ -12,6 +12,12 @@
     <artifactId>tiankafei-antlr4</artifactId>
 
     <dependencies>
+        <!--junit单元测试依赖-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
         <dependency>
             <groupId>org.antlr</groupId>
