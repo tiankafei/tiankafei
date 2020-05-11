@@ -37,4 +37,19 @@ public class ByteBufferTest {
         mappedByteBuffer.put("xxx".getBytes());
     }
 
+    @Test
+    public void testCal(){
+        System.out.println(4 & 6);
+        System.out.println(6 & 4);
+        System.out.println(4 & 8);
+        System.out.println(4 & 12);
+        System.out.println(4 & 16);
+        System.out.println(4 & 5);
+        System.out.println(3 & 5);
+        System.out.println(3 << 3);
+        System.out.println(10 >> 3);
+        System.out.println(16 >> 3);
+
+    }
+
 }
