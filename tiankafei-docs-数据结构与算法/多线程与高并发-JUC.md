@@ -6277,5 +6277,134 @@ public E set(int index, E element) {
 
 `CopyOnWriteArraySet`是通过`CopyOnWriteArrayList`实现的，它的API基本上都是通过调用`CopyOnWriteArrayList`的API来实现的。上面已经详细讲述了`CopyOnWriteArrayList`的原理及源码，故在此不做过多描述。
 
-## 十五、线程池
+## 十五、两个线程交替执行
+
+### 1. SynchronousQueue
+
+```java
+public class Demo41 {
+    public static void main(String[] args) {
+        SynchronousQueue synchronousQueue = new SynchronousQueue();
+        new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                try {
+                    System.out.println(synchronousQueue.take());
+                    synchronousQueue.put(index + "");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                try {
+                    synchronousQueue.put(str1.substring(index, index + 1));
+                    System.out.println(synchronousQueue.take());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+```
+
+### 2. LinkedTransferQueue
+
+```java
+public class Demo42 {
+    public static void main(String[] args) {
+        LinkedTransferQueue linkedTransferQueue = new LinkedTransferQueue();
+        new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                try {
+                    System.out.println(linkedTransferQueue.take());
+                    linkedTransferQueue.transfer(index + "");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                try {
+                    linkedTransferQueue.transfer(str1.substring(index, index + 1));
+                    System.out.println(linkedTransferQueue.take());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+```
+
+### 3. obj.wait()；obj.notify()
+
+```java
+public class Demo43 {
+    private static Object lock = new Object();
+    public static void main(String[] args) {
+        new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                synchronized (lock) {
+                    try {
+                        lock.wait();
+                        System.out.println(index);
+                        lock.notify();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                synchronized (lock) {
+                    try {
+                        System.out.println(str1.substring(index, index + 1));
+                        lock.notify();
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+}
+```
+
+### 4. LockSupport
+
+```java
+public class Demo44 {
+    private static Thread thread1 = null;
+    private static Thread thread2 = null;
+    public static void main(String[] args) {
+        thread1 = new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                LockSupport.park();
+                System.out.println(index);
+                LockSupport.unpark(thread2);
+            }
+        });
+        thread2 = new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                System.out.println(str1.substring(index, index + 1));
+                LockSupport.unpark(thread1);
+                LockSupport.park();
+            }
+        });
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+## 十六、线程池
 
