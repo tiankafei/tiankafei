@@ -6341,7 +6341,68 @@ public class Demo42 {
 }
 ```
 
-### 3. obj.wait()；obj.notify()
+### 3. ArrayBlockingQueue
+
+```java
+public class Demo49 {
+    public static void main(String[] args) {
+        ArrayBlockingQueue arrayBlockingQueue1 = new ArrayBlockingQueue(1);
+        ArrayBlockingQueue arrayBlockingQueue2 = new ArrayBlockingQueue(1);
+        new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                try {
+                    System.out.println(arrayBlockingQueue2.take());
+                    arrayBlockingQueue1.put(index);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                try {
+                    arrayBlockingQueue2.put(str1.substring(index, index + 1));
+                    System.out.println(arrayBlockingQueue1.take());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+```
+
+### 4. Exchanger
+
+```java
+public class Demo50 {
+    public static void main(String[] args) {
+        Exchanger exchanger = new Exchanger();
+        new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                try {
+                    System.out.println(exchanger.exchange(index));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                try {
+                    System.out.println(exchanger.exchange(str1.substring(index, index + 1)));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+```
+
+### 5. obj.wait()；obj.notify()
 
 ```java
 public class Demo43 {
@@ -6378,7 +6439,7 @@ public class Demo43 {
 }
 ```
 
-### 4. LockSupport
+### 6. LockSupport
 
 ```java
 public class Demo44 {
@@ -6402,6 +6463,150 @@ public class Demo44 {
         });
         thread1.start();
         thread2.start();
+    }
+}
+```
+
+### 7. ReentrantLock单锁
+
+```java
+public class Demo45 {
+    public static void main(String[] args) {
+        ReentrantLock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+        new Thread(() -> {
+            try {
+                lock.lock();
+                for (int index = 1; index < 27; index++) {
+                    try {
+                        condition.await();
+                        System.out.println(index);
+                        condition.signal();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }finally {
+                lock.unlock();
+            }
+        }).start();
+        new Thread(() -> {
+            try {
+                lock.lock();
+                String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                for (int index = 0; index < str1.length(); index++) {
+                    try {
+                        System.out.println(str1.substring(index, index + 1));
+                        condition.signal();
+                        condition.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }finally {
+                lock.unlock();
+            }
+        }).start();
+    }
+}
+```
+
+### 8. ReentrantLock 双锁
+
+```java
+public class Demo46 {
+    public static void main(String[] args) {
+        ReentrantLock lock = new ReentrantLock();
+        Condition condition1 = lock.newCondition();
+        Condition condition2 = lock.newCondition();
+        new Thread(() -> {
+            try {
+                lock.lock();
+                for (int index = 1; index < 27; index++) {
+                    try {
+                        condition1.await();
+                        System.out.println(index);
+                        condition2.signalAll();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }finally {
+                lock.unlock();
+            }
+        }).start();
+        new Thread(() -> {
+            try {
+                lock.lock();
+                String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                for (int index = 0; index < str1.length(); index++) {
+                    try {
+                        System.out.println(str1.substring(index, index + 1));
+                        condition1.signalAll();
+                        condition2.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }finally {
+                lock.unlock();
+            }
+        }).start();
+    }
+}
+```
+
+### 9. 手写CAS
+
+```java
+public class Demo47 {
+    enum T { T1, T2 }
+    private static volatile T t = T.T2;
+    public static void main(String[] args) {
+        new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                while(t != T.T1){
+                }
+                System.out.println(index);
+                t = T.T2;
+            }
+        }).start();
+        new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                while(t != T.T2){
+                }
+                System.out.println(str1.substring(index, index + 1));
+                t = T.T1;
+            }
+        }).start();
+    }
+}
+```
+
+### 10. AtomicInteger-CAS
+
+```java
+public class Demo48 {
+    private static AtomicInteger atomicInteger = new AtomicInteger(2);
+    public static void main(String[] args) {
+        new Thread(() -> {
+            for (int index = 1; index < 27; index++) {
+                while(atomicInteger.get() != 1){
+                }
+                System.out.println(index);
+                atomicInteger.set(2);
+            }
+        }).start();
+        new Thread(() -> {
+            String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int index = 0; index < str1.length(); index++) {
+                while(atomicInteger.get() != 2){
+                }
+                System.out.println(str1.substring(index, index + 1));
+                atomicInteger.set(1);
+            }
+        }).start();
     }
 }
 ```
