@@ -242,24 +242,24 @@ public HashMap(Map<? extends K, ? extends V> m) {
 4. 数据迁移操作流程（transfer）：头插法
 
    ```java
-       /**
-        * Transfers all entries from current table to newTable.
-        */
-       void transfer(Entry[] newTable, boolean rehash) {
-           int newCapacity = newTable.length;
-           for (Entry<K,V> e : table) {
-               while(null != e) {
-                   Entry<K,V> next = e.next;
-                   if (rehash) {
-                       e.hash = null == e.key ? 0 : hash(e.key);
-                   }
-                   int i = indexFor(e.hash, newCapacity);
-                   e.next = newTable[i];
-                   newTable[i] = e;
-                   e = next;
+   /**
+     * Transfers all entries from current table to newTable.
+     */
+   void transfer(Entry[] newTable, boolean rehash) {
+       int newCapacity = newTable.length;
+       for (Entry<K,V> e : table) {
+           while(null != e) {
+               Entry<K,V> next = e.next;
+               if (rehash) {
+                   e.hash = null == e.key ? 0 : hash(e.key);
                }
+               int i = indexFor(e.hash, newCapacity);
+               e.next = newTable[i];
+               newTable[i] = e;
+               e = next;
            }
        }
+   }
    ```
 
    ![jdk1.7-hashmap-transfer流程](./images/jdk1.7-hashmap-transfer流程.png)
