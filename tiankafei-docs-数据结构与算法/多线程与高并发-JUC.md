@@ -6724,7 +6724,147 @@ public class CompletableFutureTest {
 }
 ```
 
-### 7. ThreadPoolExecutor
+### 7. Executors：线程池的工厂
+
+>有任务队列，生命周期管理
+>
+>线程个数计算公式：N(threads) = N(CPU) * U(CPU) * (1 + W/C)
+>
+>N(CPU)是处理器的核的数目，可以通过 `Runtime.getRuntime().availableProcessors() `得到
+>
+>U(CPU)是期望的CPU利用率(该值应该介于0和1之间)
+>
+>W/C是等待时间与计算时间的比率
+
+#### 1. newSingleThreadExecutor()
+
+```java
+public static ExecutorService newSingleThreadExecutor() {
+    return new FinalizableDelegatedExecutorService
+        (new ThreadPoolExecutor(1, 1,
+                                0L, TimeUnit.MILLISECONDS,
+                                new LinkedBlockingQueue<Runnable>()));
+}
+```
+
+#### 2. newSingleThreadExecutor(ThreadFactory)
+
+```java
+public static ExecutorService newSingleThreadExecutor(ThreadFactory threadFactory) {
+    return new FinalizableDelegatedExecutorService
+        (new ThreadPoolExecutor(1, 1,
+                                0L, TimeUnit.MILLISECONDS,
+                                new LinkedBlockingQueue<Runnable>(),
+                                threadFactory));
+}
+```
+
+#### 3. newCachedThreadPool()
+
+> 任务来的忽高忽低的时候使用；自己估算，精确定义
+
+```java
+public static ExecutorService newCachedThreadPool() {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                  60L, TimeUnit.SECONDS,
+                                  new SynchronousQueue<Runnable>());
+}
+```
+
+#### 4. newCachedThreadPool(ThreadFactory)
+
+```java
+public static ExecutorService newCachedThreadPool(ThreadFactory threadFactory) {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                  60L, TimeUnit.SECONDS,
+                                  new SynchronousQueue<Runnable>(),
+                                  threadFactory);
+}
+```
+
+#### 5. newFixedThreadPool(int)
+
+> 任务来的很平稳的时候使用；自己估算，精确定义
+
+```java
+public static ExecutorService newFixedThreadPool(int nThreads) {
+    return new ThreadPoolExecutor(nThreads, nThreads,
+                                  0L, TimeUnit.MILLISECONDS,
+                                  new LinkedBlockingQueue<Runnable>());
+}
+```
+
+#### 6. newFixedThreadPool(int, ThreadFactory)
+
+```java
+public static ExecutorService newFixedThreadPool(int nThreads, ThreadFactory threadFactory) {
+    return new ThreadPoolExecutor(nThreads, nThreads,
+                                  0L, TimeUnit.MILLISECONDS,
+                                  new LinkedBlockingQueue<Runnable>(),
+                                  threadFactory);
+}
+```
+
+#### 7. newScheduledThreadPool(int)
+
+>定时任务线程池
+
+```java
+public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) {
+    return new ScheduledThreadPoolExecutor(corePoolSize);
+}
+```
+
+#### 8. newScheduledThreadPool(int, ThreadFactory)
+
+```java
+public static ScheduledExecutorService newScheduledThreadPool(
+    int corePoolSize, ThreadFactory threadFactory) {
+    return new ScheduledThreadPoolExecutor(corePoolSize, threadFactory);
+}
+```
+
+#### 9. newSingleThreadScheduledExecutor()
+
+```java
+public static ScheduledExecutorService newSingleThreadScheduledExecutor() {
+    return new DelegatedScheduledExecutorService
+        (new ScheduledThreadPoolExecutor(1));
+}
+```
+
+#### 10. newSingleThreadScheduledExecutor(ThreadFactory)
+
+```java
+public static ScheduledExecutorService newSingleThreadScheduledExecutor(ThreadFactory threadFactory) {
+    return new DelegatedScheduledExecutorService
+        (new ScheduledThreadPoolExecutor(1, threadFactory));
+}
+```
+
+#### 11. newWorkStealingPool()
+
+```java
+public static ExecutorService newWorkStealingPool() {
+    return new ForkJoinPool
+        (Runtime.getRuntime().availableProcessors(),
+         ForkJoinPool.defaultForkJoinWorkerThreadFactory,
+         null, true);
+}
+```
+
+#### 12. newWorkStealingPool(int)
+
+```java
+public static ExecutorService newWorkStealingPool(int parallelism) {
+    return new ForkJoinPool
+        (parallelism,
+         ForkJoinPool.defaultForkJoinWorkerThreadFactory,
+         null, true);
+}
+```
+
+### 8. ThreadPoolExecutor
 
 当线程达到核心线程数是，如果核心线程都在忙，当来了一个任务，加入任务队列，当任务队列满了的时候，新开启一个线程，等到线程数达到最大线程数时，执行拒绝策略。
 
@@ -6778,11 +6918,11 @@ public class CompletableFutureTest {
 
 需要实现 RejectedExecutionHandler 接口
 
+#### 8. 源码剖析
 
+##### 1. 
+##### 2. 
 
-### 8. ForkJoinPool
-
-
-
+### 9. ForkJoinPool
 
 
