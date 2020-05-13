@@ -7241,4 +7241,137 @@ final void runWorker(Worker w) {
 
 ### 9. ForkJoinPool
 
+#### 1. 简介
 
+从JDK1.7开始，Java提供ForkJoin框架用于并行执行任务，它的思想就是讲一个大任务分割成若干小任务，最终汇总每个小任务的结果得到这个大任务的结果。
+
+#### 2. ForkJoinPool
+
+既然任务是被逐渐的细化的，那就需要把这些任务存在一个池子里面，这个池子就是ForkJoinPool，它与其它的ExecutorService区别主要在于它使用“工作窃取“，那什么是工作窃取呢？
+
+一个大任务会被划分成无数个小任务，这些任务被分配到不同的队列，这些队列有些干活干的块，有些干得慢。于是干得快的，一看自己没任务需要执行了，就去隔壁的队列里面拿去任务执行。
+
+#### 3. ForkJoinTask
+
+ForkJoinTask就是ForkJoinPool里面的每一个任务。他主要有两个子类：RecursiveAction 和 RecursiveTask。然后通过fork()方法去分配任务执行任务，通过join()方法汇总任务结果，
+
+![forkjoin](./images/forkjoin.jpeg)
+
+这就是整个过程的运用。他有两个子类，使用这两个子类都可以实现我们的任务分配和计算。
+
+1. RecursiveAction 一个递归无结果的ForkJoinTask（没有返回值）
+2. RecursiveTask 一个递归有结果的ForkJoinTask（有返回值）
+
+ForkJoinPool由ForkJoinTask数组和ForkJoinWorkerThread数组组成，ForkJoinTask数组负责存放程序提交给ForkJoinPool的任务，而ForkJoinWorkerThread数组负责执行这些任务。
+
+#### 4. RecursiveTask ：有返回结果
+
+第一步：创建 AddTask 子类在ForkJoinTest中
+
+```java
+static class AddTask extends RecursiveTask<Long> {
+    private static final long serialVersionUID = 1L;
+    int start, end;
+    AddTask(int s, int e) {
+        start = s;
+        end = e;
+    }
+    @Override
+    protected Long compute() {
+        if(end-start <= MAX_NUM) {
+            long sum = 0L;
+            for(int i=start; i<end; i++) sum += nums[i];
+            return sum;
+        }
+        int middle = start + (end-start)/2;
+        AddTask subTask1 = new AddTask(start, middle);
+        AddTask subTask2 = new AddTask(middle, end);
+        subTask1.fork();
+        subTask2.fork();
+        return subTask1.join() + subTask2.join();
+    }
+}
+```
+
+在这个方法中我们传进去数据，然后使用二分法继续分配给子任务，当任务小的不能再分，那就汇总返回。
+
+第二步在ForkJoinTest中去测试
+
+```java
+static int[] nums = new int[1000000];
+static final int MAX_NUM = 50000;
+static Random r = new Random();
+static {
+    for(int i=0; i<nums.length; i++) {
+        nums[i] = r.nextInt(100);
+    }
+    System.out.println("---" + Arrays.stream(nums).sum()); //stream api
+}
+public static void main(String[] args) throws IOException {
+    ForkJoinPool fjp = new ForkJoinPool();
+    AddTask task = new AddTask(0, nums.length);
+    fjp.execute(task);
+    long result = task.join();
+    System.out.println(result);
+    System.in.read();
+}
+```
+
+在这个类中我们定义了一个阈值，然后创建一个ForkJoinPool，在这个池子中新建我们刚刚创建的Task任务，最终返回我们结果。
+
+#### 5. RecursiveAction：无返回结果
+
+第一步：创建 AddAction 子类在ForkJoinTest中
+
+```java
+static class AddAction extends RecursiveAction {
+    int start, end;
+    AddAction(int s, int e) {
+        start = s;
+        end = e;
+    }
+    @Override
+    protected void compute() {
+        if(end-start <= MAX_NUM) {
+            long sum = 0L;
+            for(int i=start; i<end; i++) sum += nums[i];
+            System.out.println("from:" + start + " to:" + end + " = " + sum);
+        } else {
+            int middle = start + (end-start)/2;
+            AddAction subTask1 = new AddAction(start, middle);
+            AddAction subTask2 = new AddAction(middle, end);
+            subTask1.fork();
+            subTask2.fork();
+        }
+    }
+}
+```
+
+在这个方法中我们不需要有return语句。过程和之前的RecursiveTask类似。
+
+第二步在ForkJoinTest中去测试
+
+```java
+static int[] nums = new int[1000000];
+static final int MAX_NUM = 50000;
+static Random r = new Random();
+
+static {
+    for(int i=0; i<nums.length; i++) {
+        nums[i] = r.nextInt(100);
+    }
+    System.out.println("---" + Arrays.stream(nums).sum()); //stream api
+}
+
+public static void main(String[] args) throws IOException {
+    ForkJoinPool fjp = new ForkJoinPool();
+    AddAction task = new AddAction(0, nums.length);
+    fjp.execute(task);
+
+    System.in.read();
+}
+```
+
+现在不管我们输出多少次都可以有返回结果了。
+
+ForkJoinTask在执行的时候可能会抛出异常，在主线程中是无法直接获取的，但是可以通过ForkJoinTask提供的isCompletedAbnormally() 方法来检查任务是否已经抛出异常或已经被取消了。
