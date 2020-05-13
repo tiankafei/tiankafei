@@ -6844,6 +6844,8 @@ public static ScheduledExecutorService newSingleThreadScheduledExecutor(ThreadFa
 
 #### 11. newWorkStealingPool()
 
+> 每一个线程都有自己单独的队列，当自己线程中队列的任务执行完成之后，会去另外的线程中拿任务进行执行
+
 ```java
 public static ExecutorService newWorkStealingPool() {
     return new ForkJoinPool
