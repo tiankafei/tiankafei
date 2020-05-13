@@ -6617,11 +6617,170 @@ public class Demo48 {
 
 ![Executor](./images/Executor.png)
 
-### 2. ExecutorService
+### 2. Callable
+
+![Callable](./images/Callable.png)
+
+```java
+public class CallableTest {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        Callable callable = new Callable() {
+            @Override
+            public Object call() throws Exception {
+                Thread.sleep(2000);
+                return "hello world";
+            }
+        };
+        ExecutorService executorService = Executors.newCachedThreadPool();
+//        Future<String> submit = executorService.submit(callable);
+        Future<String> submit = executorService.submit(() -> {
+            Thread.sleep(2000);
+            return "hello world";
+        });
+        // 直接输出
+        System.out.println("继续执行其他方法");
+        // get方法会进行阻塞等待两秒后输出
+        System.out.println(submit.get());
+        executorService.shutdown();
+    }
+}
+```
+
+### 3. ExecutorService
 
 ![ExecutorService](./images/ExecutorService.png)
 
-### 3. 
+### 4. Future
+
+![Future](./images/Future.png)
+
+### 5. FutureTask
+
+```java
+public class FutureTaskTest {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        FutureTask futureTask = new FutureTask(()->{
+            Thread.sleep(2000);
+            return "hello world";
+        });
+        new Thread(futureTask).start();
+        // 阻塞拿值
+        System.out.println(futureTask.get());
+    }
+}
+```
+
+### 6. CompletableFuture
+
+```java
+public class CompletableFutureTest {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        Stopwatch started = Stopwatch.createStarted();
+        CompletableFuture c1 = CompletableFuture.supplyAsync(CompletableFutureTest::get1);
+        CompletableFuture c2 = CompletableFuture.supplyAsync(CompletableFutureTest::get2);
+        CompletableFuture c3 = CompletableFuture.supplyAsync(CompletableFutureTest::get3);
+        CompletableFuture.allOf(c1, c2, c3).join();
+        System.out.println(c1.get());
+        System.out.println(c2.get());
+        System.out.println(c3.get());
+        System.out.println(started.elapsed(TimeUnit.MILLISECONDS));
+        c1 = CompletableFuture.supplyAsync(CompletableFutureTest::get1);
+        c2 = CompletableFuture.supplyAsync(CompletableFutureTest::get2);
+        c3 = CompletableFuture.supplyAsync(CompletableFutureTest::get3);
+        started.reset().start();
+        Object join = CompletableFuture.anyOf(c1, c2, c3).join();
+        System.out.println(join);
+        System.out.println(started.elapsed(TimeUnit.MILLISECONDS));
+        CompletableFuture.supplyAsync(CompletableFutureTest::get1)
+                .thenApply(String::valueOf)
+                .thenApply(str -> "price: " + str)
+                .thenAccept(System.out::println)
+                .join();
+    }
+    private static String get3(){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "3";
+    }
+    private static String get2(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "2";
+    }
+    private static String get1(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "1";
+    }
+}
+```
+
+### 7. ThreadPoolExecutor
+
+当线程达到核心线程数是，如果核心线程都在忙，当来了一个任务，加入任务队列，当任务队列满了的时候，新开启一个线程，等到线程数达到最大线程数时，执行拒绝策略。
+
+#### 1. int corePoolSize
+
+核心线程数：
+
+#### 2. int maximumPoolSize
+
+最大线程数：
+
+#### 3. long keepAliveTime
+
+空闲多长时间：
+
+#### 4. TimeUnit unit
+
+时间的单位：
+
+#### 5. BlockingQueue<Runnable> workQueue
+
+执行任务的队列：
+
+#### 6. ThreadFactory threadFactory
+
+创建线程池的工厂：
+
+自定义线程工厂需要实现：ThreadFactory 接口
+
+#### 7. RejectedExecutionHandler handler
+
+拒绝策略：线程都在忙，任务队列满了的时候，会进行触发。
+
+##### 1. AbortPolicy
+
+抛异常
+
+##### 2. DiscardPolicy
+
+扔掉，不抛异常
+
+##### 3. DiscardOldestPolicy
+
+扔掉排队时间最久的
+
+##### 4. CallerRunsPolicy
+
+调用者自己处理任务
+
+##### 5. 自定义
+
+需要实现 RejectedExecutionHandler 接口
+
+
+
+### 8. ForkJoinPool
 
 
 
