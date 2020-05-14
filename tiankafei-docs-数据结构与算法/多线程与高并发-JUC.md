@@ -1379,7 +1379,6 @@ public class ThreadLocalTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             System.out.println(tl.get());
         }).start();
         new Thread(()->{
@@ -1541,7 +1540,7 @@ private T setInitialValue() {
 2. ThreadLocal实例被回收，但是在ThreadLocalMap中的V没有被任何清理机制有效清理
 3. 当前Thread实例一直存在，则会一直强引用着ThreadLocalMap，也就是说ThreadLocalMap也不会被GC
 
-也就是说，如果Thread实例还在，但是ThreadLocal实例却不在了，则ThreadLocal实例作为key所关联的value无法被外部访问，却还被强引用着，因此出现了内存泄露。ThreadLocal如果使用的不当，是有可能引起内存泄露的，虽然触发的场景不算很容易。
+换句话说，如果Thread实例还在，但是ThreadLocal实例却不在了，则ThreadLocal实例作为key所关联的value无法被外部访问，却还被强引用着，因此出现了内存泄露。ThreadLocal如果使用的不当，是有可能引起内存泄露的，虽然触发的场景不算很容易。
 
 >这里要额外说明一下，这里说的内存泄露，是因为对其内存模型和设计不了解，且编码时不注意导致的内存管理失联，而不是有意为之的一直强引用或者频繁申请大内存。比如如果编码时不停的人为塞一些很大的对象，而且一直持有引用最终导致OOM，不能算作ThreadLocal导致的“内存泄露”，只是代码写的不当而已！
 
@@ -4115,8 +4114,8 @@ LinkedBlockingDeque和LinkedBlockingQueue的**不同点**在于：
 2. LinkedBlockingQueue采用了两把锁来对队列进行操作，也就是队尾添加的时候，队头仍然可以删除等操作
 3. 对于LinkedBlockingQueue来说，有两个ReentrantLock分别控制队头和队尾，这样就可以使得添加操作分开来做，一般的操作是获取一把锁就可以，但有些操作例如remove操作，则需要同时获取两把锁
 
-1. LinkedBlockingDeque就是一个双端队列，任何一端都可以进行元素的出入
-2. LinkedBlockingDeque 和 ArrayBlockingQueue 结构还是很类似的，也是一个ReentrantLock和两个Condition使用，但是仅仅是在这二者使用上，其实内部运转还是很大不同的
+4. LinkedBlockingDeque就是一个双端队列，任何一端都可以进行元素的出入
+5. LinkedBlockingDeque 和 ArrayBlockingQueue 结构还是很类似的，也是一个ReentrantLock和两个Condition使用，但是仅仅是在这二者使用上，其实内部运转还是很大不同的
 
 参考文档：
 
@@ -7375,3 +7374,204 @@ public static void main(String[] args) throws IOException {
 现在不管我们输出多少次都可以有返回结果了。
 
 ForkJoinTask在执行的时候可能会抛出异常，在主线程中是无法直接获取的，但是可以通过ForkJoinTask提供的isCompletedAbnormally() 方法来检查任务是否已经抛出异常或已经被取消了。
+
+## 十六、Disruptor
+
+### 1. 概述
+
+Disruptor是一个性能极强的异步消息处理框架，可以认为它是线程间通信高效低延时的内存消息组件，它最大的特点是高性能，其LMAX架构可以获得每秒6百万订单，用1微秒的延迟获得吞吐量为100K+。实际上它是拿内存换取处理高性能的低延迟的处理熟速度，（实际上这个框架在log4j，以及activeMQ源码扩展中有使用）
+
+### 2. Disruptor的特点
+
+对比ConcurrentLinkedQueue : 链表实现
+JDK中没有ConcurrentArrayQueue
+Disruptor是数组实现的
+无锁，高并发，使用环形Buffer，直接覆盖（不用清除）旧的数据，降低GC频率
+实现了基于事件的生产者消费者模式（观察者模式）
+
+### 3. RingBuffer
+
+环形队列
+RingBuffer的序号，指向下一个可用的元素
+采用数组实现，没有首尾指针
+对比ConcurrentLinkedQueue，用数组实现的速度更快
+
+> 假如长度为8，当添加到第12个元素的时候在哪个序号上呢？用12%8决定
+> 当Buffer被填满的时候到底是覆盖还是等待，由Producer决定
+> 长度设为2的n次幂，利于二进制计算，例如：12%8 = 12 & (8 - 1) pos = num & (size -1)
+
+### 4. Disruptor开发步骤
+
+#### 1. 定义Event - 队列中需要处理的元素
+
+```java
+public class LongEvent {
+    private long value;
+
+    public long getValue() {
+        return value;
+    }
+
+    public void setValue(long value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "LongEvent{" +
+            "value=" + value +
+            '}';
+    }
+}
+```
+
+#### 2. 定义Event工厂，用于填充队列
+
+>这里牵扯到效率问题：disruptor初始化的时候，会调用 Event 工厂，对 ringBuffer 进行内存的提前分配
+>GC产频率会降低
+
+```java
+public class LongEventFactory implements EventFactory<LongEvent> {
+
+    @Override
+    public LongEvent newInstance() {
+        return new LongEvent();
+    }
+}
+```
+
+#### 3. 定义EventHandler(消费者)，处理容器中的元素
+
+```java
+public class LongEventHandler implements EventHandler<LongEvent> {
+
+    public static long count = 0;
+
+    @Override
+    public void onEvent(LongEvent event, long sequence, boolean endOfBatch) throws Exception {
+        count ++;
+        System.out.println("[" + Thread.currentThread().getName() + "]" + event + " 序号：" + sequence);
+    }
+}
+```
+
+### 5. 事件发布模板
+
+```java
+long sequence = ringBuffer.next();  // Grab the next sequence
+try {
+    LongEvent event = ringBuffer.get(sequence); // Get the entry in the Disruptor
+    // for the sequence
+    event.set(8888L);  // Fill with data
+} finally {
+    ringBuffer.publish(sequence);
+}
+```
+
+### 6. 使用EventTranslator发布事件
+
+```java
+//===============================================================
+EventTranslator<LongEvent> translator1 = new EventTranslator<LongEvent>() {
+    @Override
+    public void translateTo(LongEvent event, long sequence) {
+        event.set(8888L);
+    }
+};
+ringBuffer.publishEvent(translator1);
+//===============================================================
+EventTranslatorOneArg<LongEvent, Long> translator2 = new EventTranslatorOneArg<LongEvent, Long>() {
+    @Override
+    public void translateTo(LongEvent event, long sequence, Long l) {
+        event.set(l);
+    }
+};
+ringBuffer.publishEvent(translator2, 7777L);
+//===============================================================
+EventTranslatorTwoArg<LongEvent, Long, Long> translator3 = new EventTranslatorTwoArg<LongEvent, Long, Long>() {
+    @Override
+    public void translateTo(LongEvent event, long sequence, Long l1, Long l2) {
+        event.set(l1 + l2);
+    }
+};
+ringBuffer.publishEvent(translator3, 10000L, 10000L);
+//===============================================================
+EventTranslatorThreeArg<LongEvent, Long, Long, Long> translator4 = new EventTranslatorThreeArg<LongEvent, Long, Long, Long>() {
+    @Override
+    public void translateTo(LongEvent event, long sequence, Long l1, Long l2, Long l3) {
+        event.set(l1 + l2 + l3);
+    }
+};
+ringBuffer.publishEvent(translator4, 10000L, 10000L, 1000L);
+//===============================================================
+EventTranslatorVararg<LongEvent> translator5 = new EventTranslatorVararg<LongEvent>() {
+    @Override
+    public void translateTo(LongEvent event, long sequence, Object... objects) {
+        long result = 0;
+        for(Object o : objects) {
+            long l = (Long)o;
+            result += l;
+        }
+        event.set(result);
+    }
+};
+ringBuffer.publishEvent(translator5, 10000L, 10000L, 10000L, 10000L);
+```
+
+### 7. 使用Lamda表达式
+
+```java
+public class Main03 {
+    public static void main(String[] args) {
+        //must be power of 2
+        int ringBufferSize = 1024;
+        Disruptor<LongEvent> disruptor = new Disruptor<>(LongEvent::new, ringBufferSize, Executors.defaultThreadFactory());
+        disruptor.handleEventsWith((longEvent, sequence, endOfBatch) -> System.out.println(longEvent.getValue()));
+        disruptor.start();
+        RingBuffer<LongEvent> ringBuffer = disruptor.getRingBuffer();
+        //
+        ringBuffer.publishEvent((event, sequence) -> event.setValue(888L));
+        ringBuffer.publishEvent((event, sequence, l) -> event.setValue(l), 10000L);
+        ringBuffer.publishEvent((event, sequence, l1, l2) -> event.setValue(l1 + l2), 10000L, 20000L);
+        ringBuffer.publishEvent((event, sequence, l1, l2, l3) -> event.setValue(l1 + l2 + l3), 10000L, 20000L, 30000L);
+        ringBuffer.publishEvent((event, sequence, array) -> {
+            long sum = 0L;
+            for (int index = 0, length = array.length; index < length; index++) {
+                sum += (Long) array[index];
+            }
+            event.setValue(sum);
+        }, 10000L, 20000L, 30000L, 40000L);
+        //
+        disruptor.shutdown();
+    }
+}
+```
+
+### 8. ProducerType生产者线程模式
+
+>ProducerType有两种模式 Producer.MULTI和Producer.SINGLE
+>默认是MULTI，表示在多线程模式下产生sequence
+>如果确认是单线程生产者，那么可以指定SINGLE，效率会提升
+>如果是多个生产者（多线程），但模式指定为SINGLE，会出什么问题呢？
+
+### 9. 等待策略
+
+1. (常用）BlockingWaitStrategy：通过线程阻塞的方式，等待生产者唤醒，被唤醒后，再循环检查依赖的sequence是否已经消费。
+2. BusySpinWaitStrategy：线程一直自旋等待，可能比较耗cpu
+3. LiteBlockingWaitStrategy：线程阻塞等待生产者唤醒，与BlockingWaitStrategy相比，区别在signalNeeded.getAndSet,如果两个线程同时访问一个访问waitfor,一个访问signalAll时，可以减少lock加锁次数.
+4. LiteTimeoutBlockingWaitStrategy：与LiteBlockingWaitStrategy相比，设置了阻塞时间，超过时间后抛异常。
+5. PhasedBackoffWaitStrategy：根据时间参数和传入的等待策略来决定使用哪种等待策略
+6. TimeoutBlockingWaitStrategy：相对于BlockingWaitStrategy来说，设置了等待时间，超过后抛异常
+7. （常用）YieldingWaitStrategy：尝试100次，然后Thread.yield()让出cpu
+8. （常用）SleepingWaitStrategy : sleep
+9. 支持自定义，需要实现` WaitStrategy`接口
+
+### 10. 消费者异常处理
+
+1. 默认：disruptor.setDefaultExceptionHandler()
+2. 覆盖：disruptor.handleExceptionFor().with()
+
+## 十七、进程、线程、纤程
+
+
+
