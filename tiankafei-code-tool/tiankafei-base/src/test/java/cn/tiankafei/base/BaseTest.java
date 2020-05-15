@@ -1,5 +1,9 @@
 package cn.tiankafei.base;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
@@ -240,6 +244,42 @@ public class BaseTest {
         Thread.sleep(1000);
         System.out.println("切片执行时间：" + stopWatch.getSplitTime());
         System.out.println("总的执行时间：" + stopWatch.getTime(TimeUnit.MILLISECONDS));
+    }
+
+    @Test
+    public void test3() throws Exception {
+        System.out.println("Integer.SIZE" + Integer.SIZE);
+        System.out.println("=============================");
+        class Person {
+            private String name;
+            public String getName() {
+                return name;
+            }
+            public void setName(String name) {
+                this.name = name;
+            }
+            @Override
+            public String toString() {
+                return "Person{" +
+                        "name='" + name + '\'' +
+                        '}';
+            }
+        }
+        Person person = new Person();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                person.setName("zhangsan");
+            }
+        };
+
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        Future<?> submit = executorService.submit(runnable, person);
+        System.out.println("ThreadPoolExecutor提交Runnable获取返回值的方式：" + submit.get());
+
+        Future<Integer> submit1 = executorService.submit(() -> 123);
+        System.out.println("ThreadPoolExecutor提交Callable获取返回值的方式：" + submit1.get());
     }
 
     private int get(int value){
