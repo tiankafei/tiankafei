@@ -7238,6 +7238,13 @@ final void runWorker(Worker w) {
 }
 ```
 
+##### 7. 设置核心线程允许退出
+
+```java
+// true为允许退出，false我不允许退出
+threadPoolExecutor.allowCoreThreadTimeOut(true);
+```
+
 ### 9. ForkJoinPool
 
 #### 1. 简介
