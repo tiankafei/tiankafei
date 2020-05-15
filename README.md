@@ -7,11 +7,8 @@
 
 # tiankafei-code-product
 
-> 抽出通过功能作为产品的一部分，
+> 抽出通过功能作为产品的一部分
 >
-> 技术中台：
->
-> 业务中台：
 
 # tiankafei-code-project
 
