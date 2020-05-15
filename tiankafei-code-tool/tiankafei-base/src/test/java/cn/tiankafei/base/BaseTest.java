@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
 
@@ -248,8 +250,6 @@ public class BaseTest {
 
     @Test
     public void test3() throws Exception {
-        System.out.println("Integer.SIZE" + Integer.SIZE);
-        System.out.println("=============================");
         class Person {
             private String name;
             public String getName() {
@@ -268,18 +268,65 @@ public class BaseTest {
         Person person = new Person();
 
         Runnable runnable = new Runnable() {
+            @SneakyThrows
             @Override
             public void run() {
+                Thread.sleep(3000);
                 person.setName("zhangsan");
             }
         };
 
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
         Future<?> submit = executorService.submit(runnable, person);
-        System.out.println("ThreadPoolExecutor提交Runnable获取返回值的方式：" + submit.get());
+        new Thread(() -> {
+            try {
+                System.out.println("ThreadPoolExecutor提交Runnable获取返回值的方式：" + submit.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        executorService.awaitTermination(4, TimeUnit.SECONDS);
 
         Future<Integer> submit1 = executorService.submit(() -> 123);
-        System.out.println("ThreadPoolExecutor提交Callable获取返回值的方式：" + submit1.get());
+        new Thread(() -> {
+            try {
+                System.out.println("ThreadPoolExecutor提交Callable获取返回值的方式：" + submit1.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        TimeUnit.SECONDS.sleep(5);
+    }
+
+    @Test
+    public void test4(){
+        System.out.println("Integer.SIZE = " + Integer.SIZE);
+        System.out.println("Integer.MAX_VALUE = " + Integer.MAX_VALUE);
+        System.out.println("=============================");
+
+        int COUNT_BITS = Integer.SIZE - 3;
+        int CAPACITY   = (1 << COUNT_BITS) - 1;
+
+        // runState is stored in the high-order bits
+        int RUNNING    = -1 << COUNT_BITS;
+        int SHUTDOWN   =  0 << COUNT_BITS;
+        int STOP       =  1 << COUNT_BITS;
+        int TIDYING    =  2 << COUNT_BITS;
+        int TERMINATED =  3 << COUNT_BITS;
+
+        System.out.println("COUNT_BITS = " + COUNT_BITS);
+        System.out.println("CAPACITY = " + CAPACITY);
+        System.out.println("=============================");
+        System.out.println("RUNNING = " + RUNNING);
+        System.out.println("SHUTDOWN = " + SHUTDOWN);
+        System.out.println("STOP = " + STOP);
+        System.out.println("TIDYING = " + TIDYING);
+        System.out.println("TERMINATED = " + TERMINATED);
     }
 
     private int get(int value){
