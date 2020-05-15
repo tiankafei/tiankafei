@@ -1,6 +1,6 @@
 package com.greenpineyu.fel;
 
-import cn.tiankafei.base.util.SystemTimeUtil;
+import com.google.common.base.Stopwatch;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -12,6 +12,7 @@ import com.greenpineyu.fel.context.AbstractContext;
 import com.greenpineyu.fel.context.ArrayCtxImpl;
 import com.greenpineyu.fel.context.FelContext;
 import com.greenpineyu.fel.context.MapContext;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
 public class PerformanceTest {
@@ -118,14 +119,13 @@ public class PerformanceTest {
     }
 
     private static long javaEl(JavaExp el, int times) {
-        long start = SystemTimeUtil.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Object result = null;
         int i = 0;
         while (i++ < times) {
             result = el.eval();
         }
-        long end = SystemTimeUtil.now();
-        long cost = end - start;
+        long cost = stopwatch.elapsed(TimeUnit.MILLISECONDS);
         System.out.println("java el --------cost[" + cost + " ]---value[" + result
                 + "]");
         return cost;
@@ -142,16 +142,15 @@ public class PerformanceTest {
         FelEngine engine = new FelEngineImpl();
         Expression expObj = engine.compile(exp, ctx);
         Object evalResult = null;
-        long start = SystemTimeUtil.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Object result = null;
         int i = 0;
         while (i++ < times) {
             result = expObj.eval(ctx);
         }
-        long end = SystemTimeUtil.now();
         // System.out.println(result + " == " + evalResult + "："
 //				+ result.equals(evalResult));
-        long cost = end - start;
+        long cost = stopwatch.elapsed(TimeUnit.MILLISECONDS);
         System.out.println("fel --------cost[" + cost + " ]---value[" + result
                 + "] ------exp[" + exp + "]");
         return cost;
@@ -187,7 +186,6 @@ public class PerformanceTest {
 
     public static void stable() {
         final FelEngine engine = new FelEngineImpl();
-        final long start = SystemTimeUtil.now();
         final int times = 10;
         for (int i = 0; i < times; i++) {
             final int temp = i;
@@ -196,27 +194,20 @@ public class PerformanceTest {
                 public void run() {
                     for (int j = 0; j < times; j++) {
                         String str = temp + "+" + j;
-                        long s = SystemTimeUtil.now();
                         Expression exp = null;
                         try {
                             exp = engine.compile(str, null);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        long now = SystemTimeUtil.now();
                         Object value = null;
                         try {
                             value = exp.eval(null);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        System.out.println("[" + (now - start) + ":"
-                                + (now - s) + "]****************:" + str + "="
-                                + value);
                     }
                 }
-
-                ;
             };
             t.start();
         }
@@ -267,7 +258,7 @@ public class PerformanceTest {
             }
         };
         FutureTask<?>[] tasks = new FutureTask[threads];
-        long start = SystemTimeUtil.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         for (int j = 0; j < threads; j++) {
             final int current = j % i;
             FutureTask<Long> f = new FutureTask<Long>(new Callable<Long>() {
@@ -291,9 +282,8 @@ public class PerformanceTest {
                 e.printStackTrace();
             }
         }
-        long end = SystemTimeUtil.now();
         double avg = 1.0 * costCount / threads;
-        long finishTime = end - start;
+        long finishTime = stopwatch.elapsed(TimeUnit.MILLISECONDS);;
         System.out.println("线程数：" + threads + ";总时间：" + finishTime + ";平均时间："
                 + avg);
 

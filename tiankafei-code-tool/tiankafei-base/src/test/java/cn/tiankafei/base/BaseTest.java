@@ -1,5 +1,7 @@
 package cn.tiankafei.base;
 
+import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
 
 import java.io.File;
@@ -217,6 +219,27 @@ public class BaseTest {
 
 
 
+    }
+
+    @Test
+    public void test2() throws InterruptedException {
+        StopWatch stopWatch =  StopWatch.createStarted();
+        stopWatch.split();
+        Thread.sleep(1000);
+        System.out.println("切片执行时间：" + stopWatch.getSplitTime());
+        System.out.println("总的执行时间：" + stopWatch.getTime(TimeUnit.MILLISECONDS));
+        stopWatch.split();
+        Thread.sleep(1000);
+        System.out.println("切片执行时间：" + stopWatch.getSplitTime());
+        System.out.println("总的执行时间：" + stopWatch.getTime(TimeUnit.MILLISECONDS));
+        stopWatch.split();
+        Thread.sleep(1000);
+        System.out.println("切片执行时间：" + stopWatch.getSplitTime());
+        System.out.println("总的执行时间：" + stopWatch.getTime(TimeUnit.MILLISECONDS));
+        stopWatch.split();
+        Thread.sleep(1000);
+        System.out.println("切片执行时间：" + stopWatch.getSplitTime());
+        System.out.println("总的执行时间：" + stopWatch.getTime(TimeUnit.MILLISECONDS));
     }
 
     private int get(int value){

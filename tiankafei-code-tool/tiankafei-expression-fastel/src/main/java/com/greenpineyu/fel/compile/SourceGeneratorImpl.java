@@ -20,12 +20,10 @@ import com.greenpineyu.fel.parser.BaseAbstFelNode;
 import com.greenpineyu.fel.parser.ConstNode;
 import com.greenpineyu.fel.parser.FelNode;
 import com.greenpineyu.fel.parser.VarAstNode;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author tiankafei
  */
-@Slf4j
 public class SourceGeneratorImpl implements SourceGenerator {
 
     private List<Optimizer> opt;
@@ -77,7 +75,7 @@ public class SourceGeneratorImpl implements SourceGenerator {
     public JavaSource getSource(FelContext ctx, FelNode node, CompileParamVo compileParamVo) throws Exception {
 
         String src = "";
-        String className = getClassName();
+        String className = getClassName(compileParamVo);
         synchronized (this) {
             node = optimize(ctx, node);
             if (node instanceof ConstNode) {
@@ -90,7 +88,7 @@ public class SourceGeneratorImpl implements SourceGenerator {
             src = buildsource(exp, className, programList, compileParamVo);
             this.localvars.clear();
         }
-        log.info("****************{}\n", src);
+        System.out.println("****************{}\n" + src);
         JavaSource returnMe = new JavaSource();
         returnMe.setSimpleName(className);
         returnMe.setSource(src);
@@ -111,12 +109,12 @@ public class SourceGeneratorImpl implements SourceGenerator {
                 SourceBuilder builder = node.toJsMethod(ctx);
                 String exp = builder.source(ctx, node);
                 List<String> programList = getProgramList(builder);
-                log.info("表达式：{}, 方法名：{}, 参数集合：{}, 编译对象：{}", exp, funName, programList, compileParamVo);
+//                log.info("表达式：{}, 方法名：{}, 参数集合：{}, 编译对象：{}", exp, funName, programList, compileParamVo);
                 src = buildJsSource(exp, funName, programList, compileParamVo);
                 this.localvars.clear();
             }
         }
-        log.info("****************{}\n", src);
+        System.out.println("****************{}\n" + src);
         return src;
     }
 
@@ -184,10 +182,14 @@ public class SourceGeneratorImpl implements SourceGenerator {
         return src;
     }
 
-    private String getClassName() {
+    private String getClassName(CompileParamVo compileParamVo) {
         String className = null;
         synchronized (SourceGeneratorImpl.class) {
-            className = "Fel_" + count++;
+            if(compileParamVo != null && StringUtils.isNotEmpty(compileParamVo.getId())){
+                className = "Fel_" + compileParamVo.getId();
+            }else{
+                className = "Fel_" + count++;
+            }
         }
         return className;
     }

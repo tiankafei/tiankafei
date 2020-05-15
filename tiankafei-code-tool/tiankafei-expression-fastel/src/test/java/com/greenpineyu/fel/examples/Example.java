@@ -1,6 +1,6 @@
 package com.greenpineyu.fel.examples;
 
-import cn.tiankafei.base.util.SystemTimeUtil;
+import com.google.common.base.Stopwatch;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,6 +22,7 @@ import com.greenpineyu.fel.interpreter.ConstInterpreter;
 import com.greenpineyu.fel.interpreter.Interpreter;
 import com.greenpineyu.fel.optimizer.Interpreters;
 import com.greenpineyu.fel.parser.FelNode;
+import java.util.concurrent.TimeUnit;
 
 public class Example {
 
@@ -277,15 +278,13 @@ public class Example {
             }
         });
         Expression expObj = fel.compile("单价*数量", null, opti);
-        long start = SystemTimeUtil.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Object result = null;
         for (int i = 0; i < count; i++) {
             result = expObj.eval(null);
             index.increment();
         }
-        long end = SystemTimeUtil.now();
-
-        System.out.println("大数据量计算:" + result + ";耗时:" + (end - start));
+        System.out.println("大数据量计算:" + result + ";耗时:" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
     /**
@@ -338,13 +337,12 @@ public class Example {
         String exp = "40.52334+60*(21.8144+17*32.663)";
         FelNode node = fel.parse(exp);
         int times = 100 * 1000 * 1000;
-        long s1 = SystemTimeUtil.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         for (int i = 0; i < times; i++) {
             //			double j = 40.52334 + 60 * (21.8144 + 17 * 32.663);
             node.eval(null);
         }
-        long s2 = SystemTimeUtil.now();
-        System.out.println("花费的时间:" + (s2 - s1));
+        System.out.println("花费的时间:" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
 }
