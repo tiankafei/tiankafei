@@ -45,6 +45,15 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>myservlet</servlet-name>
+        <servlet-class>cn.tiankafei.springmvc.servlet.MyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myservlet</servlet-name>
+        <url-pattern>/testservlet</url-pattern>
+    </servlet-mapping>
+
     <!-- 转换前台的请求为rest的请求
         表单元素中需要有一个隐藏的元素
             <input name="_method" value="put" type="hidden">

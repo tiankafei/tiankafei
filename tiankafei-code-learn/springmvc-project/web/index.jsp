@@ -14,7 +14,8 @@
   pageContext.setAttribute("path", request.getContextPath());
 %>
 <body>
-返回的消息内容：${msg}
+返回的用户名：${username}<br />
+返回的消息内容：${msg}<br />
 
 <form action="${path}/update1" method="post">
   <input type="hidden" value="1" name="id">
