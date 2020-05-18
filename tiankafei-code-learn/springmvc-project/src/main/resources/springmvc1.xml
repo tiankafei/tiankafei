@@ -22,6 +22,9 @@
         <!--配置后缀-->
         <property name="suffix" value=".jsp"></property>
     </bean>
+    <bean class="cn.tiankafei.springmvc.view.MyViewResolver">
+        <property name="order" value="0"/>
+    </bean>
 
     <!--自动扫描包，由IOC容器进行控制管理-->
     <context:component-scan base-package="cn.tiankafei.springmvc"></context:component-scan>
