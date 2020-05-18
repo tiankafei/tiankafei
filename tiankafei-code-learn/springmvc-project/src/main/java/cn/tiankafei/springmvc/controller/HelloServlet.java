@@ -11,9 +11,9 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method = request.getParameter("method");
-        if (method.equals("add")){
+        if ("add".equals(method)){
             request.getSession().setAttribute("msg","add");
-        }else if(method.equals("sub")){
+        }else if("sub".equals(method)){
             request.getSession().setAttribute("msg","sub");
         }
         request.getRequestDispatcher("index.jsp").forward(request,response);
