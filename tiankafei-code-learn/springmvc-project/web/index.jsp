@@ -25,5 +25,8 @@
   <input type="submit" value="提交"><br>
   <img src="${path}/images/filter-servlet-inteceptor-controller执行顺序图.png">
 </form>
+<form action="${path}/converter" method="post">
+  <input type="text" name="user">
+<input type="submit" value="提交"><br>
 </body>
 </html>
