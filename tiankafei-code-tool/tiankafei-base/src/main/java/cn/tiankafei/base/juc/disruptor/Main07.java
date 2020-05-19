@@ -21,8 +21,8 @@ public class Main07 {
 
         Disruptor<LongEvent> disruptor = new Disruptor<>(factory, ringBufferSize, Executors.defaultThreadFactory(), ProducerType.MULTI, new SleepingWaitStrategy());
 
-        LongEventHandler h1 = new LongEventHandler();
-        LongEventHandler h2 = new LongEventHandler();
+        LongEventExceptionHandler h1 = new LongEventExceptionHandler();
+        LongEventExceptionHandler h2 = new LongEventExceptionHandler();
         disruptor.handleEventsWith(h1, h2);
         disruptor.handleExceptionsFor(h1).with(new ExceptionHandler<LongEvent>() {
             @Override
