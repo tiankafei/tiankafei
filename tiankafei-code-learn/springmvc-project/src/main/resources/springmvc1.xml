@@ -59,4 +59,10 @@
         <property name="maxUploadSize" value="1024000"></property>
     </bean>
 
+    <mvc:interceptors>
+        <!--执行顺序按照配置的顺序执行-->
+        <bean class="cn.tiankafei.springmvc.interceptor.MySecondInterceptor"></bean>
+        <bean class="cn.tiankafei.springmvc.interceptor.MyFirstInterceptor"></bean>
+    </mvc:interceptors>
+
 </beans>
