@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>tiankafei-service-nacos</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-service-nacos</name>

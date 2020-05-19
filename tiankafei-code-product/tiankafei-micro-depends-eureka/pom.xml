@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>tiankafei-micro-depends-eureka</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-micro-depends-eureka</name>

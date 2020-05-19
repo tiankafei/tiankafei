@@ -9,11 +9,16 @@
         <relativePath/>
     </parent>
 
-    <artifactId>tiankafei-frame-start</artifactId>
+    <artifactId>tiankafei-code-generator</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>tiankafei-frame-start</name>
+    <name>tiankafei-code-generator</name>
     <description></description>
+
+    <modules>
+        <module>tiankafei-code-common</module>
+        <module>tiankafei-code-generate</module>
+    </modules>
 
 </project>

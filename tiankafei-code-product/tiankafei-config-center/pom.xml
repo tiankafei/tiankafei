@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>tiankafei-config-center</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-config-center</name>
