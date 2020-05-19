@@ -35,5 +35,11 @@
   日期：<input type="text" name="birth"${errors.birth}><br>
   <input type="submit" value="提交">
 </form>
+<form action="${path}/testUpload" method="post" enctype="multipart/form-data">
+  <input type="file" name="file"><br>
+  <input type="file" name="file"><br>
+  <input type="file" name="file"><br>
+  <input type="submit" value="上传"><br />
+</form>
 </body>
 </html>
