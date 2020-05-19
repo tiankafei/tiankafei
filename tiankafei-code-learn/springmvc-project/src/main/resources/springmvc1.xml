@@ -38,7 +38,14 @@
     <!--保证静态资源和动态请求都能够访问-->
     <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
 
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+    <!--<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="myConverter"></ref>
+            </set>
+        </property>
+    </bean>-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
             <set>
                 <ref bean="myConverter"></ref>

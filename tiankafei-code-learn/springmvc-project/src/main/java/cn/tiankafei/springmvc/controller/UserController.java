@@ -53,4 +53,10 @@ public class UserController {
         return "success";
     }
 
+    @RequestMapping("dateConvertion")
+    public String dateConvertion(User user){
+        System.out.println(user);
+        return "hello";
+    }
+
 }
