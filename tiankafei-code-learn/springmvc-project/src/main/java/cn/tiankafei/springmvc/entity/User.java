@@ -3,6 +3,7 @@ package cn.tiankafei.springmvc.entity;
 import java.util.Date;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
@@ -10,6 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class User {
 
     private Integer id;
+
+    @NotBlank(message = "名称不能为空！")
     private String name;
     private Integer age;
     private String gender;

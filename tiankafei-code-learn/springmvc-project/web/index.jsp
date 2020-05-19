@@ -30,9 +30,9 @@
 <input type="submit" value="提交"><br />
 </form>
 <form action="dateConvertion" method="post">
-  编号：<input type="text" name="id"><br>
-  姓名：<input type="text" name="name"><br>
-  日期：<input type="text" name="birth"><br>
+  编号：<input type="text" name="id">${errors.id}<br>
+  姓名：<input type="text" name="name">${errors.name}<br>
+  日期：<input type="text" name="birth"${errors.birth}><br>
   <input type="submit" value="提交">
 </form>
 </body>
