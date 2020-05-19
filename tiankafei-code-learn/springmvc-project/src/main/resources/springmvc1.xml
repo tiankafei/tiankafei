@@ -65,4 +65,10 @@
         <bean class="cn.tiankafei.springmvc.interceptor.MyFirstInterceptor"></bean>
     </mvc:interceptors>
 
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="login"></property>
+    </bean>
+    <!--配置区域信息解析器-->
+    <bean id="localeResolver" class="cn.tiankafei.springmvc.converter.MyLocaleResolver"></bean>
+
 </beans>
