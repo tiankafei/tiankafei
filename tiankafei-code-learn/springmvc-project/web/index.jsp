@@ -42,6 +42,10 @@
   <input type="submit" value="上传"><br />
 </form>
 <a href="${path}/i18n">国际化登录</a><br>
-<a href="${path}/i18nTest">国际化标准登录</a><br>
+<a href="${path}/i18nTest">国际化标准登录</a><br><br>
+
+<a href="${path}/exception1">自己处理异常</a><br>
+<a href="${path}/exception2?username=zhangsan">自定义异常处理</a><br>
+<a href="${path}/exception3">Springmvc自己异常处理</a><br>
 </body>
 </html>
