@@ -43,6 +43,7 @@
         <module>tiankafei-message-center</module>
         <module>tiankafei-service-eureka</module>
         <module>tiankafei-service-nacos</module>
+        <module>tiankafei-frame-start</module>
     </modules>
 
     <dependencyManagement>
