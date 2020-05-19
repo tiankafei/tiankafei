@@ -41,6 +41,7 @@
   <input type="file" name="file"><br>
   <input type="submit" value="上传"><br />
 </form>
-<a href="${path}/i18n">国际化登录</a>
+<a href="${path}/i18n">国际化登录</a><br>
+<a href="${path}/i18nTest">国际化标准登录</a><br>
 </body>
 </html>

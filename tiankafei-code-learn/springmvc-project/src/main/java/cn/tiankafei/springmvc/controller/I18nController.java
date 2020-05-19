@@ -10,7 +10,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Controller
 public class I18nController {
 
-    @RequestMapping("i18n")
+    @RequestMapping("/i18n")
     public String i18n(@RequestParam(value = "locale",defaultValue = "zh_CN") String localeStr, Locale locale, HttpSession session){
 
         Locale l = null;
@@ -20,6 +20,11 @@ public class I18nController {
             l = locale;
         }
         session.setAttribute(SessionLocaleResolver.class.getName() + ".LOCALE",l);
+        return "login";
+    }
+
+    @RequestMapping("/i18nTest")
+    public String i18nTest(@RequestParam(value = "locale", defaultValue = "zh_CN") String localeStr, Locale locale, HttpSession session){
         return "login";
     }
 }

@@ -68,7 +68,12 @@
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="login"></property>
     </bean>
-    <!--配置区域信息解析器-->
-    <bean id="localeResolver" class="cn.tiankafei.springmvc.converter.MyLocaleResolver"></bean>
+    <!--自定义配置区域信息解析器-->
+    <!--<bean id="localeResolver" class="cn.tiankafei.springmvc.converter.MyLocaleResolver"></bean>-->
+    <!--spring配置区域信息解析器-->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"></bean>
+    </mvc:interceptors>
 
 </beans>
