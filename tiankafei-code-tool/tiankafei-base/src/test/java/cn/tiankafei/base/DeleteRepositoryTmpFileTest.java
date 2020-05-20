@@ -38,7 +38,7 @@ public class DeleteRepositoryTmpFileTest {
         File file = new File(directoryPath);
         if (file.exists()) {
             File[] files = file.listFiles();
-            Stream.of(files).forEach((fi) -> {
+            Stream.of(files).parallel().forEach((fi) -> {
                 if (fi.isDirectory()) {
                     String directoryName = fi.getName();
                     if (directoryName.contains("unknown") || directoryName.contains("${")) {
