@@ -3,3 +3,9 @@ logging:
     # 不打印spring的 CONDITIONS EVALUATION REPORT 的日志的输出
     org.springframework.boot.autoconfigure: ERROR
     ROOT: info
+spring:
+  datasource:
+    username: tjcp
+    password: tjcp
+    url: jdbc:mysql://10.10.50.83:3306/thtftjcp-report-business?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    type: com.alibaba.druid.pool.DruidDataSource

@@ -1,6 +1,10 @@
 package cn.tiankafei.springbootproject.service.impl;
 
+import cn.tiankafei.springbootproject.repository.SpringBootRepository;
 import cn.tiankafei.springbootproject.service.SpringBootService;
+import java.util.List;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,4 +14,12 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class SpringBootServiceImpl implements SpringBootService {
+
+    @Autowired
+    private SpringBootRepository springBootRepository;
+
+    @Override
+    public List<Map<String, Object>> getAllData() {
+        return springBootRepository.getAllData();
+    }
 }
