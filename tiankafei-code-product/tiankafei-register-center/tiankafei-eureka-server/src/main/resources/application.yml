@@ -15,6 +15,8 @@ eureka:
     enable-self-preservation: false
 logging:
   level:
-    # 不打印spring的 CONDITIONS EVALUATION REPORT 的日志的输出
+    # 不打印 spring 的 CONDITIONS EVALUATION REPORT 的日志的输出
     org.springframework.boot.autoconfigure: ERROR
+    # 不打印 eureka 的心跳日志的输出
+    com.netflix.eureka: ERROR
     ROOT: info
