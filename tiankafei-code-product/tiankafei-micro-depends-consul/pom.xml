@@ -6,7 +6,7 @@
         <groupId>cn.tiankafei</groupId>
         <artifactId>code-produce-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tiankafei-micro-depends-consul</artifactId>

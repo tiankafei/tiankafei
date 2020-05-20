@@ -6,7 +6,7 @@
         <groupId>cn.tiankafei</groupId>
         <artifactId>tiankafei-code-generator</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tiankafei-code-generate</artifactId>
