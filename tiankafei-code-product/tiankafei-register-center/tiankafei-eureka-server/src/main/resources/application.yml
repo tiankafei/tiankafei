@@ -13,3 +13,8 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     enable-self-preservation: false
+logging:
+  level:
+    # 不打印spring的 CONDITIONS EVALUATION REPORT 的日志的输出
+    org.springframework.boot.autoconfigure: ERROR
+    ROOT: info
