@@ -2,12 +2,16 @@ package cn.tiankafei.springbootproject.controller;
 
 import cn.tiankafei.springbootproject.listener.SpringBootListener;
 import cn.tiankafei.springbootproject.service.SpringBootService;
+import cn.tiankafei.springbootproject.spi.IService;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sun.misc.Service;
 
 /**
  * @Author 魏双双
@@ -35,6 +39,13 @@ public class SpringBootController {
     public List<Map<String, Object>> getAllData() {
         List<Map<String, Object>> allData = springBootService.getAllData();
         return allData;
+    }
+
+    @RequestMapping(value = "/spi/{name}")
+    public String javaspi(@PathVariable(value = "name") String name){
+        Iterator<IService> providers = Service.providers(IService.class);
+        IService<String, String> service = providers.next();
+        return service.apply(name);
     }
 
 }
