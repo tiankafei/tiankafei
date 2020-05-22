@@ -1,7 +1,8 @@
 package cn.tiankafei.proxy;
 
-import cn.tiankafei.base.util.SystemTimeUtil;
 import cn.tiankafei.proxy.interfaces.IAspect;
+import com.google.common.base.Stopwatch;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
@@ -16,9 +17,9 @@ public class AspectImpl implements IAspect {
 
     @Override
     public Object executeBefore(Object object, Method method, Object[] args, Map<String, Object> paramMap) {
-        long currentTime = SystemTimeUtil.now();
-        paramMap.put("startTime", currentTime);
-        log.info("方法执行开始==============执行的类名：{}, 执行的方法：{}, 执行的参数：{}, 执行开始时间：{}", object.getClass(), method.getName(), args, currentTime);
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        paramMap.put("startTime", stopwatch);
+        log.info("方法执行开始==============执行的类名：{}, 执行的方法：{}, 执行的参数：{}, 执行开始时间：{}", object.getClass(), method.getName(), args, stopwatch.elapsed(TimeUnit.MILLISECONDS));
         return null;
     }
 
@@ -36,9 +37,8 @@ public class AspectImpl implements IAspect {
 
     @Override
     public Object returnBefore(Object object, Method method, Object[] args, Map<String, Object> paramMap, Object result) {
-        long currentTime = (long) paramMap.get("startTime");
-        long useTime = SystemTimeUtil.now() - currentTime;
-        log.info("方法执行完成后的返回=============执行的类名：{}, 执行的方法：{}, 执行的参数：{}, 执行用时：{}ms, 执行的结果为：{}", object.getClass(), method.getName(), args, useTime, result);
+        Stopwatch stopwatch = (Stopwatch) paramMap.get("startTime");
+        log.info("方法执行完成后的返回=============执行的类名：{}, 执行的方法：{}, 执行的参数：{}, 执行用时：{}ms, 执行的结果为：{}", object.getClass(), method.getName(), args, stopwatch.elapsed(TimeUnit.MILLISECONDS), result);
         return null;
     }
 

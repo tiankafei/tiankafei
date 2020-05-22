@@ -23,15 +23,23 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/cglib/cglib -->
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
-            <groupId>cn.tiankafei</groupId>
-            <artifactId>tiankafei-base</artifactId>
-            <version>${code-tool.version}</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 

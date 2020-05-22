@@ -1,7 +1,8 @@
 package cn.tiankafei.proxy;
 
-import cn.tiankafei.base.util.SystemTimeUtil;
 import cn.tiankafei.proxy.util.ProxyUtil;
+import com.google.common.base.Stopwatch;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -16,26 +17,24 @@ public class ProxyTest {
 
     @Test
     public void testJdkProxy(){
-        long currentTime = SystemTimeUtil.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         IHandler handler = new HandlerImpl();
         for (int i = 0; i < count; i++) {
             IHandler proxyHandler = ProxyUtil.getProxy(handler, new AspectImpl());
             proxyHandler.process("小明");
         }
-        long useTime = SystemTimeUtil.now() - currentTime;
-        log.info("使用jdk动态代理执行{}次，用时：{}ms", count, useTime);
+        log.info("使用jdk动态代理执行{}次，用时：{}ms", count, stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
     @Test
     public void testCglibProxy(){
-        long currentTime = SystemTimeUtil.now();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Handler handler = new Handler();
         for (int i = 0; i < count; i++) {
             Handler proxyHandler = ProxyUtil.getProxy(handler, new AspectImpl());
             proxyHandler.process("小明");
         }
-        long useTime = SystemTimeUtil.now() - currentTime;
-        log.info("使用Cglib动态代理执行{}次，用时：{}ms", count, useTime);
+        log.info("使用Cglib动态代理执行{}次，用时：{}ms", count, stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
 }

@@ -63,13 +63,13 @@ public class ProxyProcess implements InvocationHandler, MethodInterceptor {
         paramMap = new HashMap<>();
         Object result = null;
         try {
-            aspect.executeBefore(target, method, args, paramMap);
-            result = methodProxy.invokeSuper(target, args);
-            aspect.executeAfter(target, method, args, paramMap, result);
+            aspect.executeBefore(proxy, method, args, paramMap);
+            result = methodProxy.invokeSuper(proxy, args);
+            aspect.executeAfter(proxy, method, args, paramMap, result);
         }catch (Exception e){
-            aspect.executeThrowing(target, method, args, paramMap, e);
+            aspect.executeThrowing(proxy, method, args, paramMap, e);
         }finally {
-            aspect.returnBefore(target, method, args, paramMap, result);
+            aspect.returnBefore(proxy, method, args, paramMap, result);
         }
         return result;
 
