@@ -1,6 +1,7 @@
 package cn.tiankafei.base.sort.observer;
 
 import cn.tiankafei.base.sort.MainInterface;
+import cn.tiankafei.base.sort.observer.event.ObserverEvent;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -26,7 +27,7 @@ public class MainObserver implements MainInterface {
         standSortObservable.addObserver(new QuickSortObserver());
         standSortObservable.addObserver(new SelectionSortObserver());
         standSortObservable.addObserver(new ShellSortObserver());
-        standSortObservable.execute();
+        standSortObservable.execute(new ObserverEvent());
         log.info("使用观察者模式运行结束=========================================================");
     }
 

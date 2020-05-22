@@ -1,5 +1,6 @@
 package cn.tiankafei.base.sort.observer;
 
+import cn.tiankafei.base.sort.observer.event.ObserverEvent;
 import java.util.Observable;
 
 /**
@@ -12,9 +13,9 @@ import java.util.Observable;
  **/
 public class StandSortObservable extends Observable {
 
-    public void execute() {
+    public void execute(ObserverEvent event) {
         setChanged();
-        notifyObservers();
+        notifyObservers(event);
         clearChanged();
     }
 
