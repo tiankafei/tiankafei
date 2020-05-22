@@ -1,6 +1,6 @@
 package cn.tiankafei.base.sort.factory;
 
-import cn.tiankafei.base.sort.SortComparator;
+import cn.tiankafei.base.sort.comparator.SortComparator;
 
 /**
  * 工厂方法

@@ -1,4 +1,4 @@
-package cn.tiankafei.base.sort;
+package cn.tiankafei.base.sort.proxy;
 
 /**
  * 代理模式

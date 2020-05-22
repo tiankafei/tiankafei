@@ -1,6 +1,6 @@
 package cn.tiankafei.base.sort.merge;
 
-import cn.tiankafei.base.sort.SortComparator;
+import cn.tiankafei.base.sort.comparator.SortComparator;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

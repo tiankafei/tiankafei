@@ -1,4 +1,4 @@
-package cn.tiankafei.base.sort;
+package cn.tiankafei.base.sort.decorator;
 
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;

@@ -1,6 +1,5 @@
 package cn.tiankafei.base.sort.decorator;
 
-import cn.tiankafei.base.sort.SortDecorator;
 import cn.tiankafei.base.sort.factory.SortFactory;
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;

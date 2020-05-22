@@ -1,12 +1,6 @@
-package cn.tiankafei.base.sort;
+package cn.tiankafei.base.sort.chain;
 
-import cn.tiankafei.base.sort.chain.BubbleSortChain;
-import cn.tiankafei.base.sort.chain.InsertionSortChain;
-import cn.tiankafei.base.sort.chain.MergeSortChain;
-import cn.tiankafei.base.sort.chain.QuickSortChain;
-import cn.tiankafei.base.sort.chain.SelectionSortChain;
-import cn.tiankafei.base.sort.chain.ShellSortChain;
-import cn.tiankafei.base.sort.chain.StandSortChain;
+import cn.tiankafei.base.sort.MainInterface;
 import lombok.extern.slf4j.Slf4j;
 
 /**

@@ -1,6 +1,6 @@
 package cn.tiankafei.base.sort.insertion;
 
-import cn.tiankafei.base.sort.SortComparator;
+import cn.tiankafei.base.sort.comparator.SortComparator;
 import lombok.extern.slf4j.Slf4j;
 
 /**

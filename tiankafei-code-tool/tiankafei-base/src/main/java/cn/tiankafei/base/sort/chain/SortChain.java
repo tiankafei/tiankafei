@@ -1,9 +1,9 @@
-package cn.tiankafei.base.sort;
+package cn.tiankafei.base.sort.chain;
 
-import cn.tiankafei.base.sort.chain.StandSortChain;
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
 import cn.tiankafei.base.sort.singleton.SortComparatorSingleton;
+import cn.tiankafei.base.sort.singleton.SortFactoryStrategy;
 
 /**
  * 责任链模式

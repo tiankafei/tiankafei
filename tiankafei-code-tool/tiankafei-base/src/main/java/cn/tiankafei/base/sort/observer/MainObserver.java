@@ -1,12 +1,6 @@
-package cn.tiankafei.base.sort;
+package cn.tiankafei.base.sort.observer;
 
-import cn.tiankafei.base.sort.observer.BubbleSortObserver;
-import cn.tiankafei.base.sort.observer.InsertionSortObserver;
-import cn.tiankafei.base.sort.observer.MergeSortObserver;
-import cn.tiankafei.base.sort.observer.QuickSortObserver;
-import cn.tiankafei.base.sort.observer.SelectionSortObserver;
-import cn.tiankafei.base.sort.observer.ShellSortObserver;
-import cn.tiankafei.base.sort.observer.StandSortObservable;
+import cn.tiankafei.base.sort.MainInterface;
 import lombok.extern.slf4j.Slf4j;
 
 /**

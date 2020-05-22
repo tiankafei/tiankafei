@@ -2,7 +2,7 @@ package cn.tiankafei.base.sort.observer;
 
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
-import cn.tiankafei.base.sort.SortFactoryStrategy;
+import cn.tiankafei.base.sort.singleton.SortFactoryStrategy;
 import cn.tiankafei.base.sort.singleton.SortComparatorSingleton;
 import java.util.Observable;
 import java.util.Observer;

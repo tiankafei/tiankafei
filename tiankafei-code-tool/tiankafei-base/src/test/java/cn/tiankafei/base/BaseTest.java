@@ -1,7 +1,7 @@
 package cn.tiankafei.base;
 
 import cn.tiankafei.base.sort.MainInterface;
-import cn.tiankafei.base.sort.MainObserver;
+import cn.tiankafei.base.sort.observer.MainObserver;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

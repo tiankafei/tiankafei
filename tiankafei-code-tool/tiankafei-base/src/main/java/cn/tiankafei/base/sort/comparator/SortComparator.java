@@ -1,4 +1,4 @@
-package cn.tiankafei.base.sort;
+package cn.tiankafei.base.sort.comparator;
 
 /**
  * 策略模式

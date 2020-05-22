@@ -1,6 +1,5 @@
 package cn.tiankafei.base.sort.proxy;
 
-import cn.tiankafei.base.sort.SortProxy;
 import lombok.extern.slf4j.Slf4j;
 
 /**

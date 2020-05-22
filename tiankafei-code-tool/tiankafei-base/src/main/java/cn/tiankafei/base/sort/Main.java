@@ -1,5 +1,7 @@
 package cn.tiankafei.base.sort;
 
+import cn.tiankafei.base.sort.chain.MainChain;
+import cn.tiankafei.base.sort.observer.MainObserver;
 import cn.tiankafei.base.sort.proxy.TestAuthorityProxy;
 import cn.tiankafei.base.sort.proxy.TestProxy;
 import cn.tiankafei.base.sort.proxy.TestTimeProxy;

@@ -1,6 +1,5 @@
 package cn.tiankafei.base.sort.comparator;
 
-import cn.tiankafei.base.sort.SortComparator;
 import java.util.Random;
 
 /**

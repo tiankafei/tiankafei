@@ -1,6 +1,5 @@
 package cn.tiankafei.base.sort.chain;
 
-import cn.tiankafei.base.sort.SortChain;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +29,5 @@ public class StandSortChain {
         SortChain c = chainList.get(index);
         index++;
         return c.execute(this);
-
-//        for (int index = 0, length = chainList.size(); index < length; index++) {
-//            SortChain sortChain = chainList.get(index);
-//            boolean flag = sortChain.execute(sortDecorator);
-//            if(!flag){
-//                return Boolean.FALSE;
-//            }
-//        }
-//        return Boolean.TRUE;
     }
 }
