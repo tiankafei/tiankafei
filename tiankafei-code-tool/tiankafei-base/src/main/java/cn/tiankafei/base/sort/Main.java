@@ -1,6 +1,7 @@
 package cn.tiankafei.base.sort;
 
 import cn.tiankafei.base.sort.chain.MainChain;
+import cn.tiankafei.base.sort.decorator.MainDecorator;
 import cn.tiankafei.base.sort.observer.MainObserver;
 import cn.tiankafei.base.sort.proxy.TestAuthorityProxy;
 import cn.tiankafei.base.sort.proxy.TestProxy;
@@ -42,11 +43,19 @@ public class Main {
         mainChain.execute();
         System.out.println();
 
+        MainInterface mainDecorator = new MainDecorator();
+        mainDecorator.execute();
+        System.out.println();
+
         MainInterface mainInterface = ProxyUtil.getProxy(mainObserver, new DynamicProxyHandler());
         mainInterface.execute();
         System.out.println();
 
         mainInterface = ProxyUtil.getProxy(mainChain, new DynamicProxyHandler());
+        mainInterface.execute();
+        System.out.println();
+
+        mainInterface = ProxyUtil.getProxy(mainDecorator, new DynamicProxyHandler());
         mainInterface.execute();
         System.out.println();
 

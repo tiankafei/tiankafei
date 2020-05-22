@@ -1,8 +1,7 @@
 package cn.tiankafei.base.sort.decorator;
 
+import cn.tiankafei.base.sort.bubble.BubbleSortFactory;
 import cn.tiankafei.base.sort.factory.SortFactory;
-import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
-import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -13,37 +12,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BubbleSortDecorator implements SortDecorator {
 
-    private SortDecorator sortDecorator;
-
-    public BubbleSortDecorator(SortDecorator sortDecorator) {
-        this.sortDecorator = sortDecorator;
-    }
-
     @Override
-    public void testDoubleMin(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator) {
-        log.info("冒泡排序：浮点型：从小到大：start============");
-        sortDecorator.testDoubleMin(sortFactory, doubleSortComparator);
-        log.info("冒泡排序：浮点型：从小到大：finished============");
+    public void execute() {
+        //工厂方法模式
+        SortFactory<Double> doubleSortFactory = new BubbleSortFactory();
+        SortFactory<Integer> integerSortFactory = new BubbleSortFactory();
+
+        sortFactoryStrategy.testDoubleMin(doubleSortFactory, doubleMinSortComparator);
+        sortFactoryStrategy.testDoubleMax(doubleSortFactory, doubleMaxSortComparator);
+        sortFactoryStrategy.testIntegerMin(integerSortFactory, integerMinSortComparator);
+        sortFactoryStrategy.testIntegerMax(integerSortFactory, integerMaxSortComparator);
     }
 
-    @Override
-    public void testDoubleMax(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator) {
-        log.info("冒泡排序：浮点型：从大到小：start============");
-        sortDecorator.testDoubleMax(sortFactory, doubleSortComparator);
-        log.info("冒泡排序：浮点型：从大到小：finished============");
-    }
-
-    @Override
-    public void testIntegerMin(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator) {
-        log.info("冒泡排序：整型：从小到大：start============");
-        sortDecorator.testIntegerMin(sortFactory, integerSortComparator);
-        log.info("冒泡排序：整型：从小到大：finished============");
-    }
-
-    @Override
-    public void testIntegerMax(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator) {
-        log.info("冒泡排序：整型：从大到小：start============");
-        sortDecorator.testIntegerMax(sortFactory, integerSortComparator);
-        log.info("冒泡排序：整型：从大到小：finished============");
-    }
 }
