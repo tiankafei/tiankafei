@@ -2,9 +2,7 @@ package cn.tiankafei.base.sort.observer;
 
 import cn.tiankafei.base.sort.SortDecorator;
 import cn.tiankafei.base.sort.SortFactory;
-import cn.tiankafei.base.sort.SortObserver;
 import cn.tiankafei.base.sort.decorator.SelectionSortDecorator;
-import cn.tiankafei.base.sort.observer.event.ObserverEvent;
 import cn.tiankafei.base.sort.selection.SelectionSortFactory;
 
 /**
@@ -18,8 +16,7 @@ import cn.tiankafei.base.sort.selection.SelectionSortFactory;
 public class SelectionSortObserver implements SortObserver {
 
     @Override
-    public <T> void action(ObserverEvent<T> event) {
-        SortDecorator sortDecorator = (SortDecorator) event.getSource();
+    public void exec(SortDecorator sortDecorator) {
         //装饰着模式
         SelectionSortDecorator selectionSortDecorator = new SelectionSortDecorator(sortDecorator);
 

@@ -7,8 +7,7 @@ import cn.tiankafei.base.sort.observer.MergeSortObserver;
 import cn.tiankafei.base.sort.observer.QuickSortObserver;
 import cn.tiankafei.base.sort.observer.SelectionSortObserver;
 import cn.tiankafei.base.sort.observer.ShellSortObserver;
-import cn.tiankafei.base.sort.observer.StandSortObserver;
-import cn.tiankafei.base.sort.observer.event.ObserverEvent;
+import cn.tiankafei.base.sort.observer.StandSortObservable;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -27,25 +26,16 @@ public class MainObserver implements MainInterface {
         log.info("使用观察者模式运行开始=========================================================");
         //装饰着模式
         SortDecorator sortDecorator = new StandSortDecorator();
-        //声明观察者管理类
-        StandSortObserver standSortObserver = new StandSortObserver();
+        //声明被观察者对象
+        StandSortObservable standSortObservable = new StandSortObservable();
         //添加观察者
-        standSortObserver.addObserver(new BubbleSortObserver());
-        standSortObserver.addObserver(new InsertionSortObserver());
-        standSortObserver.addObserver(new MergeSortObserver());
-        standSortObserver.addObserver(new QuickSortObserver());
-        standSortObserver.addObserver(new SelectionSortObserver());
-        standSortObserver.addObserver(new ShellSortObserver());
-        /**
-         * 触发观察者观察的事件（可能是别的线程的调用）
-         *      standSortObserver.execute(event);
-         * 声明事件源对象（调用线程创建的）
-         *      ObserverEvent event = new ObserverEvent();
-         *      event.setSource(sortDecorator);
-         */
-        ObserverEvent event = new ObserverEvent();
-        event.setSource(sortDecorator);
-        standSortObserver.execute(event);
+        standSortObservable.addObserver(new BubbleSortObserver());
+        standSortObservable.addObserver(new InsertionSortObserver());
+        standSortObservable.addObserver(new MergeSortObserver());
+        standSortObservable.addObserver(new QuickSortObserver());
+        standSortObservable.addObserver(new SelectionSortObserver());
+        standSortObservable.addObserver(new ShellSortObserver());
+        standSortObservable.execute(sortDecorator);
         log.info("使用观察者模式运行结束=========================================================");
     }
 

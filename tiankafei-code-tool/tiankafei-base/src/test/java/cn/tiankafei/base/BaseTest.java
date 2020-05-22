@@ -1,5 +1,7 @@
 package cn.tiankafei.base;
 
+import cn.tiankafei.base.sort.MainInterface;
+import cn.tiankafei.base.sort.MainObserver;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -327,6 +329,12 @@ public class BaseTest {
         System.out.println("STOP = " + STOP);
         System.out.println("TIDYING = " + TIDYING);
         System.out.println("TERMINATED = " + TERMINATED);
+    }
+
+    @Test
+    public void test5(){
+        MainInterface mainObserver = new MainObserver();
+        mainObserver.execute();
     }
 
     private int get(int value){

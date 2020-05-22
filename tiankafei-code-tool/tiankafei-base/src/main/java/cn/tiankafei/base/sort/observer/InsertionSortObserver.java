@@ -2,10 +2,8 @@ package cn.tiankafei.base.sort.observer;
 
 import cn.tiankafei.base.sort.SortDecorator;
 import cn.tiankafei.base.sort.SortFactory;
-import cn.tiankafei.base.sort.SortObserver;
 import cn.tiankafei.base.sort.decorator.InsertionSortDecorator;
 import cn.tiankafei.base.sort.insertion.InsertionSortFactory;
-import cn.tiankafei.base.sort.observer.event.ObserverEvent;
 
 /**
  * 观察者模式：底层使用装饰着模式实现，注释掉责任链模式的实现
@@ -18,8 +16,7 @@ import cn.tiankafei.base.sort.observer.event.ObserverEvent;
 public class InsertionSortObserver implements SortObserver {
 
     @Override
-    public <T> void action(ObserverEvent<T> event) {
-        SortDecorator sortDecorator = (SortDecorator) event.getSource();
+    public void exec(SortDecorator sortDecorator) {
         //装饰着模式
         InsertionSortDecorator insertionSortDecorator = new InsertionSortDecorator(sortDecorator);
 
