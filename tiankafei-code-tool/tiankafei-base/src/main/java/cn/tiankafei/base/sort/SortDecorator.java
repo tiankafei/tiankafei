@@ -2,6 +2,7 @@ package cn.tiankafei.base.sort;
 
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
+import cn.tiankafei.base.sort.factory.SortFactory;
 
 /**
  * 装饰着

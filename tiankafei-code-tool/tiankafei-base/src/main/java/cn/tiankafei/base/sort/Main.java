@@ -1,13 +1,14 @@
 package cn.tiankafei.base.sort;
 
-import cn.tiankafei.base.util.SystemTimeUtil;
 import cn.tiankafei.base.sort.proxy.TestAuthorityProxy;
 import cn.tiankafei.base.sort.proxy.TestProxy;
 import cn.tiankafei.base.sort.proxy.TestTimeProxy;
 import cn.tiankafei.proxy.interfaces.IAspect;
 import cn.tiankafei.proxy.util.ProxyUtil;
+import com.google.common.base.Stopwatch;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,26 +34,55 @@ public class Main {
     public static void main(String[] args) {
         MainInterface mainObserver = new MainObserver();
         mainObserver.execute();
+        System.out.println();
 
+        MainInterface mainChain = new MainChain();
+        mainChain.execute();
+        System.out.println();
 
+        MainInterface mainInterface = ProxyUtil.getProxy(mainObserver, new DynamicProxyHandler());
+        mainInterface.execute();
+        System.out.println();
 
-//        MainInterface mainChain = new MainChain();
-//        MainInterface mainObserver = new MainObserver();
-//        MainInterface mainProxy = new MainProxy();
-//
-//        log.info("使用动态代理模式运行开始=========================================================");
-//        MainInterface mainInterface = ProxyUtil.getProxy(mainChain, new DynamicProxyHandler());
-//        mainInterface.execute();
-//        mainInterface = ProxyUtil.getProxy(mainObserver, new DynamicProxyHandler());
-//        mainInterface.execute();
-//        mainInterface = ProxyUtil.getProxy(mainProxy, new DynamicProxyHandler());
-//        mainInterface.execute();
-//        log.info("使用动态代理模式运行结束=========================================================");
-//        log.info("使用嵌套代理模式运行开始=========================================================");
-//        new TestAuthorityProxy(new TestTimeProxy(new TestProxy())).execute();
-//        System.out.println();
-//        new TestTimeProxy(new TestAuthorityProxy(new TestProxy())).execute();
-//        log.info("使用嵌套代理模式运行结束=========================================================");
+        mainInterface = ProxyUtil.getProxy(mainChain, new DynamicProxyHandler());
+        mainInterface.execute();
+        System.out.println();
+
+        log.info("使用嵌套代理模式运行开始=========================================================");
+        new TestAuthorityProxy(new TestTimeProxy(new TestProxy())).execute();
+        System.out.println();
+        new TestTimeProxy(new TestAuthorityProxy(new TestProxy())).execute();
+        log.info("使用嵌套代理模式运行结束=========================================================");
+    }
+
+    static class DynamicProxyHandler implements IAspect {
+
+        @Override
+        public Object executeBefore(Object object, Method method, Object[] args, Map<String, Object> paramMap) {
+            log.info("测试动态代理执行开始：动态执行类名 -> {}============================================", object.getClass());
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            paramMap.put("startTime", stopwatch);
+            log.info("method {} start......", method.getName());
+            return null;
+        }
+
+        @Override
+        public Object executeAfter(Object object, Method method, Object[] args, Map<String, Object> paramMap, Object result) {
+            Stopwatch stopwatch = (Stopwatch) paramMap.get("startTime");
+            log.info("method {} end......", method.getName());
+            log.info("测试动态代理执行结束：动态执行类名 -> {}; 执行用时 -> {}ms============================================", object.getClass(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
+            return null;
+        }
+
+        @Override
+        public Object executeThrowing(Object object, Method method, Object[] args, Map<String, Object> paramMap, Exception exception) {
+            return null;
+        }
+
+        @Override
+        public Object returnBefore(Object object, Method method, Object[] args, Map<String, Object> paramMap, Object result) {
+            return null;
+        }
     }
 
 }

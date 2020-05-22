@@ -1,7 +1,7 @@
 package cn.tiankafei.base.sort.shell;
 
 import cn.tiankafei.base.sort.SortComparator;
-import cn.tiankafei.base.sort.SortFactory;
+import cn.tiankafei.base.sort.factory.SortFactory;
 
 /**
  * @ClassName ShellSortFactory

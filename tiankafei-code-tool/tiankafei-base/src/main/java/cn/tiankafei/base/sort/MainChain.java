@@ -7,7 +7,6 @@ import cn.tiankafei.base.sort.chain.QuickSortChain;
 import cn.tiankafei.base.sort.chain.SelectionSortChain;
 import cn.tiankafei.base.sort.chain.ShellSortChain;
 import cn.tiankafei.base.sort.chain.StandSortChain;
-import cn.tiankafei.base.sort.decorator.StandSortDecorator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,8 +23,6 @@ public class MainChain implements MainInterface {
     @Override
     public void execute() {
         log.info("使用责任链模式运行开始=========================================================");
-        //装饰着模式
-        SortDecorator sortDecorator = new StandSortDecorator();
         //声明责任链管理类
         StandSortChain standSortChain = new StandSortChain();
         //添加责任链
@@ -35,7 +32,7 @@ public class MainChain implements MainInterface {
         standSortChain.add(new QuickSortChain());
         standSortChain.add(new SelectionSortChain());
         standSortChain.add(new ShellSortChain());
-        standSortChain.execute(sortDecorator);
+        standSortChain.execute();
         log.info("使用责任链模式运行结束=========================================================");
     }
 

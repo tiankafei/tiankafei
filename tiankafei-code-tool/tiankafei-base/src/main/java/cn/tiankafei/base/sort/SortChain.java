@@ -20,13 +20,14 @@ public interface SortChain {
     IntegerSortComparator integerMinSortComparator = SortComparatorSingleton.getIntegerMinSortComparator();
     IntegerSortComparator integerMaxSortComparator = SortComparatorSingleton.getIntegerMaxSortComparator();
 
+    SortFactoryStrategy sortFactoryStrategy = SortFactoryStrategy.getInstance();
+
     /**
      * 执行
      *
-     * @param sortDecorator
      * @param standSortChain
      * @return
      */
-    Boolean execute(SortDecorator sortDecorator, StandSortChain standSortChain);
+    Boolean execute(StandSortChain standSortChain);
 
 }

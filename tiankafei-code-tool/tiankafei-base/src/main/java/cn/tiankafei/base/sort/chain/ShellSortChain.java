@@ -1,9 +1,7 @@
 package cn.tiankafei.base.sort.chain;
 
 import cn.tiankafei.base.sort.SortChain;
-import cn.tiankafei.base.sort.SortDecorator;
-import cn.tiankafei.base.sort.SortFactory;
-import cn.tiankafei.base.sort.decorator.ShellSortDecorator;
+import cn.tiankafei.base.sort.factory.SortFactory;
 import cn.tiankafei.base.sort.shell.ShellSortFactory;
 
 /**
@@ -17,20 +15,16 @@ import cn.tiankafei.base.sort.shell.ShellSortFactory;
 public class ShellSortChain implements SortChain {
 
     @Override
-    public Boolean execute(SortDecorator sortDecorator, StandSortChain standSortChain) {
-        //装饰着模式
-        ShellSortDecorator shellSortDecorator = new ShellSortDecorator(sortDecorator);
-
+    public Boolean execute(StandSortChain standSortChain) {
         //工厂方法模式
         SortFactory<Double> doubleSortFactory = new ShellSortFactory();
         SortFactory<Integer> integerSortFactory = new ShellSortFactory();
 
-        shellSortDecorator.testDoubleMin(doubleSortFactory, doubleMinSortComparator);
-        shellSortDecorator.testDoubleMax(doubleSortFactory, doubleMaxSortComparator);
-        shellSortDecorator.testIntegerMin(integerSortFactory, integerMinSortComparator);
-        shellSortDecorator.testIntegerMax(integerSortFactory, integerMaxSortComparator);
+        sortFactoryStrategy.testDoubleMin(doubleSortFactory, doubleMinSortComparator);
+        sortFactoryStrategy.testDoubleMax(doubleSortFactory, doubleMaxSortComparator);
+        sortFactoryStrategy.testIntegerMin(integerSortFactory, integerMinSortComparator);
+        sortFactoryStrategy.testIntegerMax(integerSortFactory, integerMaxSortComparator);
 
-        return standSortChain.execute(sortDecorator);
-//        return Boolean.TRUE;
+        return standSortChain.execute();
     }
 }

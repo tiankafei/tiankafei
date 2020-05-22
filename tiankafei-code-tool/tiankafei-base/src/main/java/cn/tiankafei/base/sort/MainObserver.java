@@ -1,6 +1,5 @@
 package cn.tiankafei.base.sort;
 
-import cn.tiankafei.base.sort.decorator.StandSortDecorator;
 import cn.tiankafei.base.sort.observer.BubbleSortObserver;
 import cn.tiankafei.base.sort.observer.InsertionSortObserver;
 import cn.tiankafei.base.sort.observer.MergeSortObserver;
@@ -24,8 +23,6 @@ public class MainObserver implements MainInterface {
     @Override
     public void execute() {
         log.info("使用观察者模式运行开始=========================================================");
-        //装饰着模式
-        SortDecorator sortDecorator = new StandSortDecorator();
         //声明被观察者对象
         StandSortObservable standSortObservable = new StandSortObservable();
         //添加观察者
@@ -35,7 +32,7 @@ public class MainObserver implements MainInterface {
         standSortObservable.addObserver(new QuickSortObserver());
         standSortObservable.addObserver(new SelectionSortObserver());
         standSortObservable.addObserver(new ShellSortObserver());
-        standSortObservable.execute(sortDecorator);
+        standSortObservable.execute();
         log.info("使用观察者模式运行结束=========================================================");
     }
 

@@ -1,9 +1,8 @@
-package cn.tiankafei.base.sort.decorator;
+package cn.tiankafei.base.sort;
 
-import cn.tiankafei.base.sort.SortDecorator;
-import cn.tiankafei.base.sort.SortFactory;
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
+import cn.tiankafei.base.sort.factory.SortFactory;
 import java.util.Arrays;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +14,20 @@ import lombok.extern.slf4j.Slf4j;
  * @Version V1.0
  **/
 @Slf4j
-public class StandSortDecorator implements SortDecorator {
+public class SortFactoryStrategy {
 
     private static final int length = 100;
 
-    @Override
+    private SortFactoryStrategy(){}
+
+    private static class SortFactoryStrategySingle {
+        private final static SortFactoryStrategy INSTANCE = new SortFactoryStrategy();
+    }
+
+    public static SortFactoryStrategy getInstance() {
+        return SortFactoryStrategySingle.INSTANCE;
+    }
+
     public void testDoubleMin(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator) {
         Double[] arr = doubleSortComparator.createArray(length);
 
@@ -34,7 +42,6 @@ public class StandSortDecorator implements SortDecorator {
         log.info("与系统排序方法比对结果：" + result);
     }
 
-    @Override
     public void testDoubleMax(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator) {
         Double[] arr = doubleSortComparator.createArray(length);
 
@@ -49,7 +56,6 @@ public class StandSortDecorator implements SortDecorator {
         log.info("与系统排序方法比对结果：" + result);
     }
 
-    @Override
     public void testIntegerMin(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator) {
         Integer[] arr = integerSortComparator.createArray(length);
 
@@ -64,7 +70,6 @@ public class StandSortDecorator implements SortDecorator {
         log.info("与系统排序方法比对结果：" + result);
     }
 
-    @Override
     public void testIntegerMax(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator) {
         Integer[] arr = integerSortComparator.createArray(length);
 
