@@ -61,6 +61,11 @@
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.tiankafei</groupId>
+            <artifactId>tiankafei-proxy</artifactId>
+            <version>${code-tool.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
