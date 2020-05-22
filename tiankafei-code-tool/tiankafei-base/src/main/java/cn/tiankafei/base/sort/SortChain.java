@@ -27,6 +27,6 @@ public interface SortChain {
      * @param standSortChain
      * @return
      */
-    public Boolean execute(SortDecorator sortDecorator, StandSortChain standSortChain);
+    Boolean execute(SortDecorator sortDecorator, StandSortChain standSortChain);
 
 }

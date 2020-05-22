@@ -14,6 +14,6 @@ public interface SortProxy {
      *
      * @return
      */
-    public Boolean execute();
+    Boolean execute();
 
 }

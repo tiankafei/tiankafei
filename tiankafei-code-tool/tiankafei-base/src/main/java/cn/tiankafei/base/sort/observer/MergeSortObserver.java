@@ -2,7 +2,6 @@ package cn.tiankafei.base.sort.observer;
 
 import cn.tiankafei.base.sort.SortDecorator;
 import cn.tiankafei.base.sort.SortFactory;
-import cn.tiankafei.base.sort.decorator.MergeSortDecorator;
 import cn.tiankafei.base.sort.merge.MergeSortFactory;
 
 /**
@@ -17,20 +16,13 @@ public class MergeSortObserver implements SortObserver {
 
     @Override
     public void exec(SortDecorator sortDecorator) {
-        //装饰着模式
-        MergeSortDecorator mergeSortDecorator = new MergeSortDecorator(sortDecorator);
-
         //工厂方法模式
         SortFactory<Double> doubleSortFactory = new MergeSortFactory();
         SortFactory<Integer> integerSortFactory = new MergeSortFactory();
 
-        mergeSortDecorator.testDoubleMin(doubleSortFactory, doubleMinSortComparator);
-        mergeSortDecorator.testDoubleMax(doubleSortFactory, doubleMaxSortComparator);
-        mergeSortDecorator.testIntegerMin(integerSortFactory, integerMinSortComparator);
-        mergeSortDecorator.testIntegerMax(integerSortFactory, integerMaxSortComparator);
-
-//        StandSortChain standSortChain = new StandSortChain();
-//        standSortChain.add(new MergeSortChain());
-//        standSortChain.execute(sortDecorator);
+        sortDecorator.testDoubleMin(doubleSortFactory, doubleMinSortComparator);
+        sortDecorator.testDoubleMax(doubleSortFactory, doubleMaxSortComparator);
+        sortDecorator.testIntegerMin(integerSortFactory, integerMinSortComparator);
+        sortDecorator.testIntegerMax(integerSortFactory, integerMaxSortComparator);
     }
 }

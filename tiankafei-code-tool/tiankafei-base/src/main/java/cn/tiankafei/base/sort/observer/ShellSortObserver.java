@@ -17,20 +17,13 @@ public class ShellSortObserver implements SortObserver {
 
     @Override
     public void exec(SortDecorator sortDecorator) {
-        //装饰着模式
-        ShellSortDecorator shellSortDecorator = new ShellSortDecorator(sortDecorator);
-
         //工厂方法模式
         SortFactory<Double> doubleSortFactory = new ShellSortFactory();
         SortFactory<Integer> integerSortFactory = new ShellSortFactory();
 
-        shellSortDecorator.testDoubleMin(doubleSortFactory, doubleMinSortComparator);
-        shellSortDecorator.testDoubleMax(doubleSortFactory, doubleMaxSortComparator);
-        shellSortDecorator.testIntegerMin(integerSortFactory, integerMinSortComparator);
-        shellSortDecorator.testIntegerMax(integerSortFactory, integerMaxSortComparator);
-
-//        StandSortChain standSortChain = new StandSortChain();
-//        standSortChain.add(new ShellSortChain());
-//        standSortChain.execute(sortDecorator);
+        sortDecorator.testDoubleMin(doubleSortFactory, doubleMinSortComparator);
+        sortDecorator.testDoubleMax(doubleSortFactory, doubleMaxSortComparator);
+        sortDecorator.testIntegerMin(integerSortFactory, integerMinSortComparator);
+        sortDecorator.testIntegerMax(integerSortFactory, integerMaxSortComparator);
     }
 }

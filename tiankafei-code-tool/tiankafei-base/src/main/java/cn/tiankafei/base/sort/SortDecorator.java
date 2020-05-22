@@ -16,7 +16,7 @@ public interface SortDecorator {
      * @param sortFactory
      * @param doubleSortComparator
      */
-    public void testDoubleMin(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator);
+    void testDoubleMin(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator);
 
     /**
      * 浮点型从大到小排序
@@ -24,7 +24,7 @@ public interface SortDecorator {
      * @param sortFactory
      * @param doubleSortComparator
      */
-    public void testDoubleMax(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator);
+    void testDoubleMax(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator);
 
     /**
      * 整型从小到大排序
@@ -32,7 +32,7 @@ public interface SortDecorator {
      * @param sortFactory
      * @param integerSortComparator
      */
-    public void testIntegerMin(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator);
+    void testIntegerMin(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator);
 
     /**
      * 整型从大到小排序
@@ -40,6 +40,6 @@ public interface SortDecorator {
      * @param sortFactory
      * @param integerSortComparator
      */
-    public void testIntegerMax(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator);
+    void testIntegerMax(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator);
 
 }

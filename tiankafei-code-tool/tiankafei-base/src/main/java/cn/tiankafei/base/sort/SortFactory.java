@@ -14,6 +14,6 @@ public interface SortFactory<T> {
      * @param sortComparator 要排序的策略模式
      * @return
      */
-    public T[] sort(T[] arr, SortComparator<T> sortComparator);
+    T[] sort(T[] arr, SortComparator<T> sortComparator);
 
 }

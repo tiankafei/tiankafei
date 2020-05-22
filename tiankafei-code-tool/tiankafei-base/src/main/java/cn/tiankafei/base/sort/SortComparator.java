@@ -14,7 +14,7 @@ public interface SortComparator<T> {
      * @param t2
      * @return 1，-1，0
      */
-    public int compareTo(T t1, T t2);
+    int compareTo(T t1, T t2);
 
     /**
      * 打印数组的方法

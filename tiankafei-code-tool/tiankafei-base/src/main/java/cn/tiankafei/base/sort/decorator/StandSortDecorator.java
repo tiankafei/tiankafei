@@ -23,13 +23,11 @@ public class StandSortDecorator implements SortDecorator {
     public void testDoubleMin(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator) {
         Double[] arr = doubleSortComparator.createArray(length);
 
-        log.info("排序前：");
-        log.info(doubleSortComparator.print(arr));
+        log.info("排序前：{}", doubleSortComparator.print(arr));
         Double[] arr1 = Arrays.copyOfRange(arr, 0, arr.length);
 
-        log.info("排序后：");
         arr = sortFactory.sort(arr, doubleSortComparator);
-        log.info(doubleSortComparator.print(arr));
+        log.info("排序后：{}", doubleSortComparator.print(arr));
 
         Arrays.sort(arr1);
         boolean result = doubleSortComparator.equalsArray(arr, arr1);
@@ -40,13 +38,11 @@ public class StandSortDecorator implements SortDecorator {
     public void testDoubleMax(SortFactory<Double> sortFactory, DoubleSortComparator doubleSortComparator) {
         Double[] arr = doubleSortComparator.createArray(length);
 
-        log.info("排序前：");
-        log.info(doubleSortComparator.print(arr));
+        log.info("排序前：{}", doubleSortComparator.print(arr));
         Double[] arr1 = Arrays.copyOfRange(arr, 0, arr.length);
 
-        log.info("排序后：");
         arr = sortFactory.sort(arr, doubleSortComparator);
-        log.info(doubleSortComparator.print(arr));
+        log.info("排序后：{}", doubleSortComparator.print(arr));
 
         Arrays.sort(arr1, Collections.reverseOrder());
         boolean result = doubleSortComparator.equalsArray(arr, arr1);
@@ -57,13 +53,11 @@ public class StandSortDecorator implements SortDecorator {
     public void testIntegerMin(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator) {
         Integer[] arr = integerSortComparator.createArray(length);
 
-        log.info("排序前：");
-        log.info(integerSortComparator.print(arr));
+        log.info("排序前：{}", integerSortComparator.print(arr));
         Integer[] arr1 = Arrays.copyOfRange(arr, 0, arr.length);
 
-        log.info("排序后：");
         arr = sortFactory.sort(arr, integerSortComparator);
-        log.info(integerSortComparator.print(arr));
+        log.info("排序后：{}", integerSortComparator.print(arr));
 
         Arrays.sort(arr1);
         boolean result = integerSortComparator.equalsArray(arr, arr1);
@@ -74,13 +68,11 @@ public class StandSortDecorator implements SortDecorator {
     public void testIntegerMax(SortFactory<Integer> sortFactory, IntegerSortComparator integerSortComparator) {
         Integer[] arr = integerSortComparator.createArray(length);
 
-        log.info("排序前：");
-        log.info(integerSortComparator.print(arr));
+        log.info("排序前：{}", integerSortComparator.print(arr));
         Integer[] arr1 = Arrays.copyOfRange(arr, 0, arr.length);
 
-        log.info("排序后：");
         arr = sortFactory.sort(arr, integerSortComparator);
-        log.info(integerSortComparator.print(arr));
+        log.info("排序后：{}", integerSortComparator.print(arr));
 
         Arrays.sort(arr1, Collections.reverseOrder());
         boolean result = integerSortComparator.equalsArray(arr, arr1);
