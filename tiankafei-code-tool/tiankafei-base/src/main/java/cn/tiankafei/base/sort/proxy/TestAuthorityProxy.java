@@ -17,10 +17,9 @@ public class TestAuthorityProxy implements SortProxy {
     }
 
     @Override
-    public Boolean execute() {
+    public void execute() {
         log.info("测试的权限代理执行开始============================================");
         sortProxy.execute();
         log.info("测试的权限代理执行结束============================================");
-        return Boolean.TRUE;
     }
 }

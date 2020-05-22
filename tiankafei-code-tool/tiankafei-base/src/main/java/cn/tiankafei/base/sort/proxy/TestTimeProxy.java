@@ -17,11 +17,10 @@ public class TestTimeProxy implements SortProxy {
     }
 
     @Override
-    public Boolean execute() {
+    public void execute() {
         log.info("测试的时间代理执行开始============================================");
         long currentTime = System.currentTimeMillis();
         sortProxy.execute();
         log.info("测试的时间代理执行结束：执行用时" + (System.currentTimeMillis() - currentTime) + "ms============================================");
-        return Boolean.TRUE;
     }
 }

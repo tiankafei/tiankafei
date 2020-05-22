@@ -18,8 +18,6 @@ public class SortFactoryStrategy {
 
     private static final int length = 100;
 
-    private SortFactoryStrategy(){}
-
     private static class SortFactoryStrategySingle {
         private final static SortFactoryStrategy INSTANCE = new SortFactoryStrategy();
     }

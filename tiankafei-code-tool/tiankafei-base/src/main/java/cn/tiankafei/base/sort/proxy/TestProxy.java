@@ -11,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TestProxy implements SortProxy {
 
     @Override
-    public Boolean execute() {
+    public void execute() {
         log.info("代理需要执行的测试内容！！！！！！！！！！！！！！");
-        return Boolean.TRUE;
     }
 }

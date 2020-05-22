@@ -2,6 +2,7 @@ package cn.tiankafei.base;
 
 import cn.tiankafei.base.sort.MainInterface;
 import cn.tiankafei.base.sort.observer.MainObserver;
+import cn.tiankafei.base.sort.proxy.MainProxy;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -335,6 +336,12 @@ public class BaseTest {
     public void test5(){
         MainInterface mainObserver = new MainObserver();
         mainObserver.execute();
+    }
+
+    @Test
+    public void test6(){
+        MainInterface mainProxy = new MainProxy();
+        mainProxy.execute();
     }
 
     private int get(int value){
