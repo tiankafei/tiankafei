@@ -14,9 +14,10 @@
     <url>https://github.com/tiankafei/tiankafei</url>
 
     <modules>
-        <module>tiankafei-base</module>
         <module>tiankafei-expression-fastel</module>
         <module>tiankafei-proxy</module>
+        <module>tiankafei-asm</module>
+        <module>tiankafei-base</module>
         <module>tiankafei-antlr4</module>
     </modules>
 
@@ -36,6 +37,7 @@
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.26</slf4j.version>
         <antlr4.version>4.8</antlr4.version>
+        <asm.version>3.3.1</asm.version>
     </properties>
 
     <!-- 配置远程发布到私服，mvn deploy -->
@@ -149,6 +151,13 @@
                 <artifactId>disruptor</artifactId>
                 <version>3.4.2</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/asm/asm-all -->
+            <dependency>
+                <groupId>asm</groupId>
+                <artifactId>asm-all</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
