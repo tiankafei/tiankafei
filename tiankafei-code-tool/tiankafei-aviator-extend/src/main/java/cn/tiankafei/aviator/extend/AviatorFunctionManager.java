@@ -1,7 +1,7 @@
 package cn.tiankafei.aviator.extend;
 
-import cn.tiankafei.aviator.extend.function.impl.And;
-import cn.tiankafei.aviator.extend.function.impl.Or;
+import cn.tiankafei.aviator.extend.function.And;
+import cn.tiankafei.aviator.extend.function.Or;
 import com.googlecode.aviator.AviatorEvaluator;
 
 /**
@@ -10,7 +10,7 @@ import com.googlecode.aviator.AviatorEvaluator;
  **/
 public class AviatorFunctionManager {
 
-    static {
+    public void initFun() {
         AviatorEvaluator.addFunction(new And());
         AviatorEvaluator.addFunction(new Or());
     }

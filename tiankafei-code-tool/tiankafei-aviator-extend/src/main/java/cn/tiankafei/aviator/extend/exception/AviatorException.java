@@ -23,8 +23,8 @@ public class AviatorException extends Throwable {
     }
 
     protected AviatorException(String message, Throwable cause,
-                        boolean enableSuppression,
-                        boolean writableStackTrace) {
+                               boolean enableSuppression,
+                               boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

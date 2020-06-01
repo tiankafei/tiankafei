@@ -5,7 +5,6 @@ import com.googlecode.aviator.runtime.type.AviatorObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,12 +16,6 @@ import java.util.stream.Stream;
  **/
 @Slf4j
 public abstract class MoreParamFunction extends AbstractFunction {
-
-    @Override
-    public AviatorObject call() throws Exception {
-        int mapSize = 0;
-        return this.call(new HashMap<>(mapSize), Arrays.asList());
-    }
 
     @Override
     public AviatorObject call(Map<String, Object> env) {
@@ -136,8 +129,12 @@ public abstract class MoreParamFunction extends AbstractFunction {
         return this.call(env, dataList);
     }
 
-    public AviatorObject call(Map<String, Object> env, List<AviatorObject> valueList) {
+    private AviatorObject call(Map<String, Object> env, List<AviatorObject> valueList) {
         log.info("env:{};;;valueList:{}", env, valueList);
+        return apply(env, valueList);
+    }
+
+    public AviatorObject apply(Map<String, Object> env, List<AviatorObject> valueList) {
         return null;
     }
 

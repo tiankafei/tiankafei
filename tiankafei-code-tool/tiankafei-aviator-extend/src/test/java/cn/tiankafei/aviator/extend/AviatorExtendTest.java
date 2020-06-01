@@ -15,7 +15,7 @@ import java.util.Map;
 public class AviatorExtendTest {
 
     @Test
-    public void test01(){
+    public void test01() {
         String expression = "1+2";
         Object result = AviatorEvaluator.execute(expression);
         log.info("表达式：{}的执行结果为：{}", expression, result);
