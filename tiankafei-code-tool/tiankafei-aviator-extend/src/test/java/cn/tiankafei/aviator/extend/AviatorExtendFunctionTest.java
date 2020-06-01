@@ -22,6 +22,25 @@ public class AviatorExtendFunctionTest {
     }
 
     @Test
+    public void testAbs(){
+        String expression = "abs(-1.1)";
+        Object result = AviatorEvaluator.execute(expression);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "abs(-1--2)";
+        result = AviatorEvaluator.execute(expression);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "abs(-a-b)";
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", 1);
+        dataMap.put("b", 2);
+        result = AviatorEvaluator.execute(expression, dataMap);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+    }
+
+    @Test
     public void testAnd() {
         String expression = "and(1+2==3, 2+3==5)";
         Object result = AviatorEvaluator.execute(expression);
@@ -60,6 +79,14 @@ public class AviatorExtendFunctionTest {
         expression = "or(1+2==2)";
         result = AviatorEvaluator.execute(expression, dataMap);
         log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        try {
+            expression = "or(1+1)";
+            result = AviatorEvaluator.execute(expression, dataMap);
+            log.info("表达式：{}的执行结果为：{}", expression, result);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
 
         expression = "or()";
         result = AviatorEvaluator.execute(expression, dataMap);

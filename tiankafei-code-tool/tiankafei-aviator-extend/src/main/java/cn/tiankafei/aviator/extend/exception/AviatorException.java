@@ -4,7 +4,7 @@ package cn.tiankafei.aviator.extend.exception;
  * @author tiankafei
  * @since 1.0
  **/
-public class AviatorException extends Throwable {
+public class AviatorException extends RuntimeException {
 
     public AviatorException() {
         super();
