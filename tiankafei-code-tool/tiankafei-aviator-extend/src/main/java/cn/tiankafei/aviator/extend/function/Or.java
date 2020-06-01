@@ -1,5 +1,6 @@
 package cn.tiankafei.aviator.extend.function;
 
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
@@ -17,7 +18,7 @@ public class Or extends MoreParamFunction {
 
     @Override
     public String getName() {
-        return "or";
+        return FunctionConstants.OR_MORE;
     }
 
     @Override
