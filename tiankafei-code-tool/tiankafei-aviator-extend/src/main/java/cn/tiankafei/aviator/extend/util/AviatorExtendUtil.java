@@ -21,6 +21,7 @@ public abstract class AviatorExtendUtil {
     public static void addFunction() {
         addFunction("max");
         addFunction("min");
+//        addFunction(OperatorType.ADD.token);
     }
 
     private static void addFunction(String alreadyExistsFun) {
@@ -34,8 +35,15 @@ public abstract class AviatorExtendUtil {
      * @param function
      */
     public static void addFunction(final AviatorFunction function) {
-        AviatorEvaluator.getInstance().addFunction(function.getName().toLowerCase(), function);
-        AviatorEvaluator.getInstance().addFunction(function.getName().toUpperCase(), function);
+        String lowerCase = function.getName().toLowerCase();
+        String upperCase = function.getName().toUpperCase();
+
+        if(lowerCase.equals(upperCase)){
+            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
+        }else{
+            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
+            AviatorEvaluator.getInstance().addFunction(upperCase, function);
+        }
     }
 
     /**

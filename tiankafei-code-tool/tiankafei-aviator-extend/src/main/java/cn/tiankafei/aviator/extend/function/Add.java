@@ -1,7 +1,7 @@
 package cn.tiankafei.aviator.extend.function;
 
 import cn.tiankafei.aviator.extend.constant.FunctionConstants;
-import com.googlecode.aviator.runtime.type.AviatorBoolean;
+import cn.tiankafei.aviator.extend.util.NumberUtil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.math.BigDecimal;
 
@@ -10,33 +10,30 @@ import java.math.BigDecimal;
  * @Date 2020/6/2
  * @Version V1.0
  **/
-public class Equals extends TwoParamFunction {
+public class Add extends TwoParamFunction {
 
     @Override
-    protected AviatorObject apply(Object left, Object right) {
-        if (left == null && right == null) {
-            return AviatorBoolean.TRUE;
-        } else if (left == null || right == null) {
-            return AviatorBoolean.FALSE;
-        }
-
-        return super.apply(left, right);
+    public String getName() {
+        return FunctionConstants.ADD;
     }
 
     @Override
     public Object evlNormalOperation(Object left, Object right) {
         BigDecimal leftBigDecimal = new BigDecimal(left.toString());
         BigDecimal rightBigDecimal = new BigDecimal(right.toString());
-        return leftBigDecimal.doubleValue() == rightBigDecimal.doubleValue();
+        return leftBigDecimal.add(rightBigDecimal).doubleValue();
     }
 
     @Override
     public Object evlAbnormalOperation(Object left, Object right) {
-        return left.toString().equals(right.toString());
+        return left.toString() + right.toString();
     }
 
     @Override
-    public String getName() {
-        return FunctionConstants.EQUALS_STR;
+    public Object getReturnValue(Object object) {
+        if (object instanceof Number) {
+            object = NumberUtil.parseNumber(object.toString());
+        }
+        return object;
     }
 }

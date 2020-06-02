@@ -83,6 +83,7 @@ public class AviatorFunctionManager {
         AviatorExtendUtil.addFunction(new VerifyIdCard());
 
         AviatorExtendUtil.addFunction(new Equals());
+//        AviatorExtendUtil.addFunction(new Add());
 
         AviatorExtendUtil.addFunction(new Age());
         AviatorExtendUtil.addFunction(new And());
