@@ -49,8 +49,8 @@ public class IfOperation extends BaseMoreOperation {
                 }
                 return Boolean.TRUE;
             }
-            throw new NullPointerException("参数类型不正确，请确认!");
+            throw new AviatorException("参数类型不正确，请确认!");
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 }

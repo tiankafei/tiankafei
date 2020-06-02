@@ -46,7 +46,7 @@ public class LookatOperation extends BaseMoreOperation {
                 throw new Exception("LOOKAT函数的参数类型不合法!");
             }
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 
 }

@@ -1,35 +1,40 @@
-package com.greenpineyu.fel.function.more.impl;
+package cn.tiankafei.aviator.extend.function;
 
-import com.greenpineyu.fel.context.FelContext;
-import com.greenpineyu.fel.function.FunctionUtils;
-import com.greenpineyu.fel.function.api.BaseMoreOperation;
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
+import cn.tiankafei.aviator.extend.exception.AviatorException;
+import cn.tiankafei.aviator.extend.util.FunctionUtils;
+import com.googlecode.aviator.runtime.type.AviatorBigInt;
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * AGE(出生年份，出生月份，基准年份，基准月份)：根据出生年月获得年龄。
- * 后面两个参数为空，则以当前时间为基准时间
- *
- * @author tiankafei
- */
-public class AgeOperation extends BaseMoreOperation {
-
-    private AgeOperation() {
-    }
-
-    private static class InternalClass {
-        private final static BaseMoreOperation INSTANCE = new AgeOperation();
-    }
-
-    public static BaseMoreOperation getInstance() {
-        return InternalClass.INSTANCE;
+ * @Author 魏双双
+ * @Date 2020/6/2
+ * @Version V1.0
+ **/
+public class Age extends MoreParamFunction {
+    @Override
+    public String getName() {
+        return FunctionConstants.AGE;
     }
 
     @Override
-    public Object evl(List<Object> dataList, FelContext context, int location) throws Exception {
+    public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2) {
+        return super.call(env, arg1, arg2);
+    }
+
+    @Override
+    public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3, AviatorObject arg4) {
+        return super.call(env, arg1, arg2, arg3, arg4);
+    }
+
+    @Override
+    public AviatorObject apply(List<Object> dataList) {
         if (dataList.get(0) == null || dataList.get(1) == null) {
-            return 0;
+            return AviatorBigInt.valueOf(0);
         }
         String year = dataList.get(0).toString();
         String month = dataList.get(1).toString();
@@ -38,7 +43,7 @@ public class AgeOperation extends BaseMoreOperation {
             if (FunctionUtils.isNumerics(year)) {
                 yearInt = (int) Double.parseDouble(year);
             } else {
-                throw new AviatorException("age函数传入的年份只能是数字，请确认!");
+                throw new AviatorException(getName() + "函数传入的年份只能是数字，请确认!");
             }
         }
         int monthInt = 0;
@@ -46,7 +51,7 @@ public class AgeOperation extends BaseMoreOperation {
             if (FunctionUtils.isNumerics(month)) {
                 monthInt = (int) Double.parseDouble(month);
             } else {
-                throw new AviatorException("age函数传入的月份只能是数字，请确认!");
+                throw new AviatorException(getName() + "函数传入的月份只能是数字，请确认!");
             }
         }
         //取得系统时间
@@ -60,7 +65,7 @@ public class AgeOperation extends BaseMoreOperation {
                     if (FunctionUtils.isNumerics(dataList.get(2).toString())) {
                         currentYear = Integer.parseInt(dataList.get(2).toString());
                     } else {
-                        throw new AviatorException("age函数传入的年份只能是数字，请确认!");
+                        throw new AviatorException(getName() + "函数传入的年份只能是数字，请确认!");
                     }
                 }
             }
@@ -69,7 +74,7 @@ public class AgeOperation extends BaseMoreOperation {
                     if (FunctionUtils.isNumerics(dataList.get(3).toString())) {
                         currentMonth = Integer.parseInt(dataList.get(3).toString());
                     } else {
-                        throw new AviatorException("age函数传入的月份只能是数字，请确认!");
+                        throw new AviatorException(getName() + "函数传入的月份只能是数字，请确认!");
                     }
                 }
             }
@@ -80,6 +85,6 @@ public class AgeOperation extends BaseMoreOperation {
         } else {
             age = currentYear - yearInt;
         }
-        return Integer.valueOf(age);
+        return AviatorBigInt.valueOf(age);
     }
 }

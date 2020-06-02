@@ -15,6 +15,24 @@ import org.apache.commons.lang3.StringUtils;
 @Slf4j
 public abstract class AviatorExtendUtil {
 
+    /**
+     * 处理已经存在的函数
+     */
+    public static void addFunction() {
+        addFunction("max");
+        addFunction("min");
+    }
+
+    private static void addFunction(String alreadyExistsFun) {
+        AviatorFunction max = AviatorEvaluator.getInstance().getFunction(alreadyExistsFun);
+        AviatorEvaluator.removeFunction(alreadyExistsFun);
+        addFunction(max);
+    }
+
+    /**
+     * 自定义函数
+     * @param function
+     */
     public static void addFunction(final AviatorFunction function) {
         AviatorEvaluator.getInstance().addFunction(function.getName().toLowerCase(), function);
         AviatorEvaluator.getInstance().addFunction(function.getName().toUpperCase(), function);
@@ -40,6 +58,18 @@ public abstract class AviatorExtendUtil {
 
     public static void execute(String expression, Map<String, Object> dataMap){
         try {
+            boolean flag = expression.contains("\\\\");
+            while(flag){
+                expression = expression.replace("\\\\", "^A");
+                flag = expression.contains("\\\\");
+            }
+
+            flag = expression.contains("^A");
+            while(flag){
+                expression = expression.replace("^A", "\\\\\\\\");
+                flag = expression.contains("^A");
+            }
+
             Object result = AviatorEvaluator.execute(expression, dataMap);
             log.info("表达式：{}的执行结果为：{}", expression, result);
         }catch (Exception e){

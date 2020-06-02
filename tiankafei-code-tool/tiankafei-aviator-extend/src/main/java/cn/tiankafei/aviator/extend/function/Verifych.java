@@ -1,46 +1,33 @@
-package com.greenpineyu.fel.function.more.impl;
+package cn.tiankafei.aviator.extend.function;
 
-import com.greenpineyu.fel.context.FelContext;
-import com.greenpineyu.fel.function.api.BaseMoreOperation;
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
+import cn.tiankafei.aviator.extend.exception.AviatorException;
+import com.googlecode.aviator.runtime.type.AviatorBoolean;
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * VERIFYCH函数
- * 描述：能检测的功能有：
- * (1)用于检查字符串中的中文个数
- * (2)是否出现特定的字符
- * (3)是否必须全为汉字
- * 语法：VERIFYCH(单元格/行/列,最少汉字个数,关键词,是否全为中文)。
- * 例如：VERIFYCH([3|2],"2","北京","1")
- * VERIFYCH([3|2],"0","","0")
- * VERIFYCH([3|2],"2","公司","0")
- * ....
- * 参数说明：有四个参数
- * (1)待检验的[单元格/行/列]
- * (2)[单元格/行/列] 中汉字最少必须有多少个
- * (3)指明要判断是否在[单元格/行/列] 中出现的特定字符
- * (4)[单元格/行/列] 是否必须全是汉字 "1" 表示全为汉字 "0" 表示不全为汉字
- *
- * @author tiankafei
- */
-public class VerifychOperation extends BaseMoreOperation {
-
-    private VerifychOperation() {
-    }
-
-    private static class InternalClass {
-        private final static BaseMoreOperation INSTANCE = new VerifychOperation();
-    }
-
-    public static BaseMoreOperation getInstance() {
-        return InternalClass.INSTANCE;
+ * @Author 魏双双
+ * @Date 2020/6/2
+ * @Version V1.0
+ **/
+public class Verifych extends MoreParamFunction {
+    @Override
+    public String getName() {
+        return FunctionConstants.VERIFYCH;
     }
 
     @Override
-    public Object evl(List<Object> dataList, FelContext context, int location) throws Exception {
+    public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3, AviatorObject arg4) {
+        return super.call(env, arg1, arg2, arg3, arg4);
+    }
+
+    @Override
+    public AviatorObject apply(List<Object> dataList) {
         int length = dataList.size();
         int number4 = 4;
         if (length == number4) {
@@ -49,7 +36,7 @@ public class VerifychOperation extends BaseMoreOperation {
             Object matchCharObj = dataList.get(2);
             Object allCHObj = dataList.get(3);
             if (stringValueObj == null || stringSizeObj == null || matchCharObj == null || allCHObj == null) {
-                return Boolean.FALSE;
+                return AviatorBoolean.FALSE;
             }
 
             //待校验字符串
@@ -71,44 +58,44 @@ public class VerifychOperation extends BaseMoreOperation {
                     if (StringUtils.isNotEmpty(matchChar)) {
                         if (StringUtils.isNotEmpty(allCH)) {
                             if ("1".equals(allCH)) {
-                                return Boolean.FALSE;
+                                return AviatorBoolean.FALSE;
                             } else {
-                                return Boolean.TRUE;
+                                return AviatorBoolean.TRUE;
                             }
                         } else {
-                            return Boolean.FALSE;
+                            return AviatorBoolean.FALSE;
                         }
                     } else {
                         if (StringUtils.isNotEmpty(allCH)) {
                             if ("1".equals(allCH)) {
-                                return Boolean.FALSE;
+                                return AviatorBoolean.FALSE;
                             } else {
-                                return Boolean.TRUE;
+                                return AviatorBoolean.TRUE;
                             }
                         } else {
-                            return Boolean.TRUE;
+                            return AviatorBoolean.TRUE;
                         }
                     }
                 } else {
-                    return Boolean.FALSE;
+                    return AviatorBoolean.FALSE;
                 }
             } else {
                 if (size == 0) {
                     if (StringUtils.isNotEmpty(matchChar)) {
                         if (matchChar(stringValue, matchChar)) {
                             if (StringUtils.isNotEmpty(allCH)) {
-                                return isAllChinese(stringValue, allCH);
+                                return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
                             } else {
-                                return Boolean.TRUE;
+                                return AviatorBoolean.TRUE;
                             }
                         } else {
-                            return Boolean.FALSE;
+                            return AviatorBoolean.FALSE;
                         }
                     } else {
                         if (StringUtils.isNotEmpty(allCH)) {
-                            return isAllChinese(stringValue, allCH);
+                            return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
                         } else {
-                            return Boolean.TRUE;
+                            return AviatorBoolean.TRUE;
                         }
                     }
                 } else {
@@ -116,27 +103,27 @@ public class VerifychOperation extends BaseMoreOperation {
                         if (StringUtils.isNotEmpty(matchChar)) {
                             if (matchChar(stringValue, matchChar)) {
                                 if (StringUtils.isNotEmpty(allCH)) {
-                                    return isAllChinese(stringValue, allCH);
+                                    return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
                                 } else {
-                                    return Boolean.TRUE;
+                                    return AviatorBoolean.TRUE;
                                 }
                             } else {
-                                return Boolean.FALSE;
+                                return AviatorBoolean.FALSE;
                             }
                         } else {
                             if (StringUtils.isNotEmpty(allCH)) {
-                                return isAllChinese(stringValue, allCH);
+                                return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
                             } else {
-                                return Boolean.TRUE;
+                                return AviatorBoolean.TRUE;
                             }
                         }
                     } else {
-                        return Boolean.FALSE;
+                        return AviatorBoolean.FALSE;
                     }
                 }
             }
         }
-        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
     }
 
     /**
@@ -157,7 +144,7 @@ public class VerifychOperation extends BaseMoreOperation {
      * @param allCH
      * @return
      */
-    private static boolean isAllChinese(String stringValue, String allCH) {
+    private boolean isAllChinese(String stringValue, String allCH) {
         if ("1".equals(allCH)) {
             //必须全是汉字
             String regex = "[\u4e00-\u9fa5]{" + stringValue.length() + "}";
@@ -174,7 +161,7 @@ public class VerifychOperation extends BaseMoreOperation {
      * @param texts
      * @return
      */
-    private static int getChineseCharNum(String texts) {
+    private int getChineseCharNum(String texts) {
         if (texts == null) {
             return 0;
         }
@@ -198,7 +185,7 @@ public class VerifychOperation extends BaseMoreOperation {
      * @param text
      * @return
      */
-    private static boolean isChinese(String text) {
+    private boolean isChinese(String text) {
         if (StringUtils.isEmpty(text)) {
             return false;
         }
@@ -207,5 +194,4 @@ public class VerifychOperation extends BaseMoreOperation {
         Matcher matcher = pattern.matcher(text);
         return matcher.matches();
     }
-
 }

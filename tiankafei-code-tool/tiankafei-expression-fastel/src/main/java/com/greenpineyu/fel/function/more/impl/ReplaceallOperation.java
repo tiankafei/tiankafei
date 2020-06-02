@@ -48,7 +48,7 @@ public class ReplaceallOperation extends BaseMoreOperation {
             String str = text.toString();
             return str.replaceAll(regex.toString(), replacement.toString());
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 
 }

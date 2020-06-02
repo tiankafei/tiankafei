@@ -6,7 +6,6 @@ import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 
 import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,15 +21,14 @@ public class And extends MoreParamFunction {
     }
 
     @Override
-    public AviatorObject apply(Map<String, Object> env, List<AviatorObject> valueList) {
+    public AviatorObject apply(List<Object> valueList) {
         boolean result = true;
         StringBuilder errorInfo = new StringBuilder();
         for (int index = 0, length = valueList.size(); index < length; index++) {
-            AviatorObject aviatorObject = valueList.get(index);
-            if (aviatorObject instanceof AviatorBoolean) {
-                AviatorBoolean aviatorBoolean = (AviatorBoolean) aviatorObject;
-                boolean flag = aviatorBoolean.booleanValue(env);
-                if (flag) {
+            Object object = valueList.get(index);
+            if (object instanceof Boolean) {
+                boolean flag = (boolean) object;
+                if (!flag) {
                     result = false;
                     break;
                 }

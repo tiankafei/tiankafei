@@ -13,7 +13,7 @@ import java.util.Map;
  * @since 1.0
  **/
 @Slf4j
-public class AviatorExtendFunctionTest {
+public class AviatorExtendOneFunctionTest {
 
     static {
         AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();

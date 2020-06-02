@@ -39,13 +39,13 @@ public class RightOperation extends BaseMoreOperation {
             Integer count = null;
             Object value2 = dataList.get(1);
             if (value2 == null) {
-                throw new NullPointerException("right函数截取的位置为空，请确认!");
+                throw new AviatorException("right函数截取的位置为空，请确认!");
             } else {
                 if (FunctionUtils.isString(value2)) {
                     if (FunctionUtils.isNumerics(value2.toString())) {
                         count = Integer.valueOf(value2.toString());
                     } else {
-                        throw new NullPointerException("right函数截取的位置数据类型不正确，请确认!");
+                        throw new AviatorException("right函数截取的位置数据类型不正确，请确认!");
                     }
                 } else if (value2 instanceof Number) {
                     count = Integer.valueOf(value2.toString());
@@ -58,8 +58,8 @@ public class RightOperation extends BaseMoreOperation {
                 }
                 return value.substring(value.length() - count);
             }
-            throw new NullPointerException("right函数传入参数数组为空或者参数个数不正确!");
+            throw new AviatorException("right函数传入参数数组为空或者参数个数不正确!");
         }
-        throw new NullPointerException("right函数传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("right函数传入参数数组为空或者参数个数不正确!");
     }
 }

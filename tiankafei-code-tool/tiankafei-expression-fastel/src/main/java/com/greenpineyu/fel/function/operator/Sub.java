@@ -44,7 +44,7 @@ public class Sub extends BaseTwo {
                 }
             }
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Sub extends BaseTwo {
                 }
             }
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 
 }

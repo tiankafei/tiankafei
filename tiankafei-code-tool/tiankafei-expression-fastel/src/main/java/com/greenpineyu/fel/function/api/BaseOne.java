@@ -23,7 +23,7 @@ public abstract class BaseOne extends BaseStableFunction {
             Object value = FunctionUtils.getObject(context, children.get(0));
             return OperationFactory.getBaseOneOperation(getName()).evl(value, context, node.getTokenStartIndex());
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class BaseOne extends BaseStableFunction {
             FelMethod m = new FelMethod(stringBuilder.toString(), programList);
             return m;
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 
     @Override
@@ -81,6 +81,6 @@ public abstract class BaseOne extends BaseStableFunction {
             FelMethod m = new FelMethod(stringBuilder.toString(), programList);
             return m;
         }
-        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
     }
 }

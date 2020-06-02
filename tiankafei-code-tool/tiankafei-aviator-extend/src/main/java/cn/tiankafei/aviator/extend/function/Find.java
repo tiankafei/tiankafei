@@ -1,39 +1,35 @@
-package com.greenpineyu.fel.function.more.impl;
+package cn.tiankafei.aviator.extend.function;
 
-import com.greenpineyu.fel.context.FelContext;
-import com.greenpineyu.fel.function.FunctionUtils;
-import com.greenpineyu.fel.function.api.BaseMoreOperation;
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
+import cn.tiankafei.aviator.extend.exception.AviatorException;
+import cn.tiankafei.aviator.extend.util.FunctionUtils;
+import com.googlecode.aviator.runtime.type.AviatorBoolean;
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 正则表达式函数:根据正则表达式模式，判断文本字符串是否从指定位置之后存在匹配
- * 语法
- * FIND(text_pattern,text_matcher,start)
- * text_pattern 正则表达式模式
- * text_matcher 文本字符串
- * start 指定位置
- *
- * @author tiankafei
- */
-public class FindOperation extends BaseMoreOperation {
-
-    private FindOperation() {
-    }
-
-    private static class InternalClass {
-        private final static BaseMoreOperation INSTANCE = new FindOperation();
-    }
-
-    public static BaseMoreOperation getInstance() {
-        return InternalClass.INSTANCE;
+ * @Author 魏双双
+ * @Date 2020/6/2
+ * @Version V1.0
+ **/
+public class Find extends MoreParamFunction {
+    @Override
+    public String getName() {
+        return FunctionConstants.FIND;
     }
 
     @Override
-    public Object evl(List<Object> dataList, FelContext context, int location) throws Exception {
+    public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3) {
+        return super.call(env, arg1, arg2, arg3);
+    }
+
+    @Override
+    public AviatorObject apply(List<Object> dataList) {
         int length = dataList.size();
         if (length == 2 || length == 3) {
             try {
@@ -49,7 +45,7 @@ public class FindOperation extends BaseMoreOperation {
                     }
                 }
                 if (pattern == null || matcher == null) {
-                    return Boolean.FALSE;
+                    return AviatorBoolean.FALSE;
                 }
                 Pattern p;
                 try {
@@ -68,13 +64,13 @@ public class FindOperation extends BaseMoreOperation {
                     start = matcher.toString().length();
                 }
                 Matcher m = p.matcher(matcher.toString());
-                return Boolean.valueOf(m.find(start));
+                return AviatorBoolean.valueOf(m.find(start));
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new IllegalArgumentException("FIND函数的参数类型不合法!");
+                throw new AviatorException(getName() + "函数的参数类型不合法!");
             }
         }
-        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
     }
 
     private static String getNullString(int length) {
@@ -84,5 +80,4 @@ public class FindOperation extends BaseMoreOperation {
         }
         return bf.toString();
     }
-
 }

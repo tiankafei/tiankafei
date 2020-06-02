@@ -1,8 +1,10 @@
-package com.greenpineyu.fel.function.more.impl;
+package cn.tiankafei.aviator.extend.function;
 
-import com.greenpineyu.fel.context.FelContext;
-import com.greenpineyu.fel.function.FunctionUtils;
-import com.greenpineyu.fel.function.api.BaseMoreOperation;
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
+import cn.tiankafei.aviator.extend.exception.AviatorException;
+import cn.tiankafei.aviator.extend.util.FunctionUtils;
+import com.googlecode.aviator.runtime.type.AviatorBoolean;
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,21 +12,11 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * MONTH函数
- * 描述：用于检测月份，判断年份是否在[1,12]之间
- * 语法：MONTH(单元格/行/列,CURRENTBGQFULL(),"1")
- * 返回：TRUE OR FALSE
- * 参数说明：有三个参数
- * (1)要检测的月份单元格/行/列
- * (2)CURRENTBGQFULL() 当前报告期全称
- * (3)截止月份标识
- * "0" 判断月份份是否在[1,当前报告期月份]
- * "1" 判断月份是否在[1,12]之间
- * "2" 判断月份是否在[当前报告期月份,12]
- *
- * @author tiankafei
- */
-public class MonthOperation extends BaseMoreOperation {
+ * @Author 魏双双
+ * @Date 2020/6/2
+ * @Version V1.0
+ **/
+public class Month extends MoreParamFunction {
 
     public static Map<String, String> DCPLDYGX_Map = new HashMap<String, String>();
 
@@ -109,19 +101,18 @@ public class MonthOperation extends BaseMoreOperation {
         }
     }
 
-    private MonthOperation() {
-    }
-
-    private static class InternalClass {
-        private final static BaseMoreOperation INSTANCE = new MonthOperation();
-    }
-
-    public static BaseMoreOperation getInstance() {
-        return InternalClass.INSTANCE;
+    @Override
+    public String getName() {
+        return FunctionConstants.MONTH;
     }
 
     @Override
-    public Object evl(List<Object> dataList, FelContext context, int location) throws Exception {
+    public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3) {
+        return super.call(env, arg1, arg2, arg3);
+    }
+
+    @Override
+    public AviatorObject apply(List<Object> dataList) {
         int length = dataList.size();
         int number3 = 3;
         if (length == number3) {
@@ -132,12 +123,12 @@ public class MonthOperation extends BaseMoreOperation {
                     && currentBgqObj != null && StringUtils.isNotBlank(currentBgqObj.toString())
                     && tagObj != null && StringUtils.isNotBlank(tagObj.toString());
             if (!flag) {
-                return Boolean.FALSE;
+                return AviatorBoolean.FALSE;
             }
 
             String monthStr = monthObj.toString();
             if (!FunctionUtils.isNumerics(monthStr)) {
-                return Boolean.valueOf(false);
+                return AviatorBoolean.valueOf(false);
             }
             int month = Integer.valueOf(monthStr);
 
@@ -146,16 +137,16 @@ public class MonthOperation extends BaseMoreOperation {
 
             String currentMonth = getCurrentMonth(currentBgq);
             if ("0".equals(endTag)) {
-                return Boolean.valueOf((month - 1 >= 0) && (Integer.valueOf(currentMonth) - month >= 0));
+                return AviatorBoolean.valueOf((month - 1 >= 0) && (Integer.valueOf(currentMonth) - month >= 0));
             } else if ("1".equals(endTag)) {
-                return Boolean.valueOf((month - 1 >= 0) && (12 - month >= 0));
+                return AviatorBoolean.valueOf((month - 1 >= 0) && (12 - month >= 0));
             } else if ("2".equals(endTag)) {
-                return Boolean.valueOf(month - Integer.valueOf(currentMonth) >= 0 && 12 - month >= 0);
+                return AviatorBoolean.valueOf(month - Integer.valueOf(currentMonth) >= 0 && 12 - month >= 0);
             } else {
-                throw new IllegalArgumentException("MONTH函数的截止月份参数不正确!");
+                throw new AviatorException(getName() + "函数的截止月份参数不正确!");
             }
         }
-        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
     }
 
     /**
@@ -164,7 +155,7 @@ public class MonthOperation extends BaseMoreOperation {
      * @param currentBgq
      * @return
      */
-    private static String getCurrentMonth(String currentBgq) throws Exception {
+    private String getCurrentMonth(String currentBgq) throws AviatorException {
         if (currentBgq.length() >= 8) {
             String bgqXH = currentBgq.substring(4);
             String pddm = currentBgq.substring(currentBgq.length() - 2);
@@ -173,7 +164,6 @@ public class MonthOperation extends BaseMoreOperation {
                 return DCPLDYGX_Map.get(key);
             }
         }
-        throw new Exception("传入的报告期不是标准频度代码，请确认！");
+        throw new AviatorException(getName() + "传入的报告期不是标准频度代码，请确认！");
     }
-
 }

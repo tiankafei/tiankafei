@@ -1,33 +1,32 @@
-package com.greenpineyu.fel.function.more.impl;
+package cn.tiankafei.aviator.extend.function;
 
-import com.greenpineyu.fel.context.FelContext;
-import com.greenpineyu.fel.function.FunctionUtils;
-import com.greenpineyu.fel.function.api.BaseMoreOperation;
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
+import cn.tiankafei.aviator.extend.exception.AviatorException;
+import cn.tiankafei.aviator.extend.util.FunctionUtils;
+import com.googlecode.aviator.runtime.type.AviatorDecimal;
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 时间比较函数，传入四个参数（达到小时，达到分钟，离开小时，离开分钟）
- * 如果当天2点以前达到，算是第二天，如果是两点以后，则算是当天
- * 返回达到时间-离开时间 分钟
- *
- * @author tiankafei
- */
-public class TimeCompareOperation extends BaseMoreOperation {
-
-    private TimeCompareOperation() {
-    }
-
-    private static class InternalClass {
-        private final static BaseMoreOperation INSTANCE = new TimeCompareOperation();
-    }
-
-    public static BaseMoreOperation getInstance() {
-        return InternalClass.INSTANCE;
+ * @Author 魏双双
+ * @Date 2020/6/2
+ * @Version V1.0
+ **/
+public class TimeCompare extends MoreParamFunction {
+    @Override
+    public String getName() {
+        return FunctionConstants.TIMECOMPARE;
     }
 
     @Override
-    public Object evl(List<Object> dataList, FelContext context, int location) throws Exception {
+    public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3, AviatorObject arg4) {
+        return super.call(env, arg1, arg2, arg3, arg4);
+    }
+
+    @Override
+    public AviatorObject apply(List<Object> dataList) {
         int length = dataList.size();
         int number4 = 4;
         if (length == number4) {
@@ -50,12 +49,11 @@ public class TimeCompareOperation extends BaseMoreOperation {
                     arriveHours += 24;
                 }
 
-                return (arriveHours * 60 + arriveMinute) - (leaveHours * 60 + leaveMinute);
+                return AviatorDecimal.valueOf((arriveHours * 60 + arriveMinute) - (leaveHours * 60 + leaveMinute));
             } else {
-                throw new AviatorException("timecompare传入参数不能为空且必须得是数字，请确认!");
+                throw new AviatorException(getName() + "传入参数不能为空且必须得是数字，请确认!");
             }
         }
-        throw new AviatorException("timecompare传入参数数组为空或者参数个数不正确!");
+        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
     }
-
 }
