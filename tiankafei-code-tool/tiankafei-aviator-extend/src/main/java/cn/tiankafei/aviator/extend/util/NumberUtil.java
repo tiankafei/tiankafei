@@ -440,4 +440,52 @@ public class NumberUtil {
 //		return type==Integer.class||type == int.class;
 //	}
 
+    static public boolean equals(double left, byte right) {
+        return left == toDouble(right);
+    }
+
+    static public boolean equals(double left, short right) {
+        return left == toDouble(right);
+    }
+
+    static public boolean equals(double left, int right) {
+        return left == toDouble(right);
+    }
+
+    static public boolean equals(double left, float right) {
+        return left == toDouble(right);
+    }
+
+    static public boolean equals(float left, double right) {
+        return toDouble(left) == right;
+    }
+
+    static public boolean equals(float left, float right) {
+        return left == right;
+    }
+
+    static public boolean equals(double left, double right) {
+        return left == right;
+    }
+
+    static public boolean equals(double left, String right) {
+        return  left == Double.valueOf(right);
+    }
+
+    static public boolean equals(long left, int right) {
+        return left == right;
+    }
+
+    static public boolean equals(int left, long right) {
+        return left == right;
+    }
+
+    static public boolean equals(int left, int right) {
+        return left == right;
+    }
+
+    static public boolean equals(long left, long right) {
+        return left == right;
+    }
+
 }

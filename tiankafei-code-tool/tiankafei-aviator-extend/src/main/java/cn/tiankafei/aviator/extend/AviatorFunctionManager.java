@@ -4,6 +4,7 @@ import cn.tiankafei.aviator.extend.function.Abs;
 import cn.tiankafei.aviator.extend.function.And;
 import cn.tiankafei.aviator.extend.function.Ceil;
 import cn.tiankafei.aviator.extend.function.CurrentTime;
+import cn.tiankafei.aviator.extend.function.Equals;
 import cn.tiankafei.aviator.extend.function.IsNull;
 import cn.tiankafei.aviator.extend.function.IsNum;
 import cn.tiankafei.aviator.extend.function.IsNumber;
@@ -63,6 +64,8 @@ public class AviatorFunctionManager {
         AviatorExtendUtil.addFunction(new Verifycode());
         AviatorExtendUtil.addFunction(new VerifyCreditCode());
         AviatorExtendUtil.addFunction(new VerifyIdCard());
+
+        AviatorExtendUtil.addFunction(new Equals());
     }
 
 }

@@ -130,7 +130,7 @@ public abstract class MoreParamFunction extends AbstractFunction {
     }
 
     private AviatorObject call(Map<String, Object> env, List<AviatorObject> valueList) {
-        log.info("env:{};;;valueList:{}", env, valueList);
+//        log.info("env:{};;;valueList:{}", env, valueList);
         return apply(env, valueList);
     }
 

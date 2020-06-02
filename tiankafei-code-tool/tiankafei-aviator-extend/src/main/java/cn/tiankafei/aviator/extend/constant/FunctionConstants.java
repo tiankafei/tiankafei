@@ -36,6 +36,11 @@ public class FunctionConstants {
     public static final String EQUALS = "==";
 
     /**
+     * 等于
+     */
+    public static final String EQUALS_STR = "equals";
+
+    /**
      * 不等于
      */
     public static final String NO_EQUALS = "!=";

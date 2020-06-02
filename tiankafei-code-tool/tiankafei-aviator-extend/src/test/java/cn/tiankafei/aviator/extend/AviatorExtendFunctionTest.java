@@ -1,6 +1,7 @@
 package cn.tiankafei.aviator.extend;
 
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
+import com.googlecode.aviator.AviatorEvaluator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -17,6 +18,531 @@ public class AviatorExtendFunctionTest {
     static {
         AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
         aviatorFunctionManager.initFun();
+    }
+
+    @Test
+    public void testAdd() {
+        String expression = "1+1";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'+1";
+        AviatorExtendUtil.execute(expression);
+        expression = "1+'1'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'+'1'";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1+1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'+1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1+'1.2'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'+'1.2'";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a+1";
+        AviatorExtendUtil.execute(expression, dataMap);
+        expression = "'a'+1";
+        AviatorExtendUtil.execute(expression);
+        expression = "a+'1'";
+        AviatorExtendUtil.execute(expression, dataMap);
+        expression = "'a'+'1'";
+        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testSub() {
+        String expression = "1-1";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testMul() {
+        String expression = "1*1";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'*1";
+        AviatorExtendUtil.execute(expression);
+        expression = "1*'1'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'*'1'";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1*1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'*1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1*'1.2'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'*'1.2'";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a*1";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'*1";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a*'1'";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'*'1'";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testDiv() {
+        String expression = "1/1";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'/1";
+        AviatorExtendUtil.execute(expression);
+        expression = "1/'1'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'/'1'";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1/1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'/1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1/'1.2'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'/'1.2'";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a/1";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'/1";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a/'1'";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'/'1'";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testMod() {
+        String expression = "1%1";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'%1";
+        AviatorExtendUtil.execute(expression);
+        expression = "1%'1'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'%'1'";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1%1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'%1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1%'1.2'";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'%'1.2'";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a%1";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'%1";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a%'1'";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'%'1'";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testEquals() {
+        String expression = "1-1==0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1==0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'==0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'==0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2==0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2==0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'==0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'==0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1==0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1==0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'==0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'==0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testNoEquals() {
+        String expression = "1-1!=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1!=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'!=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'!=0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2!=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2!=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'!=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'!=0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1!=0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1!=0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'!=0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'!=0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testLessThen() {
+        String expression = "1-1<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'<0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'<0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1<0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1<0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'<0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'<0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testLessThenEquals() {
+        String expression = "1-1<=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1<=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'<=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'<=0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2<=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2<=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'<=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'<=0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1<=0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1<=0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'<=0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'<=0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testGreaterThen() {
+        String expression = "1-1>0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1>0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'>0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'>0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2>0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2>0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'>0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'>0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1>0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1>0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'>0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'>0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testGreaterThenEquals() {
+        String expression = "1-1>=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1>=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'>=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'>=0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2>=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2>=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'>=0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'>=0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1>=0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1>=0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'>=0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'>=0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testAnd() {
+        String expression = "1-1>=0 && 1-1<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1>=0 && '1'-1<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'>=0 && 1-'1'<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'>=0 && '1'-'1'<0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2>=0 && 1.1-1.2<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2>=0 && '1.1'-1.2<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'>=0 && 1.1-'1.2'<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'>=0 && '1.1'-'1.2'<0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1>=0 && a-1<0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1>=0 && 'a'-1<0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'>=0 && a-'1'<0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'>=0 && 'a'-'1'<0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testOr() {
+        String expression = "1-1>=0 || 1-1<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-1>=0 || '1'-1<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1-'1'>=0 || 1-'1'<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1'-'1'>=0 || '1'-'1'<0";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "1.1-1.2>=0 || 1.1-1.2<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-1.2>=0 || '1.1'-1.2<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1-'1.2'>=0 || 1.1-'1.2'<0";
+        AviatorExtendUtil.execute(expression);
+        expression = "'1.1'-'1.2'>=0 || '1.1'-'1.2'<0";
+        AviatorExtendUtil.execute(expression);
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1");
+        expression = "a-1>=0 || a-1<0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-1>=0 || 'a'-1<0";
+//        AviatorExtendUtil.execute(expression);
+        expression = "a-'1'>=0 || a-'1'<0";
+        AviatorExtendUtil.execute(expression, dataMap);
+//        expression = "'a'-'1'>=0 || 'a'-'1'<0";
+//        AviatorExtendUtil.execute(expression);
+        System.out.println("=====================================================");
+    }
+
+    @Test
+    public void testAnd01() {
+        String expression = "and(1+2==3, 2+3==5)";
+        Object result = AviatorEvaluator.execute(expression);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "and(1+2==3)";
+        result = AviatorEvaluator.execute(expression);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "and()";
+        result = AviatorEvaluator.execute(expression);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "1+2==3 && 2+3==5";
+        result = AviatorEvaluator.execute(expression);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "1+2==3";
+        result = AviatorEvaluator.execute(expression);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+    }
+
+    @Test
+    public void testOr01() {
+        String expression = "or(a+b==c, d+e==f)";
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", 1);
+        dataMap.put("b", 2);
+        dataMap.put("c", 3);
+        dataMap.put("d", 2);
+        dataMap.put("e", 3);
+        dataMap.put("f", 5);
+        Object result = AviatorEvaluator.execute(expression, dataMap);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "or(1+2==2)";
+        result = AviatorEvaluator.execute(expression, dataMap);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "or()";
+        result = AviatorEvaluator.execute(expression, dataMap);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "a+b==c || d+e==f";
+        dataMap = new HashMap<>();
+        dataMap.put("a", 1);
+        dataMap.put("b", 2);
+        dataMap.put("c", 3);
+        dataMap.put("d", 2);
+        dataMap.put("e", 3);
+        dataMap.put("f", 4);
+        result = AviatorEvaluator.execute(expression, dataMap);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+
+        expression = "a+b==c";
+        result = AviatorEvaluator.execute(expression, dataMap);
+        log.info("表达式：{}的执行结果为：{}", expression, result);
+    }
+
+    @Test
+    public void testEquals01(){
+        String expression = "1.1==1.2";
+        AviatorExtendUtil.execute(expression);
+        expression = "1.1==1.10";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "a==b";
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1.1");
+        dataMap.put("b", "1.2");
+        AviatorExtendUtil.execute(expression, dataMap);
+
+        dataMap.put("a", 1.1);
+        dataMap.put("b", 1.10);
+        AviatorExtendUtil.execute(expression, dataMap);
+    }
+
+    @Test
+    public void testEqualsStr(){
+        String expression = "equals(1.1, 1.2)";
+        AviatorExtendUtil.execute(expression);
+        expression = "equals(1.1, 1.10)";
+        AviatorExtendUtil.execute(expression);
+
+        expression = "equals(a, b)";
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "1.1");
+        dataMap.put("b", "1.2");
+        AviatorExtendUtil.execute(expression, dataMap);
+
+        dataMap.put("a", 1.1);
+        dataMap.put("b", 1.10);
+        AviatorExtendUtil.execute(expression, dataMap);
     }
 
     @Test
