@@ -14,7 +14,7 @@ public class Lower extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object text) {
         if (text == null) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         return new AviatorString(text.toString().toLowerCase());
     }

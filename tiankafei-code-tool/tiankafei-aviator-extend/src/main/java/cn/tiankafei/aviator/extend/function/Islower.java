@@ -13,13 +13,13 @@ public class Islower extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object text) {
         if (text == null) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         String str = text.toString();
         if (str.toLowerCase().equals(str)) {
-            return AviatorBoolean.valueOf(Boolean.TRUE);
+            return AviatorBoolean.TRUE;
         } else {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
     }
 

@@ -92,32 +92,32 @@ public class VerifyIdCard extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object object) {
         if (object == null || StringUtils.isBlank(object.toString())) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         String verifyIdCard = object.toString();
         if (verifyIdCard.length() != 18) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         //验证前17位是数字
         String prefix = verifyIdCard.substring(0, 17);
         if (!FunctionUtils.isNumerics(prefix)) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         //验证最后一位是0-9和X
         String suffix = verifyIdCard.substring(17);
         if (!idCardSuffix.contains(suffix)) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         //验证前两位是省码
         String province = verifyIdCard.substring(0, 2);
         if (!provinceMap.containsKey(province)) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         //验证年份的范围
         int tempYear = Integer.parseInt(verifyIdCard.substring(6, 10));
         int year = Calendar.getInstance().get(Calendar.YEAR);
         if (tempYear < 1890 || tempYear > year) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         //身份证第十八位数字的校验方法
         int sum = 0;
@@ -129,9 +129,9 @@ public class VerifyIdCard extends OneParamFunction {
         //余数
         int remainderValue = sum % 11;
         if (!suffix.equals(provinceRemainderMap.get(remainderValue))) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
-        return AviatorBoolean.valueOf(Boolean.TRUE);
+        return AviatorBoolean.TRUE;
     }
 
     @Override

@@ -87,7 +87,7 @@ public class VerifyCreditCode extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object object) {
         if (object == null || StringUtils.isBlank(object.toString())) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         String verifycreditcode = object.toString();
         if (verifycreditcode.length() == 18) {
@@ -107,7 +107,7 @@ public class VerifyCreditCode extends OneParamFunction {
                     //求31的余数
                     w[i] = productResult % 31;
                 } else {
-                    return AviatorBoolean.valueOf(Boolean.FALSE);
+                    return AviatorBoolean.FALSE;
                 }
             }
 
@@ -122,13 +122,13 @@ public class VerifyCreditCode extends OneParamFunction {
                 //传入码的最后一位
                 String endValue = verifycreditcode.substring(17, 18);
                 if (endValue.equals(characterIntegerMap.get(standardValue))) {
-                    return AviatorBoolean.valueOf(Boolean.TRUE);
+                    return AviatorBoolean.TRUE;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return AviatorBoolean.valueOf(Boolean.FALSE);
+        return AviatorBoolean.FALSE;
     }
 
     @Override

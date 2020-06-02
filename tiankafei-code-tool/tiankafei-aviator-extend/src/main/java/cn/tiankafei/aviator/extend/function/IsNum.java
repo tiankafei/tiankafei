@@ -13,17 +13,16 @@ import com.googlecode.aviator.runtime.type.AviatorObject;
 public class IsNum extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object object) {
-        Boolean result = Boolean.FALSE;
         if (object != null) {
             if (object instanceof Number) {
-                result = Boolean.TRUE;
+                return AviatorBoolean.TRUE;
             } else if (FunctionUtils.isString(object)) {
                 if (FunctionUtils.isNumerics(object)) {
-                    result = Boolean.TRUE;
+                    return AviatorBoolean.TRUE;
                 }
             }
         }
-        return AviatorBoolean.valueOf(result);
+        return AviatorBoolean.FALSE;
     }
 
     @Override

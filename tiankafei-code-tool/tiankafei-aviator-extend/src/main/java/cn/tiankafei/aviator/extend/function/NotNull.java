@@ -13,13 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 public class NotNull extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object object) {
-        Boolean result = Boolean.FALSE;
         if (object != null) {
             if (StringUtils.isNotBlank(object.toString())) {
-                result = Boolean.TRUE;
+                return AviatorBoolean.TRUE;
             }
         }
-        return AviatorBoolean.valueOf(result.booleanValue());
+        return AviatorBoolean.FALSE;
     }
 
     @Override

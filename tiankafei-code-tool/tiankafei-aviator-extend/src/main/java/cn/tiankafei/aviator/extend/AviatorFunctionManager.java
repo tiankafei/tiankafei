@@ -25,7 +25,7 @@ import cn.tiankafei.aviator.extend.function.Upper;
 import cn.tiankafei.aviator.extend.function.VerifyCreditCode;
 import cn.tiankafei.aviator.extend.function.VerifyIdCard;
 import cn.tiankafei.aviator.extend.function.Verifycode;
-import com.googlecode.aviator.AviatorEvaluator;
+import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 
 /**
  * @author tiankafei
@@ -34,31 +34,35 @@ import com.googlecode.aviator.AviatorEvaluator;
 public class AviatorFunctionManager {
 
     public void initFun() {
-        AviatorEvaluator.addFunction(new And());
-        AviatorEvaluator.addFunction(new Or());
-        AviatorEvaluator.addFunction(new Abs());
-        AviatorEvaluator.addFunction(new Ceil());
-        AviatorEvaluator.addFunction(new CurrentTime());
-        AviatorEvaluator.addFunction(new Isch());
-        AviatorEvaluator.addFunction(new Isen());
-        AviatorEvaluator.addFunction(new Islower());
-        AviatorEvaluator.addFunction(new IsNull());
-        AviatorEvaluator.addFunction(new IsNum());
-        AviatorEvaluator.addFunction(new IsNumber());
-        AviatorEvaluator.addFunction(new Isupper());
-        AviatorEvaluator.addFunction(new Len());
-        AviatorEvaluator.addFunction(new Length());
-        AviatorEvaluator.addFunction(new Lower());
-        AviatorEvaluator.addFunction(new Not());
-        AviatorEvaluator.addFunction(new NotNull());
-        AviatorEvaluator.addFunction(new NotOper());
-        AviatorEvaluator.addFunction(new Round());
-        AviatorEvaluator.addFunction(new Trim());
-        AviatorEvaluator.addFunction(new Trunc());
-        AviatorEvaluator.addFunction(new Upper());
-        AviatorEvaluator.addFunction(new Verifycode());
-        AviatorEvaluator.addFunction(new VerifyCreditCode());
-        AviatorEvaluator.addFunction(new VerifyIdCard());
+        //删除框架默认的函数实现
+//        AviatorExtendUtil.removeFunction("!");
+
+        //新增自定义的函数
+        AviatorExtendUtil.addFunction(new And());
+        AviatorExtendUtil.addFunction(new Or());
+        AviatorExtendUtil.addFunction(new Abs());
+        AviatorExtendUtil.addFunction(new Ceil());
+        AviatorExtendUtil.addFunction(new CurrentTime());
+        AviatorExtendUtil.addFunction(new Isch());
+        AviatorExtendUtil.addFunction(new Isen());
+        AviatorExtendUtil.addFunction(new Islower());
+        AviatorExtendUtil.addFunction(new IsNull());
+        AviatorExtendUtil.addFunction(new IsNum());
+        AviatorExtendUtil.addFunction(new IsNumber());
+        AviatorExtendUtil.addFunction(new Isupper());
+        AviatorExtendUtil.addFunction(new Len());
+        AviatorExtendUtil.addFunction(new Length());
+        AviatorExtendUtil.addFunction(new Lower());
+        AviatorExtendUtil.addFunction(new Not());
+        AviatorExtendUtil.addFunction(new NotNull());
+//        AviatorExtendUtil.addFunction(new NotOper());
+        AviatorExtendUtil.addFunction(new Round());
+        AviatorExtendUtil.addFunction(new Trim());
+        AviatorExtendUtil.addFunction(new Trunc());
+        AviatorExtendUtil.addFunction(new Upper());
+        AviatorExtendUtil.addFunction(new Verifycode());
+        AviatorExtendUtil.addFunction(new VerifyCreditCode());
+        AviatorExtendUtil.addFunction(new VerifyIdCard());
     }
 
 }

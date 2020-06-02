@@ -15,7 +15,7 @@ public class Isch extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object param) {
         if (param == null) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         String regex = "[\u4e00-\u9fa5]{";
 
@@ -27,7 +27,7 @@ public class Isch extends OneParamFunction {
 
             return AviatorBoolean.valueOf(Boolean.valueOf(matcher.matches()));
         } else {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
     }
 

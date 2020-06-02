@@ -1,4 +1,4 @@
-package cn.tiankafei.aviator.extend.function;
+package cn.tiankafei.aviator.extend.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

@@ -15,7 +15,7 @@ public class Isen extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object param) {
         if (param == null) {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
         String regex = "[a-z|A-Z]{";
         if (param instanceof String) {
@@ -27,7 +27,7 @@ public class Isen extends OneParamFunction {
             return AviatorBoolean.valueOf(Boolean.valueOf(matcher.matches()));
 
         } else {
-            return AviatorBoolean.valueOf(Boolean.FALSE);
+            return AviatorBoolean.FALSE;
         }
     }
 

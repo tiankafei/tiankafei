@@ -21,7 +21,7 @@ public class CurrentTime extends OneParamFunction {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(param);
             return new AviatorString(localDateTime.format(formatter));
         }
-        throw new AviatorException("数据类型错误，请确认！");
+        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
     }
 
     @Override

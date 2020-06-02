@@ -16,7 +16,7 @@ public class Not extends OneParamFunction {
         if (object instanceof Boolean) {
             return AviatorBoolean.valueOf( !(Boolean) object);
         }
-        throw new AviatorException(getName() + "参数类型错误，请确认！");
+        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
     }
 
     @Override

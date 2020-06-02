@@ -13,15 +13,14 @@ import org.apache.commons.lang3.StringUtils;
 public class IsNull extends OneParamFunction {
     @Override
     protected AviatorObject apply(Object object) {
-        Boolean result = Boolean.FALSE;
         if (object == null) {
-            result = Boolean.TRUE;
+            return AviatorBoolean.TRUE;
         } else {
             if (StringUtils.isBlank(object.toString())) {
-                result = Boolean.TRUE;
+                return AviatorBoolean.TRUE;
             }
         }
-        return AviatorBoolean.valueOf(result.booleanValue());
+        return AviatorBoolean.FALSE;
     }
 
     @Override

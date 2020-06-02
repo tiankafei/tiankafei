@@ -29,7 +29,7 @@ public class Round extends OneParamFunction {
         if (value != null) {
             return AviatorDecimal.valueOf(Math.round(value));
         }
-        throw new AviatorException(getName() + "函数的参数类型不合法!");
+        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
     }
 
     @Override
