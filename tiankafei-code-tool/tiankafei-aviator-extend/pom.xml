@@ -42,9 +42,14 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.googlecode.aviator/aviator -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.googlecode.aviator</groupId>
             <artifactId>aviator</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>cn.tiankafei</groupId>
+            <artifactId>tiankafei-aviator</artifactId>
+            <version>${code-tool.version}</version>
         </dependency>
 
     </dependencies>

@@ -1,18 +1,13 @@
 package cn.tiankafei.aviator.extend;
 
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-/**
- * @author tiankafei
- * @since 1.0
- **/
 @Slf4j
-public class AviatorExtendMoreFunctionTest {
+public class TestMoreFunction {
 
     static {
         AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
@@ -27,7 +22,6 @@ public class AviatorExtendMoreFunctionTest {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", "1");
         dataMap.put("b", "1");
-        
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -39,7 +33,6 @@ public class AviatorExtendMoreFunctionTest {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", 1);
         dataMap.put("b", 1);
-        
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -50,7 +43,6 @@ public class AviatorExtendMoreFunctionTest {
         expression = "LEFT(a, 6)";
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", "weishuangshuang");
-        
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -61,7 +53,6 @@ public class AviatorExtendMoreFunctionTest {
         expression = "RIGHT(a, 6)";
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", "weishuangshuang");
-        
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -72,7 +63,6 @@ public class AviatorExtendMoreFunctionTest {
         expression = "mid(a, 3, 6)";
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", "weishuangshuang");
-        
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -86,7 +76,6 @@ public class AviatorExtendMoreFunctionTest {
         dataMap.put("b", 1.1);
         dataMap.put("c", 2.2);
         dataMap.put("d", -1);
-        
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -100,9 +89,8 @@ public class AviatorExtendMoreFunctionTest {
         dataMap.put("b", 2);
         dataMap.put("c", 2.2);
         dataMap.put("d", -1);
-        dataMap.put("e", new BigDecimal("-1.1"));
-        dataMap.put("f", new BigDecimal("-2.2"));
-        
+        dataMap.put("e", -1);
+        dataMap.put("f", -1);
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -114,11 +102,10 @@ public class AviatorExtendMoreFunctionTest {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", -2);
         dataMap.put("b", 2);
-        dataMap.put("c", new BigDecimal("-2.2"));
-        dataMap.put("d", new BigDecimal("-1.11"));
-        dataMap.put("e", new BigDecimal("1.11"));
-        dataMap.put("f", new BigDecimal("1.11"));
-        
+        dataMap.put("c", 2.2);
+        dataMap.put("d", -1);
+        dataMap.put("e", -1);
+        dataMap.put("f", -1);
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -129,7 +116,6 @@ public class AviatorExtendMoreFunctionTest {
         expression = "INLIST(a, 1,2,3,4,5,6,7)";
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", '1');
-        
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -141,17 +127,17 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         expression = "age(a,b)";
         Map<String, Object> dataMap = new HashMap<>();
-        
+
         dataMap.put("a", "1989");
         dataMap.put("b", "09");
         AviatorExtendUtil.execute(expression, dataMap);
         expression = "age(a,b,c,d)";
-        
+
         dataMap.put("a", "1989");
         dataMap.put("b", "09");
         dataMap.put("c", "1999");
         dataMap.put("d", "09");
-        
+
         AviatorExtendUtil.execute(expression, dataMap);
     }
 
@@ -165,7 +151,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         expression = "FIND(a,b,c)";
         Map<String, Object> dataMap = new HashMap<>();
-        
+
         dataMap.put("a", "\\\\?");
         dataMap.put("b", "1989");
         dataMap.put("c", "0");
@@ -190,6 +176,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         expression = "lookat(a,b)";
         Map<String, Object> dataMap = new HashMap<>();
+
         dataMap.put("a", "\\\\?");
         dataMap.put("b", "1989");
         AviatorExtendUtil.execute(expression, dataMap);
@@ -211,7 +198,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         expression = "match(a,b)";
         Map<String, Object> dataMap = new HashMap<>();
-        
+
         dataMap.put("a", "\\\\?");
         dataMap.put("b", "1989");
         AviatorExtendUtil.execute(expression, dataMap);
@@ -233,7 +220,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         expression = "VERIFYCH(a,b,c,d)";
         Map<String, Object> dataMap = new HashMap<>();
-        
+
         dataMap.put("a", "工商行政管理部门工商公司aaaaa");
         dataMap.put("b", "1");
         dataMap.put("c", "公司");
@@ -273,7 +260,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         expression = "month(a,b,c)";
         Map<String, Object> dataMap = new HashMap<>();
-        
+
         dataMap.put("a", "01");
         dataMap.put("b", "201808MM");
         dataMap.put("c", "0");
@@ -334,7 +321,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         expression = "year(a,b,c)";
         Map<String, Object> dataMap = new HashMap<>();
-        
+
         dataMap.put("a", "1799");
         dataMap.put("b", "201808MM");
         dataMap.put("c", "0");
@@ -381,7 +368,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         Map<String, Object> dataMap = new HashMap<>();
         expression = "timecompare(a,b,c,d)";
-        
+
         dataMap.put("a", "04");
         dataMap.put("b", "50");
         dataMap.put("c", "01");
@@ -407,13 +394,12 @@ public class AviatorExtendMoreFunctionTest {
         dataMap.put("a", "01");
         dataMap.put("b", "00");
         dataMap.put("c", "02");
-        
         AviatorExtendUtil.execute(expression, dataMap);
-        
+
         dataMap.put("a", "01");
         dataMap.put("b", "02");
         dataMap.put("c", "03");
-        
+
         AviatorExtendUtil.execute(expression, dataMap);
         dataMap.put("a", "a");
         dataMap.put("b", "ab");
@@ -423,14 +409,13 @@ public class AviatorExtendMoreFunctionTest {
 
     @Test
     public void testMax() {
-        String expression = "MAX(9,1,2,3,4,5,6,7)";
+        String expression = "max(9,1,2,3,4,5,6,7)";
         AviatorExtendUtil.execute(expression);
-        expression = "MAX(9,1,2,3,4,5,6,7)";
+        expression = "max(9,1,2,3,4,5,6,7)";
         AviatorExtendUtil.execute(expression);
         Map<String, Object> dataMap = new HashMap<>();
-        expression = "MAX(a,1,2,3,4,5,6,7)";
+        expression = "max(a,1,2,3,4,5,6,7)";
         dataMap.put("a", 8);
-        
         AviatorExtendUtil.execute(expression, dataMap);
         dataMap.put("a", 1);
         AviatorExtendUtil.execute(expression, dataMap);
@@ -438,14 +423,13 @@ public class AviatorExtendMoreFunctionTest {
 
     @Test
     public void testMin() {
-        String expression = "MIN(9,1,2,3,4,5,6,7)";
+        String expression = "min(9,1,2,3,4,5,6,7)";
         AviatorExtendUtil.execute(expression);
-        expression = "MIN(9,1,2,3,4,5,6,7)";
+        expression = "min(9,1,2,3,4,5,6,7)";
         AviatorExtendUtil.execute(expression);
         Map<String, Object> dataMap = new HashMap<>();
-        expression = "MIN(a,1,2,3,4,5,6,7)";
+        expression = "min(a,1,2,3,4,5,6,7)";
         dataMap.put("a", 8);
-        
         AviatorExtendUtil.execute(expression, dataMap);
         dataMap.put("a", 1);
         AviatorExtendUtil.execute(expression, dataMap);
@@ -459,7 +443,7 @@ public class AviatorExtendMoreFunctionTest {
         AviatorExtendUtil.execute(expression);
         Map<String, Object> dataMap = new HashMap<>();
         expression = "replaceall(a, b, c)";
-        
+
         dataMap.put("a", "12346579");
         dataMap.put("b", 1);
         dataMap.put("c", 0);
