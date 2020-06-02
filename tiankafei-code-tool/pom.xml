@@ -17,6 +17,7 @@
         <module>tiankafei-expression-fastel</module>
         <module>tiankafei-proxy</module>
         <module>tiankafei-asm</module>
+        <module>tiankafei-aviator</module>
         <module>tiankafei-aviator-extend</module>
         <module>tiankafei-base</module>
         <module>tiankafei-antlr4</module>
