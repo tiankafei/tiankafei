@@ -42,13 +42,13 @@ public class MidOperation extends BaseMoreOperation {
             Integer start = null;
             Object value2 = dataList.get(1);
             if (value2 == null) {
-                throw new AviatorException("mid函数截取的起始位置为空，请确认!");
+                throw new NullPointerException("mid函数截取的起始位置为空，请确认!");
             } else {
                 if (FunctionUtils.isString(value2)) {
                     if (FunctionUtils.isNumerics(value2.toString())) {
                         start = Integer.valueOf(value2.toString());
                     } else {
-                        throw new AviatorException("mid函数截取的起始位置数据类型不正确，请确认!");
+                        throw new NullPointerException("mid函数截取的起始位置数据类型不正确，请确认!");
                     }
                 } else if (value2 instanceof Number) {
                     start = Integer.valueOf(value2.toString());
@@ -59,20 +59,20 @@ public class MidOperation extends BaseMoreOperation {
             Integer end = null;
             Object value3 = dataList.get(2);
             if (value3 == null) {
-                throw new AviatorException("mid函数截取的结束位置为空，请确认!");
+                throw new NullPointerException("mid函数截取的结束位置为空，请确认!");
             } else {
                 if (FunctionUtils.isString(value3)) {
                     if (FunctionUtils.isNumerics(value3.toString())) {
                         end = Integer.valueOf(value3.toString());
                     } else {
-                        throw new AviatorException("mid函数截取的结束位置数据类型不正确，请确认!");
+                        throw new NullPointerException("mid函数截取的结束位置数据类型不正确，请确认!");
                     }
                 } else if (value3 instanceof Number) {
                     end = Integer.valueOf(value3.toString());
                 }
             }
             if (start > end) {
-                throw new AviatorException("mid函数截取的开始位置比结束位置大，请确认!");
+                throw new NullPointerException("mid函数截取的开始位置比结束位置大，请确认!");
             }
             if (start != null && end != null) {
                 if (end > value.length()) {
@@ -80,8 +80,8 @@ public class MidOperation extends BaseMoreOperation {
                 }
                 return value.substring(start, end);
             }
-            throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+            throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
         }
-        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
     }
 }

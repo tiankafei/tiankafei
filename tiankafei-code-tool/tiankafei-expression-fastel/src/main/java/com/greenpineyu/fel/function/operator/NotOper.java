@@ -50,7 +50,7 @@ public class NotOper extends BaseStableFunction {
                 if (boolean.class.isAssignableFrom(returnType) || Boolean.class.isAssignableFrom(returnType)) {
                     src = "!(" + builder.source(ctx, child) + ")";
                 } else {
-                    throw new AviatorException("抛出编译异常!");
+                    throw new NullPointerException("抛出编译异常!");
                 }
                 return src;
             }
@@ -86,7 +86,7 @@ public class NotOper extends BaseStableFunction {
                 if (boolean.class.isAssignableFrom(returnType) || Boolean.class.isAssignableFrom(returnType)) {
                     src = "!(" + builder.source(ctx, child) + ")";
                 } else {
-                    throw new AviatorException("抛出编译异常!");
+                    throw new NullPointerException("抛出编译异常!");
                 }
                 return src;
             }

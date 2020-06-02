@@ -52,10 +52,10 @@ public class TimeCompareOperation extends BaseMoreOperation {
 
                 return (arriveHours * 60 + arriveMinute) - (leaveHours * 60 + leaveMinute);
             } else {
-                throw new AviatorException("timecompare传入参数不能为空且必须得是数字，请确认!");
+                throw new NullPointerException("timecompare传入参数不能为空且必须得是数字，请确认!");
             }
         }
-        throw new AviatorException("timecompare传入参数数组为空或者参数个数不正确!");
+        throw new NullPointerException("timecompare传入参数数组为空或者参数个数不正确!");
     }
 
 }

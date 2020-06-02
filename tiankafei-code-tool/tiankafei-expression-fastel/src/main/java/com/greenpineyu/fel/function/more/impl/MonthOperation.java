@@ -155,7 +155,7 @@ public class MonthOperation extends BaseMoreOperation {
                 throw new IllegalArgumentException("MONTH函数的截止月份参数不正确!");
             }
         }
-        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
     }
 
     /**

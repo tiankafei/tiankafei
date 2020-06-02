@@ -74,7 +74,7 @@ public class FindOperation extends BaseMoreOperation {
                 throw new IllegalArgumentException("FIND函数的参数类型不合法!");
             }
         }
-        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
     }
 
     private static String getNullString(int length) {

@@ -38,7 +38,7 @@ public class AgeOperation extends BaseMoreOperation {
             if (FunctionUtils.isNumerics(year)) {
                 yearInt = (int) Double.parseDouble(year);
             } else {
-                throw new AviatorException("age函数传入的年份只能是数字，请确认!");
+                throw new NullPointerException("age函数传入的年份只能是数字，请确认!");
             }
         }
         int monthInt = 0;
@@ -46,7 +46,7 @@ public class AgeOperation extends BaseMoreOperation {
             if (FunctionUtils.isNumerics(month)) {
                 monthInt = (int) Double.parseDouble(month);
             } else {
-                throw new AviatorException("age函数传入的月份只能是数字，请确认!");
+                throw new NullPointerException("age函数传入的月份只能是数字，请确认!");
             }
         }
         //取得系统时间
@@ -60,7 +60,7 @@ public class AgeOperation extends BaseMoreOperation {
                     if (FunctionUtils.isNumerics(dataList.get(2).toString())) {
                         currentYear = Integer.parseInt(dataList.get(2).toString());
                     } else {
-                        throw new AviatorException("age函数传入的年份只能是数字，请确认!");
+                        throw new NullPointerException("age函数传入的年份只能是数字，请确认!");
                     }
                 }
             }
@@ -69,7 +69,7 @@ public class AgeOperation extends BaseMoreOperation {
                     if (FunctionUtils.isNumerics(dataList.get(3).toString())) {
                         currentMonth = Integer.parseInt(dataList.get(3).toString());
                     } else {
-                        throw new AviatorException("age函数传入的月份只能是数字，请确认!");
+                        throw new NullPointerException("age函数传入的月份只能是数字，请确认!");
                     }
                 }
             }

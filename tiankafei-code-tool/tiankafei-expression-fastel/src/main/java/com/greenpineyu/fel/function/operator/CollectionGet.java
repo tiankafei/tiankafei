@@ -37,7 +37,7 @@ public class CollectionGet extends BaseStableFunction {
             return get(coll, i);
         }
 //        return null;
-        throw new AviatorException("语法错误!");
+        throw new NullPointerException("语法错误!");
     }
 
     @Override

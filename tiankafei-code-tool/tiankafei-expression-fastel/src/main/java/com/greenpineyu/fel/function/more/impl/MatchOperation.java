@@ -46,7 +46,7 @@ public class MatchOperation extends BaseMoreOperation {
                 throw new Exception("MATCH函数的参数类型不合法!");
             }
         }
-        throw new AviatorException("传入参数数组为空或者参数个数不正确!");
+        throw new NullPointerException("传入参数数组为空或者参数个数不正确!");
     }
 
 }
