@@ -2,6 +2,7 @@ package cn.tiankafei.aviator.extend.util;
 
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import com.googlecode.aviator.AviatorEvaluator;
+import com.googlecode.aviator.Options;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,9 @@ public abstract class AviatorExtendUtil {
      * 处理已经存在的函数
      */
     public static void addFunction() {
+        // 开启浮点型精度
+        AviatorEvaluator.setOption(Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
+
         addFunction("max");
         addFunction("min");
 //        addFunction(OperatorType.ADD.token);
@@ -71,13 +75,11 @@ public abstract class AviatorExtendUtil {
                 expression = expression.replace("\\\\", "^A");
                 flag = expression.contains("\\\\");
             }
-
             flag = expression.contains("^A");
             while(flag){
                 expression = expression.replace("^A", "\\\\\\\\");
                 flag = expression.contains("^A");
             }
-
             Object result = AviatorEvaluator.execute(expression, dataMap);
             log.info("表达式：{}的执行结果为：{}", expression, result);
         }catch (Exception e){

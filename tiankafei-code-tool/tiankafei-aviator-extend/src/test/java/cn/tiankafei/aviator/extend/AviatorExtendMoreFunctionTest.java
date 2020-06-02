@@ -1,6 +1,7 @@
 package cn.tiankafei.aviator.extend;
 
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -99,8 +100,8 @@ public class AviatorExtendMoreFunctionTest {
         dataMap.put("b", 2);
         dataMap.put("c", 2.2);
         dataMap.put("d", -1);
-        dataMap.put("e", -1);
-        dataMap.put("f", -1);
+        dataMap.put("e", new BigDecimal("-1.1"));
+        dataMap.put("f", new BigDecimal("-2.2"));
         
         AviatorExtendUtil.execute(expression, dataMap);
     }
@@ -113,10 +114,10 @@ public class AviatorExtendMoreFunctionTest {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", -2);
         dataMap.put("b", 2);
-        dataMap.put("c", 2.2);
-        dataMap.put("d", -1);
-        dataMap.put("e", -1);
-        dataMap.put("f", -1);
+        dataMap.put("c", new BigDecimal("-2.2"));
+        dataMap.put("d", new BigDecimal("-1.11"));
+        dataMap.put("e", new BigDecimal("1.11"));
+        dataMap.put("f", new BigDecimal("1.11"));
         
         AviatorExtendUtil.execute(expression, dataMap);
     }

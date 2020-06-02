@@ -14,9 +14,14 @@ import java.util.Map;
 @Slf4j
 public class AviatorExtendTest {
 
+    static {
+        AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
+        aviatorFunctionManager.initFun();
+    }
+
     @Test
     public void test01() {
-        String expression = "1+2";
+        String expression = "1.1+2.2";
         Object result = AviatorEvaluator.execute(expression);
         log.info("表达式：{}的执行结果为：{}", expression, result);
         expression = "1+2==3";

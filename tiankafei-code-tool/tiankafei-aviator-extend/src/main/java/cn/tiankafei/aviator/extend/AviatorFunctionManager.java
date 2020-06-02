@@ -23,9 +23,7 @@ import cn.tiankafei.aviator.extend.function.Length;
 import cn.tiankafei.aviator.extend.function.Lookat;
 import cn.tiankafei.aviator.extend.function.Lower;
 import cn.tiankafei.aviator.extend.function.Match;
-import cn.tiankafei.aviator.extend.function.Max;
 import cn.tiankafei.aviator.extend.function.Mid;
-import cn.tiankafei.aviator.extend.function.Min;
 import cn.tiankafei.aviator.extend.function.Month;
 import cn.tiankafei.aviator.extend.function.Not;
 import cn.tiankafei.aviator.extend.function.NotNull;
@@ -52,9 +50,6 @@ import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 public class AviatorFunctionManager {
 
     public void initFun() {
-        //删除框架默认的函数实现
-//        AviatorExtendUtil.removeFunction("!");
-
         //新增自定义的函数
         AviatorExtendUtil.addFunction();
 
@@ -73,7 +68,6 @@ public class AviatorFunctionManager {
         AviatorExtendUtil.addFunction(new Lower());
         AviatorExtendUtil.addFunction(new Not());
         AviatorExtendUtil.addFunction(new NotNull());
-//        AviatorExtendUtil.addFunction(new NotOper());
         AviatorExtendUtil.addFunction(new Round());
         AviatorExtendUtil.addFunction(new Trim());
         AviatorExtendUtil.addFunction(new Trunc());
@@ -83,7 +77,6 @@ public class AviatorFunctionManager {
         AviatorExtendUtil.addFunction(new VerifyIdCard());
 
         AviatorExtendUtil.addFunction(new Equals());
-//        AviatorExtendUtil.addFunction(new Add());
 
         AviatorExtendUtil.addFunction(new Age());
         AviatorExtendUtil.addFunction(new And());
@@ -94,9 +87,7 @@ public class AviatorFunctionManager {
         AviatorExtendUtil.addFunction(new Left());
         AviatorExtendUtil.addFunction(new Lookat());
         AviatorExtendUtil.addFunction(new Match());
-//        AviatorExtendUtil.addFunction(new Max());
         AviatorExtendUtil.addFunction(new Mid());
-//        AviatorExtendUtil.addFunction(new Min());
         AviatorExtendUtil.addFunction(new Month());
         AviatorExtendUtil.addFunction(new Or());
         AviatorExtendUtil.addFunction(new Replaceall());
