@@ -51,7 +51,7 @@ public abstract class TwoParamFunction extends AbstractFunction {
      * @param object
      * @return
      */
-    public Object getReturnValue(Object object) {
+    protected Object getReturnValue(Object object) {
         return object;
     }
 
@@ -63,7 +63,7 @@ public abstract class TwoParamFunction extends AbstractFunction {
      * @return
      * @throws Exception
      */
-    public Object evlNormalOperation(Object left, Object right) {
+    protected Object evlNormalOperation(Object left, Object right) {
         return null;
     }
 
@@ -75,7 +75,7 @@ public abstract class TwoParamFunction extends AbstractFunction {
      * @return
      * @throws Exception
      */
-    public Object evlAbnormalOperation(Object left, Object right) {
+    protected Object evlAbnormalOperation(Object left, Object right) {
         return null;
     }
 }

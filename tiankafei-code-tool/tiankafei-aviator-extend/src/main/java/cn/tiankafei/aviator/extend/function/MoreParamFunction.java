@@ -130,7 +130,7 @@ public abstract class MoreParamFunction extends AbstractFunction {
         return this.call(env, dataList);
     }
 
-    private AviatorObject call(Map<String, Object> env, List<AviatorObject> valueList) {
+    protected AviatorObject call(Map<String, Object> env, List<AviatorObject> valueList) {
 //        log.info("env:{};;;valueList:{}", env, valueList);
         List<Object> dataList = new ArrayList<>();
         for (int index = 0, length = valueList.size(); index < length; index++) {
@@ -140,7 +140,7 @@ public abstract class MoreParamFunction extends AbstractFunction {
         return apply(dataList);
     }
 
-    public AviatorObject apply(List<Object> valueList) {
+    protected AviatorObject apply(List<Object> valueList) {
         return null;
     }
 
