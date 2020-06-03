@@ -5,7 +5,6 @@ import cn.tiankafei.aviator.extend.function.Age;
 import cn.tiankafei.aviator.extend.function.And;
 import cn.tiankafei.aviator.extend.function.Ceil;
 import cn.tiankafei.aviator.extend.function.CurrentTime;
-import cn.tiankafei.aviator.extend.function.Equals;
 import cn.tiankafei.aviator.extend.function.Find;
 import cn.tiankafei.aviator.extend.function.If;
 import cn.tiankafei.aviator.extend.function.InList;
@@ -75,8 +74,6 @@ public class AviatorFunctionManager {
         AviatorExtendUtil.addFunction(new Verifycode());
         AviatorExtendUtil.addFunction(new VerifyCreditCode());
         AviatorExtendUtil.addFunction(new VerifyIdCard());
-
-        AviatorExtendUtil.addFunction(new Equals());
 
         AviatorExtendUtil.addFunction(new Age());
         AviatorExtendUtil.addFunction(new And());

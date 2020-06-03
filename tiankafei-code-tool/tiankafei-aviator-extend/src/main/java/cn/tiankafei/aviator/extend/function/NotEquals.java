@@ -10,14 +10,19 @@ import java.math.BigDecimal;
  * @Date 2020/6/2
  * @Version V1.0
  **/
-public class Equals extends TwoParamFunction {
+public class NotEquals extends Equals {
 
     @Override
-    protected AviatorObject apply(Object left, Object right) {
+    public String getName() {
+        return OperatorType.NEQ.token;
+    }
+
+    @Override
+    public AviatorObject apply(Object left, Object right) {
         if (left == null && right == null) {
-            return AviatorBoolean.TRUE;
-        } else if (left == null || right == null) {
             return AviatorBoolean.FALSE;
+        } else if (left == null || right == null) {
+            return AviatorBoolean.TRUE;
         }
 
         return super.apply(left, right);
@@ -27,16 +32,11 @@ public class Equals extends TwoParamFunction {
     public Object evlNormalOperation(Object left, Object right) {
         BigDecimal leftBigDecimal = new BigDecimal(left.toString());
         BigDecimal rightBigDecimal = new BigDecimal(right.toString());
-        return leftBigDecimal.doubleValue() == rightBigDecimal.doubleValue();
+        return leftBigDecimal.doubleValue() != rightBigDecimal.doubleValue();
     }
 
     @Override
     public Object evlAbnormalOperation(Object left, Object right) {
-        return left.toString().equals(right.toString());
-    }
-
-    @Override
-    public String getName() {
-        return OperatorType.EQ.token;
+        return !left.toString().equals(right.toString());
     }
 }

@@ -2,6 +2,7 @@ package cn.tiankafei.aviator.extend;
 
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
+import com.googlecode.aviator.AviatorEvaluator;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,14 @@ public class TestValue {
     static {
         AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
         aviatorFunctionManager.initFun();
+    }
+
+    @Test
+    public void testCustomAdd(){
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", 1.1);
+        dataMap.put("b", 2.2);
+        AviatorExtendUtil.execute("a+b", dataMap);
     }
 
     @Test

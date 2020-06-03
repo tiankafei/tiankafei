@@ -1,8 +1,20 @@
 package cn.tiankafei.aviator.extend.util;
 
 import cn.tiankafei.aviator.extend.exception.AviatorException;
+import cn.tiankafei.aviator.extend.function.Add;
+import cn.tiankafei.aviator.extend.function.Div;
+import cn.tiankafei.aviator.extend.function.Equals;
+import cn.tiankafei.aviator.extend.function.GreaterThen;
+import cn.tiankafei.aviator.extend.function.GreaterThenEquals;
+import cn.tiankafei.aviator.extend.function.LessThen;
+import cn.tiankafei.aviator.extend.function.LessThenEquals;
+import cn.tiankafei.aviator.extend.function.Mod;
+import cn.tiankafei.aviator.extend.function.Mul;
+import cn.tiankafei.aviator.extend.function.NotEquals;
+import cn.tiankafei.aviator.extend.function.Sub;
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.Options;
+import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +34,22 @@ public abstract class AviatorExtendUtil {
     public static void addFunction() {
         // 开启浮点型精度
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
+        AviatorEvaluator.setOption(Options.ALWAYS_PARSE_INTEGRAL_NUMBER_INTO_DECIMAL, true);
 
         addFunction("max");
         addFunction("min");
-//        addFunction(OperatorType.ADD.token);
+
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.ADD, new Add());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.SUB, new Sub());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.MULT, new Mul());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.DIV, new Div());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.MOD, new Mod());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.LT, new LessThen());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.LE, new LessThenEquals());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.GT, new GreaterThen());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.GE, new GreaterThenEquals());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.EQ, new Equals());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.NEQ, new NotEquals());
     }
 
     private static void addFunction(String alreadyExistsFun) {
