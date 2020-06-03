@@ -24,7 +24,7 @@ public class TestCompile {
         dataMap.put("a", 1);
         dataMap.put("b", 1);
         String expression = "a+b";
-        AviatorExtendUtil.execute(expression, dataMap);
+        AviatorExtendUtil.compile(expression, dataMap);
 
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
@@ -37,7 +37,7 @@ public class TestCompile {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", "1");
         dataMap.put("b", "1");
-        AviatorExtendUtil.execute(expression, dataMap);
+        AviatorExtendUtil.compile(expression, dataMap);
 
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
@@ -50,7 +50,7 @@ public class TestCompile {
 //        String expression = "IF(a1+a2==1,a4==a1,a5==v3)";
         String expression = "ABS(IF(a1+a2==1,a4,a5))";
         Map<String, Object> dataMap = new HashMap<>();
-        AviatorExtendUtil.execute(expression, dataMap);
+        AviatorExtendUtil.compile(expression, dataMap);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 

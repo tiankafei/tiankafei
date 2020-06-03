@@ -13,6 +13,7 @@ import cn.tiankafei.aviator.extend.function.Mul;
 import cn.tiankafei.aviator.extend.function.NotEquals;
 import cn.tiankafei.aviator.extend.function.Sub;
 import com.googlecode.aviator.AviatorEvaluator;
+import com.googlecode.aviator.Expression;
 import com.googlecode.aviator.Options;
 import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
@@ -88,6 +89,35 @@ public abstract class AviatorExtendUtil {
         }
     }
 
+    public static void compile(String expression){
+        compile(expression, null);
+    }
+
+    public static void compile(String expression, Map<String, Object> dataMap){
+        try {
+            boolean flag = expression.contains("\\\\");
+            while(flag){
+                expression = expression.replace("\\\\", "^A");
+                flag = expression.contains("\\\\");
+            }
+            flag = expression.contains("^A");
+            while(flag){
+                expression = expression.replace("^A", "\\\\\\\\");
+                flag = expression.contains("^A");
+            }
+            Object result = null;
+            Expression exp = AviatorEvaluator.compile(expression);
+            if(dataMap != null){
+                result = exp.execute(dataMap);
+            }else{
+                result = exp.execute();
+            }
+            log.info("表达式：{}的执行结果为：{}", expression, result);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static void execute(String expression){
         execute(expression, new HashMap<>());
     }
@@ -104,7 +134,12 @@ public abstract class AviatorExtendUtil {
                 expression = expression.replace("^A", "\\\\\\\\");
                 flag = expression.contains("^A");
             }
-            Object result = AviatorEvaluator.execute(expression, dataMap);
+            Object result = null;
+            if(dataMap != null){
+                result = AviatorEvaluator.execute(expression, dataMap);
+            }else{
+                result = AviatorEvaluator.execute(expression);
+            }
             log.info("表达式：{}的执行结果为：{}", expression, result);
         }catch (Exception e){
             e.printStackTrace();

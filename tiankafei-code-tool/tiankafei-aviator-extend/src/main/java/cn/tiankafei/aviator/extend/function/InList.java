@@ -3,6 +3,7 @@ package cn.tiankafei.aviator.extend.function;
 import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +147,7 @@ public class InList extends MoreParamFunction {
             }
             return AviatorBoolean.valueOf(tempList.contains(value.toString()));
         }
-        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+//        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+        return AviatorNil.NIL;
     }
 }

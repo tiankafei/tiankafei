@@ -3,6 +3,7 @@ package cn.tiankafei.aviator.extend.function;
 import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.List;
 import java.util.Map;
@@ -40,9 +41,11 @@ public class Match extends MoreParamFunction {
                 Matcher m = p.matcher(matcher.toString());
                 return AviatorBoolean.valueOf(m.matches());
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new AviatorException(getName() + "函数的参数类型不合法!");
             }
         }
-        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+//        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+        return AviatorNil.NIL;
     }
 }

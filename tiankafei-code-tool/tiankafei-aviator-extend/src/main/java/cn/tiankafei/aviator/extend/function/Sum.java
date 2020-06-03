@@ -5,6 +5,7 @@ import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
 import cn.tiankafei.aviator.extend.util.NumberUtil;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.math.BigDecimal;
 import java.util.List;
@@ -142,7 +143,8 @@ public class Sum extends MoreParamFunction {
             }
             return AviatorDecimal.valueOf(result);
         }
-        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+//        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+        return AviatorNil.NIL;
     }
 
     public Object evl(Object left, Object right) {

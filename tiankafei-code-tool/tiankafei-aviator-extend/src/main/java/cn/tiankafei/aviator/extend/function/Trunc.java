@@ -5,6 +5,7 @@ import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
 import cn.tiankafei.aviator.extend.util.NumberUtil;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.math.BigDecimal;
 
@@ -28,7 +29,8 @@ public class Trunc extends OneParamFunction {
             Object value = Math.floor(bigDecimal.doubleValue());
             return AviatorDecimal.valueOf(NumberUtil.parseNumber(value.toString()));
         }
-        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
+//        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
+        return AviatorNil.NIL;
     }
 
     @Override

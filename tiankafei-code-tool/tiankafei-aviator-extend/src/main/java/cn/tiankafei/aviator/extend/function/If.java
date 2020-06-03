@@ -5,6 +5,7 @@ import cn.tiankafei.aviator.extend.exception.AviatorException;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
 import com.googlecode.aviator.runtime.type.AviatorJavaType;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import com.googlecode.aviator.runtime.type.AviatorString;
@@ -54,6 +55,7 @@ public class If extends MoreParamFunction {
             }
             throw new AviatorException(getName() + "参数类型不正确，请确认!");
         }
-        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+//        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+        return AviatorNil.NIL;
     }
 }

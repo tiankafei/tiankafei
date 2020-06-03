@@ -4,6 +4,7 @@ import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class Year extends MoreParamFunction {
                 return AviatorBoolean.FALSE;
             }
         }
-        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+//        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
+        return AviatorNil.NIL;
     }
 }

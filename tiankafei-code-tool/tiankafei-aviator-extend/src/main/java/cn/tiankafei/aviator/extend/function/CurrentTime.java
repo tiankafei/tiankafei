@@ -2,6 +2,7 @@ package cn.tiankafei.aviator.extend.function;
 
 import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorString;
 import java.time.LocalDateTime;
@@ -21,7 +22,8 @@ public class CurrentTime extends OneParamFunction {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(param);
             return new AviatorString(localDateTime.format(formatter));
         }
-        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
+//        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
+        return AviatorNil.NIL;
     }
 
     @Override
