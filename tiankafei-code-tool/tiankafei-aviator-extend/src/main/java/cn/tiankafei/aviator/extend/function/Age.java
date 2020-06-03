@@ -3,8 +3,11 @@ package cn.tiankafei.aviator.extend.function;
 import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
+import com.googlecode.aviator.runtime.function.AbstractFunction;
 import com.googlecode.aviator.runtime.type.AviatorBigInt;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +18,8 @@ import org.apache.commons.lang3.StringUtils;
  * @Date 2020/6/2
  * @Version V1.0
  **/
-public class Age extends MoreParamFunction {
+public class Age extends AbstractFunction {
+
     @Override
     public String getName() {
         return FunctionConstants.AGE;
@@ -23,16 +27,20 @@ public class Age extends MoreParamFunction {
 
     @Override
     public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2) {
-        return super.call(env, arg1, arg2);
+        return this.call(env, Arrays.asList(arg1, arg2));
     }
 
     @Override
     public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3, AviatorObject arg4) {
-        return super.call(env, arg1, arg2, arg3, arg4);
+        return this.call(env, Arrays.asList(arg1, arg2, arg3, arg4));
     }
 
-    @Override
-    public AviatorObject apply(List<Object> dataList) {
+    protected AviatorObject call(Map<String, Object> env, List<AviatorObject> valueList) {
+        List<Object> dataList = new ArrayList<>();
+        for (int index = 0, length = valueList.size(); index < length; index++) {
+            AviatorObject aviatorObject = valueList.get(index);
+            dataList.add(aviatorObject.getValue(env));
+        }
         if (dataList.get(0) == null || dataList.get(1) == null) {
             return AviatorBigInt.valueOf(0);
         }

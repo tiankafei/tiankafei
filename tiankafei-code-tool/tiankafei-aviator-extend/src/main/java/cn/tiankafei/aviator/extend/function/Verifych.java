@@ -1,10 +1,11 @@
 package cn.tiankafei.aviator.extend.function;
 
 import cn.tiankafei.aviator.extend.constant.FunctionConstants;
-import cn.tiankafei.aviator.extend.exception.AviatorException;
+import com.googlecode.aviator.runtime.function.AbstractFunction;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
-import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -16,7 +17,8 @@ import org.apache.commons.lang3.StringUtils;
  * @Date 2020/6/2
  * @Version V1.0
  **/
-public class Verifych extends MoreParamFunction {
+public class Verifych extends AbstractFunction {
+
     @Override
     public String getName() {
         return FunctionConstants.VERIFYCH;
@@ -24,64 +26,84 @@ public class Verifych extends MoreParamFunction {
 
     @Override
     public AviatorObject call(Map<String, Object> env, AviatorObject arg1, AviatorObject arg2, AviatorObject arg3, AviatorObject arg4) {
-        return super.call(env, arg1, arg2, arg3, arg4);
+        return this.call(env, Arrays.asList(arg1, arg2, arg3, arg4));
     }
 
-    @Override
-    public AviatorObject apply(List<Object> dataList) {
-        int length = dataList.size();
-        int number4 = 4;
-        if (length == number4) {
-            Object stringValueObj = dataList.get(0);
-            Object stringSizeObj = dataList.get(1);
-            Object matchCharObj = dataList.get(2);
-            Object allCHObj = dataList.get(3);
-            if (stringValueObj == null || stringSizeObj == null || matchCharObj == null || allCHObj == null) {
-                return AviatorBoolean.FALSE;
-            }
+    protected AviatorObject call(Map<String, Object> env, List<AviatorObject> valueList) {
+        List<Object> dataList = new ArrayList<>();
+        for (int index = 0, length = valueList.size(); index < length; index++) {
+            AviatorObject aviatorObject = valueList.get(index);
+            dataList.add(aviatorObject.getValue(env));
+        }
+        Object stringValueObj = dataList.get(0);
+        Object stringSizeObj = dataList.get(1);
+        Object matchCharObj = dataList.get(2);
+        Object allCHObj = dataList.get(3);
+        if (stringValueObj == null || stringSizeObj == null || matchCharObj == null || allCHObj == null) {
+            return AviatorBoolean.FALSE;
+        }
 
-            //待校验字符串
-            String stringValue = stringValueObj.toString();
-            //要匹配的字符个数
-            String stringSize = stringSizeObj.toString();
-            //是否需要匹配字符
-            String matchChar = matchCharObj.toString();
-            //是否必须全为汉字
-            String allCH = allCHObj.toString();
+        //待校验字符串
+        String stringValue = stringValueObj.toString();
+        //要匹配的字符个数
+        String stringSize = stringSizeObj.toString();
+        //是否需要匹配字符
+        String matchChar = matchCharObj.toString();
+        //是否必须全为汉字
+        String allCH = allCHObj.toString();
 
-            //指定汉字的个数
-            int size = 0;
-            if (StringUtils.isNotEmpty(stringSize)) {
-                size = Integer.parseInt(stringSize);
-            }
-            if (StringUtils.isEmpty(stringValue)) {
-                if (size == 0) {
-                    if (StringUtils.isNotEmpty(matchChar)) {
-                        if (StringUtils.isNotEmpty(allCH)) {
-                            if ("1".equals(allCH)) {
-                                return AviatorBoolean.FALSE;
-                            } else {
-                                return AviatorBoolean.TRUE;
-                            }
-                        } else {
+        //指定汉字的个数
+        int size = 0;
+        if (StringUtils.isNotEmpty(stringSize)) {
+            size = Integer.parseInt(stringSize);
+        }
+        if (StringUtils.isEmpty(stringValue)) {
+            if (size == 0) {
+                if (StringUtils.isNotEmpty(matchChar)) {
+                    if (StringUtils.isNotEmpty(allCH)) {
+                        if ("1".equals(allCH)) {
                             return AviatorBoolean.FALSE;
-                        }
-                    } else {
-                        if (StringUtils.isNotEmpty(allCH)) {
-                            if ("1".equals(allCH)) {
-                                return AviatorBoolean.FALSE;
-                            } else {
-                                return AviatorBoolean.TRUE;
-                            }
                         } else {
                             return AviatorBoolean.TRUE;
                         }
+                    } else {
+                        return AviatorBoolean.FALSE;
                     }
                 } else {
-                    return AviatorBoolean.FALSE;
+                    if (StringUtils.isNotEmpty(allCH)) {
+                        if ("1".equals(allCH)) {
+                            return AviatorBoolean.FALSE;
+                        } else {
+                            return AviatorBoolean.TRUE;
+                        }
+                    } else {
+                        return AviatorBoolean.TRUE;
+                    }
                 }
             } else {
-                if (size == 0) {
+                return AviatorBoolean.FALSE;
+            }
+        } else {
+            if (size == 0) {
+                if (StringUtils.isNotEmpty(matchChar)) {
+                    if (matchChar(stringValue, matchChar)) {
+                        if (StringUtils.isNotEmpty(allCH)) {
+                            return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
+                        } else {
+                            return AviatorBoolean.TRUE;
+                        }
+                    } else {
+                        return AviatorBoolean.FALSE;
+                    }
+                } else {
+                    if (StringUtils.isNotEmpty(allCH)) {
+                        return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
+                    } else {
+                        return AviatorBoolean.TRUE;
+                    }
+                }
+            } else {
+                if (getChineseCharNum(stringValue) >= size) {
                     if (StringUtils.isNotEmpty(matchChar)) {
                         if (matchChar(stringValue, matchChar)) {
                             if (StringUtils.isNotEmpty(allCH)) {
@@ -100,32 +122,10 @@ public class Verifych extends MoreParamFunction {
                         }
                     }
                 } else {
-                    if (getChineseCharNum(stringValue) >= size) {
-                        if (StringUtils.isNotEmpty(matchChar)) {
-                            if (matchChar(stringValue, matchChar)) {
-                                if (StringUtils.isNotEmpty(allCH)) {
-                                    return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
-                                } else {
-                                    return AviatorBoolean.TRUE;
-                                }
-                            } else {
-                                return AviatorBoolean.FALSE;
-                            }
-                        } else {
-                            if (StringUtils.isNotEmpty(allCH)) {
-                                return AviatorBoolean.valueOf(isAllChinese(stringValue, allCH));
-                            } else {
-                                return AviatorBoolean.TRUE;
-                            }
-                        }
-                    } else {
-                        return AviatorBoolean.FALSE;
-                    }
+                    return AviatorBoolean.FALSE;
                 }
             }
         }
-//        throw new AviatorException(getName() + "传入参数数组为空或者参数个数不正确!");
-        return AviatorNil.NIL;
     }
 
     /**

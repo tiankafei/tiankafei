@@ -1,7 +1,6 @@
 package cn.tiankafei.aviator.extend.function;
 
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
-import cn.tiankafei.aviator.extend.util.NumberUtil;
 import com.googlecode.aviator.lexer.token.OperatorType;
 import java.math.BigDecimal;
 

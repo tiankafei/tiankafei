@@ -1,7 +1,6 @@
 package cn.tiankafei.aviator.extend.function;
 
 import cn.tiankafei.aviator.extend.constant.FunctionConstants;
-import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
 import com.googlecode.aviator.runtime.type.AviatorNil;

@@ -2,7 +2,6 @@ package cn.tiankafei.aviator.extend;
 
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
-import com.googlecode.aviator.AviatorEvaluator;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
