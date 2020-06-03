@@ -2,9 +2,7 @@ package cn.tiankafei.base.util;
 
 import cn.tiankafei.base.constants.BaseConstants;
 import cn.tiankafei.base.exceptions.BaseException;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +19,7 @@ import java.io.Writer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 /**
  * 文件处理工具类

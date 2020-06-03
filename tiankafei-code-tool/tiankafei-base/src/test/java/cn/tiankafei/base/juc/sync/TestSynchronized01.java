@@ -11,24 +11,23 @@ public class TestSynchronized01 {
     public static void main(String[] args) {
 
 
+    }
+
+    private synchronized static void exe21() {
 
     }
 
-    private synchronized static void exe21(){
-
-    }
-
-    private static void exe22(){
+    private static void exe22() {
         synchronized (TestSynchronized01.class) {
 
         }
     }
 
-    private synchronized void exe11(){
+    private synchronized void exe11() {
 
     }
 
-    private void exe12(){
+    private void exe12() {
         synchronized (this) {
 
         }

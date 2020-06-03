@@ -1,11 +1,10 @@
 package cn.tiankafei.base;
 
-import org.junit.Test;
-
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import org.junit.Test;
 
 /**
  * @author tiankafei
@@ -15,7 +14,7 @@ public class ByteBufferTest {
 
     @Test
     public void testBuffer() throws Exception {
-        RandomAccessFile accessFile = new RandomAccessFile("D:\\test1.txt","rw");
+        RandomAccessFile accessFile = new RandomAccessFile("D:\\test1.txt", "rw");
 
         accessFile.write("hello world\nhello mashibing\ngood idea".getBytes());
         //在指定文件偏移量的位置添加ooxx，原来的数据被替换
@@ -38,7 +37,7 @@ public class ByteBufferTest {
     }
 
     @Test
-    public void testCal(){
+    public void testCal() {
         System.out.println(4 & 6);
         System.out.println(6 & 4);
         System.out.println(4 & 8);

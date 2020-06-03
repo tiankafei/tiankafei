@@ -1,7 +1,6 @@
 package cn.tiankafei.base.juc.threadpool;
 
 import com.google.common.base.Stopwatch;
-
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +39,8 @@ public class CompletableFutureTest {
                 .thenAccept(System.out::println)
                 .join();
     }
-    private static String get3(){
+
+    private static String get3() {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -48,7 +48,8 @@ public class CompletableFutureTest {
         }
         return "3";
     }
-    private static String get2(){
+
+    private static String get2() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -57,7 +58,7 @@ public class CompletableFutureTest {
         return "2";
     }
 
-    private static String get1(){
+    private static String get1() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

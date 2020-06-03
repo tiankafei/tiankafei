@@ -1,17 +1,16 @@
 package com.greenpineyu.fel;
 
 import com.google.common.base.Stopwatch;
+import com.greenpineyu.fel.context.AbstractContext;
+import com.greenpineyu.fel.context.ArrayCtxImpl;
+import com.greenpineyu.fel.context.FelContext;
+import com.greenpineyu.fel.context.MapContext;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
-
-import com.greenpineyu.fel.context.AbstractContext;
-import com.greenpineyu.fel.context.ArrayCtxImpl;
-import com.greenpineyu.fel.context.FelContext;
-import com.greenpineyu.fel.context.MapContext;
 import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
@@ -283,7 +282,8 @@ public class PerformanceTest {
             }
         }
         double avg = 1.0 * costCount / threads;
-        long finishTime = stopwatch.elapsed(TimeUnit.MILLISECONDS);;
+        long finishTime = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+        ;
         System.out.println("线程数：" + threads + ";总时间：" + finishTime + ";平均时间："
                 + avg);
 

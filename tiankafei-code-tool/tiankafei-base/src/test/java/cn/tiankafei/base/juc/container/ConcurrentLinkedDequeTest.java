@@ -28,7 +28,7 @@ public class ConcurrentLinkedDequeTest {
         System.out.println("是否插入deque尾部成功？" + addBoolean);
 
         Iterator<Integer> iterator = concurrentLinkedDeque.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             System.out.println("iterator的结果：" + iterator.next());
         }
 
@@ -42,7 +42,7 @@ public class ConcurrentLinkedDequeTest {
         concurrentLinkedDeque1.addFirst(3);
 
         Iterator<Integer> iterator1 = concurrentLinkedDeque1.iterator();
-        while (iterator1.hasNext()){
+        while (iterator1.hasNext()) {
             System.out.println("iterator的结果：" + iterator1.next());
         }
 
@@ -56,7 +56,7 @@ public class ConcurrentLinkedDequeTest {
 
         System.out.println("=================");
         Iterator<Integer> iterator2 = concurrentLinkedDeque2.iterator();
-        while (iterator2.hasNext()){
+        while (iterator2.hasNext()) {
             System.out.println("iterator的结果：" + iterator2.next());
         }
 
@@ -109,7 +109,7 @@ public class ConcurrentLinkedDequeTest {
         concurrentLinkedDeque7.offer(9);
         System.out.println("=================");
         Iterator<Integer> iterator3 = concurrentLinkedDeque7.iterator();
-        while (iterator3.hasNext()){
+        while (iterator3.hasNext()) {
             System.out.println("iterator的结果：" + iterator3.next());
         }
 
@@ -122,7 +122,7 @@ public class ConcurrentLinkedDequeTest {
         concurrentLinkedDeque8.offerFirst(9);
         System.out.println("=================");
         Iterator<Integer> iterator4 = concurrentLinkedDeque8.iterator();
-        while (iterator4.hasNext()){
+        while (iterator4.hasNext()) {
             System.out.println("iterator的结果：" + iterator4.next());
         }
 
@@ -135,7 +135,7 @@ public class ConcurrentLinkedDequeTest {
         concurrentLinkedDeque9.offerLast(9);
         System.out.println("=================");
         Iterator<Integer> iterator5 = concurrentLinkedDeque9.iterator();
-        while (iterator5.hasNext()){
+        while (iterator5.hasNext()) {
             System.out.println("iterator的结果：" + iterator5.next());
         }
 
@@ -223,7 +223,7 @@ public class ConcurrentLinkedDequeTest {
         concurrentLinkedDeque17.push(9);
         System.out.println("=================");
         Iterator<Integer> iterator6 = concurrentLinkedDeque17.iterator();
-        while (iterator6.hasNext()){
+        while (iterator6.hasNext()) {
             System.out.println("iterator的结果：" + iterator6.next());
         }
 

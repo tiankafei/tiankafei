@@ -31,9 +31,9 @@ public class FindElement {
         List<String> expressionList = new ArrayList<>();
 
         FelNode felNode = parser.parse(exp);
-        if(felNode instanceof VarAstNode){
+        if (felNode instanceof VarAstNode) {
             expressionList.add(felNode.getText());
-        }else if(felNode instanceof FunNode){
+        } else if (felNode instanceof FunNode) {
             parse(felNode.getChildren(), expressionList);
         }
         return expressionList;

@@ -12,7 +12,7 @@ public class SemaphoreTest {
         // 允许permits个线程同时执行
         Semaphore semaphore = new Semaphore(1, true);
 
-        new Thread(()->{
+        new Thread(() -> {
             try {
                 semaphore.acquire();
 
@@ -27,7 +27,7 @@ public class SemaphoreTest {
             }
         }).start();
 
-        new Thread(()->{
+        new Thread(() -> {
             try {
                 semaphore.acquire();
 

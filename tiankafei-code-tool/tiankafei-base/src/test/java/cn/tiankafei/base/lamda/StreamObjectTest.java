@@ -1,12 +1,11 @@
 package cn.tiankafei.base.lamda;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @Author tiankafei

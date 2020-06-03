@@ -1,15 +1,5 @@
 package com.greenpineyu.fel.compile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.greenpineyu.fel.common.Callable;
 import com.greenpineyu.fel.common.StringUtils;
 import com.greenpineyu.fel.context.FelContext;
@@ -20,6 +10,15 @@ import com.greenpineyu.fel.parser.BaseAbstFelNode;
 import com.greenpineyu.fel.parser.ConstNode;
 import com.greenpineyu.fel.parser.FelNode;
 import com.greenpineyu.fel.parser.VarAstNode;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author tiankafei
@@ -55,7 +54,7 @@ public class SourceGeneratorImpl implements SourceGenerator {
         jsTemplate = getTemplate("js.template");
     }
 
-    private static String getTemplate(String templatePath){
+    private static String getTemplate(String templatePath) {
         StringBuilder sb = new StringBuilder();
         InputStream in = SourceGeneratorImpl.class
                 .getResourceAsStream(templatePath);
@@ -105,7 +104,7 @@ public class SourceGeneratorImpl implements SourceGenerator {
             if (node instanceof ConstNode) {
                 ConstNode n = (ConstNode) node;
                 src = buildJsSource(funName, n.eval(ctx).toString());
-            }else{
+            } else {
                 SourceBuilder builder = node.toJsMethod(ctx);
                 String exp = builder.source(ctx, node);
                 List<String> programList = getProgramList(builder);
@@ -185,9 +184,9 @@ public class SourceGeneratorImpl implements SourceGenerator {
     private String getClassName(CompileParamVo compileParamVo) {
         String className = null;
         synchronized (SourceGeneratorImpl.class) {
-            if(compileParamVo != null && StringUtils.isNotEmpty(compileParamVo.getId())){
+            if (compileParamVo != null && StringUtils.isNotEmpty(compileParamVo.getId())) {
                 className = "Fel_" + compileParamVo.getId();
-            }else{
+            } else {
                 className = "Fel_" + count++;
             }
         }
@@ -195,9 +194,9 @@ public class SourceGeneratorImpl implements SourceGenerator {
     }
 
     private String getFunName(CompileParamVo compileParamVo) {
-        if(compileParamVo != null){
+        if (compileParamVo != null) {
             return "fun_" + compileParamVo.getId();
-        }else{
+        } else {
             String className = null;
             synchronized (SourceGeneratorImpl.class) {
                 className = "Fel_" + jsCount++;

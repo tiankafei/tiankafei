@@ -61,15 +61,16 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 自定义函数
+     *
      * @param function
      */
     public static void addFunction(final AviatorFunction function) {
         String lowerCase = function.getName().toLowerCase();
         String upperCase = function.getName().toUpperCase();
 
-        if(lowerCase.equals(upperCase)){
+        if (lowerCase.equals(upperCase)) {
             AviatorEvaluator.getInstance().addFunction(lowerCase, function);
-        }else{
+        } else {
             AviatorEvaluator.getInstance().addFunction(lowerCase, function);
             AviatorEvaluator.getInstance().addFunction(upperCase, function);
         }
@@ -77,10 +78,11 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 校验错误信息
+     *
      * @param errorInfo
      * @param funName
      */
-    public static void checkError(StringBuilder errorInfo, String funName){
+    public static void checkError(StringBuilder errorInfo, String funName) {
         if (StringUtils.isNotBlank(errorInfo.toString())) {
             errorInfo.delete(0, 1);
             String error = funName + "函数的" + errorInfo.toString() + "参数类型不合法，请确认！";
@@ -89,59 +91,59 @@ public abstract class AviatorExtendUtil {
         }
     }
 
-    public static void compile(String expression){
+    public static void compile(String expression) {
         compile(expression, null);
     }
 
-    public static void compile(String expression, Map<String, Object> dataMap){
+    public static void compile(String expression, Map<String, Object> dataMap) {
         try {
             boolean flag = expression.contains("\\\\");
-            while(flag){
+            while (flag) {
                 expression = expression.replace("\\\\", "^A");
                 flag = expression.contains("\\\\");
             }
             flag = expression.contains("^A");
-            while(flag){
+            while (flag) {
                 expression = expression.replace("^A", "\\\\\\\\");
                 flag = expression.contains("^A");
             }
             Object result = null;
             Expression exp = AviatorEvaluator.compile(expression);
-            if(dataMap != null){
+            if (dataMap != null) {
                 result = exp.execute(dataMap);
-            }else{
+            } else {
                 result = exp.execute();
             }
             log.info("表达式：{}的执行结果为：{}", expression, result);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void execute(String expression){
+    public static void execute(String expression) {
         execute(expression, new HashMap<>());
     }
 
-    public static void execute(String expression, Map<String, Object> dataMap){
+    public static void execute(String expression, Map<String, Object> dataMap) {
         try {
             boolean flag = expression.contains("\\\\");
-            while(flag){
+            while (flag) {
                 expression = expression.replace("\\\\", "^A");
                 flag = expression.contains("\\\\");
             }
             flag = expression.contains("^A");
-            while(flag){
+            while (flag) {
                 expression = expression.replace("^A", "\\\\\\\\");
                 flag = expression.contains("^A");
             }
             Object result = null;
-            if(dataMap != null){
+            if (dataMap != null) {
                 result = AviatorEvaluator.execute(expression, dataMap);
-            }else{
+            } else {
                 result = AviatorEvaluator.execute(expression);
             }
             log.info("表达式：{}的执行结果为：{}", expression, result);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

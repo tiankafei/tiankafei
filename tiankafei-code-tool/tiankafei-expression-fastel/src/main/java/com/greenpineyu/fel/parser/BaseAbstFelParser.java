@@ -1,12 +1,11 @@
 package com.greenpineyu.fel.parser;
 
 
+import com.greenpineyu.fel.exception.ParseException;
 import org.antlr.runtime.Parser;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.RecognizerSharedState;
 import org.antlr.runtime.TokenStream;
-
-import com.greenpineyu.fel.exception.ParseException;
 
 /**
  * @author tiankafei

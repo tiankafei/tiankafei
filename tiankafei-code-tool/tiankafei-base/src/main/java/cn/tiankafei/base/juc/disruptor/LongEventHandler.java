@@ -8,7 +8,7 @@ public class LongEventHandler implements EventHandler<LongEvent> {
 
     @Override
     public void onEvent(LongEvent event, long sequence, boolean endOfBatch) throws Exception {
-        count ++;
+        count++;
         System.out.println("[" + Thread.currentThread().getName() + "]" + event + " 序号：" + sequence);
     }
 }

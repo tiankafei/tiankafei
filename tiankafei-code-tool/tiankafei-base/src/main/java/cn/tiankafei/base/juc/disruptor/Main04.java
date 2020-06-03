@@ -4,7 +4,6 @@ import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
-
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
@@ -31,8 +30,8 @@ public class Main04 {
         ExecutorService service = Executors.newCachedThreadPool();
         for (long i = 0; i < threadCount; i++) {
             final long threadNum = i;
-            service.submit(()-> {
-                System.out.printf("Thread %s ready to start!\n", threadNum );
+            service.submit(() -> {
+                System.out.printf("Thread %s ready to start!\n", threadNum);
                 try {
                     barrier.await();
                 } catch (InterruptedException e) {

@@ -1,7 +1,6 @@
 package cn.tiankafei.base.juc.semaphore;
 
 import cn.tiankafei.base.util.ThreadSleepUtil;
-
 import java.util.concurrent.Semaphore;
 
 /**

@@ -11,7 +11,7 @@ import java.util.concurrent.FutureTask;
 public class FutureTaskTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        FutureTask futureTask = new FutureTask(()->{
+        FutureTask futureTask = new FutureTask(() -> {
             Thread.sleep(2000);
             return "hello world";
         });

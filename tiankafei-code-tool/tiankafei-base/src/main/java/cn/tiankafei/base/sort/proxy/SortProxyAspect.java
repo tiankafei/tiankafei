@@ -15,7 +15,7 @@ public class SortProxyAspect implements IAspect {
 
     private String funName;
 
-    public SortProxyAspect(String funName){
+    public SortProxyAspect(String funName) {
         this.funName = funName;
     }
 

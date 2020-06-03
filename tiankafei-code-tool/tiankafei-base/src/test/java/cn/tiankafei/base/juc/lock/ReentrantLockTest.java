@@ -10,19 +10,20 @@ import java.util.concurrent.locks.ReentrantLock;
  **/
 public class ReentrantLockTest {
     Lock lock = new ReentrantLock();
+
     void m1() {
         try {
             lock.lock();
-            for(int i=0; i<10; i++) {
+            for (int i = 0; i < 10; i++) {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 System.out.println(i);
-                if(i == 2) m2();
+                if (i == 2) m2();
             }
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -31,7 +32,7 @@ public class ReentrantLockTest {
         try {
             lock.lock();
             System.out.println("m2 ...");
-        }finally {
+        } finally {
             lock.unlock();
         }
     }

@@ -27,7 +27,7 @@ public class Demo46 {
                         e.printStackTrace();
                     }
                 }
-            }finally {
+            } finally {
                 lock.unlock();
             }
         }).start();
@@ -45,7 +45,7 @@ public class Demo46 {
                         e.printStackTrace();
                     }
                 }
-            }finally {
+            } finally {
                 lock.unlock();
             }
         }).start();

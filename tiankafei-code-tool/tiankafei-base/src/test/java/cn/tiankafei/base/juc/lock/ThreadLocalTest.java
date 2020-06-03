@@ -12,10 +12,10 @@ public class ThreadLocalTest {
         new ThreadLocalTest().testThreadLocal();
     }
 
-    private void testThreadLocal(){
+    private void testThreadLocal() {
         ThreadLocal<Person> tl = new ThreadLocal<>();
 
-        new Thread(()->{
+        new Thread(() -> {
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
@@ -25,7 +25,7 @@ public class ThreadLocalTest {
             System.out.println(tl.get());
         }).start();
 
-        new Thread(()->{
+        new Thread(() -> {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {

@@ -11,7 +11,7 @@ public class ExchangerTest {
     public static void main(String[] args) {
         Exchanger<String> exchanger = new Exchanger<>();
 
-        new Thread(()->{
+        new Thread(() -> {
             String s = "T1";
             try {
                 // 阻塞，直到另外一个线程执行了 exchange 进行交换后，会继续执行
@@ -23,7 +23,7 @@ public class ExchangerTest {
 
         }, "t1").start();
 
-        new Thread(()->{
+        new Thread(() -> {
             String s = "T2";
             try {
                 // 阻塞，直到另外一个线程执行了 exchange 进行交换后，会继续执行

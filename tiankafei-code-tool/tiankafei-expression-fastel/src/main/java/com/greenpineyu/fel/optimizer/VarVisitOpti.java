@@ -1,8 +1,5 @@
 package com.greenpineyu.fel.optimizer;
 
-import java.util.List;
-import java.util.Map;
-
 import com.greenpineyu.fel.compile.InterpreterSourceBuilder;
 import com.greenpineyu.fel.compile.SourceBuilder;
 import com.greenpineyu.fel.compile.SourceGeneratorImpl;
@@ -14,6 +11,8 @@ import com.greenpineyu.fel.interpreter.Interpreter;
 import com.greenpineyu.fel.parser.BaseAbstFelNode;
 import com.greenpineyu.fel.parser.FelNode;
 import com.greenpineyu.fel.parser.VarAstNode;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 对访问节点进行优化，直接从Var中取变量

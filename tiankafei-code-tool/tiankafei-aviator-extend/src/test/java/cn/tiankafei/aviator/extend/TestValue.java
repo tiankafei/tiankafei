@@ -16,7 +16,7 @@ public class TestValue {
     }
 
     @Test
-    public void testCustomAdd(){
+    public void testCustomAdd() {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", 1.1);
         dataMap.put("b", 2.2);
@@ -48,7 +48,7 @@ public class TestValue {
     }
 
     @Test
-    public void test3(){
+    public void test3() {
 
 
     }

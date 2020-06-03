@@ -52,7 +52,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
         expression = "'a'+'1'";
         AviatorExtendUtil.compile(expression, dataMap);
-        
+
     }
 
     @Test
@@ -92,7 +92,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -132,7 +132,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'*'1'";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -172,7 +172,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'/'1'";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -212,7 +212,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'%'1'";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -252,7 +252,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'==0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -292,7 +292,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'!=0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -332,7 +332,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'<0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -372,7 +372,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'<=0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -412,7 +412,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'>0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -452,7 +452,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'>=0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -492,7 +492,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'>=0 && 'a'-'1'<0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
     @Test
@@ -532,7 +532,7 @@ public class TestCompileFunction {
         AviatorExtendUtil.compile(expression, dataMap);
 //        expression = "'a'-'1'>=0 || 'a'-'1'<0";
 //        AviatorExtendUtil.compile(expression);
-        
+
     }
 
 }

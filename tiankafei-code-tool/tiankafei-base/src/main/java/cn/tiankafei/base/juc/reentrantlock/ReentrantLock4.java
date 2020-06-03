@@ -1,7 +1,6 @@
 package cn.tiankafei.base.juc.reentrantlock;
 
 import cn.tiankafei.base.util.ThreadSleepUtil;
-
 import java.util.concurrent.locks.ReentrantLock;
 
 /**

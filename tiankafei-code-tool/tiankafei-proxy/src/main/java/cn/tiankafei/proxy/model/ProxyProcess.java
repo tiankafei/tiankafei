@@ -1,13 +1,12 @@
 package cn.tiankafei.proxy.model;
 
 import cn.tiankafei.proxy.interfaces.IAspect;
-import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 
 /**
  * 代理对象
@@ -34,6 +33,7 @@ public class ProxyProcess implements InvocationHandler, MethodInterceptor {
 
     /**
      * 构造代理对象
+     *
      * @param object
      * @param aspect
      */
@@ -50,9 +50,9 @@ public class ProxyProcess implements InvocationHandler, MethodInterceptor {
             aspect.executeBefore(target, method, args, paramMap);
             result = method.invoke(target, args);
             aspect.executeAfter(target, method, args, paramMap, result);
-        }catch (Exception e){
+        } catch (Exception e) {
             aspect.executeThrowing(target, method, args, paramMap, e);
-        }finally {
+        } finally {
             aspect.returnBefore(target, method, args, paramMap, result);
         }
         return result;
@@ -66,9 +66,9 @@ public class ProxyProcess implements InvocationHandler, MethodInterceptor {
             aspect.executeBefore(proxy, method, args, paramMap);
             result = methodProxy.invokeSuper(proxy, args);
             aspect.executeAfter(proxy, method, args, paramMap, result);
-        }catch (Exception e){
+        } catch (Exception e) {
             aspect.executeThrowing(proxy, method, args, paramMap, e);
-        }finally {
+        } finally {
             aspect.returnBefore(proxy, method, args, paramMap, result);
         }
         return result;

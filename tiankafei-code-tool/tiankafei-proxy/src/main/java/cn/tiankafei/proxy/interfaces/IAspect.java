@@ -14,10 +14,10 @@ public interface IAspect {
     /**
      * 方法执行之前的切面
      *
-     * @param object    被代理对象
-     * @param method    被代理的方法
-     * @param args  方法执行用到的参数
-     * @param paramMap  代理过程中用到的参数集合
+     * @param object   被代理对象
+     * @param method   被代理的方法
+     * @param args     方法执行用到的参数
+     * @param paramMap 代理过程中用到的参数集合
      * @return
      */
     Object executeBefore(Object object, Method method, Object[] args, Map<String, Object> paramMap);
@@ -25,11 +25,11 @@ public interface IAspect {
     /**
      * 方法执行之后的切面
      *
-     * @param object    被代理对象
-     * @param method    被代理的方法
-     * @param args  方法执行用到的参数
-     * @param paramMap  代理过程中用到的参数集合
-     * @param result    被代理方法执行结果的返回值
+     * @param object   被代理对象
+     * @param method   被代理的方法
+     * @param args     方法执行用到的参数
+     * @param paramMap 代理过程中用到的参数集合
+     * @param result   被代理方法执行结果的返回值
      * @return
      */
     Object executeAfter(Object object, Method method, Object[] args, Map<String, Object> paramMap, Object result);
@@ -39,7 +39,7 @@ public interface IAspect {
      *
      * @param object    被代理对象
      * @param method    被代理的方法
-     * @param args  方法执行用到的参数
+     * @param args      方法执行用到的参数
      * @param paramMap  代理过程中用到的参数集合
      * @param exception 异常信息
      * @return
@@ -49,11 +49,11 @@ public interface IAspect {
     /**
      * 方法返回之前的切面
      *
-     * @param object    被代理对象
-     * @param method    被代理的方法
-     * @param args  方法执行用到的参数
-     * @param paramMap  代理过程中用到的参数集合
-     * @param result    被代理方法执行结果的返回值
+     * @param object   被代理对象
+     * @param method   被代理的方法
+     * @param args     方法执行用到的参数
+     * @param paramMap 代理过程中用到的参数集合
+     * @param result   被代理方法执行结果的返回值
      * @return
      */
     Object returnBefore(Object object, Method method, Object[] args, Map<String, Object> paramMap, Object result);

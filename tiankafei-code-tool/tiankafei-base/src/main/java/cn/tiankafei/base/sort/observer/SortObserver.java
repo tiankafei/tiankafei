@@ -3,8 +3,8 @@ package cn.tiankafei.base.sort.observer;
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
 import cn.tiankafei.base.sort.observer.event.ObserverEvent;
-import cn.tiankafei.base.sort.singleton.SortFactoryStrategy;
 import cn.tiankafei.base.sort.singleton.SortComparatorSingleton;
+import cn.tiankafei.base.sort.singleton.SortFactoryStrategy;
 import java.util.Observable;
 import java.util.Observer;
 import org.slf4j.Logger;
@@ -31,8 +31,8 @@ public interface SortObserver extends Observer {
 
     @Override
     default void update(Observable o, Object arg) {
-        if(arg != null){
-            if(arg instanceof ObserverEvent){
+        if (arg != null) {
+            if (arg instanceof ObserverEvent) {
                 ObserverEvent event = (ObserverEvent) arg;
                 log.info("观察者模式接收到的事件对象：{}，事件对象包装的参数：{}", event, event.getObject());
             }
@@ -40,6 +40,6 @@ public interface SortObserver extends Observer {
         exec();
     }
 
-    void exec() ;
+    void exec();
 
 }

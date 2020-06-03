@@ -3,7 +3,6 @@ package cn.tiankafei.base.exceptions;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- *
  * 基础异常类
  *
  * @author tiankafei

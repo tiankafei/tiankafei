@@ -1,9 +1,6 @@
 package cn.tiankafei.base.util;
 
 import cn.tiankafei.base.exceptions.BaseException;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -18,6 +15,8 @@ import java.io.OutputStream;
 import java.nio.channels.Channel;
 import java.sql.Blob;
 import java.sql.Clob;
+import javax.imageio.ImageIO;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 数据流的处理工具类

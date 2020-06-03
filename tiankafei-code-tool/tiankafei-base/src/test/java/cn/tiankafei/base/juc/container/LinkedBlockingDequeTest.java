@@ -38,7 +38,7 @@ public class LinkedBlockingDequeTest {
          * 3、iterator()：返回在此双端队列元素上以恰当顺序进行迭代的迭代器。
          */
         Iterator<Integer> iterator = linkedBlockingDeque1.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             System.out.println("Iterator的addFirst结果：" + iterator.next());
         }
 
@@ -52,7 +52,7 @@ public class LinkedBlockingDequeTest {
         linkedBlockingDeque2.addLast(2);
         linkedBlockingDeque2.addLast(3);
         Iterator<Integer> iterator1 = linkedBlockingDeque2.iterator();
-        while (iterator1.hasNext()){
+        while (iterator1.hasNext()) {
             System.out.println("Iterator的addLast结果：" + iterator1.next());
         }
 
@@ -67,7 +67,7 @@ public class LinkedBlockingDequeTest {
         linkedBlockingDeque3.clear();
         System.out.println("================");
         Iterator<Integer> iterator2 = linkedBlockingDeque3.iterator();
-        while (iterator2.hasNext()){
+        while (iterator2.hasNext()) {
             System.out.println("Iterator的clear结果：" + iterator2.next());
         }
         System.out.println("================");
@@ -129,7 +129,7 @@ public class LinkedBlockingDequeTest {
         linkedBlockingDeque8.offer(2);
         linkedBlockingDeque8.offer(3);
         Iterator<Integer> iterator3 = linkedBlockingDeque8.iterator();
-        while (iterator3.hasNext()){
+        while (iterator3.hasNext()) {
             System.out.println("Iterator的offer结果：" + iterator3.next());
         }
 
@@ -147,10 +147,9 @@ public class LinkedBlockingDequeTest {
         linkedBlockingDeque9.offerFirst(2);
         linkedBlockingDeque9.offerFirst(3);
         Iterator<Integer> iterator4 = linkedBlockingDeque9.iterator();
-        while (iterator4.hasNext()){
+        while (iterator4.hasNext()) {
             System.out.println("Iterator的offerFirst结果：" + iterator4.next());
         }
-
 
 
         /**
@@ -164,7 +163,7 @@ public class LinkedBlockingDequeTest {
         linkedBlockingDeque10.offerLast(2);
         linkedBlockingDeque10.offerLast(3);
         Iterator<Integer> iterator5 = linkedBlockingDeque10.iterator();
-        while (iterator5.hasNext()){
+        while (iterator5.hasNext()) {
             System.out.println("Iterator的offerLast结果：" + iterator5.next());
         }
 
@@ -266,7 +265,7 @@ public class LinkedBlockingDequeTest {
         linkedBlockingDeque18.push(2);
         linkedBlockingDeque18.push(3);
         Iterator<Integer> iterator6 = linkedBlockingDeque18.iterator();
-        while (iterator6.hasNext()){
+        while (iterator6.hasNext()) {
             System.out.println("Iterator的push结果：" + iterator6.next());
         }
 
@@ -283,7 +282,7 @@ public class LinkedBlockingDequeTest {
             e.printStackTrace();
         }
         Iterator<Integer> iterator7 = linkedBlockingDeque19.iterator();
-        while (iterator7.hasNext()){
+        while (iterator7.hasNext()) {
             System.out.println("Iterator的put结果：" + iterator7.next());
         }
 
@@ -299,7 +298,7 @@ public class LinkedBlockingDequeTest {
             e.printStackTrace();
         }
         Iterator<Integer> iterator8 = linkedBlockingDeque20.iterator();
-        while (iterator8.hasNext()){
+        while (iterator8.hasNext()) {
             System.out.println("Iterator的putFirst结果：" + iterator8.next());
         }
 
@@ -315,7 +314,7 @@ public class LinkedBlockingDequeTest {
             e.printStackTrace();
         }
         Iterator<Integer> iterator9 = linkedBlockingDeque21.iterator();
-        while (iterator9.hasNext()){
+        while (iterator9.hasNext()) {
             System.out.println("Iterator的putLast结果：" + iterator9.next());
         }
 

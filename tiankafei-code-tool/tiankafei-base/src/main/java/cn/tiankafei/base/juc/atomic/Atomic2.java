@@ -1,8 +1,7 @@
 package cn.tiankafei.base.juc.atomic;
 
-import cn.tiankafei.base.util.ThreadSleepUtil;
 import cn.tiankafei.base.juc.vola.Volatile1;
-
+import cn.tiankafei.base.util.ThreadSleepUtil;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**

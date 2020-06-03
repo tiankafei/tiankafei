@@ -12,7 +12,7 @@ public class RedSortDecorator implements SortDecorator {
 
     private SortDecorator sortDecorator;
 
-    public RedSortDecorator(SortDecorator sortDecorator){
+    public RedSortDecorator(SortDecorator sortDecorator) {
         this.sortDecorator = sortDecorator;
     }
 

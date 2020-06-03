@@ -15,7 +15,7 @@ public class Demo48 {
 
         new Thread(() -> {
             for (int index = 1; index < 27; index++) {
-                while(atomicInteger.get() != 1){
+                while (atomicInteger.get() != 1) {
                 }
                 System.out.println(index);
                 atomicInteger.set(2);
@@ -25,7 +25,7 @@ public class Demo48 {
         new Thread(() -> {
             String str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             for (int index = 0; index < str1.length(); index++) {
-                while(atomicInteger.get() != 2){
+                while (atomicInteger.get() != 2) {
                 }
                 System.out.println(str1.substring(index, index + 1));
                 atomicInteger.set(1);

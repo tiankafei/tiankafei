@@ -1,7 +1,5 @@
 package com.greenpineyu.fel.parser;
 
-import org.antlr.runtime.Token;
-
 import com.greenpineyu.fel.common.Null;
 import com.greenpineyu.fel.common.ReflectUtil;
 import com.greenpineyu.fel.compile.FelMethod;
@@ -9,6 +7,7 @@ import com.greenpineyu.fel.compile.InterpreterSourceBuilder;
 import com.greenpineyu.fel.compile.SourceBuilder;
 import com.greenpineyu.fel.compile.VarBuffer;
 import com.greenpineyu.fel.context.FelContext;
+import org.antlr.runtime.Token;
 
 /**
  * 常量节点

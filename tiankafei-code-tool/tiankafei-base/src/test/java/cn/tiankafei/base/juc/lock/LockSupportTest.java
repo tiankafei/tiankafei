@@ -9,7 +9,7 @@ import java.util.concurrent.locks.LockSupport;
 public class LockSupportTest {
 
     public static void main(String[] args) throws InterruptedException {
-        Thread t = new Thread(()->{
+        Thread t = new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 System.out.println(i);
                 try {
@@ -17,10 +17,10 @@ public class LockSupportTest {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(i == 1) {
+                if (i == 1) {
                     LockSupport.park();
                 }
-                if(i == 2) {
+                if (i == 2) {
                     LockSupport.park();
                 }
             }

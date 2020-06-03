@@ -1,7 +1,6 @@
 package cn.tiankafei.base.enums;
 
 /**
- *
  * 时间类型的枚举类
  *
  * @author tiankafei

@@ -1,7 +1,6 @@
 package cn.tiankafei.proxy.util;
 
 import cn.tiankafei.proxy.model.AbstractInvocationHandler;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -16,7 +15,7 @@ public class JdkProxyUtil {
     /**
      * 获取代理对象
      *
-     * @param object    要代理的对象
+     * @param object            要代理的对象
      * @param invocationHandler 代理的具体实现
      * @param <T>
      * @return
@@ -31,7 +30,7 @@ public class JdkProxyUtil {
     /**
      * 获取代理对象
      *
-     * @param object    要代理的对象
+     * @param object            要代理的对象
      * @param invocationHandler 代理的具体实现
      * @param <T>
      * @return

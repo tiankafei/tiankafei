@@ -16,16 +16,18 @@ public class SynchronousQueueTest3 {
         new Product(queue).start();
     }
 
-    static class Product extends Thread{
+    static class Product extends Thread {
         SynchronousQueue<Integer> queue;
-        public Product(SynchronousQueue<Integer> queue){
+
+        public Product(SynchronousQueue<Integer> queue) {
             this.queue = queue;
         }
+
         @Override
-        public void run(){
-            while(true){
+        public void run() {
+            while (true) {
                 int rand = new Random().nextInt(1000);
-                System.out.println("生产了一个产品："+rand);
+                System.out.println("生产了一个产品：" + rand);
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
@@ -36,20 +38,23 @@ public class SynchronousQueueTest3 {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("产品生成完成："+rand);
+                System.out.println("产品生成完成：" + rand);
             }
         }
     }
-    static class Customer extends Thread{
+
+    static class Customer extends Thread {
         SynchronousQueue<Integer> queue;
-        public Customer(SynchronousQueue<Integer> queue){
+
+        public Customer(SynchronousQueue<Integer> queue) {
             this.queue = queue;
         }
+
         @Override
-        public void run(){
-            while(true){
+        public void run() {
+            while (true) {
                 try {
-                    System.out.println("消费了一个产品:"+queue.take());
+                    System.out.println("消费了一个产品:" + queue.take());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

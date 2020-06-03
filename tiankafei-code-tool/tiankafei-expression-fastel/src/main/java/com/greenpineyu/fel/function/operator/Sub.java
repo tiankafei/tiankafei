@@ -8,7 +8,6 @@ import com.greenpineyu.fel.function.OperationFactory;
 import com.greenpineyu.fel.function.api.BaseTwo;
 import com.greenpineyu.fel.parser.ConstNode;
 import com.greenpineyu.fel.parser.FelNode;
-
 import java.util.List;
 
 /**

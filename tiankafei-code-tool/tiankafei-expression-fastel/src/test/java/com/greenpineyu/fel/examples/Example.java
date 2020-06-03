@@ -1,15 +1,6 @@
 package com.greenpineyu.fel.examples;
 
 import com.google.common.base.Stopwatch;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-
 import com.greenpineyu.fel.Expression;
 import com.greenpineyu.fel.FelEngine;
 import com.greenpineyu.fel.FelEngineImpl;
@@ -22,6 +13,13 @@ import com.greenpineyu.fel.interpreter.ConstInterpreter;
 import com.greenpineyu.fel.interpreter.Interpreter;
 import com.greenpineyu.fel.optimizer.Interpreters;
 import com.greenpineyu.fel.parser.FelNode;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Example {

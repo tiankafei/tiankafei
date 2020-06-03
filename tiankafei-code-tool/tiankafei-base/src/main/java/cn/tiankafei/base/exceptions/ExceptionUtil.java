@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- *
  * 异常处理工具类
  *
  * @author tiankafei
@@ -14,8 +13,9 @@ public class ExceptionUtil {
 
     /**
      * 获取异常的堆栈信息
+     *
      * @param throwable 接收到的异常对象
-     * @return  异常的堆栈信息
+     * @return 异常的堆栈信息
      */
     public static String getStackTrace(Throwable throwable) {
         PrintWriter printWriter = null;

@@ -10,22 +10,22 @@ import org.junit.Test;
 public class Antlr4Test {
 
     @Test
-    public void test01(){
+    public void test01() {
         int type = 4;
 
         switch (type) {
-            case 0 :
+            case 0:
                 System.out.println(type);
                 break;
-            case 1 :
+            case 1:
                 System.out.println(type);
                 break;
-            case 2 :
+            case 2:
                 System.out.println(type);
                 break;
-            case 3 :
-            case 4 :
-            case 5 :
+            case 3:
+            case 4:
+            case 5:
                 System.out.println(type);
                 break;
             default:

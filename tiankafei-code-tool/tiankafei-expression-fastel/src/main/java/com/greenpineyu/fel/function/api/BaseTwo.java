@@ -7,7 +7,6 @@ import com.greenpineyu.fel.function.BaseStableFunction;
 import com.greenpineyu.fel.function.FunctionUtils;
 import com.greenpineyu.fel.function.OperationFactory;
 import com.greenpineyu.fel.parser.FelNode;
-
 import java.util.ArrayList;
 import java.util.List;
 

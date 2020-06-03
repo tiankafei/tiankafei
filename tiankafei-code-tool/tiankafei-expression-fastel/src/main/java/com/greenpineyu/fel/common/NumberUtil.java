@@ -2,7 +2,6 @@ package com.greenpineyu.fel.common;
 
 import com.greenpineyu.fel.function.FunctionConstants;
 import com.greenpineyu.fel.function.OperationFactory;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 

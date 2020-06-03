@@ -9,11 +9,11 @@ public class LamdaInterfaceTest<T> {
 
     private ILamdaInterface<T> lamdaInterface;
 
-    public LamdaInterfaceTest(ILamdaInterface<T> lamdaInterface){
+    public LamdaInterfaceTest(ILamdaInterface<T> lamdaInterface) {
         this.lamdaInterface = lamdaInterface;
     }
 
-    public T get(){
+    public T get() {
         return lamdaInterface.get();
     }
 

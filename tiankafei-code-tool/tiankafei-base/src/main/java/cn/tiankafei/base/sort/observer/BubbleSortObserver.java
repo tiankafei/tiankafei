@@ -1,7 +1,7 @@
 package cn.tiankafei.base.sort.observer;
 
-import cn.tiankafei.base.sort.factory.SortFactory;
 import cn.tiankafei.base.sort.bubble.BubbleSortFactory;
+import cn.tiankafei.base.sort.factory.SortFactory;
 
 /**
  * 观察者模式：底层使用装饰着模式实现，注释掉责任链模式的实现

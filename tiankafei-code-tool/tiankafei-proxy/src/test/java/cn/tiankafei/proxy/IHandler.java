@@ -7,7 +7,6 @@ package cn.tiankafei.proxy;
 public interface IHandler {
 
     /**
-     *
      * @param param
      * @return
      */

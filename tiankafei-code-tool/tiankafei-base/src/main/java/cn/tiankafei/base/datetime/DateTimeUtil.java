@@ -5,8 +5,6 @@ import cn.tiankafei.base.enums.DateTimeEnum;
 import cn.tiankafei.base.exceptions.BaseException;
 import cn.tiankafei.base.model.CodeNameVo;
 import cn.tiankafei.base.util.SystemTimeUtil;
-import org.apache.commons.lang3.StringUtils;
-
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 时间处理工具类
@@ -355,9 +354,9 @@ public class DateTimeUtil {
 
     /**
      * 获取当前月的第几天
-     * @param date
      *
-     * @return  前月的第几天
+     * @param date
+     * @return 前月的第几天
      */
     public static int getCurrentDayOfMonth(Date date) {
         if (date == null) {
@@ -370,9 +369,9 @@ public class DateTimeUtil {
 
     /**
      * 获取当前月的第几天
-     * @param timestamp
      *
-     * @return  前月的第几天
+     * @param timestamp
+     * @return 前月的第几天
      */
     public static int getCurrentDayOfMonth(Timestamp timestamp) {
         if (timestamp == null) {
@@ -396,8 +395,8 @@ public class DateTimeUtil {
 
     /**
      * 获取当前年的第几天
-     * @param date
      *
+     * @param date
      * @return 返回前年的第几天
      */
     public static int getCurrentDayOfYear(Date date) {
@@ -411,8 +410,8 @@ public class DateTimeUtil {
 
     /**
      * 获取当前年的第几天
-     * @param timestamp
      *
+     * @param timestamp
      * @return 返回前年的第几天
      */
     public static int getCurrentDayOfYear(Timestamp timestamp) {
@@ -437,8 +436,8 @@ public class DateTimeUtil {
 
     /**
      * 获取当前天的第几分钟
-     * @param date
      *
+     * @param date
      * @return 返回前天的第几分钟
      */
     public static int getCurrentMinuteOfDay(Date date) {
@@ -452,8 +451,8 @@ public class DateTimeUtil {
 
     /**
      * 获取当前天的第几分钟
-     * @param timestamp
      *
+     * @param timestamp
      * @return 返回前天的第几分钟
      */
     public static int getCurrentMinuteOfDay(Timestamp timestamp) {

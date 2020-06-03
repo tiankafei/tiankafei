@@ -16,9 +16,13 @@ public class TestJuc01 {
     private void test() {
         new TestThread().start();
         new Thread(new TestRunnable()).start();
-        new Thread(()->{System.out.println("使用 lambda 方式的线程开始执行......");}).start();
+        new Thread(() -> {
+            System.out.println("使用 lambda 方式的线程开始执行......");
+        }).start();
 
-        Executors.newCachedThreadPool().submit(()->{System.out.println("使用 线程池 方式的线程开始执行......");});
+        Executors.newCachedThreadPool().submit(() -> {
+            System.out.println("使用 线程池 方式的线程开始执行......");
+        });
     }
 
     class TestRunnable implements Runnable {

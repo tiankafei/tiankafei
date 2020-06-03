@@ -15,10 +15,10 @@ public class Phaser2Test {
         new Phaser2Test().testPhaser();
     }
 
-    private void testPhaser(){
+    private void testPhaser() {
         phaser.bulkRegister(7);
 
-        for(int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             new Thread(new Person("p" + i)).start();
         }
 
@@ -81,7 +81,7 @@ public class Phaser2Test {
         }
 
         private void hug() {
-            if(name.equals("新郎") || name.equals("新娘")) {
+            if (name.equals("新郎") || name.equals("新娘")) {
                 milliSleep(r.nextInt(1000));
                 System.out.printf("%s 洞房！\n", name);
                 phaser.arriveAndAwaitAdvance();

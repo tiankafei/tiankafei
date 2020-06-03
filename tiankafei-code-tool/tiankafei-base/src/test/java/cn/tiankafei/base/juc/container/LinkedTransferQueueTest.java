@@ -12,9 +12,9 @@ public class LinkedTransferQueueTest {
     public static void main(String[] args) {
         LinkedTransferQueue linkedTransferQueue = new LinkedTransferQueue();
 
-        new Thread(()->{
+        new Thread(() -> {
             for (int i = 0; i < 2; i++) {
-                new Thread(()->{
+                new Thread(() -> {
                     try {
                         String name = Thread.currentThread().getName();
                         System.out.println(name + "线程开始执行！");
@@ -24,12 +24,12 @@ public class LinkedTransferQueueTest {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }, i+"").start();
+                }, i + "").start();
             }
         }).start();
 
-        new Thread(()->{
-            while(true){
+        new Thread(() -> {
+            while (true) {
                 try {
                     Thread.sleep(1000);
                     System.out.println("从队列中取出的值：" + linkedTransferQueue.take());

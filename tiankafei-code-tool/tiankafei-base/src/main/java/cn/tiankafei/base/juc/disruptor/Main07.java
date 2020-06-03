@@ -5,7 +5,6 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.SleepingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
-
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
@@ -29,10 +28,12 @@ public class Main07 {
             public void handleEventException(Throwable ex, long sequence, LongEvent event) {
                 ex.printStackTrace();
             }
+
             @Override
             public void handleOnStartException(Throwable ex) {
                 System.out.println("Exception Start to Handle" + ex.getMessage());
             }
+
             @Override
             public void handleOnShutdownException(Throwable ex) {
                 System.out.println("Exception Shutdown to Handle" + ex.getMessage());
@@ -47,8 +48,8 @@ public class Main07 {
         ExecutorService service = Executors.newCachedThreadPool();
         for (long i = 0; i < threadCount; i++) {
             final long threadNum = i;
-            service.submit(()-> {
-                System.out.printf("Thread %s ready to start!\n", threadNum );
+            service.submit(() -> {
+                System.out.printf("Thread %s ready to start!\n", threadNum);
                 try {
                     barrier.await();
                 } catch (InterruptedException e) {

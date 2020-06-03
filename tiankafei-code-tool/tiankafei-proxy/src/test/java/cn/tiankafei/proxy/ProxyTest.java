@@ -16,7 +16,7 @@ public class ProxyTest {
     private static final int count = 1;
 
     @Test
-    public void testJdkProxy(){
+    public void testJdkProxy() {
         Stopwatch stopwatch = Stopwatch.createStarted();
         IHandler handler = new HandlerImpl();
         for (int i = 0; i < count; i++) {
@@ -27,7 +27,7 @@ public class ProxyTest {
     }
 
     @Test
-    public void testCglibProxy(){
+    public void testCglibProxy() {
         Stopwatch stopwatch = Stopwatch.createStarted();
         Handler handler = new Handler();
         for (int i = 0; i < count; i++) {

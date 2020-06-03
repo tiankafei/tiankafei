@@ -15,7 +15,7 @@ public class CglibProxyUtil {
     /**
      * 获取代理对象
      *
-     * @param object    要代理的对象
+     * @param object            要代理的对象
      * @param methodInterceptor 代理的具体实现
      * @param <T>
      * @return
@@ -35,7 +35,7 @@ public class CglibProxyUtil {
     /**
      * 获取代理对象
      *
-     * @param object    要代理的对象
+     * @param object            要代理的对象
      * @param methodInterceptor 代理的具体实现
      * @param <T>
      * @return

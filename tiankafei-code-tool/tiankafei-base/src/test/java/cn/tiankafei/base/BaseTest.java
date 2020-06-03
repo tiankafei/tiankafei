@@ -3,16 +3,6 @@ package cn.tiankafei.base;
 import cn.tiankafei.base.sort.MainInterface;
 import cn.tiankafei.base.sort.observer.MainObserver;
 import cn.tiankafei.base.sort.proxy.MainProxy;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-
-import lombok.SneakyThrows;
-import org.apache.commons.lang3.time.StopWatch;
-import org.junit.Test;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +15,14 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.time.StopWatch;
+import org.junit.Test;
 
 /**
  * @author tiankafei
@@ -33,19 +31,19 @@ import java.util.TreeSet;
 public class BaseTest {
 
     @Test
-    public void testForIterator(){
+    public void testForIterator() {
         List dataList = new ArrayList<>();
         dataList.add(1);
         dataList.add(3);
         dataList.add(2);
-        for (Iterator iterator = dataList.listIterator(); iterator.hasNext();) {
+        for (Iterator iterator = dataList.listIterator(); iterator.hasNext(); ) {
             Object next = iterator.next();
             System.out.println(next);
         }
     }
 
     @Test
-    public void testTreeSet(){
+    public void testTreeSet() {
         Set dataSet = new TreeSet();
         dataSet.add(1);
         dataSet.add(11);
@@ -60,7 +58,7 @@ public class BaseTest {
     }
 
     @Test
-    public void testHashMap(){
+    public void testHashMap() {
         Map map = new HashMap();
         map.put(1, 1);
         map.put(1, 2);
@@ -68,7 +66,7 @@ public class BaseTest {
     }
 
     @Test
-    public void testLinkedHashMap(){
+    public void testLinkedHashMap() {
         // 第三个参数默认为fasle，按照插入的顺序排序；为true表示不需要排序
         Map map = new LinkedHashMap(16, 0.75f, true);
         List dataList = new ArrayList();
@@ -82,7 +80,7 @@ public class BaseTest {
     }
 
     @Test
-    public void testEntrySet(){
+    public void testEntrySet() {
         Map<Integer, Integer> dataMap = new HashMap();
         for (int i = 0; i < 100; i++) {
             int number = new Random().nextInt(100);
@@ -107,7 +105,7 @@ public class BaseTest {
         System.out.println("==================");
 
         // 遍历方法3：
-        for (Iterator<Integer> iterator = dataMap.keySet().iterator(); iterator.hasNext(); ){
+        for (Iterator<Integer> iterator = dataMap.keySet().iterator(); iterator.hasNext(); ) {
             Integer key = iterator.next();
             Integer value = dataMap.get(key);
             System.out.println(key + ",,," + value);
@@ -116,7 +114,7 @@ public class BaseTest {
     }
 
     @Test(expected = Exception.class)
-    public void testHashTableValue(){
+    public void testHashTableValue() {
         // key 和 value 都不允许为空
         Map hashtable = new Hashtable();
         hashtable.put(1, null);
@@ -125,7 +123,7 @@ public class BaseTest {
     }
 
     @Test
-    public void test(){
+    public void test() {
         int index = 0;
         int a = index++;
         System.out.println(index);
@@ -138,7 +136,7 @@ public class BaseTest {
     }
 
     @Test
-    public void testCollections(){
+    public void testCollections() {
         List<String> dataList = new ArrayList<>();
         dataList.add("3");
         dataList.add("2");
@@ -163,7 +161,7 @@ public class BaseTest {
     }
 
     @Test
-    public void testInteger(){
+    public void testInteger() {
         int index = 1;
         deal(index);
         System.out.println(index);
@@ -182,28 +180,28 @@ public class BaseTest {
         System.out.println(stringBuffer.toString());
     }
 
-    private int deal(int index){
+    private int deal(int index) {
         index = index + 4;
         return 0;
     }
 
-    private int deal(Integer index){
+    private int deal(Integer index) {
         index = index + 4;
         return 0;
     }
 
-    private int deal(String str){
+    private int deal(String str) {
         str = str + "123465";
         return 0;
     }
 
-    private int deal(StringBuffer str){
+    private int deal(StringBuffer str) {
         str.append(str).append("123456");
         return 0;
     }
 
     @Test
-    public void test1(){
+    public void test1() {
         System.out.println(get(10001));
         System.out.println(get(10002));
         System.out.println(get(20001));
@@ -227,12 +225,11 @@ public class BaseTest {
         System.out.println(get(60004));
 
 
-
     }
 
     @Test
     public void test2() throws InterruptedException {
-        StopWatch stopWatch =  StopWatch.createStarted();
+        StopWatch stopWatch = StopWatch.createStarted();
         stopWatch.split();
         Thread.sleep(1000);
         System.out.println("切片执行时间：" + stopWatch.getSplitTime());
@@ -255,12 +252,15 @@ public class BaseTest {
     public void test3() throws Exception {
         class Person {
             private String name;
+
             public String getName() {
                 return name;
             }
+
             public void setName(String name) {
                 this.name = name;
             }
+
             @Override
             public String toString() {
                 return "Person{" +
@@ -307,20 +307,20 @@ public class BaseTest {
     }
 
     @Test
-    public void test4(){
+    public void test4() {
         System.out.println("Integer.SIZE = " + Integer.SIZE);
         System.out.println("Integer.MAX_VALUE = " + Integer.MAX_VALUE);
         System.out.println("=============================");
 
         int COUNT_BITS = Integer.SIZE - 3;
-        int CAPACITY   = (1 << COUNT_BITS) - 1;
+        int CAPACITY = (1 << COUNT_BITS) - 1;
 
         // runState is stored in the high-order bits
-        int RUNNING    = -1 << COUNT_BITS;
-        int SHUTDOWN   =  0 << COUNT_BITS;
-        int STOP       =  1 << COUNT_BITS;
-        int TIDYING    =  2 << COUNT_BITS;
-        int TERMINATED =  3 << COUNT_BITS;
+        int RUNNING = -1 << COUNT_BITS;
+        int SHUTDOWN = 0 << COUNT_BITS;
+        int STOP = 1 << COUNT_BITS;
+        int TIDYING = 2 << COUNT_BITS;
+        int TERMINATED = 3 << COUNT_BITS;
 
         System.out.println("COUNT_BITS = " + COUNT_BITS);
         System.out.println("CAPACITY = " + CAPACITY);
@@ -333,18 +333,18 @@ public class BaseTest {
     }
 
     @Test
-    public void test5(){
+    public void test5() {
         MainInterface mainObserver = new MainObserver();
         mainObserver.execute();
     }
 
     @Test
-    public void test6(){
+    public void test6() {
         MainInterface mainProxy = new MainProxy();
         mainProxy.execute();
     }
 
-    private int get(int value){
+    private int get(int value) {
         return value - value % 10000;
     }
 

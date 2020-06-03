@@ -1,7 +1,7 @@
 package cn.tiankafei.base.sort.chain;
 
-import cn.tiankafei.base.sort.factory.SortFactory;
 import cn.tiankafei.base.sort.bubble.BubbleSortFactory;
+import cn.tiankafei.base.sort.factory.SortFactory;
 
 /**
  * 责任链模式：底层使用装饰着模式实现

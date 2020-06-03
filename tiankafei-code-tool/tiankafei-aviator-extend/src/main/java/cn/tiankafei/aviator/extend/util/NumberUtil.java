@@ -469,7 +469,7 @@ public class NumberUtil {
     }
 
     static public boolean equals(double left, String right) {
-        return  left == Double.valueOf(right);
+        return left == Double.valueOf(right);
     }
 
     static public boolean equals(long left, int right) {
