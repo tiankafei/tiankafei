@@ -48,10 +48,7 @@ public abstract class AviatorExtendUtil {
         // 开启浮点型精度
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_INTEGRAL_NUMBER_INTO_DECIMAL, true);
-
-        addFunction("max");
-        addFunction("min");
-
+        // 重载操作符运算的函数
         AviatorEvaluator.getInstance().addOpFunction(OperatorType.ADD, new Add());
         AviatorEvaluator.getInstance().addOpFunction(OperatorType.SUB, new Sub());
         AviatorEvaluator.getInstance().addOpFunction(OperatorType.MULT, new Mul());
@@ -65,27 +62,21 @@ public abstract class AviatorExtendUtil {
         AviatorEvaluator.getInstance().addOpFunction(OperatorType.NEQ, new NotEquals());
     }
 
-    private static void addFunction(String alreadyExistsFun) {
-        AviatorFunction max = AviatorEvaluator.getInstance().getFunction(alreadyExistsFun);
-        AviatorEvaluator.removeFunction(alreadyExistsFun);
-        addFunction(max);
-    }
-
     /**
-     * 自定义函数
+     * 新增自定义函数
      *
      * @param function
      */
     public static void addFunction(final AviatorFunction function) {
-        String lowerCase = function.getName().toLowerCase();
-        String upperCase = function.getName().toUpperCase();
+        AviatorEvaluator.getInstance().addFunction(function.getName(), function);
+    }
 
-        if (lowerCase.equals(upperCase)) {
-            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
-        } else {
-            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
-            AviatorEvaluator.getInstance().addFunction(upperCase, function);
-        }
+    /**
+     * 删除已经存在的函数
+     * @param funName
+     */
+    public static void delFunction(String funName){
+        AviatorEvaluator.getInstance().removeFunction(funName);
     }
 
     /**
