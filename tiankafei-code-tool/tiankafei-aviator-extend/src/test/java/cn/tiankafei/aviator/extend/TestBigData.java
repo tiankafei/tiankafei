@@ -12,8 +12,7 @@ public class TestBigData {
     private int count = 10000 * 1;
 
     static {
-        AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
-        aviatorFunctionManager.initFun();
+        AviatorExtendUtil.initFun();
     }
 
     @Test

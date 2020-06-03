@@ -1,5 +1,6 @@
-package cn.tiankafei.aviator.extend;
+package cn.tiankafei.aviator.extend.util;
 
+import cn.tiankafei.aviator.extend.InitFunction;
 import cn.tiankafei.aviator.extend.function.Abs;
 import cn.tiankafei.aviator.extend.function.Age;
 import cn.tiankafei.aviator.extend.function.And;
@@ -40,14 +41,14 @@ import cn.tiankafei.aviator.extend.function.VerifyIdCard;
 import cn.tiankafei.aviator.extend.function.Verifych;
 import cn.tiankafei.aviator.extend.function.Verifycode;
 import cn.tiankafei.aviator.extend.function.Year;
-import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
-public class AviatorFunctionManager {
+public class AviatorCustomFunManager implements InitFunction {
 
+    @Override
     public void initFun() {
         //新增自定义的函数
         AviatorExtendUtil.addFunction();

@@ -10,8 +10,7 @@ import org.junit.Test;
 public class TestMoreFunction {
 
     static {
-        AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
-        aviatorFunctionManager.initFun();
+        AviatorExtendUtil.initFun();
     }
 
     @Test

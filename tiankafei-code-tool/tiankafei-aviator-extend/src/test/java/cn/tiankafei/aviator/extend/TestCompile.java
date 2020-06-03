@@ -12,8 +12,7 @@ import org.junit.Test;
 public class TestCompile {
 
     static {
-        AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
-        aviatorFunctionManager.initFun();
+        AviatorExtendUtil.initFun();
     }
 
     @Test

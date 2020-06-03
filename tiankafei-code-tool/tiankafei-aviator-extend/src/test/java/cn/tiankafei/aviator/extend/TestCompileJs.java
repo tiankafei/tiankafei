@@ -1,5 +1,6 @@
 package cn.tiankafei.aviator.extend;
 
+import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import com.google.common.base.Stopwatch;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +12,7 @@ import org.junit.Test;
 public class TestCompileJs {
 
     static {
-        AviatorFunctionManager aviatorFunctionManager = new AviatorFunctionManager();
-        aviatorFunctionManager.initFun();
+        AviatorExtendUtil.initFun();
     }
 
     @Test

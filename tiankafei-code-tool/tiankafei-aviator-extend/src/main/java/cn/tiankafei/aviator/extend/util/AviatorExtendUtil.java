@@ -1,5 +1,6 @@
 package cn.tiankafei.aviator.extend.util;
 
+import cn.tiankafei.aviator.extend.InitFunction;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.function.Add;
 import cn.tiankafei.aviator.extend.function.Div;
@@ -18,9 +19,11 @@ import com.googlecode.aviator.Options;
 import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import sun.misc.Service;
 
 /**
  * @author tiankafei
@@ -28,6 +31,15 @@ import org.apache.commons.lang3.StringUtils;
  **/
 @Slf4j
 public abstract class AviatorExtendUtil {
+
+    /**
+     * 初始化函数
+     */
+    public static void initFun() {
+        Iterator<InitFunction> providers = Service.providers(InitFunction.class);
+        InitFunction initFunction = providers.next();
+        initFunction.initFun();
+    }
 
     /**
      * 处理已经存在的函数
