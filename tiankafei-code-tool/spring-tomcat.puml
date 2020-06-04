@@ -1,0 +1,64 @@
+@startuml
+AbstractApplicationContext -> AbstractApplicationContext: refresh()
+AbstractApplicationContext -> ServletWebServerApplicationContext: onRefresh();
+ServletWebServerApplicationContext -> ServletWebServerApplicationContext: createWebServer();
+ServletWebServerApplicationContext -> ServletWebServerApplicationContext: 调用父类 GenericWebApplicationContext 的方法 \n getServletContext() 获取得到 ServletContext
+ServletWebServerApplicationContext -> ServletWebServerApplicationContext: 通过 getWebServerFactory() 方法获取 \n TomcatServletWebServerFactory
+ServletWebServerApplicationContext -> ServletWebServerApplicationContext: 通过 getSelfInitializer() 方法获取自身的初始化对象 \n ServletContextInitializer
+ServletWebServerApplicationContext -> TomcatServletWebServerFactory: 获取web服务器 \n getWebServer(ServletContextInitializer)
+TomcatServletWebServerFactory -> Tomcat: new Tomcat();
+Tomcat -> TomcatServletWebServerFactory
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: 获取 baseDir
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: tomcat.setBaseDir
+TomcatServletWebServerFactory -> Connector: new Connector(this.protocol); \n this.protocol 默认值为 \n org.apache.coyote.http11.Http11NioProtocol
+Connector -> Connector: 反射得到协议处理类对象 \n Class.forName(protocolHandlerClassName);
+Connector -> TomcatServletWebServerFactory:
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: connector.setThrowOnFailure(true);
+TomcatServletWebServerFactory -> Tomcat: getService()
+Tomcat -> Tomcat: getServer()
+Tomcat -> Tomcat: System.setProperty("catalina.useNaming", "false");
+Tomcat -> StandardServer: new StandardServer();
+StandardServer -> NamingResourcesImpl: globalNamingResources = new NamingResourcesImpl();
+NamingResourcesImpl -> StandardServer
+StandardServer -> StandardServer: globalNamingResources.setContainer(this);
+StandardServer -> NamingContextListener: namingContextListener = new NamingContextListener();
+NamingContextListener -> StandardServer
+StandardServer -> StandardServer: addLifecycleListener(namingContextListener);
+StandardServer -> Tomcat
+Tomcat -> Tomcat: initBaseDir();
+Tomcat -> Tomcat: baseFile.mkdirs()
+Tomcat -> Tomcat: server.setCatalinaBase(baseFile);
+Tomcat -> Tomcat: System.setProperty(Globals.CATALINA_BASE_PROP, \n baseFile.getPath());
+Tomcat -> Tomcat: server.setCatalinaHome(homeFile);
+Tomcat -> Tomcat: System.setProperty(Globals.CATALINA_HOME_PROP, \n server.getCatalinaHome().getPath());
+Tomcat -> Tomcat: ConfigFileLoader.setSource( \n new CatalinaBaseConfigurationSource(new File(basedir), null));
+Tomcat -> Tomcat: server.setPort( -1 );
+Tomcat -> StandardService: Service service = new StandardService();
+StandardService -> Tomcat
+Tomcat -> Tomcat: service.setName("Tomcat");
+Tomcat -> Tomcat: server.addService(service);
+Tomcat -> Tomcat: findServices()[0];
+Tomcat -> TomcatServletWebServerFactory
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: tomcat.getService().addConnector(connector);
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: customizeConnector(connector);
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: int port = Math.max(getPort(), 0); \n connector.setPort(port);
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: connector.setAttribute("server", this.getServerHeader());
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: customizeProtocol((AbstractProtocol<?>) \n connector.getProtocolHandler());
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: protocol.setAddress(getAddress());
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: 设置回调方法 \n invokeProtocolHandlerCustomizers(connector.getProtocolHandler());
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: connector.setURIEncoding(getUriEncoding().name());
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: connector.setProperty("bindOnInit", "false");
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: 设置ssl安全连接 customizeSsl(connector);
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: 设置压缩 \n TomcatConnectorCustomizer compression = \n new CompressionConnectorCustomizer(getCompression()); \n compression.customize(connector);
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: 连接器的回调 customizer.customize(connector);
+TomcatServletWebServerFactory -> Tomcat: getEngine()
+Tomcat -> Tomcat: getServer().findServices()[0];
+Tomcat -> StandardEngine: Engine engine = new StandardEngine();
+
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: 配置引擎 configureEngine
+
+
+
+
+TomcatServletWebServerFactory -> TomcatServletWebServerFactory: tomcat.setConnector(connector);
+@enduml
