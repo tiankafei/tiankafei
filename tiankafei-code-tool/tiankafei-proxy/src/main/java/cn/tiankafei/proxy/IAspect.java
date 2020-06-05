@@ -1,4 +1,4 @@
-package cn.tiankafei.proxy.interfaces;
+package cn.tiankafei.proxy;
 
 import java.lang.reflect.Method;
 import java.util.Map;

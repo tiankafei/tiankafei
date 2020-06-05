@@ -7,7 +7,7 @@ import cn.tiankafei.base.sort.proxy.MainProxy;
 import cn.tiankafei.base.sort.proxy.TestAuthorityProxy;
 import cn.tiankafei.base.sort.proxy.TestProxy;
 import cn.tiankafei.base.sort.proxy.TestTimeProxy;
-import cn.tiankafei.proxy.interfaces.IAspect;
+import cn.tiankafei.proxy.IAspect;
 import cn.tiankafei.proxy.util.ProxyUtil;
 import com.google.common.base.Stopwatch;
 import java.lang.reflect.Method;

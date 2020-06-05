@@ -1,6 +1,6 @@
 package cn.tiankafei.proxy.model;
 
-import cn.tiankafei.proxy.interfaces.IAspect;
+import cn.tiankafei.proxy.IAspect;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package cn.tiankafei.base.sort.proxy;
 
-import cn.tiankafei.proxy.interfaces.IAspect;
+import cn.tiankafei.proxy.IAspect;
 import java.lang.reflect.Method;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;

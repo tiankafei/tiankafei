@@ -1,6 +1,6 @@
 package cn.tiankafei.proxy.util;
 
-import cn.tiankafei.proxy.interfaces.IAspect;
+import cn.tiankafei.proxy.IAspect;
 import cn.tiankafei.proxy.model.ProxyProcess;
 
 /**
