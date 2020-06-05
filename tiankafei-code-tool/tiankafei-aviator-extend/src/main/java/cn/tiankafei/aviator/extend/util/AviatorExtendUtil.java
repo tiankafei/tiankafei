@@ -4,6 +4,7 @@ import cn.tiankafei.aviator.extend.InitFunction;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.function.Add;
 import cn.tiankafei.aviator.extend.function.And;
+import cn.tiankafei.aviator.extend.function.AviatorFunctionProxy;
 import cn.tiankafei.aviator.extend.function.Div;
 import cn.tiankafei.aviator.extend.function.Equals;
 import cn.tiankafei.aviator.extend.function.GreaterThen;
@@ -45,27 +46,31 @@ public abstract class AviatorExtendUtil {
     }
 
     /**
-     * 处理已经存在的函数
+     * 覆盖操作符运算函数的实现
      */
-    public static void addFunction() {
+    public static void addOperatorTypeFunction() {
         // 开启浮点型精度
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_INTEGRAL_NUMBER_INTO_DECIMAL, true);
         // 重载操作符运算的函数
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.ADD, new Add());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.SUB, new Sub());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.MULT, new Mul());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.DIV, new Div());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.MOD, new Mod());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.LT, new LessThen());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.LE, new LessThenEquals());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.GT, new GreaterThen());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.GE, new GreaterThenEquals());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.EQ, new Equals());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.NEQ, new NotEquals());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.NOT, new NotOper());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.AND, new And());
-        AviatorEvaluator.getInstance().addOpFunction(OperatorType.OR, new Or());
+        addOpFunction(OperatorType.ADD, new Add());
+        addOpFunction(OperatorType.SUB, new Sub());
+        addOpFunction(OperatorType.MULT, new Mul());
+        addOpFunction(OperatorType.DIV, new Div());
+        addOpFunction(OperatorType.MOD, new Mod());
+        addOpFunction(OperatorType.LT, new LessThen());
+        addOpFunction(OperatorType.LE, new LessThenEquals());
+        addOpFunction(OperatorType.GT, new GreaterThen());
+        addOpFunction(OperatorType.GE, new GreaterThenEquals());
+        addOpFunction(OperatorType.EQ, new Equals());
+        addOpFunction(OperatorType.NEQ, new NotEquals());
+        addOpFunction(OperatorType.NOT, new NotOper());
+        addOpFunction(OperatorType.AND, new And());
+        addOpFunction(OperatorType.OR, new Or());
+    }
+
+    private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
+        AviatorEvaluator.getInstance().addOpFunction(operatorType, new AviatorFunctionProxy(function));
     }
 
     /**
@@ -78,10 +83,10 @@ public abstract class AviatorExtendUtil {
         String lowerCase = name.toLowerCase();
         String upperCase = name.toUpperCase();
         if(lowerCase.equals(upperCase)){
-            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
+            AviatorEvaluator.getInstance().addFunction(lowerCase, new AviatorFunctionProxy(function));
         }else{
-            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
-            AviatorEvaluator.getInstance().addFunction(upperCase, function);
+            AviatorEvaluator.getInstance().addFunction(lowerCase, new AviatorFunctionProxy(function));
+            AviatorEvaluator.getInstance().addFunction(upperCase, new AviatorFunctionProxy(function));
         }
     }
 

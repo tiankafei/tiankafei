@@ -53,7 +53,7 @@ public class AviatorCustomFunManager implements InitFunction {
     @Override
     public void initFun() {
         //新增自定义的函数
-        AviatorExtendUtil.addFunction();
+        AviatorExtendUtil.addOperatorTypeFunction();
 
         AviatorExtendUtil.addFunction(new Abs());
         AviatorExtendUtil.addFunction(new Ceil());

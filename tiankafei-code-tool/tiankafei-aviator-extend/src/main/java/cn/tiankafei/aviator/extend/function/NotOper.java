@@ -1,6 +1,6 @@
 package cn.tiankafei.aviator.extend.function;
 
-import cn.tiankafei.aviator.extend.constant.FunctionConstants;
+import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
@@ -22,6 +22,6 @@ public class NotOper extends OneParamFunction {
 
     @Override
     public String getName() {
-        return FunctionConstants.NOT_OPER;
+        return OperatorType.NOT.token;
     }
 }
