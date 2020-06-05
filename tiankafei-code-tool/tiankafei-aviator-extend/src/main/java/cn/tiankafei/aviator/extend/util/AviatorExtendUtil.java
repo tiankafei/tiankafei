@@ -74,7 +74,15 @@ public abstract class AviatorExtendUtil {
      * @param function
      */
     public static void addFunction(final AviatorFunction function) {
-        AviatorEvaluator.getInstance().addFunction(function.getName(), function);
+        String name = function.getName();
+        String lowerCase = name.toLowerCase();
+        String upperCase = name.toUpperCase();
+        if(lowerCase.equals(upperCase)){
+            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
+        }else{
+            AviatorEvaluator.getInstance().addFunction(lowerCase, function);
+            AviatorEvaluator.getInstance().addFunction(upperCase, function);
+        }
     }
 
     /**
