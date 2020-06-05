@@ -3,7 +3,7 @@ package cn.tiankafei.aviator.extend.util;
 import cn.tiankafei.aviator.extend.InitFunction;
 import cn.tiankafei.aviator.extend.function.Abs;
 import cn.tiankafei.aviator.extend.function.Age;
-import cn.tiankafei.aviator.extend.function.And;
+import cn.tiankafei.aviator.extend.function.AndMore;
 import cn.tiankafei.aviator.extend.function.Ceil;
 import cn.tiankafei.aviator.extend.function.CurrentTime;
 import cn.tiankafei.aviator.extend.function.Find;
@@ -23,11 +23,13 @@ import cn.tiankafei.aviator.extend.function.Length;
 import cn.tiankafei.aviator.extend.function.Lookat;
 import cn.tiankafei.aviator.extend.function.Lower;
 import cn.tiankafei.aviator.extend.function.Match;
+import cn.tiankafei.aviator.extend.function.Max;
 import cn.tiankafei.aviator.extend.function.Mid;
+import cn.tiankafei.aviator.extend.function.Min;
 import cn.tiankafei.aviator.extend.function.Month;
 import cn.tiankafei.aviator.extend.function.Not;
 import cn.tiankafei.aviator.extend.function.NotNull;
-import cn.tiankafei.aviator.extend.function.Or;
+import cn.tiankafei.aviator.extend.function.OrMore;
 import cn.tiankafei.aviator.extend.function.Replaceall;
 import cn.tiankafei.aviator.extend.function.Right;
 import cn.tiankafei.aviator.extend.function.Round;
@@ -215,8 +217,8 @@ public class AviatorCustomFunManager implements InitFunction {
                 return super.getName().toUpperCase();
             }
         });
-        AviatorExtendUtil.addFunction(new And());
-        AviatorExtendUtil.addFunction(new And(){
+        AviatorExtendUtil.addFunction(new AndMore());
+        AviatorExtendUtil.addFunction(new AndMore(){
             @Override
             public String getName() {
                 return super.getName().toUpperCase();
@@ -286,8 +288,8 @@ public class AviatorCustomFunManager implements InitFunction {
                 return super.getName().toUpperCase();
             }
         });
-        AviatorExtendUtil.addFunction(new Or());
-        AviatorExtendUtil.addFunction(new Or(){
+        AviatorExtendUtil.addFunction(new OrMore());
+        AviatorExtendUtil.addFunction(new OrMore(){
             @Override
             public String getName() {
                 return super.getName().toUpperCase();
@@ -330,6 +332,23 @@ public class AviatorCustomFunManager implements InitFunction {
         });
         AviatorExtendUtil.addFunction(new Year());
         AviatorExtendUtil.addFunction(new Year(){
+            @Override
+            public String getName() {
+                return super.getName().toUpperCase();
+            }
+        });
+
+        AviatorExtendUtil.delFunction("max");
+        AviatorExtendUtil.addFunction(new Max());
+        AviatorExtendUtil.addFunction(new Max(){
+            @Override
+            public String getName() {
+                return super.getName().toUpperCase();
+            }
+        });
+        AviatorExtendUtil.delFunction("min");
+        AviatorExtendUtil.addFunction(new Min());
+        AviatorExtendUtil.addFunction(new Min(){
             @Override
             public String getName() {
                 return super.getName().toUpperCase();

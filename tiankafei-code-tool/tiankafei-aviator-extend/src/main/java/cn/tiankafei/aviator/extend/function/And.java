@@ -1,42 +1,31 @@
 package cn.tiankafei.aviator.extend.function;
 
-import cn.tiankafei.aviator.extend.constant.FunctionConstants;
-import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
+import cn.tiankafei.aviator.extend.util.NumberUtil;
+import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
-import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author tiankafei
- * @since 1.0
+ * @Author 魏双双
+ * @Date 2020/6/5
+ * @Version V1.0
  **/
-@Slf4j
-public class And extends MoreParamFunction {
+public class And extends TwoParamFunction {
 
     @Override
     public String getName() {
-        return FunctionConstants.AND_MORE;
+        return OperatorType.AND.token;
     }
 
     @Override
-    public AviatorObject apply(List<Object> valueList) {
-        boolean result = true;
-        StringBuilder errorInfo = new StringBuilder();
-        for (int index = 0, length = valueList.size(); index < length; index++) {
-            Object object = valueList.get(index);
-            if (object instanceof Boolean) {
-                boolean flag = (boolean) object;
-                if (!flag) {
-                    result = false;
-                    break;
-                }
-            } else {
-                errorInfo.append(",第" + (index + 1) + "个");
-            }
-        }
-        AviatorExtendUtil.checkError(errorInfo, getName());
-        return AviatorBoolean.valueOf(result);
-    }
+    protected AviatorObject apply(Object left, Object right) {
+        Boolean leftValue = NumberUtil.toBooleanObj(left);
+        Boolean rightValue = NumberUtil.toBooleanObj(right);
 
+        if (leftValue.booleanValue() && rightValue.booleanValue()) {
+            return AviatorBoolean.TRUE;
+        } else {
+            return AviatorBoolean.FALSE;
+        }
+    }
 }

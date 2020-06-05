@@ -3,6 +3,7 @@ package cn.tiankafei.aviator.extend.util;
 import cn.tiankafei.aviator.extend.InitFunction;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.function.Add;
+import cn.tiankafei.aviator.extend.function.And;
 import cn.tiankafei.aviator.extend.function.Div;
 import cn.tiankafei.aviator.extend.function.Equals;
 import cn.tiankafei.aviator.extend.function.GreaterThen;
@@ -12,6 +13,8 @@ import cn.tiankafei.aviator.extend.function.LessThenEquals;
 import cn.tiankafei.aviator.extend.function.Mod;
 import cn.tiankafei.aviator.extend.function.Mul;
 import cn.tiankafei.aviator.extend.function.NotEquals;
+import cn.tiankafei.aviator.extend.function.NotOper;
+import cn.tiankafei.aviator.extend.function.Or;
 import cn.tiankafei.aviator.extend.function.Sub;
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.Expression;
@@ -60,6 +63,9 @@ public abstract class AviatorExtendUtil {
         AviatorEvaluator.getInstance().addOpFunction(OperatorType.GE, new GreaterThenEquals());
         AviatorEvaluator.getInstance().addOpFunction(OperatorType.EQ, new Equals());
         AviatorEvaluator.getInstance().addOpFunction(OperatorType.NEQ, new NotEquals());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.NOT, new NotOper());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.AND, new And());
+        AviatorEvaluator.getInstance().addOpFunction(OperatorType.OR, new Or());
     }
 
     /**
