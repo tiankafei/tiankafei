@@ -17,6 +17,7 @@ import cn.tiankafei.aviator.extend.function.NotEquals;
 import cn.tiankafei.aviator.extend.function.NotOper;
 import cn.tiankafei.aviator.extend.function.Or;
 import cn.tiankafei.aviator.extend.function.Sub;
+import cn.tiankafei.proxy.util.ProxyUtil;
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.Expression;
 import com.googlecode.aviator.Options;
@@ -70,7 +71,8 @@ public abstract class AviatorExtendUtil {
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
-        AviatorEvaluator.getInstance().addOpFunction(operatorType, new AviatorFunctionProxy(function));
+        AviatorFunction functionProxy = ProxyUtil.getProxy(function, new AviatorFunctionAspect());
+        AviatorEvaluator.getInstance().addOpFunction(operatorType, functionProxy);
     }
 
     /**
@@ -79,14 +81,15 @@ public abstract class AviatorExtendUtil {
      * @param function
      */
     public static void addFunction(final AviatorFunction function) {
+        AviatorFunction functionProxy = ProxyUtil.getProxy(function, new AviatorFunctionAspect());
         String name = function.getName();
         String lowerCase = name.toLowerCase();
         String upperCase = name.toUpperCase();
         if(lowerCase.equals(upperCase)){
-            AviatorEvaluator.getInstance().addFunction(lowerCase, new AviatorFunctionProxy(function));
+            AviatorEvaluator.getInstance().addFunction(lowerCase, functionProxy);
         }else{
-            AviatorEvaluator.getInstance().addFunction(lowerCase, new AviatorFunctionProxy(function));
-            AviatorEvaluator.getInstance().addFunction(upperCase, new AviatorFunctionProxy(function));
+            AviatorEvaluator.getInstance().addFunction(lowerCase, functionProxy);
+            AviatorEvaluator.getInstance().addFunction(upperCase, functionProxy);
         }
     }
 

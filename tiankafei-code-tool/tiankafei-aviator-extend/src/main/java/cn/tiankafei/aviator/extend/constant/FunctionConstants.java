@@ -290,4 +290,6 @@ public class FunctionConstants {
      */
     public static final String MID = "mid";
 
+    public static final String AVIATOR_FUNCTION_PARAM = "AVIATOR_FUNCTION_PARAM";
+
 }

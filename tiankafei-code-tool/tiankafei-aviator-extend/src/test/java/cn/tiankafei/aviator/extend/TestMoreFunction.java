@@ -1,5 +1,6 @@
 package cn.tiankafei.aviator.extend;
 
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import java.util.HashMap;
 import java.util.Map;
@@ -106,6 +107,7 @@ public class TestMoreFunction {
         dataMap.put("e", -1);
         dataMap.put("f", -1);
         AviatorExtendUtil.execute(expression, dataMap);
+        System.out.println(dataMap.get(FunctionConstants.AVIATOR_FUNCTION_PARAM));
     }
 
     @Test
