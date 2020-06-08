@@ -1,6 +1,5 @@
 package cn.tiankafei.aviator.extend.util;
 
-import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.proxy.IAspect;
 import com.googlecode.aviator.runtime.type.AviatorJavaType;
 import com.googlecode.aviator.runtime.type.AviatorObject;
@@ -30,8 +29,6 @@ public class AviatorFunctionAspect implements IAspect {
                     String funName = getName.invoke(object).toString();
                     log.info("执行的函数名称: {}", funName);
 
-                    AviatorFunctionVo aviatorFunctionVo = new AviatorFunctionVo();
-                    aviatorFunctionVo.setFunName(funName);
                     if(args.length > 1){
                         List<Object> paramList = new ArrayList<>();
                         for (int index = 1, length = args.length; index < length; index++) {
@@ -44,9 +41,7 @@ public class AviatorFunctionAspect implements IAspect {
                                 paramList.add(value);
                             }
                         }
-                        aviatorFunctionVo.setParamList(paramList);
                     }
-                    env.put(FunctionConstants.AVIATOR_FUNCTION_PARAM, aviatorFunctionVo);
                 }
             }
         }catch (Exception e){

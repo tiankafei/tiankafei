@@ -1,6 +1,7 @@
 package cn.tiankafei.aviator.extend.util;
 
 import cn.tiankafei.aviator.extend.InitFunction;
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.exception.AviatorException;
 import cn.tiankafei.aviator.extend.function.Add;
 import cn.tiankafei.aviator.extend.function.And;
@@ -24,8 +25,11 @@ import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import sun.misc.Service;
 
@@ -114,22 +118,81 @@ public abstract class AviatorExtendUtil {
         }
     }
 
+    /**
+     * 编译js
+     * @param expression
+     */
+    public static void compileJs(String expression) {
+        compileJs(expression, new HashMap<>());
+    }
+
+    /**
+     * 编译js
+     * @param expression
+     * @param dataMap
+     */
+    public static void compileJs(String expression, Map<String, Object> dataMap) {
+        String id = UUID.randomUUID().toString().replaceAll("-", "");
+        compileJs(expression, dataMap, id);
+    }
+
+    /**
+     * 编译js
+     * @param expression
+     * @param id
+     */
+    public static void compileJs(String expression, String id) {
+        compileJs(expression, new HashMap<>(), id);
+    }
+
+    /**
+     * 编译js
+     * @param expression
+     * @param dataMap
+     * @param id
+     */
+    public static void compileJs(String expression, Map<String, Object> dataMap, String id) {
+        try {
+            expression = parseExpression(expression);
+            Expression exp = AviatorEvaluator.compile(expression);
+            dataMap.put(FunctionConstants.AVIATOR_COMPILE_JS, true);
+            Object result = exp.execute(dataMap);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("function fun_").append(id).append("(obj){ \n");
+            List<String> aliasList = (List<String>) dataMap.get(FunctionConstants.AVIATOR_FUNCTION_ALIAS);
+            if(CollectionUtils.isNotEmpty(aliasList)){
+                for (int index = 0, length = aliasList.size(); index < length; index++) {
+                    String aliasName = aliasList.get(index);
+                    stringBuilder.append("\t").append("var ").append(aliasName).append(" = ").append("obj.").append(aliasName).append("; \n");
+                }
+            }
+            stringBuilder.append("\t").append(result).append("; \n");
+            stringBuilder.append("}\n");
+            log.info("表达式：{}编译的js结果为：{}", expression, stringBuilder.toString());
+
+            dataMap.remove(FunctionConstants.AVIATOR_FUNCTION_ALIAS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 编译class执行审核
+     * @param expression
+     */
     public static void compile(String expression) {
         compile(expression, null);
     }
 
+    /**
+     * 编译class执行审核
+     * @param expression
+     * @param dataMap
+     */
     public static void compile(String expression, Map<String, Object> dataMap) {
         try {
-            boolean flag = expression.contains("\\\\");
-            while (flag) {
-                expression = expression.replace("\\\\", "^A");
-                flag = expression.contains("\\\\");
-            }
-            flag = expression.contains("^A");
-            while (flag) {
-                expression = expression.replace("^A", "\\\\\\\\");
-                flag = expression.contains("^A");
-            }
+            expression = parseExpression(expression);
             Object result = null;
             Expression exp = AviatorEvaluator.compile(expression);
             if (dataMap != null) {
@@ -137,38 +200,62 @@ public abstract class AviatorExtendUtil {
             } else {
                 result = exp.execute();
             }
-            log.info("表达式：{}的执行结果为：{}", expression, result);
+            if(result instanceof AviatorFunctionVo){
+                AviatorFunctionVo aviatorFunctionVo = (AviatorFunctionVo) result;
+                log.info("表达式：{}的执行结果为：{}", expression, aviatorFunctionVo.getExpression());
+            }else{
+                log.info("表达式：{}的执行结果为：{}", expression, result);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 直接执行审核
+     * @param expression
+     */
     public static void execute(String expression) {
         execute(expression, new HashMap<>());
     }
 
+    /**
+     * 直接执行审核
+     * @param expression
+     * @param dataMap
+     */
     public static void execute(String expression, Map<String, Object> dataMap) {
         try {
-            boolean flag = expression.contains("\\\\");
-            while (flag) {
-                expression = expression.replace("\\\\", "^A");
-                flag = expression.contains("\\\\");
-            }
-            flag = expression.contains("^A");
-            while (flag) {
-                expression = expression.replace("^A", "\\\\\\\\");
-                flag = expression.contains("^A");
-            }
+            expression = parseExpression(expression);
             Object result = null;
             if (dataMap != null) {
                 result = AviatorEvaluator.execute(expression, dataMap);
             } else {
                 result = AviatorEvaluator.execute(expression);
             }
-            log.info("表达式：{}的执行结果为：{}", expression, result);
+            if(result instanceof AviatorFunctionVo){
+                AviatorFunctionVo aviatorFunctionVo = (AviatorFunctionVo) result;
+                log.info("表达式：{}的执行结果为：{}", expression, aviatorFunctionVo.getExpression());
+            }else{
+                log.info("表达式：{}的执行结果为：{}", expression, result);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static String parseExpression(String expression){
+        boolean flag = expression.contains("\\\\");
+        while (flag) {
+            expression = expression.replace("\\\\", "^A");
+            flag = expression.contains("\\\\");
+        }
+        flag = expression.contains("^A");
+        while (flag) {
+            expression = expression.replace("^A", "\\\\\\\\");
+            flag = expression.contains("^A");
+        }
+        return expression;
     }
 
 }

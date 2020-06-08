@@ -1,5 +1,6 @@
 package cn.tiankafei.aviator.extend;
 
+import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
 import java.util.HashMap;
@@ -12,6 +13,21 @@ public class TestValue {
 
     static {
         AviatorExtendUtil.initFun();
+    }
+
+    @Test
+    public void testCompileJs() {
+//        String expression = "IF(ABS(-2)==2, 1.1+2.2, 2.2+1)";
+//        AviatorExtendUtil.execute(expression);
+        String expression = "IF(ABS(a)==b, c+d, e+f)";
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", -2);
+        dataMap.put("b", 2);
+        dataMap.put("c", 2.2);
+        dataMap.put("d", -1);
+        dataMap.put("e", -1);
+        dataMap.put("f", -1);
+        AviatorExtendUtil.execute(expression, dataMap);
     }
 
     @Test

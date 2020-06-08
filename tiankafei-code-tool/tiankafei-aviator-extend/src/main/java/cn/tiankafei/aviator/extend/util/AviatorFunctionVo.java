@@ -1,6 +1,5 @@
 package cn.tiankafei.aviator.extend.util;
 
-import java.util.List;
 import lombok.Data;
 
 /**
@@ -11,8 +10,6 @@ import lombok.Data;
 @Data
 public class AviatorFunctionVo {
 
-    private String funName;
-
-    List<Object> paramList;
+    private String expression;
 
 }
