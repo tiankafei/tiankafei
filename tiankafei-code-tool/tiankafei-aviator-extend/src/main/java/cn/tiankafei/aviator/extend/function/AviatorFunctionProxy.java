@@ -271,8 +271,11 @@ public class AviatorFunctionProxy implements AviatorFunction {
                 AviatorObject aviatorObject = aviatorList.get(index);
                 if(aviatorObject instanceof AviatorJavaType){
                     AviatorJavaType aviatorJavaType = (AviatorJavaType) aviatorObject;
-                    paramList.add(aviatorJavaType.getName());
-                    aliasList.add(aviatorJavaType.getName());
+                    String name = aviatorJavaType.getName();
+                    paramList.add(name);
+                    if(!aliasList.contains(name)){
+                        aliasList.add(aviatorJavaType.getName());
+                    }
                 }else if(aviatorObject instanceof AviatorString){
                     String value = aviatorObject.getValue(env).toString();
                     if(value.contains("RULE_")
