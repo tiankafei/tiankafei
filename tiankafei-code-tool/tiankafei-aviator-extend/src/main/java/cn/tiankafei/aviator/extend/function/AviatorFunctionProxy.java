@@ -22,10 +22,13 @@ import org.apache.commons.collections.CollectionUtils;
 @Slf4j
 public class AviatorFunctionProxy implements AviatorFunction {
 
-    private AviatorFunction function;
+    protected AviatorFunction function;
 
-    public AviatorFunctionProxy(AviatorFunction function){
+    protected boolean proxyFlag;
+
+    public AviatorFunctionProxy(AviatorFunction function, boolean proxyFlag){
         this.function = function;
+        this.proxyFlag = proxyFlag;
     }
 
     @Override
@@ -245,7 +248,33 @@ public class AviatorFunctionProxy implements AviatorFunction {
         return function.call();
     }
 
-    private AviatorObject process(Map<String, Object> env, List<AviatorObject> aviatorList){
+    /**
+     * 执行处理
+     * @param env
+     * @param aviatorList
+     * @return
+     */
+    protected AviatorObject process(Map<String, Object> env, List<AviatorObject> aviatorList){
+        //验证是否编译js
+        boolean compileJsFlag = checkIsCompileJs(env);
+        if(!compileJsFlag){
+            return null;
+        }
+        if(!proxyFlag){
+            throw new AviatorException(getName() + "函数不支持js的编译，请确认！");
+        }
+        //组装参数集合
+        List<Object> paramList = packageParam(env, aviatorList);
+        //拼接js代码
+        return compileJs(paramList);
+    }
+
+    /**
+     * 验证是否编译js
+     * @param env
+     * @return
+     */
+    protected boolean checkIsCompileJs(Map<String, Object> env){
         boolean compileJsFlag = false;
         if(env.containsKey(FunctionConstants.AVIATOR_COMPILE_JS)){
             Object object = env.get(FunctionConstants.AVIATOR_COMPILE_JS);
@@ -257,86 +286,101 @@ public class AviatorFunctionProxy implements AviatorFunction {
                 }
             }
         }
-        if(compileJsFlag){
-            List<String> aliasList = null;
-            if(env.containsKey(FunctionConstants.AVIATOR_FUNCTION_ALIAS)){
-                aliasList = (List<String>) env.get(FunctionConstants.AVIATOR_FUNCTION_ALIAS);
-            }else{
-                aliasList = new ArrayList<>();
-                env.put(FunctionConstants.AVIATOR_FUNCTION_ALIAS, aliasList);
-            }
+        return compileJsFlag;
+    }
 
-            List<Object> paramList = new ArrayList<>();
-            for (int index = 0, length = aviatorList.size(); index < length; index++) {
-                AviatorObject aviatorObject = aviatorList.get(index);
-                if(aviatorObject instanceof AviatorJavaType){
-                    AviatorJavaType aviatorJavaType = (AviatorJavaType) aviatorObject;
-                    String name = aviatorJavaType.getName();
-                    paramList.add(name);
-                    if(!aliasList.contains(name)){
-                        aliasList.add(aviatorJavaType.getName());
+    /**
+     * 拼接js代码
+     * @param paramList
+     * @return
+     */
+    protected AviatorObject compileJs(List<Object> paramList){
+        StringBuilder stringBuilder = new StringBuilder();
+        if(OperatorType.ADD.token.equals(getName())
+                || OperatorType.SUB.token.equals(getName())
+                || OperatorType.MULT.token.equals(getName())
+                || OperatorType.DIV.token.equals(getName())
+                || OperatorType.MOD.token.equals(getName())
+                || OperatorType.LT.token.equals(getName())
+                || OperatorType.LE.token.equals(getName())
+                || OperatorType.GT.token.equals(getName())
+                || OperatorType.GE.token.equals(getName())
+                || OperatorType.AND.token.equals(getName())
+                || OperatorType.OR.token.equals(getName())
+                || OperatorType.EQ.token.equals(getName())
+                || OperatorType.NEQ.token.equals(getName())){
+            stringBuilder.append(paramList.get(0)).append(getName()).append(paramList.get(1));
+        }else if(OperatorType.NOT.token.equals(getName())){
+            stringBuilder.append("RULE_NOT").append("(").append(paramList.get(0)).append(")");
+        }else{
+            if(CollectionUtils.isNotEmpty(paramList)){
+                stringBuilder.append("RULE_").append(getName().toUpperCase()).append("(");
+                for (int index = 0, length = paramList.size(); index < length; index++) {
+                    stringBuilder.append(paramList.get(index));
+                    if(index != length - 1){
+                        stringBuilder.append(",");
                     }
-                }else if(aviatorObject instanceof AviatorString){
-                    String value = aviatorObject.getValue(env).toString();
-                    if(value.contains("RULE_")
-                            || value.contains(OperatorType.ADD.token)
-                            || value.contains(OperatorType.SUB.token)
-                            || value.contains(OperatorType.MULT.token)
-                            || value.contains(OperatorType.DIV.token)
-                            || value.contains(OperatorType.MOD.token)
-                            || value.contains(OperatorType.LT.token)
-                            || value.contains(OperatorType.LE.token)
-                            || value.contains(OperatorType.GT.token)
-                            || value.contains(OperatorType.GE.token)
-                            || value.contains(OperatorType.AND.token)
-                            || value.contains(OperatorType.OR.token)
-                            || value.contains(OperatorType.EQ.token)
-                            || value.contains(OperatorType.NEQ.token)
-                            || value.contains(OperatorType.NOT.token)){
-                        paramList.add(value);
-                    }else{
-                        paramList.add("\"" + value + "\"");
-                    }
-                }else{
-                    Object value = aviatorObject.getValue(env);
-                    paramList.add(value);
                 }
-            }
-
-            StringBuilder stringBuilder = new StringBuilder();
-            if(OperatorType.ADD.token.equals(getName())
-                    || OperatorType.SUB.token.equals(getName())
-                    || OperatorType.MULT.token.equals(getName())
-                    || OperatorType.DIV.token.equals(getName())
-                    || OperatorType.MOD.token.equals(getName())
-                    || OperatorType.LT.token.equals(getName())
-                    || OperatorType.LE.token.equals(getName())
-                    || OperatorType.GT.token.equals(getName())
-                    || OperatorType.GE.token.equals(getName())
-                    || OperatorType.AND.token.equals(getName())
-                    || OperatorType.OR.token.equals(getName())
-                    || OperatorType.EQ.token.equals(getName())
-                    || OperatorType.NEQ.token.equals(getName())){
-                stringBuilder.append(paramList.get(0)).append(getName()).append(paramList.get(1));
-            }else if(OperatorType.NOT.token.equals(getName())){
-                stringBuilder.append("RULE_NOT").append("(").append(paramList.get(0)).append(")");
+                stringBuilder.append(")");
             }else{
-                if(CollectionUtils.isNotEmpty(paramList)){
-                    stringBuilder.append("RULE_").append(getName().toUpperCase()).append("(");
-                    for (int index = 0, length = paramList.size(); index < length; index++) {
-                        stringBuilder.append(paramList.get(index));
-                        if(index != length - 1){
-                            stringBuilder.append(",");
-                        }
-                    }
-                    stringBuilder.append(")");
-                }else{
-                    stringBuilder.append("RULE_").append(getName().toUpperCase()).append("()");
-                }
+                stringBuilder.append("RULE_").append(getName().toUpperCase()).append("()");
             }
-            return new AviatorString(stringBuilder.toString());
         }
-        return null;
+        return new AviatorString(stringBuilder.toString());
+    }
+
+    /**
+     * 组装参数集合
+     * @param env
+     * @param aviatorList
+     * @return
+     */
+    protected List<Object> packageParam(Map<String, Object> env, List<AviatorObject> aviatorList){
+        List<String> aliasList = null;
+        if(env.containsKey(FunctionConstants.AVIATOR_FUNCTION_ALIAS)){
+            aliasList = (List<String>) env.get(FunctionConstants.AVIATOR_FUNCTION_ALIAS);
+        }else{
+            aliasList = new ArrayList<>();
+            env.put(FunctionConstants.AVIATOR_FUNCTION_ALIAS, aliasList);
+        }
+
+        List<Object> paramList = new ArrayList<>();
+        for (int index = 0, length = aviatorList.size(); index < length; index++) {
+            AviatorObject aviatorObject = aviatorList.get(index);
+            if(aviatorObject instanceof AviatorJavaType){
+                AviatorJavaType aviatorJavaType = (AviatorJavaType) aviatorObject;
+                String name = aviatorJavaType.getName();
+                paramList.add(name);
+                if(!aliasList.contains(name)){
+                    aliasList.add(aviatorJavaType.getName());
+                }
+            }else if(aviatorObject instanceof AviatorString){
+                String value = aviatorObject.getValue(env).toString();
+                if(value.contains("RULE_")
+                        || value.contains(OperatorType.ADD.token)
+                        || value.contains(OperatorType.SUB.token)
+                        || value.contains(OperatorType.MULT.token)
+                        || value.contains(OperatorType.DIV.token)
+                        || value.contains(OperatorType.MOD.token)
+                        || value.contains(OperatorType.LT.token)
+                        || value.contains(OperatorType.LE.token)
+                        || value.contains(OperatorType.GT.token)
+                        || value.contains(OperatorType.GE.token)
+                        || value.contains(OperatorType.AND.token)
+                        || value.contains(OperatorType.OR.token)
+                        || value.contains(OperatorType.EQ.token)
+                        || value.contains(OperatorType.NEQ.token)
+                        || value.contains(OperatorType.NOT.token)){
+                    paramList.add(value);
+                }else{
+                    paramList.add("\"" + value + "\"");
+                }
+            }else{
+                Object value = aviatorObject.getValue(env);
+                paramList.add(value);
+            }
+        }
+        return paramList;
     }
 
 }

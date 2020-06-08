@@ -74,7 +74,11 @@ public abstract class AviatorExtendUtil {
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
-        AviatorEvaluator.getInstance().addOpFunction(operatorType, new AviatorFunctionProxy(function));
+        AviatorEvaluator.getInstance().addOpFunction(operatorType, new AviatorFunctionProxy(function, true));
+    }
+
+    public static void addFunction(final AviatorFunction function) {
+        addFunction(function, true);
     }
 
     /**
@@ -82,9 +86,13 @@ public abstract class AviatorExtendUtil {
      *
      * @param function
      */
-    public static void addFunction(final AviatorFunction function) {
-        AviatorFunctionProxy aviatorFunctionProxy = new AviatorFunctionProxy(function);
-        String name = function.getName();
+    public static void addFunction(final AviatorFunction function, boolean proxyFlag) {
+        AviatorFunctionProxy aviatorFunctionProxy = new AviatorFunctionProxy(function, proxyFlag);
+        addFunction(aviatorFunctionProxy);
+    }
+
+    public static void addFunction(final AviatorFunctionProxy aviatorFunctionProxy) {
+        String name = aviatorFunctionProxy.getName();
         String lowerCase = name.toLowerCase();
         String upperCase = name.toUpperCase();
         if(lowerCase.equals(upperCase)){
@@ -122,8 +130,8 @@ public abstract class AviatorExtendUtil {
      * 编译js
      * @param expression
      */
-    public static void compileJs(String expression) {
-        compileJs(expression, new HashMap<>());
+    public static String compileJs(String expression) {
+        return compileJs(expression, new HashMap<>());
     }
 
     /**
@@ -131,9 +139,9 @@ public abstract class AviatorExtendUtil {
      * @param expression
      * @param dataMap
      */
-    public static void compileJs(String expression, Map<String, Object> dataMap) {
+    public static String compileJs(String expression, Map<String, Object> dataMap) {
         String id = UUID.randomUUID().toString().replaceAll("-", "");
-        compileJs(expression, dataMap, id);
+        return compileJs(expression, dataMap, id);
     }
 
     /**
@@ -141,8 +149,8 @@ public abstract class AviatorExtendUtil {
      * @param expression
      * @param id
      */
-    public static void compileJs(String expression, String id) {
-        compileJs(expression, new HashMap<>(), id);
+    public static String compileJs(String expression, String id) {
+        return compileJs(expression, new HashMap<>(), id);
     }
 
     /**
@@ -151,7 +159,7 @@ public abstract class AviatorExtendUtil {
      * @param dataMap
      * @param id
      */
-    public static void compileJs(String expression, Map<String, Object> dataMap, String id) {
+    public static String compileJs(String expression, Map<String, Object> dataMap, String id) {
         try {
             expression = parseExpression(expression);
             Expression exp = AviatorEvaluator.compile(expression);
@@ -172,8 +180,11 @@ public abstract class AviatorExtendUtil {
             log.info("表达式：{}编译的js结果为：{}", expression, stringBuilder.toString());
 
             dataMap.remove(FunctionConstants.AVIATOR_FUNCTION_ALIAS);
+
+            return stringBuilder.toString();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new AviatorException(e.getMessage());
         }
     }
 
