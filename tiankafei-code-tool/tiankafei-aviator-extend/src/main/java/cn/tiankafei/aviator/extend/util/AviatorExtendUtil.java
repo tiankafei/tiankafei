@@ -167,7 +167,7 @@ public abstract class AviatorExtendUtil {
                     stringBuilder.append("\t").append("var ").append(aliasName).append(" = ").append("obj.").append(aliasName).append("; \n");
                 }
             }
-            stringBuilder.append("\t").append(result).append("; \n");
+            stringBuilder.append("\treturn ").append(result).append("; \n");
             stringBuilder.append("}\n");
             log.info("表达式：{}编译的js结果为：{}", expression, stringBuilder.toString());
 
