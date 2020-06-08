@@ -296,22 +296,35 @@ public class AviatorFunctionProxy implements AviatorFunction {
      */
     protected AviatorObject compileJs(List<Object> paramList){
         StringBuilder stringBuilder = new StringBuilder();
-        if(OperatorType.ADD.token.equals(getName())
-                || OperatorType.SUB.token.equals(getName())
-                || OperatorType.MULT.token.equals(getName())
-                || OperatorType.DIV.token.equals(getName())
-                || OperatorType.MOD.token.equals(getName())
-                || OperatorType.LT.token.equals(getName())
-                || OperatorType.LE.token.equals(getName())
-                || OperatorType.GT.token.equals(getName())
-                || OperatorType.GE.token.equals(getName())
-                || OperatorType.AND.token.equals(getName())
-                || OperatorType.OR.token.equals(getName())
-                || OperatorType.EQ.token.equals(getName())
-                || OperatorType.NEQ.token.equals(getName())){
-            stringBuilder.append(paramList.get(0)).append(getName()).append(paramList.get(1));
+
+        if(OperatorType.ADD.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_ADD", paramList);
+        }else if(OperatorType.SUB.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_SUB", paramList);
+        }else if(OperatorType.MULT.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_MUL", paramList);
+        }else if(OperatorType.DIV.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_DIV", paramList);
+        }else if(OperatorType.MOD.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_MOD", paramList);
+        }else if(OperatorType.LT.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_LESS", paramList);
+        }else if(OperatorType.LE.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_LESS_THAN", paramList);
+        }else if(OperatorType.GT.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_GREATER", paramList);
+        }else if(OperatorType.GE.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_GREATER_THAN", paramList);
+        }else if(OperatorType.AND.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_AND", paramList);
+        }else if(OperatorType.OR.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_OR", paramList);
+        }else if(OperatorType.EQ.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_EQUALS", paramList);
+        }else if(OperatorType.NEQ.token.equals(getName())){
+            appendTwoParam(stringBuilder, "RULE_NOT_EQUALS", paramList);
         }else if(OperatorType.NOT.token.equals(getName())){
-            stringBuilder.append("RULE_NOT").append("(").append(paramList.get(0)).append(")");
+            appendOneParam(stringBuilder, "RULE_NOT", paramList);
         }else{
             if(CollectionUtils.isNotEmpty(paramList)){
                 stringBuilder.append("RULE_").append(getName().toUpperCase()).append("(");
@@ -327,6 +340,14 @@ public class AviatorFunctionProxy implements AviatorFunction {
             }
         }
         return new AviatorString(stringBuilder.toString());
+    }
+
+    protected void appendTwoParam(StringBuilder stringBuilder, String funName, List<Object> paramList){
+        stringBuilder.append(funName).append("(").append(paramList.get(0)).append(",").append(paramList.get(1)).append(")");
+    }
+
+    protected void appendOneParam(StringBuilder stringBuilder, String funName, List<Object> paramList){
+        stringBuilder.append(funName).append("(").append(paramList.get(0)).append(")");
     }
 
     /**
