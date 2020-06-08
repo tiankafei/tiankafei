@@ -7,7 +7,7 @@ import cn.tiankafei.proxy.model.ProxyProcess;
  * @author tiankafei
  * @since 1.0
  **/
-public class ProxyUtil {
+public abstract class ProxyUtil {
 
     /**
      * 获取代理对象

@@ -10,7 +10,7 @@ import java.lang.reflect.Proxy;
  * @author tiankafei
  * @since 1.0
  **/
-public class JdkProxyUtil {
+public abstract class JdkProxyUtil {
 
     /**
      * 获取代理对象
@@ -21,9 +21,32 @@ public class JdkProxyUtil {
      * @return
      */
     public static <T> T getProxy(Object object, InvocationHandler invocationHandler) {
-        ClassLoader classLoader = object.getClass().getClassLoader();
         Class<?>[] interfaces = object.getClass().getInterfaces();
-        T t = (T) Proxy.newProxyInstance(classLoader, interfaces, invocationHandler);
+        return getProxy(object.getClass(), interfaces, invocationHandler);
+    }
+
+    /**
+     * 根据接口类获取代理对象
+     * @param clazz
+     * @param invocationHandler
+     * @param <T>
+     * @return
+     */
+    public static <T> T getProxy(Class clazz, InvocationHandler invocationHandler){
+        return getProxy(clazz, new Class[]{clazz}, invocationHandler);
+    }
+
+    /**
+     * 获取代理对象
+     * @param clazz
+     * @param clazzArray
+     * @param invocationHandler
+     * @param <T>
+     * @return
+     */
+    private static <T> T getProxy(Class clazz, Class[] clazzArray, InvocationHandler invocationHandler){
+        ClassLoader classLoader = clazz.getClassLoader();
+        T t = (T) Proxy.newProxyInstance(classLoader, clazzArray, invocationHandler);
         return t;
     }
 
@@ -36,9 +59,32 @@ public class JdkProxyUtil {
      * @return
      */
     public static <T> T getProxy(Object object, AbstractInvocationHandler invocationHandler) {
-        ClassLoader classLoader = object.getClass().getClassLoader();
         Class<?>[] interfaces = object.getClass().getInterfaces();
-        T t = (T) Proxy.newProxyInstance(classLoader, interfaces, invocationHandler);
+        return getProxy(object.getClass(), interfaces, invocationHandler);
+    }
+
+    /**
+     * 获取代理对象
+     * @param clazz
+     * @param invocationHandler
+     * @param <T>
+     * @return
+     */
+    public static <T> T getProxy(Class clazz, AbstractInvocationHandler invocationHandler) {
+        return getProxy(clazz, new Class[]{clazz}, invocationHandler);
+    }
+
+    /**
+     * 获取代理对象
+     * @param clazz
+     * @param clazzArray
+     * @param invocationHandler
+     * @param <T>
+     * @return
+     */
+    private static <T> T getProxy(Class clazz, Class[] clazzArray, AbstractInvocationHandler invocationHandler) {
+        ClassLoader classLoader = clazz.getClassLoader();
+        T t = (T) Proxy.newProxyInstance(classLoader, clazzArray, invocationHandler);
         return t;
     }
 
