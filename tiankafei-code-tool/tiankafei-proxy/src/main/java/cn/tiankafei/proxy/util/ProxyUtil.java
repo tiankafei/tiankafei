@@ -1,7 +1,7 @@
 package cn.tiankafei.proxy.util;
 
 import cn.tiankafei.proxy.IAspect;
-import cn.tiankafei.proxy.model.ProxyProcess;
+import cn.tiankafei.proxy.adapter.ProxyAdapter;
 
 /**
  * @author tiankafei
@@ -20,13 +20,13 @@ public abstract class ProxyUtil {
     public static <T> T getProxy(Object object, IAspect IAspect) {
         Class<?>[] interfaces = object.getClass().getInterfaces();
 
-        ProxyProcess proxyProcess = new ProxyProcess(object, IAspect);
+        ProxyAdapter proxyAdapter = new ProxyAdapter(object, IAspect);
         if (interfaces == null || interfaces.length == 0) {
             // 没有实现接口，使用Cglib代理
-            return CglibProxyUtil.getProxy(object, proxyProcess);
+            return CglibProxyUtil.getProxy(object, proxyAdapter);
         } else {
             // 有接口实现，使用jdk代理
-            return JdkProxyUtil.getProxy(object, proxyProcess);
+            return JdkProxyUtil.getProxy(object, proxyAdapter);
         }
     }
 

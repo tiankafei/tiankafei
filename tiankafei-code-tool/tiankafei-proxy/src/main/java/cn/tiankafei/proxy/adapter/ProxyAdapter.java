@@ -1,4 +1,4 @@
-package cn.tiankafei.proxy.model;
+package cn.tiankafei.proxy.adapter;
 
 import cn.tiankafei.proxy.IAspect;
 import java.lang.reflect.InvocationHandler;
@@ -14,7 +14,7 @@ import net.sf.cglib.proxy.MethodProxy;
  * @author tiankafei
  * @since 1.0
  **/
-public class ProxyProcess implements InvocationHandler, MethodInterceptor {
+public class ProxyAdapter implements InvocationHandler, MethodInterceptor {
 
     /**
      * 被代理的对象
@@ -37,7 +37,7 @@ public class ProxyProcess implements InvocationHandler, MethodInterceptor {
      * @param object
      * @param aspect
      */
-    public ProxyProcess(Object object, IAspect aspect) {
+    public ProxyAdapter(Object object, IAspect aspect) {
         this.target = object;
         this.aspect = aspect;
     }
