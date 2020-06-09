@@ -1,7 +1,7 @@
 package cn.tiankafei.proxy.util;
 
 import cn.tiankafei.proxy.IAspect;
-import cn.tiankafei.proxy.adapter.ProxyAdapter;
+import cn.tiankafei.proxy.ProxyAdapter;
 
 /**
  * @author tiankafei
