@@ -211,12 +211,7 @@ public abstract class AviatorExtendUtil {
             } else {
                 result = exp.execute();
             }
-            if(result instanceof AviatorFunctionVo){
-                AviatorFunctionVo aviatorFunctionVo = (AviatorFunctionVo) result;
-                log.info("表达式：{}的执行结果为：{}", expression, aviatorFunctionVo.getExpression());
-            }else{
-                log.info("表达式：{}的执行结果为：{}", expression, result);
-            }
+            log.info("表达式：{}的执行结果为：{}", expression, result);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,12 +239,7 @@ public abstract class AviatorExtendUtil {
             } else {
                 result = AviatorEvaluator.execute(expression);
             }
-            if(result instanceof AviatorFunctionVo){
-                AviatorFunctionVo aviatorFunctionVo = (AviatorFunctionVo) result;
-                log.info("表达式：{}的执行结果为：{}", expression, aviatorFunctionVo.getExpression());
-            }else{
-                log.info("表达式：{}的执行结果为：{}", expression, result);
-            }
+            log.info("表达式：{}的执行结果为：{}", expression, result);
         } catch (Exception e) {
             e.printStackTrace();
         }
