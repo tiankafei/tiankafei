@@ -1,14 +1,10 @@
 package cn.tiankafei.proxy;
 
-import cn.tiankafei.proxy.util.CglibProxyUtil;
-import cn.tiankafei.proxy.util.JdkProxyUtil;
-import cn.tiankafei.proxy.util.ProxyUtil;
+import cn.tiankafei.proxy.utils.ProxyUtil;
 import com.google.common.base.Stopwatch;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.cglib.proxy.MethodProxy;
 import org.junit.Test;
 
 /**
@@ -21,14 +17,16 @@ public class ProxyTest {
     private static final int count = 1;
 
     @Test
-    public void testJdkProxy1() {
-        IHandler handler = JdkProxyUtil.getProxy(IHandler.class, (proxy, method, args) -> {
+    public void testDynamicProxy() {
+        //使用jdk自带的动态代理
+        IHandler handler = ProxyUtil.getProxy(IHandler.class, (proxy, method, args) -> {
             System.out.println(method.getName());
             return null;
         });
         System.out.println(handler.process("test"));
 
-        IHandler handler1 = CglibProxyUtil.getProxy(IHandler.class, (obj, method, args, proxy) -> {
+        //使用cglib动态代理
+        IHandler handler1 = ProxyUtil.getProxy(IHandler.class, (obj, method, args, proxy) -> {
             System.out.println(method.getName());
             return null;
         });

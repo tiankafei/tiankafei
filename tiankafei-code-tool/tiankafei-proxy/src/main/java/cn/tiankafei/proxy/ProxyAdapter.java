@@ -13,12 +13,12 @@ import net.sf.cglib.proxy.MethodProxy;
  * @author tiankafei
  * @since 1.0
  **/
-public class ProxyAdapter implements InvocationHandler, MethodInterceptor {
+public class ProxyAdapter<T> implements InvocationHandler, MethodInterceptor {
 
     /**
      * 被代理的对象
      */
-    private Object target;
+    private T target;
 
     /**
      * 切面的具体实现
@@ -36,7 +36,7 @@ public class ProxyAdapter implements InvocationHandler, MethodInterceptor {
      * @param object
      * @param aspect
      */
-    public ProxyAdapter(Object object, IAspect aspect) {
+    public ProxyAdapter(T object, IAspect aspect) {
         this.target = object;
         this.aspect = aspect;
     }
