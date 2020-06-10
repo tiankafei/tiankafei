@@ -1,4 +1,4 @@
-package cn.tiankafei.proxy.utils;
+package cn.tiankafei.proxy;
 
 import cn.tiankafei.proxy.IAspect;
 import cn.tiankafei.proxy.ProxyAdapter;

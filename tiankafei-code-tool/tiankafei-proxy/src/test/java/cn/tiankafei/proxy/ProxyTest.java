@@ -1,6 +1,5 @@
 package cn.tiankafei.proxy;
 
-import cn.tiankafei.proxy.utils.ProxyUtil;
 import com.google.common.base.Stopwatch;
 
 import java.util.concurrent.TimeUnit;

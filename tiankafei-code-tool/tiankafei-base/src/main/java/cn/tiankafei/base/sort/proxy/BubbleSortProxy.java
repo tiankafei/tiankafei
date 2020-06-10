@@ -3,7 +3,7 @@ package cn.tiankafei.base.sort.proxy;
 import cn.tiankafei.base.sort.bubble.BubbleSortFactory;
 import cn.tiankafei.base.sort.factory.SortFactory;
 import cn.tiankafei.base.sort.singleton.SortFactoryStrategy;
-import cn.tiankafei.proxy.utils.ProxyUtil;
+import cn.tiankafei.proxy.ProxyUtil;
 
 /**
  * @Author 魏双双
