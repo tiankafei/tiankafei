@@ -30,5 +30,4 @@ tiankafei-code-learn/hadoop
 tiankafei-code-learn/hive
 tiankafei-code-learn/spark
 /node_modules
-/package.json
 /yarn.lock
