@@ -34,151 +34,151 @@
 
 > 英语学习：
 >
-> [词性语法学习](tiankafei-docs-en/词性语法学习.md)
+> [词性语法学习](/tiankafei-docs-en/词性语法学习.md)
 >
-> [第1阶段单词记忆](tiankafei-docs-en/第1阶段单词记忆.md)
+> [第1阶段单词记忆](/tiankafei-docs-en/第1阶段单词记忆.md)
 
 ## tiankafei-docs-io
 
 > IO相关的技术文档列表，包含以下：
 >
-> [IO详情介绍](tiankafei-docs-io/IO详情介绍.md)
+> [IO详情介绍](/tiankafei-docs-io/IO详情介绍.md)
 
 ## tiankafei-docs-linux
 
 > linux相关的技术文档列表，包含以下：
 >
-> [centos常用命令](tiankafei-docs-linux/centos常用命令.md)
+> [centos常用命令](/tiankafei-docs-linux/centos常用命令.md)
 >
-> [centos6安装MySQL8](tiankafei-docs-linux/centos6安装MySQL8.md)
+> [centos6安装MySQL8](/tiankafei-docs-linux/centos6安装MySQL8.md)
 >
-> [centos7安装MySQL8](tiankafei-docs-linux/centos7安装MySQL8.md)
+> [centos7安装MySQL8](/tiankafei-docs-linux/centos7安装MySQL8.md)
 >
-> [centos7安装Nacos并设置开机启动](tiankafei-docs-linux/centos7安装Nacos并设置开机启动.md)
+> [centos7安装Nacos并设置开机启动](/tiankafei-docs-linux/centos7安装Nacos并设置开机启动.md)
 >
-> [centos7安装Sentinel-dashboard并设置开机启动](tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动.md)
+> [centos7安装Sentinel-dashboard并设置开机启动](/tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动.md)
 >
-> [centos7安装Mongodb并设置开机启动](tiankafei-docs-linux/centos7安装Mongodb并设置开机启动.md)
+> [centos7安装Mongodb并设置开机启动](/tiankafei-docs-linux/centos7安装Mongodb并设置开机启动.md)
 >
-> [centos7安装Neo4j并设置开机启动](tiankafei-docs-linux/centos7安装Neo4j并设置开机启动.md)
+> [centos7安装Neo4j并设置开机启动](/tiankafei-docs-linux/centos7安装Neo4j并设置开机启动.md)
 >
-> [centos7安装RabbitMQ并设置开机启动](tiankafei-docs-linux/centos7安装RabbitMQ并设置开机启动.md)
+> [centos7安装RabbitMQ并设置开机启动](/tiankafei-docs-linux/centos7安装RabbitMQ并设置开机启动.md)
 >
-> [centos7安装NodeJS](tiankafei-docs-linux/centos7安装NodeJS.md)
+> [centos7安装NodeJS](/tiankafei-docs-linux/centos7安装NodeJS.md)
 >
-> [centos7安装Consul并设置开机启动](tiankafei-docs-linux/centos7安装Consul并设置开机启动.md)
+> [centos7安装Consul并设置开机启动](/tiankafei-docs-linux/centos7安装Consul并设置开机启动.md)
 >
-> [centos7安装Easy-Mock并设置开机启动](tiankafei-docs-linux/centos7安装Easy-Mock并设置开机启动.md)
+> [centos7安装Easy-Mock并设置开机启动](/tiankafei-docs-linux/centos7安装Easy-Mock并设置开机启动.md)
 >
-> [centos7安装Nexus私服并设置开机启动](tiankafei-docs-linux/centos7安装Nexus私服并设置开机启动.md)
+> [centos7安装Nexus私服并设置开机启动](/tiankafei-docs-linux/centos7安装Nexus私服并设置开机启动.md)
 >
-> [centos7安装Nexus私服及maven的配置](tiankafei-docs-linux/centos7安装Nexus私服及maven的配置.md)
+> [centos7安装Nexus私服及maven的配置](/tiankafei-docs-linux/centos7安装Nexus私服及maven的配置.md)
 >
-> [centos7安装禅道并开机启动](tiankafei-docs-linux/centos7安装禅道并开机启动.md)
+> [centos7安装禅道并开机启动](/tiankafei-docs-linux/centos7安装禅道并开机启动.md)
 
 ## tiankafei-docs-other
 
 > 其他的一些相关文档列表，包含以下：
 >
-> [Java基础](tiankafei-docs-other/Java基础.md)
+> [Java基础](/tiankafei-docs-other/Java基础.md)
 >
-> [常用正则表达式](tiankafei-docs-other/常用正则表达式.md)
+> [常用正则表达式](/tiankafei-docs-other/常用正则表达式.md)
 >
-> [git同时连接多个远程仓库](tiankafei-docs-other/git同时连接多个远程仓库.md)
+> [git同时连接多个远程仓库](/tiankafei-docs-other/git同时连接多个远程仓库.md)
 >
-> [git上fork后再更新](tiankafei-docs-other/git上fork后再更新.md)
+> [git上fork后再更新](/tiankafei-docs-other/git上fork后再更新.md)
 
 ## tiankafei-docs-web
 
 > web相关的技术文档列表，包含以下：
 >
-> [filter-servlet-inteceptor-controller执行顺序图](tiankafei-docs-web/filter-servlet-inteceptor-controller执行顺序图.md)
+> [filter-servlet-inteceptor-controller执行顺序图](/tiankafei-docs-web/filter-servlet-inteceptor-controller执行顺序图.md)
 >
-> [spring学习笔记](tiankafei-docs-web/spring学习笔记.md)
+> [spring学习笔记](/tiankafei-docs-web/spring学习笔记.md)
 >
-> [springMVC学习笔记](tiankafei-docs-web/springMVC学习笔记.md)
+> [springMVC学习笔记](/tiankafei-docs-web/springMVC学习笔记.md)
 >
-> [springBoot学习笔记](tiankafei-docs-web/springBoot学习笔记.md)
+> [springBoot学习笔记](/tiankafei-docs-web/springBoot学习笔记.md)
 >
-> [mybatis学习笔记](tiankafei-docs-web/mybatis学习笔记.md)
+> [mybatis学习笔记](/tiankafei-docs-web/mybatis学习笔记.md)
 >
-> [sharding-jdbc基于springboot的配置](tiankafei-docs-web/sharding-jdbc基于springboot的配置.md)
+> [sharding-jdbc基于springboot的配置](/tiankafei-docs-web/sharding-jdbc基于springboot的配置.md)
 >
-> [分布式事务](tiankafei-docs-web/分布式事务.md)
+> [分布式事务](/tiankafei-docs-web/分布式事务.md)
 >
-> [分布式锁](tiankafei-docs-web/分布式锁.md)
+> [分布式锁](/tiankafei-docs-web/分布式锁.md)
 >
-> [特别注意的点](tiankafei-docs-web/特别注意的点.md)
+> [特别注意的点](/tiankafei-docs-web/特别注意的点.md)
 
 ## tiankafei-docs-大数据
 
 > 大数据生态的技术文档列表，包含以下：
 >
-> [centos7安装配置Hadoop](tiankafei-docs-大数据/centos7安装配置Hadoop.md)
+> [centos7安装配置Hadoop](/tiankafei-docs-大数据/centos7安装配置Hadoop.md)
 >
-> [Hadoop程序运行的三种方式](tiankafei-docs-大数据/Hadoop程序运行的三种方式.md)
+> [Hadoop程序运行的三种方式](/tiankafei-docs-大数据/Hadoop程序运行的三种方式.md)
 >
-> [centos7安装配置HBase](tiankafei-docs-大数据/centos7安装配置HBase.md)
+> [centos7安装配置HBase](/tiankafei-docs-大数据/centos7安装配置HBase.md)
 >
-> [centos7安装配置Spark](tiankafei-docs-大数据/centos7安装配置Spark.md)
+> [centos7安装配置Spark](/tiankafei-docs-大数据/centos7安装配置Spark.md)
 >
-> [centos7安装配置Flink](tiankafei-docs-大数据/centos7安装配置Flink.md)
+> [centos7安装配置Flink](/tiankafei-docs-大数据/centos7安装配置Flink.md)
 >
-> [hadoop学习笔记](tiankafei-docs-大数据/hadoop学习笔记.md)
+> [hadoop学习笔记](/tiankafei-docs-大数据/hadoop学习笔记.md)
 >
-> [hive学习笔记](tiankafei-docs-大数据/hive学习笔记.md)
+> [hive学习笔记](/tiankafei-docs-大数据/hive学习笔记.md)
 >
-> [hbase学习笔记](tiankafei-docs-大数据/hbase学习笔记.md)
+> [hbase学习笔记](/tiankafei-docs-大数据/hbase学习笔记.md)
 >
-> [flume学习笔记](tiankafei-docs-大数据/flume学习笔记.md)
+> [flume学习笔记](/tiankafei-docs-大数据/flume学习笔记.md)
 >
-> [sqoop学习笔记](tiankafei-docs-大数据/sqoop学习笔记.md)
+> [sqoop学习笔记](/tiankafei-docs-大数据/sqoop学习笔记.md)
 >
-> [scala学习笔记](tiankafei-docs-大数据/scala学习笔记.md)
+> [scala学习笔记](/tiankafei-docs-大数据/scala学习笔记.md)
 >
-> [Kafka学习笔记](tiankafei-docs-大数据/Kafka学习笔记.md)
+> [Kafka学习笔记](/tiankafei-docs-大数据/Kafka学习笔记.md)
 >
-> [大数据项目-日志收集分析](tiankafei-docs-大数据/大数据项目-日志收集分析.md)
+> [大数据项目-日志收集分析](/tiankafei-docs-大数据/大数据项目-日志收集分析.md)
 
 ## tiankafei-docs-架构
 
 > 各种中间件的相关技术文档列表，包含一下：
 >
-> [redis学习笔记](tiankafei-docs-架构/redis学习笔记.md)
+> [redis学习笔记](/tiankafei-docs-架构/redis学习笔记.md)
 >
-> [MySQL调优](tiankafei-docs-架构/MySQL调优.md)
+> [MySQL调优](/tiankafei-docs-架构/MySQL调优.md)
 
 ## tiankafei-docs-数据结构与算法
 
 > 用到的各种算法的文档列表，包含以下：
 >
-> [java集合](tiankafei-docs-数据结构与算法/java集合.md)
+> [java集合](/tiankafei-docs-数据结构与算法/java集合.md)
 >
-> [Lambda表达式和StreamAPI用法](tiankafei-docs-数据结构与算法/Lambda表达式和StreamAPI用法.md)
+> [Lambda表达式和StreamAPI用法](/tiankafei-docs-数据结构与算法/Lambda表达式和StreamAPI用法.md)
 >
-> [树结构](tiankafei-docs-数据结构与算法/树结构.md)
+> [树结构](/tiankafei-docs-数据结构与算法/树结构.md)
 >
-> [多线程与高并发-JUC](tiankafei-docs-数据结构与算法/多线程与高并发-JUC.md)
+> [多线程与高并发-JUC](/tiankafei-docs-数据结构与算法/多线程与高并发-JUC.md)
 >
-> [JVM从入门到精通](tiankafei-docs-数据结构与算法/JVM从入门到精通.md)
+> [JVM从入门到精通](/tiankafei-docs-数据结构与算法/JVM从入门到精通.md)
 >
-> [设计模式](tiankafei-docs-数据结构与算法/设计模式.md)
+> [设计模式](/tiankafei-docs-数据结构与算法/设计模式.md)
 
 ## tiankafei-docs-云
 
 > 与云原生，容器相关的技术文档列表，包含以下：
 >
-> [Centos7安装Docker并配置使用](tiankafei-docs-云/Centos7安装Docker并配置使用.md)
+> [Centos7安装Docker并配置使用](/tiankafei-docs-云/Centos7安装Docker并配置使用.md)
 >
-> [Centos7安装Jenkins并配置使用](tiankafei-docs-云/Centos7安装Jenkins并配置使用.md)
+> [Centos7安装Jenkins并配置使用](/tiankafei-docs-云/Centos7安装Jenkins并配置使用.md)
 >
-> [Centos7安装Gitlab并汉化](tiankafei-docs-云/Centos7安装Gitlab并汉化.md)
+> [Centos7安装Gitlab并汉化](/tiankafei-docs-云/Centos7安装Gitlab并汉化.md)
 >
-> [k8s最新版安装过程](tiankafei-docs-云/k8s最新版安装过程.md)
+> [k8s最新版安装过程](/tiankafei-docs-云/k8s最新版安装过程.md)
 >
-> [k8s-nfs文件共享安装及使用](tiankafei-docs-云/k8s-nfs文件共享安装及使用.md)
+> [k8s-nfs文件共享安装及使用](/tiankafei-docs-云/k8s-nfs文件共享安装及使用.md)
 >
-> [k8s脚本部署](tiankafei-docs-云/k8s脚本部署.md)
+> [k8s脚本部署](/tiankafei-docs-云/k8s脚本部署.md)
 
 ## 网络上的优秀文章总结
 
