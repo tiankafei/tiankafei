@@ -1,6 +1,7 @@
 ---
 home: true
 heroImage: /images/logo.jpg
+heroText: java技术栈
 tagline: 技术笔记
 actionText: 快速上手 →
 actionLink: /guide/
