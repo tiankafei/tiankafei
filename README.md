@@ -34,9 +34,9 @@
 
 > 英语学习：
 >
-> [语法学习](tiankafei-docs-en/语法学习.md)
+> [词性语法学习](tiankafei-docs-en/词性语法学习.md)
 >
-> [第001天单词记忆](tiankafei-docs-en/第001天单词记忆.md)
+> [第1阶段单词记忆](tiankafei-docs-en/第1阶段单词记忆.md)
 
 # tiankafei-docs-io
 
