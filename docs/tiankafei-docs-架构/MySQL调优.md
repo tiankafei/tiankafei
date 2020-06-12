@@ -1,4 +1,4 @@
-# 使用比主库更好的硬件设备作为slave，mysql压力小，延迟自然会变小。MySQL调优
+# MySQL调优
 
 > 命令行连接mysql命令：
 >
