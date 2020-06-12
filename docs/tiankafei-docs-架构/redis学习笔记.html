@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>redis介绍 | tiankafei - java相关技术栈</title>
+    <meta name="generator" content="VuePress 1.5.1">
+    
+    <meta name="description" content="自己写的一些东西的记录，包括代码与笔记，jdk最低支持1.8">
+    <link rel="preload" href="/assets/css/0.styles.9bcdb81a.css" as="style"><link rel="preload" href="/assets/js/app.ccc5f14a.js" as="script"><link rel="preload" href="/assets/js/2.dfe90790.js" as="script"><link rel="preload" href="/assets/js/69.70fd1634.js" as="script"><link rel="prefetch" href="/assets/js/10.7cadd409.js"><link rel="prefetch" href="/assets/js/11.067b1649.js"><link rel="prefetch" href="/assets/js/12.2e93e392.js"><link rel="prefetch" href="/assets/js/13.f6cd60ca.js"><link rel="prefetch" href="/assets/js/14.5dac3551.js"><link rel="prefetch" href="/assets/js/15.b02ba84d.js"><link rel="prefetch" href="/assets/js/16.2eafb577.js"><link rel="prefetch" href="/assets/js/17.9899e73c.js"><link rel="prefetch" href="/assets/js/18.60703fd1.js"><link rel="prefetch" href="/assets/js/19.2ba65924.js"><link rel="prefetch" href="/assets/js/20.efca007d.js"><link rel="prefetch" href="/assets/js/21.0f202b62.js"><link rel="prefetch" href="/assets/js/22.2060d3bc.js"><link rel="prefetch" href="/assets/js/23.6f797601.js"><link rel="prefetch" href="/assets/js/24.d94f4c05.js"><link rel="prefetch" href="/assets/js/25.44dd7767.js"><link rel="prefetch" href="/assets/js/26.07daa798.js"><link rel="prefetch" href="/assets/js/27.67424cb5.js"><link rel="prefetch" href="/assets/js/28.96688bbc.js"><link rel="prefetch" href="/assets/js/29.b7eac95c.js"><link rel="prefetch" href="/assets/js/3.9c0144bd.js"><link rel="prefetch" href="/assets/js/30.db57cc90.js"><link rel="prefetch" href="/assets/js/31.55b3c285.js"><link rel="prefetch" href="/assets/js/32.9375e63d.js"><link rel="prefetch" href="/assets/js/33.6b619751.js"><link rel="prefetch" href="/assets/js/34.931628db.js"><link rel="prefetch" href="/assets/js/35.619f7989.js"><link rel="prefetch" href="/assets/js/36.4040688b.js"><link rel="prefetch" href="/assets/js/37.c827e4b0.js"><link rel="prefetch" href="/assets/js/38.8cc9fea4.js"><link rel="prefetch" href="/assets/js/39.6ba33c01.js"><link rel="prefetch" href="/assets/js/4.baf4feed.js"><link rel="prefetch" href="/assets/js/40.e67f41b2.js"><link rel="prefetch" href="/assets/js/41.d6621d93.js"><link rel="prefetch" href="/assets/js/42.6ef70c29.js"><link rel="prefetch" href="/assets/js/43.83631006.js"><link rel="prefetch" href="/assets/js/44.fb6d58d0.js"><link rel="prefetch" href="/assets/js/45.9507ab04.js"><link rel="prefetch" href="/assets/js/46.149b21d4.js"><link rel="prefetch" href="/assets/js/47.befc4ed9.js"><link rel="prefetch" href="/assets/js/48.d4c4aca0.js"><link rel="prefetch" href="/assets/js/49.5928ac72.js"><link rel="prefetch" href="/assets/js/5.d7c5e89d.js"><link rel="prefetch" href="/assets/js/50.131de96d.js"><link rel="prefetch" href="/assets/js/51.28e160d1.js"><link rel="prefetch" href="/assets/js/52.3cd65609.js"><link rel="prefetch" href="/assets/js/53.239208d7.js"><link rel="prefetch" href="/assets/js/54.c350cc4f.js"><link rel="prefetch" href="/assets/js/55.ab62193b.js"><link rel="prefetch" href="/assets/js/56.5679260a.js"><link rel="prefetch" href="/assets/js/57.2f1091ae.js"><link rel="prefetch" href="/assets/js/58.9ded9973.js"><link rel="prefetch" href="/assets/js/59.ff98f4f0.js"><link rel="prefetch" href="/assets/js/6.ad7178fc.js"><link rel="prefetch" href="/assets/js/60.73cc249a.js"><link rel="prefetch" href="/assets/js/61.dac3642a.js"><link rel="prefetch" href="/assets/js/62.c87a627b.js"><link rel="prefetch" href="/assets/js/63.40d5e52e.js"><link rel="prefetch" href="/assets/js/64.35795f8b.js"><link rel="prefetch" href="/assets/js/65.ae23fc13.js"><link rel="prefetch" href="/assets/js/66.1de59948.js"><link rel="prefetch" href="/assets/js/67.d1fa8257.js"><link rel="prefetch" href="/assets/js/68.dd73b8b9.js"><link rel="prefetch" href="/assets/js/7.17ba4181.js"><link rel="prefetch" href="/assets/js/70.e9e6439f.js"><link rel="prefetch" href="/assets/js/71.78d7c72f.js"><link rel="prefetch" href="/assets/js/72.47241074.js"><link rel="prefetch" href="/assets/js/73.fcda0ede.js"><link rel="prefetch" href="/assets/js/74.f4c53349.js"><link rel="prefetch" href="/assets/js/75.96aa577a.js"><link rel="prefetch" href="/assets/js/76.3285bc65.js"><link rel="prefetch" href="/assets/js/8.67246ec2.js"><link rel="prefetch" href="/assets/js/9.e1e90081.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9bcdb81a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">tiankafei - java相关技术栈</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>架构</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/tiankafei-docs-架构/MySQL调优.html" class="sidebar-link">MySQL调优</a></li><li><a href="/tiankafei-docs-架构/mysql主从复制安装配置.html" class="sidebar-link">mysql主从复制安装配置</a></li><li><a href="/tiankafei-docs-架构/使用amoeba实现mysql读写分离.html" class="sidebar-link">使用amoeba实现mysql读写分离</a></li><li><a href="/tiankafei-docs-架构/redis学习笔记.html" class="active sidebar-link">redis介绍</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis原理" class="sidebar-link">redis原理</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#linux内核" class="sidebar-link">linux内核</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis安装" class="sidebar-link">redis安装</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis使用" class="sidebar-link">redis使用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#string：字符串、数组、bitmap" class="sidebar-link">string：字符串、数组、bitmap</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#bit-arrays：或者说-simply-bitmaps" class="sidebar-link">Bit arrays：或者说 simply bitmaps</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#hash：由field和关联的value组成的map" class="sidebar-link">hash：由field和关联的value组成的map</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#list：按插入顺序排序的字符串元素的集合" class="sidebar-link">list：按插入顺序排序的字符串元素的集合</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#set：不重复且无序的字符串元素的集合" class="sidebar-link">set：不重复且无序的字符串元素的集合</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#sorted-set：通过score值进行排序的集合" class="sidebar-link">sorted set：通过score值进行排序的集合</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis发布订阅" class="sidebar-link">redis发布订阅</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis事务" class="sidebar-link">redis事务</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis穿透" class="sidebar-link">redis穿透</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis缓存" class="sidebar-link">redis缓存</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis-过期时间" class="sidebar-link">redis 过期时间</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis持久化" class="sidebar-link">redis持久化</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#rdb" class="sidebar-link">RDB</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#aof：append-only-file-持久化：保存写状态" class="sidebar-link">AOF：Append-Only-File 持久化：保存写状态</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#混合方式：rdb与aof混合使用" class="sidebar-link">混合方式：RDB与AOF混合使用</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis官方建议" class="sidebar-link">Redis官方建议</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#缓存的击穿" class="sidebar-link">缓存的击穿</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#缓存的雪崩" class="sidebar-link">缓存的雪崩</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#缓存的一致性（双写）" class="sidebar-link">缓存的一致性（双写）</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis集群、主从复制" class="sidebar-link">redis集群、主从复制</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-架构/redis学习笔记.html#redis开发" class="sidebar-link">redis开发</a></li></ul></li><li><a href="/tiankafei-docs-架构/zookeeper学习笔记.html" class="sidebar-link">/tiankafei-docs-架构/zookeeper学习笔记.html</a></li><li><a href="/tiankafei-docs-架构/elasticsearch学习笔记.html" class="sidebar-link">/tiankafei-docs-架构/elasticsearch学习笔记.html</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="redis介绍"><a href="#redis介绍" class="header-anchor">#</a> redis介绍</h1> <h2 id="redis原理"><a href="#redis原理" class="header-anchor">#</a> redis原理</h2> <blockquote><p>redis是单进程，单线程，为什么还那么快？</p> <ol><li><p>完全基于内存，绝大部分请求是纯粹的内存操作，非常快速。内存比磁盘快了10W倍</p> <p>内存寻址是ns(纳秒)，磁盘寻址是ms(毫秒)，中间差了10W倍</p></li> <li><p>使用多路I/O复用模型的非阻塞IO，Redis的Epoll 事件模型处理请求，任意一个客户端的资源就绪之后就可以被执行，且能够顺序执行</p></li> <li><p>由于是单线程，因此减少了线程切换的消耗</p></li> <li><p>支持管道，一次发送多次请求，减少频繁IO</p> <ol><li><p>一次性大量插入数据</p></li> <li><p>从文件中批量插入数据</p> <p>文件的换行符需要注意：redis-cli中只支持dos格式的换行符 <code>\r\n</code> ，如果你在Linux下、Mac下或者Windows下创建的文件，最好都转个码。没有转码的文件,执行会失败。</p> <p>安装转码命令</p> <div class="language-shell extra-class"><pre class="language-shell"><code>yum <span class="token function">install</span> -y unix2dos
+</code></pre></div></li></ol></li></ol></blockquote> <h2 id="linux内核"><a href="#linux内核" class="header-anchor">#</a> linux内核</h2> <blockquote><p>在linux系统中：“一切皆文件”。每一个socket连接都会生成一些文件描述符，由linux内核接收并进行转发给应用进程或线程。</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#查看文件描述</span>
+
+<span class="token function">ps</span> -ef <span class="token operator">|</span> <span class="token function">grep</span> redis
+<span class="token builtin class-name">cd</span> /proc/进程id号/fd
+ll
+</code></pre></div></blockquote> <h2 id="redis安装"><a href="#redis安装" class="header-anchor">#</a> redis安装</h2> <blockquote><ol><li><p>安装wget工具</p> <div class="language-shell extra-class"><pre class="language-shell"><code>yum <span class="token function">install</span> -y <span class="token function">wget</span>
+</code></pre></div></li> <li><p>下载redis</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">wget</span> http://download.redis.io/releases/redis-5.0.7.tar.gz
+</code></pre></div></li> <li><p>解压</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">tar</span> -zvxf redis-5.0.7.tar.gz
+</code></pre></div></li> <li><p>进入源码目录</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> redis-5.0.7/src
+</code></pre></div></li> <li><p>执行编译</p> <div class="language-shell extra-class"><pre class="language-shell"><code>yum -y <span class="token function">install</span> gcc gcc-c++ kernel-devel
+<span class="token function">make</span> <span class="token operator">&amp;</span> <span class="token function">make</span> <span class="token function">install</span>
+</code></pre></div></li> <li><p>进入源码目录，查看是否生成了可执行程序</p> <div class="language-shell extra-class"><pre class="language-shell"><code>ll
+</code></pre></div></li> <li><p>重新安装到制定目录</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">make</span> <span class="token function">install</span> <span class="token assign-left variable">PREFIX</span><span class="token operator">=</span>/usr/local/redis5
+</code></pre></div></li> <li><p>设置redis环境变量</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vi</span> /etc/profile
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/usr/java/default
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">REDIS_HOME</span><span class="token operator">=</span>/usr/local/redis5
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$JAVA_HOME</span>/bin:<span class="token variable">$REDIS_HOME</span>/bin
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">source</span> /etc/profile
+</code></pre></div></li> <li><p>redis实例安装</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">cd</span>
+<span class="token builtin class-name">cd</span> redis-5.0.7/utils
+./install_server.sh
+
+<span class="token comment">#a)一个物理机中可以有多个redis实例（进程），通过port区分</span>
+<span class="token comment">#b)可执行程序就一份在目录，但是内存中未来的多个实例需要各自的配置文件，持久化目录等资源</span>
+<span class="token comment">#c)service   redis_6379  start/stop/stauts     &gt;   linux   /etc/init.d/**** </span>
+<span class="token comment">#d)脚本还会帮你启动！</span>
+
+Config <span class="token function">file</span>    <span class="token builtin class-name">:</span> /etc/redis/6379.conf
+Log <span class="token function">file</span>       <span class="token builtin class-name">:</span> /var/log/redis_6379.log
+Data <span class="token function">dir</span>       <span class="token builtin class-name">:</span> /var/lib/redis/6379
+Executable     <span class="token builtin class-name">:</span> /usr/local/bin/redis-server
+</code></pre></div></li> <li><p>停止redis</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> redis_6379 stop
+</code></pre></div></li> <li><p>启动redis</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> redis_6379 start
+</code></pre></div></li> <li><p>查看redis状态</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> redis_6379 status
+</code></pre></div></li> <li><p>查看redis启动是否成功</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">ps</span> -ef <span class="token operator">|</span> <span class="token function">grep</span> redis
+</code></pre></div></li> <li><p>客户端连接命令</p> <div class="language-shell extra-class"><pre class="language-shell"><code>redis-cli -h localhost -p <span class="token number">6379</span> -a password
+</code></pre></div></li> <li><p>更新redis配置，增加密码</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vi</span> /etc/redis/6379.conf
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">bind</span> <span class="token number">127.0</span>.0.1 <span class="token number">192.168</span>.0.101
+
+<span class="token comment"># masterauth &lt;master-password&gt;</span>
+requirepass tiankafei
+</code></pre></div></li> <li><div class="language-shell extra-class"><pre class="language-shell"><code>systemctl <span class="token builtin class-name">enable</span> redis_6379.service
+</code></pre></div></li> <li><p>设置密码之后，停止服务会报错</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vi</span> /etc/init.d/redis_6379
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 增加密码这一行</span>
+<span class="token assign-left variable">PASSWORD</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">cat</span> $CONF<span class="token operator">|</span><span class="token function">grep</span> <span class="token string">'^\s*requirepass'</span><span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$2</span>}'</span><span class="token operator">|</span><span class="token function">sed</span> <span class="token string">'s/&quot;//g'</span><span class="token variable">)</span></span>
+
+<span class="token comment"># $CLIEXEC -p $REDISPORT shutdown 替换为</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> -z <span class="token variable">$PASSWORD</span> <span class="token punctuation">]</span>
+<span class="token keyword">then</span> 
+    <span class="token variable">$CLIEXEC</span> -p <span class="token variable">$REDISPORT</span> <span class="token function">shutdown</span>
+<span class="token keyword">else</span>
+    <span class="token variable">$CLIEXEC</span> -a <span class="token variable">$PASSWORD</span> -p <span class="token variable">$REDISPORT</span> <span class="token function">shutdown</span>
+<span class="token keyword">fi</span>
+</code></pre></div></li> <li><p>重新加载</p> <div class="language- extra-class"><pre class="language-text"><code>systemctl daemon-reload
+</code></pre></div></li></ol></blockquote> <h2 id="redis使用"><a href="#redis使用" class="header-anchor">#</a> redis使用</h2> <blockquote><ol><li><p>正反向索引</p> <p>正向（从左到右）：顺序从0开始，+1</p> <p>反向（从右到左）：顺序从-1开始，-1</p> <p>通过start=0,end=-1可以获取当前key的所有数据</p></li> <li><p>Redis key值是二进制安全的，这意味着可以用任何二进制序列作为key值</p> <p>从形如”foo”的简单字符串到一个JPEG文件的内容都可以。空字符串也是有效key值。</p></li> <li><p>关于key的几条规则</p> <ol><li>太长的键值不是个好主意，例如1024字节的键值就不是个好主意，不仅因为消耗内存，而且在数据中查找这类键值的计算成本很高。</li> <li>太短的键值通常也不是好主意，如果你要用”u:1000:pwd”来代替”user:1000:password”，这没有什么问题，但后者更易阅读，并且由此增加的空间消耗相对于key object和value object本身来说很小。当然，没人阻止您一定要用更短的键值节省一丁点儿空间。</li> <li>最好坚持一种模式。例如：”object-type🆔field”就是个不错的注意，像这样”user:1000:password”。我喜欢对多单词的字段名中加上一个点，就像这样：”comment🔢reply.to”。</li></ol></li></ol></blockquote> <h3 id="string：字符串、数组、bitmap"><a href="#string：字符串、数组、bitmap" class="header-anchor">#</a> string：字符串、数组、bitmap</h3> <blockquote><ol><li><p>set 命令后面可以跟的参数</p> <p>nx：当key不存在的时候，才会去创建，如果存在，则会返回失败</p> <div class="language- extra-class"><pre class="language-text"><code>只能新建
+应用场景：分布式锁
+多个线程同时用这个命令进行赋值，谁赋值成功，谁就拿到了这个锁
+</code></pre></div><p>xx：当key存在的时候，才可以操作，如果不存在，则返回失败</p> <div class="language- extra-class"><pre class="language-text"><code>只能更新
+</code></pre></div></li> <li><p>key中会存在一个type，用来描述值得数据类型，用来区分是字符串、数值、bitmap</p> <p>针对字符串可以有一些运算api</p> <div class="language- extra-class"><pre class="language-text"><code>应用场景：
+抢购，秒杀（扣减库存），详情页的数值，点赞，评论
+优点：
+规避高并发下，对数据库的事务操作，完全由redis的内存操作代替
+</code></pre></div></li> <li><p>对于数值型的计算能够保证其原子性</p> <p>INCR是原子操作意味着什么呢？就是说即使多个客户端对同一个key发出INCR命令，也决不会导致竞争的情况。例如如下情况永远不可能发生：『客户端1和客户端2同时读出“10”，他们俩都对其加到11，然后将新值设置为11』。最终的值一定是12，read-increment-set操作完成之前，其他客户端不会在同一时间执行任何命令。</p></li> <li><p>string值的长度不能超过512 MB</p></li></ol></blockquote> <h3 id="bit-arrays：或者说-simply-bitmaps"><a href="#bit-arrays：或者说-simply-bitmaps" class="header-anchor">#</a> Bit arrays：或者说 simply bitmaps</h3> <blockquote><p>通过特殊的命令，你可以将 String 值当作一系列 bits 处理：可以设置和清除单独的 bits，数出所有设为 1 的 bits 的数量，找到最前的被设为 1 或 0 的 bit，等等。</p> <ol><li><p>按位(1个字节有8位)的索引，值只能是0或1</p></li> <li><p>setbit，指定的偏移位置是位的索引的位置</p></li> <li><p>bitpos，后面跟的start,end是字节的索引位置，返回的是位的索引位置</p></li> <li><p>bitcount，后面跟的start,end是字节的索引位置，返回的是出现的次数</p></li> <li><p>bitop，按位与(有0则0，全1为1)，按位或(有1则1，全0为0)</p> <div class="language- extra-class"><pre class="language-text"><code>使用场景：
+1. 统计用户登录天数，且任意时刻或时间段
+bitcount key 0 -1（统计所有天数登录的次数之和）
+
+2. 用户只要登录，就送礼物。有2亿用户，需要备多少礼物
+活跃用户统计：1-3号连续登录，去重
+天为key，每一个用户有占一位作为值，最后使用bitcount按位或运算
+
+</code></pre></div></li></ol></blockquote> <h3 id="hash：由field和关联的value组成的map"><a href="#hash：由field和关联的value组成的map" class="header-anchor">#</a> hash：由field和关联的value组成的map</h3> <blockquote><p>值的操作类似string的处理</p> <p>值如果是数值的时候，可进行数值操作</p> <div class="language- extra-class"><pre class="language-text"><code>应用场景：
+详情页的数据集
+</code></pre></div></blockquote> <h3 id="list：按插入顺序排序的字符串元素的集合"><a href="#list：按插入顺序排序的字符串元素的集合" class="header-anchor">#</a> list：按插入顺序排序的字符串元素的集合</h3> <blockquote><p>Redis lists基于双向Linked Lists实现，key上面存在两个属性，一个指向头部，一个指向尾部，这意味着即使在一个list中有数百万个元素，在头部或尾部添加一个元素的操作，其时间复杂度也是常数级别的。</p> <ol><li><p>lpush 最后一个push的值始终在左侧；rpush 最后一个push的值始终的右侧</p></li> <li><p>lpop 从左侧开始取值，取出之后同时删除；rpop 从右侧开始取值，取出之后同时删除</p> <div class="language-shell extra-class"><pre class="language-shell"><code>lpush	lpop
+rpush	rpop
+<span class="token comment">#后进先出	栈(同向命令)</span>
+lpush	rpop
+rpush	lpop
+<span class="token comment">#先进先出	队列(反向命令)</span>
+</code></pre></div></li> <li><p>lrange key 0 -1得到所有值</p></li> <li><p>lindex key index</p></li> <li><p>lset key index value</p></li> <li><p>lrem 正数时从左往右移除，负数时从右往左移除</p></li> <li><p>linsert 从左往右找到第一个元素，然后在该元素之前或者之后插入</p> <div class="language-shell extra-class"><pre class="language-shell"><code>index
+<span class="token comment">#数组</span>
+</code></pre></div></li> <li><p>blpop、brpop 如果没有key的值时，则一直处于阻塞状态；如果有值，则直接拿出</p> <p>当多个消费者取一个key时，生产者生产了一个key以后，按照消费者的排队顺序进行依次取出</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#单播队列（FIFO先进先出）</span>
+</code></pre></div></li> <li><p>ltrim 对两端的数据进行移除</p></li></ol></blockquote> <h3 id="set：不重复且无序的字符串元素的集合"><a href="#set：不重复且无序的字符串元素的集合" class="header-anchor">#</a> set：不重复且无序的字符串元素的集合</h3> <blockquote><p>sadd k2 1 2 3 4 5</p> <p>sadd k3 4 5 6 7 8</p> <ol><li>求交集</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#直接把交集结果返回</span>
+sinter k2 k3
+<span class="token comment">#把交集结果放到targetkey中</span>
+sinterstore targetkey k2 k3
+</code></pre></div><ol start="2"><li>求并集</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#直接把并集结果返回</span>
+sunion k2 k3
+<span class="token comment">#把并集结果放到targetkey中</span>
+sunion targetkey k2 k3
+</code></pre></div><ol start="3"><li>求差集</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#直接把差集结果返回</span>
+<span class="token function">sdiff</span> k2 k3
+<span class="token function">sdiff</span> k3 k2
+<span class="token comment"># 把差集结果放到targetkey中</span>
+sdiffstore target k2 k3
+sdiffstore target k3 k2
+<span class="token comment">#sdiff 具有方向性,取出第一个key的差集，想要取出第二个的差集交换位置即可</span>
+</code></pre></div><ol start="4"><li>随机取出n个值，值并不从集合中删除</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code>srandmember key count -count
+如果个数为正数，返回的结果可能会出现小于等于5的情况，但能够保证返回的结果不会有重复的值出现
+如果个数为负数，则会一直返回5个结果集，但并不能保证结果集当中是否有重复的值出现
+
+<span class="token comment">#应用场景：</span>
+抽奖：一共有10个奖品；用户数可能小于10个，也可能大于10个；中奖也分是否可以重复中奖
+</code></pre></div><ol start="5"><li>spop 随机取出一个值，并从集合中删除</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#应用场景：</span>
+年会抽奖：一个人只能抽中奖一次，中奖率会不断变化
+</code></pre></div></blockquote> <h3 id="sorted-set：通过score值进行排序的集合"><a href="#sorted-set：通过score值进行排序的集合" class="header-anchor">#</a> sorted set：通过score值进行排序的集合</h3> <blockquote><p>类似Sets,但是每个字符串元素都关联到一个叫<em>score</em>浮动数值（floating number value）。里面的元素总是通过score进行着排序，所以不同的是，它是可以检索的一系列元素。（例如你可能会问：给我前面10个或者后面10个元素）。每个值都会关联一个分数。如果分值一样，默认按照名称排序</p> <ol><li><p>首先是一个去重的集合，如果有相同的值，则分数需要进行聚合，</p> <p>聚合的种类：最小值、最大值、求个、平均值、权重</p></li> <li><p>根据分数进行排序</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#默认按照分值从小到大排序（物理内存左小右大）</span>
+zadd k1 <span class="token number">8</span> apple <span class="token number">2</span> banana <span class="token number">3</span> orange
+<span class="token comment">#查看k1的数据集合</span>
+zrange k1 <span class="token number">0</span> -1 withscores
+</code></pre></div></li> <li><p>按照分值取数</p> <p>zrangebyscore k1 2 4 取出分值范围内的数据(包含最小值和最大值的结果)</p></li> <li><p>取出top或者low</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#最小的n个 downn</span>
+ZRANGE k1 <span class="token number">0</span> downn
+<span class="token comment">#最大的n个 topn</span>
+ZREVRANGE k1 <span class="token number">0</span> topn
+
+<span class="token comment">#用负数仅仅是从n的那个位置一直到最后，依然是左小右大，依然是从小到大排的</span>
+ZRANGE k1 -topn -1
+</code></pre></div></li> <li><p>可以对分值进行操作，操作后之后，时时根据分值进行排序</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#排序是如何实现的</span>
+存储结构：skip list<span class="token punctuation">(</span>跳跃表<span class="token punctuation">)</span>
+一级索引（在原链表的基础上，元素随机出现一级索引位置）
+二级索引（在一级索引的基础上，元素随机出现在二级索引的位置）
+三级索引<span class="token punctuation">..</span>.同理
+从最小的索引位置，一直找到原链表的位置，然后进行更新索引
+</code></pre></div></li> <li><p>集合操作：</p> <p>支持交集：分值需要聚合</p> <p>支持并集：分值需要聚合</p> <p>支持差集</p></li></ol></blockquote> <h2 id="redis发布订阅"><a href="#redis发布订阅" class="header-anchor">#</a> redis发布订阅</h2> <blockquote><p>一个发布者，多个客户端都可以接收</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#监听管道：只能接收到监听之后客户端发的消息，监听之前客户端发的消息接收不到</span>
+SUBSCRIBE 管道名称
+<span class="token comment">#客户端往管道里面放消息</span>
+PUBLISH 管道名称 message
+
+应用场景：
+直播，群聊
+</code></pre></div><p>聊天记录存储：数据库存储全量数据</p> <ol><li><p>实时的记录：存储到redis，使用发布订阅进行消息接收，数据可以异步存储到数据库</p></li> <li><p>3天内历史记录：存储到redis，使用sort set，把时间作为记录的分值</p> <p>ZREMRANGEBYRANK，按照索引位置进行删除</p> <p>ZREMRANGEBYSCORE，按照分值进行删除，因为时间是分值，可以仅仅保留3天内的数据</p></li> <li><p>更久之前的历史记录，存储到数据库，从数据库查询</p> <ol><li><p>clinet------&gt;redis</p></li> <li><p>redis------&gt;other clinet</p> <p>redis------&gt;other reids存储sort set</p> <p>redis------&gt;service------&gt;kafka------&gt;dbservice------&gt;mysql</p></li></ol></li></ol></blockquote> <h2 id="redis事务"><a href="#redis事务" class="header-anchor">#</a> redis事务</h2> <blockquote><p>因为redis是单进程，单线程的，所以当多个客户端发送事务时，根据哪个客户端发出的exec先到达，则先执行哪个客户端的事务，其他的客户端发出的事务有可能会报错，有可能会被撤销，主要看是否使用了watch命令。</p> <ol><li><p>watch：使用乐观锁的方式进行监听数据是否发生变化。如果数据没有变化，则事务会执行；如果值发生了变化，则事务自动撤销，不执行任何语句。</p> <p>使用无参数的unwatch命令可以取消监视</p></li> <li><p>multi：开启事务</p></li> <li><p>exec：执行所有语句。当EXEC被调用时，不管事务是否成功执行，对所有键的监视都会被取消。</p> <p>另外，当客户端断开连接时，该客户端对键的监视也会被取消。</p></li> <li><p>discard：撤销事务。当执行DISCARD命令时，事务会被放弃，事务队列会被清空，并且客户端会从事务状态中退出。</p></li> <li><p><strong>对于数值型的计算，redis可以保证其原子性</strong></p></li></ol> <p><strong>为什么 Redis 不支持回滚（roll back）</strong></p> <p>如果你有使用关系式数据库的经验， 那么 “Redis 在事务失败时不进行回滚，而是继续执行余下的命令”这种做法可能会让你觉得有点奇怪，以下是这种做法的优点：</p> <ol><li>Redis 命令只会因为错误的语法而失败（并且这些问题不能在入队时发现），或是命令用在了错误类型的键上面：这也就是说，从实用性的角度来说，失败的命令是由编程错误造成的，而这些错误应该在开发的过程中被发现，而不应该出现在生产环境中</li> <li>因为不需要对回滚进行支持，所以 Redis 的内部可以保持简单且快速</li></ol> <p>有种观点认为 Redis 处理事务的做法会产生 bug，然而需要注意的是，在通常情况下，回滚并不能解决编程错误带来的问题。举个例子，如果你本来想通过INCR命令将键的值加上1，却不小心加上了2，又或者对错误类型的键执行了INCR，回滚是没有办法处理这些情况的。</p></blockquote> <h2 id="redis穿透"><a href="#redis穿透" class="header-anchor">#</a> redis穿透</h2> <blockquote><p>缓存穿透，是指查询一个数据库一定不存在的数据，从而会让数据库多做很多无用的操作，如果并发量大，或者恶意攻击，会造成数据库承担很大的压力，更有甚者会造成宕机。</p></blockquote> <blockquote><p>缓存穿透解决方案：</p> <ol><li><p>缓存空对象，当请求到达数据库时，如果查询结果为空，可将空值放入缓存，需要增加过期时间。</p></li> <li><p><strong>布隆过滤器</strong>拦截，把要查询的数据缓存起来（通过二进制向量和一系列随机映射函数，达到占用较少的内存，缓存较大的数据量），但是并不能达到百分之百的拦截，当请求过来时，再使用第一种方案，缓存空值，可以较大程度上减少缓存穿透的情况。</p> <p>布隆过滤器：</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">wget</span> https://github.com/RedisBloom/RedisBloom/archive/master.zip
+yum <span class="token function">install</span> -y <span class="token function">unzip</span>
+<span class="token function">unzip</span> master.zip
+<span class="token builtin class-name">cd</span> RedisBloom-master
+<span class="token function">make</span>
+<span class="token function">cp</span> redisbloom.so /usr/local/redis5
+<span class="token function">service</span> redis_6379 stop
+redis-server --loadmodule /usr/local/redis5/redisbloom.so
+</code></pre></div><p>原理</p> <ol><li>你有啥</li> <li>有的像bitmap中标记</li> <li>请求的可能被误标记</li> <li>但是一定概率会大量减少放行，穿透</li> <li>而且成本低</li></ol> <p>使用bitmap进行存储，数据库里有的元素(根据什么进行搜搜，就可以把这个数据放到bitmap里)的映射关系</p> <p>一个元素会经过n个或者k个不同的映射函数，会把相对应的位置由0变为1，多个元素产生的结果可能会出现碰撞，有一定的几率都是1</p> <p>用户请求过来时，搜索的元素经过bitmap映射得到0时，说明数据库里一定没有，此时就可以返回了。如果得到1时，说明数据库有的几率很大，就可以放行，到数据库里进行查询。为1时数据库里没有的几率很小，一般不会超过百分之1。</p></li></ol></blockquote> <blockquote><p>其他过滤器</p> <ol><li>Bloom Filter 系列改进之Counting Bloom Filter</li> <li>布谷鸟过滤器</li></ol></blockquote> <h2 id="redis缓存"><a href="#redis缓存" class="header-anchor">#</a> redis缓存</h2> <blockquote><p>缓存和数据库的差别：</p> <ol><li>缓存的数据是不重要的</li> <li>缓存的数据不是全量的</li> <li>缓存应该随着访问进行变化，应该是经常访问的热数据（内存大小是有限制的，也就是其瓶颈）</li></ol> <div class="language- extra-class"><pre class="language-text"><code># 控制最大内存(1-10G)
+maxmemory bytes
+#内存达到最大值时，配置驱逐策略
+maxmemory-policy noeviction
+1. noeviction 默认值：返回错误当内存限制达到并且客户端尝试执行会让更多内存被使用的命令（大部分的写入指令，但DEL和几个例外）
+2. allkeys-lru  尝试回收最少使用的键（LRU），使得新添加的数据有空间存放。
+3. volatile-lru 尝试回收最少使用的键（LRU），但仅限于在过期集合的键,使得新添加的数据有空间存放。
+4. allkeys-random 回收随机的键使得新添加的数据有空间存放。
+5. volatile-random 回收随机的键使得新添加的数据有空间存放，但仅限于在过期集合的键。
+6. volatile-ttl 回收在过期集合的键，并且优先回收存活时间（TTL）较短的键,使得新添加的数据有空间存放。（找那个离过期时间最近的key剔除掉）
+
+allkeys（所有的key）、volatile（马上要过期的key）
+LFU（最少使用次数，碰了多少次）
+LRU（最少没有用：多久没碰）
+
+作为缓存时：一定不能用noeviction
+作为数据库时：一定要用noeviction
+</code></pre></div><p>一般的经验规则</p> <ul><li>如果没有键满足回收的前提条件的话，策略<strong>volatile-lru</strong>, <strong>volatile-random</strong>以及<strong>volatile-ttl</strong>就和noeviction 差不多了</li> <li>使用<strong>allkeys-lru</strong>策略：当你希望你的请求符合一个幂定律分布，也就是说，你希望部分的子集元素将比其它其它元素被访问的更多。如果你不确定选择什么，这是个很好的选择。.</li> <li>使用<strong>allkeys-random</strong>：如果你是循环访问，所有的键被连续的扫描，或者你希望请求分布正常（所有元素被访问的概率都差不多）。</li> <li>使用<strong>volatile-ttl</strong>：如果你想要通过创建缓存对象时设置TTL值，来决定哪些对象应该被过期。</li> <li><strong>allkeys-lru</strong> 和 <strong>volatile-random</strong>策略对于当你想要单一的实例实现缓存及持久化一些键时很有用。不过一般运行两个实例是解决这个问题的更好方法</li></ul> <p>选择正确的回收策略是非常重要的，这取决于你的应用的访问模式，不过你可以在运行时进行相关的策略调整，并且监控缓存命中率和没命中的次数，通过RedisINFO命令输出以便调优。</p></blockquote> <h2 id="redis-过期时间"><a href="#redis-过期时间" class="header-anchor">#</a> redis 过期时间</h2> <blockquote><p>过期时间：你可以对key设置一个过期时间，当这个时间到达后会被删除。精度可以使用毫秒或秒。</p> <p>EXPIRE key 时间	设置过期时间（倒计时，定时）</p> <p>PERSIST key 时间	剔除过期时间</p> <p>ttl key 查看过期时间还剩多少</p> <ol><li>每次访问并不能重新计算过期时间</li> <li>重新修改值之后，会直接剔除过期时间</li></ol> <p><strong>redis如何淘汰过期时间的key</strong></p> <ol><li><p>被动的访问时判定</p> <p>当客户端尝试访问的时候，key会被发现并主动剔除该key（过期的key有可能一辈子都不会被再次访问，所以这种方式并不能保证一定会把过期的key删除掉）</p></li> <li><p>间接主动方式：每10秒要做的事情</p> <ol><li>测试随机的20个keys进行相关过期的检测</li> <li>删除所有已经过期的key</li> <li>如果有多余25%的keys过期，重复步骤1
+<ol><li>如果有满足条件3，则立即对随机的20个key进行过期检测</li> <li>如果没有满足条件3，则会在另一个10秒才会对随机的20key进行过期检测</li></ol></li></ol> <p>这是一个平凡的概率算法，基本上的假设是，我们的样本是这个秘钥控件，并且我们不断重复过期检测，直到过期的keys百分之百低于25%，这意味着，在任何给定的时刻，最多会清楚25%的过期的keys。</p> <p>目的：稍微牺牲下内存，但是保住了redis性能为王。</p></li></ol></blockquote> <h2 id="redis持久化"><a href="#redis持久化" class="header-anchor">#</a> redis持久化</h2> <p><strong>持久化无外乎：镜像+日志</strong></p> <h3 id="rdb"><a href="#rdb" class="header-anchor">#</a> RDB</h3> <blockquote><p>也称快照方式，配置每隔一段时间执行一次全量备份，Redis将数据集快照保存在磁盘上，保存在一个名为dump.rdb的二进制文件中，也可以<strong>手动调用SAVE或BGSAVE命令</strong>。</p> <p><strong>原理</strong>：主进程调用fork函数生成一个子进程（fork之后，只是复制指针，而不是复制内存，所以时间会非常快，几乎不用考虑。同时主线程实现了Copy-on-Write，当值发生变化时，指针指向一个新的地址，旧的地址的数据保持不变），子进程进行磁盘I/O操作，<strong>操作完成后替换旧的RDB文件</strong>。</p> <p><strong>优点</strong>：非常适合做备份与回滚到指定的时间点，例如我们可以每天晚上2点执行定时计划全量备份一次Redis中的数据，以后我们进行恢复的时候可以将Redis恢复到指定的时间点的版本；与AOF相比使用<strong>RDB方式性能较高</strong>；与AOF相比Redis<strong>重启的速度较快</strong>。</p> <p><strong>缺点</strong>：相比AOF丢失的数据可能会更多，比如设置1小时备份一次快照，那么最多会损失1小时的数据。</p> <p>RDB配置：</p> <div class="language-shell extra-class"><pre class="language-shell"><code>save <span class="token number">900</span> <span class="token number">1</span>
+save <span class="token number">300</span> <span class="token number">10</span>
+save <span class="token number">60</span> <span class="token number">10000</span>
+<span class="token comment">#配置解释：从下往上执行，先最后一个配置，</span>
+<span class="token comment"># 1. 在 60 秒内，如果操作次数超过 10000 次，则直接后台调用执行备份；如果没有超过 10000 次，则向上看第二个判断，此时超过了10，则立即执行备份；</span>
+<span class="token comment"># 2. 在 300 秒内，如果操作次数超过了 10 次，则直接后台调用执行备份，如果没有超过 10 次，则向上看第1个判断，此时超过了 1， 则立即执行备份。</span>
+<span class="token comment"># 3. 在 900 秒被，如果操作次数超过了 1 次，则立即执行备份</span>
+</code></pre></div></blockquote> <h3 id="aof：append-only-file-持久化：保存写状态"><a href="#aof：append-only-file-持久化：保存写状态" class="header-anchor">#</a> AOF：Append-Only-File 持久化：保存写状态</h3> <blockquote><p>以追加的方式记录Redis的写操作，并在Redis重启时进行重放（与MySQL的binlog日志的原理是一样的）。当AOF日志过大时，redis支持日志重写。【这里提供一个小知识点，在Redis中是先执行命令再记录日志到AOF，这也是Redis事务不支持回滚的原因：即使发生异常，没有可以用来执行回滚操作的日志。而传统的数据库例如MySQL都是先做日志然后再做操作，所以能够支持回滚】。</p> <p>AOF相关配置：</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 默认关闭，若要开启将no改为yes</span>
+appendonly no
+<span class="token comment"># append文件的名字</span>
+appendfilename <span class="token string">&quot;appendonly.aof&quot;</span>
+<span class="token comment"># AOF文件的写入方式</span>
+<span class="token comment"># always一旦缓存区内容发生变化就写入AOF文件中</span>
+appendfsync always
+<span class="token comment"># everysec 每个一秒将缓存区内容写入文件 默认开启的写入方式</span>
+appendfsync everysec
+<span class="token comment"># 将写入文件的操作交由操作系统决定</span>
+appendfsync no
+<span class="token comment"># 当AOF文件大小的增长率大于该配置项时自动开启重写（这里指超过原大小的100%）。</span>
+auto-aof-rewrite-percentage <span class="token number">100</span>
+<span class="token comment"># 当AOF文件大小大于该配置项时自动开启重写</span>
+auto-aof-rewrite-min-size 64mb
+</code></pre></div><p><strong>原理</strong>：操作系统将写操作首先记录到内存缓冲区中，然后使用fsync函数将数据刷新到磁盘中。</p> <p><strong>优点</strong>：如果不考虑性能，AOF可以最大限度保证数据完整性，可以设置每发生一次写操作就调用一次fsync函数；更加灵活，可以使用不同的fsync策略：</p> <ol><li>always：一旦缓存区内容发生变化就立即写入AOF文件中（最大限度保证数据的完整性，极端情况下只会丢失一条数据）</li> <li>everysec（默认）：每个一秒将缓存区内容写入文件（最多只会丢失这一秒内且比缓存区大小小1的数据量）</li> <li>no：将写入文件的操作交由操作系统决定，当缓冲区满的时候，才会触发写操作（会丢失一个缓冲区的数据）</li></ol> <p><strong>缺点</strong>：与RDB方式相比，相同数据集大小AOF占用空间更大；若调用fsync的频率过快，性能会变差。</p> <p><strong>需要注意的是</strong>：AOF文件损坏？AOF文件中可能有一条命令是不完整的，比如发生正在写入的时候断电的这种情况，redis支持重放这样的AOF文件，他会在启动日志中记录错误命令的行数，并在重放时对该行进行忽略。</p></blockquote> <h4 id="aof重写：bgrewriteaof"><a href="#aof重写：bgrewriteaof" class="header-anchor">#</a> AOF重写：BGREWRITEAOF</h4> <ul><li>AOF 持久化是通过保存被执行的写命令来记录数据库状态的，所以AOF文件的大小随着时间的流逝一定会越来越大；影响包括但不限于：对于Redis服务器，计算机的存储压力；AOF还原出数据库状态的时间增加。</li> <li>为了解决AOF文件体积膨胀的问题，Redis提供了AOF重写功能：Redis服务器可以创建一个新的AOF文件来替代现有的AOF文件，新旧两个文件所保存的数据库状态是相同的，但是新的AOF文件不会包含任何浪费空间的冗余命令，通常体积会较旧AOF文件小很多。</li> <li>AOF重写并不需要对原有AOF文件进行任何的读取，写入，分析等操作，这个功能是通过读取服务器当前的数据库状态来实现的。</li></ul> <blockquote><p><strong>实现原理</strong></p> <ul><li>首先从数据库中读取键现在的值，然后用一条命令去记录键值对，代替之前记录该键值对的多个命令;</li> <li>实际为了避免执行命令时造成客户端输入缓冲区溢出，重写程序在处理<code>list hash set zset</code>时，会检查键所包含的元素的个数，如果元素的数量超过了<code>redis.h/REDIS_AOF_REWRITE_ITEMS_PER_CMD</code>常量的值，那么重写程序会使用多条命令来记录键的值，而不是单使用一条命令。该常量默认值是64，即每条命令设置的元素的个数 是最多64个，使用多条命令重写实现集合键中元素数量超过64个的键；</li></ul></blockquote> <blockquote><p><strong>AOF后台重写</strong></p> <ul><li><code>aof_rewrite</code>函数可以创建新的AOF文件，但是这个函数会进行大量的写入操作，所以调用这个函数的线程将被长时间的阻塞，因为Redis服务器使用单线程来处理命令请求；所以如果直接是服务器进程调用<code>AOF_REWRITE</code>函数的话，那么重写AOF期间，服务器将无法处理客户端发送来的命令请求；</li> <li>Redis不希望AOF重写会造成服务器无法处理请求，所以Redis决定将AOF重写程序放到子进程（后台）里执行。这样处理的最大好处是：
+<ul><li>子进程进行AOF重写期间，主进程可以继续处理命令请求</li> <li>子进程带有主进程的数据副本，使用子进程而不是线程，可以避免在锁的情况下，保证数据的安全性</li></ul></li></ul></blockquote> <blockquote><p><strong>使用子进程进行AOF重写的问题</strong></p> <p>子进程在进行AOF重写期间，服务器进程还要继续处理命令请求，而新的命令可能对现有的数据进行修改，这会让当前数据库的数据和重写后的AOF文件中的数据不一致</p></blockquote> <blockquote><p><strong>如何修正</strong></p> <ul><li>为了解决这种数据不一致的问题，Redis增加了一个<strong>AOF重写缓存</strong>，这个缓存在fork出子进程之后开始启用，Redis服务器主进程在执行完写命令之后，会同时将这个写命令追加到AOF缓冲区和AOF重写缓冲区</li> <li>即子进程在执行AOF重写时，主进程需要执行以下三个工作：
+<ul><li>执行client发来的命令请求；</li> <li>将写命令追加到现有的AOF文件中；</li> <li>将写命令追加到AOF重写缓存中。</li></ul></li></ul> <p>要保证的是：</p> <ul><li>AOF缓冲区的内容会定期被写入和同步到AOF文件中，对现有的AOF文件的处理工作会正常进行</li> <li>从创建子进程开始，服务器执行的所有写操作都会被记录到AOF重写缓冲区中，能够保证当前数据库的数据和重写后的AOF文件中的数据是一致的。</li></ul> <p>完成AOF重写之后</p> <p>当子进程完成对AOF文件重写之后，它会向父进程发送一个完成信号，父进程接到该完成信号之后，会调用一个信号处理函数，该函数完成以下工作</p> <ul><li>将AOF重写缓存中的内容全部写入到新的AOF文件中；这个时候新的AOF文件所保存的数据库状态和服务器当前的数据库状态一致；</li> <li>对新的AOF文件进行改名，原子的覆盖原有的AOF文件；完成新旧两个AOF文件的替换</li></ul> <p>当这个信号处理函数执行完毕之后，主进程就可以继续像往常一样接收命令请求了。在整个AOF后台重写过程中，只有最后的“主进程写入命令到AOF缓存”和“对新的AOF文件进行改名，覆盖原有的AOF文件。”这两个步骤（信号处理函数执行期间）会造成主进程阻塞，在其他时候，AOF后台重写都不会对主进程造成阻塞，这将AOF重写对性能造成的影响降到最低。</p></blockquote> <blockquote><p><strong>触发AOF后台重写的条件</strong></p> <ul><li>AOF重写可以由用户通过调用<code>BGREWRITEAOF</code>手动触发。</li> <li>服务器在AOF功能开启的情况下，会维持以下三个变量：
+<ul><li>记录当前AOF文件大小的变量<code>aof_current_size</code>。</li> <li>记录最后一次AOF重写之后，AOF文件大小的变量<code>aof_rewrite_base_size</code>。</li> <li>增长百分比变量<code>aof_rewrite_perc</code>。</li></ul></li> <li>每次当<code>serverCron</code>（服务器周期性操作函数）函数执行时，它会检查以下条件是否全部满足，如果全部满足的话，就触发自动的AOF重写操作：
+<ul><li>没有BGSAVE命令（RDB持久化）/AOF持久化在执行；</li> <li>没有BGREWRITEAOF在进行；</li> <li>当前AOF文件大小要大于<code>server.aof_rewrite_min_size</code>（默认为1MB），或者在<code>redis.conf</code>配置了<code>auto-aof-rewrite-min-size</code>大小；</li> <li>当前AOF文件大小和最后一次重写后的大小之间的比率等于或者等于指定的增长百分比（在配置文件设置了<code>auto-aof-rewrite-percentage</code>参数，不设置默认为100%）</li></ul></li></ul></blockquote> <h3 id="混合方式：rdb与aof混合使用"><a href="#混合方式：rdb与aof混合使用" class="header-anchor">#</a> 混合方式：RDB与AOF混合使用</h3> <blockquote><p>将 RDB文件的内容和增量的 AOF 日志文件存在一起。这里的 AOF 日志不再是全量的日志，而是自持久化开始到持久化结束的这段时间发生的增量 AOF 日志。</p></blockquote> <h3 id="redis官方建议"><a href="#redis官方建议" class="header-anchor">#</a> Redis官方建议</h3> <blockquote><p>使用混合方式进行Redis的持久化。并且我们需要确保避免在RDB快照操作已经在进行时触发AOF重写，或者在AOF重写过程中允许BGSAVE，防止两个Redis后台进程同时执行磁盘I/O。</p></blockquote> <h2 id="缓存的击穿"><a href="#缓存的击穿" class="header-anchor">#</a> 缓存的击穿</h2> <blockquote><p><strong>描述</strong>：缓存击穿是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。</p> <p><strong>解决方案</strong>：</p> <ol><li>设置热点数据永远不过期。</li> <li>从缓存中取数时，增加锁</li></ol></blockquote> <h2 id="缓存的雪崩"><a href="#缓存的雪崩" class="header-anchor">#</a> 缓存的雪崩</h2> <blockquote><p><strong>描述</strong>：缓存雪崩是指缓存中数据大批量到过期时间，而查询数据量巨大，引起数据库压力过大甚至宕机。和缓存击穿不同的是，缓存击穿指并发查同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查数据库。</p> <p><strong>解决方案</strong>：</p> <ol><li>缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生。</li> <li>如果缓存数据库是分布式部署，将热点数据均匀分布在不同的缓存数据库中。</li> <li>设置热点数据永远不过期。</li></ol></blockquote> <h2 id="缓存的一致性（双写）"><a href="#缓存的一致性（双写）" class="header-anchor">#</a> 缓存的一致性（双写）</h2> <blockquote></blockquote> <h2 id="redis集群、主从复制"><a href="#redis集群、主从复制" class="header-anchor">#</a> redis集群、主从复制</h2> <blockquote><ol><li><p>单点故障（主从集群：横向扩充）</p></li> <li><p>承担的压力大（读写分离：横向扩充）</p></li> <li><p>容量受限（：纵向扩充，按照业务线进行逻辑拆分，同一个业务线数据还很大，可以进行分片）</p></li></ol> <p><strong>发生在客户端的解决方案</strong>：redis server的连接成本很高，增加一层代理：1.反向代理，2.负载均衡</p> <ol><li><p>按照业务线进行拆分，客户端决定什么数据放到哪个redis集群下（纵向的每一个redis都是一个集群：主从集群，读写分类的）</p></li> <li><p>算法拆分，key做hash取模（弊端：模数值必须固定，影响分布式下的扩展性）</p></li> <li><p>随机拆分（自己都不知道扔到哪个实例上了，每一个实例的数据都不是完整的。典型应用场景：消息队列）</p></li> <li><p>一致性哈希环（映射）算法，hash环上有0-2^32个点，各节点拿着一个固定的策略之进行hash算法，能够映射一个值，在hash环上就是是一个点。等数据来了的时候，拿key值进行hash算法，也能够得到一个值，对应hash环上的一个点。</p> <p>hash环的特点：只有节点映射出的点才是物理的，key映射的点都是虚拟的，物理的点用treeMap进行封装。在这个结构中虚拟的点总能找到一个离他最近的物理的点，直接把数据存上去即可。</p> <p>此时如果新增了一个node节点，得到一个物理的点，但是这个点离key值近了，数据就拿不到了。</p> <p>优点：加节点，可以分担其他节点的压力，不会造成全局洗牌。</p> <p>缺点：新增节点会造成一小部分数据不能命中（两种问题：1.会对数据库造成击穿，把压力压倒了数据库里；2.每次取离key值最近的两个物理节点，如果两个都取不到值，再去数据库里取）。</p> <p>一个node节点，可以通过多个值进行多次映射，得到多个值，可以在环上映射多个物理节点，可以解决数据倾斜的问题。</p> <p>更倾向于做为缓存使用，而不是数据库用。</p></li></ol> <p><strong>twitter/twemproxy</strong> 可以使用作为代理。</p> <p><strong>predixy</strong> 可以使用作为代理。</p> <p><strong>cluster</strong> 可以使用作为代理。</p> <p>集群高可用：ACP原则：可用性，一致性，分区容错性</p></blockquote> <h2 id="redis开发"><a href="#redis开发" class="header-anchor">#</a> redis开发</h2></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/tiankafei-docs-架构/使用amoeba实现mysql读写分离.html" class="prev">
+        使用amoeba实现mysql读写分离
+      </a></span> <span class="next"><a href="/tiankafei-docs-架构/zookeeper学习笔记.html">
+        /tiankafei-docs-架构/zookeeper学习笔记.html
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ccc5f14a.js" defer></script><script src="/assets/js/2.dfe90790.js" defer></script><script src="/assets/js/69.70fd1634.js" defer></script>
+  </body>
+</html>

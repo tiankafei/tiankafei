@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Centos7安装Scala | tiankafei - java相关技术栈</title>
+    <meta name="generator" content="VuePress 1.5.1">
+    
+    <meta name="description" content="自己写的一些东西的记录，包括代码与笔记，jdk最低支持1.8">
+    <link rel="preload" href="/assets/css/0.styles.9bcdb81a.css" as="style"><link rel="preload" href="/assets/js/app.ccc5f14a.js" as="script"><link rel="preload" href="/assets/js/2.dfe90790.js" as="script"><link rel="preload" href="/assets/js/51.28e160d1.js" as="script"><link rel="prefetch" href="/assets/js/10.7cadd409.js"><link rel="prefetch" href="/assets/js/11.067b1649.js"><link rel="prefetch" href="/assets/js/12.2e93e392.js"><link rel="prefetch" href="/assets/js/13.f6cd60ca.js"><link rel="prefetch" href="/assets/js/14.5dac3551.js"><link rel="prefetch" href="/assets/js/15.b02ba84d.js"><link rel="prefetch" href="/assets/js/16.2eafb577.js"><link rel="prefetch" href="/assets/js/17.9899e73c.js"><link rel="prefetch" href="/assets/js/18.60703fd1.js"><link rel="prefetch" href="/assets/js/19.2ba65924.js"><link rel="prefetch" href="/assets/js/20.efca007d.js"><link rel="prefetch" href="/assets/js/21.0f202b62.js"><link rel="prefetch" href="/assets/js/22.2060d3bc.js"><link rel="prefetch" href="/assets/js/23.6f797601.js"><link rel="prefetch" href="/assets/js/24.d94f4c05.js"><link rel="prefetch" href="/assets/js/25.44dd7767.js"><link rel="prefetch" href="/assets/js/26.07daa798.js"><link rel="prefetch" href="/assets/js/27.67424cb5.js"><link rel="prefetch" href="/assets/js/28.96688bbc.js"><link rel="prefetch" href="/assets/js/29.b7eac95c.js"><link rel="prefetch" href="/assets/js/3.9c0144bd.js"><link rel="prefetch" href="/assets/js/30.db57cc90.js"><link rel="prefetch" href="/assets/js/31.55b3c285.js"><link rel="prefetch" href="/assets/js/32.9375e63d.js"><link rel="prefetch" href="/assets/js/33.6b619751.js"><link rel="prefetch" href="/assets/js/34.931628db.js"><link rel="prefetch" href="/assets/js/35.619f7989.js"><link rel="prefetch" href="/assets/js/36.4040688b.js"><link rel="prefetch" href="/assets/js/37.c827e4b0.js"><link rel="prefetch" href="/assets/js/38.8cc9fea4.js"><link rel="prefetch" href="/assets/js/39.6ba33c01.js"><link rel="prefetch" href="/assets/js/4.baf4feed.js"><link rel="prefetch" href="/assets/js/40.e67f41b2.js"><link rel="prefetch" href="/assets/js/41.d6621d93.js"><link rel="prefetch" href="/assets/js/42.6ef70c29.js"><link rel="prefetch" href="/assets/js/43.83631006.js"><link rel="prefetch" href="/assets/js/44.fb6d58d0.js"><link rel="prefetch" href="/assets/js/45.9507ab04.js"><link rel="prefetch" href="/assets/js/46.149b21d4.js"><link rel="prefetch" href="/assets/js/47.befc4ed9.js"><link rel="prefetch" href="/assets/js/48.d4c4aca0.js"><link rel="prefetch" href="/assets/js/49.5928ac72.js"><link rel="prefetch" href="/assets/js/5.d7c5e89d.js"><link rel="prefetch" href="/assets/js/50.131de96d.js"><link rel="prefetch" href="/assets/js/52.3cd65609.js"><link rel="prefetch" href="/assets/js/53.239208d7.js"><link rel="prefetch" href="/assets/js/54.c350cc4f.js"><link rel="prefetch" href="/assets/js/55.ab62193b.js"><link rel="prefetch" href="/assets/js/56.5679260a.js"><link rel="prefetch" href="/assets/js/57.2f1091ae.js"><link rel="prefetch" href="/assets/js/58.9ded9973.js"><link rel="prefetch" href="/assets/js/59.ff98f4f0.js"><link rel="prefetch" href="/assets/js/6.ad7178fc.js"><link rel="prefetch" href="/assets/js/60.73cc249a.js"><link rel="prefetch" href="/assets/js/61.dac3642a.js"><link rel="prefetch" href="/assets/js/62.c87a627b.js"><link rel="prefetch" href="/assets/js/63.40d5e52e.js"><link rel="prefetch" href="/assets/js/64.35795f8b.js"><link rel="prefetch" href="/assets/js/65.ae23fc13.js"><link rel="prefetch" href="/assets/js/66.1de59948.js"><link rel="prefetch" href="/assets/js/67.d1fa8257.js"><link rel="prefetch" href="/assets/js/68.dd73b8b9.js"><link rel="prefetch" href="/assets/js/69.70fd1634.js"><link rel="prefetch" href="/assets/js/7.17ba4181.js"><link rel="prefetch" href="/assets/js/70.e9e6439f.js"><link rel="prefetch" href="/assets/js/71.78d7c72f.js"><link rel="prefetch" href="/assets/js/72.47241074.js"><link rel="prefetch" href="/assets/js/73.fcda0ede.js"><link rel="prefetch" href="/assets/js/74.f4c53349.js"><link rel="prefetch" href="/assets/js/75.96aa577a.js"><link rel="prefetch" href="/assets/js/76.3285bc65.js"><link rel="prefetch" href="/assets/js/8.67246ec2.js"><link rel="prefetch" href="/assets/js/9.e1e90081.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9bcdb81a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">tiankafei - java相关技术栈</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>大数据</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop.html" class="sidebar-link">CentOS7安装Hadoop</a></li><li><a href="/tiankafei-docs-大数据/hadoop学习笔记.html" class="sidebar-link">大数据启蒙</a></li><li><a href="/tiankafei-docs-大数据/Hadoop程序运行的三种方式.html" class="sidebar-link">Hadoop程序运行的三种方式</a></li><li><a href="/tiankafei-docs-大数据/hive学习笔记.html" class="sidebar-link">Hive学习笔记</a></li><li><a href="/tiankafei-docs-大数据/centos7安装配置HBase.html" class="sidebar-link">centos7安装配置HBase</a></li><li><a href="/tiankafei-docs-大数据/hbase学习笔记.html" class="sidebar-link">HBase学习笔记</a></li><li><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html" class="sidebar-link">大数据项目-日志收集分析</a></li><li><a href="/tiankafei-docs-大数据/flume学习笔记.html" class="sidebar-link">Flume</a></li><li><a href="/tiankafei-docs-大数据/sqoop学习笔记.html" class="sidebar-link">sqoop的简单概论</a></li><li><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html" class="active sidebar-link">Centos7安装Scala</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#下载scala" class="sidebar-link">下载Scala</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#安装配置scala" class="sidebar-link">安装配置Scala</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#设置环境变量" class="sidebar-link">设置环境变量</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#下载spark" class="sidebar-link">下载Spark</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#spark单机版安装" class="sidebar-link">Spark单机版安装</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#解压到指定路径" class="sidebar-link">解压到指定路径</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#设置环境变量-2" class="sidebar-link">设置环境变量</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#单机启动测试" class="sidebar-link">单机启动测试</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#spark集群高可用安装-on-master" class="sidebar-link">Spark集群高可用安装-on-master</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#解压到指定路径-2" class="sidebar-link">解压到指定路径</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#设置环境变量-3" class="sidebar-link">设置环境变量</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#执行配置" class="sidebar-link">执行配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#向其他机器分发配置" class="sidebar-link">向其他机器分发配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#执行启动" class="sidebar-link">执行启动</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#设置zookeeper高可用" class="sidebar-link">设置zookeeper高可用</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#向其他机器分发配置-2" class="sidebar-link">向其他机器分发配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#进入第二台机器，修改配置" class="sidebar-link">进入第二台机器，修改配置</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#spark执行日志持久化" class="sidebar-link">Spark执行日志持久化</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#向其他机器分发配置-3" class="sidebar-link">向其他机器分发配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#执行测试程序，查看记录的日志" class="sidebar-link">执行测试程序，查看记录的日志</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#使用集群模式运行" class="sidebar-link">使用集群模式运行</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#spark高可用集群-on-yarn" class="sidebar-link">Spark高可用集群 On-Yarn</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#解压到指定路径-3" class="sidebar-link">解压到指定路径</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#设置环境变量-4" class="sidebar-link">设置环境变量</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#执行配置-2" class="sidebar-link">执行配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#向其他机器分发配置-4" class="sidebar-link">向其他机器分发配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#更新yarn配置" class="sidebar-link">更新yarn配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#mapreduce-的历史日志的配置" class="sidebar-link">MapReduce 的历史日志的配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#分发配置" class="sidebar-link">分发配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#启动hadoop集群-2" class="sidebar-link">启动hadoop集群</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#不需要再启动spark的主程序服务了，可直接运行程序" class="sidebar-link">不需要再启动Spark的主程序服务了，可直接运行程序</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#在spark集群环境上测试" class="sidebar-link">在Spark集群环境上测试</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html#启动集群总结" class="sidebar-link">启动集群总结</a></li></ul></li></ul></li><li><a href="/tiankafei-docs-大数据/scala学习笔记.html" class="sidebar-link">Scala学习</a></li><li><a href="/tiankafei-docs-大数据/centos7安装配置Flink.html" class="sidebar-link">Centos7安装Flink</a></li><li><a href="/tiankafei-docs-大数据/Kafka学习笔记.html" class="sidebar-link">Kafka</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="centos7安装scala"><a href="#centos7安装scala" class="header-anchor">#</a> Centos7安装Scala</h1> <h2 id="下载scala"><a href="#下载scala" class="header-anchor">#</a> 下载Scala</h2> <p>选择对应的版本进行下载，这里选择的是2.12.11</p> <div class="language-http extra-class"><pre class="language-http"><code># scala所有版本列表
+<span class="token header-name keyword">https:</span>//www.scala-lang.org/download/all.html
+# rpm 安装包下载路径
+<span class="token header-name keyword">https:</span>//downloads.lightbend.com/scala/2.12.11/scala-2.12.11.rpm
+# tgz 解压包下载路径
+<span class="token header-name keyword">https:</span>//downloads.lightbend.com/scala/2.12.11/scala-2.12.11.tgz
+</code></pre></div><h2 id="安装配置scala"><a href="#安装配置scala" class="header-anchor">#</a> 安装配置Scala</h2> <div class="language- extra-class"><pre class="language-text"><code>rpm -i scala-2.12.11.rpm
+</code></pre></div><h2 id="设置环境变量"><a href="#设置环境变量" class="header-anchor">#</a> 设置环境变量</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vi</span> /etc/profile
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">SCALA_HOME</span><span class="token operator">=</span>/usr/share/scala
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$SCALA_HOME</span>/bin
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">source</span> /etc/profile
+</code></pre></div><h1 id="centos7安装配置spark"><a href="#centos7安装配置spark" class="header-anchor">#</a> centos7安装配置Spark</h1> <h2 id="下载spark"><a href="#下载spark" class="header-anchor">#</a> 下载Spark</h2> <p>选择对应的版本进行下载，这里选择的是： spark-2.4.5-bin-hadoop2.7</p> <div class="language-http extra-class"><pre class="language-http"><code># spark全部版本下载地址
+<span class="token header-name keyword">http:</span>//spark.apache.org/news/index.html
+# tgz 解压包下载路径
+<span class="token header-name keyword">https:</span>//mirrors.tuna.tsinghua.edu.cn/apache/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz
+</code></pre></div><h2 id="spark单机版安装"><a href="#spark单机版安装" class="header-anchor">#</a> Spark单机版安装</h2> <h3 id="解压到指定路径"><a href="#解压到指定路径" class="header-anchor">#</a> 解压到指定路径</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">mkdir</span> -p /opt/bigdata/spark-2.4.5-local
+<span class="token function">tar</span> -zvxf spark-2.4.5-bin-hadoop2.7.tgz -C /opt/bigdata/spark-2.4.5-local
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-local
+<span class="token function">mv</span> spark-2.4.5-bin-hadoop2.7/* /opt/bigdata/spark-2.4.5-local/
+<span class="token function">rm</span> -rf spark-2.4.5-bin-hadoop2.7/
+</code></pre></div><h3 id="设置环境变量-2"><a href="#设置环境变量-2" class="header-anchor">#</a> 设置环境变量</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vi</span> /etc/profile
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_HOME</span><span class="token operator">=</span>/opt/bigdata/spark-2.4.5-local
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$SPARK_HOME</span>/bin:<span class="token variable">$SPARK_HOME</span>/sbin
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">source</span> /etc/profile
+</code></pre></div><h3 id="单机启动测试"><a href="#单机启动测试" class="header-anchor">#</a> 单机启动测试</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入spark的sbin目录</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-local/sbin
+
+<span class="token comment"># 执行命令启动spark的master节点</span>
+./start-master.sh
+
+<span class="token comment"># 启动完成之后访问地址</span>
+http://bigdata01:8080
+
+<span class="token comment"># 进入spark的bin目录</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-local/bin
+
+<span class="token comment"># 使用spark-shell 连接测试</span>
+./spark-shell --master spark://bigdata01:7077
+
+<span class="token comment"># 如果出现scala的命令行窗口模式，则说明连接成功，至此单机版的spark安装测试完成</span>
+
+<span class="token comment"># 进入spark的sbin目录</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-local/sbin
+
+<span class="token comment"># 停止单机版的Spark单机主程序</span>
+./stop-master.sh
+</code></pre></div><h2 id="spark集群高可用安装-on-master"><a href="#spark集群高可用安装-on-master" class="header-anchor">#</a> Spark集群高可用安装-on-master</h2> <h3 id="解压到指定路径-2"><a href="#解压到指定路径-2" class="header-anchor">#</a> 解压到指定路径</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">mkdir</span> -p /opt/bigdata/spark-2.4.5-master
+<span class="token function">tar</span> -zvxf spark-2.4.5-bin-hadoop2.7.tgz -C /opt/bigdata/spark-2.4.5-master
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-master
+<span class="token function">mv</span> spark-2.4.5-bin-hadoop2.7/* /opt/bigdata/spark-2.4.5-master/
+<span class="token function">rm</span> -rf spark-2.4.5-bin-hadoop2.7/
+</code></pre></div><h3 id="设置环境变量-3"><a href="#设置环境变量-3" class="header-anchor">#</a> 设置环境变量</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vi</span> /etc/profile
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_HOME</span><span class="token operator">=</span>/opt/bigdata/spark-2.4.5-master
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$SPARK_HOME</span>/bin:<span class="token variable">$SPARK_HOME</span>/sbin
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">source</span> /etc/profile
+</code></pre></div><div class="language-shelll extra-class"><pre class="language-text"><code>reboot
+</code></pre></div><h3 id="执行配置"><a href="#执行配置" class="header-anchor">#</a> 执行配置</h3> <p>cd $SPARK_HOME/conf</p> <blockquote><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">cp</span> slaves.template slaves
+<span class="token function">vim</span> slaves
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code>bigdata02
+bigdata03
+bigdata04
+</code></pre></div></blockquote> <blockquote><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">cp</span> spark-env.sh.template spark-env.sh
+<span class="token function">vim</span> spark-env.sh
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">HADOOP_CONF_DIR</span><span class="token operator">=</span>/opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3/etc/hadoop
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_MASTER_HOST</span><span class="token operator">=</span>bigdata01   <span class="token comment"># 每台master改成自己的主机名</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_MASTER_PORT</span><span class="token operator">=</span><span class="token number">7077</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_MASTER_WEBUI_PORT</span><span class="token operator">=</span><span class="token number">8080</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_WORKER_CORES</span><span class="token operator">=</span><span class="token number">4</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_WORKER_MEMORY</span><span class="token operator">=</span>4g
+</code></pre></div></blockquote> <h3 id="向其他机器分发配置"><a href="#向其他机器分发配置" class="header-anchor">#</a> 向其他机器分发配置</h3> <p>cd $SPARK_HOME/conf</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">scp</span> -r slaves spark-env.sh bigdata02:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r slaves spark-env.sh bigdata03:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r slaves spark-env.sh bigdata04:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+</code></pre></div><h3 id="执行启动"><a href="#执行启动" class="header-anchor">#</a> 执行启动</h3> <h4 id="启动hadoop集群"><a href="#启动hadoop集群" class="header-anchor">#</a> 启动hadoop集群</h4> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 所有机器启动zookeeper</span>
+zkServer.sh start
+
+<span class="token comment"># 查看zookeeper状态</span>
+zkServer.sh status
+
+<span class="token comment"># 启动 yarn 的 resourcemanager 角色</span>
+yarn-daemons.sh start resourcemanager
+
+<span class="token comment"># 启动 hdfs 集群</span>
+start-dfs.sh
+<span class="token comment"># 启动 yarn 的 NodeManager 角色</span>
+start-yarn.sh
+</code></pre></div><h4 id="启动spark"><a href="#启动spark" class="header-anchor">#</a> 启动Spark</h4> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入 spark 的 sbin 目录</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-master/sbin
+
+<span class="token comment"># 执行启动命令</span>
+./start-all.sh
+</code></pre></div><h4 id="spark资源层角色为"><a href="#spark资源层角色为" class="header-anchor">#</a> Spark资源层角色为</h4> <div class="language- extra-class"><pre class="language-text"><code>主节点：Master
+从节点：Worker
+</code></pre></div><h4 id="spark资源层webui访问url"><a href="#spark资源层webui访问url" class="header-anchor">#</a> Spark资源层webUI访问url</h4> <div class="language-http extra-class"><pre class="language-http"><code><span class="token header-name keyword">http:</span>//bigdata01:8080
+</code></pre></div><h4 id="集群应用测试"><a href="#集群应用测试" class="header-anchor">#</a> 集群应用测试</h4> <h5 id="生成本地文件"><a href="#生成本地文件" class="header-anchor">#</a> 生成本地文件</h5> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vi</span> data.txt
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>hello world
+hello mashibing
+hello spark
+good idea
+</code></pre></div><h5 id="文件上传到hdfs上"><a href="#文件上传到hdfs上" class="header-anchor">#</a> 文件上传到hdfs上</h5> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># hdfs上创建目录</span>
+hdfs dfs -mkdir -p /sparktest
+<span class="token comment"># 文本文件上传</span>
+hdfs dfs -put data.txt /sparktest
+<span class="token comment"># 查看文件是否上传成功</span>
+hdfs dfs -ls /sparktest
+<span class="token comment"># 或者访问url</span>
+http://bigdata01:50070/explorer.html
+</code></pre></div><h5 id="测试spark程序"><a href="#测试spark程序" class="header-anchor">#</a> 测试spark程序</h5> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入Spark的bin目录</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-master/bin
+
+<span class="token comment"># 查看帮助</span>
+./spark-shell --help
+
+<span class="token comment"># 使用spark-shell进行测试</span>
+./spark-shell --master spark://bigdata01:7077
+
+<span class="token comment"># 启动完成之后，可以从spark资源ui管理界面看到相对应的application</span>
+http://bigdata01:8080
+
+<span class="token comment"># 执行scala测试语句</span>
+sc.textFile<span class="token punctuation">(</span><span class="token string">&quot;hdfs://mycluster/sparktest/data.txt&quot;</span><span class="token punctuation">)</span>.flatMap<span class="token punctuation">(</span>_.split<span class="token punctuation">(</span><span class="token string">&quot; &quot;</span><span class="token punctuation">))</span>.map<span class="token variable"><span class="token punctuation">((</span>_<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">))</span></span>.reduceByKey<span class="token punctuation">(</span>_+_<span class="token punctuation">)</span>.collect<span class="token punctuation">(</span><span class="token punctuation">)</span>.foreach<span class="token punctuation">(</span>println<span class="token punctuation">)</span>
+</code></pre></div><h3 id="设置zookeeper高可用"><a href="#设置zookeeper高可用" class="header-anchor">#</a> 设置zookeeper高可用</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入 Spark 的配置文件</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-master/conf
+
+<span class="token comment"># 赋值模版文件</span>
+<span class="token function">cp</span> spark-defaults.conf.template spark-defaults.conf
+
+<span class="token comment"># 编辑spark-defaults.conf</span>
+<span class="token function">vim</span> spark-defaults.conf
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code>spark.deploy.recoveryMode       ZOOKEEPER
+spark.deploy.zookeeper.url      bigdata01:2181,bigdata02:2181,bigdata03:2181,bigdata04:2181
+spark.deploy.zookeeper.dir      /spark
+</code></pre></div><h3 id="向其他机器分发配置-2"><a href="#向其他机器分发配置-2" class="header-anchor">#</a> 向其他机器分发配置</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">scp</span> -r spark-defaults.conf bigdata02:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-defaults.conf bigdata03:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-defaults.conf bigdata04:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+
+</code></pre></div><h3 id="进入第二台机器，修改配置"><a href="#进入第二台机器，修改配置" class="header-anchor">#</a> 进入第二台机器，修改配置</h3> <p>cd $SPARK_HOME/conf</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vim</span> spark-env.sh
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_MASTER_HOST</span><span class="token operator">=</span>bigdata02   <span class="token comment"># 每台master改成自己的主机名</span>
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 重启Spark集群</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+
+<span class="token comment"># 停止Spark</span>
+./stop-all.sh
+
+<span class="token comment"># 再次启动</span>
+<span class="token comment">## 进入第一台机器启动</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+./start-all.sh
+
+<span class="token comment">## 进入第二台机器，手动启动master</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+./start-master.sh
+</code></pre></div><h2 id="spark执行日志持久化"><a href="#spark执行日志持久化" class="header-anchor">#</a> Spark执行日志持久化</h2> <p>计算层把日志持久化，history-server去获取展示</p> <p>cd $SPARK_HOME/conf</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vim</span> spark-defaults.conf
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 把日志持久化到hdfs上，所以先在hdfs创建存放日志的目录</span>
+hdfs dfs -mkdir -p /spark_log
+hdfs dfs -ls /spark_log
+
+spark.eventLog.enabled <span class="token boolean">true</span>
+spark.eventLog.dir hdfs://mycluster/spark_log
+spark.history.fs.logDirectory  hdfs://mycluster/spark_log
+</code></pre></div><h3 id="向其他机器分发配置-3"><a href="#向其他机器分发配置-3" class="header-anchor">#</a> 向其他机器分发配置</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">scp</span> -r spark-defaults.conf bigdata02:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-defaults.conf bigdata03:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-defaults.conf bigdata04:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+
+<span class="token comment"># 进去第一台机器 停止Spark集群</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+<span class="token comment"># 停止Spark</span>
+./stop-all.sh
+
+<span class="token comment"># 进入第二台机器 停止 master节点</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+./stop-master.sh
+
+<span class="token comment"># 再次启动</span>
+<span class="token comment">## 进入第一台机器启动</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+./start-all.sh
+
+<span class="token comment">## 进入第二台机器，手动启动master</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+./start-master.sh
+
+</code></pre></div><h3 id="执行测试程序，查看记录的日志"><a href="#执行测试程序，查看记录的日志" class="header-anchor">#</a> 执行测试程序，查看记录的日志</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入Spark的bin目录</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-master/bin
+
+<span class="token comment"># 使用spark-shell进行测试</span>
+./spark-shell --master spark://bigdata01:7077,bigdata02:7077
+
+<span class="token comment"># 执行scala测试语句</span>
+sc.textFile<span class="token punctuation">(</span><span class="token string">&quot;hdfs://mycluster/sparktest/data.txt&quot;</span><span class="token punctuation">)</span>.flatMap<span class="token punctuation">(</span>_.split<span class="token punctuation">(</span><span class="token string">&quot; &quot;</span><span class="token punctuation">))</span>.map<span class="token variable"><span class="token punctuation">((</span>_<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">))</span></span>.reduceByKey<span class="token punctuation">(</span>_+_<span class="token punctuation">)</span>.collect<span class="token punctuation">(</span><span class="token punctuation">)</span>.foreach<span class="token punctuation">(</span>println<span class="token punctuation">)</span>
+
+<span class="token comment"># 然后 重启Spark集群</span>
+
+<span class="token comment"># 要想查看历史日志，在任意一台机器启动以下脚本</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+./start-history-server.sh
+./stop-history-server.sh
+
+<span class="token comment"># 访问日志地址(这个结果会出现浏览器兼容性问题：360极速浏览器不好使，其他浏览器都好用)</span>
+http://bigdata02:18080
+</code></pre></div><h3 id="使用集群模式运行"><a href="#使用集群模式运行" class="header-anchor">#</a> 使用集群模式运行</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token variable">$SPARK_HOME</span>/bin/spark-submit   <span class="token punctuation">\</span>
+--master spark://bigdata01:7077,bigdata02:7077 <span class="token punctuation">\</span>
+--deploy-mode cluster <span class="token punctuation">\</span>
+--class <span class="token string">'org.apache.spark.examples.SparkPi'</span>  <span class="token punctuation">\</span>
+<span class="token string">&quot;<span class="token variable">$SPARK_HOME</span>/examples/jars/spark-examples_2.11-2.4.5.jar&quot;</span> <span class="token punctuation">\</span>
+<span class="token number">10</span>
+</code></pre></div><h2 id="spark高可用集群-on-yarn"><a href="#spark高可用集群-on-yarn" class="header-anchor">#</a> Spark高可用集群 On-Yarn</h2> <h3 id="解压到指定路径-3"><a href="#解压到指定路径-3" class="header-anchor">#</a> 解压到指定路径</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">mkdir</span> -p /opt/bigdata/spark-2.4.5-yarn
+<span class="token function">tar</span> -zvxf spark-2.4.5-bin-hadoop2.7.tgz -C /opt/bigdata/spark-2.4.5-yarn
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-yarn
+<span class="token function">mv</span> spark-2.4.5-bin-hadoop2.7/* /opt/bigdata/spark-2.4.5-yarn/
+<span class="token function">rm</span> -rf spark-2.4.5-bin-hadoop2.7/
+</code></pre></div><h3 id="设置环境变量-4"><a href="#设置环境变量-4" class="header-anchor">#</a> 设置环境变量</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vi</span> /etc/profile
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">SPARK_HOME</span><span class="token operator">=</span>/opt/bigdata/spark-2.4.5-yarn
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$SPARK_HOME</span>/bin:<span class="token variable">$SPARK_HOME</span>/sbin
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">source</span> /etc/profile
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">reboot</span>
+</code></pre></div><h3 id="执行配置-2"><a href="#执行配置-2" class="header-anchor">#</a> 执行配置</h3> <p>cd $SPARK_HOME/conf</p> <blockquote><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">cp</span> spark-env.sh.template spark-env.sh
+<span class="token function">vim</span> spark-env.sh
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">HADOOP_CONF_DIR</span><span class="token operator">=</span>/opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3/etc/hadoop
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">cp</span> spark-defaults.conf.template spark-defaults.conf
+<span class="token function">vim</span> spark-defaults.conf
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code>spark.eventLog.enabled <span class="token boolean">true</span>
+spark.eventLog.dir hdfs://mycluster/spark_yarn_log
+spark.history.fs.logDirectory  hdfs://mycluster/spark_yarn_log
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># hdfs创建 历史日志文件夹</span>
+hdfs dfs -mkdir -p /spark_yarn_log
+hdfs dfs -ls /spark_yarn_log
+</code></pre></div></blockquote> <h3 id="向其他机器分发配置-4"><a href="#向其他机器分发配置-4" class="header-anchor">#</a> 向其他机器分发配置</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">scp</span> -r spark-env.sh spark-defaults.conf bigdata02:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-env.sh spark-defaults.conf bigdata03:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-env.sh spark-defaults.conf bigdata04:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+</code></pre></div><h3 id="更新yarn配置"><a href="#更新yarn配置" class="header-anchor">#</a> 更新yarn配置</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> <span class="token variable">$HADOOP_HOME</span>/etc/hadoop
+<span class="token function">vim</span> yarn-site.xml
+</code></pre></div><div class="language-xml extra-class"><pre class="language-xml"><code>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>yarn.nodemanager.resource.memory-mb<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>4096<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>yarn.nodemanager.resource.cpu-vcores<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>yarn.nodemanager.vmem-check-enabled<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>false<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h3 id="mapreduce-的历史日志的配置"><a href="#mapreduce-的历史日志的配置" class="header-anchor">#</a> MapReduce 的历史日志的配置</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> <span class="token variable">$HADOOP_HOME</span>/etc/hadoop
+<span class="token function">vim</span> mapred-site.xml
+</code></pre></div><div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>mapred.job.history.server.embedded<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>mapreduce.jobhistory.address<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>bigdata04:10020<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>mapreduce.jobhistory.webapp.address<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>bigdata04:50060<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>mapreduce.jobhistory.intermediate-done-dir<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>/work/mr-history-tmp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">&gt;</span></span>mapreduce.jobhistory.done-dir<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>/work/mr-history-done<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h3 id="分发配置"><a href="#分发配置" class="header-anchor">#</a> 分发配置</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">scp</span> -r yarn-site.xml mapred-site.xml bigdata02:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r yarn-site.xml mapred-site.xml bigdata03:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r yarn-site.xml mapred-site.xml bigdata04:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+</code></pre></div><h3 id="启动hadoop集群-2"><a href="#启动hadoop集群-2" class="header-anchor">#</a> 启动hadoop集群</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 所有机器启动zookeeper</span>
+zkServer.sh start
+
+<span class="token comment"># 查看zookeeper状态</span>
+zkServer.sh status
+
+<span class="token comment"># 启动 yarn 的 resourcemanager 角色</span>
+yarn-daemons.sh start resourcemanager
+
+<span class="token comment"># 启动 hdfs 集群</span>
+start-dfs.sh
+
+<span class="token comment"># 启动 yarn 的 NodeManager 角色</span>
+start-yarn.sh
+
+<span class="token comment"># 测试hadoop计算的日志</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/hadoop-2.8.3-ha/hadoop-2.8.3/share/hadoop/mapreduce
+hadoop jar hadoop-mapreduce-examples-2.8.3.jar wordcount /data/wc/input /data/wc/output1
+<span class="token comment"># 启动bigdata04的日志服务</span>
+mr-jobhistory-daemon.sh start historyserver
+<span class="token comment"># 然后就可以在yarn上通过history链接点进去了</span>
+
+<span class="token comment">###########################################################################################</span>
+<span class="token comment"># 如果启动报错，全部关闭后，单个启动，然后再尝试上面的批量启动</span>
+<span class="token comment"># 1,2,3,4</span>
+zkServer.sh start
+zkServer.sh status
+<span class="token comment"># 1,2,3</span>
+hadoop-daemon.sh start journalnode
+<span class="token comment"># 1</span>
+yarn-daemons.sh start resourcemanager
+<span class="token comment"># 1</span>
+yarn-daemons.sh start nodemanager
+<span class="token comment"># 1,2</span>
+hadoop-daemon.sh start zkfc
+<span class="token comment"># 1,2</span>
+hadoop-daemon.sh start namenode
+<span class="token comment"># 1</span>
+start-dfs.sh
+</code></pre></div><h3 id="不需要再启动spark的主程序服务了，可直接运行程序"><a href="#不需要再启动spark的主程序服务了，可直接运行程序" class="header-anchor">#</a> 不需要再启动Spark的主程序服务了，可直接运行程序</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入Spark的bin目录</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-yarn/bin
+
+<span class="token comment"># 使用spark-shell进行测试</span>
+./spark-shell --master <span class="token function">yarn</span>
+<span class="token comment"># 当发现启动特别慢的时候，出现以下报错时，的解决方案</span>
+WARN yarn.Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME
+
+<span class="token comment"># 解决方案：可以将本地spark目录下的jar包上报到hdfs上，然后更改配置文件</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-yarn/jars
+<span class="token comment"># 创建hdfs目录，存放jar包</span>
+hdfs dfs -mkdir -p /work/spark_lib/jars
+<span class="token comment"># 上传jar包</span>
+hdfs dfs -put ./* /work/spark_lib/jars
+hdfs dfs -ls /work/spark_lib/jars
+<span class="token comment"># 进入spark配置目录，编辑spark-defaults.conf文件</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-yarn/conf
+<span class="token function">vim</span> spark-defaults.conf
+<span class="token comment"># 增加下面这一行的配置</span>
+spark.yarn.jars  hdfs://mycluster/work/spark_lib/jars/*
+<span class="token comment"># 配置分发</span>
+<span class="token function">scp</span> -r spark-defaults.conf bigdata02:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-defaults.conf bigdata03:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+<span class="token function">scp</span> -r spark-defaults.conf bigdata04:<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>
+</code></pre></div><h3 id="在spark集群环境上测试"><a href="#在spark集群环境上测试" class="header-anchor">#</a> 在Spark集群环境上测试</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 再次使用spark-shell进行测试（只能在客户端执行）</span>
+<span class="token builtin class-name">cd</span> /opt/bigdata/spark-2.4.5-yarn/bin
+./spark-shell --master <span class="token function">yarn</span>
+
+sc.textFile<span class="token punctuation">(</span><span class="token string">&quot;hdfs://mycluster/sparktest/data.txt&quot;</span><span class="token punctuation">)</span>.flatMap<span class="token punctuation">(</span>_.split<span class="token punctuation">(</span><span class="token string">&quot; &quot;</span><span class="token punctuation">))</span>.map<span class="token variable"><span class="token punctuation">((</span>_<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">))</span></span>.reduceByKey<span class="token punctuation">(</span>_+_<span class="token punctuation">)</span>.collect<span class="token punctuation">(</span><span class="token punctuation">)</span>.foreach<span class="token punctuation">(</span>println<span class="token punctuation">)</span>
+
+<span class="token comment"># 要想查看历史日志，在04机器启动以下脚本</span>
+<span class="token builtin class-name">cd</span> <span class="token variable">$SPARK_HOME</span>/sbin
+./start-history-server.sh
+./stop-history-server.sh
+
+<span class="token comment"># 使用集群模式运行</span>
+<span class="token variable">$SPARK_HOME</span>/bin/spark-submit   <span class="token punctuation">\</span>
+--master <span class="token function">yarn</span> <span class="token punctuation">\</span>
+--deploy-mode cluster <span class="token punctuation">\</span>
+--class <span class="token string">'org.apache.spark.examples.SparkPi'</span>  <span class="token punctuation">\</span>
+<span class="token string">&quot;<span class="token variable">$SPARK_HOME</span>/examples/jars/spark-examples_2.11-2.4.5.jar&quot;</span> <span class="token punctuation">\</span>
+<span class="token number">10</span>
+</code></pre></div><h3 id="启动集群总结"><a href="#启动集群总结" class="header-anchor">#</a> 启动集群总结</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 所有机器启动zookeeper</span>
+zkServer.sh start
+
+<span class="token comment"># 查看zookeeper状态</span>
+zkServer.sh status
+
+<span class="token comment"># 启动 yarn 的 resourcemanager 角色</span>
+yarn-daemons.sh start resourcemanager
+
+<span class="token comment"># 启动 hdfs 集群</span>
+start-dfs.sh
+
+<span class="token comment"># 启动 yarn 的 NodeManager 角色</span>
+start-yarn.sh
+
+<span class="token comment"># 启动hadoop的日志服务（在04机器上）</span>
+mr-jobhistory-daemon.sh start historyserver
+
+<span class="token comment"># 启动Spark的日志服务（在04机器上）</span>
+start-history-server.sh
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/tiankafei-docs-大数据/sqoop学习笔记.html" class="prev">
+        sqoop的简单概论
+      </a></span> <span class="next"><a href="/tiankafei-docs-大数据/scala学习笔记.html">
+        Scala学习
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ccc5f14a.js" defer></script><script src="/assets/js/2.dfe90790.js" defer></script><script src="/assets/js/51.28e160d1.js" defer></script>
+  </body>
+</html>

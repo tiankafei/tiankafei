@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>通用命令 | tiankafei - java相关技术栈</title>
+    <meta name="generator" content="VuePress 1.5.1">
+    
+    <meta name="description" content="自己写的一些东西的记录，包括代码与笔记，jdk最低支持1.8">
+    <link rel="preload" href="/assets/css/0.styles.9bcdb81a.css" as="style"><link rel="preload" href="/assets/js/app.ccc5f14a.js" as="script"><link rel="preload" href="/assets/js/2.dfe90790.js" as="script"><link rel="preload" href="/assets/js/24.d94f4c05.js" as="script"><link rel="prefetch" href="/assets/js/10.7cadd409.js"><link rel="prefetch" href="/assets/js/11.067b1649.js"><link rel="prefetch" href="/assets/js/12.2e93e392.js"><link rel="prefetch" href="/assets/js/13.f6cd60ca.js"><link rel="prefetch" href="/assets/js/14.5dac3551.js"><link rel="prefetch" href="/assets/js/15.b02ba84d.js"><link rel="prefetch" href="/assets/js/16.2eafb577.js"><link rel="prefetch" href="/assets/js/17.9899e73c.js"><link rel="prefetch" href="/assets/js/18.60703fd1.js"><link rel="prefetch" href="/assets/js/19.2ba65924.js"><link rel="prefetch" href="/assets/js/20.efca007d.js"><link rel="prefetch" href="/assets/js/21.0f202b62.js"><link rel="prefetch" href="/assets/js/22.2060d3bc.js"><link rel="prefetch" href="/assets/js/23.6f797601.js"><link rel="prefetch" href="/assets/js/25.44dd7767.js"><link rel="prefetch" href="/assets/js/26.07daa798.js"><link rel="prefetch" href="/assets/js/27.67424cb5.js"><link rel="prefetch" href="/assets/js/28.96688bbc.js"><link rel="prefetch" href="/assets/js/29.b7eac95c.js"><link rel="prefetch" href="/assets/js/3.9c0144bd.js"><link rel="prefetch" href="/assets/js/30.db57cc90.js"><link rel="prefetch" href="/assets/js/31.55b3c285.js"><link rel="prefetch" href="/assets/js/32.9375e63d.js"><link rel="prefetch" href="/assets/js/33.6b619751.js"><link rel="prefetch" href="/assets/js/34.931628db.js"><link rel="prefetch" href="/assets/js/35.619f7989.js"><link rel="prefetch" href="/assets/js/36.4040688b.js"><link rel="prefetch" href="/assets/js/37.c827e4b0.js"><link rel="prefetch" href="/assets/js/38.8cc9fea4.js"><link rel="prefetch" href="/assets/js/39.6ba33c01.js"><link rel="prefetch" href="/assets/js/4.baf4feed.js"><link rel="prefetch" href="/assets/js/40.e67f41b2.js"><link rel="prefetch" href="/assets/js/41.d6621d93.js"><link rel="prefetch" href="/assets/js/42.6ef70c29.js"><link rel="prefetch" href="/assets/js/43.83631006.js"><link rel="prefetch" href="/assets/js/44.fb6d58d0.js"><link rel="prefetch" href="/assets/js/45.9507ab04.js"><link rel="prefetch" href="/assets/js/46.149b21d4.js"><link rel="prefetch" href="/assets/js/47.befc4ed9.js"><link rel="prefetch" href="/assets/js/48.d4c4aca0.js"><link rel="prefetch" href="/assets/js/49.5928ac72.js"><link rel="prefetch" href="/assets/js/5.d7c5e89d.js"><link rel="prefetch" href="/assets/js/50.131de96d.js"><link rel="prefetch" href="/assets/js/51.28e160d1.js"><link rel="prefetch" href="/assets/js/52.3cd65609.js"><link rel="prefetch" href="/assets/js/53.239208d7.js"><link rel="prefetch" href="/assets/js/54.c350cc4f.js"><link rel="prefetch" href="/assets/js/55.ab62193b.js"><link rel="prefetch" href="/assets/js/56.5679260a.js"><link rel="prefetch" href="/assets/js/57.2f1091ae.js"><link rel="prefetch" href="/assets/js/58.9ded9973.js"><link rel="prefetch" href="/assets/js/59.ff98f4f0.js"><link rel="prefetch" href="/assets/js/6.ad7178fc.js"><link rel="prefetch" href="/assets/js/60.73cc249a.js"><link rel="prefetch" href="/assets/js/61.dac3642a.js"><link rel="prefetch" href="/assets/js/62.c87a627b.js"><link rel="prefetch" href="/assets/js/63.40d5e52e.js"><link rel="prefetch" href="/assets/js/64.35795f8b.js"><link rel="prefetch" href="/assets/js/65.ae23fc13.js"><link rel="prefetch" href="/assets/js/66.1de59948.js"><link rel="prefetch" href="/assets/js/67.d1fa8257.js"><link rel="prefetch" href="/assets/js/68.dd73b8b9.js"><link rel="prefetch" href="/assets/js/69.70fd1634.js"><link rel="prefetch" href="/assets/js/7.17ba4181.js"><link rel="prefetch" href="/assets/js/70.e9e6439f.js"><link rel="prefetch" href="/assets/js/71.78d7c72f.js"><link rel="prefetch" href="/assets/js/72.47241074.js"><link rel="prefetch" href="/assets/js/73.fcda0ede.js"><link rel="prefetch" href="/assets/js/74.f4c53349.js"><link rel="prefetch" href="/assets/js/75.96aa577a.js"><link rel="prefetch" href="/assets/js/76.3285bc65.js"><link rel="prefetch" href="/assets/js/8.67246ec2.js"><link rel="prefetch" href="/assets/js/9.e1e90081.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9bcdb81a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">tiankafei - java相关技术栈</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>linux</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/tiankafei-docs-linux/centos常用命令.html" class="active sidebar-link">通用命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#安装-wget-工具" class="sidebar-link">安装 wget 工具</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#安装-net-tools-工具" class="sidebar-link">安装 net-tools 工具</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#安装-vim-工具" class="sidebar-link">安装 vim 工具</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#查看进程" class="sidebar-link">查看进程</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#关闭selinux" class="sidebar-link">关闭selinux</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#设置本地域名解析" class="sidebar-link">设置本地域名解析</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#设置免密登录" class="sidebar-link">设置免密登录</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#关机命令" class="sidebar-link">关机命令</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#重启命令" class="sidebar-link">重启命令</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#解压命令" class="sidebar-link">解压命令</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#更改linux连接最大数" class="sidebar-link">更改linux连接最大数</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#关闭防火墙，开机不启动防火墙" class="sidebar-link">关闭防火墙，开机不启动防火墙</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos6" class="sidebar-link">CentOS6</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos7" class="sidebar-link">CentOS7</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#时间同步阿里云" class="sidebar-link">时间同步阿里云</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#ntp的安装及配置" class="sidebar-link">ntp的安装及配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos6-2" class="sidebar-link">CentOS6</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos7-2" class="sidebar-link">CentOS7</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#切换-centos-阿里云yum源" class="sidebar-link">切换 centos 阿里云yum源</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos6-3" class="sidebar-link">CentOS6</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos7-3" class="sidebar-link">CentOS7</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#问题恢复" class="sidebar-link">问题恢复</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#设置主机名" class="sidebar-link">设置主机名</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos6-4" class="sidebar-link">CentOS6</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos7-4" class="sidebar-link">CentOS7</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#网络配置" class="sidebar-link">网络配置</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#centos7-5" class="sidebar-link">CentOS7</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#卸载指定安装包" class="sidebar-link">卸载指定安装包</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#查看已安装的包" class="sidebar-link">查看已安装的包</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-linux/centos常用命令.html#执行卸载" class="sidebar-link">执行卸载</a></li></ul></li></ul></li><li><a href="/tiankafei-docs-linux/centos7安装JDK.html" class="sidebar-link">rpm安装 jdk</a></li><li><a href="/tiankafei-docs-linux/centos6安装MySQL8.html" class="sidebar-link">安装 mysql8</a></li><li><a href="/tiankafei-docs-linux/centos7安装MySQL8.html" class="sidebar-link">安装 mysql8</a></li><li><a href="/tiankafei-docs-linux/centos7安装Mongodb并设置开机启动.html" class="sidebar-link">CentOS7安装Mongodb</a></li><li><a href="/tiankafei-docs-linux/centos7安装Consul并设置开机启动.html" class="sidebar-link">CentOS7安装Consul</a></li><li><a href="/tiankafei-docs-linux/centos7安装Nacos并设置开机启动.html" class="sidebar-link">nacos</a></li><li><a href="/tiankafei-docs-linux/centos7安装Neo4j并设置开机启动.html" class="sidebar-link">CentOS7安装Neo4j</a></li><li><a href="/tiankafei-docs-linux/centos7安装Nexus私服并设置开机启动.html" class="sidebar-link">maven私服搭建</a></li><li><a href="/tiankafei-docs-linux/centos7安装Nexus私服及maven的配置.html" class="sidebar-link">Maven私服的搭建与配置</a></li><li><a href="/tiankafei-docs-linux/centos7安装NodeJS.html" class="sidebar-link">nodejs的安装</a></li><li><a href="/tiankafei-docs-linux/centos7安装禅道并开机启动.html" class="sidebar-link">禅道的安装</a></li><li><a href="/tiankafei-docs-linux/centos7安装RabbitMQ并设置开机启动.html" class="sidebar-link">CentOS7安装RabbitMQ</a></li><li><a href="/tiankafei-docs-linux/centos7安装Sentinel-dashboard并设置开机启动.html" class="sidebar-link">sentinel-dashboard</a></li><li><a href="/tiankafei-docs-linux/centos7安装Easy-Mock并设置开机启动.html" class="sidebar-link">easy-mock安装配置</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="通用命令"><a href="#通用命令" class="header-anchor">#</a> 通用命令</h1> <h2 id="安装-wget-工具"><a href="#安装-wget-工具" class="header-anchor">#</a> 安装 wget 工具</h2> <div class="language-shell extra-class"><pre class="language-shell"><code>yum <span class="token function">install</span> <span class="token function">wget</span> -y
+</code></pre></div><h2 id="安装-net-tools-工具"><a href="#安装-net-tools-工具" class="header-anchor">#</a> 安装 net-tools 工具</h2> <div class="language-shell extra-class"><pre class="language-shell"><code>yum <span class="token function">install</span> net-tools -y
+</code></pre></div><h2 id="安装-vim-工具"><a href="#安装-vim-工具" class="header-anchor">#</a> 安装 vim 工具</h2> <div class="language-shell extra-class"><pre class="language-shell"><code>yum <span class="token function">install</span> <span class="token function">vim</span> -y
+</code></pre></div><h2 id="查看进程"><a href="#查看进程" class="header-anchor">#</a> 查看进程</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">ps</span> -ef <span class="token operator">|</span> <span class="token function">grep</span> 进程名/端口
+</code></pre></div><h2 id="关闭selinux"><a href="#关闭selinux" class="header-anchor">#</a> 关闭selinux</h2> <p>vi /etc/selinux/config</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token assign-left variable">SELINUX</span><span class="token operator">=</span>disabled
+</code></pre></div><h2 id="设置本地域名解析"><a href="#设置本地域名解析" class="header-anchor">#</a> 设置本地域名解析</h2> <p>vi /etc/hosts</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># ip 别名</span>
+<span class="token number">192.168</span>.0.101 software
+<span class="token number">192.168</span>.0.102 appserver
+<span class="token number">192.168</span>.0.121 bigdata01
+<span class="token number">192.168</span>.0.122 bigdata02
+<span class="token number">192.168</span>.0.123 bigdata03
+<span class="token number">192.168</span>.0.124 bigdata04
+</code></pre></div><h2 id="设置免密登录"><a href="#设置免密登录" class="header-anchor">#</a> 设置免密登录</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">ssh</span> localhost
+<span class="token comment"># 在本地机器用ssh-keygen 生成一个公私钥对</span>
+ssh-keygen -t dsa -P <span class="token string">''</span> -f ~/.ssh/id_dsa
+<span class="token comment"># 把公钥加入authorized_keys中</span>
+ssh-copy-id root@bigdata01
+</code></pre></div><h2 id="关机命令"><a href="#关机命令" class="header-anchor">#</a> 关机命令</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">shutdown</span> -h now
+</code></pre></div><h2 id="重启命令"><a href="#重启命令" class="header-anchor">#</a> 重启命令</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">reboot</span>
+</code></pre></div><h2 id="解压命令"><a href="#解压命令" class="header-anchor">#</a> 解压命令</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 解压tar文件到指定路径</span>
+<span class="token function">tar</span> -zxvf 压缩包路径 -C 解压路径
+</code></pre></div><h2 id="更改linux连接最大数"><a href="#更改linux连接最大数" class="header-anchor">#</a> 更改linux连接最大数</h2> <p>vi /etc/security/limits.conf</p> <div class="language-sh extra-class"><pre class="language-sh"><code>*       soft    nofile  <span class="token number">102400</span>
+*       hard    nofile  <span class="token number">102400</span>
+*       soft    nproc   <span class="token number">102400</span>
+*       hard    nproc   <span class="token number">102400</span>
+</code></pre></div><p>vi /etc/pam.d/login</p> <div class="language-sh extra-class"><pre class="language-sh"><code>session    required     pam_limits.so
+</code></pre></div><h2 id="关闭防火墙，开机不启动防火墙"><a href="#关闭防火墙，开机不启动防火墙" class="header-anchor">#</a> 关闭防火墙，开机不启动防火墙</h2> <h3 id="centos6"><a href="#centos6" class="header-anchor">#</a> CentOS6</h3> <p>查看状态</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> iptables status
+</code></pre></div><p>停止服务</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> iptables stop
+</code></pre></div><p>设置开机禁止启动</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">chkconfig</span> iptables off
+</code></pre></div><h3 id="centos7"><a href="#centos7" class="header-anchor">#</a> CentOS7</h3> <p>查看状态</p> <div class="language-shell extra-class"><pre class="language-shell"><code>systemctl status firewalld.service
+</code></pre></div><p>停止服务</p> <div class="language-shell extra-class"><pre class="language-shell"><code>systemctl stop firewalld.service
+</code></pre></div><p>设置开机禁止启动</p> <div class="language-shell extra-class"><pre class="language-shell"><code>systemctl disable firewalld.service
+</code></pre></div><h2 id="时间同步阿里云"><a href="#时间同步阿里云" class="header-anchor">#</a> 时间同步阿里云</h2> <h3 id="ntp的安装及配置"><a href="#ntp的安装及配置" class="header-anchor">#</a> ntp的安装及配置</h3> <p>安装时间同步工具ntp</p> <div class="language-shell extra-class"><pre class="language-shell"><code>yum <span class="token function">install</span> ntp  -y
+</code></pre></div><p>设置阿里云时间同步地址</p> <p>vi /etc/ntp.conf</p> <div class="language-sh extra-class"><pre class="language-sh"><code>server ntp1.aliyun.com
+<span class="token comment">#注释掉其他的server</span>
+</code></pre></div><h3 id="centos6-2"><a href="#centos6-2" class="header-anchor">#</a> CentOS6</h3> <p>查看状态</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> ntpd status
+</code></pre></div><p>启动服务</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> ntpd start
+</code></pre></div><p>停止服务</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> ntpd stop
+</code></pre></div><p>设置开机启动</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">chkconfig</span> ntpd on
+</code></pre></div><h3 id="centos7-2"><a href="#centos7-2" class="header-anchor">#</a> CentOS7</h3> <p>查看状态</p> <div class="language-shell extra-class"><pre class="language-shell"><code>systemctl status ntpd.service
+</code></pre></div><p>启动服务</p> <div class="language-shell extra-class"><pre class="language-shell"><code>systemctl start ntpd.service
+</code></pre></div><p>停止服务</p> <div class="language-shell extra-class"><pre class="language-shell"><code>systemctl stop ntpd.service
+</code></pre></div><p>设置开机启动</p> <div class="language-sh extra-class"><pre class="language-sh"><code>systemctl <span class="token builtin class-name">enable</span> ntpd.service
+
+<span class="token comment"># ntpd可能与chronyd冲突，所以需要先把chronyd禁止开机启动。如果发现ntpd服务没有开机启动，可以执行下面命令</span>
+<span class="token comment"># systemctl disable chronyd</span>
+</code></pre></div><h2 id="切换-centos-阿里云yum源"><a href="#切换-centos-阿里云yum源" class="header-anchor">#</a> 切换 centos 阿里云yum源</h2> <h3 id="centos6-3"><a href="#centos6-3" class="header-anchor">#</a> CentOS6</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入系统yum源的目录</span>
+<span class="token builtin class-name">cd</span> /etc/yum.repos.d/
+<span class="token comment"># 创建备份目录，方便出错后回退</span>
+<span class="token function">mkdir</span> backup
+<span class="token comment"># 拷贝备份</span>
+<span class="token function">cp</span> CentOS-* ./backup/
+
+<span class="token comment"># 下载阿里云centos6的yum源覆盖本地文件</span>
+<span class="token function">wget</span> -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+
+<span class="token comment"># 执行清理缓存</span>
+yum clean all
+<span class="token comment"># 重新构造yum源的缓存</span>
+yum makecache
+
+<span class="token comment"># 使用新yum源更新已安装的软件</span>
+yum update -y
+</code></pre></div><h3 id="centos7-3"><a href="#centos7-3" class="header-anchor">#</a> CentOS7</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 进入系统yum源的目录</span>
+<span class="token builtin class-name">cd</span> /etc/yum.repos.d/
+<span class="token comment"># 创建备份目录，方便出错后回退</span>
+<span class="token function">mkdir</span> backup
+<span class="token comment"># 拷贝备份</span>
+<span class="token function">cp</span> CentOS-* ./backup/
+
+<span class="token comment"># 下载阿里云centos6的yum源覆盖本地文件</span>
+<span class="token function">wget</span> -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+<span class="token comment"># 添加EPEL源</span>
+<span class="token function">wget</span> -P /etc/yum.repos.d/ http://mirrors.aliyun.com/repo/epel-7.repo
+
+<span class="token comment"># 执行清理缓存</span>
+yum clean all
+<span class="token comment"># 重新构造yum源的缓存</span>
+yum makecache
+
+<span class="token comment"># 使用新yum源更新已安装的软件</span>
+yum update -y
+</code></pre></div><h3 id="问题恢复"><a href="#问题恢复" class="header-anchor">#</a> 问题恢复</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> /etc/yum.repos.d/backup
+
+<span class="token punctuation">\</span>cp -rf CentOS-* /etc/yum.repos.d/
+
+<span class="token comment"># 执行清理缓存</span>
+yum clean all
+<span class="token comment"># 重新构造yum源的缓存</span>
+yum makecache
+
+<span class="token comment"># 查看源列表</span>
+yum repolist
+
+<span class="token comment"># 使用新yum源更新已安装的软件</span>
+yum update -y
+</code></pre></div><h2 id="设置主机名"><a href="#设置主机名" class="header-anchor">#</a> 设置主机名</h2> <h3 id="centos6-4"><a href="#centos6-4" class="header-anchor">#</a> CentOS6</h3> <p>vi /etc/sysconfig/network</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token assign-left variable">NETWORKING</span><span class="token operator">=</span>yes
+<span class="token assign-left variable"><span class="token environment constant">HOSTNAME</span></span><span class="token operator">=</span>主机名
+</code></pre></div><h3 id="centos7-4"><a href="#centos7-4" class="header-anchor">#</a> CentOS7</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 设置主机名</span>
+hostnamectl set-hostname 主机名
+
+<span class="token comment"># 查看主机名</span>
+hostnamectl
+</code></pre></div><h2 id="网络配置"><a href="#网络配置" class="header-anchor">#</a> 网络配置</h2> <h3 id="centos7-5"><a href="#centos7-5" class="header-anchor">#</a> CentOS7</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vi</span> /etc/sysconfig/network-scripts/ifcfg-ens33
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span><span class="token string">&quot;none&quot;</span>
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span><span class="token string">&quot;yes&quot;</span>
+<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token string">&quot;192.168.0.108&quot;</span>
+<span class="token assign-left variable">PREFIX</span><span class="token operator">=</span><span class="token string">&quot;24&quot;</span>
+<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token string">&quot;192.168.0.1&quot;</span>
+<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token string">&quot;192.168.0.1&quot;</span>
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> network restart
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vi</span> /etc/resolv.conf
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 阿里云提供的</span>
+nameserver <span class="token number">223.5</span>.5.5
+nameserver <span class="token number">223.6</span>.6.6
+</code></pre></div><h2 id="卸载指定安装包"><a href="#卸载指定安装包" class="header-anchor">#</a> 卸载指定安装包</h2> <h3 id="查看已安装的包"><a href="#查看已安装的包" class="header-anchor">#</a> 查看已安装的包</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">rpm</span> -qa <span class="token operator">|</span> <span class="token function">grep</span> xxx
+</code></pre></div><h3 id="执行卸载"><a href="#执行卸载" class="header-anchor">#</a> 执行卸载</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">rpm</span> -e <span class="token variable"><span class="token variable">`</span><span class="token function">rpm</span> -qa <span class="token operator">|</span> <span class="token function">grep</span> xxx<span class="token variable">`</span></span>
+<span class="token function">rpm</span> -e xxx
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/tiankafei-docs-linux/centos7安装JDK.html">
+        rpm安装 jdk
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ccc5f14a.js" defer></script><script src="/assets/js/2.dfe90790.js" defer></script><script src="/assets/js/24.d94f4c05.js" defer></script>
+  </body>
+</html>

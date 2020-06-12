@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>词性 | tiankafei - java相关技术栈</title>
+    <meta name="generator" content="VuePress 1.5.1">
+    
+    <meta name="description" content="自己写的一些东西的记录，包括代码与笔记，jdk最低支持1.8">
+    <link rel="preload" href="/assets/css/0.styles.9bcdb81a.css" as="style"><link rel="preload" href="/assets/js/app.ccc5f14a.js" as="script"><link rel="preload" href="/assets/js/2.dfe90790.js" as="script"><link rel="preload" href="/assets/js/8.67246ec2.js" as="script"><link rel="prefetch" href="/assets/js/10.7cadd409.js"><link rel="prefetch" href="/assets/js/11.067b1649.js"><link rel="prefetch" href="/assets/js/12.2e93e392.js"><link rel="prefetch" href="/assets/js/13.f6cd60ca.js"><link rel="prefetch" href="/assets/js/14.5dac3551.js"><link rel="prefetch" href="/assets/js/15.b02ba84d.js"><link rel="prefetch" href="/assets/js/16.2eafb577.js"><link rel="prefetch" href="/assets/js/17.9899e73c.js"><link rel="prefetch" href="/assets/js/18.60703fd1.js"><link rel="prefetch" href="/assets/js/19.2ba65924.js"><link rel="prefetch" href="/assets/js/20.efca007d.js"><link rel="prefetch" href="/assets/js/21.0f202b62.js"><link rel="prefetch" href="/assets/js/22.2060d3bc.js"><link rel="prefetch" href="/assets/js/23.6f797601.js"><link rel="prefetch" href="/assets/js/24.d94f4c05.js"><link rel="prefetch" href="/assets/js/25.44dd7767.js"><link rel="prefetch" href="/assets/js/26.07daa798.js"><link rel="prefetch" href="/assets/js/27.67424cb5.js"><link rel="prefetch" href="/assets/js/28.96688bbc.js"><link rel="prefetch" href="/assets/js/29.b7eac95c.js"><link rel="prefetch" href="/assets/js/3.9c0144bd.js"><link rel="prefetch" href="/assets/js/30.db57cc90.js"><link rel="prefetch" href="/assets/js/31.55b3c285.js"><link rel="prefetch" href="/assets/js/32.9375e63d.js"><link rel="prefetch" href="/assets/js/33.6b619751.js"><link rel="prefetch" href="/assets/js/34.931628db.js"><link rel="prefetch" href="/assets/js/35.619f7989.js"><link rel="prefetch" href="/assets/js/36.4040688b.js"><link rel="prefetch" href="/assets/js/37.c827e4b0.js"><link rel="prefetch" href="/assets/js/38.8cc9fea4.js"><link rel="prefetch" href="/assets/js/39.6ba33c01.js"><link rel="prefetch" href="/assets/js/4.baf4feed.js"><link rel="prefetch" href="/assets/js/40.e67f41b2.js"><link rel="prefetch" href="/assets/js/41.d6621d93.js"><link rel="prefetch" href="/assets/js/42.6ef70c29.js"><link rel="prefetch" href="/assets/js/43.83631006.js"><link rel="prefetch" href="/assets/js/44.fb6d58d0.js"><link rel="prefetch" href="/assets/js/45.9507ab04.js"><link rel="prefetch" href="/assets/js/46.149b21d4.js"><link rel="prefetch" href="/assets/js/47.befc4ed9.js"><link rel="prefetch" href="/assets/js/48.d4c4aca0.js"><link rel="prefetch" href="/assets/js/49.5928ac72.js"><link rel="prefetch" href="/assets/js/5.d7c5e89d.js"><link rel="prefetch" href="/assets/js/50.131de96d.js"><link rel="prefetch" href="/assets/js/51.28e160d1.js"><link rel="prefetch" href="/assets/js/52.3cd65609.js"><link rel="prefetch" href="/assets/js/53.239208d7.js"><link rel="prefetch" href="/assets/js/54.c350cc4f.js"><link rel="prefetch" href="/assets/js/55.ab62193b.js"><link rel="prefetch" href="/assets/js/56.5679260a.js"><link rel="prefetch" href="/assets/js/57.2f1091ae.js"><link rel="prefetch" href="/assets/js/58.9ded9973.js"><link rel="prefetch" href="/assets/js/59.ff98f4f0.js"><link rel="prefetch" href="/assets/js/6.ad7178fc.js"><link rel="prefetch" href="/assets/js/60.73cc249a.js"><link rel="prefetch" href="/assets/js/61.dac3642a.js"><link rel="prefetch" href="/assets/js/62.c87a627b.js"><link rel="prefetch" href="/assets/js/63.40d5e52e.js"><link rel="prefetch" href="/assets/js/64.35795f8b.js"><link rel="prefetch" href="/assets/js/65.ae23fc13.js"><link rel="prefetch" href="/assets/js/66.1de59948.js"><link rel="prefetch" href="/assets/js/67.d1fa8257.js"><link rel="prefetch" href="/assets/js/68.dd73b8b9.js"><link rel="prefetch" href="/assets/js/69.70fd1634.js"><link rel="prefetch" href="/assets/js/7.17ba4181.js"><link rel="prefetch" href="/assets/js/70.e9e6439f.js"><link rel="prefetch" href="/assets/js/71.78d7c72f.js"><link rel="prefetch" href="/assets/js/72.47241074.js"><link rel="prefetch" href="/assets/js/73.fcda0ede.js"><link rel="prefetch" href="/assets/js/74.f4c53349.js"><link rel="prefetch" href="/assets/js/75.96aa577a.js"><link rel="prefetch" href="/assets/js/76.3285bc65.js"><link rel="prefetch" href="/assets/js/9.e1e90081.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9bcdb81a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">tiankafei - java相关技术栈</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>英语学习</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/tiankafei-docs-en/词性语法学习.html" class="active sidebar-link">词性</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#v-动词" class="sidebar-link">v. 动词</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#vt-及物动词" class="sidebar-link">vt. 及物动词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#vi-不及物动词" class="sidebar-link">vi. 不及物动词</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#n-名词" class="sidebar-link">n. 名词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#adj-形容词" class="sidebar-link">adj. 形容词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#adv-副词" class="sidebar-link">adv. 副词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#prep-介词" class="sidebar-link">prep. 介词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#conj-连词" class="sidebar-link">conj. 连词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#n-名词后缀" class="sidebar-link">n. 名词后缀</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#adj-形容词后缀" class="sidebar-link">adj. 形容词后缀</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#adv-副词后缀" class="sidebar-link">adv. 副词后缀</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#v-动词-2" class="sidebar-link">v. 动词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#prep-介词-名词" class="sidebar-link">prep. 介词+名词</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#时间介词" class="sidebar-link">时间介词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#表示做某事的方法、手段的介词" class="sidebar-link">表示做某事的方法、手段的介词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#表示空间的介词" class="sidebar-link">表示空间的介词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#其他空间介词" class="sidebar-link">其他空间介词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#其他介词" class="sidebar-link">其他介词</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#连词" class="sidebar-link">连词</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#并列连词" class="sidebar-link">并列连词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#相关连词" class="sidebar-link">相关连词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#准连词" class="sidebar-link">准连词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#引导名词从句的连词" class="sidebar-link">引导名词从句的连词</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-en/词性语法学习.html#引导定语从句的连词" class="sidebar-link">引导定语从句的连词</a></li></ul></li></ul></li><li><a href="/tiankafei-docs-en/第1阶段单词记忆.html" class="sidebar-link">单词学习</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="词性"><a href="#词性" class="header-anchor">#</a> 词性</h1> <h2 id="v-动词"><a href="#v-动词" class="header-anchor">#</a> v. 动词</h2> <h3 id="vt-及物动词"><a href="#vt-及物动词" class="header-anchor">#</a> vt. 及物动词</h3> <p>及物动词后面必须+n. 才能表示完整的意思</p> <h3 id="vi-不及物动词"><a href="#vi-不及物动词" class="header-anchor">#</a> vi. 不及物动词</h3> <p>不及物动词后面不能直接+n.</p> <h2 id="n-名词"><a href="#n-名词" class="header-anchor">#</a> n. 名词</h2> <p>复数+s/es</p> <p>冠词+单数</p> <p>三单+复数</p> <h2 id="adj-形容词"><a href="#adj-形容词" class="header-anchor">#</a> adj. 形容词</h2> <p>形容词修饰名词</p> <h2 id="adv-副词"><a href="#adv-副词" class="header-anchor">#</a> adv. 副词</h2> <p>副词修饰动词</p> <h2 id="prep-介词"><a href="#prep-介词" class="header-anchor">#</a> prep. 介词</h2> <p>介词+doing/n.</p> <h2 id="conj-连词"><a href="#conj-连词" class="header-anchor">#</a> conj. 连词</h2> <p>and/or前后词性、单复数、时态等保持一致</p> <h1 id="词性变形"><a href="#词性变形" class="header-anchor">#</a> 词性变形</h1> <h2 id="n-名词后缀"><a href="#n-名词后缀" class="header-anchor">#</a> n. 名词后缀</h2> <p><strong>一般以一下短语结尾的单词属于名词</strong></p> <ol><li>tion</li> <li>less</li> <li>ance</li> <li>ence</li> <li>ent</li> <li>lity</li></ol> <h2 id="adj-形容词后缀"><a href="#adj-形容词后缀" class="header-anchor">#</a> adj. 形容词后缀</h2> <p><strong>一般以一下短语结尾的单词属于形容词</strong></p> <ol><li>ful</li> <li>ous</li> <li>ed（也有可能是动词的过去式）</li> <li>ate（也有可能是动词）</li> <li></li></ol> <h2 id="adv-副词后缀"><a href="#adv-副词后缀" class="header-anchor">#</a> adv. 副词后缀</h2> <p><strong>一般以一下短语结尾的单词属于副词</strong></p> <ol><li>ly</li></ol> <h2 id="v-动词-2"><a href="#v-动词-2" class="header-anchor">#</a> v. 动词</h2> <ol><li><p>动词+ing，可以表示动词，也可以表示名词，（大多数当做名词使用）</p></li> <li><p>动词+er，也可以变为名词，是...工作者</p></li></ol> <h2 id="prep-介词-名词"><a href="#prep-介词-名词" class="header-anchor">#</a> prep. 介词+名词</h2> <h3 id="时间介词"><a href="#时间介词" class="header-anchor">#</a> 时间介词</h3> <p>at, on 和in 作时间介词的比较：
+① at 表示具体时间点。如at six：在6点钟
+② on 后可以跟表日期、星期、节日的词,还可以指具体某一天的早、中、晚。如：on Monday：在星期一
+③ in 泛指一天的早、中、晚,还可以表示一段时间,如：周、年、月、季节等。如：in Spring在春天</p> <p>before和after的比较：
+before 表示：在……之前
+after 表示：在……之后</p> <h3 id="表示做某事的方法、手段的介词"><a href="#表示做某事的方法、手段的介词" class="header-anchor">#</a> 表示做某事的方法、手段的介词</h3> <p>by表示：用,以,靠,通过……方式。by表示手段时后接动作或制作方式。“by+交通工具”表示交通方式。
+with 表示：用,以。with表示手段时,后接工具、材料或具体内容。
+in 表示：用,以。in表示用某种方式,如：颜色、笔墨、语言、声音、服饰等.</p> <h3 id="表示空间的介词"><a href="#表示空间的介词" class="header-anchor">#</a> 表示空间的介词</h3> <p>at, on 和 in
+① at 表示：（地点、位置）在……
+② on 表示：（位置）在……上面
+③ in 表示：（地点、位置或空间）在……里,在……中,在……上
+at,on 和 in 作空间介词的比较
+① at 用于表示一个较小的场合,这个地点被当作一个点来看待.
+② on 表示在某一平面或线上,强调与某物体有接触.
+③ in 表示在较大的地方,在某立体空间或平面范围之内.</p> <p>about 和 around
+① over 二者都表示：在……周围/各处,围绕,但
+② above about强调无方向</p> <p>over 和 above
+① under 表示：在……正上方,越过
+② above 表示：在……上方
+over和above作空间介词的比较
+① over 强调在某人或某物的正上方,而且两物体表面没有接触.
+② above 强调位置上某物体的上方,并不一定是正上方,而且两物体表面也没有接触.</p> <p>under 和 below
+① under 表示：在……的正下方
+② below 表示：在……下方
+under 和 below 作空间介词的比较
+① under 强调在某物的下方,完全覆盖两物体表面可以接触也可以不接触.
+② below 强调位置低于某参照物,但并不一定是正下方.</p> <p>between 和 among
+① between 表示：（位置、时间、数量等）在……之间（两者之间）
+② among 表示：在……中间（三者或三者以上之间）</p> <p>into 和 out of
+① into 表示：进来
+② out of 表示：出去</p> <p>behind 和 in front of
+① behind 表示：在……后面
+② in front of 表示：在……前面</p> <p>up 和 down
+① up 表示：往上,向……顶上
+② down 表示：往下,沿着……往下</p> <p>across 和 through
+① across 表示：穿过,跨过（从上面穿过，跨过）
+② through表示：穿过,通过（从中间穿过，通过）</p> <p>by 和 near
+① by 表示：在……旁边
+② near 表示：在……附近</p> <h3 id="其他空间介词"><a href="#其他空间介词" class="header-anchor">#</a> 其他空间介词</h3> <p>① along 表示：沿着,顺着
+② to 表示：到……,去……,向……</p> <h3 id="其他介词"><a href="#其他介词" class="header-anchor">#</a> 其他介词</h3> <p>of 的用法
+① of 表示：……的（表示所属、所有关系）
+② of 表示：……之中的（表示部分）
+③ of 表示：……份/量的,……的种类的（表示量、种类）</p> <p>with 的用法
+① with 表示：具有,有……的,随身带着
+② with表示：和……一起,同……一起,偕同
+③ with 表示：随着……</p> <p>for 的用法
+① for 表示：为了……（表示目的、用途、利益）
+② for 表示：一段距离或时间
+③ for 表示：因为,由于（表示原因）</p> <p>like 的用法
+① like表示：像……（一样）,似……（一样）
+② like 表示：是什么样子,怎样</p> <p>from 的用法
+① from 表示：（时间或场所）从……,自……
+② from 表示（两地的距离）离
+③ from 表示：出自……,来自……</p> <p>at, about, to 和 in 的其他用法
+① at 表示：对着……, 朝着……,向……（表示方向,目标）
+② about 表示：关于……,涉及……
+③ to 表示：对于,给,向（表示对象）
+④ in 表示：穿着,戴着</p> <h2 id="连词"><a href="#连词" class="header-anchor">#</a> 连词</h2> <p><strong>把两个或者多个句子连起来，需要使用连词</strong></p> <h3 id="并列连词"><a href="#并列连词" class="header-anchor">#</a> 并列连词</h3> <ol><li>and 和，那么，渐du渐；</li> <li>or 或，否则，不管是…，还是；zhi</li> <li>but 但是，dao而是，的确…但；nor 也不</li> <li>so 也是，因此，所以，那么，这样看来；</li> <li>for 因为（表示推测），由于；</li></ol> <h3 id="相关连词"><a href="#相关连词" class="header-anchor">#</a> 相关连词</h3> <ol><li>both A and B 既是A又是B；</li> <li>either A or B 不是A 就是B；</li> <li>neither A nor B 既不是A也不是B ，两者皆非；</li> <li>not only A but also B 不但A而且B；</li> <li>A as well as B 不但A而且B , 与，和；</li></ol> <h3 id="准连词"><a href="#准连词" class="header-anchor">#</a> 准连词</h3> <ol><li>而且 besides, furthermore, moreover, in addition;</li> <li>然而 yet, still, however, nevertheless;</li> <li>否则 else, otherwise;</li> <li>因此 所以 thus, hence, therefore, accordingly, consequently;</li></ol> <h3 id="引导名词从句的连词"><a href="#引导名词从句的连词" class="header-anchor">#</a> 引导名词从句的连词</h3> <ol><li>从属连词 that, whether, if;</li> <li>疑问连词 what, which, who/whom/whose;</li> <li>疑问副词 when, where, why, how;</li> <li>复合关系代词 whatever, whoever, whomever;</li></ol> <h3 id="引导定语从句的连词"><a href="#引导定语从句的连词" class="header-anchor">#</a> 引导定语从句的连词</h3> <ol><li>关系代词 who (whom whose), which, that, as;</li> <li>关系副词 when, where, why;</li> <li>关系形容词 which, whose。</li></ol> <h1 id="五大基本句型"><a href="#五大基本句型" class="header-anchor">#</a> 五大基本句型</h1> <table><thead><tr><th>例句</th> <th>句型</th> <th></th></tr></thead> <tbody><tr><td>I cried.</td> <td>主+谓.</td> <td>n. + v.</td></tr> <tr><td>I love you.</td> <td>主+谓+宾.</td> <td>n. + v. + n.</td></tr> <tr><td>I give you a kiss.</td> <td>主+谓+宾1+宾2.</td> <td>n. + v. + n. + n.</td></tr> <tr><td>You make me happy.</td> <td>主+谓+宾+宾补.</td> <td>n. + v. + n. + adj.</td></tr> <tr><td>You are my angel.</td> <td>主+系+表.</td> <td>n. + v. + n./v./adj.</td></tr></tbody></table></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/tiankafei-docs-en/第1阶段单词记忆.html">
+        单词学习
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ccc5f14a.js" defer></script><script src="/assets/js/2.dfe90790.js" defer></script><script src="/assets/js/8.67246ec2.js" defer></script>
+  </body>
+</html>

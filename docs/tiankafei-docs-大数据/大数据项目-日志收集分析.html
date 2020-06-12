@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>大数据项目-日志收集分析 | tiankafei - java相关技术栈</title>
+    <meta name="generator" content="VuePress 1.5.1">
+    
+    <meta name="description" content="自己写的一些东西的记录，包括代码与笔记，jdk最低支持1.8">
+    <link rel="preload" href="/assets/css/0.styles.9bcdb81a.css" as="style"><link rel="preload" href="/assets/js/app.ccc5f14a.js" as="script"><link rel="preload" href="/assets/js/2.dfe90790.js" as="script"><link rel="preload" href="/assets/js/58.9ded9973.js" as="script"><link rel="prefetch" href="/assets/js/10.7cadd409.js"><link rel="prefetch" href="/assets/js/11.067b1649.js"><link rel="prefetch" href="/assets/js/12.2e93e392.js"><link rel="prefetch" href="/assets/js/13.f6cd60ca.js"><link rel="prefetch" href="/assets/js/14.5dac3551.js"><link rel="prefetch" href="/assets/js/15.b02ba84d.js"><link rel="prefetch" href="/assets/js/16.2eafb577.js"><link rel="prefetch" href="/assets/js/17.9899e73c.js"><link rel="prefetch" href="/assets/js/18.60703fd1.js"><link rel="prefetch" href="/assets/js/19.2ba65924.js"><link rel="prefetch" href="/assets/js/20.efca007d.js"><link rel="prefetch" href="/assets/js/21.0f202b62.js"><link rel="prefetch" href="/assets/js/22.2060d3bc.js"><link rel="prefetch" href="/assets/js/23.6f797601.js"><link rel="prefetch" href="/assets/js/24.d94f4c05.js"><link rel="prefetch" href="/assets/js/25.44dd7767.js"><link rel="prefetch" href="/assets/js/26.07daa798.js"><link rel="prefetch" href="/assets/js/27.67424cb5.js"><link rel="prefetch" href="/assets/js/28.96688bbc.js"><link rel="prefetch" href="/assets/js/29.b7eac95c.js"><link rel="prefetch" href="/assets/js/3.9c0144bd.js"><link rel="prefetch" href="/assets/js/30.db57cc90.js"><link rel="prefetch" href="/assets/js/31.55b3c285.js"><link rel="prefetch" href="/assets/js/32.9375e63d.js"><link rel="prefetch" href="/assets/js/33.6b619751.js"><link rel="prefetch" href="/assets/js/34.931628db.js"><link rel="prefetch" href="/assets/js/35.619f7989.js"><link rel="prefetch" href="/assets/js/36.4040688b.js"><link rel="prefetch" href="/assets/js/37.c827e4b0.js"><link rel="prefetch" href="/assets/js/38.8cc9fea4.js"><link rel="prefetch" href="/assets/js/39.6ba33c01.js"><link rel="prefetch" href="/assets/js/4.baf4feed.js"><link rel="prefetch" href="/assets/js/40.e67f41b2.js"><link rel="prefetch" href="/assets/js/41.d6621d93.js"><link rel="prefetch" href="/assets/js/42.6ef70c29.js"><link rel="prefetch" href="/assets/js/43.83631006.js"><link rel="prefetch" href="/assets/js/44.fb6d58d0.js"><link rel="prefetch" href="/assets/js/45.9507ab04.js"><link rel="prefetch" href="/assets/js/46.149b21d4.js"><link rel="prefetch" href="/assets/js/47.befc4ed9.js"><link rel="prefetch" href="/assets/js/48.d4c4aca0.js"><link rel="prefetch" href="/assets/js/49.5928ac72.js"><link rel="prefetch" href="/assets/js/5.d7c5e89d.js"><link rel="prefetch" href="/assets/js/50.131de96d.js"><link rel="prefetch" href="/assets/js/51.28e160d1.js"><link rel="prefetch" href="/assets/js/52.3cd65609.js"><link rel="prefetch" href="/assets/js/53.239208d7.js"><link rel="prefetch" href="/assets/js/54.c350cc4f.js"><link rel="prefetch" href="/assets/js/55.ab62193b.js"><link rel="prefetch" href="/assets/js/56.5679260a.js"><link rel="prefetch" href="/assets/js/57.2f1091ae.js"><link rel="prefetch" href="/assets/js/59.ff98f4f0.js"><link rel="prefetch" href="/assets/js/6.ad7178fc.js"><link rel="prefetch" href="/assets/js/60.73cc249a.js"><link rel="prefetch" href="/assets/js/61.dac3642a.js"><link rel="prefetch" href="/assets/js/62.c87a627b.js"><link rel="prefetch" href="/assets/js/63.40d5e52e.js"><link rel="prefetch" href="/assets/js/64.35795f8b.js"><link rel="prefetch" href="/assets/js/65.ae23fc13.js"><link rel="prefetch" href="/assets/js/66.1de59948.js"><link rel="prefetch" href="/assets/js/67.d1fa8257.js"><link rel="prefetch" href="/assets/js/68.dd73b8b9.js"><link rel="prefetch" href="/assets/js/69.70fd1634.js"><link rel="prefetch" href="/assets/js/7.17ba4181.js"><link rel="prefetch" href="/assets/js/70.e9e6439f.js"><link rel="prefetch" href="/assets/js/71.78d7c72f.js"><link rel="prefetch" href="/assets/js/72.47241074.js"><link rel="prefetch" href="/assets/js/73.fcda0ede.js"><link rel="prefetch" href="/assets/js/74.f4c53349.js"><link rel="prefetch" href="/assets/js/75.96aa577a.js"><link rel="prefetch" href="/assets/js/76.3285bc65.js"><link rel="prefetch" href="/assets/js/8.67246ec2.js"><link rel="prefetch" href="/assets/js/9.e1e90081.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.9bcdb81a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">tiankafei - java相关技术栈</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/guide/" class="nav-link">
+  导航
+</a></div><div class="nav-item"><a href="/tiankafei-docs-架构/MySQL调优/" class="nav-link">
+  架构
+</a></div><div class="nav-item"><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><a href="/tiankafei-docs-web/spring学习笔记/" class="nav-link">
+  WEB
+</a></div><div class="nav-item"><a href="/tiankafei-docs-io/IO详情介绍/" class="nav-link">
+  IO
+</a></div><div class="nav-item"><a href="/tiankafei-docs-数据结构与算法/java集合/" class="nav-link">
+  数据结构与算法
+</a></div><div class="nav-item"><a href="/tiankafei-docs-云/Centos7安装Docker并配置使用/" class="nav-link">
+  云
+</a></div><div class="nav-item"><a href="/tiankafei-docs-linux/centos常用命令/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/tiankafei-docs-程序员的数学/距离度量/" class="nav-link">
+  程序员的数学
+</a></div><div class="nav-item"><a href="/tiankafei-docs-other/git上fork后再更新/" class="nav-link">
+  其他
+</a></div><div class="nav-item"><a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  英语
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多文档" class="dropdown-title"><span class="title">更多文档</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/词性语法学习/" class="nav-link">
+  词性语法学习
+</a></li><li class="dropdown-item"><!----> <a href="/tiankafei-docs-en/第1阶段单词记忆/" class="nav-link">
+  第1阶段单词记忆
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tiankafei/tiankafei" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>大数据</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/tiankafei-docs-大数据/centos7安装配置Hadoop.html" class="sidebar-link">CentOS7安装Hadoop</a></li><li><a href="/tiankafei-docs-大数据/hadoop学习笔记.html" class="sidebar-link">大数据启蒙</a></li><li><a href="/tiankafei-docs-大数据/Hadoop程序运行的三种方式.html" class="sidebar-link">Hadoop程序运行的三种方式</a></li><li><a href="/tiankafei-docs-大数据/hive学习笔记.html" class="sidebar-link">Hive学习笔记</a></li><li><a href="/tiankafei-docs-大数据/centos7安装配置HBase.html" class="sidebar-link">centos7安装配置HBase</a></li><li><a href="/tiankafei-docs-大数据/hbase学习笔记.html" class="sidebar-link">HBase学习笔记</a></li><li><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html" class="active sidebar-link">大数据项目-日志收集分析</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#日志收集架构流程图" class="sidebar-link">日志收集架构流程图</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#nginx配置" class="sidebar-link">Nginx配置</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#nginx安装之前的准备" class="sidebar-link">Nginx安装之前的准备</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#nginx-安装" class="sidebar-link">Nginx 安装</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#配置nginx为系统服务" class="sidebar-link">配置Nginx为系统服务</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#添加到系统服务" class="sidebar-link">添加到系统服务</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#启动，停止，重新装载" class="sidebar-link">启动，停止，重新装载</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#配置日志输出格式" class="sidebar-link">配置日志输出格式</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#location配置" class="sidebar-link">location配置</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#flume日志收集" class="sidebar-link">Flume日志收集</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#flume-配置" class="sidebar-link">Flume 配置</a></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#启动flumne" class="sidebar-link">启动Flumne</a></li></ul></li><li class="sidebar-sub-header"><a href="/tiankafei-docs-大数据/大数据项目-日志收集分析.html#mr执行日志数据的清洗存储到hbase" class="sidebar-link">MR执行日志数据的清洗存储到HBase</a></li></ul></li><li><a href="/tiankafei-docs-大数据/flume学习笔记.html" class="sidebar-link">Flume</a></li><li><a href="/tiankafei-docs-大数据/sqoop学习笔记.html" class="sidebar-link">sqoop的简单概论</a></li><li><a href="/tiankafei-docs-大数据/centos7安装配置Spark.html" class="sidebar-link">Centos7安装Scala</a></li><li><a href="/tiankafei-docs-大数据/scala学习笔记.html" class="sidebar-link">Scala学习</a></li><li><a href="/tiankafei-docs-大数据/centos7安装配置Flink.html" class="sidebar-link">Centos7安装Flink</a></li><li><a href="/tiankafei-docs-大数据/Kafka学习笔记.html" class="sidebar-link">Kafka</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="大数据项目-日志收集分析"><a href="#大数据项目-日志收集分析" class="header-anchor">#</a> 大数据项目-日志收集分析</h1> <h2 id="日志收集架构流程图"><a href="#日志收集架构流程图" class="header-anchor">#</a> 日志收集架构流程图</h2> <p><img src="/images/%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E5%88%86%E6%9E%90-%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.png" alt="日志收集分析-数据流图"></p> <h2 id="nginx配置"><a href="#nginx配置" class="header-anchor">#</a> Nginx配置</h2> <h3 id="nginx安装之前的准备"><a href="#nginx安装之前的准备" class="header-anchor">#</a> Nginx安装之前的准备</h3> <div class="language-shell extra-class"><pre class="language-shell"><code>yum <span class="token function">install</span> gcc openssl-devel pcre-devel zlib-devel -y
+</code></pre></div><h3 id="nginx-安装"><a href="#nginx-安装" class="header-anchor">#</a> Nginx 安装</h3> <div class="language-shell extra-class"><pre class="language-shell"><code>./configure 
+<span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span>
+
+<span class="token comment"># 默认安装目录</span>
+/usr/local/nginx
+</code></pre></div><h3 id="配置nginx为系统服务"><a href="#配置nginx为系统服务" class="header-anchor">#</a> 配置Nginx为系统服务</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> /etc/rc.d/init.d/
+<span class="token function">vim</span> nginx
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token comment">#</span>
+<span class="token comment"># nginx - this script starts and stops the nginx daemon</span>
+<span class="token comment">#</span>
+<span class="token comment"># chkconfig:   - 85 15 </span>
+<span class="token comment"># description:  Nginx is an HTTP(S) server, HTTP(S) reverse \</span>
+<span class="token comment">#               proxy and IMAP/POP3 proxy server</span>
+<span class="token comment"># processname: nginx</span>
+<span class="token comment"># config:      /etc/nginx/nginx.conf</span>
+<span class="token comment"># config:      /etc/sysconfig/nginx</span>
+<span class="token comment"># pidfile:     /var/run/nginx.pid</span>
+ 
+<span class="token comment"># Source function library.</span>
+<span class="token builtin class-name">.</span> /etc/rc.d/init.d/functions
+ 
+<span class="token comment"># Source networking configuration.</span>
+<span class="token builtin class-name">.</span> /etc/sysconfig/network
+ 
+<span class="token comment"># Check that networking is up.</span>
+<span class="token punctuation">[</span> <span class="token string">&quot;<span class="token variable">$NETWORKING</span>&quot;</span> <span class="token operator">=</span> <span class="token string">&quot;no&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+ 
+<span class="token assign-left variable">nginx</span><span class="token operator">=</span><span class="token string">&quot;/usr/local/nginx/sbin/nginx&quot;</span>
+<span class="token assign-left variable">prog</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">basename</span> $nginx<span class="token variable">)</span></span>
+ 
+<span class="token assign-left variable">NGINX_CONF_FILE</span><span class="token operator">=</span><span class="token string">&quot;/usr/local/nginx/conf/nginx.conf&quot;</span>
+ 
+<span class="token punctuation">[</span> -f /etc/sysconfig/nginx <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">.</span> /etc/sysconfig/nginx
+ 
+<span class="token assign-left variable">lockfile</span><span class="token operator">=</span>/var/lock/subsys/nginx
+ 
+<span class="token function-name function">make_dirs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token comment"># make required directories</span>
+   <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span>nginx -V <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&quot;configure arguments:&quot;</span> <span class="token operator">|</span> <span class="token function">sed</span> <span class="token string">'s/[^*]*--user=\([^ ]*\).*/<span class="token entity" title="\1">\1</span>/g'</span> -<span class="token variable">`</span></span>
+   <span class="token assign-left variable">options</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span>$nginx -V <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">'configure arguments:'</span><span class="token variable">`</span></span>
+   <span class="token keyword">for</span> <span class="token for-or-select variable">opt</span> <span class="token keyword">in</span> <span class="token variable">$options</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+       <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">echo</span> $opt <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">'.*-temp-path'</span><span class="token variable">`</span></span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+           <span class="token assign-left variable">value</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">echo</span> $opt <span class="token operator">|</span> <span class="token function">cut</span> -d <span class="token string">&quot;=&quot;</span> -f <span class="token number">2</span><span class="token variable">`</span></span>
+           <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -d <span class="token string">&quot;<span class="token variable">$value</span>&quot;</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+               <span class="token comment"># echo &quot;creating&quot; $value</span>
+               <span class="token function">mkdir</span> -p <span class="token variable">$value</span> <span class="token operator">&amp;&amp;</span> <span class="token function">chown</span> -R <span class="token variable">$user</span> <span class="token variable">$value</span>
+           <span class="token keyword">fi</span>
+       <span class="token keyword">fi</span>
+   <span class="token keyword">done</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">[</span> -x <span class="token variable">$nginx</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">5</span>
+    <span class="token punctuation">[</span> -f <span class="token variable">$NGINX_CONF_FILE</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">6</span>
+    make_dirs
+    <span class="token builtin class-name">echo</span> -n $<span class="token string">&quot;Starting <span class="token variable">$prog</span>: &quot;</span>
+    daemon <span class="token variable">$nginx</span> -c <span class="token variable">$NGINX_CONF_FILE</span>
+    <span class="token assign-left variable">retval</span><span class="token operator">=</span><span class="token variable">$?</span>
+    <span class="token builtin class-name">echo</span>
+    <span class="token punctuation">[</span> <span class="token variable">$retval</span> -eq <span class="token number">0</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token function">touch</span> <span class="token variable">$lockfile</span>
+    <span class="token builtin class-name">return</span> <span class="token variable">$retval</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">echo</span> -n $<span class="token string">&quot;Stopping <span class="token variable">$prog</span>: &quot;</span>
+    killproc <span class="token variable">$prog</span> -QUIT
+    <span class="token assign-left variable">retval</span><span class="token operator">=</span><span class="token variable">$?</span>
+    <span class="token builtin class-name">echo</span>
+    <span class="token punctuation">[</span> <span class="token variable">$retval</span> -eq <span class="token number">0</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> -f <span class="token variable">$lockfile</span>
+    <span class="token builtin class-name">return</span> <span class="token variable">$retval</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">restart</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    configtest <span class="token operator">||</span> <span class="token builtin class-name">return</span> <span class="token variable">$?</span>
+    stop
+    <span class="token function">sleep</span> <span class="token number">1</span>
+    start
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">reload</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    configtest <span class="token operator">||</span> <span class="token builtin class-name">return</span> <span class="token variable">$?</span>
+    <span class="token builtin class-name">echo</span> -n $<span class="token string">&quot;Reloading <span class="token variable">$prog</span>: &quot;</span>
+    killproc <span class="token variable">$nginx</span> -HUP
+    <span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token variable">$?</span>
+    <span class="token builtin class-name">echo</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">force_reload</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    restart
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">configtest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token variable">$nginx</span> -t -c <span class="token variable">$NGINX_CONF_FILE</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">rh_status</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    status <span class="token variable">$prog</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token function-name function">rh_status_q</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    rh_status <span class="token operator">&gt;</span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">case</span> <span class="token string">&quot;<span class="token variable">$1</span>&quot;</span> <span class="token keyword">in</span>
+    start<span class="token punctuation">)</span>
+        rh_status_q <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+        <span class="token variable">$1</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    stop<span class="token punctuation">)</span>
+        rh_status_q <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+        <span class="token variable">$1</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    restart<span class="token operator">|</span>configtest<span class="token punctuation">)</span>
+        <span class="token variable">$1</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    reload<span class="token punctuation">)</span>
+        rh_status_q <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">7</span>
+        <span class="token variable">$1</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    force-reload<span class="token punctuation">)</span>
+        force_reload
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    status<span class="token punctuation">)</span>
+        rh_status
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    condrestart<span class="token operator">|</span>try-restart<span class="token punctuation">)</span>
+        rh_status_q <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+            <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    *<span class="token punctuation">)</span>
+        <span class="token builtin class-name">echo</span> $<span class="token string">&quot;Usage: <span class="token variable">$0</span> {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}&quot;</span>
+        <span class="token builtin class-name">exit</span> <span class="token number">2</span>
+<span class="token keyword">esac</span>
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 修改nginx文件的执行权限</span>
+<span class="token function">chmod</span> +x nginx
+</code></pre></div><h3 id="添加到系统服务"><a href="#添加到系统服务" class="header-anchor">#</a> 添加到系统服务</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment"># 添加该文件到系统服务中去</span>
+<span class="token function">chkconfig</span> --add nginx
+<span class="token comment"># 查看是否添加成功</span>
+<span class="token function">chkconfig</span> --list nginx
+</code></pre></div><h3 id="启动，停止，重新装载"><a href="#启动，停止，重新装载" class="header-anchor">#</a> 启动，停止，重新装载</h3> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">service</span> nginx start<span class="token operator">|</span>stop
+</code></pre></div><h3 id="配置日志输出格式"><a href="#配置日志输出格式" class="header-anchor">#</a> 配置日志输出格式</h3> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token keyword">log_format</span> my_format <span class="token string">'$remote_addr^A$msec^A$http_host^A$request_uri'</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="location配置"><a href="#location配置" class="header-anchor">#</a> location配置</h3> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token keyword">location</span> <span class="token operator">=</span> <span class="token operator">/</span>log<span class="token punctuation">.</span>gif <span class="token punctuation">{</span>
+    <span class="token keyword">default_type</span> image<span class="token operator">/</span>gif<span class="token punctuation">;</span>
+    <span class="token keyword">access_log</span> <span class="token operator">/</span>opt<span class="token operator">/</span>data<span class="token operator">/</span>access<span class="token punctuation">.</span>log my_format<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="flume日志收集"><a href="#flume日志收集" class="header-anchor">#</a> Flume日志收集</h2> <h3 id="flume-配置"><a href="#flume-配置" class="header-anchor">#</a> Flume 配置</h3> <div class="language-properties extra-class"><pre class="language-properties"><code><span class="token comment"># example.conf: A single-node Flume configuration</span>
+
+<span class="token comment"># Name the components on this agent</span>
+<span class="token attr-name">a1.sources</span> <span class="token punctuation">=</span> <span class="token attr-value">r1</span>
+<span class="token attr-name">a1.sinks</span> <span class="token punctuation">=</span> <span class="token attr-value">k1</span>
+<span class="token attr-name">a1.channels</span> <span class="token punctuation">=</span> <span class="token attr-value">c1</span>
+
+<span class="token comment"># Describe/configure the source</span>
+<span class="token attr-name">a1.sources.r1.type</span> <span class="token punctuation">=</span> <span class="token attr-value">exec</span>
+<span class="token attr-name">a1.sources.r1.command</span> <span class="token punctuation">=</span> <span class="token attr-value">tail -F /opt/data/access.log</span>
+
+<span class="token comment"># Describe the sink</span>
+<span class="token attr-name">a1.sinks.k1.type</span> <span class="token punctuation">=</span> <span class="token attr-value">hdfs</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.path</span> <span class="token punctuation">=</span> <span class="token attr-value">/project/%Y%m%d</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.filePrefix</span> <span class="token punctuation">=</span> <span class="token attr-value">log-</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.rollInterval</span> <span class="token punctuation">=</span> <span class="token attr-value">0</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.rollSize</span> <span class="token punctuation">=</span> <span class="token attr-value">10240</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.rollCount</span> <span class="token punctuation">=</span> <span class="token attr-value">0</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.idleTimeout</span> <span class="token punctuation">=</span> <span class="token attr-value">30</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.fileType</span> <span class="token punctuation">=</span> <span class="token attr-value">DataStream</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.callTimeout</span> <span class="token punctuation">=</span> <span class="token attr-value">60000</span>
+<span class="token attr-name">a1.sinks.k1.hdfs.useLocalTimeStamp</span> <span class="token punctuation">=</span> <span class="token attr-value">true</span>
+
+<span class="token comment"># Use a channel which buffers events in memory</span>
+<span class="token attr-name">a1.channels.c1.type</span> <span class="token punctuation">=</span> <span class="token attr-value">memory</span>
+<span class="token attr-name">a1.channels.c1.capacity</span> <span class="token punctuation">=</span> <span class="token attr-value">1000</span>
+<span class="token attr-name">a1.channels.c1.transactionCapacity</span> <span class="token punctuation">=</span> <span class="token attr-value">100</span>
+
+<span class="token comment"># Bind the source and sink to the channel</span>
+<span class="token attr-name">a1.sources.r1.channels</span> <span class="token punctuation">=</span> <span class="token attr-value">c1</span>
+<span class="token attr-name">a1.sinks.k1.channel</span> <span class="token punctuation">=</span> <span class="token attr-value">c1</span>
+</code></pre></div><h3 id="启动flumne"><a href="#启动flumne" class="header-anchor">#</a> 启动Flumne</h3> <div class="language-shell extra-class"><pre class="language-shell"><code>flume-ng agent --conf-file project --name a1 -Dflume.root.logger<span class="token operator">=</span>INFO,console
+</code></pre></div><h2 id="mr执行日志数据的清洗存储到hbase"><a href="#mr执行日志数据的清洗存储到hbase" class="header-anchor">#</a> MR执行日志数据的清洗存储到HBase</h2></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/tiankafei-docs-大数据/hbase学习笔记.html" class="prev">
+        HBase学习笔记
+      </a></span> <span class="next"><a href="/tiankafei-docs-大数据/flume学习笔记.html">
+        Flume
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.ccc5f14a.js" defer></script><script src="/assets/js/2.dfe90790.js" defer></script><script src="/assets/js/58.9ded9973.js" defer></script>
+  </body>
+</html>
