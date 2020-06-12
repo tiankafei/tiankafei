@@ -41,7 +41,7 @@ module.exports = {
         }
       ]
     },
-    sidebarDepth: 2,
+    sidebarDepth: 3,
     lastUpdated: 'Last Updated'
   }
 };

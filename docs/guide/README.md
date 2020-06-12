@@ -1,36 +1,36 @@
 # tiankafei
 自己写的一些东西的记录，包括代码与笔记，jdk最低支持1.8
 
-# tiankafei-code-learn
+## tiankafei-code-learn
 
 > 学习技术的练习工程
 
-# tiankafei-code-product
+## tiankafei-code-product
 
 > 抽出通过功能作为产品的一部分
 >
 
-# tiankafei-code-project
+## tiankafei-code-project
 
 > 产品应用到的项目
 
-# tiankafei-code-tool
+## tiankafei-code-tool
 
 <font color="red">**核心代码工程列表如下：**</font>
 
-## tiankafei-base
+### tiankafei-base
 
 ​		基础工具包
 
-## tiankafei-expression-fastel
+### tiankafei-expression-fastel
 
 ​		基于开源表达式引擎 fastel 进行再次封装增加一些常用的函数（根据规则表达式可以动态生成class类。执行的时候，直接通过反射进行调用）
 
-## tiankafei-proxy
+### tiankafei-proxy
 
 ​		动态代理封装工具类并进行抽象
 
-# tiankafei-docs-en
+## tiankafei-docs-en
 
 > 英语学习：
 >
@@ -38,13 +38,13 @@
 >
 > [第1阶段单词记忆](tiankafei-docs-en/第1阶段单词记忆.md)
 
-# tiankafei-docs-io
+## tiankafei-docs-io
 
 > IO相关的技术文档列表，包含以下：
 >
 > [IO详情介绍](tiankafei-docs-io/IO详情介绍.md)
 
-# tiankafei-docs-linux
+## tiankafei-docs-linux
 
 > linux相关的技术文档列表，包含以下：
 >
@@ -76,7 +76,7 @@
 >
 > [centos7安装禅道并开机启动](tiankafei-docs-linux/centos7安装禅道并开机启动.md)
 
-# tiankafei-docs-other
+## tiankafei-docs-other
 
 > 其他的一些相关文档列表，包含以下：
 >
@@ -88,7 +88,7 @@
 >
 > [git上fork后再更新](tiankafei-docs-other/git上fork后再更新.md)
 
-# tiankafei-docs-web
+## tiankafei-docs-web
 
 > web相关的技术文档列表，包含以下：
 >
@@ -110,7 +110,7 @@
 >
 > [特别注意的点](tiankafei-docs-web/特别注意的点.md)
 
-# tiankafei-docs-大数据
+## tiankafei-docs-大数据
 
 > 大数据生态的技术文档列表，包含以下：
 >
@@ -140,7 +140,7 @@
 >
 > [大数据项目-日志收集分析](tiankafei-docs-大数据/大数据项目-日志收集分析.md)
 
-# tiankafei-docs-架构
+## tiankafei-docs-架构
 
 > 各种中间件的相关技术文档列表，包含一下：
 >
@@ -148,7 +148,7 @@
 >
 > [MySQL调优](tiankafei-docs-架构/MySQL调优.md)
 
-# tiankafei-docs-数据结构与算法
+## tiankafei-docs-数据结构与算法
 
 > 用到的各种算法的文档列表，包含以下：
 >
@@ -164,7 +164,7 @@
 >
 > [设计模式](tiankafei-docs-数据结构与算法/设计模式.md)
 
-# tiankafei-docs-云
+## tiankafei-docs-云
 
 > 与云原生，容器相关的技术文档列表，包含以下：
 >
@@ -180,53 +180,53 @@
 >
 > [k8s脚本部署](tiankafei-docs-云/k8s脚本部署.md)
 
-# <font color="red">网络上的优秀文章总结：</font>
+## 网络上的优秀文章总结
 
-## 架构
+### 架构
 
 1. [什么才是真正的架构设计？](https://www.toutiao.com/i6803176165226840589/)
 2. [通过filebeat、logstash、rsyslog采集nginx日志的几种方式](https://www.toutiao.com/i6802419285617541639/)
 
-## 高并发
+### 高并发
 
 1. [高并发下的抽奖优化](https://www.toutiao.com/i6780889261630554631/)
 
-## 消息中间件
+### 消息中间件
 
 1. [曾经我以为我很懂Kafka，直到我看了这篇文章](https://www.toutiao.com/i6758731417548489229/)
 2. [全网最全RabbitMQ总结，别再说你不会RabbitMQ](https://www.toutiao.com/i6781284630222864903/)
 3. [Kafka基础知识大补](https://www.toutiao.com/i6793738120283030016/)
 4. [SpringBoot+RabbitMQ，保证消息100%投递成功并被消费](https://www.toutiao.com/i6780891320329175566/)
 
-## JVM
+### JVM
 
 1. [Java并发编程之验证volatile指令重排-理论篇](https://www.toutiao.com/i6807257741199933966/)
 2. [这就是你需要的JVM性能调优，拿走不谢](https://www.toutiao.com/i6793265553684300292/)
 
-## 集合
+### 集合
 
 1. [HashSet、TreeSet 和HashMap 的实现与原理](https://www.toutiao.com/i6793542610330845700/)
 
-## 算法
+### 算法
 
 1. [javaHashMap的hash算法扰动函数](https://blog.csdn.net/qq_28523617/article/details/77533097)
 2. [浅谈 CAP 和 Paxos 共识算法](https://www.toutiao.com/i6802843072888570379/)
 3. [5分钟理解一致性哈希算法](https://segmentfault.com/a/1190000017847097)
 
-## 元数据
+### 元数据
 
 1. [数据治理--元数据](https://www.toutiao.com/i6791272312415977997/)
 
-## Spring
+### Spring
 
 1. [5种分布式事务解决方案优缺点对比](https://www.toutiao.com/i6717432946736759299/)
 2. [如何提升springboot服务吞吐量](https://www.toutiao.com/i6789505761681605134/)
 
-## 云
+### 云
 
 1. [再见Docker！使用Podman、Skopeo和Buildah下一代容器新架构](https://www.toutiao.com/i6718935824110453252/)
 2. [完美的分布式监控系统——普罗米修斯](https://www.toutiao.com/i6695676145804771843/)
 
-## 大数据
+### 大数据
 
 1. [Atlas从扫盲到和Hive、HBase、Kafka、Flink等集成开发](https://www.toutiao.com/i6803136002668888580/)
