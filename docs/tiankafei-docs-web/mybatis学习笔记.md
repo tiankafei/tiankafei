@@ -9,7 +9,7 @@
 - 优点：运行期：快捷、高效
 - 缺点：编辑期：代码量大、繁琐异常处理、不支持数据库跨平台
 
-![img](images\jdbc.jpg)
+![img](/images/jdbc.jpg)
 
 ### DBUtils
 
@@ -31,7 +31,7 @@ DBUtils三个核心功能介绍
 
 ​		Hibernate 是传统 Java 对象和数据库服务器之间的桥梁，用来处理基于 O/R 映射机制和模式的那些对象。
 
-![image](images\hibernate.jpg)
+![image](/images/hibernate.jpg)
 
 **Hibernate 优势**
 
