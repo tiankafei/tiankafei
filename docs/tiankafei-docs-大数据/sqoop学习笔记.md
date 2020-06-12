@@ -14,7 +14,7 @@ sqoop是连接关系型数据库和hadoop的桥梁，主要有两个方面(导�
 1. 将关系型数据库的数据导入到Hadoop 及其相关的系统中，如 Hive和HBase
 2. 将数据从Hadoop 系统里抽取并导出到关系型数据库
 
-![sqoop-导出和导入](./images/sqoop-导出和导入.jpg)
+![sqoop-导出和导入](/images/sqoop-导出和导入.jpg)
 
 ## Sqoop的优点
 
@@ -40,13 +40,13 @@ sqoop是连接关系型数据库和hadoop的桥梁，主要有两个方面(导�
 
 4. Sqoop2和sqoop1的功能性对比：
 
-   ![sqoop功能性对比](./images/sqoop功能性对比.jpg)
+   ![sqoop功能性对比](/images/sqoop功能性对比.jpg)
 
 ## sqoop1和sqoop2的架构区别
 
 ### sqoop1的架构图
 
-![sqoop1的架构图](./images/sqoop1的架构图.jpg)
+![sqoop1的架构图](/images/sqoop1的架构图.jpg)
 
 1. 版本号：1.4.X以后的sqoop1
 2. 在架构上：sqoop1使用sqoop客户端直接提交代码方式
@@ -57,7 +57,7 @@ sqoop是连接关系型数据库和hadoop的桥梁，主要有两个方面(导�
 
 ### sqoop2架构图
 
-![sqoop2架构图](./images/sqoop2架构图.jpg)
+![sqoop2架构图](/images/sqoop2架构图.jpg)
 
 1. 版本号：1.99.X以上的版本sqoop2
 2. 在架构上：sqoop2引入了 sqoop server,对对connector实现了集中的管理访问方式：REST API、 JAVA API、 WEB UI以及CLI控制台方式进行访问 

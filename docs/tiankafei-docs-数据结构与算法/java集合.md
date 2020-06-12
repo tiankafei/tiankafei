@@ -4,7 +4,7 @@
 
 ### 类继承关系图
 
-![ArrayList](./images/ArrayList.png)
+![ArrayList](/images/ArrayList.png)
 
 ```java
 // 用指定的初始容量构造一个空列表
@@ -62,7 +62,7 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 
 ### 类继承关系图
 
-![LinkedList](./images/LinkedList.png)
+![LinkedList](/images/LinkedList.png)
 
 ### 特点
 
@@ -73,7 +73,7 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 
 ### 类继承关系图
 
-![Vector](./images/Vector.png)
+![Vector](/images/Vector.png)
 
 ```java
 // 构造一个新对象，指定初始化容量、容量增加的值（如果这个值大于0，则每次扩容这个数据量，否则扩容到原来的两倍）
@@ -123,7 +123,7 @@ public Vector(Collection<? extends E> c) {
 
 ### 类继承关系图
 
-![Stack](./images/Stack.png)
+![Stack](/images/Stack.png)
 
 ### 特点
 
@@ -135,7 +135,7 @@ public Vector(Collection<? extends E> c) {
 
 ### 类继承关系图
 
-![Hashtable](./images/Hashtable.png)
+![Hashtable](/images/Hashtable.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -178,7 +178,7 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 
 ### 类继承关系图
 
-![HashMap](./images/HashMap.png)
+![HashMap](/images/HashMap.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -237,7 +237,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
    }
    ```
    
-3. put流程![jdk1.7-hashmap-put流程图](./images/jdk1.7-hashmap-put流程图.png)
+3. put流程![jdk1.7-hashmap-put流程图](/images/jdk1.7-hashmap-put流程图.png)
 
 4. 数据迁移操作流程（transfer）：头插法
 
@@ -262,9 +262,9 @@ public HashMap(Map<? extends K, ? extends V> m) {
    }
    ```
 
-   ![jdk1.7-hashmap-transfer流程](./images/jdk1.7-hashmap-transfer流程.png)
+   ![jdk1.7-hashmap-transfer流程](/images/jdk1.7-hashmap-transfer流程.png)
 
-5. 出现死循环的情况![jdk1.7-hashmap的死循环问题](./images/jdk1.7-hashmap的死循环问题.png)
+5. 出现死循环的情况![jdk1.7-hashmap的死循环问题](/images/jdk1.7-hashmap的死循环问题.png)
 
 ### 1.8
 
@@ -286,7 +286,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
    }
    ```
 
-6. put流程![jdk1.8-hashmap-put流程图](./images/jdk1.8-hashmap-put流程图.png)
+6. put流程![jdk1.8-hashmap-put流程图](/images/jdk1.8-hashmap-put流程图.png)
 
 7. 数据迁移操作流程（transfer）：尾插法；尾插法比头插法更加稳定
 
@@ -366,7 +366,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
    }
    ```
 
-   ![jdk1.8-hashmap-transfer流程](./images/jdk1.8-hashmap-transfer流程.png)
+   ![jdk1.8-hashmap-transfer流程](/images/jdk1.8-hashmap-transfer流程.png)
 
 8. 
 
@@ -374,7 +374,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 
 ### 类继承关系图
 
-![ConcurrentHashMap](./images/ConcurrentHashMap.png)
+![ConcurrentHashMap](/images/ConcurrentHashMap.png)
 
 ```java
 // 构造一个新对象，默认初始化容量为：16
@@ -420,13 +420,13 @@ public ConcurrentHashMap(int initialCapacity,
 ### 特点
 
 1. 同步性能更好，因为它仅仅根据同步级别对Map的一部分进行上锁
-2. put流程![jdk7-concurrenthashmap-put流程](./images/jdk7-concurrenthashmap-put流程.png)
+2. put流程![jdk7-concurrenthashmap-put流程](/images/jdk7-concurrenthashmap-put流程.png)
 
 ## TreeMap
 
 ### 类继承关系图
 
-![TreeMap](./images/TreeMap.png)
+![TreeMap](/images/TreeMap.png)
 
 ```java
 // 构造一个新的，空的树映射集合，使用key的字典序
@@ -473,7 +473,7 @@ ps: 参考红黑树的算法实现
 
 ### 类继承关系图
 
-![LinkedHashMap](./images/LinkedHashMap.png)
+![LinkedHashMap](/images/LinkedHashMap.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -514,7 +514,7 @@ public LinkedHashMap(Map<? extends K, ? extends V> m) {
 
 ### 类继承关系图
 
-![HashSet](./images/HashSet.png)
+![HashSet](/images/HashSet.png)
 
 ```java
 // 构造一个新对象，默认初始化容量为：16， 负载因子默认为：0.75
@@ -549,7 +549,7 @@ public HashSet(int initialCapacity) {
 
 ### 类继承关系图
 
-![TreeSet](./images/TreeSet.png)
+![TreeSet](/images/TreeSet.png)
 
 ```java
 // 构造一个新的，空的树映射集合，使用key的字典序
@@ -586,7 +586,7 @@ public TreeSet(SortedSet<E> s) {
 
 ### 类继承关系图
 
-![LinkedHashSet](./images/LinkedHashSet.png)
+![LinkedHashSet](/images/LinkedHashSet.png)
 
 ```java
 // 构造一个新对象，同时指定初始化容量和负载因子
@@ -617,7 +617,7 @@ public LinkedHashSet(Collection<? extends E> c) {
 
 ### 类继承关系图
 
-![SynchronizedList](./images/SynchronizedList.png)
+![SynchronizedList](/images/SynchronizedList.png)
 
 ```java
 //传入的集合

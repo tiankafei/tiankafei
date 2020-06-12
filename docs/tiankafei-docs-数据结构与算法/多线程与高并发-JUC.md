@@ -65,7 +65,7 @@ Executors.newCachedThreadPool().submit(()->{System.out.println("使用 线程池
 
 ### 线程的状态
 
-![thread-status](./images/thread-status.png)
+![thread-status](/images/thread-status.png)
 
 #### 1. 新建状态
 
@@ -178,7 +178,7 @@ private static void exe22(){
 >
 > JDK早期，是重量级锁，需要找OS申请锁
 
-![java-synchronized升级的原理](./images/java-synchronized升级的原理.png)
+![java-synchronized升级的原理](/images/java-synchronized升级的原理.png)
 
 ##### 1. 偏向锁
 
@@ -764,7 +764,7 @@ public class LockSupportTest {
 
 **底层操作：CAS**
 
-![AQS结构图](./images/AQS实现.png)
+![AQS结构图](/images/AQS实现.png)
 
 #### 重要的API
 
@@ -874,7 +874,7 @@ int STATE = MethodHandles.lookup().findVarHandle(Class, "state", int.class);
 
 ### 1. Java内存模型
 
-![Java内存模型](./images/Java内存模型.png)
+![Java内存模型](/images/Java内存模型.png)
 
 ### 2. 内存间的交互动作
 
@@ -889,13 +889,13 @@ int STATE = MethodHandles.lookup().findVarHandle(Class, "state", int.class);
 | store（存储）  | 作用于工作内存的变量，把工作内存中一个变量的值传送到主内存中，<br />以便随后的write操作使用 |
 | write（写入）  | 作用于主内存的变量，把store操作从工作内存中得到的变量的值放入主内存的变量中 |
 
-![Java-内存间的交互动作](./images/Java-内存间的交互动作.png)
+![Java-内存间的交互动作](/images/Java-内存间的交互动作.png)
 
 ### 3. volatile 的特点
 
 在访问volatile变量时不会执行加锁操作，因此也就不会使执行线程阻塞，因此volatile变量是一种比sychronized关键字更轻量级的同步机制。
 
-![vlolatile](./images/vlolatile.png)
+![vlolatile](/images/vlolatile.png)
 
 当对非 volatile 变量进行读写的时候，每个线程先从内存拷贝变量到CPU缓存中。如果计算机有多个CPU，每个线程可能在不同的CPU上被处理，这意味着每个线程可以拷贝到不同的 CPU cache 中。而声明变量是 volatile 的，JVM 保证了每次读变量都从内存中读，跳过 CPU cache 这一步。
 
@@ -937,7 +937,7 @@ new 一个对象的指令会分成三步
 
 以i++为例，其包括读取、操作、赋值三个操作，下面是两个线程的操作顺序
 
-![volatile不能保证原子性](./images/volatile不能保证原子性.png)
+![volatile不能保证原子性](/images/volatile不能保证原子性.png)
 
 假如说线程A在做了i+1，但未赋值的时候，线程B就开始读取i，那么当线程A赋值i=1，并回写到主内存，而此时线程B已经不再需要i的值了，而是直接交给处理器去做+1的操作，于是当线程B执行完并回写到主内存，i的值仍然是1，而不是预期的2。也就是说，volatile缩短了普通变量在不同线程之间执行的时间差，但仍然存有漏洞，依然不能保证原子性。
 
@@ -1247,7 +1247,7 @@ public class Demo8 {
 
 JDK1.2之后，Java对引用的概念进行了扩充，分为强引用（Strong Reference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）4中，这4种引用强度逐渐减弱。
 
-![强软弱虚引用类型](./images/强软弱虚引用类型.jpg)
+![强软弱虚引用类型](/images/强软弱虚引用类型.jpg)
 
 ### 2. 强引用
 
@@ -1301,7 +1301,7 @@ public class SoftReferenceTest {
 
 ThreadLocal使用了弱引用
 
-![弱引用](./images/弱引用.png)
+![弱引用](/images/弱引用.png)
 
 ```java
 public class WeakReferenceTest {
@@ -1519,7 +1519,7 @@ private T setInitialValue() {
 
 通过上一节的分析，其实我们已经很清楚ThreadLocal的相关设计了，对数据存储的具体分布也会有个比较清晰的概念。下面的图是网上找来的常见到的示意图，我们可以通过该图对ThreadLocal的存储有个更加直接的印象。
 
-![ThreadLocal](./images/ThreadLocal.jpeg)
+![ThreadLocal](/images/ThreadLocal.jpeg)
 
 我们知道Thread运行时，线程的的一些局部变量和引用使用的内存属于Stack（栈）区，而普通的对象是存储在Heap（堆）区。根据上图，基本分析如下：
 
@@ -1606,7 +1606,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ### (1). Queue：队列
 
-![Queue](./images/Queue.png)
+![Queue](/images/Queue.png)
 
 #### add(E)
 
@@ -1634,7 +1634,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ### (2). Deque：双端队列（extends Queue）
 
-![Deque](./images/Deque.png)
+![Deque](/images/Deque.png)
 
 #### addFirst(E)
 
@@ -1702,7 +1702,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ### (3). BlockingQueue：阻塞队列（extends Queue）
 
-![BlockingQueue](./images/BlockingQueue.png)
+![BlockingQueue](/images/BlockingQueue.png)
 
 #### put(E)
 
@@ -1714,7 +1714,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ### (4). BlockingDeque：阻塞的双端队列（extends BlockingQueue, Deque）
 
-![BlockingDeque](./images/BlockingDeque.png)
+![BlockingDeque](/images/BlockingDeque.png)
 
 #### offer(E e, long timeout, TimeUnit unit) 
 
@@ -1758,7 +1758,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 ### (5). TransferQueue
 
-![TransferQueue](./images/TransferQueue.png)
+![TransferQueue](/images/TransferQueue.png)
 
 #### tryTransfer(E e)
 
@@ -1893,7 +1893,7 @@ public LinkedBlockingQueue(Collection<? extends E> c) {
 
 默认的构造函数和最后一个构造函数创建的队列大小都为Integer.MAX_VALUE，只有第二个构造函数用户可以指定队列的大小。第二个构造函数最后初始化了last和head节点，让它们都指向了一个元素为null的节点。
 
-![LinkedBlockingQueue-init](./images/LinkedBlockingQueue-init.png)
+![LinkedBlockingQueue-init](/images/LinkedBlockingQueue-init.png)
 
 最后一个构造函数使用了putLock来进行加锁，但是这里并不是为了多线程的竞争而加锁，只是为了放入的元素能立即对其他线程可见。
 
@@ -1949,7 +1949,7 @@ private void enqueue(Node<E> node) {
 
 该方法可能有些同学看不太懂，我们用一张图来看看往队列里依次放入元素A和元素B，毕竟无图无真相：
 
-![LinkedBlockingQueue-enqueue](./images/LinkedBlockingQueue-enqueue.png)
+![LinkedBlockingQueue-enqueue](/images/LinkedBlockingQueue-enqueue.png)
 
 接下来我们看看signalNotEmpty，顺带着看signalNotFull方法：
 
@@ -2105,7 +2105,7 @@ private E dequeue() {
 
 可能有些童鞋链表算法不是很熟悉，我们可以结合注释和图来看就清晰很多了。
 
-![LinkedBlockingQueue-enqueue-take](./images/LinkedBlockingQueue-enqueue-take.png)
+![LinkedBlockingQueue-enqueue-take](/images/LinkedBlockingQueue-enqueue-take.png)
 
 其实这个写法看起来很绕，我们其实也可以这么写：
 
@@ -2922,7 +2922,7 @@ private void sweep() {
 
 ##### 9. 整个过程如下图：
 
-![LinkedTransferQueue-xfer.webp](./images/LinkedTransferQueue-xfer.webp.jpg)
+![LinkedTransferQueue-xfer.webp](/images/LinkedTransferQueue-xfer.webp.jpg)
 
 相比较 `SynchronousQueue` 多了一个可以存储的队列，相比较 `LinkedBlockingQueue` 多了直接传递元素，少了用锁来同步。性能更高，用处更大。
 
@@ -2951,7 +2951,7 @@ PriorityBlockingQueue是一个支持优先级的无界阻塞队列，直到系�
 1. **队列**是一种**FIFO**（First-In-First-Out）先进先出的数据结构，对应于生活中的排队的场景，排在前面的人总是先通过，**依次进行**。
 2. **优先队列**是特殊的队列，从“优先”一词，可看出**有“插队现象”**。比如在火车站排队进站时，就会有些比较急的人来插队，他们就在前面先通过验票。优先队列**至少含有两种操作**的数据结构：**insert（插入）**，即将元素插入到优先队列中（入队）；以及**deleteMin（删除最小者）**，它的作用是找出、删除优先队列中的最小的元素（出队）。
 
-![优先队列基本模型](./images/优先队列基本模型.jpg)
+![优先队列基本模型](/images/优先队列基本模型.jpg)
 
 ##### 2. 优先队列（堆）的特性
 
@@ -2964,11 +2964,11 @@ PriorityBlockingQueue是一个支持优先级的无界阻塞队列，直到系�
 
 ##### 3. 结构性
 
-![一颗 完全二叉树的结构性](./images/一颗完全二叉树的结构性.jpg)
+![一颗 完全二叉树的结构性](/images/一颗完全二叉树的结构性.jpg)
 
 通过观察发现，**完全二叉树可以直接使用一个数组表示**而不需要使用其他数据结构。所以我们只需要传入一个size就可以构建优先队列的结构（元素之间使用compareTo方法进行比较）。
 
-![完全二叉树的数组实现](./images/完全二叉树的数组实现.jpg)
+![完全二叉树的数组实现](/images/完全二叉树的数组实现.jpg)
 
 对于数组中的任意位置 i 的元素，其**左儿子**在位置 **2i** 上，则**右儿子**在 **2i+1** 上，**父节点**在 在 **i/2**（向下取整）上。通常从数组下标1开始存储，这样的好处在于很方便找到左右、及父节点。如果从0开始，左儿子在2i+1,右儿子在2i+2,父节点在(i-1)/2（向下取整）。
 
@@ -2976,7 +2976,7 @@ PriorityBlockingQueue是一个支持优先级的无界阻塞队列，直到系�
 
 我们这建立**最小堆，即对于每一个元素X，X的父亲中的关键字小于（或等于）X中的关键字，根节点除外（它没有父节点）。**
 
-![一颗完全二叉树的堆序性](./images/一颗完全二叉树的堆序性.jpg)
+![一颗完全二叉树的堆序性](/images/一颗完全二叉树的堆序性.jpg)
 
 如图所示，只有左边是堆，右边红色节点违反堆序性。根据堆序性，只需要常O(1)找到最小元。
 
@@ -2984,9 +2984,9 @@ PriorityBlockingQueue是一个支持优先级的无界阻塞队列，直到系�
 
 **上滤**：**为了插入元素X，我们在下一个可用的位置建立空穴**（否则会破坏结构性，不是完全二叉树）。**如果此元素放入空穴不破坏堆序性，则插入完成；否则，将父节点下移到空穴，即空穴向根的方向上冒一步。**继续该过程，直到X插入空穴为止。这样的过程称为上滤。
 
-![二叉堆尝试插入-1](./images/二叉堆尝试插入-1.jpg)
+![二叉堆尝试插入-1](/images/二叉堆尝试插入-1.jpg)
 
-![二叉堆尝试插入-2](./images/二叉堆尝试插入-2.jpg)
+![二叉堆尝试插入-2](/images/二叉堆尝试插入-2.jpg)
 
 图中演示了18插入的过程，**在下一个可用的位置建立空穴（满足结构性），发现不能直接插入，将父节点移下来，空穴上冒。继续这个过程，直到满足堆序性。**这样就实现了元素插入到优先队列（堆）中。
 
@@ -3034,9 +3034,9 @@ private void enlargeArray(int newSize) {
 
 **下滤**：类似于上滤操作。因为我们建立的是最小堆，所以删除最小元，就是将根节点删掉，这样就破坏了结构性。所以**我们在根节点处建立空穴，为了满足结构性，堆中最后一个元素X必须移动到合适的位置，如果可以直接放到空穴，则删除完成（一般不可能）；否则，将空穴的左右儿子中较小者移到空穴，即空穴下移了一层。继续这样的操作，直到X可以放入到空穴中。**这样就可以满足结构性与堆序性。这个过程称为下滤。
 
-![二叉堆删除最小元-1](./images/二叉堆删除最小元-1.jpg)
+![二叉堆删除最小元-1](/images/二叉堆删除最小元-1.jpg)
 
-![二叉堆删除最小元-2](./images/二叉堆删除最小元-2.jpg)
+![二叉堆删除最小元-2](/images/二叉堆删除最小元-2.jpg)
 
 如图所示：**在根处建立空穴，将最后一个元素放到空穴，已满足结构性；为满足堆序性，需要将空穴下移到合适的位置。**
 
@@ -3390,7 +3390,7 @@ DelayQueue是Leader-Followr模式的变种，消费者线程处于等待状态�
 
 #### 2. 初始状态
 
-![delayQueue-初始状态](./images/delayQueue-初始状态.png)
+![delayQueue-初始状态](/images/delayQueue-初始状态.png)
 
 因为队列是没有边界的，向队列中添加元素的线程不会阻塞，添加操作相对简单，所以此图不考虑向队列添加元素的生产者线程。假设现在共有三个消费者线程。
 
@@ -3400,7 +3400,7 @@ DelayQueue是Leader-Followr模式的变种，消费者线程处于等待状态�
 
 #### 3. 2s以后
 
-![delayQueue-2s以后](./images/delayQueue-2s以后.png)
+![delayQueue-2s以后](/images/delayQueue-2s以后.png)
 
 消费者线程１已经拿到了对象５，从等待状态进入处理状态，处理它取到的对象５，同时向消费者线程2与消费者线程3发送signal。
 
@@ -3410,7 +3410,7 @@ DelayQueue是Leader-Followr模式的变种，消费者线程处于等待状态�
 
 #### 4. 又2s之后
 
-![delayQueue-又2s以后](./images/delayQueue-又2s以后.png)
+![delayQueue-又2s以后](/images/delayQueue-又2s以后.png)
 
 先看线程１，如果它已经结束了对象5的处理，则进入待命状态。如果还没有结束，则它继续处理对象5。
 
@@ -3420,7 +3420,7 @@ DelayQueue是Leader-Followr模式的变种，消费者线程处于等待状态�
 
 **一种不好的结果：**
 
-![delayQueue-又1s以后-不好的结果](./images/delayQueue-又1s以后-不好的结果.png)
+![delayQueue-又1s以后-不好的结果](/images/delayQueue-又1s以后-不好的结果.png)
 
 消费线程３一定正在处理对象7。消费线程１与消费线程２还没有处理完它们各自取得的对象，无法进入待命状态，也更加进入不了等待状态。此时对象3马上要到期，那么如果它到期时没有消费者线程空下来，则它的处理一定会延期。
 
@@ -3428,7 +3428,7 @@ DelayQueue是Leader-Followr模式的变种，消费者线程处于等待状态�
 
 **好的结果：**
 
-![delayQueue-又1s以后-好的结果](./images/delayQueue-又1s以后-好的结果.png)
+![delayQueue-又1s以后-好的结果](/images/delayQueue-又1s以后-好的结果.png)
 
 消费线程１与消费线程２很快的完成对取出对象的处理，及时返回重新等待队列中的到期元素。一个处于等待状态(Leader)，对象3一到期就立刻处理。另一个则处于待命状态。这样，每一个对象都能在到期时被及时处理，不会发生明显的延期。
 
@@ -3817,7 +3817,7 @@ private boolean linkLast(Node<E> node) {
 
 下面给出两张图，都是队列为空的情况下，调用linkFirst和linkLast依次放入元素A和元素B的图：
 
-![LinkedBlockingDeque-1](./images/LinkedBlockingDeque-1.png)
+![LinkedBlockingDeque-1](/images/LinkedBlockingDeque-1.png)
 
 offer的超时方法这里就不放出了，原理和 `LinkedBlockingQueue` 一样，利用了Condition的awaitNanos进行超时等待，并在外面用while循环控制等待时的中断问题。
 
@@ -4508,7 +4508,7 @@ head = tail = new Node<E>(null);
 
 入队列就是将入队节点添加到队列的尾部。为了方便理解入队时队列的变化，以及head节点和tail节点的变化，每添加一个节点我就做了一个队列的快照图：
 
-![ConcurrentLinkedQueue-入队](./images/ConcurrentLinkedQueue-入队.png)
+![ConcurrentLinkedQueue-入队](/images/ConcurrentLinkedQueue-入队.png)
 
 上图所示的元素添加过程如下：
 
@@ -4606,13 +4606,13 @@ public boolean offer(E e) {
 
 ##### 6. 入队操作整体逻辑如下图所示：
 
-![ConcurrentLinkedQueue-入队整体逻辑](./images/ConcurrentLinkedQueue-入队整体逻辑.png)
+![ConcurrentLinkedQueue-入队整体逻辑](/images/ConcurrentLinkedQueue-入队整体逻辑.png)
 
 ##### 7. 出队操作
 
 出队列的就是从队列里返回一个节点元素，并清空该节点对元素的引用。让我们通过每个节点出队的快照来观察下head节点的变化：
 
-![ConcurrentLinkedQueue-出队](./images/ConcurrentLinkedQueue-出队.png)
+![ConcurrentLinkedQueue-出队](/images/ConcurrentLinkedQueue-出队.png)
 
 从上图可知，并不是每次出队时都更新 head 节点，当 head 节点里有元素时，直接弹出head节点里的元素，而不会更新head 节点。只有当head节点里没有元素时，出队操作才会更新head节点。采用这种方式也是为了减少使用 CAS 更新head 节点的消耗，从而提高出队效率。让我们再通过源码来深入分析下出队过程。
 
@@ -4657,7 +4657,7 @@ public E poll() {
 
 在入队和出队操作中，都有p == q的情况，那这种情况是怎么出现的呢？我们来看这样一种操作：
 
-![ConcurrentLinkedQueue](./images/ConcurrentLinkedQueue.png)
+![ConcurrentLinkedQueue](/images/ConcurrentLinkedQueue.png)
 
 在弹出一个节点之后，tai l节点有一条指向自己的虚线，这是什么意思呢？我们来看poll()方法，在该方法中，移除元素之后，会调用updateHead方法：
 
@@ -4804,13 +4804,13 @@ ArrayDeque 是 Deque 接口的一种具体实现，是依赖于可变数组来�
 
 为了提高效率，ArrayDeque采用了**循环数组**的设计，也就是说虽然基础容器是一个普通的数组（默认容量16），但是在逻辑上，这个数组没有固定的开头或结尾，既可以直接向尾部添加数据，也**可以直接向头部之前添加数据**，不需要大面积地移动数据。逻辑上的概念大概是这样的：
 
-![循环数组vs线性数组](./images/循环数组vs线性数组.png)
+![循环数组vs线性数组](/images/循环数组vs线性数组.png)
 
 ##### 1. 具体实现及优化
 
 循环数组在概念上没有左右边界，但是Java并没有这样的数组，Java只能提供固定大小的数组，这样的话，**如何实现循环数组**就转变为**如何利用固定数组实现循环数组**。相对于线性数组，循环数组是连续的，但是数组的头和尾可能在任何位置，所以循环数组在真实数据中的映射大概是这样：
 
-![在物理数组中的循环数组](./images/在物理数组中的循环数组.png)
+![在物理数组中的循环数组](/images/在物理数组中的循环数组.png)
 
 在逻辑上，队首总是在左边，队尾总是在右边，但是如果持续向队首插入数据，就很容易把队首“挤”出物理容器的左边界，“挤”进物理容器的右侧。这时候，我们可以看到，循环数组在物理数组中最大的问题是，**很多时候，逻辑上连续，但物理上被分成了两截**。所以，ArrayDeque需要针对以下操作，做特殊处理：
 
@@ -4936,7 +4936,7 @@ transient int head;
 transient int tail;
 ```
 
-![ArrayDeque结构](./images/ArrayDeque结构.png)
+![ArrayDeque结构](/images/ArrayDeque结构.png)
 
 ##### 2. 构造函数
 
@@ -5519,7 +5519,7 @@ void unlink(Node<E> x) {
 
 ##### 1. 跳跃表具有以下几个必备的性质
 
-![ConcurrentSkipListMap-1](./images/ConcurrentSkipListMap-1.jpg)
+![ConcurrentSkipListMap-1](/images/ConcurrentSkipListMap-1.jpg)
 
 1. 最底层包含所有节点的一个有序的链表
 2. 每一层都是一个有序的链表
@@ -5528,7 +5528,7 @@ void unlink(Node<E> x) {
 
 ##### 2. 查找一个元素
 
-![ConcurrentSkipListMap-2](./images/ConcurrentSkipListMap-2.jpg)
+![ConcurrentSkipListMap-2](/images/ConcurrentSkipListMap-2.jpg)
 
 查找的过程有点像我们的二分查找，不过这里我们是通过为链表建立多级索引，以空间换时间来实现二分查找。所以，跳表的查询操作的时间复杂度为 O(logN)。
 
@@ -5536,19 +5536,19 @@ void unlink(Node<E> x) {
 
 首先，跳表的插入必然会在底层增加一个节点，但是往上的层次是否需要增加节点则完全是随机的，SkipList 通过概率保证整张表的节点分布均匀，它不像红黑树是通过人为的 rebalance 操作来保证二叉树的平衡性。（数学对于计算机还是很重要的）。通过概率算法得到新插入节点的一个 level 值，如果小于当前表的最大 level，从最底层到 level 层都添加一个该节点。例如：
 
-![ConcurrentSkipListMap-3](./images/ConcurrentSkipListMap-3.jpg)
+![ConcurrentSkipListMap-3](/images/ConcurrentSkipListMap-3.jpg)
 
 如图，首先 119 节点会被添加到最底层链表的合适位置，然后通过概率算法得到 level 为 2，于是 1—2 层中的每一层都添加了 119 节点。
 
 如果概率算法得到的 level 大于当前表的最大 level 值的话，那么将会新增一个 level，并且将新节点添加到该 level 上。
 
-![ConcurrentSkipListMap-4](./images/ConcurrentSkipListMap-4.jpg)
+![ConcurrentSkipListMap-4](/images/ConcurrentSkipListMap-4.jpg)
 
 ##### 4. 跳表的删除操作
 
 跳表的删除操作其实就是一个查找加删除节点的操作
 
-![ConcurrentSkipListMap-5](./images/ConcurrentSkipListMap-5.jpg)
+![ConcurrentSkipListMap-5](/images/ConcurrentSkipListMap-5.jpg)
 
 #### 3. ConcurrentSkipListMap 的前导知识预备
 
@@ -5864,19 +5864,19 @@ if ((rnd & 0x80000001) == 0){
 
 初始化的跳表如下：
 
-![ConcurrentSkipListMap-1](./images/ConcurrentSkipListMap-1.png)
+![ConcurrentSkipListMap-1](/images/ConcurrentSkipListMap-1.png)
 
 第一部分，新增一个结点到最底层的链表上。
 
-![ConcurrentSkipListMap-2](./images/ConcurrentSkipListMap-2.png)
+![ConcurrentSkipListMap-2](/images/ConcurrentSkipListMap-2.png)
 
 第二部分，假设概率得出一个 level 值为 10，那么根据跳表的算法描述需要新建一层索引层。
 
-![ConcurrentSkipListMap-3](./images/ConcurrentSkipListMap-3.png)
+![ConcurrentSkipListMap-3](/images/ConcurrentSkipListMap-3.png)
 
 第三步，链接各个索引层次上的新节点。
 
-![ConcurrentSkipListMap-4](./images/ConcurrentSkipListMap-4.png)
+![ConcurrentSkipListMap-4](/images/ConcurrentSkipListMap-4.png)
 
 这样就完成了新增结点到跳表中的全部过程，大体上已如上图描述，至于 ConcurrentSkipListMap 中关于并发处理的细节之处，图中无法展示，大家可据此重新感受下源码的实现过程。下面我们着重描述下整个 doPut 方法中还涉及的其他几个方法的具体实现。
 
@@ -6614,11 +6614,11 @@ public class Demo48 {
 
 ### 1. Executor
 
-![Executor](./images/Executor.png)
+![Executor](/images/Executor.png)
 
 ### 2. Callable
 
-![Callable](./images/Callable.png)
+![Callable](/images/Callable.png)
 
 ```java
 public class CallableTest {
@@ -6647,11 +6647,11 @@ public class CallableTest {
 
 ### 3. ExecutorService
 
-![ExecutorService](./images/ExecutorService.png)
+![ExecutorService](/images/ExecutorService.png)
 
 ### 4. Future
 
-![Future](./images/Future.png)
+![Future](/images/Future.png)
 
 ### 5. FutureTask
 
@@ -7261,7 +7261,7 @@ threadPoolExecutor.allowCoreThreadTimeOut(true);
 
 ForkJoinTask就是ForkJoinPool里面的每一个任务。他主要有两个子类：RecursiveAction 和 RecursiveTask。然后通过fork()方法去分配任务执行任务，通过join()方法汇总任务结果，
 
-![forkjoin](./images/forkjoin.jpeg)
+![forkjoin](/images/forkjoin.jpeg)
 
 这就是整个过程的运用。他有两个子类，使用这两个子类都可以实现我们的任务分配和计算。
 

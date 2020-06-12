@@ -10,11 +10,11 @@
 
 ### 如果查找某一个元素是否在这个集合当中，最简单的遍历方式复杂的是多少
 
-![分治思想1-1](./images/分治思想1-1.png)
+![分治思想1-1](/images/分治思想1-1.png)
 
 ### 如果查找某一个元素是否在这个集合当中，我期望复杂度是O(4)呢
 
-![分治思想1-2](./images/分治思想1-2.png)
+![分治思想1-2](/images/分治思想1-2.png)
 
 ## 分治思想的应用案例
 
@@ -100,7 +100,7 @@
 9. 一次写入多次读取，不支持修改
 10. 支持追加数据
 
-![hdfs存储模型](./images/hdfs存储模型.gif)
+![hdfs存储模型](/images/hdfs存储模型.gif)
 
 
 
@@ -114,7 +114,7 @@
 6. DataNode与NameNode维持心跳，并汇报自己持有的block信息
 7. Client和NameNode交互文件元数据和DataNode交互文件block数据
 
-![hdfs](./images/hdfs.gif)
+![hdfs](/images/hdfs.gif)
 
 ### 角色功能
 
@@ -188,7 +188,7 @@
 2. 根据配置文件设置的时间间隔fs.checkpoint.period  默认3600秒
 3. 根据配置文件设置edits log大小 fs.checkpoint.size 规定edits文件的最大值默认是64MB
 
-![非Ha模式下的SecondaryNameNode](./images/非Ha模式下的SecondaryNameNode.png)
+![非Ha模式下的SecondaryNameNode](/images/非Ha模式下的SecondaryNameNode.png)
 
 ### Block的副本放置策略
 
@@ -203,7 +203,7 @@
 
 ### HDFS写流程
 
-![HDFS写流程](./images/HDFS写流程.png)
+![HDFS写流程](/images/HDFS写流程.png)
 
 1. Client和NN连接创建文件元数据
 2. NN判定元数据是否有效（是否已经存在，是否有权限）
@@ -223,7 +223,7 @@
 
 ### HDFS读流程
 
-![HDFS读流程](./images/HDFS读流程.png)
+![HDFS读流程](/images/HDFS读流程.png)
 
 1. 为了降低整体的带宽消耗和读取延时，HDFS会尽量让读取程序读取离它最近的副本。
 2. 如果在读取程序的同一个机架上有一个副本，那么就读取该副本。
@@ -320,7 +320,7 @@ public void getFileBlock() throws Exception {
 
 ### Map映射
 
-![map映射](./images/map映射.png)
+![map映射](/images/map映射.png)
 
 > 以上三种操作，在进行计算时，是以一条记录为单位，不会关心其他记录的，这种转换的过程就叫做映射 Map
 >
@@ -330,7 +330,7 @@ public void getFileBlock() throws Exception {
 
 ### Reduce分组计算
 
-![Reduce分组计算](./images/Reduce分组计算.png)
+![Reduce分组计算](/images/Reduce分组计算.png)
 
 > 以一组为单位的计算时，叫做分组，分组必须要有一个key值，也就是kv的实现。
 
@@ -345,11 +345,11 @@ public void getFileBlock() throws Exception {
 3. (KEY,VAL)
    - 键值对的键划分数据分组
 
-![MapReduce](./images/MapReduce.png)
+![MapReduce](/images/MapReduce.png)
 
 ### MapReduce详细的计算过程
 
-![MapReduce详细的计算过程](./images/MapReduce详细的计算过程.png)
+![MapReduce详细的计算过程](/images/MapReduce详细的计算过程.png)
 
 > 数据以一条记录为单位经过Map方法映射成KV，相同的key为一组，这一组数据调用一次Reduce方法，在方法内迭代计算这一组的数据。
 
@@ -391,7 +391,7 @@ public void getFileBlock() throws Exception {
 
 > <font color="red">**迭代器模式是批量计算中非常优美的实现形！！！**</font>
 
-![MapReduce详细拆解过程](./images/MapReduce详细拆解过程.png)
+![MapReduce详细拆解过程](/images/MapReduce详细拆解过程.png)
 
 1. 切片会格式化出记录，以记录为单位调用map方法
 2. map的输出映射成KV，kv会参与分区计算，拿着key算出P，分区号，K,V,P
@@ -409,7 +409,7 @@ public void getFileBlock() throws Exception {
 >
 > 最终计算向数据移动的实现：**代码在某一个节点被启动，通过cli上传，TaskTracker下载，并启动相应的任务**
 
-![JobTracker](./images/计算如何向数据移动.png)
+![JobTracker](/images/计算如何向数据移动.png)
 
 ### Client
 
@@ -470,7 +470,7 @@ public void getFileBlock() throws Exception {
 > 8. container会反射相应的Task类为对象，调用方法执行，其结果就是执行我们的业务逻辑代码
 > 9. 计算框架都有Task失败重试的机制。
 
-![yarn架构-资源管理](./images/yarn架构-资源管理.gif)
+![yarn架构-资源管理](/images/yarn架构-资源管理.gif)
 
 > **结论：**
 >
@@ -556,7 +556,7 @@ public void getFileBlock() throws Exception {
 >       4，hosts    //支撑的计算向数据移动
 > ```
 
-![split切片主要流程](./images/split切片主要流程.png)
+![split切片主要流程](/images/split切片主要流程.png)
 
 ### 默认输入格式化类
 
@@ -1154,7 +1154,7 @@ public void init(MapOutputCollector.Context context
 
 ### Map输出的处理：SpillThread溢写线程
 
-![Map输出环形缓冲区及排序](./images/Map输出环形缓冲区及排序.png)
+![Map输出环形缓冲区及排序](/images/Map输出环形缓冲区及排序.png)
 
 ```java
 // 溢写线程

@@ -12,7 +12,7 @@
 
 ​		随着互联网的发展，网站应用的规模不断扩大，常规的垂直应用架构已无法应对，分布式服务架构以及流动计算架构势在必行，亟需一个治理系统确保架构有条不紊的演进。
 
-![image](./images/dubbo-architecture-roadmap.jpg)
+![image](/images/dubbo-architecture-roadmap.jpg)
 
 ### 单一应用架构
 
@@ -36,7 +36,7 @@
 
 2. MVC三层架构
 
-   ![mvc](./images/mvc.png)
+   ![mvc](/images/mvc.png)
 
 3. EJB
 
@@ -100,7 +100,7 @@ spring是一个**IOC**和**AOP**的容器框架。
 
 ### spring的模块划分图
 
-![overview](./images/spring-overview.png)
+![overview](/images/spring-overview.png)
 
 ```
 模块解释：
@@ -339,15 +339,15 @@ public class SpringDemoTest {
 
 ​		在面向对象设计的软件系统中，底层的实现都是由N个对象组成的，所有的对象通过彼此的合作，最终实现系统的业务逻辑。
 
-![](./images/耦合对象.jpg)
+![](/images/耦合对象.jpg)
 
 ​		需要注意的是，在这样的组合关系中，一旦某一个对象出现了问题，那么其他对象肯定回有所影响，这就是耦合性太高的缘故，但是对象的耦合关系是无法避免的，也是必要的。随着应用程序越来越庞大，对象的耦合关系可能越来越复杂，经常需要多重依赖关系，因此，无论是架构师还是程序员，在面临这样的场景的时候，都需要减少这些对象的耦合性。
 
-![](./images/类耦合.jpg)
+![](/images/类耦合.jpg)
 
 ​		耦合的关系不仅仅是对象与对象之间，也会出现在软件系统的各个模块之间，是我们需要重点解决的问题。而为了解决对象之间的耦合度过高的问题，我们就可以通过IOC来实现对象之间的解耦，spring框架就是IOC理论最最广泛的应用。
 
-![](./images/ioc.jpg)
+![](/images/ioc.jpg)
 
 ​		从上图中可以看到，当引入了第三方的容器之后，几个对象之间就没有了耦合关系，全部对象都交由容器来控制，这个容器就相当于粘合剂，将系统的对象粘合在一起发挥作用。
 
@@ -3636,7 +3636,7 @@ public class MyTest {
 ​		Spring的核心事务管理抽象是PlatformTransactionManager。它为事务管理封装了一组独立于技术的方法。无论使用Spring的哪种事务管理策略(编程式或声明式)，事务管理器都是必须的。
 
 ​		事务管理器可以以普通的bean的形式声明在Spring IOC容器中。下图是spring提供的事务管理器
-![事务管理器](./images/事务管理器.png)
+![事务管理器](/images/事务管理器.png)
 
 在配置文件中添加事务管理器
 
@@ -3937,7 +3937,7 @@ public class BookService {
 
 spring的事务传播行为一共有7种：
 
-![传播特性](./images/传播特性.jpg)
+![传播特性](/images/传播特性.jpg)
 
 ### 10. 测试事务的传播特性
 
@@ -4544,7 +4544,7 @@ jdbcTemplate.xml
 
 主要包含的模块：
 
-![](./images/spring-overview.png)
+![](/images/spring-overview.png)
 
 ## 2. Spring框架的优势
 
@@ -4589,7 +4589,7 @@ Spring IOC容器的初始化简单的可以分为三个过程：
 
 ## 6. BeanFactory和ApplicationContext的异同
 
-![](./images/ApplicationContext类图.png)
+![](/images/ApplicationContext类图.png)
 
 相同：
 
@@ -4608,7 +4608,7 @@ Spring IOC容器的初始化简单的可以分为三个过程：
 
 ## 7. Spring Bean 的生命周期？
 
-![](./images/bean生命周期.png)
+![](/images/bean生命周期.png)
 
 总结：
 
@@ -4698,7 +4698,7 @@ Spring IOC容器的初始化简单的可以分为三个过程：
 
 ## 10. Spring 的事务传播行为有哪些，干什么用的？
 
-![](./images/传播特性.jpg)
+![](/images/传播特性.jpg)
 
 ## 11. Spring 中用到了那些设计模式？
 

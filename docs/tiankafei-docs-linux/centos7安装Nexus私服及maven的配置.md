@@ -10,7 +10,7 @@ https://help.sonatype.com/repomanager3/download/download-archives---repository-m
 
 1. 直接解压下载后的压缩包，
 
-   ![nexus解压文件目录](./images/nexus解压文件目录.png)
+   ![nexus解压文件目录](/images/nexus解压文件目录.png)
 
 2. 找到 nexus-3.21.2-03\bin 路径下的 nexus.exe 文件
 
@@ -82,7 +82,7 @@ https://maven.aliyun.com/repository/public
 
 ### 配置Nexus公共仓库
 
-![nexus公共仓库配置](./images/nexus公共仓库配置.png)
+![nexus公共仓库配置](/images/nexus公共仓库配置.png)
 
 ​		把新增加的阿里云代理仓库，加入maven-public组中，把原maven-central中央仓库的代理仓库移除。国内使用aliyun代理仓库可以提高很快的下载速度。
 
@@ -92,7 +92,7 @@ https://maven.aliyun.com/repository/public
 
 ### 阿里云官方提供的其他仓库地址
 
-![阿里云官方仓库](./images/阿里云官方仓库.png)
+![阿里云官方仓库](/images/阿里云官方仓库.png)
 
 ### 如有需要可以把以上仓库，新建为代理仓库，放在nexus中的maven-public组中
 
@@ -128,7 +128,7 @@ https://maven.aliyun.com/repository/jcenter
 
 ### 把新建的代理仓库加入maven-public组中
 
-![nexus公共仓库](./images/nexus公共仓库.png)
+![nexus公共仓库](/images/nexus公共仓库.png)
 
 ## Maven的配置
 

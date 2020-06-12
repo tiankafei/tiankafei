@@ -422,7 +422,7 @@ SELECT event_id,event_name,source,timer_wait,object_name,index_name,operation,ne
 
 > 可以观察是否有大量线程处于不正常的状态或者其他不正常的特征
 
-![show-processlist](./images/show-processlist.png)
+![show-processlist](/images/show-processlist.png)
 
 属性说明：
 
@@ -618,7 +618,7 @@ SELECT event_id,event_name,source,timer_wait,object_name,index_name,operation,ne
 >
 > 执行计划中包含的信息：
 >
-> ![执行计划](./images/执行计划.png)
+> ![执行计划](/images/执行计划.png)
 
 属性解释：
 
@@ -1163,7 +1163,7 @@ explain select * from user where phone='13800001234';
 
 **show status like 'Handler_read%';**
 
-![索引监控](./images/索引监控.png)
+![索引监控](/images/索引监控.png)
 
 参数解释
 
@@ -2145,23 +2145,23 @@ innodb_file_per_table =
 
 ##### 一主一从
 
-![MySQL一主一从](./images/MySQL一主一从.png)
+![MySQL一主一从](/images/MySQL一主一从.png)
 
 ##### 主主复制
 
-![MySQL主主复制](./images/MySQL主主复制.png)
+![MySQL主主复制](/images/MySQL主主复制.png)
 
 ##### 一主多从
 
-![MySQL一主多从](./images/MySQL一主多从.png)
+![MySQL一主多从](/images/MySQL一主多从.png)
 
 ##### 多主一从
 
-![MySQL多主一从](./images/MySQL多主一从.png)
+![MySQL多主一从](/images/MySQL多主一从.png)
 
 ##### 联级复制
 
-![MySQL联机复制](./images/MySQL联机复制.png)
+![MySQL联机复制](/images/MySQL联机复制.png)
 
 #### mysql主从同步延时分析
 

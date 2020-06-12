@@ -4,7 +4,7 @@
 
 Flume是一个分布式，可靠的，可以用来有效的收集，聚合和移动大的日志数据的可用服务。它是一个基于数据流的简单且灵活的框架。采用可调可靠性机制和多种故障转移及恢复机制保证很好的稳健性和容错性。它使用了一个简单的可扩展的数据模型，允许在线分析应用。data flow（数据流）是Flume最重要的抽象，data flow描述了从数据产生，传输、处理并最终写入目标路径。下图描述了Flume重要的几个组件：
 
-![flume-单agent](./images/flume-单agent.png)
+![flume-单agent](/images/flume-单agent.png)
 
 结合上图，Flume的一些核心组件：
 
@@ -36,19 +36,19 @@ Flume提供了大量内置的Source、Channel和Sink类型。不同类型的Sour
 
 为了使数据跨多个代理或跃点流动，前一个代理的接收器和当前跃点的源必须是avro类型，接收器指向源的主机名（或IP地址）和端口。
 
-![flume-串联agent](./images/flume-串联agent.png)
+![flume-串联agent](/images/flume-串联agent.png)
 
 ### 合并
 
 日志收集中的一个非常常见的情况是，大量的日志生成客户端将数据发送到连接到存储子系统的几个使用方。 例如，从数百台Web服务器收集的日志发送到许多写入HDFS群集的代理。
 
-![flume-并联agent](./images/flume-并联agent.png)
+![flume-并联agent](/images/flume-并联agent.png)
 
 ### 多路流
 
 Flume支持multiplexing Event到一个或者多个目的地，它通过多路复用器将Event复制或者选择性的路由到一个或多个Channel。
 
-![flume-多sink的agent](./images/flume-多sink的agent.png)
+![flume-多sink的agent](/images/flume-多sink的agent.png)
 
 上图的示例，名称为“foo”的Agent，Source会Fan out到三个Channel中，Fan out的方式分为replicating和multiplexing。如果采用replicating方式，那么每个Event会发到这三个Channel中，如果采用multiplexing方式，它是根据Event的属性来路由，然后发送到指定的Channel中。
 
@@ -124,7 +124,7 @@ Flume 的配置参考官方案例：
 
 ## Flume单台节点
 
-![flume-单agent](./images/flume-单agent.png)
+![flume-单agent](/images/flume-单agent.png)
 
 ### 配置
 
@@ -173,7 +173,7 @@ telnet bigdata01 44444
 
 ## 两台Flume节点
 
-![flume-串联agent](./images/flume-串联agent.png)
+![flume-串联agent](/images/flume-串联agent.png)
 
 ### bigdata01 配置
 
@@ -258,7 +258,7 @@ telnet bigdata01 44444
 
 > 一个 flume 配置多个 source
 
-![flume-并联agent](./images/flume-并联agent.png)
+![flume-并联agent](/images/flume-并联agent.png)
 
 
 
@@ -266,7 +266,7 @@ telnet bigdata01 44444
 
 > 一个 flume 配置多个 sinks
 
-![flume-多sink的agent](./images/flume-多sink的agent.png)
+![flume-多sink的agent](/images/flume-多sink的agent.png)
 
 
 

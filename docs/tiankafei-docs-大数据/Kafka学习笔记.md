@@ -26,7 +26,7 @@
 
 **kafka中leader的选举使用Zookeeper进行分布式协调**
 
-![kafka架构图](./images/kafka架构图.png)
+![kafka架构图](/images/kafka架构图.png)
 
 ### 分区
 
@@ -36,7 +36,7 @@
 >
 > 消息记录的表示形式：Record：Key / Value / Timestamp
 
-![分区日志](./images/分区日志.png)
+![分区日志](/images/分区日志.png)
 
 ### 消费者
 
@@ -46,7 +46,7 @@
 
 > 一般情况下，在同一个消费组内，消费者的数量不会大于分区的数量；如果消费者数量大于分区的个数，那么会有一些消费者不会任何消费，只有当正在消费的消费者出现故障时，这些空闲的消费者才会去消费。
 
-![消费Topic数据](./images/消费Topic数据.png)
+![消费Topic数据](/images/消费Topic数据.png)
 
 ### 顺序写入、MMAP、零拷贝
 
@@ -58,7 +58,7 @@
 
 ​		Kafka充分利用了操作系统分页存储来使内存提高I/O效率。Memory Mapped Files(后面简称mmap)也称为内存映射文件，在64位操作系统中一般可以表示20G的数据文件，它的工作原理是直接利用操作系统的Page实现文件到物理内存的直接映射。完成MMP映射后，用户对内存的所有操作会被操作系统自动的刷新到磁盘上，极大地降低了IO使用率。
 
-![顺序写入和MMAPpng](./images/顺序写入和MMAPpng.png)
+![顺序写入和MMAPpng](/images/顺序写入和MMAPpng.png)
 
 #### Zero拷贝
 
@@ -78,9 +78,9 @@
 
 6. 将数据从内核缓冲区拷贝到用户缓冲区，同时从系统调用中返回。完成任务
 
-   ![传统IO操作](./images/传统IO操作.png)
+   ![传统IO操作](/images/传统IO操作.png)
 
-   ![传统IO网络图解](./images/传统IO网络图解.png)
+   ![传统IO网络图解](/images/传统IO网络图解.png)
 
 **DMA读取**
 
@@ -98,9 +98,9 @@
 
 7. CPU收到DMA的信号，知道数据已经准备好，于是将数据从内核拷贝到用户空间，系统调用返回。
 
-   ![DMA读取](./images/DMA读取.png)
+   ![DMA读取](/images/DMA读取.png)
 
-   ![Zero拷贝网络图](./images/Zero拷贝网络图.png)
+   ![Zero拷贝网络图](/images/Zero拷贝网络图.png)
 
 ### Kafka使用分区存储的优点
 
@@ -579,7 +579,7 @@ request.timeout.ms = 30000 默认
 
 retries = 2147483647 默认
 
-![应答and重试](./images/应答and重试.png)
+![应答and重试](/images/应答and重试.png)
 
 > 当生产者给服务器发送消息之后，服务器已经把消息写入分区文件中了，但是由于某些原因没有在规定的时间内给生产者应答，造成生产者再次给服务器推送了相同的消息。当消费者消费的时候，就会产生重复消费的问题。
 
@@ -606,7 +606,7 @@ properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 1);
 
 enable.idempotence= false 默认
 
-![幂等](./images/幂等.png)
+![幂等](/images/幂等.png)
 
 > 注意:在使用幂等性的时候，要求必须开启acks=all和retries机制
 
@@ -822,15 +822,15 @@ while(true){
 
 #### LEO、HW更新图解
 
-![Kafka的LEO、HW更新图解](./images/Kafka的LEO、HW更新图解.png)
+![Kafka的LEO、HW更新图解](/images/Kafka的LEO、HW更新图解.png)
 
 #### 高水位同步存在数据丢失的问题
 
-![高水位数据丢失的问题](./images/高水位数据丢失的问题.png)
+![高水位数据丢失的问题](/images/高水位数据丢失的问题.png)
 
 > 当A带着自己的LEO=0进行Fetch时，Leader在返回消息m2时，会更新自己的HW=2。当A收到消息写入本地log后，还未更新HW之前发生了宕机，重启之后B会根据自己原本的HW截断消息m2，之后再次拿着LEO=0进行Fetch时，倘若此时B发生了宕机，那么A就变成了Leader，然后此时A的HW=1，消息m2便永久丢失了。
 >
-> 图解![高水位同步存在数据丢失的问题](./images/高水位同步存在数据丢失的问题.jpg)
+> 图解![高水位同步存在数据丢失的问题](/images/高水位同步存在数据丢失的问题.jpg)
 
 #### 高水位同步数据不一致的问题
 
@@ -838,7 +838,7 @@ while(true){
 
 > 当A带着自己的LEO=0进行Fetch时，Leader在返回消息m2时，会更新自己的HW=1。当A收到消息写入本地log后，还未更新HW之前，A和B都发生了宕机，然后将两者进行重启，假设A比B先重启完成，自然A就变成了Leader，根据HW=0把消息m2进行截断，假设此时生产者发送了一条m3的消息，A收到之后，更新了自己的HW=1，当B重启完成之后，拿着LEO=1进行Fetch，发现和Leader一样，所以就不做任何操作，此时LEO=1的位置A是m3，B是m2发生了不一致。
 >
-> 图解![高水位同步数据不一致的问题](./images/高水位同步数据不一致的问题.jpg)
+> 图解![高水位同步数据不一致的问题](/images/高水位同步数据不一致的问题.jpg)
 
 #### 规避数据丢失且不一致风险
 
@@ -863,13 +863,13 @@ while(true){
 
 #### 数据丢失的问题解决
 
-![数据丢失的问题解决](./images/数据丢失的问题解决.png)
+![数据丢失的问题解决](/images/数据丢失的问题解决.png)
 
 > 
 
 #### 数据不一致的问题解决
 
-![数据不一致的问题解决](./images/数据不一致的问题解决.png)
+![数据不一致的问题解决](/images/数据不一致的问题解决.png)
 
 > 
 

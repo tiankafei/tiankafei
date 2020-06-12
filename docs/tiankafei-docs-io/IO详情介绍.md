@@ -126,7 +126,7 @@ redis 启动的时候，先调用 epoll_create 创建一块内存空间5，
 
 ​		Memory Mapped Files(后面简称mmap)也称为内存映射文件，在64位操作系统中一般可以表示20G的数据文件，它的工作原理是直接利用操作系统的Page实现文件到物理内存的直接映射。完成MMP映射后，用户对内存的所有操作会被操作系统自动的刷新到磁盘上，极大地降低了IO使用率。
 
-![顺序写入和MMAPpng](./images/顺序写入和MMAPpng.png)
+![顺序写入和MMAPpng](/images/顺序写入和MMAPpng.png)
 
 ## Zero拷贝
 
@@ -146,9 +146,9 @@ ZeroCopy技术，直接将磁盘无需拷贝到用户空间，而是直接将数
 
 6. 将数据从内核缓冲区拷贝到用户缓冲区，同时从系统调用中返回。完成任务
 
-   ![传统IO操作](./images/传统IO操作.png)
+   ![传统IO操作](/images/传统IO操作.png)
 
-   ![传统IO网络图解](./images/传统IO网络图解.png)
+   ![传统IO网络图解](/images/传统IO网络图解.png)
 
 **DMA读取**
 
@@ -166,7 +166,7 @@ ZeroCopy技术，直接将磁盘无需拷贝到用户空间，而是直接将数
 
 7. CPU收到DMA的信号，知道数据已经准备好，于是将数据从内核拷贝到用户空间，系统调用返回。
 
-   ![DMA读取](./images/DMA读取.png)
+   ![DMA读取](/images/DMA读取.png)
 
-   ![Zero拷贝网络图](./images/Zero拷贝网络图.png)
+   ![Zero拷贝网络图](/images/Zero拷贝网络图.png)
 

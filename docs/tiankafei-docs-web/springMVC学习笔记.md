@@ -14,7 +14,7 @@
 
 **最典型的MVC就是JSP + servlet + javabean的模式。**
 
-![mvc](./images/mvc交互.png)
+![mvc](/images/mvc交互.png)
 
 代码展示：
 
@@ -114,13 +114,13 @@ Spring Web MVC是构建在Servlet API上的原始Web框架，从一开始就包�
 
 ​		springmvc的mvc模式：
 
-![](./images/springmvc.png)
+![](/images/springmvc.png)
 
 SpringMVC的具体执行流程：
 
 ​		当发起请求时被前置的控制器拦截到请求，根据请求参数生成代理请求，找到请求对应的实际控制器，控制器处理请求，创建数据模型，访问数据库，将模型响应给中心控制器，控制器使用模型与视图渲染视图结果，将结果返回给中心控制器，再将结果返回给请求者。
 
-![](./images/springmvc运行流程.jpg)
+![](/images/springmvc运行流程.jpg)
 
 ```
 1、DispatcherServlet表示前置控制器，是整个SpringMVC的控制中心。用户发出请求，DispatcherServlet接收请求并拦截请求。
@@ -1233,7 +1233,7 @@ public class OutputController {
 
 当使用此方式进行设置之后，会发现所有的参数值都设置到了request作用域中，那么这三个对象是什么关系呢？
 
-![](./images/BindingAwareModelMap.png)
+![](/images/BindingAwareModelMap.png)
 
 ### 5. 使用ModelAndView对象传输数据到页面
 
@@ -1572,7 +1572,7 @@ public class RedirectController {
 
 ​		4、根目录：localhost:8080/项目地址/,包含了项目的访问地址
 
-![转发](./images/转发.png)
+![转发](/images/转发.png)
 
 重定向：
 
@@ -1588,7 +1588,7 @@ public class RedirectController {
 
 ​		4、根目录：localhost:8080/  不包含项目的名称
 
-![](./images/重定向.png)
+![](/images/重定向.png)
 
 ​	对比：
 
@@ -1623,7 +1623,7 @@ hello springmvc
 
 ​		此时大家发现我们请求的图片根本访问不到，根据查看发现路径是没有问题的，那么为什么会找不到静态资源呢？
 
-![image-20200312233843775](./images/静态资源.png)
+![image-20200312233843775](/images/静态资源.png)
 
 ​		大家发现此时是找不到对应的mapping映射的，此时是因为DispatcherServlet会拦截所有的请求，而此时我们没有对应图片的请求处理方法，所以此时报错了，想要解决的话非常简单，只需要添加一个配置即可
 
@@ -1646,9 +1646,9 @@ hello springmvc
 
 ​		我们在之前的操作中已经用了SpringMVC中提供的视图解析器，那么如果我们需要实现自己的视图解析器该如何操作呢？
 
-![image-20200312211420457](./images/视图解析器.png)
+![image-20200312211420457](/images/视图解析器.png)
 
-![image-20200312211552245](./images/视图对象.png)
+![image-20200312211552245](/images/视图对象.png)
 
 MyViewController.java
 
@@ -1760,7 +1760,7 @@ springmvc.xml
 
 ​		在日常的企业开发需求中，我们输入文本框的内容全部都是字符串类型，但是在后端处理的时候我们可以用其他基本类型来接受数据，也可以使用实体类来接受参数，这个是怎么完成的呢？就是通过SpringMVC提供的类型转换器，SpringMVC内部提供了非常丰富的类型转换器的支持，但是有些情况下有可能难以满足我们的需求，因此需要我们自己实现，如下：
 
-![image-20200312211944841](./images/类型转换器.png)
+![image-20200312211944841](/images/类型转换器.png)
 
 User.java
 
@@ -2067,11 +2067,11 @@ springmvc.xml
 
 JSR303:
 
-![](./images/JSR303.png)
+![](/images/JSR303.png)
 
 Hibernate Validator 扩展注解:
 
-![](./images/hibernate.png)
+![](/images/hibernate.png)
 
 ​		spring中拥有自己的数据校验框架，同时支持JSR303标准的校验框架，可以在通过添加注解的方式进行数据校验。在spring中本身没有提供JSR303的实现，需要导入依赖的包。
 
@@ -3278,7 +3278,7 @@ public class UploadHandler {
 
 ​		SpringMVC提供了拦截器机制，允许运行目标方法之前进行一些拦截工作或者目标方法运行之后进行一下其他相关的处理。自定义的拦截器必须实现**HandlerInterceptor**接口。
 
-![image-20200313173442876](./images/handlerInterceptor.png) 
+![image-20200313173442876](/images/handlerInterceptor.png) 
 
 ​		**preHandle**()：这个方法在业务处理器处理请求之前被调用，在该方法中对用户请求 request 进行处理。如果程序员决定该拦截器对请求进行拦截处理后还要调用其他的拦截器，或者是业务处理器去进行处理，则返回true；如果程序员决定不需要再调用其他的组件去处理请求，则返回false
 
@@ -3378,7 +3378,7 @@ success
 
 ​		通过运行结果能够发现拦截器的执行顺序如下：
 
-![](E:\lian\springmvc\./images/拦截器执行结果.png)
+![](E:\lian\springmvc\/images/拦截器执行结果.png)
 
 ​		可以看到先执行拦截器的preHandle方法----》执行目标方法----》执行拦截器的postHandle方法----》执行页面跳转----》执行拦截器的afterCompletion方法
 
@@ -3423,11 +3423,11 @@ public class MySecondInterceptor implements HandlerInterceptor {
 
 看到如下执行顺序：
 
-![image-20200313182213954](E:\lian\springmvc\./images/多个拦截器执行顺序.png)
+![image-20200313182213954](E:\lian\springmvc\/images/多个拦截器执行顺序.png)
 
 调整两个拦截器的配置顺序：
 
-![image-20200313182350929](./images/多个拦截器执行顺序2.png)
+![image-20200313182350929](/images/多个拦截器执行顺序2.png)
 
 大家可以看到对应的效果，谁先执行取决于配置的顺序。
 
@@ -3451,9 +3451,9 @@ public class MySecondInterceptor implements HandlerInterceptor {
 
 ​		5、在action的生命周期中，拦截器可以多次调用，而过滤器只能在容器初始化的时候调用一次
 
-![image-20200313190146352](./images/拦截器跟过滤器的执行流程.png)
+![image-20200313190146352](/images/拦截器跟过滤器的执行流程.png)
 
-![image-20200313190309273](./images/拦截器和过滤器的包含关系.png)
+![image-20200313190309273](/images/拦截器和过滤器的包含关系.png)
 
 ## 9. SpringMVC的国际化操作
 
@@ -3569,15 +3569,15 @@ Locale locale = request.getLocale();//获取浏览器的区域信息
 
 在DispatcherServlet中会包含一个组件，用来专门获取区域信息
 
-![image-20200313193757666](./images/国际化1.png)
+![image-20200313193757666](/images/国际化1.png)
 
-![image-20200313193823121](./images/国际化2.png)
+![image-20200313193823121](/images/国际化2.png)
 
-![image-20200313194137103](./images/国际化3.png)
+![image-20200313194137103](/images/国际化3.png)
 
 通过图片能够发现，默认调用的是org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver类
 
-![image-20200313194436614](./images/国际化4.png)
+![image-20200313194436614](/images/国际化4.png)
 
 在程序中可以获取Locale的相关信息：
 
@@ -3846,11 +3846,11 @@ public class I18nController {
 
 ​		在SpringMVC中拥有一套非常强大的异常处理机制，SpringMVC通过HandlerExceptionResolver处理程序的异常，包括请求映射，数据绑定以及目标方法的执行时发生的异常。
 
-![image-20200313204210754](./images/异常处理实现的子类.png)
+![image-20200313204210754](/images/异常处理实现的子类.png)
 
 在容器启动好，进入DispatcherServlet之后，会对HandlerExceptionResolver进行初始化操作：
 
-![image-20200313204557902](./images/异常初始化.png)
+![image-20200313204557902](/images/异常初始化.png)
 
 会默认的从DispatcherServlet.properties中找到对应的异常处理类：
 

@@ -939,7 +939,7 @@ result3的结果List(1, 2, 3, 11, 22, 33)	list01的值List(1, 2, 3)	list02的值
 
 ##### 图片总结
 
-![scala操作符](./images/scala操作符.png)
+![scala操作符](/images/scala操作符.png)
 
 #### 使用java语言中的LinkedList
 

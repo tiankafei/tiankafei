@@ -26,7 +26,7 @@
 
 ## HBase数据模型
 
-![hbase数据模型](./images/hbase数据模型.png)
+![hbase数据模型](/images/hbase数据模型.png)
 
 ### rowkey
 
@@ -60,7 +60,7 @@
 
 ## HBase架构
 
-![hbase架构图](./images/hbase架构图1.png)
+![hbase架构图](/images/hbase架构图1.png)
 
 ### 角色介绍
 
@@ -87,7 +87,7 @@ HMaster没有单点问题，HBase可以启动多个HMaster，通过Zookeeper的M
 
 #### HRegionServer
 
-HBase中最核心的模块，主要负责响应用户I/O请求，向HDFS文件系统中读写![HRegionServer1](./images/HRegionServer1.png)
+HBase中最核心的模块，主要负责响应用户I/O请求，向HDFS文件系统中读写![HRegionServer1](/images/HRegionServer1.png)
 
 1. HRegionServer管理一系列HRegion对象
 2. 每个HRegion对应Table中一个Region，HRegion由多个HStore组成
@@ -114,13 +114,13 @@ HBase中最核心的模块，主要负责响应用户I/O请求，向HDFS文件�
 2. HRegion由一个或者多个Store组成，每个store保存一个columns family。
 3. 每个Strore又由一个memStore和0至多个StoreFile组成。如图：StoreFile以HFile格式保存在HDFS上。
 
-![hbase架构图3](./images/hbase架构图3.png)
+![hbase架构图3](/images/hbase架构图3.png)
 
 ## HBase读写流程
 
 ### 读流程
 
-![HBase读取数据流程](./images/HBase读取数据流程.png)
+![HBase读取数据流程](/images/HBase读取数据流程.png)
 
 1. Client访问zookeeper，获取hbase:meta所在RegionServer的节点信息
 2. Client访问hbase:meta所在的RegionServer，获取hbase:meta记录的元数据后先加载到内存中，然后再从内存中根据需要查询的RowKey查询出RowKey所在的Region的相关信息（Region所在RegionServer）
@@ -142,7 +142,7 @@ HBase中最核心的模块，主要负责响应用户I/O请求，向HDFS文件�
 
 ##### 2. HBase中KeyValue是什么样的结构？
 
-![hbase-keyvalue](./images/hbase-keyvalue.png)
+![hbase-keyvalue](/images/hbase-keyvalue.png)
 
 1. KeyValue由Key length、value length、key、value组成
 2. 其中key又由RowKey length、RowKey、ColumnFamily length、ColumnFamily、ColumnQualifier、TimeStamp、KeyType组成
@@ -166,7 +166,7 @@ key的内容包括RowKey、ColumnFamuly、ColumnQualifier、Timestamp、KeyType�
 
 ##### 4. 数据是如何从最小堆<KeyValueScanner>中一行行获取的？
 
-![hbase-scan案例](./images/hbase-scan案例.png)
+![hbase-scan案例](/images/hbase-scan案例.png)
 
 这三个Scanner组成的heap为<MemstoreScanner，StoreFileScanner2, StoreFileScanner1>，Scanner由小到大排列。查询的时候首先pop出heap的堆顶元素，即MemstoreScanner，得到keyvalue = r2:cf1:name:v3:name23的数据，拿到这个keyvalue之后，需要进行如下判定：
 
@@ -181,7 +181,7 @@ key的内容包括RowKey、ColumnFamuly、ColumnQualifier、Timestamp、KeyType�
 
 ### 写流程
 
-![hbase写流程](./images/hbase写流程.png)
+![hbase写流程](/images/hbase写流程.png)
 
 1. Client访问zookeeper，获取hbase:meta所在RegionServer的节点信息
 2. Client访问hbase:meta所在的RegionServer，获取hbase:meta记录的元数据后先加载到内存中，获取将要写入region所在的regionserver的位置信息（Region所在RegionServer）

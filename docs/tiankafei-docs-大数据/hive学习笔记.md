@@ -39,7 +39,7 @@ Hive使用SQL语句来进行数据分析，由SQL语句到具体的任务执行�
 
 ## Hive的架构图
 
-![hive架构图](./images/hive架构图.png)
+![hive架构图](/images/hive架构图.png)
 
 ## Hive的服务（角色）
 
@@ -63,7 +63,7 @@ Hive使用SQL语句来进行数据分析，由SQL语句到具体的任务执行�
 
 ### Hive的访问流程图
 
-![访问流程图](./images/访问流程图.png)
+![访问流程图](/images/访问流程图.png)
 
 ## Hive的基本SQL操作
 
@@ -610,9 +610,9 @@ insert into psn values(1,'zhangsan')
 
 > 在官网中我们明确看到hive中是支持Update和Delete操作的，但是实际上，是需要事务的支持的，Hive对于事务的支持有很多的限制。因此，在使用hive的过程中，我们一般不会产生删除和更新的操作，如果你需要测试的话，参考下面如下配置：
 
-![transaction_limitations](./images/transaction_limitations.png)
+![transaction_limitations](/images/transaction_limitations.png)
 
-![update](./images/update.png)
+![update](/images/update.png)
 
 ```xml
 <!-- 在hive的hive-site.xml中添加如下配置：-->
@@ -1151,7 +1151,7 @@ LATERAL VIEW udtf(expression) tableAlias AS columnAlias (',' columnAlias)
 
 统计人员表中共有多少种爱好、多少个城市?
 
-![Hive-Lateral-View案例](./images/Hive-Lateral-View案例.png)
+![Hive-Lateral-View案例](/images/Hive-Lateral-View案例.png)
 
 ```sql
 select count(distinct(myCol1)), count(distinct(myCol2)) from psn2 
@@ -1641,7 +1641,7 @@ ORC 和 PARQUET 是基于列式存储的。
 
 ​		每个Orc文件由1个或多个stripe组成，每个stripe250MB大小，这个Stripe实际相当于RowGroup概念，不过大小由4MB->250MB，这样应该能提升顺序读的吞吐率。每个Stripe里有三部分组成，分别是Index Data,Row Data,Stripe Footer：
 
-![orc文件格式](./images/orc文件格式.png)
+![orc文件格式](/images/orc文件格式.png)
 
 1. Index Data：一个轻量级的index，默认是每隔1W行做一个索引。这里做的索引应该只是记录某行的各字段在Row Data中的offset。
 2. Row Data：存的是具体的数据，先取部分行，然后对这些行按列进行存储。对每个列进行了编码，分成多个Stream来存储。
@@ -1657,7 +1657,7 @@ ORC 和 PARQUET 是基于列式存储的。
 
 ​		通常情况下，在存储Parquet数据的时候会按照Block大小设置行组的大小，由于一般情况下每一个Mapper任务处理数据的最小单位是一个Block，这样可以把每一个行组由一个Mapper任务处理，增大任务执行并行度。Parquet文件的格式如下图所示。
 
-![parquet文件格式](./images/parquet文件格式.png)
+![parquet文件格式](/images/parquet文件格式.png)
 
 ​		上图展示了一个Parquet文件的内容，一个文件中可以存储多个行组，文件的首位都是该文件的Magic Code，用于校验它是否是一个Parquet文件，Footer length记录了文件元数据的大小，通过该值和文件长度可以计算出元数据的偏移量，文件的元数据中包括每一个行组的元数据信息和该文件存储数据的Schema信息。除了文件中每一个行组的元数据，每一页的开始都会存储该页的元数据，在Parquet中，有三种类型的页：数据页、字典页和索引页。数据页用于存储当前行组中该列的值，字典页存储该列值的编码字典，每一个列块中最多包含一个字典页，索引页用来存储当前行组下该列的索引，目前Parquet中还不支持索引页。
 

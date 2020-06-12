@@ -414,7 +414,7 @@ hdfs dfs -ls /
 
 ## 高可用 HA 配置
 
-![HDFS-HA解决方案](./images/HDFS-HA解决方案.jpg)
+![HDFS-HA解决方案](/images/HDFS-HA解决方案.jpg)
 
 ### 部署策略
 
