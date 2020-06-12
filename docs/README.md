@@ -1,6 +1,7 @@
 ---
 home: true
-hero: /images/hero.png
+heroImage: /images/logo.jpg
+tagline: 技术笔记
 actionText: 快速上手 →
 actionLink: /guide/
 features:
