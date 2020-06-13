@@ -19,13 +19,13 @@ module.exports = {
       {text: '云', link: '/tiankafei-docs-云/Centos7安装Docker并配置使用/'},
       {text: '其他', link: '/tiankafei-docs-other/git上fork后再更新/'},
       {text: '英语', link: '/tiankafei-docs-en/词性语法学习/'},
-      {
+/*      {
         text: '更多文档',
         items: [
           {text: '词性语法学习', link: '/tiankafei-docs-en/词性语法学习/'},
           {text: '第1阶段单词记忆', link: '/tiankafei-docs-en/第1阶段单词记忆/'},
         ]
-      },
+      },*/
       {text: 'GitHub', link: 'https://github.com/tiankafei/tiankafei'},
     ],
     sidebar: {
