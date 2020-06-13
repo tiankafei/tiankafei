@@ -1,4 +1,4 @@
-# 配置示例
+# sharding-jdbc基于springboot的配置
 
 ## 数据分片
 
