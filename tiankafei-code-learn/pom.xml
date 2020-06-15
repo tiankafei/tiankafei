@@ -22,6 +22,14 @@
         <junit.version>4.12</junit.version>
     </properties>
 
+    <modules>
+        <module>scala-project</module>
+        <module>spring-project</module>
+        <module>springmvc-project</module>
+        <module>springboot-project</module>
+        <module>hadoop-project</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
