@@ -344,6 +344,28 @@ public class BaseTest {
         mainProxy.execute();
     }
 
+    @Test
+    public void test7(){
+        String str1 = new String("abc1") + new String("abc2");
+        // 如果常量池的变量是由str1.intern()方法放进去的，则str1的引用会发生改变
+        String str3 = str1.intern();
+        String str2 = "abc1abc2";
+
+        System.out.println(str1 == str2);//true
+        System.out.println(str3 == str2);
+    }
+
+    @Test
+    public void test8(){
+        String str1 = new String("abc1") + new String("abc2");
+        String str2 = "abc1abc2";
+        // 如果常量池的变量不是由str1.intern()方法放进去的，则str1的引用会不发生改变
+        String str3 = str1.intern();
+
+        System.out.println(str1 == str2);//false
+        System.out.println(str3 == str2);
+    }
+
     private int get(int value) {
         return value - value % 10000;
     }
