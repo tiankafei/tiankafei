@@ -1,11 +1,10 @@
 package cn.tiankafei.proxy;
 
-import cn.tiankafei.proxy.IAspect;
-import cn.tiankafei.proxy.ProxyAdapter;
 import cn.tiankafei.proxy.impl.CglibProxy;
 import cn.tiankafei.proxy.impl.JdkProxy;
-import java.lang.reflect.InvocationHandler;
 import net.sf.cglib.proxy.MethodInterceptor;
+
+import java.lang.reflect.InvocationHandler;
 
 /**
  * @author tiankafei

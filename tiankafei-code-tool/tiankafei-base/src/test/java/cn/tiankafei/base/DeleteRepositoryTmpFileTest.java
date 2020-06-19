@@ -1,10 +1,11 @@
 package cn.tiankafei.base;
 
 import cn.tiankafei.base.util.FileUtil;
-import java.io.File;
-import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.util.stream.Stream;
 
 public class DeleteRepositoryTmpFileTest {
 

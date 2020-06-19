@@ -10,10 +10,11 @@ import cn.tiankafei.base.sort.proxy.TestTimeProxy;
 import cn.tiankafei.proxy.IAspect;
 import cn.tiankafei.proxy.ProxyUtil;
 import com.google.common.base.Stopwatch;
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 使用的模式如下：

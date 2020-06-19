@@ -1,7 +1,6 @@
 // Generated from E:/gits/tiankafei/tiankafei-code-tool/tiankafei-antlr4/src/main/java/cn/tiankafei/antlr4/expression\RuleSet.g4 by ANTLR 4.8
 package cn.tiankafei.antlr4.expression;
 
-import java.util.List;
 import org.antlr.v4.runtime.FailedPredicateException;
 import org.antlr.v4.runtime.NoViableAltException;
 import org.antlr.v4.runtime.Parser;
@@ -21,6 +20,8 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.util.List;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class RuleSetParser extends Parser {

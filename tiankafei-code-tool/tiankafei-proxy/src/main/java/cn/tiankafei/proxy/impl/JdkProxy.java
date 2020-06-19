@@ -3,6 +3,7 @@ package cn.tiankafei.proxy.impl;
 import cn.tiankafei.proxy.IAspect;
 import cn.tiankafei.proxy.IProxy;
 import cn.tiankafei.proxy.ProxyAdapter;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -31,7 +32,7 @@ public class JdkProxy<T> implements IProxy<T, InvocationHandler> {
         return getProxy(clazz, new Class[]{clazz}, invocationHandler);
     }
 
-    private T getProxy(Class clazz, Class[] clazzArray, InvocationHandler invocationHandler){
+    private T getProxy(Class clazz, Class[] clazzArray, InvocationHandler invocationHandler) {
         ClassLoader classLoader = clazz.getClassLoader();
         T t = (T) Proxy.newProxyInstance(classLoader, clazzArray, invocationHandler);
         return t;

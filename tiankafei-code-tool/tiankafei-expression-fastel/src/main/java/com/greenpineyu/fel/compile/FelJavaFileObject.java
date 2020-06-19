@@ -1,11 +1,11 @@
 package com.greenpineyu.fel.compile;
 
+import javax.tools.SimpleJavaFileObject;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
-import javax.tools.SimpleJavaFileObject;
 
 /**
  * 编译时，用于提供类源码和保存类的字节码

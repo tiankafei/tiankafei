@@ -1,9 +1,10 @@
 package cn.tiankafei.base.sort.merge;
 
 import cn.tiankafei.base.sort.comparator.SortComparator;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @ClassName SelectionSortUtil

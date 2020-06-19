@@ -2,8 +2,9 @@ package com.greenpineyu.fel;
 
 import com.google.common.base.Stopwatch;
 import com.greenpineyu.fel.context.FelContext;
-import java.util.concurrent.TimeUnit;
 import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
 
 public class TestCompileJs {
 

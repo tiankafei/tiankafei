@@ -3,6 +3,10 @@ package cn.tiankafei.base;
 import cn.tiankafei.base.sort.MainInterface;
 import cn.tiankafei.base.sort.observer.MainObserver;
 import cn.tiankafei.base.sort.proxy.MainProxy;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.time.StopWatch;
+import org.junit.Test;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,9 +24,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import lombok.SneakyThrows;
-import org.apache.commons.lang3.time.StopWatch;
-import org.junit.Test;
 
 /**
  * @author tiankafei
@@ -345,7 +346,7 @@ public class BaseTest {
     }
 
     @Test
-    public void test7(){
+    public void test7() {
         String str1 = new String("abc1") + new String("abc2");
         // 如果常量池的变量是由str1.intern()方法放进去的，则str1的引用会发生改变
         String str3 = str1.intern();
@@ -356,7 +357,7 @@ public class BaseTest {
     }
 
     @Test
-    public void test8(){
+    public void test8() {
         String str1 = new String("abc1") + new String("abc2");
         String str2 = "abc1abc2";
         // 如果常量池的变量不是由str1.intern()方法放进去的，则str1的引用会不发生改变

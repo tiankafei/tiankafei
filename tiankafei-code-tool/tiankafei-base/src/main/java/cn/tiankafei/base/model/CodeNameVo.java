@@ -1,9 +1,10 @@
 package cn.tiankafei.base.model;
 
 import cn.tiankafei.base.enums.BaseEnums;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * 代码名称视图模型

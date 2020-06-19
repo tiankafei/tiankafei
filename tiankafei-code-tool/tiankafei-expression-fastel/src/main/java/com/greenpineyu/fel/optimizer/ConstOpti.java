@@ -7,9 +7,10 @@ import com.greenpineyu.fel.function.operator.Or;
 import com.greenpineyu.fel.parser.ConstNode;
 import com.greenpineyu.fel.parser.FelNode;
 import com.greenpineyu.fel.parser.FunNode;
-import java.util.List;
 import org.antlr.runtime.CommonToken;
 import org.antlr.runtime.Token;
+
+import java.util.List;
 
 /**
  * 常量节点优化，优化表达式中的常量部分。

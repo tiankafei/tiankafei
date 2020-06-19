@@ -3,9 +3,10 @@ package cn.tiankafei.base.sort.singleton;
 import cn.tiankafei.base.sort.comparator.DoubleSortComparator;
 import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
 import cn.tiankafei.base.sort.factory.SortFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Arrays;
 import java.util.Collections;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @ClassName SortDecoratorImpl

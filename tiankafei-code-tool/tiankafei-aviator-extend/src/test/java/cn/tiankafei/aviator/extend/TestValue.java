@@ -1,12 +1,12 @@
 package cn.tiankafei.aviator.extend;
 
-import cn.tiankafei.aviator.extend.constant.FunctionConstants;
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import cn.tiankafei.aviator.extend.util.FunctionUtils;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class TestValue {

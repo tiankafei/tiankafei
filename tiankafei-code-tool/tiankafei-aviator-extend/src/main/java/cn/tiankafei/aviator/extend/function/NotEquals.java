@@ -3,6 +3,7 @@ package cn.tiankafei.aviator.extend.function;
 import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+
 import java.math.BigDecimal;
 
 /**

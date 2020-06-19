@@ -23,15 +23,16 @@ import com.googlecode.aviator.Expression;
 import com.googlecode.aviator.Options;
 import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import sun.misc.Service;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import sun.misc.Service;
 
 /**
  * @author tiankafei
@@ -95,9 +96,9 @@ public abstract class AviatorExtendUtil {
         String name = aviatorFunctionProxy.getName();
         String lowerCase = name.toLowerCase();
         String upperCase = name.toUpperCase();
-        if(lowerCase.equals(upperCase)){
+        if (lowerCase.equals(upperCase)) {
             AviatorEvaluator.getInstance().addFunction(lowerCase, aviatorFunctionProxy);
-        }else{
+        } else {
             AviatorEvaluator.getInstance().addFunction(lowerCase, aviatorFunctionProxy);
             AviatorEvaluator.getInstance().addFunction(upperCase, aviatorFunctionProxy);
         }
@@ -105,9 +106,10 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 删除已经存在的函数
+     *
      * @param funName
      */
-    public static void delFunction(String funName){
+    public static void delFunction(String funName) {
         AviatorEvaluator.getInstance().removeFunction(funName);
     }
 
@@ -128,6 +130,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 编译js
+     *
      * @param expression
      */
     public static String compileJs(String expression) {
@@ -136,6 +139,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 编译js
+     *
      * @param expression
      * @param dataMap
      */
@@ -146,6 +150,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 编译js
+     *
      * @param expression
      * @param id
      */
@@ -155,6 +160,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 编译js
+     *
      * @param expression
      * @param dataMap
      * @param id
@@ -169,7 +175,7 @@ public abstract class AviatorExtendUtil {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("function fun_").append(id).append("(obj){ \n");
             List<String> aliasList = (List<String>) dataMap.get(FunctionConstants.AVIATOR_FUNCTION_ALIAS);
-            if(CollectionUtils.isNotEmpty(aliasList)){
+            if (CollectionUtils.isNotEmpty(aliasList)) {
                 for (int index = 0, length = aliasList.size(); index < length; index++) {
                     String aliasName = aliasList.get(index);
                     stringBuilder.append("\t").append("var ").append(aliasName).append(" = ").append("obj.").append(aliasName).append("; \n");
@@ -190,6 +196,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 编译class执行审核
+     *
      * @param expression
      */
     public static void compile(String expression) {
@@ -198,6 +205,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 编译class执行审核
+     *
      * @param expression
      * @param dataMap
      */
@@ -219,6 +227,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 直接执行审核
+     *
      * @param expression
      */
     public static void execute(String expression) {
@@ -227,6 +236,7 @@ public abstract class AviatorExtendUtil {
 
     /**
      * 直接执行审核
+     *
      * @param expression
      * @param dataMap
      */
@@ -245,7 +255,7 @@ public abstract class AviatorExtendUtil {
         }
     }
 
-    private static String parseExpression(String expression){
+    private static String parseExpression(String expression) {
         boolean flag = expression.contains("\\\\");
         while (flag) {
             expression = expression.replace("\\\\", "^A");

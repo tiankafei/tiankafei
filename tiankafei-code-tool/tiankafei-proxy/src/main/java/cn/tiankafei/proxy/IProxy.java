@@ -7,10 +7,10 @@ package cn.tiankafei.proxy;
  **/
 public interface IProxy<T, Call> {
 
-    T getProxy(T t, IAspect IAspect) ;
+    T getProxy(T t, IAspect IAspect);
 
-    T getProxy(T t, Call call) ;
+    T getProxy(T t, Call call);
 
-    T getProxy(Class clazz, Call call) ;
+    T getProxy(Class clazz, Call call);
 
 }

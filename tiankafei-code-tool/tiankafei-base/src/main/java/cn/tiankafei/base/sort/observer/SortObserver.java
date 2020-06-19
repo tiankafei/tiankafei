@@ -5,10 +5,11 @@ import cn.tiankafei.base.sort.comparator.IntegerSortComparator;
 import cn.tiankafei.base.sort.observer.event.ObserverEvent;
 import cn.tiankafei.base.sort.singleton.SortComparatorSingleton;
 import cn.tiankafei.base.sort.singleton.SortFactoryStrategy;
-import java.util.Observable;
-import java.util.Observer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * 观察者模式

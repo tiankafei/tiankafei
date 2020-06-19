@@ -1,10 +1,11 @@
 package cn.tiankafei.aviator.extend.function;
 
 import cn.tiankafei.aviator.extend.util.AviatorExtendUtil;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author 魏双双

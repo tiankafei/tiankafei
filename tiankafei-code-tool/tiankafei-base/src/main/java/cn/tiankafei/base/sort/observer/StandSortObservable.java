@@ -1,6 +1,7 @@
 package cn.tiankafei.base.sort.observer;
 
 import cn.tiankafei.base.sort.observer.event.ObserverEvent;
+
 import java.util.Observable;
 
 /**
