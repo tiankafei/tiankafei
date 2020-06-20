@@ -1,4 +1,4 @@
 package cn.tiankafei.poi;
 
-public interface ExcelReadStyle {
+public interface ExcelReadStyle extends ExcelImport {
 }
