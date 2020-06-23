@@ -1,6 +1,6 @@
 package cn.tiankafei.poi;
 
-import cn.tiankafei.poi.model.WorkbookVo;
+import cn.tiankafei.poi.model.impl.WorkbookVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.junit.Test;
 public class PoiTest {
 
     @Test
-    public void test01(){
+    public void test01() {
         try {
             WorkbookVo workbookVo = new WorkbookVo();
 

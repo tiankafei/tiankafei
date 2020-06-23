@@ -1,15 +1,14 @@
-package cn.tiankafei.poi.model;
+package cn.tiankafei.poi.model.impl;
 
+import cn.tiankafei.poi.model.ICell;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
 @Data
-@Accessors(chain = true)
-public class CellVo {
+public class CellVo implements ICell {
 
     private Integer colIndex;
 
