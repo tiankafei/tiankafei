@@ -14,4 +14,6 @@ public class CellVo implements ICell {
 
     private Integer styleIndex;
 
+    private Object value;
+
 }
