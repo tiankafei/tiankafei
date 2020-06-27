@@ -8,6 +8,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -365,6 +366,15 @@ public class BaseTest {
 
         System.out.println(str1 == str2);//false
         System.out.println(str3 == str2);
+    }
+
+    @Test
+    public void test9() {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4096);
+        System.out.println(byteBuffer.getClass());
+
+        byteBuffer = ByteBuffer.allocateDirect(4096);
+        System.out.println(byteBuffer.getClass());
     }
 
     private int get(int value) {

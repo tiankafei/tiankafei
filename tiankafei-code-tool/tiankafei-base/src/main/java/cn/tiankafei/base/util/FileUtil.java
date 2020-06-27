@@ -4,7 +4,7 @@ import cn.tiankafei.base.constants.BaseConstants;
 import cn.tiankafei.base.exceptions.BaseException;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

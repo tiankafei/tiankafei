@@ -3,7 +3,7 @@ package cn.tiankafei.poi.model.impl;
 import cn.tiankafei.poi.model.IBorder;
 import lombok.Data;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * @author tiankafei

@@ -8,26 +8,30 @@ public interface ICellStyle {
 
     /**
      * 获取边框样式
+     *
      * @return
      */
-    IBorder getBorder() ;
+    IBorder getBorder();
 
     /**
      * 设置边框样式
+     *
      * @param border
      */
-    void setBorder(IBorder border) ;
+    void setBorder(IBorder border);
 
     /**
      * 获取字体
+     *
      * @return
      */
-    public IFont getFont() ;
+    public IFont getFont();
 
     /**
      * 设置字体
+     *
      * @param font
      */
-    public void setFont(IFont font) ;
+    public void setFont(IFont font);
 
 }

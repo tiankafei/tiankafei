@@ -1,6 +1,6 @@
 package cn.tiankafei.poi.model;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * @author tiankafei
@@ -9,98 +9,114 @@ public interface IBorder {
 
     /**
      * 获取下边框样式
+     *
      * @return
      */
-    String getBorderBottomStyle() ;
+    String getBorderBottomStyle();
 
     /**
      * 设置下边框样式
+     *
      * @param borderBottomStyle
      */
-    void setBorderBottomStyle(String borderBottomStyle) ;
+    void setBorderBottomStyle(String borderBottomStyle);
 
     /**
      * 获取上边框样式
+     *
      * @return
      */
-    String getBorderTopStyle() ;
+    String getBorderTopStyle();
 
     /**
      * 设置上边框样式
+     *
      * @param borderTopStyle
      */
-    void setBorderTopStyle(String borderTopStyle) ;
+    void setBorderTopStyle(String borderTopStyle);
 
     /**
      * 获取左边框样式
+     *
      * @return
      */
-    String getBorderLeftStyle() ;
+    String getBorderLeftStyle();
 
     /**
      * 设置左边框样式
+     *
      * @param borderLeftStyle
      */
-    void setBorderLeftStyle(String borderLeftStyle) ;
+    void setBorderLeftStyle(String borderLeftStyle);
 
     /**
      * 获取右边框样式
+     *
      * @return
      */
-    String getBorderRightStyle() ;
+    String getBorderRightStyle();
 
     /**
      * 设置右边框样式
+     *
      * @param borderRightStyle
      */
-    void setBorderRightStyle(String borderRightStyle) ;
+    void setBorderRightStyle(String borderRightStyle);
 
     /**
      * 获取下边框颜色
+     *
      * @return
      */
-    Color getBorderBottomColor() ;
+    Color getBorderBottomColor();
 
     /**
      * 设置下边框颜色
+     *
      * @param borderBottomColor
      */
-    void setBorderBottomColor(Color borderBottomColor) ;
+    void setBorderBottomColor(Color borderBottomColor);
 
     /**
      * 获取上边框颜色
+     *
      * @return
      */
-    Color getBorderTopColor() ;
+    Color getBorderTopColor();
 
     /**
      * 设置上边框颜色
+     *
      * @param borderTopColor
      */
-    void setBorderTopColor(Color borderTopColor) ;
+    void setBorderTopColor(Color borderTopColor);
 
     /**
      * 获取左边框颜色
+     *
      * @return
      */
-    Color getBorderLeftColor() ;
+    Color getBorderLeftColor();
 
     /**
      * 设置左边框颜色
+     *
      * @param borderLeftColor
      */
-    void setBorderLeftColor(Color borderLeftColor) ;
+    void setBorderLeftColor(Color borderLeftColor);
 
     /**
      * 获取右边框颜色
+     *
      * @return
      */
-    Color getBorderRightColor() ;
+    Color getBorderRightColor();
 
     /**
      * 设置右边框颜色
+     *
      * @param borderRightColor
      */
-    void setBorderRightColor(Color borderRightColor) ;
+    void setBorderRightColor(Color borderRightColor);
 
 }
