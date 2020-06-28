@@ -1,4 +1,4 @@
-package cn.tiankafei.antlr4;
+package org.tiankafei.antlr4.antlr4;
 
 /**
  * @Author 魏双双

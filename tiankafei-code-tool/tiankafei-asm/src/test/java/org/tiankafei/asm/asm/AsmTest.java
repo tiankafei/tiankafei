@@ -1,4 +1,4 @@
-package cn.tiankafei.asm;
+package org.tiankafei.asm.asm;
 
 import org.junit.Test;
 import org.objectweb.asm.ClassWriter;

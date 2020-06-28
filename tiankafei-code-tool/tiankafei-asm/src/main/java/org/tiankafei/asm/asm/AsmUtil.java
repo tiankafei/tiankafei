@@ -1,4 +1,4 @@
-package cn.tiankafei.asm;
+package org.tiankafei.asm.asm;
 
 /**
  * @author tiankafei
