@@ -1,4 +1,4 @@
-package com.tiankafei.hadoop.hdfs;
+package org.tiankafei.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.BlockLocation;

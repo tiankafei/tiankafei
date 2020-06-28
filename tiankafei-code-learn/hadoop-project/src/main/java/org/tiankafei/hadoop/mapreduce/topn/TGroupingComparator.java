@@ -1,4 +1,4 @@
-package com.tiankafei.hadoop.mapreduce.topn;
+package org.tiankafei.hadoop.mapreduce.topn;
 
 import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;

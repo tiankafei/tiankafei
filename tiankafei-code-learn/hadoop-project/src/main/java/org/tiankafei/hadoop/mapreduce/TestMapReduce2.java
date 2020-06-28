@@ -1,4 +1,4 @@
-package com.tiankafei.hadoop.mapreduce;
+package org.tiankafei.hadoop.mapreduce;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;

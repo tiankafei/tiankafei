@@ -1,4 +1,4 @@
-package com.tiankafei.hadoop.mapreduce;
+package org.tiankafei.hadoop.mapreduce;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;

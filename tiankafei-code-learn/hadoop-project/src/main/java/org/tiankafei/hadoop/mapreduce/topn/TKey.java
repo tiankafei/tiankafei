@@ -1,4 +1,4 @@
-package com.tiankafei.hadoop.mapreduce.topn;
+package org.tiankafei.hadoop.mapreduce.topn;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

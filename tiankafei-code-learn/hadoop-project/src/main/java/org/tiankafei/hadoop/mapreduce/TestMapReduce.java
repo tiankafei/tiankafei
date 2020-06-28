@@ -1,4 +1,4 @@
-package com.tiankafei.hadoop.mapreduce;
+package org.tiankafei.hadoop.mapreduce;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -9,26 +9,18 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 /**
- * 客户端在windows上执行，map,reduce也在windows上运行
- * 需要配置本地hadoop环境变量，且hadoop的bin目录需要有winutils.exe这个文件
+ * 打成jar包上传到集群环境上，在集群上通过java -jar 运行
  *
  * @Author 魏双双
  * @Date 2019/12/13
  * @Version V1.0
  **/
-public class TestMapReduce3 {
+public class TestMapReduce {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration(true);
-        System.setProperty("HADOOP_USER_NAME", "root");
-        // 让框架知道在windows上执行，需要设置为true
-        conf.set("mapreduce.app-submission.cross-platform", "true");
-        // 让框架在本地运行
-        conf.set("mapreduce.framework.name", "local");
-
-
         Job job = Job.getInstance(conf);
-        job.setJarByClass(TestMapReduce3.class);
+        job.setJarByClass(TestMapReduce.class);
         job.setJobName("tiankafei-wordcount");
 
         Path inFile = new Path("/data/wc/input");

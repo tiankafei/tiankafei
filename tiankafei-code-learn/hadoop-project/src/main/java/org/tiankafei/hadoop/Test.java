@@ -1,4 +1,4 @@
-package com.tiankafei.hadoop;
+package org.tiankafei.hadoop;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
