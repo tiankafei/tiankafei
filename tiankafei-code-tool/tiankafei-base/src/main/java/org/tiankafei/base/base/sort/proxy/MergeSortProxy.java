@@ -3,7 +3,7 @@ package org.tiankafei.base.base.sort.proxy;
 import org.tiankafei.base.base.sort.factory.SortFactory;
 import org.tiankafei.base.base.sort.merge.MergeSortFactory;
 import org.tiankafei.base.base.sort.singleton.SortFactoryStrategy;
-import cn.tiankafei.proxy.ProxyUtil;
+import org.tiankafei.proxy.ProxyUtil;
 
 /**
  * 观察者模式：底层使用装饰着模式实现，注释掉责任链模式的实现

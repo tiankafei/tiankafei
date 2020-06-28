@@ -1,7 +1,7 @@
-package cn.tiankafei.proxy;
+package org.tiankafei.proxy;
 
-import cn.tiankafei.proxy.impl.CglibProxy;
-import cn.tiankafei.proxy.impl.JdkProxy;
+import org.tiankafei.proxy.impl.CglibProxy;
+import org.tiankafei.proxy.impl.JdkProxy;
 import net.sf.cglib.proxy.MethodInterceptor;
 
 import java.lang.reflect.InvocationHandler;

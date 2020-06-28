@@ -1,4 +1,4 @@
-package cn.tiankafei.proxy;
+package org.tiankafei.proxy;
 
 /**
  * @author tiankafei

@@ -7,8 +7,8 @@ import org.tiankafei.base.base.sort.proxy.MainProxy;
 import org.tiankafei.base.base.sort.proxy.TestAuthorityProxy;
 import org.tiankafei.base.base.sort.proxy.TestProxy;
 import org.tiankafei.base.base.sort.proxy.TestTimeProxy;
-import cn.tiankafei.proxy.IAspect;
-import cn.tiankafei.proxy.ProxyUtil;
+import org.tiankafei.proxy.IAspect;
+import org.tiankafei.proxy.ProxyUtil;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package cn.tiankafei.proxy;
+package org.tiankafei.proxy;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;

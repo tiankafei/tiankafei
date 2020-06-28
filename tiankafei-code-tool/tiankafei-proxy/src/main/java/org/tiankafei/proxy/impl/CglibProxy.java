@@ -1,8 +1,8 @@
-package cn.tiankafei.proxy.impl;
+package org.tiankafei.proxy.impl;
 
-import cn.tiankafei.proxy.IAspect;
-import cn.tiankafei.proxy.IProxy;
-import cn.tiankafei.proxy.ProxyAdapter;
+import org.tiankafei.proxy.IAspect;
+import org.tiankafei.proxy.IProxy;
+import org.tiankafei.proxy.ProxyAdapter;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 
