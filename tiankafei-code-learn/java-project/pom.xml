@@ -3,20 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cn.tiankafei</groupId>
+        <groupId>org.tiankafei</groupId>
         <artifactId>code-learn-parent</artifactId>
         <version>1.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>cn.tiankafei</groupId>
-    <artifactId>java-project</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>java-project</name>
-    <description>Demo project for Spring Boot</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <artifactId>java-project</artifactId>
+    <packaging>jar</packaging>
+    <name>java-project</name>
+    <description></description>
 
     <dependencies>
         <dependency>
@@ -25,7 +21,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>cn.tiankafei</groupId>
+            <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-base</artifactId>
             <version>${code-tool.version}</version>
         </dependency>

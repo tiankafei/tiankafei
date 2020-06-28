@@ -1,6 +1,6 @@
 package org.tiankafei.java.juc.sync;
 
-import cn.tiankafei.base.util.ThreadSleepUtil;
+import org.tiankafei.base.base.util.ThreadSleepUtil;
 
 /**
  * synchronized异常会释放锁的测试（两个线程共同调用一个同步的方法）

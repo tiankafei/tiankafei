@@ -1,6 +1,6 @@
 package org.tiankafei.java.juc.demo;
 
-import cn.tiankafei.base.util.ThreadSleepUtil;
+import org.tiankafei.base.base.util.ThreadSleepUtil;
 
 import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;

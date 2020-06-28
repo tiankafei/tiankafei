@@ -11,7 +11,7 @@
                            https://www.springframework.org/schema/aop/spring-aop.xsd
                            ">
 
-    <context:component-scan base-package="cn.tiankafei"></context:component-scan>
+    <context:component-scan base-package="org.tiankafei"></context:component-scan>
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
     <bean id="logUtil" class="org.tiankafei.springdemo.util.LogUtil8"></bean>

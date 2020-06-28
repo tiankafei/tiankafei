@@ -1,6 +1,6 @@
 package org.tiankafei.java.juc.readwriteLock;
 
-import cn.tiankafei.base.util.ThreadSleepUtil;
+import org.tiankafei.base.base.util.ThreadSleepUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="cn.tiankafei" use-default-filters="false">
+    <context:component-scan base-package="org.tiankafei" use-default-filters="false">
         <!--
         当定义好基础扫描的包之后，可以排除包中的某些类，使用如下的方式:
         type:表示指定过滤的规则

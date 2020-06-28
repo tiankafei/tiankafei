@@ -8,11 +8,12 @@
         <version>2.2.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cn.tiankafei</groupId>
+    <groupId>org.tiankafei</groupId>
     <artifactId>springboot-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>springboot-project</name>
-    <description>Demo project for Spring Boot</description>
+    <description></description>
 
     <properties>
         <java.version>1.8</java.version>

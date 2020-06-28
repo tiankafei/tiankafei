@@ -1,6 +1,6 @@
 package org.tiankafei.java.juc.thread;
 
-import cn.tiankafei.base.util.ThreadSleepUtil;
+import org.tiankafei.base.base.util.ThreadSleepUtil;
 
 /**
  * 线程的:sleep\yield\join

@@ -4,11 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.tiankafei</groupId>
+    <groupId>org.tiankafei</groupId>
     <artifactId>code-learn-parent</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <name>code-learn-parent</name>
     <description>此工程是tiankafei的学习包集合</description>
     <url>https://github.com/tiankafei/tiankafei</url>

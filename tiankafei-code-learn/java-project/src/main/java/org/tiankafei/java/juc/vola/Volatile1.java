@@ -1,6 +1,6 @@
 package org.tiankafei.java.juc.vola;
 
-import cn.tiankafei.base.util.ThreadSleepUtil;
+import org.tiankafei.base.base.util.ThreadSleepUtil;
 
 /**
  * volatile可以技术数据类型在线程之间可见
