@@ -1,6 +1,6 @@
 package cn.tiankafei.base.model;
 
-import cn.tiankafei.base.enums.BaseEnums;
+import cn.tiankafei.base.enums.ViewTypeEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -42,7 +42,7 @@ public class CodeNameVo implements Serializable {
      * 构造代码名称值对象类
      */
     public CodeNameVo() {
-        viewType = BaseEnums.VIEW_NAME.getCode();
+        viewType = ViewTypeEnum.VIEW_NAME.getCode();
         separator = "    ";
     }
 
@@ -54,13 +54,13 @@ public class CodeNameVo implements Serializable {
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
-        if (BaseEnums.VIEW_CODE.getCode() == getViewType()) {
+        if (ViewTypeEnum.VIEW_CODE.getCode() == getViewType()) {
             buffer.append(code);
-        } else if (BaseEnums.VIEW_NAME.getCode() == getViewType()) {
+        } else if (ViewTypeEnum.VIEW_NAME.getCode() == getViewType()) {
             buffer.append(name);
-        } else if (BaseEnums.VIEW_CODE_NAME.getCode() == getViewType()) {
+        } else if (ViewTypeEnum.VIEW_CODE_NAME.getCode() == getViewType()) {
             buffer.append(code).append(getSeparator()).append(name);
-        } else if (BaseEnums.VIEW_NAME_CODE.getCode() == getViewType()) {
+        } else if (ViewTypeEnum.VIEW_NAME_CODE.getCode() == getViewType()) {
             buffer.append(name).append(getSeparator()).append(code);
         } else {
             //默认显示名称

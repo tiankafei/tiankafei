@@ -1,12 +1,10 @@
 package cn.tiankafei.base.enums;
 
 /**
- * 基础枚举类
- *
  * @author tiankafei
  * @since 1.0
  **/
-public enum BaseEnums {
+public enum DataTypeEnum {
 
     /**
      * boolean数据类型
@@ -32,33 +30,13 @@ public enum BaseEnums {
      * 字符串数据类型
      */
     DATA_TYPE_STRING(50, "字符串数据类型"),
-
-    /**
-     * 显示代码
-     */
-    VIEW_CODE(10, "显示代码"),
-
-    /**
-     * 显示名称
-     */
-    VIEW_NAME(20, "显示名称"),
-
-    /**
-     * 显示代码和名称
-     */
-    VIEW_CODE_NAME(30, "显示代码和名称"),
-
-    /**
-     * 显示名称和代码
-     */
-    VIEW_NAME_CODE(40, "显示名称和代码"),
     ;
 
     private int code;
 
     private String name;
 
-    BaseEnums(int code, String name) {
+    DataTypeEnum(int code, String name) {
         this.code = code;
         this.name = name;
     }

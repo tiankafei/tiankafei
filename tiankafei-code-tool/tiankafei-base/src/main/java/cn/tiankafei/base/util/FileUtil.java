@@ -1,6 +1,6 @@
 package cn.tiankafei.base.util;
 
-import cn.tiankafei.base.constants.BaseConstants;
+import cn.tiankafei.base.enums.BaseEnum;
 import cn.tiankafei.base.exceptions.BaseException;
 
 import javax.imageio.ImageIO;
@@ -195,7 +195,7 @@ public class FileUtil {
             if (file.isFile()) {
                 String fileName = file.getName().toLowerCase();
                 //是txt或者csv格式的文件
-                if (fileName.endsWith(BaseConstants.FILE_SUFFIX_TXT) || fileName.endsWith(BaseConstants.FILE_SUFFIX_CSV)) {
+                if (fileName.endsWith(BaseEnum.FILE_SUFFIX_TXT.getValue()) || fileName.endsWith(BaseEnum.FILE_SUFFIX_CSV.getValue())) {
                     reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
                     bufferedReader = new BufferedReader(reader);
                     String lineTxt = null;
