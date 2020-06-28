@@ -16,6 +16,6 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
-    <bean id="/hello" class="cn.tiankafei.springmvc.controller.HelloController"></bean>
+    <bean id="/hello" class="org.tiankafei.springmvcdemo.controller.HelloController"></bean>
 
 </beans>

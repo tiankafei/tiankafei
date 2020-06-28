@@ -25,7 +25,7 @@
     </filter-mapping>
     <servlet>
         <servlet-name>HelloServlet</servlet-name>
-        <servlet-class>cn.tiankafei.springmvc.controller.HelloServlet</servlet-class>
+        <servlet-class>org.tiankafei.springmvcdemo.controller.HelloServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HelloServlet</servlet-name>
@@ -33,7 +33,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>myservlet</servlet-name>
-        <servlet-class>cn.tiankafei.springmvc.servlet.MyServlet</servlet-class>
+        <servlet-class>org.tiankafei.springmvcdemo.servlet.MyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>myservlet</servlet-name>
