@@ -41,6 +41,7 @@
         <antlr4.version>4.8</antlr4.version>
         <asm.version>8.0.1</asm.version>
         <poi.version>4.1.2</poi.version>
+        <quasar.version>0.7.10</quasar.version>
     </properties>
 
     <!-- 配置远程发布到私服，mvn deploy -->
@@ -170,7 +171,7 @@
             <dependency>
                 <groupId>co.paralleluniverse</groupId>
                 <artifactId>quasar-core</artifactId>
-                <version>0.8.0</version>
+                <version>${quasar.version}</version>
             </dependency>
 
             <!--poi依赖jar包-->

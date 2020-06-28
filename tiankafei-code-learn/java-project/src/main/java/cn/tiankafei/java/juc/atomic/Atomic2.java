@@ -1,6 +1,5 @@
 package cn.tiankafei.java.juc.atomic;
 
-import cn.tiankafei.base.juc.vola.Volatile1;
 import cn.tiankafei.base.util.ThreadSleepUtil;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -17,7 +16,7 @@ public class Atomic2 {
     private AtomicBoolean atomicBoolean = new AtomicBoolean();
 
     public static void main(String[] args) {
-        Volatile1 vola = new Volatile1();
+        Atomic2 vola = new Atomic2();
 //        new Thread(vola::changeValue, "t1").start();
 
         new Thread(() -> {
