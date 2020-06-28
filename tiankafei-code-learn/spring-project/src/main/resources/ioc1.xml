@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--给person类添加构造方法-->
-    <bean id="person1" class="cn.tiankafei.spring.entity.Person001">
+    <bean id="person1" class="org.tiankafei.springdemo.entity.Person001">
         <constructor-arg name="id" value="1"></constructor-arg>
         <constructor-arg name="name" value="lisi"></constructor-arg>
         <constructor-arg name="age" value="20"></constructor-arg>
@@ -14,7 +14,7 @@
     </bean>
 
     <!--在使用构造器赋值的时候可以省略name属性，但是此时就要求必须严格按照构造器参数的顺序来填写了-->
-    <bean id="person2" class="cn.tiankafei.spring.entity.Person001">
+    <bean id="person2" class="org.tiankafei.springdemo.entity.Person001">
         <constructor-arg value="1"></constructor-arg>
         <constructor-arg value="lisi"></constructor-arg>
         <constructor-arg value="20"></constructor-arg>
@@ -22,7 +22,7 @@
     </bean>
 
     <!--如果想不按照顺序来添加参数值，那么可以搭配index属性来使用-->
-    <bean id="person3" class="cn.tiankafei.spring.entity.Person001">
+    <bean id="person3" class="org.tiankafei.springdemo.entity.Person001">
         <constructor-arg value="lisi" index="1"></constructor-arg>
         <constructor-arg value="1" index="0"></constructor-arg>
         <constructor-arg value="女" index="3"></constructor-arg>
@@ -30,20 +30,20 @@
     </bean>
 
     <!--当有多个参数个数相同，不同类型的构造器的时候，可以通过type来强制类型-->
-    <bean id="person4" class="cn.tiankafei.spring.entity.Person001">
+    <bean id="person4" class="org.tiankafei.springdemo.entity.Person001">
         <constructor-arg value="1" type="java.lang.Integer"></constructor-arg>
         <constructor-arg value="lisi"></constructor-arg>
         <constructor-arg value="20"></constructor-arg>
     </bean>
 
     <!--如果不修改为integer类型，那么需要type跟index组合使用-->
-    <bean id="person5" class="cn.tiankafei.spring.entity.Person002">
+    <bean id="person5" class="org.tiankafei.springdemo.entity.Person002">
         <constructor-arg value="1" type="int" index="0"></constructor-arg>
         <constructor-arg value="lisi"></constructor-arg>
         <constructor-arg value="20"></constructor-arg>
     </bean>
 
     <!--通过命名空间为bean赋值，简化配置文件中属性声明的写法-->
-    <bean id="person6" class="cn.tiankafei.spring.entity.Person001" p:id="3" p:name="wangwu" p:age="22" p:gender="男"></bean>
+    <bean id="person6" class="org.tiankafei.springdemo.entity.Person001" p:id="3" p:name="wangwu" p:age="22" p:gender="男"></bean>
 
 </beans>

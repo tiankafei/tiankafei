@@ -5,5 +5,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="myfactorybean" class="cn.tiankafei.spring.bean.MyFactoryBean"></bean>
+    <bean id="myfactorybean" class="org.tiankafei.springdemo.bean.MyFactoryBean"></bean>
 </beans>

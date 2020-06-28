@@ -10,7 +10,7 @@
     class:指定静态工厂类
     factory-method:指定哪个方法是工厂方法
     -->
-    <bean id="person5" class="cn.tiankafei.spring.factory.PersonStaticFactory" factory-method="getPerson">
+    <bean id="person5" class="org.tiankafei.springdemo.factory.PersonStaticFactory" factory-method="getPerson">
         <!--constructor-arg：可以为方法指定参数-->
         <constructor-arg value="lisi"></constructor-arg>
     </bean>

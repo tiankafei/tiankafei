@@ -3,12 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="address" class="cn.tiankafei.spring.entity.Address">
+    <bean id="address" class="org.tiankafei.springdemo.entity.Address">
         <property name="province" value="河北"></property>
         <property name="city" value="邯郸"></property>
         <property name="town" value="武安"></property>
     </bean>
-    <bean id="person" class="cn.tiankafei.spring.entity.Person003" autowire="byName"></bean>
-    <bean id="person2" class="cn.tiankafei.spring.entity.Person003" autowire="byType"></bean>
-    <bean id="person3" class="cn.tiankafei.spring.entity.Person003" autowire="constructor"></bean>
+    <bean id="person" class="org.tiankafei.springdemo.entity.Person003" autowire="byName"></bean>
+    <bean id="person2" class="org.tiankafei.springdemo.entity.Person003" autowire="byType"></bean>
+    <bean id="person3" class="org.tiankafei.springdemo.entity.Person003" autowire="constructor"></bean>
 </beans>

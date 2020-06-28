@@ -8,7 +8,7 @@
 >
 
     <!--给复杂类型的赋值都在property标签内进行-->
-    <bean id="person" class="cn.tiankafei.spring.entity.Person003">
+    <bean id="person" class="org.tiankafei.springdemo.entity.Person003">
         <property name="name">
             <!--赋空值-->
             <null></null>
@@ -27,7 +27,7 @@
         <property name="books">
             <list>
                 <!--内部bean-->
-                <bean id="book1" class="cn.tiankafei.spring.entity.Book">
+                <bean id="book1" class="org.tiankafei.springdemo.entity.Book">
                     <property name="name" value="多线程与高并发"></property>
                     <property name="author" value="马士兵"></property>
                     <property name="price" value="1000"></property>
@@ -62,12 +62,12 @@
             </set>
         </property>
     </bean>
-    <bean id="address" class="cn.tiankafei.spring.entity.Address">
+    <bean id="address" class="org.tiankafei.springdemo.entity.Address">
         <property name="province" value="河北"></property>
         <property name="city" value="邯郸"></property>
         <property name="town" value="武安"></property>
     </bean>
-    <bean id="book2" class="cn.tiankafei.spring.entity.Book">
+    <bean id="book2" class="org.tiankafei.springdemo.entity.Book">
         <property name="name" value="JVM"></property>
         <property name="author" value="马士兵"></property>
         <property name="price" value="1200"></property>
@@ -78,7 +78,7 @@
         <entry key="key1" value="value1"></entry>
         <entry key="key2" value-ref="book2"></entry>
         <entry key="key03">
-            <bean class="cn.tiankafei.spring.entity.Book">
+            <bean class="org.tiankafei.springdemo.entity.Book">
                 <property name="name" value="西游记"></property>
                 <property name="author" value="吴承恩"></property>
                 <property name="price" value="100"></property>

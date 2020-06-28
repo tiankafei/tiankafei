@@ -9,5 +9,5 @@
         如果bean是单例，容器在启动的时候会创建好，关闭的时候会销毁创建的bean
         如果bean是多礼，获取的时候创建对象，销毁的时候不会有任何的调用
     -->
-    <bean id="address" class="cn.tiankafei.spring.entity.Address" init-method="init" destroy-method="destory"></bean>
+    <bean id="address" class="org.tiankafei.springdemo.entity.Address" init-method="init" destroy-method="destory"></bean>
 </beans>

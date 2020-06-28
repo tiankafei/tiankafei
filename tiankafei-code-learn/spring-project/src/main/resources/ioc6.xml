@@ -15,6 +15,6 @@
         在容器启动完成之前就已经创建好对象
         获取的所有对象都是同一个
     -->
-    <bean id="person" class="cn.tiankafei.spring.entity.Person001" scope="prototype">
+    <bean id="person" class="org.tiankafei.springdemo.entity.Person001" scope="prototype">
     </bean>
 </beans>

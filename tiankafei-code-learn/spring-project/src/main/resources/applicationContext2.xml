@@ -20,6 +20,6 @@
         <!--        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
 
         <!--指定只扫描哪些组件，默认情况下是全部扫描的，所以此时要配置的话需要在component-scan标签中添加 use-default-filters="false"-->
-        <context:include-filter type="assignable" expression="cn.tiankafei.spring.service.impl.PersonService"/>
+        <context:include-filter type="assignable" expression="org.tiankafei.springdemo.service.impl.PersonService"/>
     </context:component-scan>
 </beans>

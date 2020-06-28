@@ -5,14 +5,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="person" class="cn.tiankafei.spring.entity.Person001" abstract="true">
+    <bean id="person" class="org.tiankafei.springdemo.entity.Person001" abstract="true">
         <property name="id" value="1"></property>
         <property name="name" value="zhangsan"></property>
         <property name="age" value="21"></property>
         <property name="gender" value="男"></property>
     </bean>
     <!--parent:指定bean的配置信息继承于哪个bean-->
-    <bean id="person2" class="cn.tiankafei.spring.entity.Person001" parent="person">
+    <bean id="person2" class="org.tiankafei.springdemo.entity.Person001" parent="person">
         <property name="name" value="lisi"></property>
     </bean>
 </beans>

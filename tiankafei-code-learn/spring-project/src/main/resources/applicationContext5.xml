@@ -14,13 +14,13 @@
     <context:component-scan base-package="cn.tiankafei"></context:component-scan>
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-    <bean id="logUtil" class="cn.tiankafei.spring.util.LogUtil8"></bean>
-    <bean id="securityAspect" class="cn.tiankafei.spring.util.SecurityAspect2"></bean>
-    <bean id="myCalculator" class="cn.tiankafei.spring.inter.impl.MyCalculator9"></bean>
+    <bean id="logUtil" class="org.tiankafei.springdemo.util.LogUtil8"></bean>
+    <bean id="securityAspect" class="org.tiankafei.springdemo.util.SecurityAspect2"></bean>
+    <bean id="myCalculator" class="org.tiankafei.springdemo.inter.impl.MyCalculator9"></bean>
     <aop:config>
-        <aop:pointcut id="globalPoint" expression="execution(public int cn.tiankafei.spring.inter.impl.MyCalculator9.*(int,int))"/>
+        <aop:pointcut id="globalPoint" expression="execution(public int org.tiankafei.springdemo.inter.impl.MyCalculator9.*(int,int))"/>
         <aop:aspect ref="logUtil">
-            <aop:pointcut id="mypoint" expression="execution(public int cn.tiankafei.spring.inter.impl.MyCalculator9.*(int,int))"/>
+            <aop:pointcut id="mypoint" expression="execution(public int org.tiankafei.springdemo.inter.impl.MyCalculator9.*(int,int))"/>
             <aop:before method="start" pointcut-ref="mypoint"></aop:before>
             <aop:after method="end" pointcut-ref="mypoint"></aop:after>
             <aop:after-returning method="stop" pointcut-ref="mypoint" returning="result"></aop:after-returning>

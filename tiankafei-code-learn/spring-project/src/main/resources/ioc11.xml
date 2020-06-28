@@ -5,6 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="address" class="cn.tiankafei.spring.entity.Address" init-method="init" destroy-method="destory"></bean>
-    <bean id="myBeanPostProcessor" class="cn.tiankafei.spring.bean.MyBeanPostProcessor"></bean>
+    <bean id="address" class="org.tiankafei.springdemo.entity.Address" init-method="init" destroy-method="destory"></bean>
+    <bean id="myBeanPostProcessor" class="org.tiankafei.springdemo.bean.MyBeanPostProcessor"></bean>
 </beans>

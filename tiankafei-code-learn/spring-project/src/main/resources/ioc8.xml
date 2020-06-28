@@ -7,12 +7,12 @@
 
     <!--实例工厂使用-->
     <!--创建实例工厂类-->
-    <bean id="personInstanceFactory" class="cn.tiankafei.spring.factory.PersonInstanceFactory"></bean>
+    <bean id="personInstanceFactory" class="org.tiankafei.springdemo.factory.PersonInstanceFactory"></bean>
     <!--
         factory-bean:指定使用哪个工厂实例
         factory-method:指定使用哪个工厂实例的方法
         -->
-    <bean id="person6" class="cn.tiankafei.spring.entity.Person001" factory-bean="personInstanceFactory" factory-method="getPerson">
+    <bean id="person6" class="org.tiankafei.springdemo.entity.Person001" factory-bean="personInstanceFactory" factory-method="getPerson">
         <constructor-arg value="wangwu"></constructor-arg>
     </bean>
 </beans>
