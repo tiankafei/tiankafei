@@ -25,7 +25,7 @@ public class TestMapReduce2 {
 
         Job job = Job.getInstance(conf);
         // 把本地jar包上传到hadoop上
-        job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\hadoop-project\\target\\hadoop-project-1.0-SNAPSHOT.jar");
+        job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\hadoop-project\\target\\hadoop-project-1.1-SNAPSHOT.jar");
         job.setJarByClass(TestMapReduce2.class);
         job.setJobName("tiankafei-wordcount");
 

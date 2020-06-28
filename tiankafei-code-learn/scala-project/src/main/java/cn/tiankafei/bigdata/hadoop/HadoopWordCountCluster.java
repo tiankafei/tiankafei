@@ -23,7 +23,7 @@ public class HadoopWordCountCluster {
 
         Job job = Job.getInstance(conf);
         // 把本地jar包上传到hadoop上
-        job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\scala-project\\target\\scala-project-1.0-SNAPSHOT.jar");
+        job.setJar("E:\\gits\\tiankafei\\tiankafei-code-learn\\scala-project\\target\\scala-project-1.1-SNAPSHOT.jar");
         job.setJarByClass(HadoopWordCountCluster.class);
         // 指定job的名称
         job.setJobName("tiankafei-wordcount");

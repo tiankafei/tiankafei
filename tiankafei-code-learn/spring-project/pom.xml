@@ -6,7 +6,7 @@
 
     <groupId>cn.tiankafei</groupId>
     <artifactId>spring-project</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -138,7 +138,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    &lt;!&ndash; 设置false后是去掉 MySpark-1.0-SNAPSHOT-jar-with-dependencies.jar 后的 “-jar-with-dependencies” &ndash;&gt;
+                    &lt;!&ndash; 设置false后是去掉 MySpark-1.1-SNAPSHOT-jar-with-dependencies.jar 后的 “-jar-with-dependencies” &ndash;&gt;
                     &lt;!&ndash;<appendAssemblyId>false</appendAssemblyId>&ndash;&gt;
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
