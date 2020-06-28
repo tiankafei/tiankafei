@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>code-tool-parent</artifactId>
-        <groupId>cn.tiankafei</groupId>
+        <groupId>org.tiankafei</groupId>
         <version>1.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tiankafei-proxy</artifactId>
+    <packaging>jar</packaging>
     <description>动态代理封装工具类并进行抽象</description>
 
     <dependencies>
