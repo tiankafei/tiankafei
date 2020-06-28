@@ -166,6 +166,12 @@
                 <artifactId>aviator</artifactId>
                 <version>5.0.0</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/co.paralleluniverse/quasar-core -->
+            <dependency>
+                <groupId>co.paralleluniverse</groupId>
+                <artifactId>quasar-core</artifactId>
+                <version>0.8.0</version>
+            </dependency>
 
             <!--poi依赖jar包-->
             <dependency>

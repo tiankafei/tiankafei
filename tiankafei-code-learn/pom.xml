@@ -19,10 +19,12 @@
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
 
+        <code-tool.version>1.0-SNAPSHOT</code-tool.version>
         <junit.version>4.12</junit.version>
     </properties>
 
     <modules>
+        <module>java-project</module>
         <module>scala-project</module>
         <module>spring-project</module>
         <module>springmvc-project</module>

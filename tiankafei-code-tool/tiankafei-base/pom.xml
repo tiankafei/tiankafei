@@ -61,6 +61,11 @@
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/co.paralleluniverse/quasar-core -->
+        <dependency>
+            <groupId>co.paralleluniverse</groupId>
+            <artifactId>quasar-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>cn.tiankafei</groupId>
             <artifactId>tiankafei-proxy</artifactId>
