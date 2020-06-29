@@ -28,7 +28,7 @@ import javax.validation.constraints.NotNull;
 @TableName("${table.name}" )
 #end
 @ApiModel(value = " $!{table.comment} 实体对象" , description = "$!{table.comment}" )
-public class ${cfg.customEntityClassName} extends ${superEntityClass} {
+public class ${cfg.entityClassName} extends ${superEntityClass} {
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})

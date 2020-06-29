@@ -1,6 +1,6 @@
 package ${package.Service};
 
-import ${package.Entity}.${cfg.customEntityClassName};
+import ${package.Entity}.${cfg.entityClassName};
 import ${superServiceClassPackage};
 import ${cfg.queryParamPath};
 import ${cfg.pageQueryParamPath};
@@ -18,7 +18,7 @@ import java.util.List;
  * @author ${author}
  * @since ${date}
  */
-public interface ${table.serviceName} extends ${superServiceClass}<${cfg.customEntityClassName}> {
+public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityClassName}> {
     
     /**
      * 校验 $!{table.comment} 是否已经存在

@@ -315,8 +315,10 @@ public class CodeGenerator {
                 map.put("superQueryVoPath", superQueryVo);
                 // 响应结果类路径
                 map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
+                // 实体类名称
+                map.put("entityClassName", pascalTableName + "Entity");
                 // 实体对象名称
-                map.put("entityObjectName", camelTableName);
+                map.put("entityObjectName", camelTableName + "Entity");
                 // 实体对象名称
                 map.put("tableName", camelTableName);
                 map.put("TableName", pascalTableName);
@@ -324,9 +326,6 @@ public class CodeGenerator {
                 map.put("serviceObjectName", camelTableName + "Service");
                 // mapper对象名称
                 map.put("mapperObjectName", camelTableName + "Mapper");
-
-                map.put("customEntityClassName", pascalTableName + "Entity");
-                map.put("customEntityObjectName", camelTableName + "Entity");
                 // 主键ID列名
                 map.put("pkIdColumnName", pkIdColumnName);
                 // 主键ID驼峰名称
