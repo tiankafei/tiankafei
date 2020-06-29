@@ -30,8 +30,6 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value = " $!{table.comment} 实体对象" , description = "$!{table.comment}" )
 public class ${entity} extends ${superEntityClass} {
 
-    private static final long serialVersionUID = 1L;
-
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 ## 设置swagger注解以及长度校验注解
