@@ -16,9 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author 魏双双
- * @Date 2020/5/20
- * @Version V1.0
+ * @author tiankafei
+ * @since 1.0
  **/
 @Configuration
 public class DruidDataSourceConfig {
