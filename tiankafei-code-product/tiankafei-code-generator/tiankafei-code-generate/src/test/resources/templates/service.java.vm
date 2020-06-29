@@ -1,0 +1,113 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+import ${cfg.queryParamPath};
+import ${cfg.pageQueryParamPath};
+import ${cfg.queryVoPath};
+import ${cfg.paging};
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * <pre>
+ * $!{table.comment} 服务类
+ * </pre>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+    
+    /**
+     * 校验 $!{table.comment} 是否已经存在
+     *
+     * @param ${cfg.entityObjectName}QueryParam
+     * @return
+     * @throws Exception
+     */
+    boolean check${entity}Exists(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+
+    /**
+     * 保存 $!{table.comment}
+     *
+     * @param ${cfg.entityObjectName}QueryVo
+     * @return
+     * @throws Exception
+     */
+    String save${entity}(${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception;
+    
+    /**
+     * 保存 $!{table.comment} 集合
+     *
+     * @param ${cfg.entityObjectName}QueryVoList
+     * @return
+     * @throws Exception
+     */
+    boolean save${entity}List(List<${entity}QueryVo> ${cfg.entityObjectName}QueryVoList) throws Exception;
+
+    /**
+     * 修改 $!{table.comment}
+     *
+     * @param ${cfg.entityObjectName}QueryVo
+     * @return
+     * @throws Exception
+     */
+    boolean update${entity}(${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception;
+
+    /**
+     * 删除 $!{table.comment}
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    boolean delete${entity}(String ids) throws Exception;
+	
+    /**
+     * 根据条件删除 $!{table.comment}
+     *
+     * @param ${cfg.entityObjectName}QueryParam
+     * @return
+     * @throws Exception
+     */
+    boolean delete${entity}(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+
+    /**
+     * 根据ID获取 $!{table.comment} 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    ${entity}QueryVo get${entity}ById(Serializable id) throws Exception;
+
+    /**
+     * 获取 $!{table.comment} 分页对象列表
+     *
+     * @param ${cfg.entityObjectName}PageQueryParam
+     * @return
+     * @throws Exception
+     */
+    Paging<${entity}QueryVo> get${entity}PageList(${entity}PageQueryParam ${cfg.entityObjectName}PageQueryParam) throws Exception;
+
+    /**
+     * 获取 $!{table.comment} 对象列表
+     *
+     * @param ${cfg.entityObjectName}QueryParam
+     * @return
+     * @throws Exception
+     */
+    List<${entity}QueryVo> get${entity}List(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+    
+    /**
+     * 计算 $!{table.comment} 总记录数
+     *
+     * @param ${cfg.entityObjectName}QueryParam
+     * @return
+     * @throws Exception
+     */
+    int count${entity}(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+
+}

@@ -3,6 +3,7 @@ package org.tiankafei.web.common.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.tiankafei.web.common.properties.SwaggerProperties;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
  **/
 @Configuration
 @EnableSwagger2
+@Profile("dev")
 public class Swagger2Config {
 
     @Resource

@@ -1,0 +1,75 @@
+package ${package.Entity};
+
+#foreach($pkg in ${table.importPackages})
+import ${pkg};
+#end
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+/**
+ * <pre>
+ * $!{table.comment}
+ * </pre>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+#if(${table.convert})
+@TableName("${table.name}" )
+#end
+@ApiModel(value = " $!{table.comment} 实体对象" , description = "$!{table.comment}" )
+public class ${entity} extends ${superEntityClass} {
+
+    private static final long serialVersionUID = 1L;
+
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+## 设置swagger注解以及长度校验注解
+#if($!field.comment != "")
+    /**
+     * ${field.comment}
+     */
+    @ApiModelProperty(value = "${field.comment}")
+#if(${field.type.indexOf("(")}!=-1)
+#set($start=${field.type.indexOf("(")} + 1)
+#set($end=${field.type.length()} - 1)
+#set($length=${field.type.substring($start, $end)})
+    @Size(max = ${length}, message = "${field.comment}长度不能超过 ${length} ！")
+#end
+#end
+#if(${field.keyFlag})
+## 设置主键注解
+    @TableId(value = "${field.name}" , type = IdType.${idType})
+#elseif(${field.convert})
+## 普通字段
+    @TableField("${field.name}")
+#end
+## 逻辑删除注解
+#if(${logicDeleteFieldName}==${field.name})
+    @TableLogic
+#end
+## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
+#if(${field.customMap.null} == 'NO' && !${field.keyFlag})
+#if(${field.propertyType} == 'String')
+    @NotBlank(message = "${field.comment}不能为空" )
+#else
+    @NotNull(message = "${field.comment}不能为空" )
+#end
+    private ${field.propertyType} ${field.propertyName};
+#else
+    private ${field.propertyType} ${field.propertyName};
+#end
+
+#end
+## ----------  END 字段循环遍历  ----------
+}

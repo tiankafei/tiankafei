@@ -1,0 +1,146 @@
+package ${package.Controller};
+
+import ${package.Service}.${table.serviceName};
+import ${cfg.queryParamPath};
+import ${cfg.pageQueryParamPath};
+import ${cfg.queryVoPath};
+import ${cfg.apiResult};
+import ${superControllerClassPackage};
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+import ${cfg.paging};
+import ${cfg.idsParamPath};
+
+import java.util.List;
+
+/**
+ * <pre>
+ * $!{table.comment} 前端控制器
+ * </pre>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@RestController
+@RequestMapping("/${cfg.entityObjectName}")
+@Api(value = "$!{table.comment} API", tags = "$!{table.comment} 功能维护")
+public class ${table.controllerName} extends ${superControllerClass} {
+
+    @Autowired
+    private ${table.serviceName} ${cfg.serviceObjectName};
+
+    /**
+     * 校验 $!{table.comment} 是否已经存在
+     */
+    @PostMapping("/check")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:check")
+#end
+    @ApiOperation(value = "校验 $!{table.comment} 是否已经存在", notes = "校验 $!{table.comment} 是否已经存在")
+    public ApiResult<Boolean> check${entity}Exists(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        Boolean flag = ${cfg.serviceObjectName}.check${entity}Exists(${cfg.entityObjectName}QueryParam);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 添加 $!{table.comment} 对象
+     */
+    @PostMapping("/add")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:add")
+#end
+    @ApiOperation(value = "添加 $!{table.comment} 对象", notes = "添加 $!{table.comment}")
+    public ApiResult<String> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
+        String id = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName}QueryVo);
+        return ApiResult.ok(id);
+    }
+
+    /**
+     * 修改 $!{table.comment} 对象
+     */
+    @PostMapping("/update")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:update")
+#end
+    @ApiOperation(value = "修改 $!{table.comment} 对象", notes = "修改 $!{table.comment}")
+    public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
+        boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName}QueryVo);
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 删除 $!{table.comment} 对象
+     */
+    @PostMapping("/delete")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:delete")
+#end
+    @ApiOperation(value = "删除 $!{table.comment} 对象", notes = "删除 $!{table.comment}")
+    public ApiResult<Boolean> delete${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody IdsParam idsParam) throws Exception {
+        boolean flag = ${cfg.serviceObjectName}.delete${entity}(idsParam.getIds());
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 获取 $!{table.comment} 对象详情
+     */
+    @GetMapping("/info/{id}")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:info")
+#end
+    @ApiOperation(value = "获取 $!{table.comment} 对象详情", notes = "获取 $!{table.comment} 对象详情")
+    public ApiResult<${entity}QueryVo> get${entity}(@PathVariable("id") String id) throws Exception {
+        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(id);
+        return ApiResult.ok(${cfg.entityObjectName}QueryVo);
+    }
+
+    /**
+     * 获取 $!{table.comment} 分页列表
+     */
+    @PostMapping("/getPageList")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:getPageList")
+#end
+    @ApiOperation(value = "获取 $!{table.comment} 分页列表", notes = "获取 $!{table.comment} 分页列表")
+    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}PageQueryParam ${cfg.entityObjectName}PageQueryParam) throws Exception {
+        Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}PageQueryParam);
+        return ApiResult.ok(paging);
+    }
+    
+    /**
+     * 获取 $!{table.comment} 列表
+     */
+    @PostMapping("/getList")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:getList")
+#end
+    @ApiOperation(value = "获取 $!{table.comment} 列表", notes = "获取 $!{table.comment} 列表")
+    public ApiResult<List<${entity}QueryVo>> get${entity}List(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        List<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}List(${cfg.entityObjectName}QueryParam);
+        return ApiResult.ok(paging);
+    }
+    
+    /**
+     * 计算 $!{table.comment} 总记录数
+     */
+    @PostMapping("/count")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:count")
+#end
+    @ApiOperation(value = "计算 $!{table.comment} 总记录数", notes = "计算 $!{table.comment} 总记录数")
+    public ApiResult<Integer> count${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        int count = ${cfg.serviceObjectName}.count${entity}(${cfg.entityObjectName}QueryParam);
+        return ApiResult.ok(count);
+    }
+
+}

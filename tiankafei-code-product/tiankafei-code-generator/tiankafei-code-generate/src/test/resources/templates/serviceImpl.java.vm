@@ -1,0 +1,122 @@
+package ${package.ServiceImpl};
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.tiankafei.common.config.GeneratorConfig;
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${cfg.queryParamPath};
+import ${cfg.pageQueryParamPath};
+import ${cfg.queryVoPath};
+import ${superServiceImplClassPackage};
+import ${cfg.paging};
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.io.Serializable;
+
+/**
+ * <pre>
+ * $!{table.comment} 服务实现类
+ * </pre>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@Service
+@Transactional(rollbackFor = Exception.class)
+public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    @Autowired
+    private ${table.mapperName} ${cfg.mapperObjectName};
+
+    @Override
+    public boolean check${entity}Exists(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+        int count = super.count(lambdaQueryWrapper);
+        return count > 0;
+    }
+    
+    @Override
+    public String save${entity}(${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
+        ${entity} ${cfg.entityObjectName} = new ${entity}();
+        BeanUtils.copyProperties(${cfg.entityObjectName}QueryVo, ${cfg.entityObjectName});
+        super.save(${cfg.entityObjectName});
+        return ${cfg.entityObjectName}.getId();
+    }
+        
+    @Override
+    public boolean save${entity}List(List<${entity}QueryVo> ${cfg.entityObjectName}QueryVoList) throws Exception {
+        if(${cfg.entityObjectName}QueryVoList != null && !${cfg.entityObjectName}QueryVoList.isEmpty()){
+            List<${entity}> ${cfg.entityObjectName}List = new ArrayList<>();
+            for (${entity}QueryVo ${cfg.entityObjectName}QueryVo : ${cfg.entityObjectName}QueryVoList) {
+                ${entity} ${cfg.entityObjectName} = new ${entity}();
+                BeanUtils.copyProperties(${cfg.entityObjectName}QueryVo, ${cfg.entityObjectName});
+                ${cfg.entityObjectName}List.add(${cfg.entityObjectName});
+            }
+            super.saveBatch(${cfg.entityObjectName}List, GeneratorConfig.BATCH_SAVE_COUNT);
+        }
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean update${entity}(${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
+        ${entity} ${cfg.entityObjectName} = new ${entity}();
+        BeanUtils.copyProperties(${cfg.entityObjectName}QueryVo, ${cfg.entityObjectName});
+        return super.updateById(${cfg.entityObjectName});
+    }
+
+    @Override
+    public boolean delete${entity}(String ids) throws Exception {
+        String[] idArray = ids.split(",");
+        return super.removeByIds(Arrays.asList(idArray));
+    }
+	
+    @Override
+    public boolean delete${entity}(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+
+        return super.remove(lambdaQueryWrapper);
+    }
+
+    @Override
+    public ${entity}QueryVo get${entity}ById(Serializable id) throws Exception {
+        ${entity} ${cfg.entityObjectName} = super.getById(id);
+        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = new ${entity}QueryVo();
+        BeanUtils.copyProperties(${cfg.entityObjectName}, ${cfg.entityObjectName}QueryVo);
+        return ${cfg.entityObjectName}QueryVo;
+    }
+
+    @Override
+    public Paging<${entity}QueryVo> get${entity}PageList(${entity}PageQueryParam ${cfg.entityObjectName}PageQueryParam) throws Exception {
+        Page page = setPageParam(${cfg.entityObjectName}PageQueryParam, OrderItem.desc("create_time"));
+        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+        IPage<${entity}QueryVo> iPage = super.page(page, lambdaQueryWrapper);
+        return new Paging(iPage);
+    }
+
+    @Override
+    public List<${entity}QueryVo> get${entity}List(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        List<${entity}QueryVo> ${cfg.entityObjectName}QueryVoList = ${cfg.mapperObjectName}.get${entity}List(${cfg.entityObjectName}QueryParam);
+        return ${cfg.entityObjectName}QueryVoList;
+    }
+    
+    @Override
+    public int count${entity}(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+        int count = super.count(lambdaQueryWrapper);
+        return count;
+    }
+
+}

@@ -16,4 +16,29 @@
     <name>tiankafei-code-generate</name>
     <description></description>
 
+    <dependencies>
+        <!--依赖的工具包-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+        </dependency>
+        <!--自己的工具包-->
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-base</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
