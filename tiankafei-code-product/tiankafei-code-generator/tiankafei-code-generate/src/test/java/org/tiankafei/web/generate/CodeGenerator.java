@@ -1,19 +1,3 @@
-/*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.tiankafei.web.generate;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -33,6 +17,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
+import org.tiankafei.web.common.entity.BaseEntity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -127,59 +112,54 @@ public class CodeGenerator {
     /**
      * 分页列表查询是否排序 true：有排序参数/false：无
      */
-    private boolean pageListOrder = false;
+    private boolean pageListOrder = Boolean.TRUE;
     /**
      * 是否生成validation校验，true：生成/false：不生成
      */
-    private boolean paramValidation = true;
+    private boolean paramValidation = Boolean.TRUE;
 
     /**
      * 是否生成实体类
      */
-    private boolean generatorEntity;
+    private boolean generatorEntity = Boolean.TRUE;
     /**
      * 是否生成控制器
      */
-    private boolean generatorController;
+    private boolean generatorController = Boolean.TRUE;
     /**
      * 是否生成service接口
      */
-    private boolean generatorService;
+    private boolean generatorService = Boolean.TRUE;
     /**
      * 是否生成service实现类
      */
-    private boolean generatorServiceImpl;
+    private boolean generatorServiceImpl = Boolean.TRUE;
     /**
      * 是否生成Mapper
      */
-    private boolean generatorMapper;
+    private boolean generatorMapper = Boolean.TRUE;
     /**
      * 是否生成Mapper XML
      */
-    private boolean generatorMapperXml;
+    private boolean generatorMapperXml = Boolean.TRUE;
     /**
      * 是否生成查询参数
      */
-    private boolean generatorQueryParam;
+    private boolean generatorQueryParam = Boolean.TRUE;
     /**
      * 是否生成查询VO
      */
-    private boolean generatorQueryVo;
+    private boolean generatorQueryVo = Boolean.TRUE;
     /**
      * 是否生成Shiro RequiresPermissions 注解
      */
-    private boolean requiresPermissions;
+    private boolean requiresPermissions = Boolean.FALSE;
     // ############################ 自定义配置部分 end ############################
 
     /**
      * 公共父包
      */
     private String commonParentPackage;
-
-    /**
-     * 实体父类
-     */
-    private String superEntity;
     /**
      * 查询对象父类
      */
@@ -234,7 +214,7 @@ public class CodeGenerator {
     /**
      * 是否文件覆盖
      */
-    private boolean fileOverride;
+    private boolean fileOverride = Boolean.TRUE;
 
     /**
      * 初始化变量
@@ -244,7 +224,6 @@ public class CodeGenerator {
 
         this.commonParentPackage = this.parentPackage + ".common";
         // 父类包路径
-        this.superEntity = this.commonParentPackage + ".entity.BaseEntity";
         this.superQueryVo = this.commonParentPackage + ".vo.BaseQueryVo";
         this.superController = this.commonParentPackage + ".controller.BaseController";
         this.superService = this.commonParentPackage + ".service.BaseService";
@@ -276,7 +255,7 @@ public class CodeGenerator {
         gc.setAuthor(author);
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(true);               // 启用swagger注解
-        gc.setIdType(IdType.ID_WORKER_STR); // 主键类型:ID_WORKER
+        gc.setIdType(IdType.AUTO);          // 主键类型:AUTO
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
@@ -444,7 +423,7 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setSuperEntityClass(superEntity);
+        strategy.setSuperEntityClass(BaseEntity.class);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setSuperControllerClass(superController);

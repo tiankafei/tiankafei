@@ -75,7 +75,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @ApiOperation(value = "修改 $!{table.comment} 对象", notes = "修改 $!{table.comment}")
     public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName}QueryVo);
-        return ApiResult.result(flag);
+        return ApiResult.ok(flag);
     }
 
     /**
@@ -88,7 +88,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @ApiOperation(value = "删除 $!{table.comment} 对象", notes = "删除 $!{table.comment}")
     public ApiResult<Boolean> delete${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = ${cfg.serviceObjectName}.delete${entity}(idsParam.getIds());
-        return ApiResult.result(flag);
+        return ApiResult.ok(flag);
     }
 
     /**

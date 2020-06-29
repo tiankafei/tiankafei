@@ -1,7 +1,7 @@
 package ${package.ServiceImpl};
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.tiankafei.common.config.GeneratorConfig;
+import org.tiankafei.web.common.config.CommonWebConfig;
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
@@ -65,7 +65,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
                 BeanUtils.copyProperties(${cfg.entityObjectName}QueryVo, ${cfg.entityObjectName});
                 ${cfg.entityObjectName}List.add(${cfg.entityObjectName});
             }
-            super.saveBatch(${cfg.entityObjectName}List, GeneratorConfig.BATCH_SAVE_COUNT);
+            super.saveBatch(${cfg.entityObjectName}List, CommonWebConfig.BATCH_SAVE_COUNT);
         }
         return Boolean.TRUE;
     }

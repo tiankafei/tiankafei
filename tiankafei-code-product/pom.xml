@@ -29,6 +29,7 @@
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
 
         <code-tool.version>1.1-SNAPSHOT</code-tool.version>
+        <code-produce.version>1.0-SNAPSHOT</code-produce.version>
         <junit.version>4.12</junit.version>
         <swagger.version>2.9.2</swagger.version>
         <fastjson.version>1.2.72</fastjson.version>
@@ -37,6 +38,8 @@
         <hutool.version>5.3.8</hutool.version>
         <druid.version>1.1.23</druid.version>
         <mysql.version>8.0.20</mysql.version>
+        <velocity.version>1.7</velocity.version>
+        <shiro-spring.version>1.5.3</shiro-spring.version>
     </properties>
 
     <modules>
@@ -162,6 +165,19 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
+
 
             <!--自己的工具包-->
             <dependency>
