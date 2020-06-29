@@ -32,7 +32,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/${cfg.entityObjectName}")
+@RequestMapping("/${cfg.tableName}")
 @Api(value = "$!{table.comment} API", tags = "$!{table.comment} 功能维护")
 public class ${table.controllerName} extends ${superControllerClass} {
 
@@ -47,8 +47,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:check")
 #end
     @ApiOperation(value = "校验 $!{table.comment} 是否已经存在", notes = "校验 $!{table.comment} 是否已经存在")
-    public ApiResult<Boolean> check${entity}Exists(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        Boolean flag = ${cfg.serviceObjectName}.check${entity}Exists(${cfg.entityObjectName}QueryParam);
+    public ApiResult<Boolean> check${cfg.TableName}Exists(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+        Boolean flag = ${cfg.serviceObjectName}.check${cfg.TableName}Exists(${cfg.tableName}QueryParam);
         return ApiResult.ok(flag);
     }
 
@@ -60,8 +60,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:add")
 #end
     @ApiOperation(value = "添加 $!{table.comment} 对象", notes = "添加 $!{table.comment}")
-    public ApiResult<String> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
-        String id = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName}QueryVo);
+    public ApiResult<String> add${cfg.TableName}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
+        String id = ${cfg.serviceObjectName}.save${cfg.TableName}(${cfg.tableName}QueryVo);
         return ApiResult.ok(id);
     }
 
@@ -73,8 +73,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
     @ApiOperation(value = "修改 $!{table.comment} 对象", notes = "修改 $!{table.comment}")
-    public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
-        boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName}QueryVo);
+    public ApiResult<Boolean> update${cfg.TableName}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
+        boolean flag = ${cfg.serviceObjectName}.update${cfg.TableName}(${cfg.tableName}QueryVo);
         return ApiResult.ok(flag);
     }
 
@@ -86,8 +86,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end
     @ApiOperation(value = "删除 $!{table.comment} 对象", notes = "删除 $!{table.comment}")
-    public ApiResult<Boolean> delete${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody IdsParam idsParam) throws Exception {
-        boolean flag = ${cfg.serviceObjectName}.delete${entity}(idsParam.getIds());
+    public ApiResult<Boolean> delete${cfg.TableName}(#if(${cfg.paramValidation})@Valid#end @RequestBody IdsParam idsParam) throws Exception {
+        boolean flag = ${cfg.serviceObjectName}.delete${cfg.TableName}(idsParam.getIds());
         return ApiResult.ok(flag);
     }
 
@@ -99,9 +99,9 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:info")
 #end
     @ApiOperation(value = "获取 $!{table.comment} 对象详情", notes = "获取 $!{table.comment} 对象详情")
-    public ApiResult<${entity}QueryVo> get${entity}(@PathVariable("id") String id) throws Exception {
-        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(id);
-        return ApiResult.ok(${cfg.entityObjectName}QueryVo);
+    public ApiResult<${cfg.TableName}QueryVo> get${cfg.TableName}(@PathVariable("id") String id) throws Exception {
+         ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = ${cfg.serviceObjectName}.get${cfg.TableName}ById(id);
+        return ApiResult.ok(${cfg.tableName}QueryVo);
     }
 
     /**
@@ -112,8 +112,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:getPageList")
 #end
     @ApiOperation(value = "获取 $!{table.comment} 分页列表", notes = "获取 $!{table.comment} 分页列表")
-    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}PageQueryParam ${cfg.entityObjectName}PageQueryParam) throws Exception {
-        Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}PageQueryParam);
+    public ApiResult<Paging<${cfg.TableName}QueryVo>> get${cfg.TableName}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}PageQueryParam ${cfg.tableName}PageQueryParam) throws Exception {
+         Paging<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}PageList(${cfg.tableName}PageQueryParam);
         return ApiResult.ok(paging);
     }
     
@@ -125,8 +125,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:getList")
 #end
     @ApiOperation(value = "获取 $!{table.comment} 列表", notes = "获取 $!{table.comment} 列表")
-    public ApiResult<List<${entity}QueryVo>> get${entity}List(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        List<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}List(${cfg.entityObjectName}QueryParam);
+    public ApiResult<List<${cfg.TableName}QueryVo>> get${cfg.TableName}List(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+         List<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}List(${cfg.tableName}QueryParam);
         return ApiResult.ok(paging);
     }
     
@@ -138,8 +138,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
     @RequiresPermissions("$!{cfg.colonTableName}:count")
 #end
     @ApiOperation(value = "计算 $!{table.comment} 总记录数", notes = "计算 $!{table.comment} 总记录数")
-    public ApiResult<Integer> count${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        int count = ${cfg.serviceObjectName}.count${entity}(${cfg.entityObjectName}QueryParam);
+    public ApiResult<Integer> count${cfg.TableName}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+        int count = ${cfg.serviceObjectName}.count${cfg.TableName}(${cfg.tableName}QueryParam);
         return ApiResult.ok(count);
     }
 

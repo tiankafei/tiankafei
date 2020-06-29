@@ -2,7 +2,7 @@ package ${package.ServiceImpl};
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.tiankafei.web.common.config.CommonWebConfig;
-import ${package.Entity}.${entity};
+import ${package.Entity}.${cfg.customEntityClassName};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${cfg.queryParamPath};
@@ -36,85 +36,85 @@ import java.io.Serializable;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${cfg.customEntityClassName}> implements ${table.serviceName} {
 
     @Autowired
     private ${table.mapperName} ${cfg.mapperObjectName};
 
     @Override
-    public boolean check${entity}Exists(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+    public boolean check${cfg.TableName}Exists(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+        LambdaQueryWrapper<${cfg.customEntityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
     
     @Override
-    public String save${entity}(${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
-        ${entity} ${cfg.entityObjectName} = new ${entity}();
-        BeanUtils.copyProperties(${cfg.entityObjectName}QueryVo, ${cfg.entityObjectName});
-        super.save(${cfg.entityObjectName});
-        return ${cfg.entityObjectName}.getId();
+    public String save${cfg.TableName}(${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
+        ${cfg.customEntityClassName} ${cfg.customEntityObjectName} = new ${cfg.customEntityClassName}();
+        BeanUtils.copyProperties(${cfg.tableName}QueryVo, ${cfg.customEntityObjectName});
+        super.save(${cfg.customEntityObjectName});
+        return ${cfg.customEntityObjectName}.getId();
     }
         
     @Override
-    public boolean save${entity}List(List<${entity}QueryVo> ${cfg.entityObjectName}QueryVoList) throws Exception {
-        if(${cfg.entityObjectName}QueryVoList != null && !${cfg.entityObjectName}QueryVoList.isEmpty()){
-            List<${entity}> ${cfg.entityObjectName}List = new ArrayList<>();
-            for (${entity}QueryVo ${cfg.entityObjectName}QueryVo : ${cfg.entityObjectName}QueryVoList) {
-                ${entity} ${cfg.entityObjectName} = new ${entity}();
-                BeanUtils.copyProperties(${cfg.entityObjectName}QueryVo, ${cfg.entityObjectName});
-                ${cfg.entityObjectName}List.add(${cfg.entityObjectName});
+    public boolean save${cfg.TableName}List(List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception {
+        if(${cfg.tableName}QueryVoList != null && !${cfg.tableName}QueryVoList.isEmpty()){
+            List<${cfg.customEntityClassName}> ${cfg.tableName}List = new ArrayList<>();
+            for ( ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo : ${cfg.tableName}QueryVoList) {
+                ${cfg.customEntityClassName} ${cfg.customEntityObjectName} = new ${cfg.customEntityClassName}();
+                BeanUtils.copyProperties(${cfg.tableName}QueryVo, ${cfg.customEntityObjectName});
+                ${cfg.tableName}List.add(${cfg.customEntityObjectName});
             }
-            super.saveBatch(${cfg.entityObjectName}List, CommonWebConfig.BATCH_SAVE_COUNT);
+            super.saveBatch(${cfg.tableName}List, CommonWebConfig.BATCH_SAVE_COUNT);
         }
         return Boolean.TRUE;
     }
 
     @Override
-    public boolean update${entity}(${entity}QueryVo ${cfg.entityObjectName}QueryVo) throws Exception {
-        ${entity} ${cfg.entityObjectName} = new ${entity}();
-        BeanUtils.copyProperties(${cfg.entityObjectName}QueryVo, ${cfg.entityObjectName});
-        return super.updateById(${cfg.entityObjectName});
+    public boolean update${cfg.TableName}(${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
+        ${cfg.customEntityClassName} ${cfg.customEntityObjectName} = new ${cfg.customEntityClassName}();
+        BeanUtils.copyProperties(${cfg.tableName}QueryVo, ${cfg.customEntityObjectName});
+        return super.updateById(${cfg.customEntityObjectName});
     }
 
     @Override
-    public boolean delete${entity}(String ids) throws Exception {
+    public boolean delete${cfg.TableName}(String ids) throws Exception {
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
 	
     @Override
-    public boolean delete${entity}(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+    public boolean delete${cfg.TableName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+        LambdaQueryWrapper<${cfg.customEntityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
 
     @Override
-    public ${entity}QueryVo get${entity}ById(Serializable id) throws Exception {
-        ${entity} ${cfg.entityObjectName} = super.getById(id);
-        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = new ${entity}QueryVo();
-        BeanUtils.copyProperties(${cfg.entityObjectName}, ${cfg.entityObjectName}QueryVo);
-        return ${cfg.entityObjectName}QueryVo;
+    public ${cfg.TableName}QueryVo get${cfg.TableName}ById(Serializable id) throws Exception {
+        ${cfg.customEntityClassName} ${cfg.customEntityObjectName} = super.getById(id);
+         ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = new  ${cfg.TableName}QueryVo();
+        BeanUtils.copyProperties(${cfg.customEntityObjectName}, ${cfg.tableName}QueryVo);
+        return ${cfg.tableName}QueryVo;
     }
 
     @Override
-    public Paging<${entity}QueryVo> get${entity}PageList(${entity}PageQueryParam ${cfg.entityObjectName}PageQueryParam) throws Exception {
-        Page page = setPageParam(${cfg.entityObjectName}PageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-        IPage<${entity}QueryVo> iPage = super.page(page, lambdaQueryWrapper);
+    public Paging<${cfg.TableName}QueryVo> get${cfg.TableName}PageList(${cfg.TableName}PageQueryParam ${cfg.tableName}PageQueryParam) throws Exception {
+        Page page = setPageParam(${cfg.tableName}PageQueryParam, OrderItem.desc("create_time"));
+        LambdaQueryWrapper<${cfg.customEntityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
+        IPage<${cfg.TableName}QueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
 
     @Override
-    public List<${entity}QueryVo> get${entity}List(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        List<${entity}QueryVo> ${cfg.entityObjectName}QueryVoList = ${cfg.mapperObjectName}.get${entity}List(${cfg.entityObjectName}QueryParam);
-        return ${cfg.entityObjectName}QueryVoList;
+    public List<${cfg.TableName}QueryVo> get${cfg.TableName}List( ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+        List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList = ${cfg.mapperObjectName}.get${cfg.TableName}List(${cfg.tableName}QueryParam);
+        return ${cfg.tableName}QueryVoList;
     }
     
     @Override
-    public int count${entity}(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+    public int count${cfg.TableName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+        LambdaQueryWrapper<${cfg.customEntityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }

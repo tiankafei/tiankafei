@@ -27,7 +27,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 #end
 @ApiModel(value = "$!{table.comment} 对象" , description = "$!{table.comment} 查询参数" )
-public class ${entity}QueryVo extends BaseQueryVo {
+public class  ${cfg.TableName}QueryVo extends BaseQueryVo {
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})

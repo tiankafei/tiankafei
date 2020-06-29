@@ -3,7 +3,7 @@ package ${package.Mapper};
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${superMapperClassPackage};
-import ${package.Entity}.${entity};
+import ${package.Entity}.${cfg.customEntityClassName};
 import ${cfg.queryParamPath};
 import ${cfg.pageQueryParamPath};
 import ${cfg.queryVoPath};
@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @since ${date}
  */
 @Repository
-public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+public interface ${table.mapperName} extends ${superMapperClass}<${cfg.customEntityClassName}> {
 
     /**
      * 根据ID获取 $!{table.comment} 对象
@@ -30,23 +30,23 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      * @param id
      * @return
      */
-    ${entity}QueryVo get${entity}ById(Serializable id);
+     ${cfg.TableName}QueryVo get${cfg.TableName}ById(Serializable id);
 
     /**
      * 获取 $!{table.comment} 分页对象
      *
      * @param page
-     * @param ${cfg.entityObjectName}PageQueryParam
+     * @param ${cfg.tableName}PageQueryParam
      * @return
      */
-    IPage<${entity}QueryVo> get${entity}PageList(@Param("page") Page page, @Param("param") ${entity}PageQueryParam ${cfg.entityObjectName}PageQueryParam);
+     IPage<${cfg.TableName}QueryVo> get${cfg.TableName}PageList(@Param("page") Page page, @Param("param") ${cfg.TableName}PageQueryParam ${cfg.tableName}PageQueryParam);
     
     /**
      * 获取 $!{table.comment} 对象列表
      *
-     * @param ${cfg.entityObjectName}QueryParam
+     * @param ${cfg.tableName}QueryParam
      * @return
      */
-    List<${entity}QueryVo> get${entity}List(@Param("param") ${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+     List<${cfg.TableName}QueryVo> get${cfg.TableName}List(@Param("param")  ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam);
 
 }

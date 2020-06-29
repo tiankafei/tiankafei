@@ -9,7 +9,7 @@
     #end
     #if(${baseResultMap})
         <!-- 通用查询映射结果 -->
-        <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
+        <resultMap id="BaseResultMap" type="${package.Entity}.${cfg.TableName}">
             #foreach($field in ${table.fields})
                 #if(${field.keyFlag})##生成主键排在第一位
                     <id column="${field.name}" property="${field.propertyName}"/>
@@ -34,7 +34,7 @@
         ${table.fieldNames}
     </sql>
 
-    <select id="get${entity}List" resultType="${cfg.queryVoPath}">
+    <select id="get${cfg.TableName}List" resultType="${cfg.queryVoPath}">
         select
         <include refid="Base_Column_List"/>
         from ${table.name}

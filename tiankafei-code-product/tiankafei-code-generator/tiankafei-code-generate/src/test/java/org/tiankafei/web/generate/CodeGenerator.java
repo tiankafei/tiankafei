@@ -317,10 +317,16 @@ public class CodeGenerator {
                 map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
                 // 实体对象名称
                 map.put("entityObjectName", camelTableName);
+                // 实体对象名称
+                map.put("tableName", camelTableName);
+                map.put("TableName", pascalTableName);
                 // service对象名称
                 map.put("serviceObjectName", camelTableName + "Service");
                 // mapper对象名称
                 map.put("mapperObjectName", camelTableName + "Mapper");
+
+                map.put("customEntityClassName", pascalTableName + "Entity");
+                map.put("customEntityObjectName", camelTableName + "Entity");
                 // 主键ID列名
                 map.put("pkIdColumnName", pkIdColumnName);
                 // 主键ID驼峰名称
@@ -364,18 +370,29 @@ public class CodeGenerator {
             });
         }
 
+        if(generatorEntity){
+            focList.add(new FileOutConfig("/templates/entity.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/entity/" + tableInfo.getEntityName() + "Entity" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
         // 自定义queryParam模板
         if (generatorQueryParam) {
             focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+                    String pascalTableName = underlineToPascal(tableInfo.getName());
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + pascalTableName + "QueryParam" + StringPool.DOT_JAVA;
                 }
             });
             focList.add(new FileOutConfig("/templates/pageQueryParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "PageQueryParam" + StringPool.DOT_JAVA;
+                    String pascalTableName = underlineToPascal(tableInfo.getName());
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + pascalTableName + "PageQueryParam" + StringPool.DOT_JAVA;
                 }
             });
         }
@@ -385,7 +402,8 @@ public class CodeGenerator {
             focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+                    String pascalTableName = underlineToPascal(tableInfo.getName());
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + pascalTableName + "QueryVo" + StringPool.DOT_JAVA;
                 }
             });
         }
@@ -397,10 +415,8 @@ public class CodeGenerator {
         TemplateConfig templateConfig = new TemplateConfig();
         // xml使用自定义输出
         templateConfig.setXml(null);
-        // 是否生成entity
-        if (!generatorEntity) {
-            templateConfig.setEntity(null);
-        }
+        // entity使用自定义输出
+        templateConfig.setEntity(null);
         // 是否生成controller
         if (!generatorController) {
             templateConfig.setController(null);

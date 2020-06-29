@@ -19,7 +19,7 @@ import ${cfg.orderQueryParamPath};
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "$!{table.comment} 分页查询参数对象", description = "$!{table.comment} 分页查询参数对象")
-public class ${entity}PageQueryParam extends OrderQueryParam {
+public class ${cfg.TableName}PageQueryParam extends OrderQueryParam {
 
 
 
