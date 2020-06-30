@@ -1,8 +1,8 @@
-package org.tiankafei.general.db.mapper;
+package org.tiankafei.dbmysql.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
-import org.tiankafei.general.db.entity.TableEntity;
+import org.tiankafei.dbmysql.entity.TableEntity;
 
 /**
  * @author tiankafei

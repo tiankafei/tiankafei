@@ -1,4 +1,4 @@
-package org.tiankafei.general.db.utils;
+package org.tiankafei.dbmysql.utils;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.tiankafei.web.common.exception.DaoException;

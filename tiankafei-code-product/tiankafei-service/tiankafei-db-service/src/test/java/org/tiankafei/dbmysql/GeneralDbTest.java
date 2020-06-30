@@ -1,4 +1,4 @@
-package org.tiankafei.general.db;
+package org.tiankafei.dbmysql;
 
 /**
  * @author tiankafei

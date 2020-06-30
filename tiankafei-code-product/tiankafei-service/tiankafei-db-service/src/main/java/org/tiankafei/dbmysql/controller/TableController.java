@@ -1,4 +1,4 @@
-package org.tiankafei.general.db.controller;
+package org.tiankafei.dbmysql.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.general.db.entity.TableEntity;
-import org.tiankafei.general.db.param.TableNameEntityQueryParam;
-import org.tiankafei.general.db.param.TableNameListQueryParam;
-import org.tiankafei.general.db.param.TableNamePageListQueryParam;
-import org.tiankafei.general.db.service.TableService;
+import org.tiankafei.dbmysql.entity.TableEntity;
+import org.tiankafei.dbmysql.param.TableNameEntityQueryParam;
+import org.tiankafei.dbmysql.param.TableNameListQueryParam;
+import org.tiankafei.dbmysql.param.TableNamePageListQueryParam;
+import org.tiankafei.dbmysql.service.TableService;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.vo.Paging;

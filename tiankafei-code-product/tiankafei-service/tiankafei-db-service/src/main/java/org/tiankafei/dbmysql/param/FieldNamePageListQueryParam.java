@@ -1,4 +1,4 @@
-package org.tiankafei.general.db.param;
+package org.tiankafei.dbmysql.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
