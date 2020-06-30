@@ -16,10 +16,10 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
 @ComponentScan(basePackages = {"org.tiankafei"})
-public class GeneralUserApplication {
+public class UserApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GeneralUserApplication.class, args);
+        SpringApplication.run(UserApplication.class, args);
     }
 
 }

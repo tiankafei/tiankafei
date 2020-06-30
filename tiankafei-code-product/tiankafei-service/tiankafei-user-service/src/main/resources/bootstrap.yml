@@ -37,7 +37,7 @@ logging:
   level:
     ROOT: info
     # mapper sql日志的包路径
-    org.tiankafei.general.user.mapper: debug
+    org.tiankafei.user.mapper: debug
     # nacos日志的包路径
     com.alibaba.nacos.client.naming: WARN
     # nacos日志的包路径
