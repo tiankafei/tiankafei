@@ -62,6 +62,13 @@ public class TableEntity extends BaseEntity {
     private String version;
 
     /**
+     * 行格式[Compact|Dynamic|Fixed]
+     */
+    @TableField("ROW_FORMAT")
+    @ApiModelProperty(value = "行格式[Compact|Dynamic|Fixed]")
+    private String rowFormat;
+
+    /**
      * 表里所存多少行数据
      */
     @TableField("TABLE_ROWS")
@@ -73,28 +80,35 @@ public class TableEntity extends BaseEntity {
      */
     @TableField("AVG_ROW_LENGTH")
     @ApiModelProperty(value = "平均行长度")
-    private Integer avgRowLength;
+    private BigInteger avgRowLength;
 
     /**
      * 数据长度
      */
     @TableField("DATA_LENGTH")
     @ApiModelProperty(value = "数据长度")
-    private Integer dataLength;
+    private BigInteger dataLength;
 
     /**
      * 最大数据长度
      */
     @TableField("MAX_DATA_LENGTH")
     @ApiModelProperty(value = "最大数据长度")
-    private Integer maxDataLength;
+    private BigInteger maxDataLength;
 
     /**
      * 索引长度
      */
     @TableField("INDEX_LENGTH")
     @ApiModelProperty(value = "索引长度")
-    private Integer indexLength;
+    private BigInteger indexLength;
+
+    /**
+     * 空间碎片
+     */
+    @TableField("DATA_FREE")
+    @ApiModelProperty(value = "空间碎片")
+    private BigInteger dataFree;
 
     /**
      * 做自增主键的自动增量当前值
@@ -118,11 +132,32 @@ public class TableEntity extends BaseEntity {
     private Timestamp updateTime;
 
     /**
+     * 表的检查时间
+     */
+    @TableField("CHECK_TIME")
+    @ApiModelProperty(value = "表的检查时间")
+    private Timestamp checkTime;
+
+    /**
      * 表的字符校验编码集
      */
     @TableField("TABLE_COLLATION")
     @ApiModelProperty(value = "表的字符校验编码集")
     private String tableCollationl;
+
+    /**
+     * 校验和
+     */
+    @TableField("CHECKSUM")
+    @ApiModelProperty(value = "校验和")
+    private BigInteger checksum;
+
+    /**
+     * 创建选项
+     */
+    @TableField("CREATE_OPTIONS")
+    @ApiModelProperty(value = "创建选项")
+    private String createOptions;
 
     /**
      * 表的注释、备注
