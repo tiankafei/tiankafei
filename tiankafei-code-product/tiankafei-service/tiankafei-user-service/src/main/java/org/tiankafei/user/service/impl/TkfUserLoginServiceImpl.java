@@ -9,7 +9,7 @@ import org.tiankafei.user.param.TkfUserLoginPageQueryParam;
 import org.tiankafei.user.param.TkfUserLoginQueryParam;
 import org.tiankafei.user.service.TkfUserLoginService;
 import org.tiankafei.user.vo.TkfUserLoginQueryVo;
-import org.tiankafei.web.common.config.CommonWebConfig;
+import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.exception.UserException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
@@ -119,7 +119,7 @@ public class TkfUserLoginServiceImpl extends BaseServiceImpl<TkfUserLoginMapper,
                 BeanUtils.copyProperties(tkfUserLoginQueryVo, tkfUserLoginEntity);
                 tkfUserLoginList.add(tkfUserLoginEntity);
             }
-            super.saveBatch(tkfUserLoginList, CommonWebConfig.BATCH_SAVE_COUNT);
+            super.saveBatch(tkfUserLoginList, CommonConstant.BATCH_SAVE_COUNT);
         }
         return Boolean.TRUE;
     }

@@ -21,4 +21,9 @@ public interface CommonConstant {
      */
     Integer DEFAULT_PAGE_SIZE = 10;
 
+    /**
+     * 批量操作时，分批提交的数量配置
+     */
+    Integer BATCH_SAVE_COUNT = 100;
+
 }

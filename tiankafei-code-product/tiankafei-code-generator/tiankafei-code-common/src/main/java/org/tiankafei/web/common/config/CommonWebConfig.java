@@ -9,6 +9,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CommonWebConfig {
 
-    public static Integer BATCH_SAVE_COUNT = 100;
 
 }
