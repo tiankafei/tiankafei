@@ -16,8 +16,16 @@ public class ApiDocController extends BaseController {
      * swaggerUI
      */
     @GetMapping("/docs")
-    public String swaggerUI() {
+    public String docs() {
         return "redirect:/swagger-ui.html";
+    }
+
+    /**
+     * swaggerUI
+     */
+    @GetMapping("/doc")
+    public String doc() {
+        return "redirect:/doc.html";
     }
 
 }
