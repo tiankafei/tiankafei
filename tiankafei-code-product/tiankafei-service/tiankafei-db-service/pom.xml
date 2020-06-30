@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>code-produce-parent</artifactId>
+        <artifactId>tiankafei-service</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-service-nacos</artifactId>
+    <artifactId>tiankafei-db-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>tiankafei-service-nacos</name>
+    <name>tiankafei-db-service</name>
     <description></description>
 
 </project>

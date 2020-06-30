@@ -52,10 +52,9 @@
         <module>tiankafei-micro-depends-nacos</module>
         <module>tiankafei-micro-depends-consul</module>
         <module>tiankafei-message-center</module>
-        <module>tiankafei-service-eureka</module>
-        <module>tiankafei-service-nacos</module>
         <module>tiankafei-frame-start</module>
         <module>tiankafei-code-generator</module>
+        <module>tiankafei-service</module>
     </modules>
 
     <dependencyManagement>

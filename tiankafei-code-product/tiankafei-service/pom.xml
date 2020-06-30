@@ -9,11 +9,16 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-service-eureka</artifactId>
+    <artifactId>tiankafei-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>tiankafei-service-eureka</name>
+    <name>tiankafei-service</name>
     <description></description>
+
+    <modules>
+        <module>tiankafei-user-service</module>
+        <module>tiankafei-db-service</module>
+    </modules>
 
 </project>
