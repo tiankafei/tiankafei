@@ -33,7 +33,7 @@ public interface TableService extends BaseService<TableEntity> {
      * @return
      * @throws Exception
      */
-    Paging<TableEntity> getTkfUserLoginPageList(TableNameListQueryParam tableNameListQueryParam) throws Exception;
+    Paging<TableEntity> getTableEntityPageList(TableNameListQueryParam tableNameListQueryParam) throws Exception;
 
     /**
      * 获取 数据库表 对象列表
@@ -42,6 +42,6 @@ public interface TableService extends BaseService<TableEntity> {
      * @return
      * @throws Exception
      */
-    List<TableEntity> getTkfUserLoginList(TableNameListQueryParam tableNameListQueryParam) throws Exception;
+    List<TableEntity> getTableEntityList(TableNameListQueryParam tableNameListQueryParam) throws Exception;
 
 }

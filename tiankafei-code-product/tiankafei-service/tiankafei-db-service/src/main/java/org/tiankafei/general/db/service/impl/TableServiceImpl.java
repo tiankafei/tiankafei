@@ -51,7 +51,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
     }
 
     @Override
-    public Paging<TableEntity> getTkfUserLoginPageList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
+    public Paging<TableEntity> getTableEntityPageList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
         Page page = setPageParam(tableNameListQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper searchCondition = getSearchCondition(tableNameListQueryParam);
 
@@ -60,7 +60,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
     }
 
     @Override
-    public List<TableEntity> getTkfUserLoginList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
+    public List<TableEntity> getTableEntityList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
         LambdaQueryWrapper searchCondition = getSearchCondition(tableNameListQueryParam);
         List<TableEntity> tableEntityList = super.list(searchCondition);
         return tableEntityList;
