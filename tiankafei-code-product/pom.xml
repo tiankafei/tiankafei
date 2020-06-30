@@ -177,11 +177,15 @@
                 <version>${shiro-spring.version}</version>
             </dependency>
 
-
             <!--自己的工具包-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-base</artifactId>
+                <version>${code-tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-aviator-extend</artifactId>
                 <version>${code-tool.version}</version>
             </dependency>
         </dependencies>

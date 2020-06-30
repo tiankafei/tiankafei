@@ -102,6 +102,10 @@
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-base</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-aviator-extend</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

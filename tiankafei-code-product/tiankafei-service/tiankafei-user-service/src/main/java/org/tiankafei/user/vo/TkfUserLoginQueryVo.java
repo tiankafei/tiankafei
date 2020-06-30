@@ -9,6 +9,8 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.tiankafei.web.common.constraints.Condition;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 import java.util.Date;
@@ -39,6 +41,7 @@ public class TkfUserLoginQueryVo extends BaseQueryVo {
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
     @NotBlank(message = "用户名不能为空，请重新输入！")
+    @Condition(expression = "a!='super'", message = "用户名不能为 super")
     private String username;
 
     /**
