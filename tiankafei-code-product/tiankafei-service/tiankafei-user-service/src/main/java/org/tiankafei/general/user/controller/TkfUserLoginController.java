@@ -92,7 +92,7 @@ public class TkfUserLoginController extends BaseController {
     /**
      * 获取 用户登录信息表 分页列表
      */
-    @PostMapping("/getPageList")
+    @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户登录信息表 分页列表", notes = "获取 用户登录信息表 分页列表")
     public ApiResult<Paging<TkfUserLoginQueryVo>> getTkfUserLoginPageList(@Valid @RequestBody TkfUserLoginPageQueryParam tkfUserLoginPageQueryParam) throws Exception {
          Paging<TkfUserLoginQueryVo> paging = tkfUserLoginService.getTkfUserLoginPageList(tkfUserLoginPageQueryParam);
@@ -102,7 +102,7 @@ public class TkfUserLoginController extends BaseController {
     /**
      * 获取 用户登录信息表 列表
      */
-    @PostMapping("/getList")
+    @PostMapping("/list")
     @ApiOperation(value = "获取 用户登录信息表 列表", notes = "获取 用户登录信息表 列表")
     public ApiResult<List<TkfUserLoginQueryVo>> getTkfUserLoginList(@Valid @RequestBody TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception {
          List<TkfUserLoginQueryVo> paging = tkfUserLoginService.getTkfUserLoginList(tkfUserLoginQueryParam);

@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiResult exception(DaoException daoException) {
         log.error("exception:", daoException);
-        return ApiResult.error(ExceptionEnum.DAO_EXCEPTION);
+        return ApiResult.error(ExceptionEnum.DAO_EXCEPTION, daoException.getMessage());
     }
 
     /**
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiResult exception(Exception exception) {
         log.error("exception:", exception);
-        return ApiResult.error(ExceptionEnum.EXCEPTION);
+        return ApiResult.error(ExceptionEnum.EXCEPTION, exception.getMessage());
     }
 
 }

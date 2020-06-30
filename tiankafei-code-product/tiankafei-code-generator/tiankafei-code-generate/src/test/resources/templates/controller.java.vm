@@ -107,7 +107,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
     /**
      * 获取 $!{table.comment} 分页列表
      */
-    @PostMapping("/getPageList")
+    @PostMapping("/pageList")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:getPageList")
 #end
@@ -120,7 +120,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
     /**
      * 获取 $!{table.comment} 列表
      */
-    @PostMapping("/getList")
+    @PostMapping("/list")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:getList")
 #end

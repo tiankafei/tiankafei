@@ -80,6 +80,10 @@ public class ApiResult<T> implements Serializable {
         return result(enums, data);
     }
 
+    public static ApiResult ok(BaseEnums enums, String message) {
+        return result(enums.getStatus(), message, null);
+    }
+
     public static ApiResult ok(String message, Object data) {
         return result(ApiStatusEnum.OK.getStatus(), message, data);
     }
@@ -109,6 +113,10 @@ public class ApiResult<T> implements Serializable {
         return result(enums, data);
     }
 
+    public static ApiResult fail(BaseEnums enums, String message) {
+        return result(enums.getStatus(), message, null);
+    }
+
     public static ApiResult fail(String message, Object data) {
         return result(ApiStatusEnum.FAIL.getStatus(), message, data);
     }
@@ -136,6 +144,10 @@ public class ApiResult<T> implements Serializable {
 
     public static ApiResult error(BaseEnums enums, Object data) {
         return result(enums, data);
+    }
+
+    public static ApiResult error(BaseEnums enums, String message) {
+        return result(enums.getStatus(), message, null);
     }
 
     public static ApiResult error(String message, Object data) {
