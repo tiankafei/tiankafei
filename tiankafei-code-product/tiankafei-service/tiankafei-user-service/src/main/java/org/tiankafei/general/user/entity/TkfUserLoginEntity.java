@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
@@ -24,7 +26,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
+@TableName("tkf_user_login")
 @ApiModel(value = " 用户登录信息表 实体对象" , description = "用户登录信息表")
 public class TkfUserLoginEntity extends BaseEntity {
 
@@ -40,6 +42,7 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
+    @TableField("username")
     private String username;
 
     /**
@@ -47,6 +50,7 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "电子邮件")
     @Size(max = 80, message = "电子邮件长度不能超过 80 ！")
+    @TableField("email")
     private String email;
 
     /**
@@ -54,6 +58,7 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "手机号码")
     @Size(max = 11, message = "手机号码长度不能超过 11 ！")
+    @TableField("telephone")
     private String telephone;
 
     /**
@@ -61,6 +66,7 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "密码")
     @Size(max = 64, message = "密码长度不能超过 64 ！")
+    @TableField("password")
     private String password;
 
     /**
@@ -68,18 +74,21 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "状态")
     @Size(max = 2, message = "状态长度不能超过 2 ！")
+    @TableField("status")
     private String status;
 
     /**
      * 有效期截至时间
      */
     @ApiModelProperty(value = "有效期截至时间")
+    @TableField("expiration_date")
     private Date expirationDate;
 
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
+    @TableField("create_time")
     private Date createTime;
 
 }

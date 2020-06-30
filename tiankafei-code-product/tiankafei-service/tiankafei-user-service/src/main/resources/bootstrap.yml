@@ -33,32 +33,23 @@ spring:
 logging:
   level:
     ROOT: info
+    # mapper sql日志的包路径
+    org.tiankafei.general.user.mapper: debug
+    # nacos日志的包路径
+    com.alibaba.nacos.client.naming: WARN
+    # nacos日志的包路径
+    com.alibaba.nacos.client.config.impl: WARN
+    # spring自动装配日志的包路径
+    org.springframework.boot.autoconfigure: ERROR
 #################################### Swagger start #################################
 # swagger配置
 swagger:
-  basePackage: com.tiankafei
   contact:
     email: 798971170@qq.com
     name: user-service
     url: 'https://tiankafei.top'
   description: '测试描述内容'
   title: tiankafei-service
-  url: ''
+  url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################
-
-######################## Spring Shiro start ########################
-shiro:
-  # 是否启用
-  enable: true
-  # shiro ini 多行字符串配置
-  filter-chain-definitions: |
-  # 权限配置
-  permission:
-    # 排除登陆登出相关
-    - urls: /logon,/logout,/index
-      permission: anon
-      # 排除Swagger
-    - urls: /docs,/swagger-ui.html,/webjars/springfox-swagger-ui/**,/swagger-resources/**,/v2/api-docs
-      permission: anon
-######################## Spring Shiro end ##########################

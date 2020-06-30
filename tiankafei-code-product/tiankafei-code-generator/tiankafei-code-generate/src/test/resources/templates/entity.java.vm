@@ -3,10 +3,12 @@ package ${package.Entity};
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
@@ -23,10 +25,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-#if(${table.convert})
 @TableName("${table.name}")
-#end
 @ApiModel(value = " $!{table.comment} 实体对象" , description = "$!{table.comment}")
 public class ${cfg.entityClassName} extends ${superEntityClass} {
 
@@ -48,7 +47,7 @@ public class ${cfg.entityClassName} extends ${superEntityClass} {
 #if(${field.keyFlag})
 ## 设置主键注解
     @TableId(value = "${field.name}" , type = IdType.${idType})
-#elseif(${field.convert})
+#else
 ## 普通字段
     @TableField("${field.name}")
 #end

@@ -1,6 +1,5 @@
 package org.tiankafei.web.common.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -20,9 +19,9 @@ import javax.annotation.Resource;
  * @author tiankafei
  * @since 1.0
  **/
+@Profile("dev")
 @Configuration
 @EnableSwagger2
-@Profile("dev")
 public class Swagger2Config {
 
     @Resource
