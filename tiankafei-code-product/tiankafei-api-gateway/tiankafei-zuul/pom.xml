@@ -4,21 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>code-produce-parent</artifactId>
+        <artifactId>tiankafei-api-gateway</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-api-gateway</artifactId>
+    <artifactId>tiankafei-zuul</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>tiankafei-api-gateway</name>
+    <name>tiankafei-zuul</name>
     <description></description>
-
-    <modules>
-        <module>tiankafei-zuul</module>
-        <module>tiankafei-gateway</module>
-    </modules>
 
 </project>

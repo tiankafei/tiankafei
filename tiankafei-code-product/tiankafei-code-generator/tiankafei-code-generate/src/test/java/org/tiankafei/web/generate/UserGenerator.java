@@ -23,7 +23,7 @@ public class UserGenerator {
 
         // 包信息
         codeGenerator
-                .setProjectPackagePath("org/tiankafei/general")
+                .setProjectPackagePath("org/tiankafei")
                 .setParentPackage("org.tiankafei.web");
 
         // 组件作者等配置
