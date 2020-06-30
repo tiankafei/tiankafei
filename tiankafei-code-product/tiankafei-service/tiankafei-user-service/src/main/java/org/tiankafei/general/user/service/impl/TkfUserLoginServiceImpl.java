@@ -1,6 +1,8 @@
 package org.tiankafei.general.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.apache.commons.lang3.StringUtils;
+import org.tiankafei.general.user.service.CheckUserInfoExists;
 import org.tiankafei.web.common.config.CommonWebConfig;
 import org.tiankafei.general.user.entity.TkfUserLoginEntity;
 import org.tiankafei.general.user.mapper.TkfUserLoginMapper;
@@ -8,6 +10,7 @@ import org.tiankafei.general.user.service.TkfUserLoginService;
 import org.tiankafei.general.user.param.TkfUserLoginQueryParam;
 import org.tiankafei.general.user.param.TkfUserLoginPageQueryParam;
 import org.tiankafei.general.user.vo.TkfUserLoginQueryVo;
+import org.tiankafei.web.common.exception.UserException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
 import java.util.List;
@@ -81,12 +84,32 @@ public class TkfUserLoginServiceImpl extends BaseServiceImpl<TkfUserLoginMapper,
     
     @Override
     public Object saveTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception {
+        checkSaveUserInfoExists(tkfUserLoginQueryVo.getUsername(), "用户名", str -> checkUsernameExists(str));
+        checkSaveUserInfoExists(tkfUserLoginQueryVo.getEmail(), "邮箱", str -> checkEmailExists(str));
+        checkSaveUserInfoExists(tkfUserLoginQueryVo.getTelephone(), "手机号码", str -> checkTelephoneExists(str));
+
         TkfUserLoginEntity tkfUserLoginEntity = new TkfUserLoginEntity();
         BeanUtils.copyProperties(tkfUserLoginQueryVo, tkfUserLoginEntity);
         super.save(tkfUserLoginEntity);
         return tkfUserLoginEntity.getId();
     }
-        
+
+    /**
+     * 新增时校验用户信息是否存在
+     * @param str
+     * @param message
+     * @param checkUserInfoExists
+     * @throws Exception
+     */
+    private void checkSaveUserInfoExists(String str, String message, CheckUserInfoExists checkUserInfoExists) throws Exception {
+        if(StringUtils.isNotBlank(str)){
+            boolean existsFlag = checkUserInfoExists.checkUserInfoExists(str);
+            if(existsFlag){
+                throw new UserException(message + "已经存在，请重新输入！");
+            }
+        }
+    }
+
     @Override
     public boolean saveTkfUserLoginList(List<TkfUserLoginQueryVo> tkfUserLoginQueryVoList) throws Exception {
         if(tkfUserLoginQueryVoList != null && !tkfUserLoginQueryVoList.isEmpty()){
@@ -103,9 +126,37 @@ public class TkfUserLoginServiceImpl extends BaseServiceImpl<TkfUserLoginMapper,
 
     @Override
     public boolean updateTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception {
+        TkfUserLoginEntity oldUserEntity = super.getById(tkfUserLoginQueryVo.getId());
+        checkUpdateUserInfoExists(oldUserEntity.getUsername(), tkfUserLoginQueryVo.getUsername(), "用户名", str -> checkUsernameExists(str));
+        checkUpdateUserInfoExists(oldUserEntity.getEmail(), tkfUserLoginQueryVo.getEmail(), "邮箱", str -> checkEmailExists(str));
+        checkUpdateUserInfoExists(oldUserEntity.getTelephone(), tkfUserLoginQueryVo.getTelephone(), "手机号码", str -> checkTelephoneExists(str));
+
         TkfUserLoginEntity tkfUserLoginEntity = new TkfUserLoginEntity();
         BeanUtils.copyProperties(tkfUserLoginQueryVo, tkfUserLoginEntity);
         return super.updateById(tkfUserLoginEntity);
+    }
+
+    /**
+     * 修改时，校验用户信息是否存在
+     * @param oldStr
+     * @param str
+     * @param message
+     * @param checkUserInfoExists
+     * @throws Exception
+     */
+    private void checkUpdateUserInfoExists(String oldStr, String str, String message, CheckUserInfoExists checkUserInfoExists) throws Exception {
+        boolean emailChangeFlag = Boolean.FALSE;
+        if(StringUtils.isNotEmpty(oldStr)){
+            emailChangeFlag = !oldStr.equals(str);
+        }else if(StringUtils.isNotEmpty(str)){
+            emailChangeFlag = !str.equals(oldStr);
+        }
+        if(emailChangeFlag){
+            boolean existsFlag = checkUserInfoExists.checkUserInfoExists(str);
+            if(existsFlag){
+                throw new UserException(message + "已经存在，请重新输入！");
+            }
+        }
     }
 
     @Override

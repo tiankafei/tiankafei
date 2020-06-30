@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.web.common.api.ApiResult;
+import org.tiankafei.web.common.enums.ApiStatusEnum;
 import org.tiankafei.web.common.enums.ExceptionEnum;
 
 import java.util.ArrayList;
@@ -44,6 +45,19 @@ public class GlobalExceptionHandler {
         Collections.sort(list);
         log.error("field Errors: {}", JSON.toJSONString(list));
         return ApiResult.fail(ExceptionEnum.REQUEST_PARAM_EXCEPTION, list);
+    }
+
+    /**
+     * 用户的异常处理
+     *
+     * @param userException
+     * @return
+     */
+    @ExceptionHandler(value = UserException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult exception(UserException userException) {
+        log.error("exception:", userException);
+        return ApiResult.fail(ApiStatusEnum.FAIL, userException.getMessage());
     }
 
     /**

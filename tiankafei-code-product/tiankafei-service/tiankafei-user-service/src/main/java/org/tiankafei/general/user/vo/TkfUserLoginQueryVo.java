@@ -38,13 +38,14 @@ public class TkfUserLoginQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
+    @NotBlank(message = "用户名不能为空，请重新输入！")
     private String username;
 
     /**
-     * 电子邮件
+     *  邮箱
      */
-    @ApiModelProperty(value = "电子邮件")
-    @Size(max = 80, message = "电子邮件长度不能超过 80 ！")
+    @ApiModelProperty(value = "邮箱")
+    @Size(max = 80, message = "邮箱长度不能超过 80 ！")
     private String email;
 
     /**

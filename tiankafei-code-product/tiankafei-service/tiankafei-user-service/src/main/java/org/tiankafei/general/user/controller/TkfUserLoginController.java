@@ -50,10 +50,10 @@ public class TkfUserLoginController extends BaseController {
     }
 
     /**
-     * 校验 电子邮件 是否已经存在
+     * 校验  邮箱 是否已经存在
      */
     @GetMapping("/checkEmail/{email}")
-    @ApiOperation(value = "校验 电子邮件 是否已经存在", notes = "校验 电子邮件 是否已经存在")
+    @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
         Boolean flag = tkfUserLoginService.checkEmailExists(email);
         return ApiResult.ok(flag);

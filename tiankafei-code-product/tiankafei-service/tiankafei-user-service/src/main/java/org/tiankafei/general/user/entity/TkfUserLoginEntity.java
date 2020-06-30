@@ -46,10 +46,10 @@ public class TkfUserLoginEntity extends BaseEntity {
     private String username;
 
     /**
-     * 电子邮件
+     *  邮箱
      */
-    @ApiModelProperty(value = "电子邮件")
-    @Size(max = 80, message = "电子邮件长度不能超过 80 ！")
+    @ApiModelProperty(value = " 邮箱")
+    @Size(max = 80, message = " 邮箱长度不能超过 80 ！")
     @TableField("email")
     private String email;
 
