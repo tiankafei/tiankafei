@@ -25,9 +25,9 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 #if(${table.convert})
-@TableName("${table.name}" )
+@TableName("${table.name}")
 #end
-@ApiModel(value = " $!{table.comment} 实体对象" , description = "$!{table.comment}" )
+@ApiModel(value = " $!{table.comment} 实体对象" , description = "$!{table.comment}")
 public class ${cfg.entityClassName} extends ${superEntityClass} {
 
 ## ----------  BEGIN 字段循环遍历  ----------
@@ -52,16 +52,12 @@ public class ${cfg.entityClassName} extends ${superEntityClass} {
 ## 普通字段
     @TableField("${field.name}")
 #end
-## 逻辑删除注解
-#if(${logicDeleteFieldName}==${field.name})
-    @TableLogic
-#end
 ## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
 #if(${field.customMap.null} == 'NO' && !${field.keyFlag})
 #if(${field.propertyType} == 'String')
-    @NotBlank(message = "${field.comment}不能为空" )
+    @NotBlank(message = "${field.comment}不能为空")
 #else
-    @NotNull(message = "${field.comment}不能为空" )
+    @NotNull(message = "${field.comment}不能为空")
 #end
     private ${field.propertyType} ${field.propertyName};
 #else

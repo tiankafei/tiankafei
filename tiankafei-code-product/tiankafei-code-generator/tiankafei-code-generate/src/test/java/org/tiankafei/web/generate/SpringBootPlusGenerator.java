@@ -39,6 +39,7 @@ public class SpringBootPlusGenerator {
         map.put("roledata", new String[]{"TKF_ROLE_DATA"});
         map.put("syscatalog", new String[]{"TKF_SYS_CATALOG"});
 
+        String directory = "";
         for (String moduleName : map.keySet()) {
             String[] tables = map.get(moduleName);
             codeGenerator.setModuleName(moduleName.toLowerCase());
@@ -49,7 +50,7 @@ public class SpringBootPlusGenerator {
                 // 设置需要生成的表名称
                 codeGenerator.setTableName(table);
                 // 生成代码
-                codeGenerator.generator();
+                codeGenerator.generator(directory);
             }
         }
     }

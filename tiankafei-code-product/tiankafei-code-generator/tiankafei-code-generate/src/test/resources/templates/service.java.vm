@@ -27,7 +27,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-    boolean check${cfg.TableName}Exists( ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+    boolean check${cfg.TableName}Exists(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
 
     /**
      * 保存 $!{table.comment}
@@ -36,7 +36,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-    String save${cfg.TableName}( ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception;
+    String save${cfg.TableName}(${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception;
     
     /**
      * 保存 $!{table.comment} 集合
@@ -45,7 +45,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-    boolean save${cfg.TableName}List( List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception;
+    boolean save${cfg.TableName}List(List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception;
 
     /**
      * 修改 $!{table.comment}
@@ -54,7 +54,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-    boolean update${cfg.TableName}( ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception;
+    boolean update${cfg.TableName}(${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception;
 
     /**
      * 删除 $!{table.comment}
@@ -72,7 +72,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-    boolean delete${cfg.TableName}( ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+    boolean delete${cfg.TableName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
 
     /**
      * 根据ID获取 $!{table.comment} 对象
@@ -99,7 +99,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-     List<${cfg.TableName}QueryVo> get${cfg.TableName}List( ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+     List<${cfg.TableName}QueryVo> get${cfg.TableName}List(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
     
     /**
      * 计算 $!{table.comment} 总记录数
@@ -108,6 +108,6 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-    int count${cfg.TableName}( ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+    int count${cfg.TableName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
 
 }

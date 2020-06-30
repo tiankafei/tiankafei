@@ -26,7 +26,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 #end
-@ApiModel(value = "$!{table.comment} 对象" , description = "$!{table.comment} 查询参数" )
+@ApiModel(value = "$!{table.comment} 对象" , description = "$!{table.comment} 查询参数")
 public class  ${cfg.TableName}QueryVo extends BaseQueryVo {
 
 ## ----------  BEGIN 字段循环遍历  ----------
@@ -58,5 +58,4 @@ public class  ${cfg.TableName}QueryVo extends BaseQueryVo {
 
 #end
 ## ----------  END 字段循环遍历  ----------
-
 }

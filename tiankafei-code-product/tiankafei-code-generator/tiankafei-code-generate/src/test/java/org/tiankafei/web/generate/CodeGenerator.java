@@ -243,14 +243,13 @@ public class CodeGenerator {
     /**
      * 生成代码
      */
-    public void generator() {
+    public void generator(String directory) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-//        String projectPath = System.getProperty("user.dir");
-        String projectPath = getCurrentProjectRootFilePath(this);
+        String projectPath = getCurrentProjectRootFilePath(this, directory);
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor(author);
         gc.setOpen(false);                  // 是否打开输出目录
@@ -506,7 +505,10 @@ public class CodeGenerator {
      * @param object
      * @return
      */
-    private String getCurrentProjectRootFilePath(Object object) {
+    private String getCurrentProjectRootFilePath(Object object, String directory) {
+        if(StringUtils.isNotBlank(directory)){
+            return directory;
+        }
         StringBuilder filePath = new StringBuilder();
 
         String classPath = object.getClass().getResource("/").getPath();
