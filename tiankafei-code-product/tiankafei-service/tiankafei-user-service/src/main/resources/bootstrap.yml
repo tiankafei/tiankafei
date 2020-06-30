@@ -38,7 +38,7 @@ logging:
     ROOT: info
     # mapper sql日志的包路径
     org.tiankafei.user.mapper: debug
-    org.tiankafei.dbmysql.mapper: debug
+    org.tiankafei.dbmysql.service.impl: debug
     # nacos日志的包路径
     com.alibaba.nacos.client.naming: WARN
     # nacos日志的包路径
