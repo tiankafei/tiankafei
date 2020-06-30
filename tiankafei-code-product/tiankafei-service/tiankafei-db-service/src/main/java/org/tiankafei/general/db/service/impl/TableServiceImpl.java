@@ -13,6 +13,7 @@ import org.tiankafei.general.db.entity.TableEntity;
 import org.tiankafei.general.db.mapper.TableMapper;
 import org.tiankafei.general.db.param.TableNameEntityQueryParam;
 import org.tiankafei.general.db.param.TableNameListQueryParam;
+import org.tiankafei.general.db.param.TableNamePageListQueryParam;
 import org.tiankafei.general.db.service.TableService;
 import org.tiankafei.general.db.utils.DbUtil;
 import org.tiankafei.web.common.exception.DaoException;
@@ -51,22 +52,25 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
     }
 
     @Override
-    public Paging<TableEntity> getTableEntityPageList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
-        Page page = setPageParam(tableNameListQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper searchCondition = getSearchCondition(tableNameListQueryParam);
+    public Paging<TableEntity> getTableEntityPageList(TableNamePageListQueryParam tableNamePageListQueryParam) throws Exception {
+        Page page = setPageParam(tableNamePageListQueryParam, OrderItem.desc("create_time"));
+        LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        String tableName = tableNamePageListQueryParam.getTableName();
+        if(StringUtils.isNotBlank(tableName)){
+            lambdaQueryWrapper.eq(TableEntity::getTableName, tableName);
+        }
+        String tableSchema = tableNamePageListQueryParam.getTableSchema();
+        if(StringUtils.isBlank(tableSchema)){
+            tableSchema = DbUtil.getTableSchema(jdbcTemplate);
+            lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
+        }
 
-        IPage<TableEntity> iPage = super.page(page, searchCondition);
+        IPage<TableEntity> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
 
     @Override
     public List<TableEntity> getTableEntityList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
-        LambdaQueryWrapper searchCondition = getSearchCondition(tableNameListQueryParam);
-        List<TableEntity> tableEntityList = super.list(searchCondition);
-        return tableEntityList;
-    }
-
-    private LambdaQueryWrapper getSearchCondition(TableNameListQueryParam tableNameListQueryParam) throws DaoException {
         LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         String tableName = tableNameListQueryParam.getTableName();
         if(StringUtils.isNotBlank(tableName)){
@@ -77,6 +81,8 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
             tableSchema = DbUtil.getTableSchema(jdbcTemplate);
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
-        return lambdaQueryWrapper;
+        List<TableEntity> tableEntityList = super.list(lambdaQueryWrapper);
+        return tableEntityList;
     }
+
 }

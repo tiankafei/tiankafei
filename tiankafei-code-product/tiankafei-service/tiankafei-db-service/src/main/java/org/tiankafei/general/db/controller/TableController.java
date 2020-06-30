@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.general.db.entity.TableEntity;
 import org.tiankafei.general.db.param.TableNameEntityQueryParam;
 import org.tiankafei.general.db.param.TableNameListQueryParam;
+import org.tiankafei.general.db.param.TableNamePageListQueryParam;
 import org.tiankafei.general.db.service.TableService;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
@@ -46,14 +47,14 @@ public class TableController extends BaseController {
     /**
      * 获取 数据库表 分页对象列表
      *
-     * @param tableNameListQueryParam
+     * @param tableNamePageListQueryParam
      * @return
      * @throws Exception
      */
     @PostMapping("/pageTableList")
     @ApiOperation(value = "获取 数据库表 分页对象列表", notes = "获取 数据库表 分页对象列表")
-    public ApiResult<Paging<TableEntity>> getTableEntityPageList(@Valid @RequestBody TableNameListQueryParam tableNameListQueryParam) throws Exception {
-        Paging<TableEntity> tkfUserLoginPageList = tableService.getTableEntityPageList(tableNameListQueryParam);
+    public ApiResult<Paging<TableEntity>> getTableEntityPageList(@Valid @RequestBody TableNamePageListQueryParam tableNamePageListQueryParam) throws Exception {
+        Paging<TableEntity> tkfUserLoginPageList = tableService.getTableEntityPageList(tableNamePageListQueryParam);
         return ApiResult.ok(tkfUserLoginPageList);
     }
 

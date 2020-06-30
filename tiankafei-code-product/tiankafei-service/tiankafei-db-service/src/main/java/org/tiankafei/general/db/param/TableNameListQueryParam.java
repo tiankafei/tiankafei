@@ -4,7 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.param.QueryParam;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -17,7 +18,7 @@ import org.tiankafei.web.common.param.QueryParam;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "数据库表集合 查询参数对象", description = "数据库表集合 查询参数对象")
-public class TableNameListQueryParam extends QueryParam {
+public class TableNameListQueryParam implements Serializable {
 
     /**
      * 表名称
