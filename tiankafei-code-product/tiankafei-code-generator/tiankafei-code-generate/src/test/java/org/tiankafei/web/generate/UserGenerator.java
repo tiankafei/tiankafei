@@ -9,7 +9,7 @@ import java.util.Map;
  * @author geekidea
  * @date 2019-10-22
  **/
-public class SpringBootPlusGenerator {
+public class UserGenerator {
 
     public static void main(String[] args) {
         CodeGenerator codeGenerator = new CodeGenerator();
@@ -19,11 +19,11 @@ public class SpringBootPlusGenerator {
                 .setUserName("root")
                 .setPassword("tiankafei")
                 .setDriverName("com.mysql.cj.jdbc.Driver")
-                .setDriverUrl("jdbc:mysql://localhost:3306/master?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
+                .setDriverUrl("jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
 
         // 包信息
         codeGenerator
-                .setProjectPackagePath("org/tiankafei")
+                .setProjectPackagePath("org/tiankafei/general")
                 .setParentPackage("org.tiankafei.web");
 
         // 组件作者等配置
@@ -32,13 +32,9 @@ public class SpringBootPlusGenerator {
                 .setPkIdColumnName("id");
 
         Map<String, String[]> map = new HashMap<>();
-        map.put("businessdata", new String[]{"TKF_BUSINESS_DATA"});
-        map.put("loginuser", new String[]{"TKF_LOGIN_USER"});
-        map.put("rolebusinessdata", new String[]{"TKF_ROLE_BUSINESS_DATA"});
-        map.put("roledata", new String[]{"TKF_ROLE_DATA"});
-        map.put("syscatalog", new String[]{"TKF_SYS_CATALOG"});
+        map.put("user", new String[]{"tkf_user_login"});
 
-        String directory = "";
+        String directory = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-user-service";
         for (String moduleName : map.keySet()) {
             String[] tables = map.get(moduleName);
             codeGenerator.setModuleName(moduleName.toLowerCase());
