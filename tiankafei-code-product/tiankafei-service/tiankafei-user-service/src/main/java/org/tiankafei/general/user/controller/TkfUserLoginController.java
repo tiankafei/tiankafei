@@ -40,6 +40,36 @@ public class TkfUserLoginController extends BaseController {
     private TkfUserLoginService tkfUserLoginService;
 
     /**
+     * 校验 用户名 是否已经存在
+     */
+    @GetMapping("/checkUsername/{username}")
+    @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
+    public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
+        Boolean flag = tkfUserLoginService.checkUsernameExists(username);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 校验 电子邮件 是否已经存在
+     */
+    @GetMapping("/checkEmail/{email}")
+    @ApiOperation(value = "校验 电子邮件 是否已经存在", notes = "校验 电子邮件 是否已经存在")
+    public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
+        Boolean flag = tkfUserLoginService.checkEmailExists(email);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 校验 手机号码 是否已经存在
+     */
+    @GetMapping("/checkTelephone/{telephone}")
+    @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
+    public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
+        Boolean flag = tkfUserLoginService.checkTelephoneExists(telephone);
+        return ApiResult.ok(flag);
+    }
+
+    /**
      * 校验 用户登录信息表 是否已经存在
      */
     @PostMapping("/check")

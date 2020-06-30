@@ -24,8 +24,8 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "用户登录信息表 对象" , description = "用户登录信息表 查询参数")
-public class  TkfUserLoginQueryVo extends BaseQueryVo {
+@ApiModel(value = "用户登录信息表 对象", description = "用户登录信息表 查询参数")
+public class TkfUserLoginQueryVo extends BaseQueryVo {
 
     /**
      * 主键

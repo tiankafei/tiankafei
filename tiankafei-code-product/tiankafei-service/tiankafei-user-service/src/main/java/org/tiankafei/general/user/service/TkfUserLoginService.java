@@ -19,7 +19,31 @@ import java.util.List;
  * @since 2020-06-30
  */
 public interface TkfUserLoginService extends BaseService<TkfUserLoginEntity> {
-    
+
+    /**
+     * 验证用户名是否存在
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    boolean checkUsernameExists(String username) throws Exception;
+
+    /**
+     * 验证邮箱是否存在
+     * @param email
+     * @return
+     * @throws Exception
+     */
+    boolean checkEmailExists(String email) throws Exception;
+
+    /**
+     * 验证手机号码是否存在
+     * @param telephone
+     * @return
+     * @throws Exception
+     */
+    boolean checkTelephoneExists(String telephone) throws Exception;
+
     /**
      * 校验 用户登录信息表 是否已经存在
      *

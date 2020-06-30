@@ -42,8 +42,39 @@ public class TkfUserLoginServiceImpl extends BaseServiceImpl<TkfUserLoginMapper,
     private TkfUserLoginMapper tkfUserLoginMapper;
 
     @Override
+    public boolean checkUsernameExists(String username) throws Exception {
+        LambdaQueryWrapper<TkfUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(TkfUserLoginEntity::getUsername, username);
+        return checkTkfUserLoginExists(lambdaQueryWrapper);
+    }
+
+    @Override
+    public boolean checkEmailExists(String email) throws Exception {
+        LambdaQueryWrapper<TkfUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(TkfUserLoginEntity::getEmail, email);
+        return checkTkfUserLoginExists(lambdaQueryWrapper);
+    }
+
+    @Override
+    public boolean checkTelephoneExists(String telephone) throws Exception {
+        LambdaQueryWrapper<TkfUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(TkfUserLoginEntity::getTelephone, telephone);
+        return checkTkfUserLoginExists(lambdaQueryWrapper);
+    }
+
+    @Override
     public boolean checkTkfUserLoginExists(TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception {
         LambdaQueryWrapper<TkfUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        return checkTkfUserLoginExists(lambdaQueryWrapper);
+    }
+
+    /**
+     * 验证信息是否存在
+     * @param lambdaQueryWrapper
+     * @return
+     * @throws Exception
+     */
+    private boolean checkTkfUserLoginExists(LambdaQueryWrapper<TkfUserLoginEntity> lambdaQueryWrapper) throws Exception {
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
