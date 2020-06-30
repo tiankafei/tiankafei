@@ -55,7 +55,7 @@ public class TkfUserLoginController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户登录信息表 对象", notes = "添加 用户登录信息表")
     public ApiResult<String> addTkfUserLogin(@Valid @RequestBody TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception {
-        String id = tkfUserLoginService.saveTkfUserLogin(tkfUserLoginQueryVo);
+        Object id = tkfUserLoginService.saveTkfUserLogin(tkfUserLoginQueryVo);
         return ApiResult.ok(id);
     }
 

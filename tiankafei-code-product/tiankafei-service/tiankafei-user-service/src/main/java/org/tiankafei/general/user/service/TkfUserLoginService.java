@@ -36,7 +36,7 @@ public interface TkfUserLoginService extends BaseService<TkfUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    String saveTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception;
+    Object saveTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception;
     
     /**
      * 保存 用户登录信息表 集合

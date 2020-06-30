@@ -61,7 +61,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
 #end
     @ApiOperation(value = "添加 $!{table.comment} 对象", notes = "添加 $!{table.comment}")
     public ApiResult<String> add${cfg.TableName}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
-        String id = ${cfg.serviceObjectName}.save${cfg.TableName}(${cfg.tableName}QueryVo);
+        Object id = ${cfg.serviceObjectName}.save${cfg.TableName}(${cfg.tableName}QueryVo);
         return ApiResult.ok(id);
     }
 

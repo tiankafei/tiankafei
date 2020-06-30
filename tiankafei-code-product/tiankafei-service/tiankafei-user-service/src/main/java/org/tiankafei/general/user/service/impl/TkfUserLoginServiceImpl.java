@@ -49,11 +49,11 @@ public class TkfUserLoginServiceImpl extends BaseServiceImpl<TkfUserLoginMapper,
     }
     
     @Override
-    public String saveTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception {
+    public Object saveTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception {
         TkfUserLoginEntity tkfUserLoginEntity = new TkfUserLoginEntity();
         BeanUtils.copyProperties(tkfUserLoginQueryVo, tkfUserLoginEntity);
         super.save(tkfUserLoginEntity);
-        return  tkfUserLoginEntity.getId();
+        return tkfUserLoginEntity.getId();
     }
         
     @Override
