@@ -4,10 +4,23 @@ spring:
   application:
     name: zuul-service
 zuul:
-  #全部服务忽略敏感头（全部服务可传递cookie）
-  sensitiveHeaders:
   prefix: /api
   routes:
     user:
       path: /user/**
       serviceId: user-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+logging:
+  level:
+    ROOT: info
+    # nacos日志的包路径
+    com.alibaba.nacos.client.naming: WARN
+    # nacos日志的包路径
+    com.alibaba.nacos.client.config.impl: WARN

@@ -6,15 +6,14 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.dbmysql.entity.FieldEntity;
 import org.tiankafei.dbmysql.mapper.FieldMapper;
 import org.tiankafei.dbmysql.param.FieldNameEntityQueryParam;
 import org.tiankafei.dbmysql.param.FieldNameListQueryParam;
+import org.tiankafei.dbmysql.service.DbmysqlService;
 import org.tiankafei.dbmysql.service.FieldService;
-import org.tiankafei.dbmysql.utils.DbUtil;
 import org.tiankafei.dbmysql.param.FieldNamePageListQueryParam;
 import org.tiankafei.web.common.exception.DaoException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
@@ -31,7 +30,7 @@ import java.util.List;
 public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> implements FieldService {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private DbmysqlService dbmysqlService;
 
     @Override
     public FieldEntity getFieldEntity(FieldNameEntityQueryParam fieldNameEntityQueryParam) throws Exception {
@@ -40,7 +39,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldNameEntityQueryParam.getFieldName());
         String tableSchema = fieldNameEntityQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = DbUtil.getTableSchema(jdbcTemplate);
+            tableSchema = dbmysqlService.getTableSchema();
         }
         lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         try {
@@ -63,7 +62,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         }
         String tableSchema = fieldNamePageListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = DbUtil.getTableSchema(jdbcTemplate);
+            tableSchema = dbmysqlService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }
         IPage<FieldEntity> iPage = super.page(page, lambdaQueryWrapper);
@@ -80,7 +79,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         }
         String tableSchema = fieldNameListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = DbUtil.getTableSchema(jdbcTemplate);
+            tableSchema = dbmysqlService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }
         List<FieldEntity> fieldEntityList = super.list(lambdaQueryWrapper);

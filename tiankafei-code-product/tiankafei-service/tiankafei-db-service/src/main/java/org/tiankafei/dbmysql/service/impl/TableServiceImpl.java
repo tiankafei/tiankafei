@@ -6,16 +6,15 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.dbmysql.param.TableNameListQueryParam;
+import org.tiankafei.dbmysql.service.DbmysqlService;
 import org.tiankafei.dbmysql.service.TableService;
 import org.tiankafei.dbmysql.entity.TableEntity;
 import org.tiankafei.dbmysql.mapper.TableMapper;
 import org.tiankafei.dbmysql.param.TableNameEntityQueryParam;
 import org.tiankafei.dbmysql.param.TableNamePageListQueryParam;
-import org.tiankafei.dbmysql.utils.DbUtil;
 import org.tiankafei.web.common.exception.DaoException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
@@ -31,7 +30,7 @@ import java.util.List;
 public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> implements TableService {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private DbmysqlService dbmysqlService;
 
     @Override
     public TableEntity getTableEntity(TableNameEntityQueryParam tableNameEntityQueryParam) throws Exception {
@@ -39,7 +38,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         lambdaQueryWrapper.eq(TableEntity::getTableName, tableNameEntityQueryParam.getTableName());
         String tableSchema = tableNameEntityQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = DbUtil.getTableSchema(jdbcTemplate);
+            tableSchema = dbmysqlService.getTableSchema();
         }
         lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         try {
@@ -61,7 +60,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         }
         String tableSchema = tableNamePageListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = DbUtil.getTableSchema(jdbcTemplate);
+            tableSchema = dbmysqlService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
 
@@ -78,7 +77,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         }
         String tableSchema = tableNameListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = DbUtil.getTableSchema(jdbcTemplate);
+            tableSchema = dbmysqlService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
         List<TableEntity> tableEntityList = super.list(lambdaQueryWrapper);
