@@ -32,8 +32,7 @@ public class UserGenerator {
                 .setPkIdColumnName("id");
 
         Map<String, String[]> map = new HashMap<>();
-//        map.put("user", new String[]{"sys_user_login"});
-        map.put("user", new String[]{"sys_rule_info", "sys_feature_info"});
+        map.put("user", new String[]{"sys_user_login", "sys_role_info", "sys_feature_info", "sys_user_role", "sys_role_feature"});
 
         String directory = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-user-service";
         for (String moduleName : map.keySet()) {
