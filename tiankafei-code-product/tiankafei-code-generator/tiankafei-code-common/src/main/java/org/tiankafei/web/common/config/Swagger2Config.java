@@ -1,5 +1,6 @@
 package org.tiankafei.web.common.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -22,6 +23,7 @@ import javax.annotation.Resource;
 @Profile("dev")
 @Configuration
 @EnableSwagger2
+@EnableKnife4j
 public class Swagger2Config {
 
     @Resource
