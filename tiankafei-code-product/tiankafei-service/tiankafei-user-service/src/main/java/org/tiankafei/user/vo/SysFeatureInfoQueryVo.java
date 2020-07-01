@@ -64,11 +64,25 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
     private String featureType;
 
     /**
+     * 打开方式：1页签，2新窗口
+     */
+    @ApiModelProperty(value = "打开方式：1页签，2新窗口")
+    @Size(max = 1, message = "打开方式：1页签，2新窗口长度不能超过 1 ！")
+    private String openType;
+
+    /**
      * 功能的url地址
      */
     @ApiModelProperty(value = "功能的url地址")
     @Size(max = 50, message = "功能的url地址长度不能超过 50 ！")
     private String url;
+
+    /**
+     * 权限关键字
+     */
+    @ApiModelProperty(value = "权限关键字")
+    @Size(max = 100, message = "权限关键字长度不能超过 100 ！")
+    private String keys;
 
     /**
      * 父id
@@ -82,6 +96,19 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
     @ApiModelProperty(value = "状态：1启用，0停用")
     @Size(max = 1, message = "状态：1启用，0停用长度不能超过 1 ！")
     private Boolean status;
+
+    /**
+     * 顺序
+     */
+    @ApiModelProperty(value = "顺序")
+    private Integer serialNumber;
+
+    /**
+     * 图标的名称
+     */
+    @ApiModelProperty(value = "图标的名称")
+    @Size(max = 20, message = "图标的名称长度不能超过 20 ！")
+    private String icon;
 
     /**
      * 创建时间
@@ -100,11 +127,5 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "创建用户id")
     private Long createUserId;
-
-    /**
-     * 顺序
-     */
-    @ApiModelProperty(value = "顺序")
-    private Integer serialNumber;
 
 }
