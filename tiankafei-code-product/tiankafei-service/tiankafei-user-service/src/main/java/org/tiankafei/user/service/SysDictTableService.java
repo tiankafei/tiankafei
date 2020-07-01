@@ -41,11 +41,12 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     /**
      * 保存 系统数据字典的数据表 集合
      *
+     * @param dataTable
      * @param sysDictTableQueryVoList
      * @return
      * @throws Exception
      */
-    boolean addSysDictTableList(List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception;
+    boolean addSysDictTableList(String dataTable, List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception;
 
     /**
      * 修改 系统数据字典的数据表
@@ -59,11 +60,12 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     /**
      * 删除 系统数据字典的数据表
      *
+     * @param dataTable
      * @param ids
      * @return
      * @throws Exception
      */
-    boolean deleteSysDictTable(String ids) throws Exception;
+    boolean deleteSysDictTable(String dataTable, String ids) throws Exception;
 	
     /**
      * 根据条件删除 系统数据字典的数据表
@@ -77,11 +79,12 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     /**
      * 根据ID获取 系统数据字典的数据表 对象
      *
+     * @param dataTable
      * @param id
      * @return
      * @throws Exception
      */
-     SysDictTableQueryVo getSysDictTableById(Serializable id) throws Exception;
+     SysDictTableQueryVo getSysDictTableById(String dataTable, Serializable id) throws Exception;
 
     /**
      * 获取 系统数据字典的数据表 分页对象列表

@@ -76,7 +76,7 @@ public class SysDictTableController extends BaseController {
     public ApiResult<Boolean> deleteSysDictTable(
             @ApiParam(name = "dataTable", value = "字典数据表") @RequestParam("dataTable") String dataTable,
             @ApiParam(name = "ids", value = "要删除的字典数据的代码，多个用逗号分隔") @RequestParam("ids") String ids) throws Exception {
-        boolean flag = sysDictTableService.deleteSysDictTable(ids);
+        boolean flag = sysDictTableService.deleteSysDictTable(dataTable, ids);
         return ApiResult.ok(flag);
     }
 
@@ -86,7 +86,7 @@ public class SysDictTableController extends BaseController {
     @GetMapping("/info/{dataTable}/{id}")
     @ApiOperation(value = "获取 系统数据字典的数据表 对象详情", notes = "获取 系统数据字典的数据表 对象详情")
     public ApiResult<SysDictTableQueryVo> getSysDictTable(@PathVariable("dataTable") String dataTable, @PathVariable("id") String id) throws Exception {
-         SysDictTableQueryVo sysDictTableQueryVo = sysDictTableService.getSysDictTableById(id);
+         SysDictTableQueryVo sysDictTableQueryVo = sysDictTableService.getSysDictTableById(dataTable, id);
         return ApiResult.ok(sysDictTableQueryVo);
     }
 

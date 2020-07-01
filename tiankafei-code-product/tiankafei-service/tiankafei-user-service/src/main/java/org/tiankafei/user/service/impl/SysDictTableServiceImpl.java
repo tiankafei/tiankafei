@@ -43,6 +43,7 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
 
     @Override
     public boolean checkSysDictTableExists(SysDictTableQueryParam sysDictTableQueryParam) throws Exception {
+        setDynamicTableName(sysDictTableQueryParam.getDataTable());
         LambdaQueryWrapper<SysDictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
@@ -50,6 +51,8 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
     
     @Override
     public Object addSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception {
+        setDynamicTableName(sysDictTableQueryVo.getDataTable());
+
         SysDictTableEntity sysDictTableEntity = new SysDictTableEntity();
         BeanUtils.copyProperties(sysDictTableQueryVo, sysDictTableEntity);
         super.save(sysDictTableEntity);
@@ -57,7 +60,9 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
     }
         
     @Override
-    public boolean addSysDictTableList(List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception {
+    public boolean addSysDictTableList(String dataTable, List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception {
+        setDynamicTableName(dataTable);
+
         if(sysDictTableQueryVoList != null && !sysDictTableQueryVoList.isEmpty()){
             List<SysDictTableEntity> sysDictTableList = new ArrayList<>();
             for ( SysDictTableQueryVo sysDictTableQueryVo : sysDictTableQueryVoList) {
@@ -72,26 +77,34 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
 
     @Override
     public boolean updateSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception {
+        setDynamicTableName(sysDictTableQueryVo.getDataTable());
+
         SysDictTableEntity sysDictTableEntity = new SysDictTableEntity();
         BeanUtils.copyProperties(sysDictTableQueryVo, sysDictTableEntity);
         return super.updateById(sysDictTableEntity);
     }
 
     @Override
-    public boolean deleteSysDictTable(String ids) throws Exception {
+    public boolean deleteSysDictTable(String dataTable, String ids) throws Exception {
+        setDynamicTableName(dataTable);
+
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
 	
     @Override
     public boolean deleteSysDictTable(SysDictTableQueryParam sysDictTableQueryParam) throws Exception {
+        setDynamicTableName(sysDictTableQueryParam.getDataTable());
+
         LambdaQueryWrapper <SysDictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
 
     @Override
-    public SysDictTableQueryVo getSysDictTableById(Serializable id) throws Exception {
+    public SysDictTableQueryVo getSysDictTableById(String dataTable, Serializable id) throws Exception {
+        setDynamicTableName(dataTable);
+
          SysDictTableEntity sysDictTableEntity = super.getById(id);
          SysDictTableQueryVo sysDictTableQueryVo = new SysDictTableQueryVo();
          BeanUtils.copyProperties(sysDictTableEntity, sysDictTableQueryVo);
@@ -100,6 +113,8 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
 
     @Override
     public Paging<SysDictTableQueryVo> getSysDictTablePageList(SysDictTablePageQueryParam sysDictTablePageQueryParam) throws Exception {
+        setDynamicTableName(sysDictTablePageQueryParam.getDataTable());
+
         Page page = setPageParam(sysDictTablePageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <SysDictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysDictTableQueryVo> iPage = super.page(page, lambdaQueryWrapper);
@@ -108,15 +123,27 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
 
     @Override
     public List<SysDictTableQueryVo> getSysDictTableList(SysDictTableQueryParam sysDictTableQueryParam) throws Exception {
+        setDynamicTableName(sysDictTableQueryParam.getDataTable());
+
         List<SysDictTableQueryVo> sysDictTableQueryVoList = sysDictTableMapper.getSysDictTableList(sysDictTableQueryParam);
         return sysDictTableQueryVoList;
     }
     
     @Override
     public int countSysDictTable(SysDictTableQueryParam sysDictTableQueryParam) throws Exception {
+        setDynamicTableName(sysDictTableQueryParam.getDataTable());
+
         LambdaQueryWrapper <SysDictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
+    }
+
+    /**
+     * 设置动态表名
+     * @param dataTable
+     */
+    private void setDynamicTableName(String dataTable){
+
     }
 
 }
