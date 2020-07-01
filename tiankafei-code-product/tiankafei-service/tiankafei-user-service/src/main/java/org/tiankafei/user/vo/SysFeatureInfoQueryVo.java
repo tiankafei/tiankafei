@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <pre>
@@ -56,11 +57,11 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
     private String description;
 
     /**
-     * 是否中间节点：1是，0否
+     * 节点类型：1目录，2菜单，3按钮
      */
-    @ApiModelProperty(value = "是否中间节点：1是，0否")
-    @Size(max = 1, message = "是否中间节点：1是，0否长度不能超过 1 ！")
-    private Boolean isMiddleNode;
+    @ApiModelProperty(value = "节点类型：1目录，2菜单，3按钮")
+    @Size(max = 1, message = "节点类型：1目录，2菜单，3按钮长度不能超过 1 ！")
+    private String featureType;
 
     /**
      * 功能的url地址
