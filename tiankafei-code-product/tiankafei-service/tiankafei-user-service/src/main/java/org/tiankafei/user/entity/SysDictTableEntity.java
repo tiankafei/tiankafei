@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * <pre>
- * 字典的数据表
+ * 系统数据字典的数据表
  * </pre>
  *
  * @author tiankafei
@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @TableName("sys_dict_table")
-@ApiModel(value = " 字典的数据表 实体对象" , description = "字典的数据表")
+@ApiModel(value = " 系统数据字典的数据表 实体对象" , description = "系统数据字典的数据表")
 public class SysDictTableEntity extends BaseEntity {
 
     /**

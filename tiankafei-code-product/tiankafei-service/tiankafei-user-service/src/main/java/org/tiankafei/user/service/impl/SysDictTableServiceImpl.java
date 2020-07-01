@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 /**
  * <pre>
- * 字典的数据表 服务实现类
+ * 系统数据字典的数据表 服务实现类
  * </pre>
  *
  * @author tiankafei

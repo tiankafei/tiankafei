@@ -9,7 +9,7 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 
 /**
  * <pre>
- * 字典的数据表 分页查询参数对象
+ * 系统数据字典的数据表 分页查询参数对象
  * </pre>
  *
  * @author tiankafei
@@ -18,7 +18,7 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "字典的数据表 分页查询参数对象", description = "字典的数据表 分页查询参数对象")
+@ApiModel(value = "系统数据字典的数据表 分页查询参数对象", description = "系统数据字典的数据表 分页查询参数对象")
 public class SysDictTablePageQueryParam extends OrderQueryParam {
 
 

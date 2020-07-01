@@ -16,7 +16,7 @@ import java.util.Date;
 
 /**
  * <pre>
- * 字典的数据表 查询结果对象
+ * 系统数据字典的数据表 查询结果对象
  * </pre>
  *
  * @author tiankafei
@@ -25,7 +25,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "字典的数据表 对象", description = "字典的数据表 查询参数")
+@ApiModel(value = "系统数据字典的数据表 对象", description = "系统数据字典的数据表 查询参数")
 public class SysDictTableQueryVo extends BaseQueryVo {
 
     /**

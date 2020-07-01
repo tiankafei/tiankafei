@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <pre>
- * 字典的数据表 服务类
+ * 系统数据字典的数据表 服务类
  * </pre>
  *
  * @author tiankafei
@@ -21,7 +21,7 @@ import java.util.List;
 public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     
     /**
-     * 校验 字典的数据表 是否已经存在
+     * 校验 系统数据字典的数据表 是否已经存在
      *
      * @param sysDictTableQueryParam
      * @return
@@ -30,7 +30,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     boolean checkSysDictTableExists(SysDictTableQueryParam sysDictTableQueryParam) throws Exception;
 
     /**
-     * 保存 字典的数据表
+     * 保存 系统数据字典的数据表
      *
      * @param sysDictTableQueryVo
      * @return
@@ -39,7 +39,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     Object addSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception;
     
     /**
-     * 保存 字典的数据表 集合
+     * 保存 系统数据字典的数据表 集合
      *
      * @param sysDictTableQueryVoList
      * @return
@@ -48,7 +48,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     boolean addSysDictTableList(List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception;
 
     /**
-     * 修改 字典的数据表
+     * 修改 系统数据字典的数据表
      *
      * @param sysDictTableQueryVo
      * @return
@@ -57,7 +57,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     boolean updateSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception;
 
     /**
-     * 删除 字典的数据表
+     * 删除 系统数据字典的数据表
      *
      * @param ids
      * @return
@@ -66,7 +66,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     boolean deleteSysDictTable(String ids) throws Exception;
 	
     /**
-     * 根据条件删除 字典的数据表
+     * 根据条件删除 系统数据字典的数据表
      *
      * @param sysDictTableQueryParam
      * @return
@@ -75,7 +75,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     boolean deleteSysDictTable(SysDictTableQueryParam sysDictTableQueryParam) throws Exception;
 
     /**
-     * 根据ID获取 字典的数据表 对象
+     * 根据ID获取 系统数据字典的数据表 对象
      *
      * @param id
      * @return
@@ -84,7 +84,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
      SysDictTableQueryVo getSysDictTableById(Serializable id) throws Exception;
 
     /**
-     * 获取 字典的数据表 分页对象列表
+     * 获取 系统数据字典的数据表 分页对象列表
      *
      * @param sysDictTablePageQueryParam
      * @return
@@ -93,7 +93,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
     Paging<SysDictTableQueryVo> getSysDictTablePageList(SysDictTablePageQueryParam sysDictTablePageQueryParam) throws Exception;
 
     /**
-     * 获取 字典的数据表 对象列表
+     * 获取 系统数据字典的数据表 对象列表
      *
      * @param sysDictTableQueryParam
      * @return
@@ -102,7 +102,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
      List<SysDictTableQueryVo> getSysDictTableList(SysDictTableQueryParam sysDictTableQueryParam) throws Exception;
     
     /**
-     * 计算 字典的数据表 总记录数
+     * 计算 系统数据字典的数据表 总记录数
      *
      * @param sysDictTableQueryParam
      * @return

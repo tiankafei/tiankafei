@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * <pre>
- * 字典的数据表 查询参数对象
+ * 系统数据字典的数据表 查询参数对象
  * </pre>
  *
  * @author tiankafei
@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "字典的数据表 查询参数对象", description = "字典的数据表查询参数")
+@ApiModel(value = "系统数据字典的数据表 查询参数对象", description = "系统数据字典的数据表查询参数")
 public class SysDictTableQueryParam implements Serializable {
 
 

@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 /**
  * <pre>
- * 字典的数据表 Mapper 接口
+ * 系统数据字典的数据表 Mapper 接口
  * </pre>
  *
  * @author tiankafei
@@ -25,7 +25,7 @@ import java.io.Serializable;
 public interface SysDictTableMapper extends BaseMapper<SysDictTableEntity> {
 
     /**
-     * 根据ID获取 字典的数据表 对象
+     * 根据ID获取 系统数据字典的数据表 对象
      *
      * @param id
      * @return
@@ -33,7 +33,7 @@ public interface SysDictTableMapper extends BaseMapper<SysDictTableEntity> {
      SysDictTableQueryVo getSysDictTableById(Serializable id);
 
     /**
-     * 获取 字典的数据表 分页对象
+     * 获取 系统数据字典的数据表 分页对象
      *
      * @param page
      * @param sysDictTablePageQueryParam
@@ -42,7 +42,7 @@ public interface SysDictTableMapper extends BaseMapper<SysDictTableEntity> {
      IPage<SysDictTableQueryVo> getSysDictTablePageList(@Param("page") Page page, @Param("param") SysDictTablePageQueryParam sysDictTablePageQueryParam);
     
     /**
-     * 获取 字典的数据表 对象列表
+     * 获取 系统数据字典的数据表 对象列表
      *
      * @param sysDictTableQueryParam
      * @return
