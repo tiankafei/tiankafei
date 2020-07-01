@@ -31,7 +31,10 @@ import javax.validation.constraints.NotNull;
 public class SysDictTableEntity extends BaseEntity {
 
     /**
-     * 主键id
+     * 主键id，
+     * 因为这张表有一个字段存储的所有父id，如果有多个，用逗号分割，用来查询所有的父亲节点（使用like），故不能使用自增自增主键，
+     * 为了保证mysql不频繁进行页分裂，所以要保证主键按顺序自增，uuid排除掉不可用，
+     * 看到mybatis-plus提供了一种自定义ID生成器：雪花算法+UUID(不含中划线)
      */
     @ApiModelProperty(value = "主键id")
     @Size(max = 20, message = "主键id长度不能超过 20 ！")

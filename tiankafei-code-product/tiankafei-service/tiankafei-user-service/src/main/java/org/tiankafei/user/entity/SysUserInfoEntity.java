@@ -32,7 +32,8 @@ import javax.validation.constraints.NotNull;
 public class SysUserInfoEntity extends BaseEntity {
 
     /**
-     * 主键
+     * 主键，
+     * 跟随 SysUserLoginEntity 这个对象入库之后，得到其id，然后再赋值给该对象
      */
     @ApiModelProperty(value = "主键")
     @TableId(value = "id" , type = IdType.INPUT)

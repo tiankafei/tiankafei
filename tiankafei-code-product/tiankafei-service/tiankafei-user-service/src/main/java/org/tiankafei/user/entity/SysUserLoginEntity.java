@@ -31,7 +31,9 @@ import javax.validation.constraints.NotBlank;
 public class SysUserLoginEntity extends BaseEntity {
 
     /**
-     * 主键
+     * 主键，当
+     * 用户数据量非常大的时候，要进行分库分表，自增主键不能保证每一个用户的id唯一性，
+     * 故采用mybatis-plus提供的自定义id生成器：雪花算法
      */
     @ApiModelProperty(value = "主键")
     @TableId(value = "id" , type = IdType.ASSIGN_ID)
