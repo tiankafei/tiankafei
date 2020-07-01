@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import ${cfg.superQueryVoPath};
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <pre>

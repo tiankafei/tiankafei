@@ -95,13 +95,6 @@ public class SysUserInfoEntity extends BaseEntity {
     private Timestamp expirationDate;
 
     /**
-     * 创建时间
-     */
-    @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
-    private Timestamp createTime;
-
-    /**
      * 部门id
      */
     @ApiModelProperty(value = "部门id")
@@ -121,5 +114,26 @@ public class SysUserInfoEntity extends BaseEntity {
     @ApiModelProperty(value = "出生日期")
     @TableField("born_time")
     private Date bornTime;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    @TableField("create_time")
+    private Timestamp createTime;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    @TableField("update_time")
+    private Timestamp updateTime;
+
+    /**
+     * 创建人
+     */
+    @ApiModelProperty(value = "创建人")
+    @TableField("create_user_id")
+    private Long createUserId;
 
 }

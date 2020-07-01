@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <pre>
@@ -83,12 +84,6 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
     private Timestamp expirationDate;
 
     /**
-     * 创建时间
-     */
-    @ApiModelProperty(value = "创建时间")
-    private Timestamp createTime;
-
-    /**
      * 部门id
      */
     @ApiModelProperty(value = "部门id")
@@ -105,5 +100,23 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "出生日期")
     private Date bornTime;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    private Timestamp createTime;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    private Timestamp updateTime;
+
+    /**
+     * 创建人
+     */
+    @ApiModelProperty(value = "创建人")
+    private Long createUserId;
 
 }
