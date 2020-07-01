@@ -1,5 +1,6 @@
 package org.tiankafei.user.controller;
 
+import io.swagger.annotations.ApiParam;
 import org.tiankafei.user.service.SysDictTableService;
 import org.tiankafei.user.param.SysDictTableQueryParam;
 import org.tiankafei.user.param.SysDictTablePageQueryParam;
@@ -11,14 +12,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
 
 import java.util.List;
 
@@ -74,17 +73,19 @@ public class SysDictTableController extends BaseController {
      */
     @PostMapping("/delete")
     @ApiOperation(value = "删除 系统数据字典的数据表 对象", notes = "删除 系统数据字典的数据表")
-    public ApiResult<Boolean> deleteSysDictTable(@Valid @RequestBody IdsParam idsParam) throws Exception {
-        boolean flag = sysDictTableService.deleteSysDictTable(idsParam.getIds());
+    public ApiResult<Boolean> deleteSysDictTable(
+            @ApiParam(name = "dataTable", value = "字典数据表") @RequestParam("dataTable") String dataTable,
+            @ApiParam(name = "ids", value = "要删除的字典数据的代码，多个用逗号分隔") @RequestParam("ids") String ids) throws Exception {
+        boolean flag = sysDictTableService.deleteSysDictTable(ids);
         return ApiResult.ok(flag);
     }
 
     /**
      * 获取 系统数据字典的数据表 对象详情
      */
-    @GetMapping("/info/{id}")
+    @GetMapping("/info/{dataTable}/{id}")
     @ApiOperation(value = "获取 系统数据字典的数据表 对象详情", notes = "获取 系统数据字典的数据表 对象详情")
-    public ApiResult<SysDictTableQueryVo> getSysDictTable(@PathVariable("id") String id) throws Exception {
+    public ApiResult<SysDictTableQueryVo> getSysDictTable(@PathVariable("dataTable") String dataTable, @PathVariable("id") String id) throws Exception {
          SysDictTableQueryVo sysDictTableQueryVo = sysDictTableService.getSysDictTableById(id);
         return ApiResult.ok(sysDictTableQueryVo);
     }

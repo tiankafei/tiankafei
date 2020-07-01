@@ -8,11 +8,9 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * <pre>
@@ -27,6 +25,14 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "系统数据字典的数据表 对象", description = "系统数据字典的数据表 查询参数")
 public class SysDictTableQueryVo extends BaseQueryVo {
+
+    /**
+     * 数据表
+     */
+    @ApiModelProperty(value = "数据表")
+    @Size(max = 30, message = "数据表长度不能超过 30 ！")
+    @NotBlank(message = "字典数据表不能为空！")
+    private String dataTable;
 
     /**
      * 主键id
