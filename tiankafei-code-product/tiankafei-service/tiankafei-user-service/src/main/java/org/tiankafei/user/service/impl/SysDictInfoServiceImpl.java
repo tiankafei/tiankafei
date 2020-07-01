@@ -1,6 +1,7 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.tiankafei.user.constants.UserConstants;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysDictInfoEntity;
 import org.tiankafei.user.mapper.SysDictInfoMapper;
@@ -8,7 +9,9 @@ import org.tiankafei.user.service.SysDictInfoService;
 import org.tiankafei.user.param.SysDictInfoQueryParam;
 import org.tiankafei.user.param.SysDictInfoPageQueryParam;
 import org.tiankafei.user.vo.SysDictInfoQueryVo;
+import org.tiankafei.web.common.exception.UserException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.web.common.utils.SequenceUtil;
 import org.tiankafei.web.common.vo.Paging;
 import java.util.List;
 import java.util.ArrayList;
@@ -43,15 +46,29 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
     @Override
     public boolean checkSysDictInfoExists(SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception {
+        return checkSysDictCodeExists(sysDictInfoQueryParam.getDictCode());
+    }
+
+    private boolean checkSysDictCodeExists(String dictCode){
         LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(SysDictInfoEntity::getDictCode, dictCode);
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
     
     @Override
     public Object addSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
+        String dictCode = sysDictInfoQueryVo.getDictCode();
+        if(checkSysDictCodeExists(dictCode)){
+            throw new UserException("字典代码：" + dictCode + " 已经存在！");
+        }
+        // 生成序列号
+        Long id = SequenceUtil.generatorLonId();
+        // 保存字典
         SysDictInfoEntity sysDictInfoEntity = new SysDictInfoEntity();
         BeanUtils.copyProperties(sysDictInfoQueryVo, sysDictInfoEntity);
+        sysDictInfoEntity.setStatus(Boolean.FALSE);
+        sysDictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + id);
         super.save(sysDictInfoEntity);
         return sysDictInfoEntity.getId();
     }
@@ -72,7 +89,14 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
     @Override
     public boolean updateSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
-        SysDictInfoEntity sysDictInfoEntity = new SysDictInfoEntity();
+        SysDictInfoEntity sysDictInfoEntity = sysDictInfoMapper.selectById(sysDictInfoQueryVo.getId());
+        String dictCode = sysDictInfoQueryVo.getDictCode();
+        if(!sysDictInfoEntity.getDictCode().equals(dictCode)){
+            if(checkSysDictCodeExists(dictCode)){
+                throw new UserException("字典代码：" + dictCode + " 已经存在！");
+            }
+        }
+
         BeanUtils.copyProperties(sysDictInfoQueryVo, sysDictInfoEntity);
         return super.updateById(sysDictInfoEntity);
     }
