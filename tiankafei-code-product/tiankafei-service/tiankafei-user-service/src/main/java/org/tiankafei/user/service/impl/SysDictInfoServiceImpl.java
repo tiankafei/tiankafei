@@ -48,9 +48,6 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     private SysDictInfoMapper sysDictInfoMapper;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private DbmysqlService dbmysqlService;
 
     @Override
