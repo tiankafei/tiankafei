@@ -114,4 +114,11 @@ public class SysFeatureInfoEntity extends BaseEntity {
     @TableField("create_user_id")
     private Long createUserId;
 
+    /**
+     * 顺序
+     */
+    @ApiModelProperty(value = "顺序")
+    @TableField("serial_number")
+    private Integer serialNumber;
+
 }

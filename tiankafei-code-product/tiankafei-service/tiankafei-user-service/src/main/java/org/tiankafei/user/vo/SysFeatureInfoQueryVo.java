@@ -100,4 +100,10 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
     @ApiModelProperty(value = "创建用户id")
     private Long createUserId;
 
+    /**
+     * 顺序
+     */
+    @ApiModelProperty(value = "顺序")
+    private Integer serialNumber;
+
 }
