@@ -1,6 +1,7 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.tiankafei.web.common.config.MybatisPlusConfig;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysDictTableEntity;
 import org.tiankafei.user.mapper.SysDictTableMapper;
@@ -9,6 +10,7 @@ import org.tiankafei.user.param.SysDictTableQueryParam;
 import org.tiankafei.user.param.SysDictTablePageQueryParam;
 import org.tiankafei.user.vo.SysDictTableQueryVo;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.web.common.utils.DynamicTableNameUtil;
 import org.tiankafei.web.common.vo.Paging;
 import java.util.List;
 import java.util.ArrayList;
@@ -143,7 +145,7 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
      * @param dataTable
      */
     private void setDynamicTableName(String dataTable){
-
+        DynamicTableNameUtil.setDynamicTableName(dataTable);
     }
 
 }

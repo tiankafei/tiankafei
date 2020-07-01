@@ -1,9 +1,16 @@
 package org.tiankafei.web.common.config;
 
+import com.baomidou.mybatisplus.extension.parsers.DynamicTableNameParser;
+import com.baomidou.mybatisplus.extension.parsers.ITableNameHandler;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.google.common.collect.Maps;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.tiankafei.web.common.config.impl.DynamicTableNameHandler;
+
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * @author tiankafei
@@ -17,7 +24,15 @@ public class MybatisPlusConfig {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+
+        DynamicTableNameParser dynamicTableNameParser = new DynamicTableNameParser();
+        HashMap<String, ITableNameHandler> tableNameHandlerHashMap = Maps.newHashMap();
+        tableNameHandlerHashMap.put("sys_dict_table", new DynamicTableNameHandler());
+        dynamicTableNameParser.setTableNameHandlerMap(tableNameHandlerHashMap);
+
+        paginationInterceptor.setSqlParserList(Collections.singletonList(dynamicTableNameParser));
+        return paginationInterceptor;
     }
 
     /**

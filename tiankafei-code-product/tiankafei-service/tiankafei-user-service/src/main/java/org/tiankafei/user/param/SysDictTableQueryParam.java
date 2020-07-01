@@ -36,8 +36,6 @@ public class SysDictTableQueryParam implements Serializable {
      */
     @ApiModelProperty(value = "代码")
     @Size(max = 100, message = "代码长度不能超过 100 ！")
-    @TableField("code")
-    @NotBlank(message = "代码不能为空")
     private String code;
 
 }
