@@ -1,7 +1,8 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
+
+import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
 
@@ -13,8 +14,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * <pre>
@@ -82,13 +81,13 @@ public class SysUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "有效期截至时间")
     @TableField("expiration_date")
-    private Date expirationDate;
+    private Timestamp expirationDate;
 
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
     @TableField("create_time")
-    private Date createTime;
+    private Timestamp createTime;
 
 }

@@ -8,12 +8,11 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.tiankafei.web.common.constraints.Condition;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -76,12 +75,12 @@ public class SysUserLoginQueryVo extends BaseQueryVo {
      * 有效期截至时间
      */
     @ApiModelProperty(value = "有效期截至时间")
-    private Date expirationDate;
+    private Timestamp expirationDate;
 
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    private Timestamp createTime;
 
 }
