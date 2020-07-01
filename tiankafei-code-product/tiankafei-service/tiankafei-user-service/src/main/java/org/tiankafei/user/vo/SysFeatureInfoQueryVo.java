@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -86,13 +86,13 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    private Timestamp createTime;
 
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
-    private Date updateTime;
+    private Timestamp updateTime;
 
     /**
      * 创建用户id

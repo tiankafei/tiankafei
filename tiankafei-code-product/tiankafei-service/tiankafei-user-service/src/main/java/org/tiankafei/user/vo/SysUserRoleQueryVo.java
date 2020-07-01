@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * <pre>

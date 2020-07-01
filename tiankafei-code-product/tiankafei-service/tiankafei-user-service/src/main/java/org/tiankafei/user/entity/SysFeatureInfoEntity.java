@@ -1,7 +1,7 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
+import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
 
@@ -98,14 +98,14 @@ public class SysFeatureInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "创建时间")
     @TableField("create_time")
-    private Date createTime;
+    private Timestamp createTime;
 
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
     @TableField("update_time")
-    private Date updateTime;
+    private Timestamp updateTime;
 
     /**
      * 创建用户id

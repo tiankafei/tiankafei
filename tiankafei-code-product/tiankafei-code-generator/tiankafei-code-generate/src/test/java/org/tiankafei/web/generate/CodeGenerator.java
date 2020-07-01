@@ -7,12 +7,16 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.ITypeConvert;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -273,6 +277,17 @@ public class CodeGenerator {
             @Override
             public String[] fieldCustom() {
                 return new String[]{"null", "default"};
+            }
+        });
+        dsc.setTypeConvert(new ITypeConvert() {
+            @Override
+            public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
+                String columnType = fieldType.toLowerCase();
+                if(columnType.equals("timestamp") || columnType.equals("datetime")){
+                    return DbColumnType.TIMESTAMP;
+                }
+                //其它字段采用默认转换（非mysql数据库可以使用其它默认的数据库转换器）
+                return new MySqlTypeConvert().processTypeConvert(globalConfig,fieldType);
             }
         });
 
