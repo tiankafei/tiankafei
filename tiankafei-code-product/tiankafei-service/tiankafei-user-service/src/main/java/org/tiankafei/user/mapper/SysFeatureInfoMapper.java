@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 /**
  * <pre>
- * 系统功能菜单 Mapper 接口
+ * 系统功能菜单信息表 Mapper 接口
  * </pre>
  *
  * @author tiankafei
@@ -25,7 +25,7 @@ import java.io.Serializable;
 public interface SysFeatureInfoMapper extends BaseMapper<SysFeatureInfoEntity> {
 
     /**
-     * 根据ID获取 系统功能菜单 对象
+     * 根据ID获取 系统功能菜单信息表 对象
      *
      * @param id
      * @return
@@ -33,7 +33,7 @@ public interface SysFeatureInfoMapper extends BaseMapper<SysFeatureInfoEntity> {
      SysFeatureInfoQueryVo getSysFeatureInfoById(Serializable id);
 
     /**
-     * 获取 系统功能菜单 分页对象
+     * 获取 系统功能菜单信息表 分页对象
      *
      * @param page
      * @param sysFeatureInfoPageQueryParam
@@ -42,7 +42,7 @@ public interface SysFeatureInfoMapper extends BaseMapper<SysFeatureInfoEntity> {
      IPage<SysFeatureInfoQueryVo> getSysFeatureInfoPageList(@Param("page") Page page, @Param("param") SysFeatureInfoPageQueryParam sysFeatureInfoPageQueryParam);
     
     /**
-     * 获取 系统功能菜单 对象列表
+     * 获取 系统功能菜单信息表 对象列表
      *
      * @param sysFeatureInfoQueryParam
      * @return

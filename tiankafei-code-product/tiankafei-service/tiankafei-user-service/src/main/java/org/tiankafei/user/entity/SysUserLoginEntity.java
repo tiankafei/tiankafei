@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 /**
  * <pre>
@@ -42,13 +43,14 @@ public class SysUserLoginEntity extends BaseEntity {
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
     @TableField("username")
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     /**
-     *  邮箱
+     * 邮箱
      */
-    @ApiModelProperty(value = " 邮箱")
-    @Size(max = 80, message = " 邮箱长度不能超过 80 ！")
+    @ApiModelProperty(value = "邮箱")
+    @Size(max = 100, message = "邮箱长度不能超过 100 ！")
     @TableField("email")
     private String email;
 
@@ -56,7 +58,7 @@ public class SysUserLoginEntity extends BaseEntity {
      * 手机号码
      */
     @ApiModelProperty(value = "手机号码")
-    @Size(max = 11, message = "手机号码长度不能超过 11 ！")
+    @Size(max = 13, message = "手机号码长度不能超过 13 ！")
     @TableField("telephone")
     private String telephone;
 

@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 /**
  * <pre>
- * 系统功能菜单 服务实现类
+ * 系统功能菜单信息表 服务实现类
  * </pre>
  *
  * @author tiankafei
@@ -107,7 +107,7 @@ public class SysFeatureInfoServiceImpl extends BaseServiceImpl<SysFeatureInfoMap
     }
 
     @Override
-    public List<SysFeatureInfoQueryVo> getSysFeatureInfoList( SysFeatureInfoQueryParam sysFeatureInfoQueryParam) throws Exception {
+    public List<SysFeatureInfoQueryVo> getSysFeatureInfoList(SysFeatureInfoQueryParam sysFeatureInfoQueryParam) throws Exception {
         List<SysFeatureInfoQueryVo> sysFeatureInfoQueryVoList = sysFeatureInfoMapper.getSysFeatureInfoList(sysFeatureInfoQueryParam);
         return sysFeatureInfoQueryVoList;
     }

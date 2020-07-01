@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "$!{table.comment} 查询参数对象", description = "$!{table.comment}查询参数")
-public class  ${cfg.TableName}QueryParam implements Serializable {
+public class ${cfg.TableName}QueryParam implements Serializable {
 
 
 

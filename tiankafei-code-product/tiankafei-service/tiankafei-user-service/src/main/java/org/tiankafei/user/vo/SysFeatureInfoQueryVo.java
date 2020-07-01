@@ -7,13 +7,15 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <pre>
- * 系统功能菜单 查询结果对象
+ * 系统功能菜单信息表 查询结果对象
  * </pre>
  *
  * @author tiankafei
@@ -22,7 +24,7 @@ import java.sql.Timestamp;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "系统功能菜单 对象", description = "系统功能菜单 查询参数")
+@ApiModel(value = "系统功能菜单信息表 对象", description = "系统功能菜单信息表 查询参数")
 public class SysFeatureInfoQueryVo extends BaseQueryVo {
 
     /**
@@ -36,6 +38,7 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "功能代码")
     @Size(max = 20, message = "功能代码长度不能超过 20 ！")
+    @NotBlank(message = "功能代码不能为空")
     private String featureCode;
 
     /**
@@ -43,6 +46,7 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "功能名称")
     @Size(max = 100, message = "功能名称长度不能超过 100 ！")
+    @NotBlank(message = "功能名称不能为空")
     private String featureName;
 
     /**
@@ -75,19 +79,20 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
      * 状态：1启用，0停用
      */
     @ApiModelProperty(value = "状态：1启用，0停用")
-    private Integer status;
+    @Size(max = 1, message = "状态：1启用，0停用长度不能超过 1 ！")
+    private Boolean status;
 
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    private Timestamp createTime;
+    private Date createTime;
 
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
-    private Timestamp updateTime;
+    private Date updateTime;
 
     /**
      * 创建用户id

@@ -107,7 +107,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     }
 
     @Override
-    public List<${cfg.TableName}QueryVo> get${cfg.TableName}List( ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
+    public List<${cfg.TableName}QueryVo> get${cfg.TableName}List(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
         List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList = ${cfg.mapperObjectName}.get${cfg.TableName}List(${cfg.tableName}QueryParam);
         return ${cfg.tableName}QueryVoList;
     }

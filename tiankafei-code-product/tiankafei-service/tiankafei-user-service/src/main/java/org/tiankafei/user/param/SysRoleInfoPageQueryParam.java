@@ -9,7 +9,7 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 
 /**
  * <pre>
- * 系统功能菜单信息表 分页查询参数对象
+ * 角色信息表 分页查询参数对象
  * </pre>
  *
  * @author tiankafei
@@ -18,8 +18,8 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "系统功能菜单信息表 分页查询参数对象", description = "系统功能菜单信息表 分页查询参数对象")
-public class SysFeatureInfoPageQueryParam extends OrderQueryParam {
+@ApiModel(value = "角色信息表 分页查询参数对象", description = "角色信息表 分页查询参数对象")
+public class SysRoleInfoPageQueryParam extends OrderQueryParam {
 
 
 

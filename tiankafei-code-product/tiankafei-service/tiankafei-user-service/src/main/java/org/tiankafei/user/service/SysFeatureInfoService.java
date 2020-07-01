@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <pre>
- * 系统功能菜单 服务类
+ * 系统功能菜单信息表 服务类
  * </pre>
  *
  * @author tiankafei
@@ -21,7 +21,7 @@ import java.util.List;
 public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity> {
     
     /**
-     * 校验 系统功能菜单 是否已经存在
+     * 校验 系统功能菜单信息表 是否已经存在
      *
      * @param sysFeatureInfoQueryParam
      * @return
@@ -30,7 +30,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
     boolean checkSysFeatureInfoExists(SysFeatureInfoQueryParam sysFeatureInfoQueryParam) throws Exception;
 
     /**
-     * 保存 系统功能菜单
+     * 保存 系统功能菜单信息表
      *
      * @param sysFeatureInfoQueryVo
      * @return
@@ -39,7 +39,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
     Object saveSysFeatureInfo(SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception;
     
     /**
-     * 保存 系统功能菜单 集合
+     * 保存 系统功能菜单信息表 集合
      *
      * @param sysFeatureInfoQueryVoList
      * @return
@@ -48,7 +48,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
     boolean saveSysFeatureInfoList(List<SysFeatureInfoQueryVo> sysFeatureInfoQueryVoList) throws Exception;
 
     /**
-     * 修改 系统功能菜单
+     * 修改 系统功能菜单信息表
      *
      * @param sysFeatureInfoQueryVo
      * @return
@@ -57,7 +57,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
     boolean updateSysFeatureInfo(SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception;
 
     /**
-     * 删除 系统功能菜单
+     * 删除 系统功能菜单信息表
      *
      * @param ids
      * @return
@@ -66,7 +66,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
     boolean deleteSysFeatureInfo(String ids) throws Exception;
 	
     /**
-     * 根据条件删除 系统功能菜单
+     * 根据条件删除 系统功能菜单信息表
      *
      * @param sysFeatureInfoQueryParam
      * @return
@@ -75,7 +75,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
     boolean deleteSysFeatureInfo(SysFeatureInfoQueryParam sysFeatureInfoQueryParam) throws Exception;
 
     /**
-     * 根据ID获取 系统功能菜单 对象
+     * 根据ID获取 系统功能菜单信息表 对象
      *
      * @param id
      * @return
@@ -84,7 +84,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
      SysFeatureInfoQueryVo getSysFeatureInfoById(Serializable id) throws Exception;
 
     /**
-     * 获取 系统功能菜单 分页对象列表
+     * 获取 系统功能菜单信息表 分页对象列表
      *
      * @param sysFeatureInfoPageQueryParam
      * @return
@@ -93,7 +93,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
     Paging<SysFeatureInfoQueryVo> getSysFeatureInfoPageList(SysFeatureInfoPageQueryParam sysFeatureInfoPageQueryParam) throws Exception;
 
     /**
-     * 获取 系统功能菜单 对象列表
+     * 获取 系统功能菜单信息表 对象列表
      *
      * @param sysFeatureInfoQueryParam
      * @return
@@ -102,7 +102,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
      List<SysFeatureInfoQueryVo> getSysFeatureInfoList(SysFeatureInfoQueryParam sysFeatureInfoQueryParam) throws Exception;
     
     /**
-     * 计算 系统功能菜单 总记录数
+     * 计算 系统功能菜单信息表 总记录数
      *
      * @param sysFeatureInfoQueryParam
      * @return

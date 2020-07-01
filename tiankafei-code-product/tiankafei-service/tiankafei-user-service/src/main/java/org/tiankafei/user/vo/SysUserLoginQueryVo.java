@@ -39,22 +39,21 @@ public class SysUserLoginQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
-    @NotBlank(message = "用户名不能为空，请重新输入！")
-    @Condition(expression = "a!='super'", message = "用户名不能为 super")
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     /**
-     *  邮箱
+     * 邮箱
      */
     @ApiModelProperty(value = "邮箱")
-    @Size(max = 80, message = "邮箱长度不能超过 80 ！")
+    @Size(max = 100, message = "邮箱长度不能超过 100 ！")
     private String email;
 
     /**
      * 手机号码
      */
     @ApiModelProperty(value = "手机号码")
-    @Size(max = 11, message = "手机号码长度不能超过 11 ！")
+    @Size(max = 13, message = "手机号码长度不能超过 13 ！")
     private String telephone;
 
     /**

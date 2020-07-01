@@ -47,9 +47,9 @@ public class ${cfg.TableName}QueryVo extends BaseQueryVo {
 ## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
 #if(${field.customMap.null} == 'NO' && !${field.keyFlag})
 #if(${field.propertyType} == 'String')
-    @NotBlank(message = "${field.comment}不能为空" )
+    @NotBlank(message = "${field.comment}不能为空")
 #else
-    @NotNull(message = "${field.comment}不能为空" )
+    @NotNull(message = "${field.comment}不能为空")
 #end
     private ${field.propertyType} ${field.propertyName};
 #else
