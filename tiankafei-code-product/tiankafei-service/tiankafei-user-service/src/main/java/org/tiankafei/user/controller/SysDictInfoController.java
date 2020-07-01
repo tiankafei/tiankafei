@@ -73,8 +73,8 @@ public class SysDictInfoController extends BaseController {
      * 启用 系统数据字典表 对象
      */
     @GetMapping("/enable/{id}")
-    @ApiOperation(value = "修改 系统数据字典表 对象", notes = "修改 系统数据字典表")
-    public ApiResult<Boolean> enable(String id) throws Exception {
+    @ApiOperation(value = "启用 系统数据字典表 对象", notes = "启用 系统数据字典表 对象")
+    public ApiResult<Boolean> enable(@PathVariable String id) throws Exception {
         boolean flag = sysDictInfoService.enable(id);
         return ApiResult.ok(flag);
     }
@@ -83,8 +83,8 @@ public class SysDictInfoController extends BaseController {
      * 禁用 系统数据字典表 对象
      */
     @PostMapping("/disable/{id}")
-    @ApiOperation(value = "修改 系统数据字典表 对象", notes = "修改 系统数据字典表")
-    public ApiResult<Boolean> disable(String id) throws Exception {
+    @ApiOperation(value = "禁用 系统数据字典表 对象", notes = "禁用 系统数据字典表 对象")
+    public ApiResult<Boolean> disable(@PathVariable String id) throws Exception {
         boolean flag = sysDictInfoService.disable(id);
         return ApiResult.ok(flag);
     }

@@ -1,6 +1,10 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.tiankafei.dbmysql.service.DbmysqlService;
 import org.tiankafei.user.constants.UserConstants;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysDictInfoEntity;
@@ -26,6 +30,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -43,6 +48,12 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
     @Autowired
     private SysDictInfoMapper sysDictInfoMapper;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private DbmysqlService dbmysqlService;
 
     @Override
     public boolean checkSysDictInfoExists(SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception {
@@ -107,10 +118,13 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         sysDictInfoEntity.setStatus(Boolean.TRUE);
         sysDictInfoMapper.updateById(sysDictInfoEntity);
 
-        //TODO 创建表结构
         String dataTable = sysDictInfoEntity.getDataTable();
-        System.out.println(dataTable);
-
+        // 创建表结构和索引
+        List<String> sqlList = Lists.newArrayList();
+        sqlList.add("create table " + dataTable + " as select * from sys_dict_table where 1=2");
+        sqlList.add("ALTER TABLE `" + dbmysqlService.getTableSchema() + "`.`" + dataTable + "` ADD UNIQUE INDEX `idx_code`(`code`) COMMENT '按照代码查询详细信息'");
+        sqlList.add("ALTER TABLE `" + dbmysqlService.getTableSchema() + "`.`" + dataTable + "` COMMENT = '" + sysDictInfoEntity.getDictName() + "字典数据表'");
+        jdbcTemplate.batchUpdate(sqlList.toArray(new String[]{}));
         return Boolean.TRUE;
     }
 
@@ -126,7 +140,23 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     @Override
     public boolean deleteSysDictInfo(String ids) throws Exception {
         String[] idArray = ids.split(",");
-        return super.removeByIds(Arrays.asList(idArray));
+        List<String> idList = Arrays.asList(idArray);
+        if(CollectionUtils.isNotEmpty(idList)){
+            // 查询字典，理论上只查询一列即可，稍后研究mybatis-plus如何只查询一部分列的情况 TODO
+            List<SysDictInfoEntity> sysDictInfoEntityList = sysDictInfoMapper.selectBatchIds(idList);
+            // 删除字典数据
+            super.removeByIds(idList);
+
+            // 删除字段的数据表
+            List<String> sqlList = new ArrayList<>();
+            for (int index = 0, length = sysDictInfoEntityList.size(); index < length; index++) {
+                String dataTable = sysDictInfoEntityList.get(index).getDataTable();
+                sqlList.add("drop table " + dataTable);
+            }
+            jdbcTemplate.batchUpdate(sqlList.toArray(new String[]{}));
+        }
+
+        return Boolean.TRUE;
     }
 	
     @Override
