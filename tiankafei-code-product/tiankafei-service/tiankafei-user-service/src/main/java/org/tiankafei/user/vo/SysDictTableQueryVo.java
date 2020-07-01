@@ -88,7 +88,6 @@ public class SysDictTableQueryVo extends BaseQueryVo {
      * 所在层级
      */
     @ApiModelProperty(value = "所在层级")
-    @NotNull(message = "所在层级不能为空")
     private Integer level;
 
     /**

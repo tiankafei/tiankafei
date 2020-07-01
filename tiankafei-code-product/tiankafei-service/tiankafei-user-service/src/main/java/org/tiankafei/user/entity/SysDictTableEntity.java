@@ -99,7 +99,6 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "所在层级")
     @TableField("level")
-    @NotNull(message = "所在层级不能为空")
     private Integer level;
 
     /**
