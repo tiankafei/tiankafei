@@ -94,7 +94,6 @@ public class SysFeatureInfoQueryVo extends BaseQueryVo {
      * 状态：1启用，0停用
      */
     @ApiModelProperty(value = "状态：1启用，0停用")
-    @Size(max = 1, message = "状态：1启用，0停用长度不能超过 1 ！")
     private Boolean status;
 
     /**

@@ -54,7 +54,6 @@ public class SysDictInfoQueryVo extends BaseQueryVo {
      * 状态：1启用，0停用
      */
     @ApiModelProperty(value = "状态：1启用，0停用")
-    @Size(max = 1, message = "状态：1启用，0停用长度不能超过 1 ！")
     private Boolean status;
 
     /**
@@ -75,7 +74,6 @@ public class SysDictInfoQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "数据表")
     @Size(max = 30, message = "数据表长度不能超过 30 ！")
-    @NotBlank(message = "数据表不能为空")
     private String dataTable;
 
     /**

@@ -42,7 +42,10 @@ public class ${cfg.TableName}QueryVo extends BaseQueryVo {
 #set($start=${field.type.indexOf("(")} + 1)
 #set($end=${field.type.length()} - 1)
 #set($length=${field.type.substring($start, $end)})
+#if($length == 1 && ${field.columnType} == 'BOOLEAN')
+#else
     @Size(max = ${length}, message = "${field.comment}长度不能超过 ${length} ！")
+#end
 #end
 #end
 ## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
