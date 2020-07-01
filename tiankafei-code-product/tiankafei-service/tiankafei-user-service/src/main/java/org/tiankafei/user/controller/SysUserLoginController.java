@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/tkfUserLogin")
+@RequestMapping("/sysUserLogin")
 @Api(value = "用户登录信息表 API", tags = "用户登录信息表 功能维护")
 public class SysUserLoginController extends BaseController {
 
@@ -73,8 +73,8 @@ public class SysUserLoginController extends BaseController {
      */
     @PostMapping("/check")
     @ApiOperation(value = "校验 用户登录信息表 是否已经存在", notes = "校验 用户登录信息表 是否已经存在")
-    public ApiResult<Boolean> checkTkfUserLoginExists(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-        Boolean flag = sysUserLoginService.checkTkfUserLoginExists(sysUserLoginQueryParam);
+    public ApiResult<Boolean> checkSysUserLoginExists(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+        Boolean flag = sysUserLoginService.checkSysUserLoginExists(sysUserLoginQueryParam);
         return ApiResult.ok(flag);
     }
 
@@ -83,8 +83,8 @@ public class SysUserLoginController extends BaseController {
      */
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户登录信息表 对象", notes = "添加 用户登录信息表")
-    public ApiResult<String> addTkfUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
-        Object id = sysUserLoginService.saveTkfUserLogin(sysUserLoginQueryVo);
+    public ApiResult<String> addSysUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
+        Object id = sysUserLoginService.saveSysUserLogin(sysUserLoginQueryVo);
         return ApiResult.ok(id);
     }
 
@@ -93,8 +93,8 @@ public class SysUserLoginController extends BaseController {
      */
     @PostMapping("/update")
     @ApiOperation(value = "修改 用户登录信息表 对象", notes = "修改 用户登录信息表")
-    public ApiResult<Boolean> updateTkfUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
-        boolean flag = sysUserLoginService.updateTkfUserLogin(sysUserLoginQueryVo);
+    public ApiResult<Boolean> updateSysUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
+        boolean flag = sysUserLoginService.updateSysUserLogin(sysUserLoginQueryVo);
         return ApiResult.ok(flag);
     }
 
@@ -103,8 +103,8 @@ public class SysUserLoginController extends BaseController {
      */
     @PostMapping("/delete")
     @ApiOperation(value = "删除 用户登录信息表 对象", notes = "删除 用户登录信息表")
-    public ApiResult<Boolean> deleteTkfUserLogin(@Valid @RequestBody IdsParam idsParam) throws Exception {
-        boolean flag = sysUserLoginService.deleteTkfUserLogin(idsParam.getIds());
+    public ApiResult<Boolean> deleteSysUserLogin(@Valid @RequestBody IdsParam idsParam) throws Exception {
+        boolean flag = sysUserLoginService.deleteSysUserLogin(idsParam.getIds());
         return ApiResult.ok(flag);
     }
 
@@ -113,8 +113,8 @@ public class SysUserLoginController extends BaseController {
      */
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 用户登录信息表 对象详情", notes = "获取 用户登录信息表 对象详情")
-    public ApiResult<SysUserLoginQueryVo> getTkfUserLogin(@PathVariable("id") String id) throws Exception {
-         SysUserLoginQueryVo sysUserLoginQueryVo = sysUserLoginService.getTkfUserLoginById(id);
+    public ApiResult<SysUserLoginQueryVo> getSysUserLogin(@PathVariable("id") String id) throws Exception {
+         SysUserLoginQueryVo sysUserLoginQueryVo = sysUserLoginService.getSysUserLoginById(id);
         return ApiResult.ok(sysUserLoginQueryVo);
     }
 
@@ -123,8 +123,8 @@ public class SysUserLoginController extends BaseController {
      */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户登录信息表 分页列表", notes = "获取 用户登录信息表 分页列表")
-    public ApiResult<Paging<SysUserLoginQueryVo>> getTkfUserLoginPageList(@Valid @RequestBody SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception {
-         Paging<SysUserLoginQueryVo> paging = sysUserLoginService.getTkfUserLoginPageList(sysUserLoginPageQueryParam);
+    public ApiResult<Paging<SysUserLoginQueryVo>> getSysUserLoginPageList(@Valid @RequestBody SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception {
+         Paging<SysUserLoginQueryVo> paging = sysUserLoginService.getSysUserLoginPageList(sysUserLoginPageQueryParam);
         return ApiResult.ok(paging);
     }
     
@@ -133,8 +133,8 @@ public class SysUserLoginController extends BaseController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 用户登录信息表 列表", notes = "获取 用户登录信息表 列表")
-    public ApiResult<List<SysUserLoginQueryVo>> getTkfUserLoginList(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-         List<SysUserLoginQueryVo> paging = sysUserLoginService.getTkfUserLoginList(sysUserLoginQueryParam);
+    public ApiResult<List<SysUserLoginQueryVo>> getSysUserLoginList(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+         List<SysUserLoginQueryVo> paging = sysUserLoginService.getSysUserLoginList(sysUserLoginQueryParam);
         return ApiResult.ok(paging);
     }
     
@@ -143,8 +143,8 @@ public class SysUserLoginController extends BaseController {
      */
     @PostMapping("/count")
     @ApiOperation(value = "计算 用户登录信息表 总记录数", notes = "计算 用户登录信息表 总记录数")
-    public ApiResult<Integer> countTkfUserLogin(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-        int count = sysUserLoginService.countTkfUserLogin(sysUserLoginQueryParam);
+    public ApiResult<Integer> countSysUserLogin(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+        int count = sysUserLoginService.countSysUserLogin(sysUserLoginQueryParam);
         return ApiResult.ok(count);
     }
 

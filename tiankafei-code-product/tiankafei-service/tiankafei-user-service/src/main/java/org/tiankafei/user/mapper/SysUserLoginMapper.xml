@@ -7,10 +7,10 @@
         id, username, email, telephone, password, status, expiration_date, create_time
     </sql>
 
-    <select id="getTkfUserLoginList" resultType="org.tiankafei.user.vo.SysUserLoginQueryVo">
+    <select id="getSysUserLoginList" resultType="org.tiankafei.user.vo.SysUserLoginQueryVo">
         select
         <include refid="Base_Column_List"/>
-        from tkf_user_login
+        from sys_user_login
     </select>
 
 </mapper>

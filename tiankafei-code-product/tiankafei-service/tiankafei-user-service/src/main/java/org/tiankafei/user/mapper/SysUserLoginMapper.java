@@ -30,7 +30,7 @@ public interface SysUserLoginMapper extends BaseMapper<SysUserLoginEntity> {
      * @param id
      * @return
      */
-     SysUserLoginQueryVo getTkfUserLoginById(Serializable id);
+     SysUserLoginQueryVo getSysUserLoginById(Serializable id);
 
     /**
      * 获取 用户登录信息表 分页对象
@@ -39,7 +39,7 @@ public interface SysUserLoginMapper extends BaseMapper<SysUserLoginEntity> {
      * @param sysUserLoginPageQueryParam
      * @return
      */
-     IPage<SysUserLoginQueryVo> getTkfUserLoginPageList(@Param("page") Page page, @Param("param") SysUserLoginPageQueryParam sysUserLoginPageQueryParam);
+     IPage<SysUserLoginQueryVo> getSysUserLoginPageList(@Param("page") Page page, @Param("param") SysUserLoginPageQueryParam sysUserLoginPageQueryParam);
     
     /**
      * 获取 用户登录信息表 对象列表
@@ -47,6 +47,6 @@ public interface SysUserLoginMapper extends BaseMapper<SysUserLoginEntity> {
      * @param sysUserLoginQueryParam
      * @return
      */
-     List<SysUserLoginQueryVo> getTkfUserLoginList(@Param("param") SysUserLoginQueryParam sysUserLoginQueryParam);
+     List<SysUserLoginQueryVo> getSysUserLoginList(@Param("param") SysUserLoginQueryParam sysUserLoginQueryParam);
 
 }

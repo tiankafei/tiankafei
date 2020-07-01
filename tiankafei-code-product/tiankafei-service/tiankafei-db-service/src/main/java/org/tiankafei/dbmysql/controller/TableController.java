@@ -54,8 +54,8 @@ public class TableController extends BaseController {
     @PostMapping("/pageTableList")
     @ApiOperation(value = "获取 数据库表 分页对象列表", notes = "获取 数据库表 分页对象列表")
     public ApiResult<Paging<TableEntity>> getTableEntityPageList(@Valid @RequestBody TableNamePageListQueryParam tableNamePageListQueryParam) throws Exception {
-        Paging<TableEntity> tkfUserLoginPageList = tableService.getTableEntityPageList(tableNamePageListQueryParam);
-        return ApiResult.ok(tkfUserLoginPageList);
+        Paging<TableEntity> sysUserLoginPageList = tableService.getTableEntityPageList(tableNamePageListQueryParam);
+        return ApiResult.ok(sysUserLoginPageList);
     }
 
     /**
@@ -68,8 +68,8 @@ public class TableController extends BaseController {
     @PostMapping("/tableList")
     @ApiOperation(value = "取 数据库表 对象列表", notes = "取 数据库表 对象列表")
     public ApiResult<List<TableEntity>> getTableEntityList(@Valid @RequestBody TableNameListQueryParam tableNameListQueryParam) throws Exception {
-        List<TableEntity> tkfUserLoginList = tableService.getTableEntityList(tableNameListQueryParam);
-        return ApiResult.ok(tkfUserLoginList);
+        List<TableEntity> sysUserLoginList = tableService.getTableEntityList(tableNameListQueryParam);
+        return ApiResult.ok(sysUserLoginList);
     }
 
 }

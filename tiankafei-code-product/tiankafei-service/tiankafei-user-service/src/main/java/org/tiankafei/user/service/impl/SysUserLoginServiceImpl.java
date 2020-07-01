@@ -48,27 +48,27 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     public boolean checkUsernameExists(String username) throws Exception {
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.eq(SysUserLoginEntity::getUsername, username);
-        return checkTkfUserLoginExists(lambdaQueryWrapper);
+        return checkSysUserLoginExists(lambdaQueryWrapper);
     }
 
     @Override
     public boolean checkEmailExists(String email) throws Exception {
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.eq(SysUserLoginEntity::getEmail, email);
-        return checkTkfUserLoginExists(lambdaQueryWrapper);
+        return checkSysUserLoginExists(lambdaQueryWrapper);
     }
 
     @Override
     public boolean checkTelephoneExists(String telephone) throws Exception {
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.eq(SysUserLoginEntity::getTelephone, telephone);
-        return checkTkfUserLoginExists(lambdaQueryWrapper);
+        return checkSysUserLoginExists(lambdaQueryWrapper);
     }
 
     @Override
-    public boolean checkTkfUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+    public boolean checkSysUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        return checkTkfUserLoginExists(lambdaQueryWrapper);
+        return checkSysUserLoginExists(lambdaQueryWrapper);
     }
 
     /**
@@ -77,13 +77,13 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
      * @return
      * @throws Exception
      */
-    private boolean checkTkfUserLoginExists(LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper) throws Exception {
+    private boolean checkSysUserLoginExists(LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper) throws Exception {
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
     
     @Override
-    public Object saveTkfUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
+    public Object saveSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
         checkSaveUserInfoExists(sysUserLoginQueryVo.getUsername(), "用户名", str -> checkUsernameExists(str));
         checkSaveUserInfoExists(sysUserLoginQueryVo.getEmail(), "邮箱", str -> checkEmailExists(str));
         checkSaveUserInfoExists(sysUserLoginQueryVo.getTelephone(), "手机号码", str -> checkTelephoneExists(str));
@@ -111,21 +111,21 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     }
 
     @Override
-    public boolean saveTkfUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception {
+    public boolean saveSysUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception {
         if(sysUserLoginQueryVoList != null && !sysUserLoginQueryVoList.isEmpty()){
-            List<SysUserLoginEntity> tkfUserLoginList = new ArrayList<>();
+            List<SysUserLoginEntity> sysUserLoginList = new ArrayList<>();
             for ( SysUserLoginQueryVo sysUserLoginQueryVo : sysUserLoginQueryVoList) {
                 SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
                 BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
-                tkfUserLoginList.add(sysUserLoginEntity);
+                sysUserLoginList.add(sysUserLoginEntity);
             }
-            super.saveBatch(tkfUserLoginList, CommonConstant.BATCH_SAVE_COUNT);
+            super.saveBatch(sysUserLoginList, CommonConstant.BATCH_SAVE_COUNT);
         }
         return Boolean.TRUE;
     }
 
     @Override
-    public boolean updateTkfUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
+    public boolean updateSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
         SysUserLoginEntity oldUserEntity = super.getById(sysUserLoginQueryVo.getId());
         checkUpdateUserInfoExists(oldUserEntity.getUsername(), sysUserLoginQueryVo.getUsername(), "用户名", str -> checkUsernameExists(str));
         checkUpdateUserInfoExists(oldUserEntity.getEmail(), sysUserLoginQueryVo.getEmail(), "邮箱", str -> checkEmailExists(str));
@@ -160,20 +160,20 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     }
 
     @Override
-    public boolean deleteTkfUserLogin(String ids) throws Exception {
+    public boolean deleteSysUserLogin(String ids) throws Exception {
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
 	
     @Override
-    public boolean deleteTkfUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+    public boolean deleteSysUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
         LambdaQueryWrapper <SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
 
     @Override
-    public SysUserLoginQueryVo getTkfUserLoginById(Serializable id) throws Exception {
+    public SysUserLoginQueryVo getSysUserLoginById(Serializable id) throws Exception {
          SysUserLoginEntity sysUserLoginEntity = super.getById(id);
          SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
          BeanUtils.copyProperties(sysUserLoginEntity, sysUserLoginQueryVo);
@@ -181,7 +181,7 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     }
 
     @Override
-    public Paging<SysUserLoginQueryVo> getTkfUserLoginPageList(SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception {
+    public Paging<SysUserLoginQueryVo> getSysUserLoginPageList(SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception {
         Page page = setPageParam(sysUserLoginPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysUserLoginQueryVo> iPage = super.page(page, lambdaQueryWrapper);
@@ -189,13 +189,13 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     }
 
     @Override
-    public List<SysUserLoginQueryVo> getTkfUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-        List<SysUserLoginQueryVo> sysUserLoginQueryVoList = sysUserLoginMapper.getTkfUserLoginList(sysUserLoginQueryParam);
+    public List<SysUserLoginQueryVo> getSysUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+        List<SysUserLoginQueryVo> sysUserLoginQueryVoList = sysUserLoginMapper.getSysUserLoginList(sysUserLoginQueryParam);
         return sysUserLoginQueryVoList;
     }
     
     @Override
-    public int countTkfUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+    public int countSysUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
         LambdaQueryWrapper <SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;

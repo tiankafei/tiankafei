@@ -52,8 +52,8 @@ public class FieldController extends BaseController {
     @PostMapping("/pageFieldList")
     @ApiOperation(value = "获取 数据库表的字段集合 分页对象列表", notes = "获取 数据库表的字段集合 分页对象列表")
     public ApiResult<Paging<FieldEntity>> getFieldEntityPageList(@Valid @RequestBody FieldNamePageListQueryParam fieldNamePageListQueryParam) throws Exception {
-        Paging<FieldEntity> tkfUserLoginPageList = fieldService.getFieldEntityPageList(fieldNamePageListQueryParam);
-        return ApiResult.ok(tkfUserLoginPageList);
+        Paging<FieldEntity> sysUserLoginPageList = fieldService.getFieldEntityPageList(fieldNamePageListQueryParam);
+        return ApiResult.ok(sysUserLoginPageList);
     }
 
     /**
@@ -66,8 +66,8 @@ public class FieldController extends BaseController {
     @PostMapping("/fieldList")
     @ApiOperation(value = "取 数据库表的字段集合 对象列表", notes = "取 数据库表的字段集合 对象列表")
     public ApiResult<List<FieldEntity>> getFieldEntityList(@Valid @RequestBody FieldNameListQueryParam fieldNameListQueryParam) throws Exception {
-        List<FieldEntity> tkfUserLoginList = fieldService.getFieldEntityList(fieldNameListQueryParam);
-        return ApiResult.ok(tkfUserLoginList);
+        List<FieldEntity> sysUserLoginList = fieldService.getFieldEntityList(fieldNameListQueryParam);
+        return ApiResult.ok(sysUserLoginList);
     }
 
 }

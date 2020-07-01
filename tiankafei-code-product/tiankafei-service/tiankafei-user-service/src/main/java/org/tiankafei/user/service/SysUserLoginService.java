@@ -51,7 +51,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    boolean checkTkfUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
+    boolean checkSysUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
 
     /**
      * 保存 用户登录信息表
@@ -60,7 +60,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    Object saveTkfUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
+    Object saveSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
     
     /**
      * 保存 用户登录信息表 集合
@@ -69,7 +69,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveTkfUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception;
+    boolean saveSysUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception;
 
     /**
      * 修改 用户登录信息表
@@ -78,7 +78,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    boolean updateTkfUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
+    boolean updateSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
 
     /**
      * 删除 用户登录信息表
@@ -87,7 +87,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    boolean deleteTkfUserLogin(String ids) throws Exception;
+    boolean deleteSysUserLogin(String ids) throws Exception;
 	
     /**
      * 根据条件删除 用户登录信息表
@@ -96,7 +96,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    boolean deleteTkfUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
+    boolean deleteSysUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
 
     /**
      * 根据ID获取 用户登录信息表 对象
@@ -105,7 +105,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-     SysUserLoginQueryVo getTkfUserLoginById(Serializable id) throws Exception;
+     SysUserLoginQueryVo getSysUserLoginById(Serializable id) throws Exception;
 
     /**
      * 获取 用户登录信息表 分页对象列表
@@ -114,7 +114,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    Paging<SysUserLoginQueryVo> getTkfUserLoginPageList(SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception;
+    Paging<SysUserLoginQueryVo> getSysUserLoginPageList(SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception;
 
     /**
      * 获取 用户登录信息表 对象列表
@@ -123,7 +123,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-     List<SysUserLoginQueryVo> getTkfUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
+     List<SysUserLoginQueryVo> getSysUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
     
     /**
      * 计算 用户登录信息表 总记录数
@@ -132,6 +132,6 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    int countTkfUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
+    int countSysUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
 
 }
