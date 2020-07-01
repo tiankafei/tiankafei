@@ -1,7 +1,6 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.tiankafei.dbmysql.service.DbmysqlService;
@@ -30,7 +29,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -118,13 +116,14 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         sysDictInfoEntity.setStatus(Boolean.TRUE);
         sysDictInfoMapper.updateById(sysDictInfoEntity);
 
+        // 如果表已经存在，则直接返回
         String dataTable = sysDictInfoEntity.getDataTable();
-        // 创建表结构和索引
-        List<String> sqlList = Lists.newArrayList();
-        sqlList.add("create table " + dataTable + " as select * from sys_dict_table where 1=2");
-        sqlList.add("ALTER TABLE `" + dbmysqlService.getTableSchema() + "`.`" + dataTable + "` ADD UNIQUE INDEX `idx_code`(`code`) COMMENT '按照代码查询详细信息'");
-        sqlList.add("ALTER TABLE `" + dbmysqlService.getTableSchema() + "`.`" + dataTable + "` COMMENT = '" + sysDictInfoEntity.getDictName() + "字典数据表'");
-        jdbcTemplate.batchUpdate(sqlList.toArray(new String[]{}));
+        if(dbmysqlService.checkTableExists(dataTable)){
+            return Boolean.TRUE;
+        }
+
+        // 表不存在的时候，创建表结构和索引
+        dbmysqlService.createTable("sys_dict_table", dataTable, sysDictInfoEntity.getDictName() + "字典数据表");
         return Boolean.TRUE;
     }
 
@@ -133,7 +132,6 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         SysDictInfoEntity sysDictInfoEntity = sysDictInfoMapper.selectById(id);
         sysDictInfoEntity.setStatus(Boolean.FALSE);
         sysDictInfoMapper.updateById(sysDictInfoEntity);
-
         return Boolean.TRUE;
     }
 
@@ -148,12 +146,10 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
             super.removeByIds(idList);
 
             // 删除字段的数据表
-            List<String> sqlList = new ArrayList<>();
             for (int index = 0, length = sysDictInfoEntityList.size(); index < length; index++) {
                 String dataTable = sysDictInfoEntityList.get(index).getDataTable();
-                sqlList.add("drop table " + dataTable);
+                dbmysqlService.dropTable(dataTable);
             }
-            jdbcTemplate.batchUpdate(sqlList.toArray(new String[]{}));
         }
 
         return Boolean.TRUE;

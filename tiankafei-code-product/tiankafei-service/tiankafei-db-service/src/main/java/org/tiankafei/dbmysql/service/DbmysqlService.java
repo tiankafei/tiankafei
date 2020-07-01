@@ -1,34 +1,38 @@
 package org.tiankafei.dbmysql.service;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.tiankafei.web.common.exception.DaoException;
-
 /**
  * @author tiankafei
  * @since 1.0
  **/
-@Service
-public class DbmysqlService {
-
-    @Value("${spring.datasource.url}")
-    private String url;
+public interface DbmysqlService {
 
     /**
-     * 数据库名称
+     * 获取数据库的名称
+     * @return
      */
-    private String tableSchema;
+    String getTableSchema() ;
 
-    public String getTableSchema() throws DaoException {
-        if(StringUtils.isNotBlank(tableSchema)){
-            return tableSchema;
-        }
-//        jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-        String str = url.split("\\?")[0];
-        String[] split = str.split("/");
-        tableSchema = split[split.length - 1];
-        return tableSchema;
-    }
+    /**
+     * 检查物理表是否存在
+     * @param tableName
+     * @return
+     */
+    boolean checkTableExists(String tableName) ;
+
+    /**
+     * 删除物理表
+     * @param tableName
+     * @return
+     */
+    boolean dropTable(String tableName) ;
+
+    /**
+     * 根据模版表创建物理表
+     * @param templateTable 模版表名
+     * @param tableName 要创建的表名
+     * @param name  表中文名
+     * @return
+     */
+    boolean createTable(String templateTable, String tableName, String name) ;
 
 }
