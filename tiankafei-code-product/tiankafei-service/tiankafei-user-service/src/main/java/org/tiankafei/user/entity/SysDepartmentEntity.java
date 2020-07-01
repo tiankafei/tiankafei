@@ -61,6 +61,13 @@ public class SysDepartmentEntity extends BaseEntity {
     private Integer parentId;
 
     /**
+     * 顺序
+     */
+    @ApiModelProperty(value = "顺序")
+    @TableField("serial_number")
+    private Integer serialNumber;
+
+    /**
      * 当前部门所处的层级(在第几级)
      */
     @ApiModelProperty(value = "当前部门所处的层级(在第几级)")

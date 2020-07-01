@@ -31,14 +31,11 @@ import javax.validation.constraints.NotNull;
 public class SysDictTableEntity extends BaseEntity {
 
     /**
-     * 主键id，
-     * 因为这张表有一个字段存储的所有父id，如果有多个，用逗号分割，用来查询所有的父亲节点（使用like），故不能使用自增自增主键，
-     * 为了保证mysql不频繁进行页分裂，所以要保证主键按顺序自增，uuid排除掉不可用，
-     * 看到mybatis-plus提供了一种自定义ID生成器：雪花算法+UUID(不含中划线)
+     * 主键id
      */
     @ApiModelProperty(value = "主键id")
     @Size(max = 20, message = "主键id长度不能超过 20 ！")
-    @TableId(value = "id" , type = IdType.ASSIGN_ID)
+    @TableId(value = "id" , type = IdType.AUTO)
     private String id;
 
     /**
@@ -89,6 +86,13 @@ public class SysDictTableEntity extends BaseEntity {
     @Size(max = 2100, message = "所有父id，用逗号分隔长度不能超过 2100 ！")
     @TableField("all_parent_id")
     private String allParentId;
+
+    /**
+     * 顺序
+     */
+    @ApiModelProperty(value = "顺序")
+    @TableField("serial_number")
+    private Integer serialNumber;
 
     /**
      * 所在层级

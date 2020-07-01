@@ -57,7 +57,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     }
         
     @Override
-    public boolean save${cfg.TableName}List(List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception {
+    public boolean add${cfg.TableName}List(List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception {
         if(${cfg.tableName}QueryVoList != null && !${cfg.tableName}QueryVoList.isEmpty()){
             List<${cfg.entityClassName}> ${cfg.tableName}List = new ArrayList<>();
             for ( ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo : ${cfg.tableName}QueryVoList) {

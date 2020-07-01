@@ -79,6 +79,12 @@ public class SysDictTableQueryVo extends BaseQueryVo {
     private String allParentId;
 
     /**
+     * 顺序
+     */
+    @ApiModelProperty(value = "顺序")
+    private Integer serialNumber;
+
+    /**
      * 所在层级
      */
     @ApiModelProperty(value = "所在层级")

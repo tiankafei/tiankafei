@@ -45,7 +45,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${cfg.entityC
      * @return
      * @throws Exception
      */
-    boolean save${cfg.TableName}List(List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception;
+    boolean add${cfg.TableName}List(List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception;
 
     /**
      * 修改 $!{table.comment}

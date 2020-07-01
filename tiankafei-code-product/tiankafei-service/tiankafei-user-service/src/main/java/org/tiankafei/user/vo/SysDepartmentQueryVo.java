@@ -55,6 +55,12 @@ public class SysDepartmentQueryVo extends BaseQueryVo {
     private Integer parentId;
 
     /**
+     * 顺序
+     */
+    @ApiModelProperty(value = "顺序")
+    private Integer serialNumber;
+
+    /**
      * 当前部门所处的层级(在第几级)
      */
     @ApiModelProperty(value = "当前部门所处的层级(在第几级)")
