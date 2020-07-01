@@ -1,9 +1,9 @@
 package org.tiankafei.user.controller;
 
-import org.tiankafei.user.service.TkfUserLoginService;
-import org.tiankafei.user.param.TkfUserLoginQueryParam;
-import org.tiankafei.user.param.TkfUserLoginPageQueryParam;
-import org.tiankafei.user.vo.TkfUserLoginQueryVo;
+import org.tiankafei.user.service.SysUserLoginService;
+import org.tiankafei.user.param.SysUserLoginQueryParam;
+import org.tiankafei.user.param.SysUserLoginPageQueryParam;
+import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 
@@ -33,10 +33,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/tkfUserLogin")
 @Api(value = "用户登录信息表 API", tags = "用户登录信息表 功能维护")
-public class TkfUserLoginController extends BaseController {
+public class SysUserLoginController extends BaseController {
 
     @Autowired
-    private TkfUserLoginService tkfUserLoginService;
+    private SysUserLoginService sysUserLoginService;
 
     /**
      * 校验 用户名 是否已经存在
@@ -44,7 +44,7 @@ public class TkfUserLoginController extends BaseController {
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
     public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
-        Boolean flag = tkfUserLoginService.checkUsernameExists(username);
+        Boolean flag = sysUserLoginService.checkUsernameExists(username);
         return ApiResult.ok(flag);
     }
 
@@ -54,7 +54,7 @@ public class TkfUserLoginController extends BaseController {
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
-        Boolean flag = tkfUserLoginService.checkEmailExists(email);
+        Boolean flag = sysUserLoginService.checkEmailExists(email);
         return ApiResult.ok(flag);
     }
 
@@ -64,7 +64,7 @@ public class TkfUserLoginController extends BaseController {
     @GetMapping("/checkTelephone/{telephone}")
     @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
     public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
-        Boolean flag = tkfUserLoginService.checkTelephoneExists(telephone);
+        Boolean flag = sysUserLoginService.checkTelephoneExists(telephone);
         return ApiResult.ok(flag);
     }
 
@@ -73,8 +73,8 @@ public class TkfUserLoginController extends BaseController {
      */
     @PostMapping("/check")
     @ApiOperation(value = "校验 用户登录信息表 是否已经存在", notes = "校验 用户登录信息表 是否已经存在")
-    public ApiResult<Boolean> checkTkfUserLoginExists(@Valid @RequestBody TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception {
-        Boolean flag = tkfUserLoginService.checkTkfUserLoginExists(tkfUserLoginQueryParam);
+    public ApiResult<Boolean> checkTkfUserLoginExists(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+        Boolean flag = sysUserLoginService.checkTkfUserLoginExists(sysUserLoginQueryParam);
         return ApiResult.ok(flag);
     }
 
@@ -83,8 +83,8 @@ public class TkfUserLoginController extends BaseController {
      */
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户登录信息表 对象", notes = "添加 用户登录信息表")
-    public ApiResult<String> addTkfUserLogin(@Valid @RequestBody TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception {
-        Object id = tkfUserLoginService.saveTkfUserLogin(tkfUserLoginQueryVo);
+    public ApiResult<String> addTkfUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
+        Object id = sysUserLoginService.saveTkfUserLogin(sysUserLoginQueryVo);
         return ApiResult.ok(id);
     }
 
@@ -93,8 +93,8 @@ public class TkfUserLoginController extends BaseController {
      */
     @PostMapping("/update")
     @ApiOperation(value = "修改 用户登录信息表 对象", notes = "修改 用户登录信息表")
-    public ApiResult<Boolean> updateTkfUserLogin(@Valid @RequestBody TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception {
-        boolean flag = tkfUserLoginService.updateTkfUserLogin(tkfUserLoginQueryVo);
+    public ApiResult<Boolean> updateTkfUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
+        boolean flag = sysUserLoginService.updateTkfUserLogin(sysUserLoginQueryVo);
         return ApiResult.ok(flag);
     }
 
@@ -104,7 +104,7 @@ public class TkfUserLoginController extends BaseController {
     @PostMapping("/delete")
     @ApiOperation(value = "删除 用户登录信息表 对象", notes = "删除 用户登录信息表")
     public ApiResult<Boolean> deleteTkfUserLogin(@Valid @RequestBody IdsParam idsParam) throws Exception {
-        boolean flag = tkfUserLoginService.deleteTkfUserLogin(idsParam.getIds());
+        boolean flag = sysUserLoginService.deleteTkfUserLogin(idsParam.getIds());
         return ApiResult.ok(flag);
     }
 
@@ -113,9 +113,9 @@ public class TkfUserLoginController extends BaseController {
      */
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 用户登录信息表 对象详情", notes = "获取 用户登录信息表 对象详情")
-    public ApiResult<TkfUserLoginQueryVo> getTkfUserLogin(@PathVariable("id") String id) throws Exception {
-         TkfUserLoginQueryVo tkfUserLoginQueryVo = tkfUserLoginService.getTkfUserLoginById(id);
-        return ApiResult.ok(tkfUserLoginQueryVo);
+    public ApiResult<SysUserLoginQueryVo> getTkfUserLogin(@PathVariable("id") String id) throws Exception {
+         SysUserLoginQueryVo sysUserLoginQueryVo = sysUserLoginService.getTkfUserLoginById(id);
+        return ApiResult.ok(sysUserLoginQueryVo);
     }
 
     /**
@@ -123,8 +123,8 @@ public class TkfUserLoginController extends BaseController {
      */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户登录信息表 分页列表", notes = "获取 用户登录信息表 分页列表")
-    public ApiResult<Paging<TkfUserLoginQueryVo>> getTkfUserLoginPageList(@Valid @RequestBody TkfUserLoginPageQueryParam tkfUserLoginPageQueryParam) throws Exception {
-         Paging<TkfUserLoginQueryVo> paging = tkfUserLoginService.getTkfUserLoginPageList(tkfUserLoginPageQueryParam);
+    public ApiResult<Paging<SysUserLoginQueryVo>> getTkfUserLoginPageList(@Valid @RequestBody SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception {
+         Paging<SysUserLoginQueryVo> paging = sysUserLoginService.getTkfUserLoginPageList(sysUserLoginPageQueryParam);
         return ApiResult.ok(paging);
     }
     
@@ -133,8 +133,8 @@ public class TkfUserLoginController extends BaseController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 用户登录信息表 列表", notes = "获取 用户登录信息表 列表")
-    public ApiResult<List<TkfUserLoginQueryVo>> getTkfUserLoginList(@Valid @RequestBody TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception {
-         List<TkfUserLoginQueryVo> paging = tkfUserLoginService.getTkfUserLoginList(tkfUserLoginQueryParam);
+    public ApiResult<List<SysUserLoginQueryVo>> getTkfUserLoginList(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+         List<SysUserLoginQueryVo> paging = sysUserLoginService.getTkfUserLoginList(sysUserLoginQueryParam);
         return ApiResult.ok(paging);
     }
     
@@ -143,8 +143,8 @@ public class TkfUserLoginController extends BaseController {
      */
     @PostMapping("/count")
     @ApiOperation(value = "计算 用户登录信息表 总记录数", notes = "计算 用户登录信息表 总记录数")
-    public ApiResult<Integer> countTkfUserLogin(@Valid @RequestBody TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception {
-        int count = tkfUserLoginService.countTkfUserLogin(tkfUserLoginQueryParam);
+    public ApiResult<Integer> countTkfUserLogin(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
+        int count = sysUserLoginService.countTkfUserLogin(sysUserLoginQueryParam);
         return ApiResult.ok(count);
     }
 

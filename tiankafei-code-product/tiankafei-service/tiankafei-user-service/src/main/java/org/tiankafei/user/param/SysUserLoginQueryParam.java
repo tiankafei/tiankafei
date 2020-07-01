@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "用户登录信息表 查询参数对象", description = "用户登录信息表查询参数")
-public class  TkfUserLoginQueryParam implements Serializable {
+public class SysUserLoginQueryParam implements Serializable {
 
 
 

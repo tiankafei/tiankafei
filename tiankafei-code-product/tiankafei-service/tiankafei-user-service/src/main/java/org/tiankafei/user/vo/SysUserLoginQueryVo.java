@@ -1,40 +1,38 @@
-package org.tiankafei.user.entity;
+package org.tiankafei.user.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.tiankafei.web.common.entity.BaseEntity;
-
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.tiankafei.web.common.constraints.Condition;
+import org.tiankafei.web.common.vo.BaseQueryVo;
+
+import java.util.Date;
+
 /**
  * <pre>
- * 用户登录信息表
+ * 用户登录信息表 查询结果对象
  * </pre>
  *
  * @author tiankafei
- * @since 2020-06-30
+ * @date 2020-06-30
  */
 @Data
 @Accessors(chain = true)
-@TableName("tkf_user_login")
-@ApiModel(value = " 用户登录信息表 实体对象" , description = "用户登录信息表")
-public class TkfUserLoginEntity extends BaseEntity {
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "用户登录信息表 对象", description = "用户登录信息表 查询参数")
+public class SysUserLoginQueryVo extends BaseQueryVo {
 
     /**
      * 主键
      */
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id" , type = IdType.AUTO)
     private Long id;
 
     /**
@@ -42,15 +40,15 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
-    @TableField("username")
+    @NotBlank(message = "用户名不能为空，请重新输入！")
+    @Condition(expression = "a!='super'", message = "用户名不能为 super")
     private String username;
 
     /**
      *  邮箱
      */
-    @ApiModelProperty(value = " 邮箱")
-    @Size(max = 80, message = " 邮箱长度不能超过 80 ！")
-    @TableField("email")
+    @ApiModelProperty(value = "邮箱")
+    @Size(max = 80, message = "邮箱长度不能超过 80 ！")
     private String email;
 
     /**
@@ -58,7 +56,6 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "手机号码")
     @Size(max = 11, message = "手机号码长度不能超过 11 ！")
-    @TableField("telephone")
     private String telephone;
 
     /**
@@ -66,7 +63,6 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "密码")
     @Size(max = 64, message = "密码长度不能超过 64 ！")
-    @TableField("password")
     private String password;
 
     /**
@@ -74,21 +70,18 @@ public class TkfUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "状态")
     @Size(max = 2, message = "状态长度不能超过 2 ！")
-    @TableField("status")
     private String status;
 
     /**
      * 有效期截至时间
      */
     @ApiModelProperty(value = "有效期截至时间")
-    @TableField("expiration_date")
     private Date expirationDate;
 
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
     private Date createTime;
 
 }

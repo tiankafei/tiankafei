@@ -19,7 +19,7 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "用户登录信息表 分页查询参数对象", description = "用户登录信息表 分页查询参数对象")
-public class TkfUserLoginPageQueryParam extends OrderQueryParam {
+public class SysUserLoginPageQueryParam extends OrderQueryParam {
 
 
 

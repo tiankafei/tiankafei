@@ -1,9 +1,9 @@
 package org.tiankafei.user.service;
 
-import org.tiankafei.user.entity.TkfUserLoginEntity;
-import org.tiankafei.user.param.TkfUserLoginPageQueryParam;
-import org.tiankafei.user.param.TkfUserLoginQueryParam;
-import org.tiankafei.user.vo.TkfUserLoginQueryVo;
+import org.tiankafei.user.entity.SysUserLoginEntity;
+import org.tiankafei.user.param.SysUserLoginPageQueryParam;
+import org.tiankafei.user.param.SysUserLoginQueryParam;
+import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @author tiankafei
  * @since 2020-06-30
  */
-public interface TkfUserLoginService extends BaseService<TkfUserLoginEntity> {
+public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
 
     /**
      * 验证用户名是否存在
@@ -47,38 +47,38 @@ public interface TkfUserLoginService extends BaseService<TkfUserLoginEntity> {
     /**
      * 校验 用户登录信息表 是否已经存在
      *
-     * @param tkfUserLoginQueryParam
+     * @param sysUserLoginQueryParam
      * @return
      * @throws Exception
      */
-    boolean checkTkfUserLoginExists(TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception;
+    boolean checkTkfUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
 
     /**
      * 保存 用户登录信息表
      *
-     * @param tkfUserLoginQueryVo
+     * @param sysUserLoginQueryVo
      * @return
      * @throws Exception
      */
-    Object saveTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception;
+    Object saveTkfUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
     
     /**
      * 保存 用户登录信息表 集合
      *
-     * @param tkfUserLoginQueryVoList
+     * @param sysUserLoginQueryVoList
      * @return
      * @throws Exception
      */
-    boolean saveTkfUserLoginList(List<TkfUserLoginQueryVo> tkfUserLoginQueryVoList) throws Exception;
+    boolean saveTkfUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception;
 
     /**
      * 修改 用户登录信息表
      *
-     * @param tkfUserLoginQueryVo
+     * @param sysUserLoginQueryVo
      * @return
      * @throws Exception
      */
-    boolean updateTkfUserLogin(TkfUserLoginQueryVo tkfUserLoginQueryVo) throws Exception;
+    boolean updateTkfUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
 
     /**
      * 删除 用户登录信息表
@@ -92,11 +92,11 @@ public interface TkfUserLoginService extends BaseService<TkfUserLoginEntity> {
     /**
      * 根据条件删除 用户登录信息表
      *
-     * @param tkfUserLoginQueryParam
+     * @param sysUserLoginQueryParam
      * @return
      * @throws Exception
      */
-    boolean deleteTkfUserLogin(TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception;
+    boolean deleteTkfUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
 
     /**
      * 根据ID获取 用户登录信息表 对象
@@ -105,33 +105,33 @@ public interface TkfUserLoginService extends BaseService<TkfUserLoginEntity> {
      * @return
      * @throws Exception
      */
-     TkfUserLoginQueryVo getTkfUserLoginById(Serializable id) throws Exception;
+     SysUserLoginQueryVo getTkfUserLoginById(Serializable id) throws Exception;
 
     /**
      * 获取 用户登录信息表 分页对象列表
      *
-     * @param tkfUserLoginPageQueryParam
+     * @param sysUserLoginPageQueryParam
      * @return
      * @throws Exception
      */
-    Paging<TkfUserLoginQueryVo> getTkfUserLoginPageList(TkfUserLoginPageQueryParam tkfUserLoginPageQueryParam) throws Exception;
+    Paging<SysUserLoginQueryVo> getTkfUserLoginPageList(SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception;
 
     /**
      * 获取 用户登录信息表 对象列表
      *
-     * @param tkfUserLoginQueryParam
+     * @param sysUserLoginQueryParam
      * @return
      * @throws Exception
      */
-     List<TkfUserLoginQueryVo> getTkfUserLoginList(TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception;
+     List<SysUserLoginQueryVo> getTkfUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
     
     /**
      * 计算 用户登录信息表 总记录数
      *
-     * @param tkfUserLoginQueryParam
+     * @param sysUserLoginQueryParam
      * @return
      * @throws Exception
      */
-    int countTkfUserLogin(TkfUserLoginQueryParam tkfUserLoginQueryParam) throws Exception;
+    int countTkfUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
 
 }

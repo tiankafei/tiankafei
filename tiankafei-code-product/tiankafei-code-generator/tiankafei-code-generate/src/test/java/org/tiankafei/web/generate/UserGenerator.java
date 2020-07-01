@@ -32,7 +32,7 @@ public class UserGenerator {
                 .setPkIdColumnName("id");
 
         Map<String, String[]> map = new HashMap<>();
-        map.put("user", new String[]{"tkf_user_login"});
+        map.put("user", new String[]{"sys_user_login"});
 
         String directory = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-user-service";
         for (String moduleName : map.keySet()) {
