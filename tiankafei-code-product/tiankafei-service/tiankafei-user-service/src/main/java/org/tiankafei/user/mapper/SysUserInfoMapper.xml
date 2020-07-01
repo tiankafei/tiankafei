@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.user.mapper.SysUserInfoMapper">
+
+            <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, username, nickname, email, telephone, password, status, expiration_date, create_time, department_id, gender, born_time
+    </sql>
+
+    <select id="getSysUserInfoList" resultType="org.tiankafei.user.vo.SysUserInfoQueryVo">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user_info
+    </select>
+
+</mapper>
