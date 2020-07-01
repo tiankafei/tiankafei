@@ -36,7 +36,7 @@ public interface SysRoleInfoService extends BaseService<SysRoleInfoEntity> {
      * @return
      * @throws Exception
      */
-    Object saveSysRoleInfo(SysRoleInfoQueryVo sysRoleInfoQueryVo) throws Exception;
+    Object addSysRoleInfo(SysRoleInfoQueryVo sysRoleInfoQueryVo) throws Exception;
     
     /**
      * 保存 角色信息表 集合
@@ -45,7 +45,7 @@ public interface SysRoleInfoService extends BaseService<SysRoleInfoEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveSysRoleInfoList(List<SysRoleInfoQueryVo> sysRoleInfoQueryVoList) throws Exception;
+    boolean addSysRoleInfoList(List<SysRoleInfoQueryVo> sysRoleInfoQueryVoList) throws Exception;
 
     /**
      * 修改 角色信息表

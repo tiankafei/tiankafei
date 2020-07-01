@@ -55,7 +55,7 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 系统部门表信息 对象", notes = "添加 系统部门表信息")
     public ApiResult<String> addSysDepartment(@Valid @RequestBody SysDepartmentQueryVo sysDepartmentQueryVo) throws Exception {
-        Object id = sysDepartmentService.saveSysDepartment(sysDepartmentQueryVo);
+        Object id = sysDepartmentService.addSysDepartment(sysDepartmentQueryVo);
         return ApiResult.ok(id);
     }
 

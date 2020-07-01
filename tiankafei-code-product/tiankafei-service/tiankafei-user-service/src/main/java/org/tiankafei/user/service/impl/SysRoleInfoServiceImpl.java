@@ -49,7 +49,7 @@ public class SysRoleInfoServiceImpl extends BaseServiceImpl<SysRoleInfoMapper, S
     }
     
     @Override
-    public Object saveSysRoleInfo(SysRoleInfoQueryVo sysRoleInfoQueryVo) throws Exception {
+    public Object addSysRoleInfo(SysRoleInfoQueryVo sysRoleInfoQueryVo) throws Exception {
         SysRoleInfoEntity sysRoleInfoEntity = new SysRoleInfoEntity();
         BeanUtils.copyProperties(sysRoleInfoQueryVo, sysRoleInfoEntity);
         super.save(sysRoleInfoEntity);
@@ -57,7 +57,7 @@ public class SysRoleInfoServiceImpl extends BaseServiceImpl<SysRoleInfoMapper, S
     }
         
     @Override
-    public boolean saveSysRoleInfoList(List<SysRoleInfoQueryVo> sysRoleInfoQueryVoList) throws Exception {
+    public boolean addSysRoleInfoList(List<SysRoleInfoQueryVo> sysRoleInfoQueryVoList) throws Exception {
         if(sysRoleInfoQueryVoList != null && !sysRoleInfoQueryVoList.isEmpty()){
             List<SysRoleInfoEntity> sysRoleInfoList = new ArrayList<>();
             for ( SysRoleInfoQueryVo sysRoleInfoQueryVo : sysRoleInfoQueryVoList) {

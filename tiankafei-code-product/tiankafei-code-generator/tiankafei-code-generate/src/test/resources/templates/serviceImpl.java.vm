@@ -49,7 +49,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     }
     
     @Override
-    public Object save${cfg.TableName}(${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
+    public Object add${cfg.TableName}(${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
         ${cfg.entityClassName} ${cfg.entityObjectName} = new ${cfg.entityClassName}();
         BeanUtils.copyProperties(${cfg.tableName}QueryVo, ${cfg.entityObjectName});
         super.save(${cfg.entityObjectName});

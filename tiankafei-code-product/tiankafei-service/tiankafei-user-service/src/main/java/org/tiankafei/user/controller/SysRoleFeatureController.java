@@ -55,7 +55,7 @@ public class SysRoleFeatureController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 系统角色对应的功能配置表 对象", notes = "添加 系统角色对应的功能配置表")
     public ApiResult<String> addSysRoleFeature(@Valid @RequestBody SysRoleFeatureQueryVo sysRoleFeatureQueryVo) throws Exception {
-        Object id = sysRoleFeatureService.saveSysRoleFeature(sysRoleFeatureQueryVo);
+        Object id = sysRoleFeatureService.addSysRoleFeature(sysRoleFeatureQueryVo);
         return ApiResult.ok(id);
     }
 

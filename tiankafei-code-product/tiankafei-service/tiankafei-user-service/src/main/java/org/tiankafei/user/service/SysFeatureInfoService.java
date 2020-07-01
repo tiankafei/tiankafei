@@ -36,7 +36,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
      * @return
      * @throws Exception
      */
-    Object saveSysFeatureInfo(SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception;
+    Object addSysFeatureInfo(SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception;
     
     /**
      * 保存 系统功能菜单信息表 集合
@@ -45,7 +45,7 @@ public interface SysFeatureInfoService extends BaseService<SysFeatureInfoEntity>
      * @return
      * @throws Exception
      */
-    boolean saveSysFeatureInfoList(List<SysFeatureInfoQueryVo> sysFeatureInfoQueryVoList) throws Exception;
+    boolean addSysFeatureInfoList(List<SysFeatureInfoQueryVo> sysFeatureInfoQueryVoList) throws Exception;
 
     /**
      * 修改 系统功能菜单信息表

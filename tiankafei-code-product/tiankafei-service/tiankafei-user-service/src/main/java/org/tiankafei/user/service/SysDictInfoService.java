@@ -36,7 +36,7 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
      * @return
      * @throws Exception
      */
-    Object saveSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception;
+    Object addSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception;
     
     /**
      * 保存 系统数据字典表 集合
@@ -45,7 +45,7 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveSysDictInfoList(List<SysDictInfoQueryVo> sysDictInfoQueryVoList) throws Exception;
+    boolean addSysDictInfoList(List<SysDictInfoQueryVo> sysDictInfoQueryVoList) throws Exception;
 
     /**
      * 修改 系统数据字典表

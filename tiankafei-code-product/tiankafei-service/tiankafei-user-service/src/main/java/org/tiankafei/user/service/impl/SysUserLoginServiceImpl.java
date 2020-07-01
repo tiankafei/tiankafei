@@ -1,16 +1,16 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.user.service.CheckUserInfoExists;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.SysUserLoginPageQueryParam;
 import org.tiankafei.user.param.SysUserLoginQueryParam;
+import org.tiankafei.user.service.SysUserInfoService;
 import org.tiankafei.user.service.SysUserLoginService;
+import org.tiankafei.user.service.UserService;
+import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
-import org.tiankafei.web.common.exception.UserException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
 import java.util.List;
@@ -44,74 +44,39 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     @Autowired
     private SysUserLoginMapper sysUserLoginMapper;
 
-    @Override
-    public boolean checkUsernameExists(String username) throws Exception {
-        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.eq(SysUserLoginEntity::getUsername, username);
-        return checkSysUserLoginExists(lambdaQueryWrapper);
-    }
+    @Autowired
+    private SysUserInfoService sysUserInfoService;
 
-    @Override
-    public boolean checkEmailExists(String email) throws Exception {
-        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.eq(SysUserLoginEntity::getEmail, email);
-        return checkSysUserLoginExists(lambdaQueryWrapper);
-    }
-
-    @Override
-    public boolean checkTelephoneExists(String telephone) throws Exception {
-        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.eq(SysUserLoginEntity::getTelephone, telephone);
-        return checkSysUserLoginExists(lambdaQueryWrapper);
-    }
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean checkSysUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        return checkSysUserLoginExists(lambdaQueryWrapper);
-    }
-
-    /**
-     * 验证信息是否存在
-     * @param lambdaQueryWrapper
-     * @return
-     * @throws Exception
-     */
-    private boolean checkSysUserLoginExists(LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper) throws Exception {
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
     
     @Override
-    public Object saveSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
-        checkSaveUserInfoExists(sysUserLoginQueryVo.getUsername(), "用户名", str -> checkUsernameExists(str));
-        checkSaveUserInfoExists(sysUserLoginQueryVo.getEmail(), "邮箱", str -> checkEmailExists(str));
-        checkSaveUserInfoExists(sysUserLoginQueryVo.getTelephone(), "手机号码", str -> checkTelephoneExists(str));
+    public Object addSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
+        // 新增时校验用户信息是否存在
+        userService.checkAddUserInfoExists(sysUserLoginQueryVo);
 
+        // 保存用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
         super.save(sysUserLoginEntity);
-        return sysUserLoginEntity.getId();
-    }
+        Long id = sysUserLoginEntity.getId();
 
-    /**
-     * 新增时校验用户信息是否存在
-     * @param str
-     * @param message
-     * @param checkUserInfoExists
-     * @throws Exception
-     */
-    private void checkSaveUserInfoExists(String str, String message, CheckUserInfoExists checkUserInfoExists) throws Exception {
-        if(StringUtils.isNotBlank(str)){
-            boolean existsFlag = checkUserInfoExists.checkUserInfoExists(str);
-            if(existsFlag){
-                throw new UserException(message + "已经存在，请重新输入！");
-            }
-        }
+        // 保存用户信息表数据
+        SysUserInfoQueryVo sysUserInfoQueryVo = new SysUserInfoQueryVo();
+        BeanUtils.copyProperties(sysUserLoginEntity, sysUserInfoQueryVo);
+        sysUserInfoService.addSysUserInfo(sysUserInfoQueryVo);
+        return id;
     }
 
     @Override
-    public boolean saveSysUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception {
+    public boolean addSysUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception {
         if(sysUserLoginQueryVoList != null && !sysUserLoginQueryVoList.isEmpty()){
             List<SysUserLoginEntity> sysUserLoginList = new ArrayList<>();
             for ( SysUserLoginQueryVo sysUserLoginQueryVo : sysUserLoginQueryVoList) {
@@ -127,41 +92,27 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     @Override
     public boolean updateSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
         SysUserLoginEntity oldUserEntity = super.getById(sysUserLoginQueryVo.getId());
-        checkUpdateUserInfoExists(oldUserEntity.getUsername(), sysUserLoginQueryVo.getUsername(), "用户名", str -> checkUsernameExists(str));
-        checkUpdateUserInfoExists(oldUserEntity.getEmail(), sysUserLoginQueryVo.getEmail(), "邮箱", str -> checkEmailExists(str));
-        checkUpdateUserInfoExists(oldUserEntity.getTelephone(), sysUserLoginQueryVo.getTelephone(), "手机号码", str -> checkTelephoneExists(str));
+        // 修改时，校验用户信息是否存在
+        userService.checkUpdateUserInfoExists(oldUserEntity, sysUserLoginQueryVo);
 
+        // 更新用户信息表数据
+        SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoService.getSysUserInfoById(sysUserLoginQueryVo.getId());
+        BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserInfoQueryVo);
+        sysUserInfoService.updateSysUserInfo(sysUserInfoQueryVo);
+
+        // 更新用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
         return super.updateById(sysUserLoginEntity);
     }
 
-    /**
-     * 修改时，校验用户信息是否存在
-     * @param oldStr
-     * @param str
-     * @param message
-     * @param checkUserInfoExists
-     * @throws Exception
-     */
-    private void checkUpdateUserInfoExists(String oldStr, String str, String message, CheckUserInfoExists checkUserInfoExists) throws Exception {
-        boolean emailChangeFlag = Boolean.FALSE;
-        if(StringUtils.isNotEmpty(oldStr)){
-            emailChangeFlag = !oldStr.equals(str);
-        }else if(StringUtils.isNotEmpty(str)){
-            emailChangeFlag = !str.equals(oldStr);
-        }
-        if(emailChangeFlag){
-            boolean existsFlag = checkUserInfoExists.checkUserInfoExists(str);
-            if(existsFlag){
-                throw new UserException(message + "已经存在，请重新输入！");
-            }
-        }
-    }
-
     @Override
     public boolean deleteSysUserLogin(String ids) throws Exception {
         String[] idArray = ids.split(",");
+
+        // 删除用户信息表
+        sysUserInfoService.deleteSysUserInfo(ids);
+        // 删除登录用户表
         return super.removeByIds(Arrays.asList(idArray));
     }
 	

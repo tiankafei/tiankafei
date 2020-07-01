@@ -55,7 +55,7 @@ public class SysDictInfoController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 系统数据字典表 对象", notes = "添加 系统数据字典表")
     public ApiResult<String> addSysDictInfo(@Valid @RequestBody SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
-        Object id = sysDictInfoService.saveSysDictInfo(sysDictInfoQueryVo);
+        Object id = sysDictInfoService.addSysDictInfo(sysDictInfoQueryVo);
         return ApiResult.ok(id);
     }
 

@@ -49,7 +49,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     }
     
     @Override
-    public Object saveSysDepartment(SysDepartmentQueryVo sysDepartmentQueryVo) throws Exception {
+    public Object addSysDepartment(SysDepartmentQueryVo sysDepartmentQueryVo) throws Exception {
         SysDepartmentEntity sysDepartmentEntity = new SysDepartmentEntity();
         BeanUtils.copyProperties(sysDepartmentQueryVo, sysDepartmentEntity);
         super.save(sysDepartmentEntity);
@@ -57,7 +57,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     }
         
     @Override
-    public boolean saveSysDepartmentList(List<SysDepartmentQueryVo> sysDepartmentQueryVoList) throws Exception {
+    public boolean addSysDepartmentList(List<SysDepartmentQueryVo> sysDepartmentQueryVoList) throws Exception {
         if(sysDepartmentQueryVoList != null && !sysDepartmentQueryVoList.isEmpty()){
             List<SysDepartmentEntity> sysDepartmentList = new ArrayList<>();
             for ( SysDepartmentQueryVo sysDepartmentQueryVo : sysDepartmentQueryVoList) {

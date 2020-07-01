@@ -36,7 +36,7 @@ public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
      * @return
      * @throws Exception
      */
-    Object saveSysDepartment(SysDepartmentQueryVo sysDepartmentQueryVo) throws Exception;
+    Object addSysDepartment(SysDepartmentQueryVo sysDepartmentQueryVo) throws Exception;
     
     /**
      * 保存 系统部门表信息 集合
@@ -45,7 +45,7 @@ public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveSysDepartmentList(List<SysDepartmentQueryVo> sysDepartmentQueryVoList) throws Exception;
+    boolean addSysDepartmentList(List<SysDepartmentQueryVo> sysDepartmentQueryVoList) throws Exception;
 
     /**
      * 修改 系统部门表信息

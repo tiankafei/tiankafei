@@ -49,7 +49,7 @@ public class SysRoleFeatureServiceImpl extends BaseServiceImpl<SysRoleFeatureMap
     }
     
     @Override
-    public Object saveSysRoleFeature(SysRoleFeatureQueryVo sysRoleFeatureQueryVo) throws Exception {
+    public Object addSysRoleFeature(SysRoleFeatureQueryVo sysRoleFeatureQueryVo) throws Exception {
         SysRoleFeatureEntity sysRoleFeatureEntity = new SysRoleFeatureEntity();
         BeanUtils.copyProperties(sysRoleFeatureQueryVo, sysRoleFeatureEntity);
         super.save(sysRoleFeatureEntity);
@@ -57,7 +57,7 @@ public class SysRoleFeatureServiceImpl extends BaseServiceImpl<SysRoleFeatureMap
     }
         
     @Override
-    public boolean saveSysRoleFeatureList(List<SysRoleFeatureQueryVo> sysRoleFeatureQueryVoList) throws Exception {
+    public boolean addSysRoleFeatureList(List<SysRoleFeatureQueryVo> sysRoleFeatureQueryVoList) throws Exception {
         if(sysRoleFeatureQueryVoList != null && !sysRoleFeatureQueryVoList.isEmpty()){
             List<SysRoleFeatureEntity> sysRoleFeatureList = new ArrayList<>();
             for ( SysRoleFeatureQueryVo sysRoleFeatureQueryVo : sysRoleFeatureQueryVoList) {

@@ -49,7 +49,7 @@ public class SysFeatureInfoServiceImpl extends BaseServiceImpl<SysFeatureInfoMap
     }
     
     @Override
-    public Object saveSysFeatureInfo(SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception {
+    public Object addSysFeatureInfo(SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception {
         SysFeatureInfoEntity sysFeatureInfoEntity = new SysFeatureInfoEntity();
         BeanUtils.copyProperties(sysFeatureInfoQueryVo, sysFeatureInfoEntity);
         super.save(sysFeatureInfoEntity);
@@ -57,7 +57,7 @@ public class SysFeatureInfoServiceImpl extends BaseServiceImpl<SysFeatureInfoMap
     }
         
     @Override
-    public boolean saveSysFeatureInfoList(List<SysFeatureInfoQueryVo> sysFeatureInfoQueryVoList) throws Exception {
+    public boolean addSysFeatureInfoList(List<SysFeatureInfoQueryVo> sysFeatureInfoQueryVoList) throws Exception {
         if(sysFeatureInfoQueryVoList != null && !sysFeatureInfoQueryVoList.isEmpty()){
             List<SysFeatureInfoEntity> sysFeatureInfoList = new ArrayList<>();
             for ( SysFeatureInfoQueryVo sysFeatureInfoQueryVo : sysFeatureInfoQueryVoList) {

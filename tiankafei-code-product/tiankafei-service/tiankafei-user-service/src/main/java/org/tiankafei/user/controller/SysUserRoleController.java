@@ -55,7 +55,7 @@ public class SysUserRoleController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户拥有的角色关系表 对象", notes = "添加 用户拥有的角色关系表")
     public ApiResult<String> addSysUserRole(@Valid @RequestBody SysUserRoleQueryVo sysUserRoleQueryVo) throws Exception {
-        Object id = sysUserRoleService.saveSysUserRole(sysUserRoleQueryVo);
+        Object id = sysUserRoleService.addSysUserRole(sysUserRoleQueryVo);
         return ApiResult.ok(id);
     }
 

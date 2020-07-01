@@ -36,7 +36,7 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @return
      * @throws Exception
      */
-    Object saveSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception;
+    Object addSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception;
     
     /**
      * 保存 用户基本信息表 集合
@@ -45,7 +45,7 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveSysUserInfoList(List<SysUserInfoQueryVo> sysUserInfoQueryVoList) throws Exception;
+    boolean addSysUserInfoList(List<SysUserInfoQueryVo> sysUserInfoQueryVoList) throws Exception;
 
     /**
      * 修改 用户基本信息表

@@ -3,6 +3,7 @@ package org.tiankafei.user.controller;
 import org.tiankafei.user.service.SysUserLoginService;
 import org.tiankafei.user.param.SysUserLoginQueryParam;
 import org.tiankafei.user.param.SysUserLoginPageQueryParam;
+import org.tiankafei.user.service.UserService;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
@@ -38,13 +39,16 @@ public class SysUserLoginController extends BaseController {
     @Autowired
     private SysUserLoginService sysUserLoginService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 校验 用户名 是否已经存在
      */
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
     public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
-        Boolean flag = sysUserLoginService.checkUsernameExists(username);
+        Boolean flag = userService.checkUsernameExists(username);
         return ApiResult.ok(flag);
     }
 
@@ -54,7 +58,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
-        Boolean flag = sysUserLoginService.checkEmailExists(email);
+        Boolean flag = userService.checkEmailExists(email);
         return ApiResult.ok(flag);
     }
 
@@ -64,7 +68,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkTelephone/{telephone}")
     @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
     public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
-        Boolean flag = sysUserLoginService.checkTelephoneExists(telephone);
+        Boolean flag = userService.checkTelephoneExists(telephone);
         return ApiResult.ok(flag);
     }
 
@@ -84,7 +88,8 @@ public class SysUserLoginController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户登录信息表 对象", notes = "添加 用户登录信息表")
     public ApiResult<String> addSysUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
-        Object id = sysUserLoginService.saveSysUserLogin(sysUserLoginQueryVo);
+        sysUserLoginQueryVo.setId(null);
+        Object id = sysUserLoginService.addSysUserLogin(sysUserLoginQueryVo);
         return ApiResult.ok(id);
     }
 

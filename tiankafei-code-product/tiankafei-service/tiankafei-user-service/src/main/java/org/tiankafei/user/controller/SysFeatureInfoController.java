@@ -55,7 +55,7 @@ public class SysFeatureInfoController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 系统功能菜单信息表 对象", notes = "添加 系统功能菜单信息表")
     public ApiResult<String> addSysFeatureInfo(@Valid @RequestBody SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception {
-        Object id = sysFeatureInfoService.saveSysFeatureInfo(sysFeatureInfoQueryVo);
+        Object id = sysFeatureInfoService.addSysFeatureInfo(sysFeatureInfoQueryVo);
         return ApiResult.ok(id);
     }
 

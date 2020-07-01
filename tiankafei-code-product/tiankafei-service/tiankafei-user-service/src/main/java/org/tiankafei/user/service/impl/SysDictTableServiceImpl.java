@@ -49,7 +49,7 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
     }
     
     @Override
-    public Object saveSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception {
+    public Object addSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception {
         SysDictTableEntity sysDictTableEntity = new SysDictTableEntity();
         BeanUtils.copyProperties(sysDictTableQueryVo, sysDictTableEntity);
         super.save(sysDictTableEntity);
@@ -57,7 +57,7 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
     }
         
     @Override
-    public boolean saveSysDictTableList(List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception {
+    public boolean addSysDictTableList(List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception {
         if(sysDictTableQueryVoList != null && !sysDictTableQueryVoList.isEmpty()){
             List<SysDictTableEntity> sysDictTableList = new ArrayList<>();
             for ( SysDictTableQueryVo sysDictTableQueryVo : sysDictTableQueryVoList) {

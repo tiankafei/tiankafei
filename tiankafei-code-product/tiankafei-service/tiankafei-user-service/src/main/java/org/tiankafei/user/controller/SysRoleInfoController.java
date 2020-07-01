@@ -55,7 +55,7 @@ public class SysRoleInfoController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 角色信息表 对象", notes = "添加 角色信息表")
     public ApiResult<String> addSysRoleInfo(@Valid @RequestBody SysRoleInfoQueryVo sysRoleInfoQueryVo) throws Exception {
-        Object id = sysRoleInfoService.saveSysRoleInfo(sysRoleInfoQueryVo);
+        Object id = sysRoleInfoService.addSysRoleInfo(sysRoleInfoQueryVo);
         return ApiResult.ok(id);
     }
 

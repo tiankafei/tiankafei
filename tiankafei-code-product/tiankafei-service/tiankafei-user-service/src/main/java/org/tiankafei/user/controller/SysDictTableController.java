@@ -55,7 +55,7 @@ public class SysDictTableController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 字典的数据表 对象", notes = "添加 字典的数据表")
     public ApiResult<String> addSysDictTable(@Valid @RequestBody SysDictTableQueryVo sysDictTableQueryVo) throws Exception {
-        Object id = sysDictTableService.saveSysDictTable(sysDictTableQueryVo);
+        Object id = sysDictTableService.addSysDictTable(sysDictTableQueryVo);
         return ApiResult.ok(id);
     }
 

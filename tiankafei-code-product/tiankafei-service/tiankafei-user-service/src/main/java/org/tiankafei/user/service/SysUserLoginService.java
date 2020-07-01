@@ -21,30 +21,6 @@ import java.util.List;
 public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
 
     /**
-     * 验证用户名是否存在
-     * @param username
-     * @return
-     * @throws Exception
-     */
-    boolean checkUsernameExists(String username) throws Exception;
-
-    /**
-     * 验证邮箱是否存在
-     * @param email
-     * @return
-     * @throws Exception
-     */
-    boolean checkEmailExists(String email) throws Exception;
-
-    /**
-     * 验证手机号码是否存在
-     * @param telephone
-     * @return
-     * @throws Exception
-     */
-    boolean checkTelephoneExists(String telephone) throws Exception;
-
-    /**
      * 校验 用户登录信息表 是否已经存在
      *
      * @param sysUserLoginQueryParam
@@ -60,7 +36,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    Object saveSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
+    Object addSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
     
     /**
      * 保存 用户登录信息表 集合
@@ -69,7 +45,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveSysUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception;
+    boolean addSysUserLoginList(List<SysUserLoginQueryVo> sysUserLoginQueryVoList) throws Exception;
 
     /**
      * 修改 用户登录信息表

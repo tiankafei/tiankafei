@@ -36,7 +36,7 @@ public interface SysRoleFeatureService extends BaseService<SysRoleFeatureEntity>
      * @return
      * @throws Exception
      */
-    Object saveSysRoleFeature(SysRoleFeatureQueryVo sysRoleFeatureQueryVo) throws Exception;
+    Object addSysRoleFeature(SysRoleFeatureQueryVo sysRoleFeatureQueryVo) throws Exception;
     
     /**
      * 保存 系统角色对应的功能配置表 集合
@@ -45,7 +45,7 @@ public interface SysRoleFeatureService extends BaseService<SysRoleFeatureEntity>
      * @return
      * @throws Exception
      */
-    boolean saveSysRoleFeatureList(List<SysRoleFeatureQueryVo> sysRoleFeatureQueryVoList) throws Exception;
+    boolean addSysRoleFeatureList(List<SysRoleFeatureQueryVo> sysRoleFeatureQueryVoList) throws Exception;
 
     /**
      * 修改 系统角色对应的功能配置表

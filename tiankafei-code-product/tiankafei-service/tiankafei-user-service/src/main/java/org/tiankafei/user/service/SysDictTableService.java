@@ -36,7 +36,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
      * @return
      * @throws Exception
      */
-    Object saveSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception;
+    Object addSysDictTable(SysDictTableQueryVo sysDictTableQueryVo) throws Exception;
     
     /**
      * 保存 字典的数据表 集合
@@ -45,7 +45,7 @@ public interface SysDictTableService extends BaseService<SysDictTableEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveSysDictTableList(List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception;
+    boolean addSysDictTableList(List<SysDictTableQueryVo> sysDictTableQueryVoList) throws Exception;
 
     /**
      * 修改 字典的数据表

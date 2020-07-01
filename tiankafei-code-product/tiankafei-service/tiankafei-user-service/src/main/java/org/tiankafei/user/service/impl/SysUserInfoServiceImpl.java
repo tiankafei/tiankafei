@@ -1,6 +1,9 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.tiankafei.user.service.SysUserLoginService;
+import org.tiankafei.user.service.UserService;
+import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.mapper.SysUserInfoMapper;
@@ -41,6 +44,12 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     @Autowired
     private SysUserInfoMapper sysUserInfoMapper;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private SysUserLoginService userLoginService;
+
     @Override
     public boolean checkSysUserInfoExists(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
         LambdaQueryWrapper<SysUserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
@@ -49,15 +58,26 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     }
     
     @Override
-    public Object saveSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
+    public Object addSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
+        // 新增时校验用户信息是否存在
+        userService.checkAddUserInfoExists(sysUserInfoQueryVo);
+
+        // 保存用户登录表数据
+        SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
+        BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserLoginQueryVo);
+        Long id = (Long) userLoginService.addSysUserLogin(sysUserLoginQueryVo);
+
+        // 保存用户信息表数据
         SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
         BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserInfoEntity);
+        sysUserInfoEntity.setId(id);
         super.save(sysUserInfoEntity);
+
         return sysUserInfoEntity.getId();
     }
         
     @Override
-    public boolean saveSysUserInfoList(List<SysUserInfoQueryVo> sysUserInfoQueryVoList) throws Exception {
+    public boolean addSysUserInfoList(List<SysUserInfoQueryVo> sysUserInfoQueryVoList) throws Exception {
         if(sysUserInfoQueryVoList != null && !sysUserInfoQueryVoList.isEmpty()){
             List<SysUserInfoEntity> sysUserInfoList = new ArrayList<>();
             for ( SysUserInfoQueryVo sysUserInfoQueryVo : sysUserInfoQueryVoList) {
@@ -72,6 +92,16 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
 
     @Override
     public boolean updateSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
+        SysUserInfoEntity oldUserInfoEntity = super.getById(sysUserInfoQueryVo.getId());
+        // 修改时，校验用户信息是否存在
+        userService.checkUpdateUserInfoExists(oldUserInfoEntity, sysUserInfoQueryVo);
+
+        // 更新用户登录表数据
+        SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
+        BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserLoginQueryVo);
+        userLoginService.updateSysUserLogin(sysUserLoginQueryVo);
+
+        // 更新用户信息表数据
         SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
         BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserInfoEntity);
         return super.updateById(sysUserInfoEntity);
@@ -80,6 +110,9 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     @Override
     public boolean deleteSysUserInfo(String ids) throws Exception {
         String[] idArray = ids.split(",");
+        // 删除用户登录表数据
+        userLoginService.deleteSysUserLogin(ids);
+        // 删除用户信息表数据
         return super.removeByIds(Arrays.asList(idArray));
     }
 	

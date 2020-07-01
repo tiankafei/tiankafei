@@ -3,6 +3,7 @@ package org.tiankafei.user.controller;
 import org.tiankafei.user.service.SysUserInfoService;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
+import org.tiankafei.user.service.UserService;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
@@ -39,6 +40,39 @@ public class SysUserInfoController extends BaseController {
     @Autowired
     private SysUserInfoService sysUserInfoService;
 
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 校验 用户名 是否已经存在
+     */
+    @GetMapping("/checkUsername/{username}")
+    @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
+    public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
+        Boolean flag = userService.checkUsernameExists(username);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 校验  邮箱 是否已经存在
+     */
+    @GetMapping("/checkEmail/{email}")
+    @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
+    public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
+        Boolean flag = userService.checkEmailExists(email);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 校验 手机号码 是否已经存在
+     */
+    @GetMapping("/checkTelephone/{telephone}")
+    @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
+    public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
+        Boolean flag = userService.checkTelephoneExists(telephone);
+        return ApiResult.ok(flag);
+    }
+
     /**
      * 校验 用户基本信息表 是否已经存在
      */
@@ -55,7 +89,7 @@ public class SysUserInfoController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户基本信息表 对象", notes = "添加 用户基本信息表")
     public ApiResult<String> addSysUserInfo(@Valid @RequestBody SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
-        Object id = sysUserInfoService.saveSysUserInfo(sysUserInfoQueryVo);
+        Object id = sysUserInfoService.addSysUserInfo(sysUserInfoQueryVo);
         return ApiResult.ok(id);
     }
 

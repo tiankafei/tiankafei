@@ -49,7 +49,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
     }
     
     @Override
-    public Object saveSysUserRole(SysUserRoleQueryVo sysUserRoleQueryVo) throws Exception {
+    public Object addSysUserRole(SysUserRoleQueryVo sysUserRoleQueryVo) throws Exception {
         SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
         BeanUtils.copyProperties(sysUserRoleQueryVo, sysUserRoleEntity);
         super.save(sysUserRoleEntity);
@@ -57,7 +57,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
     }
         
     @Override
-    public boolean saveSysUserRoleList(List<SysUserRoleQueryVo> sysUserRoleQueryVoList) throws Exception {
+    public boolean addSysUserRoleList(List<SysUserRoleQueryVo> sysUserRoleQueryVoList) throws Exception {
         if(sysUserRoleQueryVoList != null && !sysUserRoleQueryVoList.isEmpty()){
             List<SysUserRoleEntity> sysUserRoleList = new ArrayList<>();
             for ( SysUserRoleQueryVo sysUserRoleQueryVo : sysUserRoleQueryVoList) {

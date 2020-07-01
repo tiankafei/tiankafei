@@ -36,7 +36,7 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @return
      * @throws Exception
      */
-    Object saveSysUserRole(SysUserRoleQueryVo sysUserRoleQueryVo) throws Exception;
+    Object addSysUserRole(SysUserRoleQueryVo sysUserRoleQueryVo) throws Exception;
     
     /**
      * 保存 用户拥有的角色关系表 集合
@@ -45,7 +45,7 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @return
      * @throws Exception
      */
-    boolean saveSysUserRoleList(List<SysUserRoleQueryVo> sysUserRoleQueryVoList) throws Exception;
+    boolean addSysUserRoleList(List<SysUserRoleQueryVo> sysUserRoleQueryVoList) throws Exception;
 
     /**
      * 修改 用户拥有的角色关系表

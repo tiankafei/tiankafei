@@ -49,7 +49,7 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     }
     
     @Override
-    public Object saveSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
+    public Object addSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
         SysDictInfoEntity sysDictInfoEntity = new SysDictInfoEntity();
         BeanUtils.copyProperties(sysDictInfoQueryVo, sysDictInfoEntity);
         super.save(sysDictInfoEntity);
@@ -57,7 +57,7 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     }
         
     @Override
-    public boolean saveSysDictInfoList(List<SysDictInfoQueryVo> sysDictInfoQueryVoList) throws Exception {
+    public boolean addSysDictInfoList(List<SysDictInfoQueryVo> sysDictInfoQueryVoList) throws Exception {
         if(sysDictInfoQueryVoList != null && !sysDictInfoQueryVoList.isEmpty()){
             List<SysDictInfoEntity> sysDictInfoList = new ArrayList<>();
             for ( SysDictInfoQueryVo sysDictInfoQueryVo : sysDictInfoQueryVoList) {
