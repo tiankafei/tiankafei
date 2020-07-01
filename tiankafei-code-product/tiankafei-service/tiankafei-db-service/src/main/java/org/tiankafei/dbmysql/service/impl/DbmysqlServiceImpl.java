@@ -64,7 +64,7 @@ public class DbmysqlServiceImpl implements DbmysqlService {
     public boolean dropTable(String tableName) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("drop table ").append(tableName);
-        log.debug(stringBuilder.toString());
+        log.debug("delete table sql is : {}", stringBuilder.toString());
         jdbcTemplate.execute(stringBuilder.toString());
         return Boolean.TRUE;
     }
@@ -74,17 +74,22 @@ public class DbmysqlServiceImpl implements DbmysqlService {
         // 1. 查询索引
         StringBuilder searchIndexSql = new StringBuilder();
         searchIndexSql.append("show index from ").append(templateTable);
+        log.debug("show index sql : {}", searchIndexSql.toString());
         List<Map<String, Object>> dataMapList = jdbcTemplate.queryForList(searchIndexSql.toString());
 
         List<String> sqlList = Lists.newArrayList();
         // 2. 创建表语句
-        sqlList.add("create table " + tableName + " as select * from " + templateTable + " where 1=2");
+        StringBuilder createTableSql = new StringBuilder();
+        createTableSql.append("create table ").append(tableName).append(" as select * from ").append(templateTable).append(" where 1=2");
+        log.debug("create table sql : {}", createTableSql.toString());
+        sqlList.add(createTableSql.toString());
 
         for (int index = 0, length = dataMapList.size(); index < length; index++) {
             Map<String, Object> dataMap = dataMapList.get(index);
             Object key_name = dataMap.get("Key_name");
             Object column_name = dataMap.get("Column_name");
             Integer non_unique = (Integer) dataMap.get("Non_unique");
+            String index_comment  = (String) dataMap.get("Index_comment");
 
             if(!"PRIMARY".equals(key_name)){
                 // 3. 创建索引语句
@@ -92,7 +97,8 @@ public class DbmysqlServiceImpl implements DbmysqlService {
                 createIndexSql.append("ALTER TABLE `")
                         .append(getTableSchema()).append("`.`").append(tableName)
                         .append("` ADD ").append(non_unique == 0 ? "UNIQUE" : "").append(" INDEX `")
-                        .append(key_name).append("`(`").append(column_name).append("`) COMMENT '").append(name).append("'");
+                        .append(key_name).append("`(`").append(column_name).append("`) COMMENT '").append(index_comment).append("'");
+                log.debug("create index sql : {}", createIndexSql.toString());
                 sqlList.add(createIndexSql.toString());
             }
         }
@@ -100,6 +106,7 @@ public class DbmysqlServiceImpl implements DbmysqlService {
         if(StringUtils.isNotBlank(name)){
             StringBuilder tableCommentSql = new StringBuilder();
             tableCommentSql.append("ALTER TABLE `").append(getTableSchema()).append("`.`").append(tableName).append("` COMMENT = '").append(name).append("'");
+            log.debug("alter table comment : {}", tableCommentSql.toString());
             sqlList.add(tableCommentSql.toString());
         }
         jdbcTemplate.batchUpdate(sqlList.toArray(new String[]{}));
