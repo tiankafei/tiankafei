@@ -102,6 +102,28 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     }
 
     @Override
+    public boolean enable(String id) throws Exception {
+        SysDictInfoEntity sysDictInfoEntity = sysDictInfoMapper.selectById(id);
+        sysDictInfoEntity.setStatus(Boolean.TRUE);
+        sysDictInfoMapper.updateById(sysDictInfoEntity);
+
+        //TODO 创建表结构
+        String dataTable = sysDictInfoEntity.getDataTable();
+        System.out.println(dataTable);
+
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean disable(String id) throws Exception {
+        SysDictInfoEntity sysDictInfoEntity = sysDictInfoMapper.selectById(id);
+        sysDictInfoEntity.setStatus(Boolean.FALSE);
+        sysDictInfoMapper.updateById(sysDictInfoEntity);
+
+        return Boolean.TRUE;
+    }
+
+    @Override
     public boolean deleteSysDictInfo(String ids) throws Exception {
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));

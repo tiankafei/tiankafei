@@ -70,6 +70,26 @@ public class SysDictInfoController extends BaseController {
     }
 
     /**
+     * 启用 系统数据字典表 对象
+     */
+    @GetMapping("/enable/{id}")
+    @ApiOperation(value = "修改 系统数据字典表 对象", notes = "修改 系统数据字典表")
+    public ApiResult<Boolean> enable(String id) throws Exception {
+        boolean flag = sysDictInfoService.enable(id);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 禁用 系统数据字典表 对象
+     */
+    @PostMapping("/disable/{id}")
+    @ApiOperation(value = "修改 系统数据字典表 对象", notes = "修改 系统数据字典表")
+    public ApiResult<Boolean> disable(String id) throws Exception {
+        boolean flag = sysDictInfoService.disable(id);
+        return ApiResult.ok(flag);
+    }
+
+    /**
      * 删除 系统数据字典表 对象
      */
     @PostMapping("/delete")

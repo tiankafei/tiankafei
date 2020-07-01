@@ -57,6 +57,22 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
     boolean updateSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception;
 
     /**
+     * 启用字段
+     * @param id    字典id
+     * @return
+     * @throws Exception
+     */
+    boolean enable(String id) throws Exception ;
+
+    /**
+     * 禁用字典
+     * @param id    字典id
+     * @return
+     * @throws Exception
+     */
+    boolean disable(String id) throws Exception ;
+
+    /**
      * 删除 系统数据字典表
      *
      * @param ids
