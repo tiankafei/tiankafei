@@ -34,7 +34,7 @@ public class SysUserLoginEntity extends BaseEntity {
      * 主键
      */
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id" , type = IdType.AUTO)
+    @TableId(value = "id" , type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
