@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.user.mapper.SysDictInfoMapper">
+
+            <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, dict_code, dict_name, status, description, remarks, data_table, create_time, update_time, create_user_id
+    </sql>
+
+    <select id="getSysDictInfoList" resultType="org.tiankafei.user.vo.SysDictInfoQueryVo">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict_info
+    </select>
+
+</mapper>
