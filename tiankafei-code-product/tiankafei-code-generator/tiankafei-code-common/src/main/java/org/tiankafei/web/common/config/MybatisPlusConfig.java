@@ -28,6 +28,7 @@ public class MybatisPlusConfig {
 
         DynamicTableNameParser dynamicTableNameParser = new DynamicTableNameParser();
         HashMap<String, ITableNameHandler> tableNameHandlerHashMap = Maps.newHashMap();
+        //TODO note note note 动态表名在这里配置
         tableNameHandlerHashMap.put("sys_dict_table", new DynamicTableNameHandler());
         dynamicTableNameParser.setTableNameHandlerMap(tableNameHandlerHashMap);
 
