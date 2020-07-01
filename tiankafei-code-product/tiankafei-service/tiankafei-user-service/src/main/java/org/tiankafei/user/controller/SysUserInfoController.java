@@ -89,6 +89,7 @@ public class SysUserInfoController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户基本信息表 对象", notes = "添加 用户基本信息表")
     public ApiResult<String> addSysUserInfo(@Valid @RequestBody SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
+        sysUserInfoQueryVo.setId(null);
         Object id = sysUserInfoService.addSysUserInfo(sysUserInfoQueryVo);
         return ApiResult.ok(id);
     }

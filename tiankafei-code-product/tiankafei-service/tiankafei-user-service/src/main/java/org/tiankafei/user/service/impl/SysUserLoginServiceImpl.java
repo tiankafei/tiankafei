@@ -1,14 +1,15 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.apache.commons.collections4.CollectionUtils;
+import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.entity.SysUserLoginEntity;
+import org.tiankafei.user.mapper.SysUserInfoMapper;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.SysUserLoginPageQueryParam;
 import org.tiankafei.user.param.SysUserLoginQueryParam;
-import org.tiankafei.user.service.SysUserInfoService;
 import org.tiankafei.user.service.SysUserLoginService;
 import org.tiankafei.user.service.UserService;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
@@ -42,10 +43,10 @@ import java.io.Serializable;
 public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUserLoginEntity> implements SysUserLoginService {
 
     @Autowired
-    private SysUserLoginMapper sysUserLoginMapper;
+    private SysUserLoginMapper userLoginMapper;
 
     @Autowired
-    private SysUserInfoService sysUserInfoService;
+    private SysUserInfoMapper userInfoMapper;
 
     @Autowired
     private UserService userService;
@@ -69,9 +70,9 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         Long id = sysUserLoginEntity.getId();
 
         // 保存用户信息表数据
-        SysUserInfoQueryVo sysUserInfoQueryVo = new SysUserInfoQueryVo();
-        BeanUtils.copyProperties(sysUserLoginEntity, sysUserInfoQueryVo);
-        sysUserInfoService.addSysUserInfo(sysUserInfoQueryVo);
+        SysUserInfoEntity userInfoEntity = new SysUserInfoEntity();
+        BeanUtils.copyProperties(sysUserLoginQueryVo, userInfoEntity);
+        userInfoMapper.insert(userInfoEntity);
         return id;
     }
 
@@ -96,24 +97,29 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         userService.checkUpdateUserInfoExists(oldUserEntity, sysUserLoginQueryVo);
 
         // 更新用户信息表数据
-        SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoService.getSysUserInfoById(sysUserLoginQueryVo.getId());
-        BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserInfoQueryVo);
-        sysUserInfoService.updateSysUserInfo(sysUserInfoQueryVo);
+        SysUserInfoEntity userInfoEntity = userInfoMapper.selectById(sysUserLoginQueryVo.getId());
+        BeanUtils.copyProperties(sysUserLoginQueryVo, userInfoEntity);
+        userInfoMapper.updateById(userInfoEntity);
 
         // 更新用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
-        return super.updateById(sysUserLoginEntity);
+        super.updateById(sysUserLoginEntity);
+
+        return Boolean.TRUE;
     }
 
     @Override
     public boolean deleteSysUserLogin(String ids) throws Exception {
         String[] idArray = ids.split(",");
-
-        // 删除用户信息表
-        sysUserInfoService.deleteSysUserInfo(ids);
-        // 删除登录用户表
-        return super.removeByIds(Arrays.asList(idArray));
+        List<String> idList = Arrays.asList(idArray);
+        if(CollectionUtils.isNotEmpty(idList)){
+            // 删除用户信息表
+            userInfoMapper.deleteBatchIds(idList);
+            // 删除登录用户表
+            super.removeByIds(idList);
+        }
+        return Boolean.TRUE;
     }
 	
     @Override
@@ -141,7 +147,7 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
 
     @Override
     public List<SysUserLoginQueryVo> getSysUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-        List<SysUserLoginQueryVo> sysUserLoginQueryVoList = sysUserLoginMapper.getSysUserLoginList(sysUserLoginQueryParam);
+        List<SysUserLoginQueryVo> sysUserLoginQueryVoList = userLoginMapper.getSysUserLoginList(sysUserLoginQueryParam);
         return sysUserLoginQueryVoList;
     }
     

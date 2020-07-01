@@ -1,9 +1,10 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.tiankafei.user.service.SysUserLoginService;
+import org.apache.commons.collections4.CollectionUtils;
+import org.tiankafei.user.entity.SysUserLoginEntity;
+import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.service.UserService;
-import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.mapper.SysUserInfoMapper;
@@ -42,13 +43,13 @@ import java.io.Serializable;
 public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, SysUserInfoEntity> implements SysUserInfoService {
 
     @Autowired
-    private SysUserInfoMapper sysUserInfoMapper;
+    private SysUserInfoMapper userInfoMapper;
+
+    @Autowired
+    private SysUserLoginMapper userLoginMapper;
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private SysUserLoginService userLoginService;
 
     @Override
     public boolean checkSysUserInfoExists(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
@@ -63,14 +64,14 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
         userService.checkAddUserInfoExists(sysUserInfoQueryVo);
 
         // 保存用户登录表数据
-        SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
-        BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserLoginQueryVo);
-        Long id = (Long) userLoginService.addSysUserLogin(sysUserLoginQueryVo);
+        SysUserLoginEntity userLoginEntity = new SysUserLoginEntity();
+        BeanUtils.copyProperties(sysUserInfoQueryVo, userLoginEntity);
+        userLoginMapper.insert(userLoginEntity);
 
         // 保存用户信息表数据
         SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
         BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserInfoEntity);
-        sysUserInfoEntity.setId(id);
+        sysUserInfoEntity.setId(userLoginEntity.getId());
         super.save(sysUserInfoEntity);
 
         return sysUserInfoEntity.getId();
@@ -97,23 +98,30 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
         userService.checkUpdateUserInfoExists(oldUserInfoEntity, sysUserInfoQueryVo);
 
         // 更新用户登录表数据
-        SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
-        BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserLoginQueryVo);
-        userLoginService.updateSysUserLogin(sysUserLoginQueryVo);
+        SysUserLoginEntity userLoginEntity = new SysUserLoginEntity();
+        BeanUtils.copyProperties(sysUserInfoQueryVo, userLoginEntity);
+        userLoginMapper.updateById(userLoginEntity);
 
         // 更新用户信息表数据
         SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
         BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserInfoEntity);
-        return super.updateById(sysUserInfoEntity);
+        super.updateById(sysUserInfoEntity);
+
+        return Boolean.TRUE;
     }
 
     @Override
     public boolean deleteSysUserInfo(String ids) throws Exception {
         String[] idArray = ids.split(",");
-        // 删除用户登录表数据
-        userLoginService.deleteSysUserLogin(ids);
-        // 删除用户信息表数据
-        return super.removeByIds(Arrays.asList(idArray));
+        List<String> idList = Arrays.asList(idArray);
+
+        if(CollectionUtils.isNotEmpty(idList)){
+            // 删除用户登录表数据
+            userLoginMapper.deleteBatchIds(idList);
+            // 删除用户信息表数据
+            super.removeByIds(idList);
+        }
+        return Boolean.TRUE;
     }
 	
     @Override
@@ -141,7 +149,7 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
 
     @Override
     public List<SysUserInfoQueryVo> getSysUserInfoList(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
-        List<SysUserInfoQueryVo> sysUserInfoQueryVoList = sysUserInfoMapper.getSysUserInfoList(sysUserInfoQueryParam);
+        List<SysUserInfoQueryVo> sysUserInfoQueryVoList = userInfoMapper.getSysUserInfoList(sysUserInfoQueryParam);
         return sysUserInfoQueryVoList;
     }
     
