@@ -18,6 +18,7 @@
 
     <modules>
         <module>tiankafei-db-service</module>
+        <module>tiankafei-user-common</module>
         <module>tiankafei-user-service</module>
         <module>tiankafei-blog-service</module>
     </modules>
