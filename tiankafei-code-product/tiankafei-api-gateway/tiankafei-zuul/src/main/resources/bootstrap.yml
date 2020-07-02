@@ -9,6 +9,12 @@ zuul:
     user:
       path: /user/**
       serviceId: user-service
+    blog:
+      path: /blog/**
+      serviceId: blog-service
+    questionnaire:
+      path: /questionnaire/**
+      serviceId: questionnaire-service
 management:
   endpoints:
     web:

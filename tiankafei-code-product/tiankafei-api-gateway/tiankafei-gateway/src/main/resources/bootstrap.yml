@@ -15,6 +15,21 @@ spring:
             - Path=/api/user/**
           filters:
             - StripPrefix=2
+        - id: blog-service
+          uri: lb://blog-service
+          predicates:
+            - Path=/api/blog/**
+          filters:
+            - StripPrefix=2
+        - id: questionnaire-service
+          uri: lb://questionnaire-service
+          predicates:
+            - Path=/api/questionnaire/**
+          filters:
+            - StripPrefix=2
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
 logging:
   level:
     ROOT: info
