@@ -21,6 +21,12 @@
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-message</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-stream-rabbit -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -21,6 +21,12 @@
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-message</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-stream-kafka -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
