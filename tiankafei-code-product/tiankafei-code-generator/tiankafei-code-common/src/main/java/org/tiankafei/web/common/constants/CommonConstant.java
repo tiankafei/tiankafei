@@ -6,6 +6,8 @@ package org.tiankafei.web.common.constants;
  **/
 public interface CommonConstant {
 
+    String ACTIVE_PROFILE_DEV = "dev";
+
     /**
      * 记住我的标识
      */

@@ -88,17 +88,18 @@ public class ApiResult<T> implements Serializable {
         return result(ApiStatusEnum.OK.getStatus(), message, data);
     }
 
+
     /**
      * 处理失败
      *
      * @return
      */
     public static ApiResult fail() {
-        return ok(ApiStatusEnum.FAIL);
+        return fail(ApiStatusEnum.FAIL);
     }
 
     public static ApiResult fail(String message) {
-        return ok(message, null);
+        return fail(message, null);
     }
 
     public static ApiResult fail(BaseEnums enums) {
@@ -127,11 +128,11 @@ public class ApiResult<T> implements Serializable {
      * @return
      */
     public static ApiResult error() {
-        return ok(ApiStatusEnum.ERROR);
+        return error(ApiStatusEnum.ERROR);
     }
 
     public static ApiResult error(String message) {
-        return ok(message, null);
+        return error(message, null);
     }
 
     public static ApiResult error(BaseEnums enums) {

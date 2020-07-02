@@ -9,6 +9,7 @@ public enum ExceptionEnum implements BaseEnums {
     REQUEST_PARAM_EXCEPTION("", "请求参数校验异常!"),
     EXCEPTION("", "系统异常!"),
     DAO_EXCEPTION("", "数据库处理异常!"),
+    NOT_FOUND("", "你请求的资源不存在!"),
     ;
 
     private String status;

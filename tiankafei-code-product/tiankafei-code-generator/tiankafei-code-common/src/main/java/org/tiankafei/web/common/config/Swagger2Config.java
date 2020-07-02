@@ -4,6 +4,7 @@ import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.properties.SwaggerProperties;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -20,7 +21,7 @@ import javax.annotation.Resource;
  * @author tiankafei
  * @since 1.0
  **/
-@Profile("dev")
+@Profile(CommonConstant.ACTIVE_PROFILE_DEV)
 @Configuration
 @EnableSwagger2
 @EnableKnife4j
