@@ -221,7 +221,42 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-cache-redis</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-cache-memory</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-message</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-message-disruptor</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-message-kafka</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-message-rabbitmq</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-message-redis</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-message-rocketmq</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
         </dependencies>
