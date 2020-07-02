@@ -11,7 +11,7 @@ import java.util.Map;
  * @author geekidea
  * @date 2019-10-22
  **/
-public class blogGenerator {
+public class BlogGenerator {
 
     public static void main(String[] args) {
         CodeGenerator codeGenerator = new CodeGenerator();
@@ -36,7 +36,7 @@ public class blogGenerator {
         codeGenerator.setIdType(IdType.ASSIGN_ID);
 
         Map<String, String[]> map = new HashMap<>();
-        map.put("blog", new String[]{"sys_blog_info", "sys_blog_label"});
+        map.put("blog", new String[]{"sys_blog_info", "sys_blog_label", "sys_blog_diary"});
 
         String directory = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-blog-service";
         for (String moduleName : map.keySet()) {
