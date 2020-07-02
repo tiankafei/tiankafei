@@ -42,11 +42,12 @@ public class ApiDocFilter implements Filter {
             // 只有在开发模式才提供api文档支持
             chain.doFilter(request, response);
         }else{
+//            // 重定向到错误页面
 //            HttpServletResponse servletResponse = (HttpServletResponse) response;
-            HttpServletRequest servletRequest = (HttpServletRequest) request;
-            // 重定向到错误页面
 //            servletResponse.sendRedirect("/apiDocError");
+
             // 请求转发到错误页面
+            HttpServletRequest servletRequest = (HttpServletRequest) request;
             servletRequest.getRequestDispatcher("/apiDocError").forward(request, response);
         }
     }

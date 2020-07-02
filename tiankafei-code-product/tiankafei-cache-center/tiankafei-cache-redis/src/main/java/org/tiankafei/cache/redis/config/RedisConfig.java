@@ -9,7 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 
 /**
@@ -19,10 +18,10 @@ import java.io.Serializable;
 @Configuration
 public class RedisConfig {
 
-    @Resource
+    @Autowired
     private RedisProperties redisProperties;
 
-    @Resource
+    @Autowired
     private LettuceConnectionFactory lettuceConnectionFactory;
 
     @Bean
