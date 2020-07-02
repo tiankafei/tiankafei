@@ -11,7 +11,7 @@
 
     <artifactId>tiankafei-micro-depends-nacos</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>tiankafei-micro-depends-nacos</name>
     <description></description>

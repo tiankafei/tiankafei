@@ -11,7 +11,7 @@
 
     <artifactId>tiankafei-micro-depends-eureka</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>tiankafei-micro-depends-eureka</name>
     <description></description>
