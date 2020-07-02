@@ -206,6 +206,11 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-user-cache</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-db</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
