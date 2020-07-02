@@ -1,4 +1,4 @@
-package org.tiankafei.user.param;
+package org.tiankafei.user.login.param;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "用户登录对象", description = "用户登录对象")
-public class LoginEntity implements Serializable {
+public class LoginQueryVo implements Serializable {
 
 
 
