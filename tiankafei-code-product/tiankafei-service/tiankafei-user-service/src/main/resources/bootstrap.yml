@@ -54,7 +54,7 @@ swagger:
     name: user-service
     url: 'https://tiankafei.top'
   description: '测试描述内容'
-  title: tiankafei-service
+  title: user-service
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################

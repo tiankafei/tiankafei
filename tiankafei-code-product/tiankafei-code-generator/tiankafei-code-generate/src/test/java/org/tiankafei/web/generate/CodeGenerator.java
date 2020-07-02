@@ -216,6 +216,11 @@ public class CodeGenerator {
     private String commonPaging;
 
     /**
+     * 主键id的类型
+     */
+    private IdType idType = IdType.AUTO;
+
+    /**
      * 是否文件覆盖
      */
     private boolean fileOverride = Boolean.TRUE;
@@ -258,7 +263,7 @@ public class CodeGenerator {
         gc.setAuthor(author);
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(true);               // 启用swagger注解
-        gc.setIdType(IdType.AUTO);          // 主键类型:AUTO
+        gc.setIdType(idType);               // 主键类型:默认AUTO
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
