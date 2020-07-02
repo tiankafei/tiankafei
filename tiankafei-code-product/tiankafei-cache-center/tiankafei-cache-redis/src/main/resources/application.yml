@@ -1,6 +1,6 @@
 spring:
   redis:
-    host: software
+    host: 127.0.0.1
     port: 6379
     timeout: 20000
     #    集群环境打开下面注释，单机不需要打开
