@@ -9,11 +9,16 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-produce-common</artifactId>
+    <artifactId>tiankafei-cache-center</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>tiankafei-produce-common</name>
+    <name>tiankafei-cache-center</name>
     <description></description>
+
+    <modules>
+        <module>tiankafei-cache</module>
+        <module>tiankafei-cache-redis</module>
+    </modules>
 
 </project>

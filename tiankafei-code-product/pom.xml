@@ -43,15 +43,15 @@
     </properties>
 
     <modules>
-        <module>tiankafei-produce-common</module>
         <module>tiankafei-register-center</module>
         <module>tiankafei-config-center</module>
         <module>tiankafei-monitor-center</module>
+        <module>tiankafei-message-center</module>
+        <module>tiankafei-cache-center</module>
         <module>tiankafei-api-gateway</module>
         <module>tiankafei-micro-depends-eureka</module>
         <module>tiankafei-micro-depends-nacos</module>
         <module>tiankafei-micro-depends-consul</module>
-        <module>tiankafei-message-center</module>
         <module>tiankafei-frame-start</module>
         <module>tiankafei-code-generator</module>
         <module>tiankafei-service</module>
@@ -207,6 +207,11 @@
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-db</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-cache</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
             <dependency>
