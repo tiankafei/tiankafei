@@ -4,24 +4,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>code-produce-parent</artifactId>
+        <artifactId>tiankafei-message-center</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-service</artifactId>
+    <artifactId>tiankafei-message-rabbitmq</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>tiankafei-service</name>
+    <name>tiankafei-message-rabbitmq</name>
     <description></description>
 
-    <modules>
-        <module>tiankafei-db</module>
-        <module>tiankafei-user-common</module>
-        <module>tiankafei-user-service</module>
-        <module>tiankafei-blog-service</module>
-        <module>tiankafei-questionnaire-service</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-message</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

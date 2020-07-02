@@ -4,35 +4,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>tiankafei-service</artifactId>
+        <artifactId>tiankafei-message-center</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-db-service</artifactId>
+    <artifactId>tiankafei-message-kafka</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tiankafei-db-service</name>
+    <name>tiankafei-message-kafka</name>
     <description></description>
 
     <dependencies>
-        <!--依赖的工具包-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!--lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-code-common</artifactId>
-            <version>${code-produce.version}</version>
+            <artifactId>tiankafei-message</artifactId>
         </dependency>
     </dependencies>
 

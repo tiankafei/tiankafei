@@ -16,4 +16,13 @@
     <name>tiankafei-message-center</name>
     <description></description>
 
+    <modules>
+        <module>tiankafei-message</module>
+        <module>tiankafei-message-disruptor</module>
+        <module>tiankafei-message-rabbitmq</module>
+        <module>tiankafei-message-kafka</module>
+        <module>tiankafei-message-rocketmq</module>
+        <module>tiankafei-message-redis</module>
+    </modules>
+
 </project>

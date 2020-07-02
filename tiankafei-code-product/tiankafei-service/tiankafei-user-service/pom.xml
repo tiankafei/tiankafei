@@ -43,7 +43,7 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-db-service</artifactId>
+            <artifactId>tiankafei-db</artifactId>
         </dependency>
     </dependencies>
 
