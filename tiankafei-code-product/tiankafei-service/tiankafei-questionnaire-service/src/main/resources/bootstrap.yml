@@ -1,8 +1,8 @@
 server:
-  port: 7200
+  port: 7300
 spring:
   application:
-    name: blog-service
+    name: questionnaire-service
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -51,10 +51,10 @@ logging:
 swagger:
   contact:
     email: 798971170@qq.com
-    name: blog-service
+    name: questionnaire-service
     url: 'https://tiankafei.top'
   description: '测试描述内容'
-  title: blog-service
+  title: questionnaire-service
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################
