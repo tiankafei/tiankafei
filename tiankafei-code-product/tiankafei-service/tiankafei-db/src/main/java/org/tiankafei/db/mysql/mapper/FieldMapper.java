@@ -1,14 +1,14 @@
-package org.tiankafei.dbmysql.mapper;
+package org.tiankafei.db.mysql.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
-import org.tiankafei.dbmysql.entity.TableEntity;
+import org.tiankafei.db.mysql.entity.FieldEntity;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
 @Repository
-public interface TableMapper extends BaseMapper<TableEntity> {
+public interface FieldMapper extends BaseMapper<FieldEntity> {
 
 }

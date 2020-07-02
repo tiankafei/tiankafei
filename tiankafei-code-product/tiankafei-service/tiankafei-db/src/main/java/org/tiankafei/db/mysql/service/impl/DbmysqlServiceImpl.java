@@ -1,4 +1,4 @@
-package org.tiankafei.dbmysql.service.impl;
+package org.tiankafei.db.mysql.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.tiankafei.dbmysql.entity.TableEntity;
-import org.tiankafei.dbmysql.service.DbmysqlService;
-import org.tiankafei.dbmysql.service.TableService;
+import org.tiankafei.db.mysql.entity.TableEntity;
+import org.tiankafei.db.mysql.service.DbmysqlService;
+import org.tiankafei.db.mysql.service.TableService;
 
 import java.util.List;
 import java.util.Map;

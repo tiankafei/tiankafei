@@ -2,8 +2,7 @@ package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.tiankafei.dbmysql.service.DbmysqlService;
+import org.tiankafei.db.mysql.service.DbmysqlService;
 import org.tiankafei.user.constants.UserConstants;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysDictInfoEntity;
