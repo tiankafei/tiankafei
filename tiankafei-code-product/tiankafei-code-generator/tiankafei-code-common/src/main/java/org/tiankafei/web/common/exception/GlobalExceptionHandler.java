@@ -48,6 +48,19 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 登录异常处理
+     *
+     * @param loginException
+     * @return
+     */
+    @ExceptionHandler(value = LoginException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult exception(LoginException loginException) {
+        log.error("exception:", loginException);
+        return ApiResult.fail(ApiStatusEnum.FAIL, loginException.getMessage());
+    }
+
+    /**
      * 用户的异常处理
      *
      * @param userException
