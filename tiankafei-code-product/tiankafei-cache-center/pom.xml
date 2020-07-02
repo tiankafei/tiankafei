@@ -18,6 +18,7 @@
 
     <modules>
         <module>tiankafei-cache</module>
+        <module>tiankafei-cache-memory</module>
         <module>tiankafei-cache-redis</module>
     </modules>
 
