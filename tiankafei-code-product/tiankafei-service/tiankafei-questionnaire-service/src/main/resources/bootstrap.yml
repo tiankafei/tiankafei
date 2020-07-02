@@ -37,7 +37,7 @@ logging:
   level:
     ROOT: info
     # mapper sql日志的包路径
-    org.tiankafei.blog.mapper: debug
+    org.tiankafei.questionnaire.mapper: debug
     org.tiankafei.dbmysql.mapper: debug
     org.tiankafei.dbmysql.service.impl: debug
     # nacos日志的包路径
