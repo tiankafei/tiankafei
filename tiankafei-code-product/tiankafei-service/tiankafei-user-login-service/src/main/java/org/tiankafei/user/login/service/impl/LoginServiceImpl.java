@@ -16,6 +16,8 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginQueryVo>
 
     @Override
     public void login(LoginQueryVo loginQueryVo) throws LoginException {
+        // 用户信息不需要进行数据预热
+
         // 缓存常见的问题及解决方案
         // 1.缓存穿透：同一个key（数据库中没有的key），频繁发起请求，当这个key在数据库中不存在时，用户端频繁使用这一个值不停的发送请求，会造成请求穿过缓存，到达数据库的情况
         // 1.解决方案：把这一个key存放在缓存中，只不过值是空的
