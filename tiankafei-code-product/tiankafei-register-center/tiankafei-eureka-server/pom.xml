@@ -24,13 +24,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-            <exclusions>
-                <!--这个会把返回结果有json转成xml-->
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.dataformat</groupId>
-                    <artifactId>jackson-dataformat-xml</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
