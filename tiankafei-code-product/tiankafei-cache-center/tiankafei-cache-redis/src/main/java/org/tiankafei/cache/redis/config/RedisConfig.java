@@ -27,8 +27,6 @@ public class RedisConfig {
 
     @Bean
     public RedisTemplate<String, Serializable> redisTemplate(){
-        String host = redisProperties.getHost();
-
         RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
 
         redisTemplate.setKeySerializer(new StringRedisSerializer());
