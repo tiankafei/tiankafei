@@ -36,7 +36,7 @@ public class BlogGenerator {
         codeGenerator.setIdType(IdType.ASSIGN_ID);
 
         Map<String, String[]> map = new HashMap<>();
-        map.put("blog", new String[]{"sys_blog_info", "sys_blog_label", "sys_blog_diary"});
+        map.put("blog", new String[]{"sys_blog_info", "sys_blog_label", "sys_blog_diary", "sys_blog_options"});
 
         String directory = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-blog-service";
         for (String moduleName : map.keySet()) {

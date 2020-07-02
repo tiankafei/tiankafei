@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.blog.mapper.SysBlogOptionsMapper">
+
+            <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, options_name, options_value, setting_time, create_user_id
+    </sql>
+
+    <select id="getSysBlogOptionsList" resultType="org.tiankafei.blog.vo.SysBlogOptionsQueryVo">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_blog_options
+    </select>
+
+</mapper>
