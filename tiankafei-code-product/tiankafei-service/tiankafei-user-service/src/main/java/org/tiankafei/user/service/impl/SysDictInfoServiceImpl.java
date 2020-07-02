@@ -2,7 +2,7 @@ package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.collections4.CollectionUtils;
-import org.tiankafei.db.mysql.service.DbmysqlService;
+import org.tiankafei.db.service.DbService;
 import org.tiankafei.user.constants.UserConstants;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysDictInfoEntity;
@@ -47,7 +47,7 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     private SysDictInfoMapper sysDictInfoMapper;
 
     @Autowired
-    private DbmysqlService dbmysqlService;
+    private DbService dbService;
 
     @Override
     public boolean checkSysDictInfoExists(SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception {
@@ -114,12 +114,12 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
         // 如果表已经存在，则直接返回
         String dataTable = sysDictInfoEntity.getDataTable();
-        if(dbmysqlService.checkTableExists(dataTable)){
+        if(dbService.checkTableExists(dataTable)){
             return Boolean.TRUE;
         }
 
         // 表不存在的时候，创建表结构和索引
-        dbmysqlService.createTable("sys_dict_table", dataTable, sysDictInfoEntity.getDictName() + "字典数据表");
+        dbService.createTable("sys_dict_table", dataTable, sysDictInfoEntity.getDictName() + "字典数据表");
         return Boolean.TRUE;
     }
 
@@ -144,7 +144,7 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
             // 删除字段的数据表
             for (int index = 0, length = sysDictInfoEntityList.size(); index < length; index++) {
                 String dataTable = sysDictInfoEntityList.get(index).getDataTable();
-                dbmysqlService.dropTable(dataTable);
+                dbService.dropTable(dataTable);
             }
         }
 

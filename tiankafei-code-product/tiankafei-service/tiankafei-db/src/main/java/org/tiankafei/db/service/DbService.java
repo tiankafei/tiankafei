@@ -1,10 +1,10 @@
-package org.tiankafei.db.mysql.service;
+package org.tiankafei.db.service;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
-public interface DbmysqlService {
+public interface DbService {
 
     /**
      * 获取数据库的名称

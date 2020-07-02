@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.mysql.entity.FieldEntity;
 import org.tiankafei.db.mysql.mapper.FieldMapper;
-import org.tiankafei.db.mysql.service.DbmysqlService;
+import org.tiankafei.db.service.DbService;
 import org.tiankafei.db.mysql.service.FieldService;
 import org.tiankafei.db.mysql.param.FieldNameEntityQueryParam;
 import org.tiankafei.db.mysql.param.FieldNameListQueryParam;
@@ -30,7 +30,7 @@ import java.util.List;
 public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> implements FieldService {
 
     @Autowired
-    private DbmysqlService dbmysqlService;
+    private DbService dbService;
 
     @Override
     public FieldEntity getFieldEntity(FieldNameEntityQueryParam fieldNameEntityQueryParam) throws Exception {
@@ -39,7 +39,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldNameEntityQueryParam.getFieldName());
         String tableSchema = fieldNameEntityQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = dbmysqlService.getTableSchema();
+            tableSchema = dbService.getTableSchema();
         }
         lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         try {
@@ -62,7 +62,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         }
         String tableSchema = fieldNamePageListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = dbmysqlService.getTableSchema();
+            tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }
         IPage<FieldEntity> iPage = super.page(page, lambdaQueryWrapper);
@@ -79,7 +79,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         }
         String tableSchema = fieldNameListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = dbmysqlService.getTableSchema();
+            tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }
         List<FieldEntity> fieldEntityList = super.list(lambdaQueryWrapper);

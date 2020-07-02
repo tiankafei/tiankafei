@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.mysql.entity.TableEntity;
 import org.tiankafei.db.mysql.mapper.TableMapper;
 import org.tiankafei.db.mysql.param.TableNamePageListQueryParam;
-import org.tiankafei.db.mysql.service.DbmysqlService;
+import org.tiankafei.db.service.DbService;
 import org.tiankafei.db.mysql.service.TableService;
 import org.tiankafei.db.mysql.param.TableNameListQueryParam;
 import org.tiankafei.db.mysql.param.TableNameEntityQueryParam;
@@ -30,7 +30,7 @@ import java.util.List;
 public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> implements TableService {
 
     @Autowired
-    private DbmysqlService dbmysqlService;
+    private DbService dbService;
 
     @Override
     public TableEntity getTableEntity(TableNameEntityQueryParam tableNameEntityQueryParam) throws Exception {
@@ -38,7 +38,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         lambdaQueryWrapper.eq(TableEntity::getTableName, tableNameEntityQueryParam.getTableName());
         String tableSchema = tableNameEntityQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = dbmysqlService.getTableSchema();
+            tableSchema = dbService.getTableSchema();
         }
         lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         try {
@@ -60,7 +60,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         }
         String tableSchema = tableNamePageListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = dbmysqlService.getTableSchema();
+            tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
 
@@ -77,7 +77,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         }
         String tableSchema = tableNameListQueryParam.getTableSchema();
         if(StringUtils.isBlank(tableSchema)){
-            tableSchema = dbmysqlService.getTableSchema();
+            tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
         List<TableEntity> tableEntityList = super.list(lambdaQueryWrapper);

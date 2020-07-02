@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.tiankafei.db.mysql.entity.TableEntity;
-import org.tiankafei.db.mysql.service.DbmysqlService;
+import org.tiankafei.db.service.DbService;
 import org.tiankafei.db.mysql.service.TableService;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Map;
  **/
 @Service
 @Slf4j
-public class DbmysqlServiceImpl implements DbmysqlService {
+public class MysqlServiceImpl implements DbService {
 
     @Value("${spring.datasource.url}")
     private String url;
