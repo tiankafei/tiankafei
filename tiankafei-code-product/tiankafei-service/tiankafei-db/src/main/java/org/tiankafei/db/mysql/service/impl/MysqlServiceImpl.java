@@ -1,7 +1,6 @@
 package org.tiankafei.db.mysql.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -37,8 +36,6 @@ public class MysqlServiceImpl implements DbService {
 
     @Autowired
     private TableService tableService;
-
-    private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public String getTableSchema() {
