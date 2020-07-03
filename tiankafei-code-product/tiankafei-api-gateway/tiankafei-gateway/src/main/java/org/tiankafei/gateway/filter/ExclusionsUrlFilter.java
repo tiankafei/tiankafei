@@ -1,17 +1,16 @@
 package org.tiankafei.gateway.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-import org.tiankafei.gateway.constants.GatewayConstants;
+
+import org.tiankafei.web.common.constants.GatewayConstants;
 import org.tiankafei.gateway.properties.ExclusionsUrlsProperties;
+import org.tiankafei.web.common.utils.CommonUtil;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -22,36 +21,23 @@ import java.util.List;
  **/
 @Slf4j
 @Component
-public class ExclusionsUrlFilter implements GlobalFilter, Ordered, ApplicationContextAware {
+public class ExclusionsUrlFilter implements GlobalFilter, Ordered {
 
-    private ApplicationContext applicationContext;
+    @Autowired
+    private ExclusionsUrlsProperties exclusionsUrlsProperties;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ExclusionsUrlsProperties exclusionsUrlsProperties = applicationContext.getBean(ExclusionsUrlsProperties.class);
         List<String> urls = exclusionsUrlsProperties.getUrls();
-
-        boolean flag = false;
         String path = exchange.getRequest().getPath().toString();
-        if(CollectionUtils.isNotEmpty(urls)){
-            for (int index = 0, length = urls.size(); index < length; index++) {
-                String url = urls.get(index);
-                if(path.startsWith(url)){
-                    flag = true;
-                }
-            }
-        }
+        boolean flag = CommonUtil.checkUrlStartsWith(urls, path);
         exchange.getAttributes().put(GatewayConstants.EXCLUSTIONS_URL_FLAG, flag);
         return chain.filter(exchange);
     }
 
     @Override
     public int getOrder() {
-        return 0;
+        return GatewayConstants.FIRST_FILTER_ORDER;
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
 }

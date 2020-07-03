@@ -1,4 +1,4 @@
-package org.tiankafei.gateway.properties;
+package org.tiankafei.zuul.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -48,6 +48,19 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 验证码异常处理
+     *
+     * @param verificationException
+     * @return
+     */
+    @ExceptionHandler(value = VerificationException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult exception(VerificationException verificationException) {
+        log.error("exception:", verificationException);
+        return ApiResult.fail(ApiStatusEnum.FAIL, verificationException.getMessage());
+    }
+
+    /**
      * 登录异常处理
      *
      * @param loginException

@@ -2,6 +2,8 @@ server:
   port: 7000
 exclusions:
   urls:
+    - /api/user-login/logout
+  auth-urls:
     - /api/user-login/login
     - /api/user-login/verificationCode
 spring:
