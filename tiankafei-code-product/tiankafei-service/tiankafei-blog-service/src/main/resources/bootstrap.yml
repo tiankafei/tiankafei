@@ -54,7 +54,7 @@ swagger:
     email: 798971170@qq.com
     name: blog-service
     url: 'https://tiankafei.top'
-  description: '测试描述内容'
+  description: '博客系统服务'
   title: blog-service
   url: 'https://tiankafei.top'
   version: 1.0

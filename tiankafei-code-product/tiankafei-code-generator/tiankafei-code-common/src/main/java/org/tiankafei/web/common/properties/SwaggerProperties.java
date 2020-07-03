@@ -31,11 +31,32 @@ public class SwaggerProperties {
     /**
      * 联系人
      */
-    private ContactProperties contact;
+    private ContactProperties contact = new ContactProperties();
 
     /**
      * 版本
      */
     private String version;
+
+    /**
+     * 联系人
+     */
+    @Data
+    public class ContactProperties {
+        /**
+         * 作者
+         */
+        private String name;
+
+        /**
+         * 作者网址
+         */
+        private String url;
+
+        /**
+         * 作者邮箱
+         */
+        private String email;
+    }
 
 }

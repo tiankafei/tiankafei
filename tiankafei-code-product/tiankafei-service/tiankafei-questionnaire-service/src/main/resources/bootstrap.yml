@@ -54,7 +54,7 @@ swagger:
     email: 798971170@qq.com
     name: questionnaire-service
     url: 'https://tiankafei.top'
-  description: '测试描述内容'
+  description: '调查问卷服务'
   title: questionnaire-service
   url: 'https://tiankafei.top'
   version: 1.0
