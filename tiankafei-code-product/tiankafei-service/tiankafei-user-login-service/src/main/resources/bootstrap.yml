@@ -1,5 +1,5 @@
 server:
-  port: 7400
+  port: 7100
 spring:
   application:
     name: user-login-service

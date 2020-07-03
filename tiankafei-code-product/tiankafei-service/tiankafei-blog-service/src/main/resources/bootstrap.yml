@@ -1,5 +1,5 @@
 server:
-  port: 7200
+  port: 7300
 spring:
   application:
     name: blog-service
