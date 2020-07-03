@@ -181,6 +181,11 @@
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons-pool2.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ramostear</groupId>
+                <artifactId>Happy-Captcha</artifactId>
+                <version>1.0.1</version>
+            </dependency>
 
             <!--自己的工具包-->
             <dependency>

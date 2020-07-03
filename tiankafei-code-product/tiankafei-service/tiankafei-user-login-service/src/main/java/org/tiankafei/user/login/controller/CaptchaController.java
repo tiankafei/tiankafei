@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.user.login.service.VerificationService;
+import org.tiankafei.user.login.service.CaptchaService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,19 +18,18 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @RestController
 @Api(value = "验证码 API", tags = "验证码 API")
-public class VerificationController {
+public class CaptchaController {
 
     @Autowired
-    private VerificationService verificationService;
+    private CaptchaService captchaService;
 
     /**
-     * 验证码
+     * 生成验证码
      */
-    @GetMapping("/verificationCode")
-    @ApiOperation(value = "访问验证码", notes = "访问验证码")
-    public void verificationCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        verificationService.verificationCode(request, response);
+    @GetMapping("/captcha")
+    @ApiOperation(value = "生成验证码", notes = "生成验证码")
+    public void createCaptcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        captchaService.createCaptcha(request, response);
     }
 
 }

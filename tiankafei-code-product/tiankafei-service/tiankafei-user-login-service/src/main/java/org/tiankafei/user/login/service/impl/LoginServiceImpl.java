@@ -1,11 +1,16 @@
 package org.tiankafei.user.login.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.param.LoginQueryVo;
+import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.web.common.exception.LoginException;
+import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author tiankafei
@@ -13,6 +18,9 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  **/
 @Service
 public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginQueryVo> implements LoginService {
+
+    @Autowired
+    private CaptchaService captchaService;
 
     /**
      *
@@ -43,8 +51,32 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginQueryVo>
      * @throws LoginException
      */
     @Override
-    public void login(LoginQueryVo loginQueryVo) throws LoginException {
+    public void login(LoginQueryVo loginQueryVo, HttpServletRequest request) throws LoginException {
+        // 验证数据合法性
+        checkDataValid(loginQueryVo, request);
 
+
+
+    }
+
+    /**
+     * 验证数据合法性
+     * @param loginQueryVo
+     * @param request
+     */
+    private void checkDataValid(LoginQueryVo loginQueryVo, HttpServletRequest request) throws LoginException {
+        try {
+            boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginQueryVo.getVerificationCode(), request);
+            if(verifyCaptchaFlag){
+                // 验证完成，删除
+                captchaService.removeCaptcha(request);
+            }else{
+                throw new LoginException("验证码输入错误，请重新输入！");
+            }
+        } catch (VerificationException e) {
+            e.printStackTrace();
+            throw new LoginException("验证码校验异常！");
+        }
     }
 
     /**
