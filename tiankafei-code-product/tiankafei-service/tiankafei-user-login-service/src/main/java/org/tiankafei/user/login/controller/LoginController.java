@@ -21,7 +21,7 @@ import javax.validation.Valid;
  **/
 @Slf4j
 @RestController
-@Api(value = "登录相关 API", tags = "登录")
+@Api(value = "用户登录相关 API", tags = "用户登录相关接口")
 public class LoginController extends BaseController {
 
     @Autowired

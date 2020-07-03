@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  **/
 @Slf4j
 @RestController
-@Api(value = "验证码 API", tags = "验证码")
+@Api(value = "验证码 API", tags = "验证码 API")
 public class VerificationController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class VerificationController {
      * 验证码
      */
     @GetMapping("/verificationCode")
-    @ApiOperation(value = "用户登录", notes = "用户登录")
+    @ApiOperation(value = "访问验证码", notes = "访问验证码")
     public void verificationCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         verificationService.verificationCode(request, response);
