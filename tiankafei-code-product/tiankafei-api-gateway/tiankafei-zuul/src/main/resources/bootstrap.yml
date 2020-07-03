@@ -15,7 +15,7 @@ zuul:
     user:
       path: /user/**
       serviceId: user-service
-    user-login-service:
+    user-login:
       path: /user-login/**
       serviceId: user-login-service
     blog:
