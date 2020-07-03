@@ -1,0 +1,43 @@
+server:
+  port: 7010
+spring:
+  application:
+    name: zuul-service
+exclusions:
+  urls:
+    - /api/user-login/logout
+  auth-urls:
+    - /api/user-login/login
+    - /api/user-login/verificationCode
+zuul:
+  prefix: /api
+  routes:
+    user:
+      path: /user/**
+      serviceId: user-service
+    user-login:
+      path: /user-login/**
+      serviceId: user-login-service
+    blog:
+      path: /blog/**
+      serviceId: blog-service
+    questionnaire:
+      path: /questionnaire/**
+      serviceId: questionnaire-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+logging:
+  level:
+    ROOT: info
+    # nacos日志的包路径
+    com.alibaba.nacos.client.naming: WARN
+    # nacos日志的包路径
+    com.alibaba.nacos.client.config.impl: WARN
+    # spring自动装配日志的包路径
+    org.springframework.boot.autoconfigure: ERROR
