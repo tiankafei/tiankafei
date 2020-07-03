@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.LoginService;
@@ -22,7 +21,6 @@ import javax.validation.Valid;
  **/
 @Slf4j
 @RestController
-@RequestMapping("/sysUserLogin")
 @Api(value = "登录相关 API", tags = "登录")
 public class LoginController extends BaseController {
 

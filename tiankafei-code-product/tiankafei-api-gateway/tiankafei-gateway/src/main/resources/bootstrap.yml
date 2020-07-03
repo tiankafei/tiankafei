@@ -1,5 +1,9 @@
 server:
   port: 7000
+exclusions:
+  urls:
+    - /api/user-login/login
+    - /api/user-login/verificationCode
 spring:
   application:
     name: gateway-service
@@ -13,6 +17,12 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/user/**
+          filters:
+            - StripPrefix=2
+        - id: user-login-service
+          uri: lb://user-login-service
+          predicates:
+            - Path=/api/user-login/**
           filters:
             - StripPrefix=2
         - id: blog-service
@@ -37,3 +47,5 @@ logging:
     com.alibaba.nacos.client.naming: WARN
     # nacos日志的包路径
     com.alibaba.nacos.client.config.impl: WARN
+    # spring自动装配日志的包路径
+    org.springframework.boot.autoconfigure: ERROR
