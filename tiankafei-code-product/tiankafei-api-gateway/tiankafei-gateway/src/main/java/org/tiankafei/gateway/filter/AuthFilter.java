@@ -64,7 +64,7 @@ public class AuthFilter extends GatewayFilter {
      * @return
      */
     private ApiResult executeAuth(){
-        boolean flag = Boolean.TRUE;
+        boolean flag = Boolean.FALSE;
         if(flag){
             // 鉴权通过
             return null;

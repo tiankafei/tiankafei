@@ -3,6 +3,7 @@ package org.tiankafei.zuul.filter;
 import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.http.HttpProperties;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.properties.ExclusionsUrlsProperties;
@@ -34,6 +35,9 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
 
     @Autowired
     protected ExclusionsUrlsProperties exclusionsUrlsProperties;
+
+    @Autowired
+    protected HttpProperties httpProperties;
 
     @Override
     public String filterType() {

@@ -6,26 +6,26 @@ package org.tiankafei.web.common.enums;
  **/
 public enum ApiStatusEnum implements BaseEnums {
 
-    FAIL("0"),
-    OK("1"),
-    ERROR("2"),
+    FAIL(0),
+    OK(1),
+    ERROR(2),
     ;
 
-    private String status;
+    private Integer status;
 
     private String message;
 
-    ApiStatusEnum(String status) {
+    ApiStatusEnum(Integer status) {
         this.status = status;
     }
 
-    ApiStatusEnum(String status, String message) {
+    ApiStatusEnum(Integer status, String message) {
         this(status);
         this.message = message;
     }
 
     @Override
-    public String getStatus() {
+    public Integer getStatus() {
         return this.status;
     }
 

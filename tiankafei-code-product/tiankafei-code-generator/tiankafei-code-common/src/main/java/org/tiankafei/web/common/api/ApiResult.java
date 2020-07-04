@@ -29,7 +29,7 @@ public class ApiResult<T> implements Serializable {
      * 状态（0，失败；1成功，2错误）
      */
     @ApiModelProperty(value = "状态（0，失败；1成功，2错误）")
-    private String status;
+    private Integer status;
 
     /**
      * 返回的响应消息
@@ -159,7 +159,7 @@ public class ApiResult<T> implements Serializable {
         return result(enums.getStatus(), enums.getMessage(), data);
     }
 
-    private static ApiResult result(String status, String message, Object data) {
+    private static ApiResult result(Integer status, String message, Object data) {
         return ApiResult.builder()
                 .status(status)
                 .message(message)

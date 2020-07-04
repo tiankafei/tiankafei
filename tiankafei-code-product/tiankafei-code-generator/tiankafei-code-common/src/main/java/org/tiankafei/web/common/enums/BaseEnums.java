@@ -10,7 +10,7 @@ public interface BaseEnums {
      *
      * @return
      */
-    String getStatus();
+    Integer getStatus();
 
     /**
      * 获取消息内容
