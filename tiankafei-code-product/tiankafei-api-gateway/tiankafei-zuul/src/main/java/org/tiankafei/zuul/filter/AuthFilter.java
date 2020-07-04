@@ -1,5 +1,6 @@
 package org.tiankafei.zuul.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
@@ -62,15 +63,23 @@ public class AuthFilter extends ZuulFilter {
      */
     @Override
     public Object run() throws ZuulException {
+        RequestContext currentContext = RequestContext.getCurrentContext();
         boolean flag = Boolean.TRUE;
         if(flag){
             // 鉴权通过
             log.info("正在执行鉴权，鉴权通过的url：{}", currentPath);
             return null;
         }else{
-            log.error("正在执行鉴权，鉴权没有通过的url：{}", currentPath);
             // 鉴权失败
-            return ApiResult.error(ExceptionEnum.LOGIN_AUTHENTICATION_EXCEPTION);
+            log.error("正在执行鉴权，鉴权没有通过的url：{}", currentPath);
+            //返回错误提示内容
+            ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_AUTHENTICATION_EXCEPTION);
+
+            //false  不会继续往下执行 不会调用服务接口了 网关直接响应给客户了
+            currentContext.setSendZuulResponse(false);
+            currentContext.setResponseBody(JSON.toJSONString(error));
+            currentContext.setResponseStatusCode(Integer.valueOf(error.getStatus()));
+            return null;
         }
     }
 

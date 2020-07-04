@@ -11,7 +11,7 @@ public enum ExceptionEnum implements BaseEnums {
     DAO_EXCEPTION("", "数据库处理异常!"),
     NOT_FOUND("", "你请求的资源不存在!"),
 
-    LOGIN_AUTHENTICATION_EXCEPTION("5000", "登陆授权异常"),
+    LOGIN_AUTHENTICATION_EXCEPTION("5001", "登陆授权异常"),
     ;
 
     private String status;
