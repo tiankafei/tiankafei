@@ -136,7 +136,7 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         String[] idArray = ids.split(",");
         List<String> idList = Arrays.asList(idArray);
         if(CollectionUtils.isNotEmpty(idList)){
-            // 查询字典，理论上只查询一列即可，稍后研究mybatis-plus如何只查询一部分列的情况 TODO
+            //TODO 查询字典，理论上只查询一列即可，稍后研究mybatis-plus如何只查询一部分列的情况
             List<SysDictInfoEntity> sysDictInfoEntityList = sysDictInfoMapper.selectBatchIds(idList);
             // 删除字典数据
             super.removeByIds(idList);

@@ -37,7 +37,7 @@ public class AuthFilter extends GatewayFilter {
             return chain.filter(exchange);
         }else{
             // 目前随机鉴权成功或者失败
-            //TODO 开始执行鉴权的逻辑
+            //TODO 基于gateway的鉴权在这里执行，鉴权成功返回true，失败返回false
             ApiResult apiResult = executeAuth();
             if(apiResult == null){
                 log.info("正在执行鉴权，鉴权通过的url：{}", path);
