@@ -63,7 +63,7 @@ public class AuthFilter extends ZuulFilter {
      */
     @Override
     public Object run() throws ZuulException {
-        RequestContext currentContext = RequestContext.getCurrentContext();
+        //TODO 鉴权在这里执行，鉴权成功返回true，失败返回false
         boolean flag = Boolean.TRUE;
         if(flag){
             // 鉴权通过
@@ -73,6 +73,7 @@ public class AuthFilter extends ZuulFilter {
             // 鉴权失败
             log.error("正在执行鉴权，鉴权没有通过的url：{}", currentPath);
             //返回错误提示内容
+            RequestContext currentContext = RequestContext.getCurrentContext();
             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_AUTHENTICATION_EXCEPTION);
 
             //false  不会继续往下执行 不会调用服务接口了 网关直接响应给客户了
