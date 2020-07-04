@@ -39,6 +39,11 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
     @Autowired
     protected HttpProperties httpProperties;
 
+    /**
+     * 当前url路径
+     */
+    protected String currentPath;
+
     @Override
     public String filterType() {
         return FilterConstants.PRE_TYPE;
@@ -51,6 +56,7 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String path = request.getServletPath();
+        this.currentPath = path;
 
         boolean flag = CommonUtil.checkUrlStartsWith(urls, path);
         if(flag){

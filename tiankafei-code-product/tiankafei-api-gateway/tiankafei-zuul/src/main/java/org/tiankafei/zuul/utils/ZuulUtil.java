@@ -45,13 +45,12 @@ public abstract class ZuulUtil {
      * @param apiResult
      */
     public static void returnValue(RequestContext currentContext, ApiResult apiResult, Charset charset){
-        //false  不会继续往下执行 不会调用服务接口了 网关直接响应给客户了
-        currentContext.setSendZuulResponse(false);
-
         String contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + getDefaultCharset();
         if(charset != null){
             contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + charset;
         }
+        // 设置为false，用接口将访问不到结果
+        currentContext.setSendZuulResponse(true);
         currentContext.getResponse().setContentType(contentType);
         currentContext.setResponseBody(JSON.toJSONString(apiResult));
         currentContext.setResponseStatusCode(apiResult.getStatus());

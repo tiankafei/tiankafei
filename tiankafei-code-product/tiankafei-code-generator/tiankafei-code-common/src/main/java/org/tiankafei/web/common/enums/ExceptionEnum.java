@@ -12,6 +12,7 @@ public enum ExceptionEnum implements BaseEnums {
     NOT_FOUND(null, "你请求的资源不存在!"),
 
     LOGIN_AUTHENTICATION_EXCEPTION(5001, "登陆授权异常"),
+    LOGIN_LIMITED_EXCEPTION(5002, "登录人数过多，请稍后再试"),
     ;
 
     private Integer status;

@@ -1,8 +1,10 @@
 package org.tiankafei.zuul.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 import org.tiankafei.web.common.api.ApiResult;
@@ -21,14 +23,9 @@ import java.util.List;
 @Component
 public class AuthFilter extends ZuulFilter {
 
-    /**
-     * 当前url路径
-     */
-    private String currentPath;
-
     @Override
     public int filterOrder() {
-        return FilterConstants.SERVLET_DETECTION_FILTER_ORDER - 1;
+        return FilterConstants.PRE_DECORATION_FILTER_ORDER - 1;
     }
 
     @Override
@@ -64,19 +61,22 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public Object run() throws ZuulException {
         //TODO 基于zuul的鉴权在这里执行，鉴权成功返回true，失败返回false
-        boolean flag = Boolean.FALSE;
+//        boolean flag = Boolean.FALSE;
+        boolean flag = RandomUtils.nextBoolean();
         if(flag){
             // 鉴权通过
             log.info("正在执行鉴权，鉴权通过的url：{}", currentPath);
-            return null;
         }else{
             // 鉴权失败
             log.error("正在执行鉴权，鉴权没有通过的url：{}", currentPath);
             //返回错误提示内容
             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_AUTHENTICATION_EXCEPTION);
             ZuulUtil.returnValue(error, httpProperties.getEncoding().getCharset());
-            return null;
+
+//            // 之所以要抛异常，是为了阻止执行下一个filter
+//            throw new ZuulException(JSON.toJSONString(error), error.getStatus(), error.getMessage());
         }
+        return null;
     }
 
 }
