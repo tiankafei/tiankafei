@@ -15,10 +15,13 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public abstract class GatewayFilter implements GlobalFilter, Ordered {
 
+    protected String path;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         boolean flag = (boolean) exchange.getAttributes().get(GatewayConstants.EXCLUSTIONS_URL_FLAG);
         String path = exchange.getRequest().getPath().toString();
+        this.path = path;
         if(flag){
             log.info("不需要过滤的url：{}", path);
             // 跳过url，该url不需要鉴权

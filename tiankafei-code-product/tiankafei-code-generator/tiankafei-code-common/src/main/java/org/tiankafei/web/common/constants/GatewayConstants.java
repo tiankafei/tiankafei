@@ -17,13 +17,29 @@ public interface GatewayConstants {
     String FILTER_FLAG = "FILTER_FLAG";
 
     /**
+     * 要添加的header信息的参数名称
+     */
+    String ADD_HREADER_PARAM_NAME = "TestHeaderInfo";
+
+    /**
      * 必须第一个执行过滤
      */
-    int FIRST_FILTER_ORDER = 0;
+    int FIRST_FILTER_ORDER = -9999;
+
+    /**
+     * 限流过滤器的执行顺序
+     */
+    int LIMITED_FILTER_ORDER = 0;
 
     /**
      * 鉴权过滤器的执行顺序
      */
-    int AUTH_FILTER_ORDER = 1;
+    int AUTH_FILTER_ORDER = 10;
+
+
+    /**
+     * 鉴权过滤器的执行顺序
+     */
+    int ADD_HEADER_FILTER_ORDER = 20;
 
 }
