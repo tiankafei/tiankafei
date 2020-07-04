@@ -12,6 +12,11 @@ public interface GatewayConstants {
     String EXCLUSTIONS_URL_FLAG = "EXCLUSTIONS_URL_FLAG";
 
     /**
+     * 过滤成功或者失败的标识
+     */
+    String FILTER_FLAG = "FILTER_FLAG";
+
+    /**
      * 必须第一个执行过滤
      */
     int FIRST_FILTER_ORDER = 0;

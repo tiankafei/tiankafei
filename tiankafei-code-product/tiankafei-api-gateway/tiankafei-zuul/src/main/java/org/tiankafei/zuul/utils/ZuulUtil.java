@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.context.RequestContext;
 import org.springframework.http.MediaType;
 import org.tiankafei.web.common.api.ApiResult;
+import org.tiankafei.web.common.constants.GatewayConstants;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -14,20 +16,21 @@ import java.nio.charset.StandardCharsets;
 public abstract class ZuulUtil {
 
     /**
-     * 返回值
-     * @param apiResult
+     * 验证是否需要执行后面的过滤器
+     * @param request
+     * @return
      */
-    public static void returnValue(ApiResult apiResult){
-        returnValue(apiResult, getDefaultCharset());
+    public static boolean checkIsExecuteFilter(HttpServletRequest request){
+        boolean flag = Boolean.TRUE;
+        Object object = request.getAttribute(GatewayConstants.FILTER_FLAG);
+        if(object instanceof Boolean){
+            flag = Boolean.valueOf(object.toString());
+        }
+        return flag;
     }
 
-    /**
-     * 返回值
-     * @param apiResult
-     */
-    public static void returnValue(ApiResult apiResult, Charset charset){
-        RequestContext currentContext = RequestContext.getCurrentContext();
-        returnValue(currentContext, apiResult, charset);
+    public static void setFilterFail(HttpServletRequest request){
+        request.setAttribute(GatewayConstants.FILTER_FLAG, false);
     }
 
     /**

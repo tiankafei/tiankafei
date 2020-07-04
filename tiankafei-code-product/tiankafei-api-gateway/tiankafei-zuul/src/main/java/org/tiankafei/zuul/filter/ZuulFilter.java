@@ -1,31 +1,23 @@
 package org.tiankafei.zuul.filter;
 
 import com.netflix.zuul.context.RequestContext;
+import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpProperties;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.properties.ExclusionsUrlsProperties;
+import org.tiankafei.zuul.utils.ZuulUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
  * zuul pre filter base class, other filter extend this, if have special logic, need Rewrite {@link org.tiankafei.zuul.filter.ZuulFilter#shouldFilter} method,
  * for example:
  *      {@link org.tiankafei.zuul.filter}
- *
- *      if fail, need return value :
- *             //返回错误提示内容
- *             RequestContext currentContext = RequestContext.getCurrentContext();
- *             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_AUTHENTICATION_EXCEPTION);
- *
- *             //false  不会继续往下执行 不会调用服务接口了 网关直接响应给客户了
- *             currentContext.setSendZuulResponse(false);
- *             currentContext.setResponseBody(JSON.toJSONString(error));
- *             currentContext.setResponseStatusCode(Integer.valueOf(error.getStatus()));
- *             return null;
  *
  * @author tiankafei
  * @since 1.0
@@ -38,6 +30,10 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
 
     @Autowired
     protected HttpProperties httpProperties;
+
+    protected RequestContext currentContext;
+    protected HttpServletRequest request;
+    protected HttpServletResponse response;
 
     /**
      * 当前url路径
@@ -68,5 +64,21 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
 
         return true;
     }
+
+    @Override
+    public Object run() throws ZuulException {
+        this.currentContext = RequestContext.getCurrentContext();
+        this.request = currentContext.getRequest();
+        this.response = currentContext.getResponse();
+        boolean executeFilterFlag = ZuulUtil.checkIsExecuteFilter(request);
+        if(!executeFilterFlag){
+            return null;
+        }
+        Object object = execFilter();
+
+        return null;
+    }
+
+    public abstract Object execFilter() ;
 
 }
