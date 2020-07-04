@@ -8,6 +8,7 @@ import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
+import org.tiankafei.gateway.utils.GatewayUtil;
 import org.tiankafei.web.common.constants.GatewayConstants;
 import org.tiankafei.gateway.properties.ExclusionsUrlsProperties;
 import org.tiankafei.web.common.utils.CommonUtil;
@@ -28,10 +29,12 @@ public class ExclusionsUrlFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        List<String> urls = exclusionsUrlsProperties.getUrls();
         String path = exchange.getRequest().getPath().toString();
-        boolean flag = CommonUtil.checkUrlStartsWith(urls, path);
-        exchange.getAttributes().put(GatewayConstants.EXCLUSTIONS_URL_FLAG, flag);
+        List<String> urls = exclusionsUrlsProperties.getUrls();
+        if(CommonUtil.checkUrlStartsWith(urls, path)){
+            // 只有url不需要过滤才需要设置属性
+            GatewayUtil.setNoExecFilter(exchange);
+        }
         return chain.filter(exchange);
     }
 

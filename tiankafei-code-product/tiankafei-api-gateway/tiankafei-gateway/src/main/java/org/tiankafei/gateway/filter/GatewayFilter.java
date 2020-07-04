@@ -5,6 +5,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.web.server.ServerWebExchange;
+import org.tiankafei.gateway.utils.GatewayUtil;
 import org.tiankafei.web.common.constants.GatewayConstants;
 import reactor.core.publisher.Mono;
 
@@ -19,7 +20,7 @@ public abstract class GatewayFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        boolean flag = (boolean) exchange.getAttributes().get(GatewayConstants.EXCLUSTIONS_URL_FLAG);
+        boolean flag = GatewayUtil.checkIsExecuteFilter(exchange);
         String path = exchange.getRequest().getPath().toString();
         this.path = path;
         if(flag){
