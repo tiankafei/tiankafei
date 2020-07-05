@@ -12,6 +12,7 @@ public interface CaptchaService {
 
     /**
      * 生成验证码
+     *
      * @param request
      * @param response
      * @return
@@ -21,6 +22,7 @@ public interface CaptchaService {
 
     /**
      * 校验验证码
+     *
      * @param captcha
      * @param request
      * @return
@@ -30,6 +32,7 @@ public interface CaptchaService {
 
     /**
      * 删除验证码
+     *
      * @param request
      */
     void removeCaptcha(HttpServletRequest request);

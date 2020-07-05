@@ -20,10 +20,15 @@ public class LoginQueryVo implements Serializable {
 
     /**
      * 登录类型
-     *
      */
     @ApiModelProperty(value = "登录类型：1用户名，2邮箱，3手机号码")
     private String loginType;
+
+    /**
+     * 用户账号
+     */
+    @ApiModelProperty(value = "用户输入的用户账号")
+    private String userAccount;
 
     /**
      * 用户名

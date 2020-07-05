@@ -17,6 +17,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     /**
      * 生成验证码
+     *
      * @param request
      * @param response
      * @return
@@ -30,6 +31,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     /**
      * 校验验证码
+     *
      * @param captcha
      * @param request
      * @return
@@ -37,12 +39,13 @@ public class CaptchaServiceImpl implements CaptchaService {
      */
     @Override
     public boolean verifyCaptcha(String captcha, HttpServletRequest request) throws VerificationException {
-        boolean flag = HappyCaptcha.verification(request, captcha,true);
+        boolean flag = HappyCaptcha.verification(request, captcha, true);
         return flag;
     }
 
     /**
      * 删除验证码
+     *
      * @param request
      */
     @Override

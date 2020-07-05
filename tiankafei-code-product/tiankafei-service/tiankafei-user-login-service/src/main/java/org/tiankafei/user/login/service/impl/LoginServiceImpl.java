@@ -1,10 +1,15 @@
 package org.tiankafei.user.login.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.tiankafei.user.login.entity.LoginEntity;
+import org.tiankafei.user.login.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.CaptchaService;
+import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
@@ -17,15 +22,30 @@ import javax.servlet.http.HttpServletRequest;
  * @since 1.0
  **/
 @Service
-public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginQueryVo> implements LoginService {
+public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> implements LoginService {
 
     @Autowired
     private CaptchaService captchaService;
 
+    @Autowired
+    @Qualifier("user")
+    private GetLoginService userLoginService;
+
+    @Autowired
+    @Qualifier("email")
+    private GetLoginService emailLoginService;
+
+    @Autowired
+    @Qualifier("phone")
+    private GetLoginService phoneLoginService;
+
+    @Autowired
+    @Qualifier("more")
+    private GetLoginService moreLoginService;
+
     /**
-     *
      * 针对用户登录的这个场景，用户数据不需要进行数据预热
-     *
+     * <p>
      * 缓存常见的问题及解决方案
      * 1.缓存穿透：同一个key（数据库中没有的key），频繁发起请求，当这个key在数据库中不存在时，用户端频繁使用这一个值不停的发送请求，会造成请求穿过缓存，到达数据库的情况
      * 1.解决方案：把这一个key存放在缓存中，只不过值是空的
@@ -33,7 +53,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginQueryVo>
      * 2.解决方案：使用布隆过滤器，把数据库的值都缓存到缓存中，就不会造成请求频繁到达数据库的问题
      * 3.缓存雪崩：同一时间，大量的key值过期，且大量的请求涌入，致使大部分请求穿过缓存，到达数据库的情况
      * 3.解决方案：对key的过期时间使用不同的间隔，以达到不会在同一时间造成大量的key失效的问题
-     *
+     * <p>
      * 0.验证传入数据（验证码，且用户名、邮箱、手机号码）的合法性
      * 1.从当前缓存中查询用户信息，
      * 2.如果存在，说明已经登录，取出缓存的数据，直接返回，
@@ -53,24 +73,100 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginQueryVo>
     @Override
     public void login(LoginQueryVo loginQueryVo, HttpServletRequest request) throws LoginException {
         // 验证数据合法性
-        checkDataValid(loginQueryVo, request);
+//        checkDataValid(loginQueryVo, request);
 
+        // 获取用户信息对象
+        LoginEntity loginEntity = getLoginEntity(loginQueryVo);
+        System.out.println(loginEntity);
+    }
 
+    /**
+     * 获取用户信息对象
+     *
+     * @param loginQueryVo
+     * @return
+     */
+    private LoginEntity getLoginEntity(LoginQueryVo loginQueryVo) throws LoginException {
+        LoginEntity loginEntity = null;
 
+        // 登录类型
+        String loginType = loginQueryVo.getLoginType();
+        if (StringUtils.isNotBlank(loginType)) {
+            // 登录类型不为空
+            LoginEnums loginEnums = LoginEnums.valueOf(loginType);
+            switch (loginEnums) {
+                case USER_NAME:
+                    // 根据用户名获取用户信息对象
+                    loginEntity = userLoginService.getLoginEntity(loginQueryVo.getUsername(), loginQueryVo.getPassword());
+                    break;
+                case EMAIL:
+                    // 根据用户名获取用户信息对象
+                    loginEntity = emailLoginService.getLoginEntity(loginQueryVo.getEmail(), loginQueryVo.getPassword());
+                    break;
+                case PHONE:
+                    // 根据用户名获取用户信息对象
+                    loginEntity = phoneLoginService.getLoginEntity(loginQueryVo.getTelephone(), loginQueryVo.getPassword());
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            String userAccount = loginQueryVo.getUserAccount();
+            // 看是否能判断出来用户账户属于哪一种登录类型
+            loginType = getLoginType(userAccount);
+            if (StringUtils.isNotBlank(loginType)) {
+                LoginEnums loginEnums = LoginEnums.valueOf(loginType);
+                switch (loginEnums) {
+                    case USER_NAME:
+                        // 根据用户名获取用户信息对象
+                        loginEntity = userLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
+                        break;
+                    case EMAIL:
+                        // 根据用户名获取用户信息对象
+                        loginEntity = emailLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
+                        break;
+                    case PHONE:
+                        // 根据用户名获取用户信息对象
+                        loginEntity = phoneLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                loginEntity = moreLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
+            }
+        }
+        return loginEntity;
+    }
+
+    /**
+     * TODO 判断用户账户属于什么登录类型
+     *
+     * @param userAccount
+     * @return
+     */
+    private String getLoginType(String userAccount) {
+        return null;
     }
 
     /**
      * 验证数据合法性
+     *
      * @param loginQueryVo
      * @param request
      */
     private void checkDataValid(LoginQueryVo loginQueryVo, HttpServletRequest request) throws LoginException {
         try {
+            // 用户名
+            // 邮箱
+            // 手机号码
+            // 是否合法
+
             boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginQueryVo.getVerificationCode(), request);
-            if(verifyCaptchaFlag){
+            if (verifyCaptchaFlag) {
                 // 验证完成，删除
                 captchaService.removeCaptcha(request);
-            }else{
+            } else {
                 throw new LoginException("验证码输入错误，请重新输入！");
             }
         } catch (VerificationException e) {

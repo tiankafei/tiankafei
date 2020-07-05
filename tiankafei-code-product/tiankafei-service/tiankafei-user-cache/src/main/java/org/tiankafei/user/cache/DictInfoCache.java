@@ -1,5 +1,10 @@
 package org.tiankafei.user.cache;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.tiankafei.cache.GetCache;
+import org.tiankafei.cache.PutCache;
+
 /**
  * 字典数据缓存
  * 1.对于已经启动的字典，可以进行字典数据的长期缓存，
@@ -11,5 +16,13 @@ package org.tiankafei.user.cache;
  * @author tiankafei
  * @since 1.0
  **/
+@Repository
 public class DictInfoCache {
+
+    @Autowired
+    private GetCache getCache;
+
+    @Autowired
+    private PutCache putCache;
+
 }
