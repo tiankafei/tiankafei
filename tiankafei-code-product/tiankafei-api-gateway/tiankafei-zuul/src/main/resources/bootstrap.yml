@@ -10,6 +10,8 @@ exclusions:
     - /api/user-login/login
     - /api/user-login/verificationCode
 zuul:
+  #全部服务忽略敏感头（全部服务可传递cookie）
+  sensitiveHeaders:
   prefix: /api
   routes:
     user:
@@ -24,6 +26,12 @@ zuul:
     questionnaire:
       path: /questionnaire/**
       serviceId: questionnaire-service
+    # 忽略的url
+    # ignored-patterns:
+    # - /*/dataList.tkf
+    # - /demoserver1/dataList.tkf
+    # - /demo1/dataList.tkf
+
 management:
   endpoints:
     web:

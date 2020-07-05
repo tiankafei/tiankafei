@@ -2,12 +2,15 @@ package org.tiankafei.gateway.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.constants.GatewayConstants;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -39,18 +42,57 @@ public abstract class GatewayUtil {
     }
 
     /**
-     * 返回值转换
+     * 返回值
      * @param apiResult
      * @param exchange
      * @return
      */
     public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange){
-        ServerHttpResponse response = exchange.getResponse();
+        return returnValue(apiResult, exchange, null);
+    }
+
+    /**
+     * 返回值
+     * @param apiResult
+     * @param exchange
+     * @param httpStatus
+     * @return
+     */
+    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange, HttpStatus httpStatus){
+        return returnValue(apiResult, exchange, getDefaultCharset(), httpStatus);
+    }
+
+    /**
+     * **
+     * 返回值
+     * @param apiResult
+     * @param exchange
+     * @param charset
+     * @param httpStatus
+     * @return
+     */
+    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange, Charset charset, HttpStatus httpStatus){
+        String contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + getDefaultCharset();
+        if(charset != null){
+            contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + charset;
+        }
+
         // 自定义返回结果
         String returnBody = JSON.toJSONString(apiResult);
-        byte[] byteArray = returnBody.getBytes(StandardCharsets.UTF_8);
+        byte[] byteArray = returnBody.getBytes(getDefaultCharset());
+        ServerHttpResponse response = exchange.getResponse();
+
         DataBuffer buffer = response.bufferFactory().wrap(byteArray);
+        // 从header中获取
+        if(httpStatus != null){
+            response.setStatusCode(httpStatus);
+        }
+        response.getHeaders().add("Content-Type", contentType);
         return response.writeWith(Mono.just(buffer));
+    }
+
+    private static Charset getDefaultCharset(){
+        return StandardCharsets.UTF_8;
     }
 
 }

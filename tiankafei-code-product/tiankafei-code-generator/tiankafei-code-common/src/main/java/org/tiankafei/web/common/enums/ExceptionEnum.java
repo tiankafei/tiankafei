@@ -13,6 +13,7 @@ public enum ExceptionEnum implements BaseEnums {
 
     LOGIN_AUTHENTICATION_EXCEPTION(5001, "登陆授权异常"),
     LOGIN_LIMITED_EXCEPTION(5002, "登录人数过多，请稍后再试"),
+    LOGIN_TOKEN_EXCEPTION(5003, "请求中没有携带tonken信息"),
     ;
 
     private Integer status;

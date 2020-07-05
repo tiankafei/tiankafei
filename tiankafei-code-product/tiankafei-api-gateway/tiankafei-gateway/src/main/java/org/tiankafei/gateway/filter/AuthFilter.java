@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.tiankafei.gateway.properties.ExclusionsUrlsProperties;
@@ -46,7 +47,7 @@ public class AuthFilter extends GatewayFilter {
             }else{
                 log.error("正在执行鉴权，鉴权没有通过的url：{}", path);
                 // 返回鉴权失败
-                return GatewayUtil.returnValue(apiResult, exchange);
+                return GatewayUtil.returnValue(apiResult, exchange, HttpStatus.UNAUTHORIZED);
             }
         }
     }
