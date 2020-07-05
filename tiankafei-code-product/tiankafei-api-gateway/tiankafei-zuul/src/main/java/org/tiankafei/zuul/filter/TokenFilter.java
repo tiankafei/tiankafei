@@ -39,6 +39,7 @@ public class TokenFilter extends ZuulFilter {
         }
         if (StringUtils.isEmpty(token)) {
             // 返回错误提示内容
+            ZuulUtil.setFilterFail(request);
             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_TOKEN_EXCEPTION);
             log.info("{}, 请求的url为：{}", error.getMessage(), currentPath);
             ZuulUtil.returnValue(currentContext, error, httpProperties.getEncoding().getCharset());
