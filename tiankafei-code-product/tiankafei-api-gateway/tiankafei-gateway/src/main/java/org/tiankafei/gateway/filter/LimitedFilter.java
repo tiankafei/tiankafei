@@ -26,10 +26,10 @@ public class LimitedFilter extends GatewayFilter {
     protected ApiResult executeFilter(ServerWebExchange exchange, GatewayFilterChain chain) {
         boolean flag = RandomUtils.nextBoolean();
 //        boolean flag = Boolean.TRUE;
-        if(flag){
+        if (flag) {
             // 限流通过
             return null;
-        }else{
+        } else {
             // 限流失败
             return ApiResult.error(ExceptionEnum.LOGIN_LIMITED_EXCEPTION);
         }

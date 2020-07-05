@@ -17,39 +17,42 @@ public abstract class ZuulUtil {
 
     /**
      * 验证是否需要执行后面的过滤器
+     *
      * @param request
      * @return
      */
-    public static boolean checkIsExecuteFilter(HttpServletRequest request){
+    public static boolean checkIsExecuteFilter(HttpServletRequest request) {
         boolean flag = Boolean.TRUE;
         Object object = request.getAttribute(GatewayConstants.FILTER_FLAG);
-        if(object instanceof Boolean){
+        if (object instanceof Boolean) {
             flag = Boolean.valueOf(object.toString());
         }
         return flag;
     }
 
-    public static void setFilterFail(HttpServletRequest request){
+    public static void setFilterFail(HttpServletRequest request) {
         request.setAttribute(GatewayConstants.FILTER_FLAG, false);
     }
 
     /**
      * 返回值
+     *
      * @param currentContext
      * @param apiResult
      */
-    public static void returnValue(RequestContext currentContext, ApiResult apiResult){
+    public static void returnValue(RequestContext currentContext, ApiResult apiResult) {
         returnValue(currentContext, apiResult, getDefaultCharset());
     }
 
     /**
      * 返回值
+     *
      * @param currentContext
      * @param apiResult
      */
-    public static void returnValue(RequestContext currentContext, ApiResult apiResult, Charset charset){
+    public static void returnValue(RequestContext currentContext, ApiResult apiResult, Charset charset) {
         String contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + getDefaultCharset();
-        if(charset != null){
+        if (charset != null) {
             contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + charset;
         }
         // 设置为false，用接口将访问不到结果
@@ -59,7 +62,7 @@ public abstract class ZuulUtil {
         currentContext.setResponseStatusCode(apiResult.getStatus());
     }
 
-    private static Charset getDefaultCharset(){
+    private static Charset getDefaultCharset() {
         return StandardCharsets.UTF_8;
     }
 

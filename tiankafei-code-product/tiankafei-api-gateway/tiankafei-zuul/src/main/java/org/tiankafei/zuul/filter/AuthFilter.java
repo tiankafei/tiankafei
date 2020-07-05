@@ -30,7 +30,7 @@ public class AuthFilter extends ZuulFilter {
     public boolean shouldFilter() {
         // 如果为false,说明该url不需要过滤，则直接返回
         boolean needFilterFlag = super.shouldFilter();
-        if(!needFilterFlag){
+        if (!needFilterFlag) {
             return Boolean.FALSE;
         }
 
@@ -41,7 +41,7 @@ public class AuthFilter extends ZuulFilter {
         this.currentPath = request.getServletPath();
 
         boolean needAuthFlag = CommonUtil.checkUrlStartsWith(authUrls, currentPath);
-        if(needAuthFlag){
+        if (needAuthFlag) {
             log.info("不需要鉴权的url：{}", currentPath);
             return false;
         }
@@ -49,10 +49,10 @@ public class AuthFilter extends ZuulFilter {
     }
 
     /**
-     *  1.从请求参数中拿到用户id
-     *  2.根据用户id去缓存中获取用户信息
-     *  3.如果为空，则返回失败的数据
-     *  4.如果不为空，则继续下一个过滤
+     * 1.从请求参数中拿到用户id
+     * 2.根据用户id去缓存中获取用户信息
+     * 3.如果为空，则返回失败的数据
+     * 4.如果不为空，则继续下一个过滤
      *
      * @return
      */
@@ -61,10 +61,10 @@ public class AuthFilter extends ZuulFilter {
         //TODO 基于zuul的鉴权在这里执行，鉴权成功返回true，失败返回false
 //        boolean flag = Boolean.FALSE;
         boolean flag = RandomUtils.nextBoolean();
-        if(flag){
+        if (flag) {
             // 鉴权通过
             log.info("正在执行鉴权，鉴权通过的url：{}", currentPath);
-        }else{
+        } else {
             ZuulUtil.setFilterFail(request);
             // 鉴权失败
             log.error("正在执行鉴权，鉴权没有通过的url：{}", currentPath);

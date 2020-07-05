@@ -25,13 +25,13 @@ public class TokenFilter extends GatewayFilter {
 
         // 从请求参数中获取
         String token = request.getQueryParams().getFirst(GatewayConstants.TOKEN_PARAM_NAME);
-        if(StringUtils.isBlank(token)){
-            if(StringUtils.isBlank(token)){
+        if (StringUtils.isBlank(token)) {
+            if (StringUtils.isBlank(token)) {
                 // 从cookies中获取
                 HttpCookie first = request.getCookies().getFirst(GatewayConstants.TOKEN_PARAM_NAME);
-                if(first != null){
+                if (first != null) {
                     token = first.getValue();
-                    if(StringUtils.isBlank(token)){
+                    if (StringUtils.isBlank(token)) {
                         // 从header中获取
                         token = request.getHeaders().getFirst(GatewayConstants.TOKEN_PARAM_NAME);
                     }
@@ -39,10 +39,10 @@ public class TokenFilter extends GatewayFilter {
             }
         }
 
-        if(StringUtils.isBlank(token)){
+        if (StringUtils.isBlank(token)) {
             // token验证失败
             return ApiResult.error(ExceptionEnum.LOGIN_TOKEN_EXCEPTION);
-        }else{
+        } else {
             // token验证通过
             return null;
         }

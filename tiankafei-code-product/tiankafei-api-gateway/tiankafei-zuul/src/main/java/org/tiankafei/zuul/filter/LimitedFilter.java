@@ -22,10 +22,10 @@ public class LimitedFilter extends ZuulFilter {
     }
 
     /**
-     *  1.从请求参数中拿到用户id
-     *  2.根据用户id去缓存中获取用户信息
-     *  3.如果为空，则返回失败的数据
-     *  4.如果不为空，则继续下一个过滤
+     * 1.从请求参数中拿到用户id
+     * 2.根据用户id去缓存中获取用户信息
+     * 3.如果为空，则返回失败的数据
+     * 4.如果不为空，则继续下一个过滤
      *
      * @return
      */
@@ -34,10 +34,10 @@ public class LimitedFilter extends ZuulFilter {
         //TODO 基于zuul的限流在这里执行，限流成功返回true，失败返回false
 //        boolean flag = Boolean.TRUE;
         boolean flag = RandomUtils.nextBoolean();
-        if(flag){
+        if (flag) {
             // 通过
             log.info("正在执行限流，限流通过的url：{}", currentPath);
-        }else{
+        } else {
             ZuulUtil.setFilterFail(request);
             // 不失败
             log.error("正在执行限流，限流没有通过的url：{}", currentPath);

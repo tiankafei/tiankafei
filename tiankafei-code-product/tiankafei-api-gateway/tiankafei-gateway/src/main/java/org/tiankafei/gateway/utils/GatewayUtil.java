@@ -28,7 +28,7 @@ public abstract class GatewayUtil {
 
     /**
      * 路径转换，主要是为了个配置文件中自定义的过滤进行匹配，
-     *  之所以加入完整路径是因为，为了防止，不同服务，对应的后缀url一样的情况
+     * 之所以加入完整路径是因为，为了防止，不同服务，对应的后缀url一样的情况
      *
      * @param gatewayProperties
      * @param exchange
@@ -37,32 +37,32 @@ public abstract class GatewayUtil {
      */
     public static String pathConvert(GatewayProperties gatewayProperties, ServerWebExchange exchange) throws Exception {
         String path = exchange.getRequest().getPath().toString();
-        if(path.startsWith("/api")){
+        if (path.startsWith("/api")) {
             GatewayRouteVo gatewayRouteVo = null;
             List<GatewayRouteVo> gatewayRouteVoList = joinGatewayRouteVoList(gatewayProperties);
             for (int index = 0, length = gatewayRouteVoList.size(); index < length; index++) {
                 GatewayRouteVo tempGatewayRouteVo = gatewayRouteVoList.get(index);
-                if(path.startsWith(tempGatewayRouteVo.getPathPrefix())){
+                if (path.startsWith(tempGatewayRouteVo.getPathPrefix())) {
                     gatewayRouteVo = tempGatewayRouteVo;
                     break;
                 }
             }
-            if(gatewayRouteVo != null){
+            if (gatewayRouteVo != null) {
                 // 把服务名放在当前请求的上下文环境中
                 String serviceName = gatewayRouteVo.getServiceName();
                 exchange.getAttributes().put(GatewayConstants.SERVICE_PARAM_NAME, serviceName);
-            }else{
+            } else {
                 throw new Exception("根据当前路径没有找到对应的服务");
             }
             return path;
-        }else{
+        } else {
             // 从当前的上下文请求环境上获取服务名
             Object object = exchange.getAttributes().get(GatewayConstants.SERVICE_PARAM_NAME);
-            if(object != null){
+            if (object != null) {
                 String serviceName = object.toString();
                 // 根据服务名，重新组装路径
                 return pathJoinServiceName(gatewayProperties, path, serviceName);
-            }else{
+            } else {
                 // 服务名为空，抛出异常
                 throw new Exception("根据当前路径没有找到对应的服务");
             }
@@ -71,6 +71,7 @@ public abstract class GatewayUtil {
 
     /**
      * 根据服务名，拼接路径
+     *
      * @param gatewayProperties
      * @param path
      * @param serviceName
@@ -78,21 +79,21 @@ public abstract class GatewayUtil {
      * @throws Exception
      */
     public static String pathJoinServiceName(GatewayProperties gatewayProperties, String path, String serviceName) throws Exception {
-        if(path.startsWith("/api")){
+        if (path.startsWith("/api")) {
             return path;
-        }else{
+        } else {
             GatewayRouteVo gatewayRouteVo = null;
             List<GatewayRouteVo> gatewayRouteVoList = joinGatewayRouteVoList(gatewayProperties);
             for (int index = 0, length = gatewayRouteVoList.size(); index < length; index++) {
                 GatewayRouteVo tempGatewayRouteVo = gatewayRouteVoList.get(index);
-                if(tempGatewayRouteVo.getServiceName().equalsIgnoreCase(serviceName)){
+                if (tempGatewayRouteVo.getServiceName().equalsIgnoreCase(serviceName)) {
                     gatewayRouteVo = tempGatewayRouteVo;
                     break;
                 }
             }
-            if(gatewayRouteVo != null){
+            if (gatewayRouteVo != null) {
                 return gatewayRouteVo.getPathPrefix() + path.substring(1);
-            }else{
+            } else {
                 throw new Exception();
             }
         }
@@ -100,10 +101,11 @@ public abstract class GatewayUtil {
 
     /**
      * 組裝路由数据集合
+     *
      * @param gatewayProperties
      * @return
      */
-    private static List<GatewayRouteVo> joinGatewayRouteVoList(GatewayProperties gatewayProperties){
+    private static List<GatewayRouteVo> joinGatewayRouteVoList(GatewayProperties gatewayProperties) {
         List<GatewayRouteVo> gatewayRouteVoList = Lists.newArrayList();
 
         List<RouteDefinition> routes = gatewayProperties.getRoutes();
@@ -116,7 +118,7 @@ public abstract class GatewayUtil {
             // 设置前缀截取路径的位数
             List<FilterDefinition> filters = routeDefinition.getFilters();
             filters.stream().forEach(filterDefinition -> {
-                if("StripPrefix".equalsIgnoreCase(filterDefinition.getName())){
+                if ("StripPrefix".equalsIgnoreCase(filterDefinition.getName())) {
                     String stripPrefix = filterDefinition.getArgs().get("_genkey_0");
                     gatewayRouteVo.setStripPrefix(Integer.valueOf(stripPrefix));
                 }
@@ -125,7 +127,7 @@ public abstract class GatewayUtil {
             // 设置前置的url path
             List<PredicateDefinition> predicates = routeDefinition.getPredicates();
             predicates.stream().forEach(predicateDefinition -> {
-                if("Path".equalsIgnoreCase(predicateDefinition.getName())){
+                if ("Path".equalsIgnoreCase(predicateDefinition.getName())) {
                     int number = gatewayRouteVo.getStripPrefix() + 1;
                     String genkey_0 = predicateDefinition.getArgs().get("_genkey_0");
                     String pathPrefix = splitPrefixPath(genkey_0, number);
@@ -140,20 +142,21 @@ public abstract class GatewayUtil {
 
     /**
      * 按照位置切分前缀字符串路径
+     *
      * @param path
      * @param number
      * @return
      */
-    private static String splitPrefixPath(String path, int number){
+    private static String splitPrefixPath(String path, int number) {
         StringBuilder split = new StringBuilder();
         int count = 0;
         for (int index = 0, length = path.length(); index < length; index++) {
             char c = path.charAt(index);
             split.append(c);
-            if(c == '/'){
+            if (c == '/') {
                 count++;
             }
-            if(count == number){
+            if (count == number) {
                 break;
             }
         }
@@ -162,37 +165,40 @@ public abstract class GatewayUtil {
 
     /**
      * 返回值
+     *
      * @param apiResult
      * @param exchange
      * @return
      */
-    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange){
+    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange) {
         return returnValue(apiResult, exchange, null);
     }
 
     /**
      * 返回值
+     *
      * @param apiResult
      * @param exchange
      * @param httpStatus
      * @return
      */
-    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange, HttpStatus httpStatus){
+    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange, HttpStatus httpStatus) {
         return returnValue(apiResult, exchange, getDefaultCharset(), httpStatus);
     }
 
     /**
      * **
      * 返回值
+     *
      * @param apiResult
      * @param exchange
      * @param charset
      * @param httpStatus
      * @return
      */
-    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange, Charset charset, HttpStatus httpStatus){
+    public static Mono<Void> returnValue(ApiResult apiResult, ServerWebExchange exchange, Charset charset, HttpStatus httpStatus) {
         String contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + getDefaultCharset();
-        if(charset != null){
+        if (charset != null) {
             contentType = MediaType.APPLICATION_JSON_VALUE + ";charset=" + charset;
         }
 
@@ -203,14 +209,14 @@ public abstract class GatewayUtil {
 
         DataBuffer buffer = response.bufferFactory().wrap(byteArray);
         // 从header中获取
-        if(httpStatus != null){
+        if (httpStatus != null) {
             response.setStatusCode(httpStatus);
         }
         response.getHeaders().add("Content-Type", contentType);
         return response.writeWith(Mono.just(buffer));
     }
 
-    private static Charset getDefaultCharset(){
+    private static Charset getDefaultCharset() {
         return StandardCharsets.UTF_8;
     }
 

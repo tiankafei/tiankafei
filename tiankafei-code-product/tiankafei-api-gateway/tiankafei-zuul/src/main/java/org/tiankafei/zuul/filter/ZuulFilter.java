@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * zuul pre filter base class, other filter extend this, if have special logic, need Rewrite {@link org.tiankafei.zuul.filter.ZuulFilter#shouldFilter} method,
  * for example:
- *      {@link org.tiankafei.zuul.filter}
+ * {@link org.tiankafei.zuul.filter}
  *
  * @author tiankafei
  * @since 1.0
@@ -55,7 +55,7 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
         this.currentPath = path;
 
         boolean flag = CommonUtil.checkUrlStartsWith(urls, path);
-        if(flag){
+        if (flag) {
             // 其他filter继承这个filter，如果没有特殊要求，则走父类这个方法，能够保证，全局都不需要过滤的url
             //
             log.info("不需要过滤的url：{}", path);
@@ -71,7 +71,7 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
         this.request = currentContext.getRequest();
         this.response = currentContext.getResponse();
         boolean executeFilterFlag = ZuulUtil.checkIsExecuteFilter(request);
-        if(!executeFilterFlag){
+        if (!executeFilterFlag) {
             return null;
         }
         Object object = execFilter();
@@ -79,6 +79,6 @@ public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
         return null;
     }
 
-    public abstract Object execFilter() ;
+    public abstract Object execFilter();
 
 }

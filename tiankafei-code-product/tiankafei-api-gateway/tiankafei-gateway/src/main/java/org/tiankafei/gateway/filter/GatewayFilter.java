@@ -51,17 +51,17 @@ public abstract class GatewayFilter implements GlobalFilter, Ordered {
 
         // 执行过滤器校验是否需要执行
         Mono<Void> voidMono = checkFilter(exchange, chain);
-        if(voidMono != null){
+        if (voidMono != null) {
             return voidMono;
         }
 
         // 执行过滤
         ApiResult apiResult = executeFilter(exchange, chain);
-        if(apiResult == null){
+        if (apiResult == null) {
             // 执行其他过滤
             log.info("正在执行{}，{}通过的url：{}", getName(), getName(), currentPath);
             return chain.filter(exchange);
-        }else{
+        } else {
             log.error("正在执行{}，{}没有通过的url：{}", getName(), getName(), currentPath);
             // 过滤失败，返回结果
             return GatewayUtil.returnValue(apiResult, exchange);
@@ -70,30 +70,31 @@ public abstract class GatewayFilter implements GlobalFilter, Ordered {
 
     /**
      * 当前过滤器是否需要执行，
-     *      如果需要执行，则返回null,
-     *      如果不需要执行，继续执行下一个过滤器，则chain.filter(exchange);
+     * 如果需要执行，则返回null,
+     * 如果不需要执行，继续执行下一个过滤器，则chain.filter(exchange);
      *
      * @param exchange
      * @param chain
      * @return
      */
-    protected Mono<Void> checkFilter(ServerWebExchange exchange, GatewayFilterChain chain){
+    protected Mono<Void> checkFilter(ServerWebExchange exchange, GatewayFilterChain chain) {
         List<String> urls = exclusionsUrlsProperties.getUrls();
         boolean flag = CommonUtil.checkUrlStartsWith(urls, currentPath);
-        if(flag){
+        if (flag) {
             log.info("{} 没有执行过滤的url：{}", getName(), currentPath);
             return chain.filter(exchange);
-        }else{
+        } else {
             return null;
         }
     }
 
     /**
      * 执行过滤
+     *
      * @param exchange
      * @param chain
      * @return
      */
-    protected abstract ApiResult executeFilter(ServerWebExchange exchange, GatewayFilterChain chain) ;
+    protected abstract ApiResult executeFilter(ServerWebExchange exchange, GatewayFilterChain chain);
 
 }
