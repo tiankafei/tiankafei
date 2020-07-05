@@ -7,9 +7,9 @@ package org.tiankafei.web.common.constants;
 public interface GatewayConstants {
 
     /**
-     * 不必要进行鉴权的url配置标识
+     * 服务的参数名
      */
-    String EXCLUSTIONS_URL_FLAG = "EXCLUSTIONS_URL_FLAG";
+    String SERVICE_PARAM_NAME = "SERVICE_PARAM_NAME";
 
     /**
      * 过滤成功或者失败的标识

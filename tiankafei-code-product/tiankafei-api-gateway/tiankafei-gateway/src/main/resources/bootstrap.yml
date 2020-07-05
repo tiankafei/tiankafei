@@ -5,7 +5,6 @@ exclusions:
     - /api/user-login/logout
   auth-urls:
     - /api/user-login/login
-    - /api/user-login/verificationCode
 spring:
   application:
     name: gateway-service
