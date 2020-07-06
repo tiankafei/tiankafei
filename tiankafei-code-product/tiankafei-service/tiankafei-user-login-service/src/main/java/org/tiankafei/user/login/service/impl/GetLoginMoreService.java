@@ -11,7 +11,7 @@ import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.web.common.exception.LoginException;
 
-@Service("more")
+@Service
 public class GetLoginMoreService implements GetLoginService {
 
     @Autowired

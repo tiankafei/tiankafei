@@ -1,9 +1,10 @@
 package org.tiankafei.user.controller;
 
+import org.tiankafei.user.bean.VerificationClient;
+import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.service.SysUserLoginService;
 import org.tiankafei.user.param.SysUserLoginQueryParam;
 import org.tiankafei.user.param.SysUserLoginPageQueryParam;
-import org.tiankafei.user.service.UserService;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
@@ -40,7 +41,7 @@ public class SysUserLoginController extends BaseController {
     private SysUserLoginService sysUserLoginService;
 
     @Autowired
-    private UserService userService;
+    private VerificationClient verificationClient;
 
     /**
      * 校验 用户名 是否已经存在
@@ -48,7 +49,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
     public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
-        Boolean flag = userService.checkUsernameExists(username);
+        Boolean flag = verificationClient.doHandler(LoginEnums.USER_NAME.getCode(), username);
         return ApiResult.ok(flag);
     }
 
@@ -58,7 +59,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
-        Boolean flag = userService.checkEmailExists(email);
+        Boolean flag = verificationClient.doHandler(LoginEnums.EMAIL.getCode(), email);
         return ApiResult.ok(flag);
     }
 
@@ -68,7 +69,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkTelephone/{telephone}")
     @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
     public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
-        Boolean flag = userService.checkTelephoneExists(telephone);
+        Boolean flag = verificationClient.doHandler(LoginEnums.PHONE.getCode(), telephone);
         return ApiResult.ok(flag);
     }
 

@@ -2,9 +2,10 @@ package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.collections4.CollectionUtils;
+import org.tiankafei.user.bean.VerificationClient;
 import org.tiankafei.user.entity.SysUserLoginEntity;
+import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
-import org.tiankafei.user.service.UserService;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.mapper.SysUserInfoMapper;
@@ -49,7 +50,7 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     private SysUserLoginMapper userLoginMapper;
 
     @Autowired
-    private UserService userService;
+    private VerificationClient verificationClient;
 
     @Override
     public boolean checkSysUserInfoExists(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
@@ -61,7 +62,9 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     @Override
     public Object addSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
         // 新增时校验用户信息是否存在
-        userService.checkAddUserInfoExists(sysUserInfoQueryVo);
+        verificationClient.checkSysUserExists(LoginEnums.USER_NAME.getCode(), sysUserInfoQueryVo.getUsername());
+        verificationClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), sysUserInfoQueryVo.getEmail());
+        verificationClient.checkSysUserExists(LoginEnums.PHONE.getCode(), sysUserInfoQueryVo.getTelephone());
 
         // 保存用户登录表数据
         SysUserLoginEntity userLoginEntity = new SysUserLoginEntity();
@@ -95,7 +98,9 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     public boolean updateSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
         SysUserInfoEntity oldUserInfoEntity = super.getById(sysUserInfoQueryVo.getId());
         // 修改时，校验用户信息是否存在
-        userService.checkUpdateUserInfoExists(oldUserInfoEntity, sysUserInfoQueryVo);
+        verificationClient.checkSysUserExists(LoginEnums.USER_NAME.getCode(), sysUserInfoQueryVo.getUsername(), oldUserInfoEntity.getUsername());
+        verificationClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), sysUserInfoQueryVo.getEmail(), oldUserInfoEntity.getEmail());
+        verificationClient.checkSysUserExists(LoginEnums.PHONE.getCode(), sysUserInfoQueryVo.getTelephone(), oldUserInfoEntity.getTelephone());
 
         // 更新用户登录表数据
         SysUserLoginEntity userLoginEntity = new SysUserLoginEntity();
