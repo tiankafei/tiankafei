@@ -1,4 +1,4 @@
-package org.tiankafei.user.login.enums;
+package org.tiankafei.user.enums;
 
 /**
  * @author tiankafei

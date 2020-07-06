@@ -1,7 +1,7 @@
 package org.tiankafei.user.login.service;
 
 import org.tiankafei.user.login.entity.LoginEntity;
-import org.tiankafei.user.login.enums.LoginEnums;
+import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 

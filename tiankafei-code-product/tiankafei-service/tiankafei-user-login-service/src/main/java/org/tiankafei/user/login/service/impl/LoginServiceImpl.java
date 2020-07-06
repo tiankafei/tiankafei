@@ -1,11 +1,16 @@
 package org.tiankafei.user.login.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.login.bean.GetLoginClient;
 import org.tiankafei.user.login.entity.LoginEntity;
-import org.tiankafei.user.login.enums.LoginEnums;
+import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.CaptchaService;
@@ -13,6 +18,8 @@ import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+
+import java.util.Set;
 
 /**
  * @author tiankafei
@@ -73,6 +80,13 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
      * @return
      */
     private Integer getLoginType(String userAccount) {
+        ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
+        Validator validator = vf.getValidator();
+
+        Set<ConstraintViolation<String>> set = validator.validate(userAccount);
+        for (ConstraintViolation<String> constraintViolation : set) {
+            System.out.println(constraintViolation.getMessage());
+        }
 
 
         return LoginEnums.MORE.getCode();
