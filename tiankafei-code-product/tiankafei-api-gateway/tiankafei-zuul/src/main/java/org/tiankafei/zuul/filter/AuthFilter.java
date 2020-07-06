@@ -58,8 +58,6 @@ public class AuthFilter extends ZuulFilter {
      */
     @Override
     public Object execFilter() {
-        //TODO 基于zuul的鉴权在这里执行，鉴权成功返回true，失败返回false
-//        boolean flag = Boolean.FALSE;
         boolean flag = RandomUtils.nextBoolean();
         if (flag) {
             // 鉴权通过

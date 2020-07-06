@@ -25,7 +25,6 @@ public class LimitedFilter extends GatewayFilter {
     @Override
     protected ApiResult executeFilter(ServerWebExchange exchange, GatewayFilterChain chain) {
         boolean flag = RandomUtils.nextBoolean();
-//        boolean flag = Boolean.TRUE;
         if (flag) {
             // 限流通过
             return null;

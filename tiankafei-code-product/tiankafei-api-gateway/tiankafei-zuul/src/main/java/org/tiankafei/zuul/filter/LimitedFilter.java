@@ -31,8 +31,6 @@ public class LimitedFilter extends ZuulFilter {
      */
     @Override
     public Object execFilter() {
-        //TODO 基于zuul的限流在这里执行，限流成功返回true，失败返回false
-//        boolean flag = Boolean.TRUE;
         boolean flag = RandomUtils.nextBoolean();
         if (flag) {
             // 通过
