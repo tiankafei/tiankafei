@@ -49,7 +49,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
     public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
-        Boolean flag = verificationClient.doHandler(LoginEnums.USER_NAME.getCode(), username);
+        Boolean flag = verificationClient.checkSysUserExists(LoginEnums.USER_NAME.getCode(), username);
         return ApiResult.ok(flag);
     }
 
@@ -59,7 +59,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
-        Boolean flag = verificationClient.doHandler(LoginEnums.EMAIL.getCode(), email);
+        Boolean flag = verificationClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), email);
         return ApiResult.ok(flag);
     }
 
@@ -69,7 +69,7 @@ public class SysUserLoginController extends BaseController {
     @GetMapping("/checkTelephone/{telephone}")
     @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
     public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
-        Boolean flag = verificationClient.doHandler(LoginEnums.PHONE.getCode(), telephone);
+        Boolean flag = verificationClient.checkSysUserExists(LoginEnums.PHONE.getCode(), telephone);
         return ApiResult.ok(flag);
     }
 
