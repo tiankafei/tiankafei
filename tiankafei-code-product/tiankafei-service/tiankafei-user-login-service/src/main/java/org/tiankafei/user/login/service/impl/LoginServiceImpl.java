@@ -75,7 +75,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
 
         // 登录类型
         Integer loginType = loginQueryVo.getLoginType();
-        if (loginType == null) {
+        if (loginType == null || loginType == 0) {
             // 登录类型为空，根据用户输入的用户名是否能判断出来用户账户属于哪一种登录类型
             loginType = getLoginType(loginQueryVo.getUserAccount());
             loginEntity = loginClient.doHandler(loginType, loginQueryVo);

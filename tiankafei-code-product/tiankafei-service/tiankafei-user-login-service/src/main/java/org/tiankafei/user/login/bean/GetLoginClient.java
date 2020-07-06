@@ -3,15 +3,13 @@ package org.tiankafei.user.login.bean;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.ServletContext;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.tiankafei.user.login.entity.LoginEntity;
 import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.GetLoginService;
+import org.tiankafei.web.common.component.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**
@@ -24,11 +22,12 @@ public class GetLoginClient implements InitializingBean {
 
     private Map<Integer, GetLoginService> loginServiceMap = Maps.newConcurrentMap();
 
+    @Autowired
+    private ApplicationContextHelper applicationContextHelper;
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        ServletContext servletContext = ContextLoader.getCurrentWebApplicationContext().getServletContext();
-        ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-        Map<String, GetLoginService> beansOfType = applicationContext.getBeansOfType(GetLoginService.class);
+        Map<String, GetLoginService> beansOfType = applicationContextHelper.getBeansOfType(GetLoginService.class);
         Set<Map.Entry<String, GetLoginService>> entries = beansOfType.entrySet();
         for (Map.Entry<String, GetLoginService> entry : entries) {
             GetLoginService loginService = entry.getValue();
