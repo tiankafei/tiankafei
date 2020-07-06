@@ -10,3 +10,4 @@ target
 .factorypath
 **/data/
 **/logs/
+**/dump.rdb
