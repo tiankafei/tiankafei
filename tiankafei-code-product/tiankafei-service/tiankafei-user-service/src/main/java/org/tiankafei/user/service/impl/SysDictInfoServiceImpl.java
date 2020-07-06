@@ -136,8 +136,11 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         String[] idArray = ids.split(",");
         List<String> idList = Arrays.asList(idArray);
         if(CollectionUtils.isNotEmpty(idList)){
-            //TODO 查询字典，理论上只查询一列即可，稍后研究mybatis-plus如何只查询一部分列的情况
-            List<SysDictInfoEntity> sysDictInfoEntityList = sysDictInfoMapper.selectBatchIds(idList);
+            LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+            // 设置只查询这一列的数据
+            lambdaQueryWrapper.select(SysDictInfoEntity::getDataTable);
+            lambdaQueryWrapper.in(SysDictInfoEntity::getId, idList);
+            List<SysDictInfoEntity> sysDictInfoEntityList = sysDictInfoMapper.selectList(lambdaQueryWrapper);
             // 删除字典数据
             super.removeByIds(idList);
 
