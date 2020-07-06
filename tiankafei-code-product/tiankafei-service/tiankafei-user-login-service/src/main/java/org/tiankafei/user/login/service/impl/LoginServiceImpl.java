@@ -1,21 +1,18 @@
 package org.tiankafei.user.login.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.tiankafei.user.login.bean.GetLoginClient;
 import org.tiankafei.user.login.entity.LoginEntity;
 import org.tiankafei.user.login.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.CaptchaService;
-import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author tiankafei
@@ -28,20 +25,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
     private CaptchaService captchaService;
 
     @Autowired
-    @Qualifier("user")
-    private GetLoginService userLoginService;
-
-    @Autowired
-    @Qualifier("email")
-    private GetLoginService emailLoginService;
-
-    @Autowired
-    @Qualifier("phone")
-    private GetLoginService phoneLoginService;
-
-    @Autowired
-    @Qualifier("more")
-    private GetLoginService moreLoginService;
+    private GetLoginClient loginClient;
 
     /**
      * 针对用户登录的这个场景，用户数据不需要进行数据预热
@@ -90,52 +74,16 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
         LoginEntity loginEntity = null;
 
         // 登录类型
-        String loginType = loginQueryVo.getLoginType();
-        if (StringUtils.isNotBlank(loginType)) {
-            // 登录类型不为空
-            LoginEnums loginEnums = LoginEnums.valueOf(loginType);
-            switch (loginEnums) {
-                case USER_NAME:
-                    // 根据用户名获取用户信息对象
-                    loginEntity = userLoginService.getLoginEntity(loginQueryVo.getUsername(), loginQueryVo.getPassword());
-                    break;
-                case EMAIL:
-                    // 根据用户名获取用户信息对象
-                    loginEntity = emailLoginService.getLoginEntity(loginQueryVo.getEmail(), loginQueryVo.getPassword());
-                    break;
-                case PHONE:
-                    // 根据用户名获取用户信息对象
-                    loginEntity = phoneLoginService.getLoginEntity(loginQueryVo.getTelephone(), loginQueryVo.getPassword());
-                    break;
-                default:
-                    break;
-            }
+        Integer loginType = loginQueryVo.getLoginType();
+        if (loginType == null) {
+            // 登录类型为空，根据用户输入的用户名是否能判断出来用户账户属于哪一种登录类型
+            loginType = getLoginType(loginQueryVo.getUserAccount());
+            loginEntity = loginClient.doHandler(loginType, loginQueryVo);
         } else {
-            String userAccount = loginQueryVo.getUserAccount();
-            // 看是否能判断出来用户账户属于哪一种登录类型
-            loginType = getLoginType(userAccount);
-            if (StringUtils.isNotBlank(loginType)) {
-                LoginEnums loginEnums = LoginEnums.valueOf(loginType);
-                switch (loginEnums) {
-                    case USER_NAME:
-                        // 根据用户名获取用户信息对象
-                        loginEntity = userLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
-                        break;
-                    case EMAIL:
-                        // 根据用户名获取用户信息对象
-                        loginEntity = emailLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
-                        break;
-                    case PHONE:
-                        // 根据用户名获取用户信息对象
-                        loginEntity = phoneLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                loginEntity = moreLoginService.getLoginEntity(userAccount, loginQueryVo.getPassword());
-            }
+            // 登录类型不为空
+            loginEntity = loginClient.doHandler(loginType, loginQueryVo);
         }
+
         return loginEntity;
     }
 
@@ -145,8 +93,10 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
      * @param userAccount
      * @return
      */
-    private String getLoginType(String userAccount) {
-        return null;
+    private Integer getLoginType(String userAccount) {
+
+
+        return LoginEnums.MORE.getCode();
     }
 
     /**

@@ -2,12 +2,13 @@ package org.tiankafei.user.login.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.experimental.Accessors;
-
+import java.io.Serializable;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
+import lombok.Data;
+import lombok.experimental.Accessors;
+import org.tiankafei.web.common.constraints.MobilePhone;
 
 /**
  * @author tiankafei
@@ -22,7 +23,7 @@ public class LoginQueryVo implements Serializable {
      * 登录类型
      */
     @ApiModelProperty(value = "登录类型：1用户名，2邮箱，3手机号码")
-    private String loginType;
+    private Integer loginType;
 
     /**
      * 用户账号
@@ -42,6 +43,7 @@ public class LoginQueryVo implements Serializable {
      */
     @ApiModelProperty(value = "邮箱")
     @Size(max = 100, message = "邮箱长度不能超过 100 ！")
+    @Email(message = "请输入有效的邮箱")
     private String email;
 
     /**
@@ -49,6 +51,7 @@ public class LoginQueryVo implements Serializable {
      */
     @ApiModelProperty(value = "手机号码")
     @Size(max = 13, message = "手机号码长度不能超过 13 ！")
+    @MobilePhone
     private String telephone;
 
     /**

@@ -6,13 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.sql.Timestamp;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.web.common.entity.BaseEntity;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 
 /**
  * <pre>
