@@ -66,7 +66,6 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         verificationClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), sysUserLoginQueryVo.getEmail());
         verificationClient.checkSysUserExists(LoginEnums.PHONE.getCode(), sysUserLoginQueryVo.getTelephone());
 
-
         // 保存用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
@@ -76,6 +75,7 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         // 保存用户信息表数据
         SysUserInfoEntity userInfoEntity = new SysUserInfoEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, userInfoEntity);
+        userInfoEntity.setId(id);
         userInfoMapper.insert(userInfoEntity);
         return id;
     }
