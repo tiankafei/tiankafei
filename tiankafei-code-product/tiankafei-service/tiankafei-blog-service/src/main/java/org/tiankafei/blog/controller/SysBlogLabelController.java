@@ -62,7 +62,7 @@ public class SysBlogLabelController extends BaseController {
     /**
      * 修改 系统的博客标签 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统的博客标签 对象", notes = "修改 系统的博客标签")
     public ApiResult<Boolean> updateSysBlogLabel(@Valid @RequestBody SysBlogLabelQueryVo sysBlogLabelQueryVo) throws Exception {
         boolean flag = sysBlogLabelService.updateSysBlogLabel(sysBlogLabelQueryVo);
@@ -72,7 +72,7 @@ public class SysBlogLabelController extends BaseController {
     /**
      * 删除 系统的博客标签 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统的博客标签 对象", notes = "删除 系统的博客标签")
     public ApiResult<Boolean> deleteSysBlogLabel(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysBlogLabelService.deleteSysBlogLabel(idsParam.getIds());

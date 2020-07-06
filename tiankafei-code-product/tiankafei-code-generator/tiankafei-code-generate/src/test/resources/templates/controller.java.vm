@@ -68,7 +68,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
     /**
      * 修改 $!{table.comment} 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
@@ -81,7 +81,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
     /**
      * 删除 $!{table.comment} 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end

@@ -62,7 +62,7 @@ public class SysLinksController extends BaseController {
     /**
      * 修改 系统的友情链接 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统的友情链接 对象", notes = "修改 系统的友情链接")
     public ApiResult<Boolean> updateSysLinks(@Valid @RequestBody SysLinksQueryVo sysLinksQueryVo) throws Exception {
         boolean flag = sysLinksService.updateSysLinks(sysLinksQueryVo);
@@ -72,7 +72,7 @@ public class SysLinksController extends BaseController {
     /**
      * 删除 系统的友情链接 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统的友情链接 对象", notes = "删除 系统的友情链接")
     public ApiResult<Boolean> deleteSysLinks(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysLinksService.deleteSysLinks(idsParam.getIds());

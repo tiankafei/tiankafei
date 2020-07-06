@@ -62,7 +62,7 @@ public class SysBlogOptionsController extends BaseController {
     /**
      * 修改 系统的博客选项设置 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统的博客选项设置 对象", notes = "修改 系统的博客选项设置")
     public ApiResult<Boolean> updateSysBlogOptions(@Valid @RequestBody SysBlogOptionsQueryVo sysBlogOptionsQueryVo) throws Exception {
         boolean flag = sysBlogOptionsService.updateSysBlogOptions(sysBlogOptionsQueryVo);
@@ -72,7 +72,7 @@ public class SysBlogOptionsController extends BaseController {
     /**
      * 删除 系统的博客选项设置 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统的博客选项设置 对象", notes = "删除 系统的博客选项设置")
     public ApiResult<Boolean> deleteSysBlogOptions(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysBlogOptionsService.deleteSysBlogOptions(idsParam.getIds());

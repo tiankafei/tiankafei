@@ -62,7 +62,7 @@ public class SysUserRoleController extends BaseController {
     /**
      * 修改 用户拥有的角色关系表 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 用户拥有的角色关系表 对象", notes = "修改 用户拥有的角色关系表")
     public ApiResult<Boolean> updateSysUserRole(@Valid @RequestBody SysUserRoleQueryVo sysUserRoleQueryVo) throws Exception {
         boolean flag = sysUserRoleService.updateSysUserRole(sysUserRoleQueryVo);
@@ -72,7 +72,7 @@ public class SysUserRoleController extends BaseController {
     /**
      * 删除 用户拥有的角色关系表 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 用户拥有的角色关系表 对象", notes = "删除 用户拥有的角色关系表")
     public ApiResult<Boolean> deleteSysUserRole(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysUserRoleService.deleteSysUserRole(idsParam.getIds());

@@ -61,7 +61,7 @@ public class SysDictTableController extends BaseController {
     /**
      * 修改 系统数据字典的数据表 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统数据字典的数据表 对象", notes = "修改 系统数据字典的数据表")
     public ApiResult<Boolean> updateSysDictTable(@Valid @RequestBody SysDictTableQueryVo sysDictTableQueryVo) throws Exception {
         boolean flag = sysDictTableService.updateSysDictTable(sysDictTableQueryVo);
@@ -71,7 +71,7 @@ public class SysDictTableController extends BaseController {
     /**
      * 删除 系统数据字典的数据表 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统数据字典的数据表 对象", notes = "删除 系统数据字典的数据表")
     public ApiResult<Boolean> deleteSysDictTable(
             @ApiParam(name = "dataTable", value = "字典数据表") @RequestParam("dataTable") String dataTable,

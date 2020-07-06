@@ -62,7 +62,7 @@ public class SysBlogInfoController extends BaseController {
     /**
      * 修改 系统的博客数据 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统的博客数据 对象", notes = "修改 系统的博客数据")
     public ApiResult<Boolean> updateSysBlogInfo(@Valid @RequestBody SysBlogInfoQueryVo sysBlogInfoQueryVo) throws Exception {
         boolean flag = sysBlogInfoService.updateSysBlogInfo(sysBlogInfoQueryVo);
@@ -72,7 +72,7 @@ public class SysBlogInfoController extends BaseController {
     /**
      * 删除 系统的博客数据 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统的博客数据 对象", notes = "删除 系统的博客数据")
     public ApiResult<Boolean> deleteSysBlogInfo(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysBlogInfoService.deleteSysBlogInfo(idsParam.getIds());

@@ -97,7 +97,7 @@ public class SysUserInfoController extends BaseController {
     /**
      * 修改 用户基本信息表 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 用户基本信息表 对象", notes = "修改 用户基本信息表")
     public ApiResult<Boolean> updateSysUserInfo(@Valid @RequestBody SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
         boolean flag = sysUserInfoService.updateSysUserInfo(sysUserInfoQueryVo);
@@ -107,7 +107,7 @@ public class SysUserInfoController extends BaseController {
     /**
      * 删除 用户基本信息表 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 用户基本信息表 对象", notes = "删除 用户基本信息表")
     public ApiResult<Boolean> deleteSysUserInfo(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysUserInfoService.deleteSysUserInfo(idsParam.getIds());

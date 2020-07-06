@@ -62,7 +62,7 @@ public class SysRoleInfoController extends BaseController {
     /**
      * 修改 角色信息表 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 角色信息表 对象", notes = "修改 角色信息表")
     public ApiResult<Boolean> updateSysRoleInfo(@Valid @RequestBody SysRoleInfoQueryVo sysRoleInfoQueryVo) throws Exception {
         boolean flag = sysRoleInfoService.updateSysRoleInfo(sysRoleInfoQueryVo);
@@ -72,7 +72,7 @@ public class SysRoleInfoController extends BaseController {
     /**
      * 删除 角色信息表 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 角色信息表 对象", notes = "删除 角色信息表")
     public ApiResult<Boolean> deleteSysRoleInfo(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysRoleInfoService.deleteSysRoleInfo(idsParam.getIds());

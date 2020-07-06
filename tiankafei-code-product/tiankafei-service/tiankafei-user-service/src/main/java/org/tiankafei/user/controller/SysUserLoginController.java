@@ -97,7 +97,7 @@ public class SysUserLoginController extends BaseController {
     /**
      * 修改 用户登录信息表 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 用户登录信息表 对象", notes = "修改 用户登录信息表")
     public ApiResult<Boolean> updateSysUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
         boolean flag = sysUserLoginService.updateSysUserLogin(sysUserLoginQueryVo);
@@ -107,7 +107,7 @@ public class SysUserLoginController extends BaseController {
     /**
      * 删除 用户登录信息表 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 用户登录信息表 对象", notes = "删除 用户登录信息表")
     public ApiResult<Boolean> deleteSysUserLogin(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysUserLoginService.deleteSysUserLogin(idsParam.getIds());

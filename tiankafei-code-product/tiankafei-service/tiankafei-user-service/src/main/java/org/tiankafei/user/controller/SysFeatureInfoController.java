@@ -62,7 +62,7 @@ public class SysFeatureInfoController extends BaseController {
     /**
      * 修改 系统功能菜单信息表 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统功能菜单信息表 对象", notes = "修改 系统功能菜单信息表")
     public ApiResult<Boolean> updateSysFeatureInfo(@Valid @RequestBody SysFeatureInfoQueryVo sysFeatureInfoQueryVo) throws Exception {
         boolean flag = sysFeatureInfoService.updateSysFeatureInfo(sysFeatureInfoQueryVo);
@@ -72,7 +72,7 @@ public class SysFeatureInfoController extends BaseController {
     /**
      * 删除 系统功能菜单信息表 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统功能菜单信息表 对象", notes = "删除 系统功能菜单信息表")
     public ApiResult<Boolean> deleteSysFeatureInfo(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysFeatureInfoService.deleteSysFeatureInfo(idsParam.getIds());

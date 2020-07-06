@@ -62,7 +62,7 @@ public class SysDictInfoController extends BaseController {
     /**
      * 修改 系统数据字典表 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统数据字典表 对象", notes = "修改 系统数据字典表")
     public ApiResult<Boolean> updateSysDictInfo(@Valid @RequestBody SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
         boolean flag = sysDictInfoService.updateSysDictInfo(sysDictInfoQueryVo);
@@ -92,7 +92,7 @@ public class SysDictInfoController extends BaseController {
     /**
      * 删除 系统数据字典表 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统数据字典表 对象", notes = "删除 系统数据字典表")
     public ApiResult<Boolean> deleteSysDictInfo(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysDictInfoService.deleteSysDictInfo(idsParam.getIds());

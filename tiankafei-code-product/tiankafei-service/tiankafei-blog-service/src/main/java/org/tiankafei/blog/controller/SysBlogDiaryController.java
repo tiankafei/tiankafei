@@ -62,7 +62,7 @@ public class SysBlogDiaryController extends BaseController {
     /**
      * 修改 系统的博客日记 对象
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ApiOperation(value = "修改 系统的博客日记 对象", notes = "修改 系统的博客日记")
     public ApiResult<Boolean> updateSysBlogDiary(@Valid @RequestBody SysBlogDiaryQueryVo sysBlogDiaryQueryVo) throws Exception {
         boolean flag = sysBlogDiaryService.updateSysBlogDiary(sysBlogDiaryQueryVo);
@@ -72,7 +72,7 @@ public class SysBlogDiaryController extends BaseController {
     /**
      * 删除 系统的博客日记 对象
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "删除 系统的博客日记 对象", notes = "删除 系统的博客日记")
     public ApiResult<Boolean> deleteSysBlogDiary(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = sysBlogDiaryService.deleteSysBlogDiary(idsParam.getIds());
