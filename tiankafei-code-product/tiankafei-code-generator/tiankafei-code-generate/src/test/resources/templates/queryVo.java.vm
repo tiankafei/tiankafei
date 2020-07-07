@@ -20,7 +20,7 @@ import java.util.Date;
  * </pre>
  *
  * @author ${author}
- * @date 1.0
+ * @since 1.0
  */
 #if(${entityLombokModel})
 @Data
