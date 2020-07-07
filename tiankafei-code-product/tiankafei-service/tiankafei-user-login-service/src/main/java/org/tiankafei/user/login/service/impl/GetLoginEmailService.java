@@ -9,12 +9,24 @@ import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.web.common.exception.LoginException;
+import org.tiankafei.web.common.exception.UserException;
 
 @Service
 public class GetLoginEmailService implements GetLoginService {
 
     @Autowired
     private LoginMapper loginMapper;
+
+    @Override
+    public Boolean checkSysUserExists(String keywords) throws LoginException {
+        if (StringUtils.isBlank(keywords)) {
+            throw new LoginException("邮箱不能为空");
+        }
+        LambdaQueryWrapper<LoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(LoginEntity::getEmail, keywords);
+
+        return loginMapper.selectCount(lambdaQueryWrapper) > 0;
+    }
 
     @Override
     public LoginEntity getLoginEntity(String keywords, String password) throws LoginException {

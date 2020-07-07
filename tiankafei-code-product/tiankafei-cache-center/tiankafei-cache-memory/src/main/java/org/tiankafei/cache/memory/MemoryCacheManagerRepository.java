@@ -21,6 +21,11 @@ public class MemoryCacheManagerRepository implements CacheManagerRepository {
     }
 
     @Override
+    public <T> void setCacheObject(Map<String, T> map) {
+
+    }
+
+    @Override
     public <T> void setCacheList(String key, List<T> dataList) {
 
     }
@@ -42,6 +47,11 @@ public class MemoryCacheManagerRepository implements CacheManagerRepository {
 
     @Override
     public <T> void setCacheObject(String key, T value, Integer timeout, TimeUnit timeUnit) {
+
+    }
+
+    @Override
+    public void expireKey(String key, Integer timeout, TimeUnit timeUnit) {
 
     }
 

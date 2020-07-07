@@ -33,6 +33,12 @@ public class RedisCacheManagerRepository implements CacheManagerRepository {
     }
 
     @Override
+    public <T> void setCacheObject(Map<String, T> map) {
+        ValueOperations<String, T> valueOperations = redisTemplate.opsForValue();
+        valueOperations.multiSet(map);
+    }
+
+    @Override
     public <T> void setCacheList(String key, List<T> dataList) {
         ListOperations listOperations = redisTemplate.opsForList();
         if (CollectionUtils.isNotEmpty(dataList)) {
@@ -69,6 +75,11 @@ public class RedisCacheManagerRepository implements CacheManagerRepository {
     public <T> void setCacheObject(String key, T value, Integer timeout, TimeUnit timeUnit) {
         ValueOperations<String, T> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key, value, timeout, timeUnit);
+    }
+
+    @Override
+    public void expireKey(String key, Integer timeout, TimeUnit timeUnit) {
+        redisTemplate.expire(key, timeout, timeUnit);
     }
 
     @Override

@@ -17,6 +17,21 @@ public class GetLoginMoreService implements GetLoginService {
     private LoginMapper loginMapper;
 
     @Override
+    public Boolean checkSysUserExists(String keywords) throws LoginException {
+        if (StringUtils.isBlank(keywords)) {
+            throw new LoginException("输入的用户账号不能为空");
+        }
+        LambdaQueryWrapper<LoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+
+        lambdaQueryWrapper
+                .and(i -> i.eq(LoginEntity::getUsername, keywords)
+                        .or().eq(LoginEntity::getEmail, keywords)
+                        .or().eq(LoginEntity::getTelephone, keywords));
+
+        return loginMapper.selectCount(lambdaQueryWrapper) > 0;
+    }
+
+    @Override
     public LoginEntity getLoginEntity(String keywords, String password) throws LoginException {
         if (StringUtils.isBlank(keywords)) {
             throw new LoginException("输入的用户账号不能为空");

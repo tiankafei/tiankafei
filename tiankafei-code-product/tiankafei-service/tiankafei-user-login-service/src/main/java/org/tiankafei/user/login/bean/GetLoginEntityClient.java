@@ -35,7 +35,8 @@ public class GetLoginEntityClient implements InitializingBean {
     }
 
     /**
-     * 执行处理逻辑
+     * 红球用户对象
+     *
      * @param loginType
      * @param keywords
      * @param password
@@ -45,6 +46,18 @@ public class GetLoginEntityClient implements InitializingBean {
     public LoginEntity getLoginEntity(Integer loginType, String keywords, String password) throws LoginException {
         LoginEntity loginEntity = loginServiceMap.get(loginType).getLoginEntity(keywords, password);
         return loginEntity;
+    }
+
+    /**
+     * 登录时验证用户是否存在
+     *
+     * @param loginType
+     * @param keywords
+     * @return
+     * @throws LoginException
+     */
+    public Boolean checkSysUserExists(Integer loginType, String keywords) throws LoginException {
+        return loginServiceMap.get(loginType).checkSysUserExists(keywords);
     }
 
 }

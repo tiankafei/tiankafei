@@ -23,6 +23,14 @@ public interface CacheManagerRepository {
     <T> void setCacheObject(String key, T value);
 
     /**
+     * 设置缓存数据
+     *
+     * @param map
+     * @param <T>
+     */
+    <T> void setCacheObject(Map<String, T> map);
+
+    /**
      * 设置缓存
      *
      * @param key       缓存的key值
@@ -69,6 +77,15 @@ public interface CacheManagerRepository {
      * @param <T>
      */
     <T> void setCacheObject(String key, T value, Integer timeout, TimeUnit timeUnit);
+
+    /**
+     * 给key设置过期时间
+     *
+     * @param key
+     * @param timeout
+     * @param timeUnit
+     */
+    void expireKey(String key, Integer timeout, TimeUnit timeUnit);
 
     /**
      * 获取缓存数据对象

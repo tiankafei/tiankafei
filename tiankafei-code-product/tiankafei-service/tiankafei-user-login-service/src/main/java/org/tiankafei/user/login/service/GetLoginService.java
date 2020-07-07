@@ -12,11 +12,20 @@ import org.tiankafei.web.common.exception.LoginException;
 public interface GetLoginService {
 
     /**
-     * 获取用户登录信息对象
+     * 登录时验证用户是否存在
      *
+     * @param keywords
+     * @return
+     * @throws LoginException
+     */
+    Boolean checkSysUserExists(String keywords) throws LoginException;
+
+    /**
+     * 获取用户登录信息对象
      * @param keywords
      * @param password
      * @return
+     * @throws LoginException
      */
     LoginEntity getLoginEntity(String keywords, String password) throws LoginException;
 

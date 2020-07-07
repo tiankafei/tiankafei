@@ -2,8 +2,11 @@ package org.tiankafei.user.login.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.validation.constraints.NotBlank;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.login.bean.GetLoginEntityClient;
 import org.tiankafei.user.login.entity.LoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
@@ -11,6 +14,8 @@ import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.param.LoginParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.user.login.service.LoginService;
+import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
@@ -24,6 +29,9 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
 
     @Autowired
     private CaptchaService captchaService;
+
+    @Autowired
+    private UserInfoCache userInfoCache;
 
     @Autowired
     private GetLoginEntityClient getLoginEntityClient;
@@ -45,7 +53,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
      * 3.如果不存在，说明没有登录过，去数据库读取数据进行验证
      * 4.如果用户名不存在，则以该用户名为key，空值存储到缓存中，避免下次使用该不存在的用户访问时造成缓存穿透的问题
      * 5.如果用户端暴力频繁使用不同的用户名进行暴力登录，此时就要使用布隆过滤器，把数据库中的所有用户名缓存在缓存中，以屏蔽缓存击穿的问题
-     * 6.如果用户存在，密码输入错误，则把该用户信息取出，放入缓存中，下次直接从缓存中取数进行比对
+     * 这一步不需要----6.如果用户存在，密码输入错误，则把该用户信息取出，放入缓存中，下次直接从缓存中取数进行比对
      * 7.如果验证通过，根据用户id获取用户详细数据和角色及功能清单相关数据保存在缓存中。
      * 8.获取用户详细数据信息
      * 9.获取用户的角色
@@ -57,21 +65,38 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
      */
     @Override
     public void login(LoginParamVo loginParamVo, HttpServletRequest request) throws LoginException {
-        // 验证数据合法性
+        // 0.验证数据合法性
         checkDataValid(loginParamVo, request);
 
-        // 登录类型判断
+        // 1.用户输入的登录用户名
+        String keywords = loginParamVo.getKeywords();
+        SysUserInfoQueryVo sysUserInfoQueryVo = userInfoCache.getSysUserInfoQueryVo(keywords);
+        if(sysUserInfoQueryVo != null){
+            // 2.已经存在，说明已经登录，取出缓存的数据，直接返回，
+            return;
+        }
+
+        // 根据用户输入的用户名判断登录类型
         Integer loginType = loginParamVo.getLoginType();
         if(loginType == null || loginType == 0){
-            loginType = getLoginType(loginParamVo.getKeywords());
+            loginType = getLoginType(keywords);
             loginParamVo.setLoginType(loginType);
         }
 
-        // 获取用户信息对象
-        LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginType, loginParamVo.getKeywords(), loginParamVo.getPassword());
-        System.out.println(loginEntity);
-
-
+        // 3.从数据库读取数据进行验证
+        LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginType, keywords, loginParamVo.getPassword());
+        if(loginEntity != null){
+            SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
+            BeanUtils.copyProperties(loginEntity, sysUserLoginQueryVo);
+            // 7.如果验证通过，根据用户id获取用户详细数据和角色及功能清单相关数据保存在缓存中。
+            userInfoCache.setSysUserInfoQueryVo(sysUserInfoQueryVo);
+        }else{
+            if(!getLoginEntityClient.checkSysUserExists(loginType, keywords)){
+                // 4.如果用户名不存在，则以该用户名为key，空值存储到缓存中，避免下次使用该不存在的用户访问时造成缓存穿透的问题
+                userInfoCache.setSysUserInfoToNull(keywords);
+            }
+            throw new LoginException("您输入的用户名密码不正确，请重新输入");
+        }
     }
 
     /**
