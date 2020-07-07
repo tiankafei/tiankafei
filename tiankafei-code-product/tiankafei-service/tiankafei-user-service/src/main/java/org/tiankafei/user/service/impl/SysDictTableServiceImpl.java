@@ -1,7 +1,6 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.tiankafei.web.common.config.MybatisPlusConfig;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysDictTableEntity;
 import org.tiankafei.user.mapper.SysDictTableMapper;
