@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.user.login.entity.LoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
-import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.web.common.exception.LoginException;
 
@@ -18,9 +17,7 @@ public class GetLoginEmailService implements GetLoginService {
     private LoginMapper loginMapper;
 
     @Override
-    public LoginEntity getLoginEntity(LoginQueryVo loginQueryVo) throws LoginException {
-        String keywords = loginQueryVo.getEmail();
-        String password = loginQueryVo.getPassword();
+    public LoginEntity getLoginEntity(String keywords, String password) throws LoginException {
         if (StringUtils.isBlank(keywords)) {
             throw new LoginException("邮箱不能为空");
         }

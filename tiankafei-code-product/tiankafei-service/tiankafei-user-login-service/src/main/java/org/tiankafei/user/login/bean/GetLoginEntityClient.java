@@ -7,7 +7,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.user.login.entity.LoginEntity;
-import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.web.common.component.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.LoginException;
@@ -38,12 +37,13 @@ public class GetLoginEntityClient implements InitializingBean {
     /**
      * 执行处理逻辑
      * @param loginType
-     * @param loginQueryVo
+     * @param keywords
+     * @param password
      * @return
      * @throws LoginException
      */
-    public LoginEntity getLoginEntity(Integer loginType, LoginQueryVo loginQueryVo) throws LoginException {
-        LoginEntity loginEntity = loginServiceMap.get(loginType).getLoginEntity(loginQueryVo);
+    public LoginEntity getLoginEntity(Integer loginType, String keywords, String password) throws LoginException {
+        LoginEntity loginEntity = loginServiceMap.get(loginType).getLoginEntity(keywords, password);
         return loginEntity;
     }
 

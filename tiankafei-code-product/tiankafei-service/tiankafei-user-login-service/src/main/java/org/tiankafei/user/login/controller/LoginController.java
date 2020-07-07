@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.user.login.param.LoginQueryVo;
+import org.tiankafei.user.login.param.LoginParamVo;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
@@ -33,8 +33,8 @@ public class LoginController extends BaseController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    public ApiResult<Boolean> login(@Valid @RequestBody LoginQueryVo loginQueryVo, HttpServletRequest request) throws Exception {
-        loginService.login(loginQueryVo, request);
+    public ApiResult<Boolean> login(@Valid @RequestBody LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
+        loginService.login(loginParamVo, request);
         return ApiResult.ok(true);
     }
 

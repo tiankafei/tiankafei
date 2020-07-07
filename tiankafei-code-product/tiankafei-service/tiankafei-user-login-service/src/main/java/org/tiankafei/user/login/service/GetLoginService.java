@@ -2,7 +2,6 @@ package org.tiankafei.user.login.service;
 
 import org.tiankafei.user.login.entity.LoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
-import org.tiankafei.user.login.param.LoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**
@@ -15,10 +14,11 @@ public interface GetLoginService {
     /**
      * 获取用户登录信息对象
      *
-     * @param loginQueryVo
+     * @param keywords
+     * @param password
      * @return
      */
-    LoginEntity getLoginEntity(LoginQueryVo loginQueryVo) throws LoginException;
+    LoginEntity getLoginEntity(String keywords, String password) throws LoginException;
 
     /**
      * 获取登录类型

@@ -8,7 +8,7 @@ import org.tiankafei.user.login.bean.GetLoginEntityClient;
 import org.tiankafei.user.login.entity.LoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
-import org.tiankafei.user.login.param.LoginQueryVo;
+import org.tiankafei.user.login.param.LoginParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.web.common.exception.LoginException;
@@ -52,23 +52,23 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
      * 10.获取用户角色对应的功能清单
      * 11.组装数据关系（去重，排序）返回前端
      *
-     * @param loginQueryVo
+     * @param loginParamVo
      * @throws LoginException
      */
     @Override
-    public void login(LoginQueryVo loginQueryVo, HttpServletRequest request) throws LoginException {
+    public void login(LoginParamVo loginParamVo, HttpServletRequest request) throws LoginException {
         // 验证数据合法性
-//        checkDataValid(loginQueryVo, request);
+        checkDataValid(loginParamVo, request);
 
         // 登录类型判断
-        Integer loginType = loginQueryVo.getLoginType();
+        Integer loginType = loginParamVo.getLoginType();
         if(loginType == null || loginType == 0){
-            loginType = getLoginType(loginQueryVo.getUserAccount());
-            loginQueryVo.setLoginType(loginType);
+            loginType = getLoginType(loginParamVo.getKeywords());
+            loginParamVo.setLoginType(loginType);
         }
 
         // 获取用户信息对象
-        LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginType, loginQueryVo);
+        LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginType, loginParamVo.getKeywords(), loginParamVo.getPassword());
         System.out.println(loginEntity);
 
 
@@ -90,17 +90,17 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
     /**
      * 验证数据合法性
      *
-     * @param loginQueryVo
+     * @param loginParamVo
      * @param request
      */
-    private void checkDataValid(LoginQueryVo loginQueryVo, HttpServletRequest request) throws LoginException {
+    private void checkDataValid(LoginParamVo loginParamVo, HttpServletRequest request) throws LoginException {
         try {
             // 用户名
             // 邮箱
             // 手机号码
             // 是否合法
 
-            boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginQueryVo.getVerificationCode(), request);
+            boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginParamVo.getVerificationCode(), request);
             if (verifyCaptchaFlag) {
                 // 验证完成，删除
                 captchaService.removeCaptcha(request);
