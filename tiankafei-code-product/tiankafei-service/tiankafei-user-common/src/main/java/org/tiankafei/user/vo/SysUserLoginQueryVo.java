@@ -20,7 +20,7 @@ import java.sql.Timestamp;
  * </pre>
  *
  * @author tiankafei
- * @date 2020-06-30
+ * @since 1.0
  */
 @Data
 @Accessors(chain = true)

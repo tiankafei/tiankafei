@@ -2,6 +2,7 @@ package org.tiankafei.user.enums;
 
 /**
  * @author tiankafei
+ * @since 1.0
  */
 public enum LoginEnums {
 

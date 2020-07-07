@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </pre>
  *
  * @author tiankafei
- * @date 2020-06-30
+ * @since 1.0
  */
 @Data
 @Accessors(chain = true)
