@@ -19,7 +19,7 @@ import java.io.Serializable;
  * </pre>
  *
  * @author tiankafei
- * @since 2020-07-02
+ * @since 1.0
  */
 @Repository
 public interface SysBlogOptionsMapper extends BaseMapper<SysBlogOptionsEntity> {

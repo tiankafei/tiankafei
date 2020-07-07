@@ -16,7 +16,7 @@ import java.util.List;
  * </pre>
  *
  * @author tiankafei
- * @since 2020-07-02
+ * @since 1.0
  */
 public interface SysBlogInfoService extends BaseService<SysBlogInfoEntity> {
     

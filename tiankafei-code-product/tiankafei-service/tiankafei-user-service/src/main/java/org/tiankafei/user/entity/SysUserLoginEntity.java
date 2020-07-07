@@ -22,7 +22,7 @@ import javax.validation.constraints.NotBlank;
  * </pre>
  *
  * @author tiankafei
- * @since 2020-06-30
+ * @since 1.0
  */
 @Data
 @Accessors(chain = true)
