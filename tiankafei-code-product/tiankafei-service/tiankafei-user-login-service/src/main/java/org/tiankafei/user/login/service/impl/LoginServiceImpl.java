@@ -86,10 +86,10 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
         // 3.从数据库读取数据进行验证
         LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginType, keywords, loginParamVo.getPassword());
         if(loginEntity != null){
-            SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
-            BeanUtils.copyProperties(loginEntity, sysUserLoginQueryVo);
+            SysUserInfoQueryVo userInfoQueryVo = new SysUserInfoQueryVo();
+            BeanUtils.copyProperties(loginEntity, userInfoQueryVo);
             // 7.如果验证通过，根据用户id获取用户详细数据和角色及功能清单相关数据保存在缓存中。
-            userInfoCache.setSysUserInfoQueryVo(sysUserInfoQueryVo);
+            userInfoCache.setSysUserInfoQueryVo(userInfoQueryVo);
         }else{
             if(!getLoginEntityClient.checkSysUserExists(loginType, keywords)){
                 // 4.如果用户名不存在，则以该用户名为key，空值存储到缓存中，避免下次使用该不存在的用户访问时造成缓存穿透的问题
