@@ -4,15 +4,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tiankafei.user.bean.QueryUserAndCheckExistsClient;
 import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.bean.LoginClient;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.service.CaptchaService;
 import org.tiankafei.user.service.LoginService;
+import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
@@ -31,7 +32,7 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
     private UserInfoCache userInfoCache;
 
     @Autowired
-    private LoginClient loginClient;
+    private QueryUserAndCheckExistsClient queryUserAndCheckExistsClient;
 
     /**
      * 针对用户登录的这个场景，用户数据不需要进行数据预热
@@ -70,8 +71,8 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
 
         // 根据用户名密码进行登录
         String keywords = loginParamVo.getKeywords();
-        SysUserLoginEntity userLoginEntity = loginClient.login(loginType, keywords, loginParamVo.getPassword());
-        if(userLoginEntity != null){
+        SysUserLoginQueryVo userLoginQueryVo = queryUserAndCheckExistsClient.getSysUserLoginQueryVo(loginType, keywords, loginParamVo.getPassword());
+        if(userLoginQueryVo != null){
             // 登录成功，获取其他用户数据
 
             // 获取角色，功能清单的数据
@@ -80,7 +81,7 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
 //            userInfoCache.setUserInfo(null);
         }else{
             // 登录失败，用户名或密码错误，查询当前登录的用户名是否存在
-            if(!loginClient.userExists(loginType, keywords)){
+            if(!queryUserAndCheckExistsClient.checkLoginSysUserExists(loginType, keywords)){
                 // 当前用户名不存在，存放空值到缓存中，避免缓存穿透
                 userInfoCache.setUsernameNullValue(keywords);
             }
