@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.enums.LoginEnums;
-import org.tiankafei.user.service.CheckUserExistsService;
+import org.tiankafei.user.service.QueryUserExistsService;
 import org.tiankafei.user.service.SysUserInfoService;
 import org.tiankafei.web.common.exception.UserException;
 
 @Service
-public class CheckEmailExistsService implements CheckUserExistsService {
+public class QueryEmailExistsService implements QueryUserExistsService {
 
     @Autowired
     private SysUserInfoService sysUserInfoService;

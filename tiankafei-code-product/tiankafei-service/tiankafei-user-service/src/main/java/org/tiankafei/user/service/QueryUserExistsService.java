@@ -3,7 +3,7 @@ package org.tiankafei.user.service;
 import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.web.common.exception.UserException;
 
-public interface CheckUserExistsService {
+public interface QueryUserExistsService {
 
     /**
      * 新增时验证系统用户是否存在

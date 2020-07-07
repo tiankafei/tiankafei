@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tiankafei.user.service.CheckUserExistsService;
+import org.tiankafei.user.service.QueryUserExistsService;
 import org.tiankafei.web.common.component.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.UserException;
 
@@ -14,17 +14,17 @@ import java.util.Set;
 @Component
 public class CheckUserExistsClient implements InitializingBean {
 
-    private Map<Integer, CheckUserExistsService> userExistsServiceMap = Maps.newHashMap();
+    private Map<Integer, QueryUserExistsService> userExistsServiceMap = Maps.newHashMap();
 
     @Autowired
     private ApplicationContextHelper applicationContextHelper;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, CheckUserExistsService> beansOfType = applicationContextHelper.getBeansOfType(CheckUserExistsService.class);
-        Set<Map.Entry<String, CheckUserExistsService>> entries = beansOfType.entrySet();
-        for (Map.Entry<String, CheckUserExistsService> entry : entries) {
-            CheckUserExistsService userExistsService = entry.getValue();
+        Map<String, QueryUserExistsService> beansOfType = applicationContextHelper.getBeansOfType(QueryUserExistsService.class);
+        Set<Map.Entry<String, QueryUserExistsService>> entries = beansOfType.entrySet();
+        for (Map.Entry<String, QueryUserExistsService> entry : entries) {
+            QueryUserExistsService userExistsService = entry.getValue();
             userExistsServiceMap.put(userExistsService.getUserFlag(), userExistsService);
         }
     }
