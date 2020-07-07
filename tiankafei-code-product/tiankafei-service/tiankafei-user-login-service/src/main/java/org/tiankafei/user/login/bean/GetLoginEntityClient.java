@@ -18,7 +18,7 @@ import org.tiankafei.web.common.exception.LoginException;
  * @Version V1.0
  **/
 @Component
-public class GetLoginClient implements InitializingBean {
+public class GetLoginEntityClient implements InitializingBean {
 
     private Map<Integer, GetLoginService> loginServiceMap = Maps.newConcurrentMap();
 
@@ -42,7 +42,7 @@ public class GetLoginClient implements InitializingBean {
      * @return
      * @throws LoginException
      */
-    public LoginEntity doHandler(Integer loginType, LoginQueryVo loginQueryVo) throws LoginException {
+    public LoginEntity getLoginEntity(Integer loginType, LoginQueryVo loginQueryVo) throws LoginException {
         LoginEntity loginEntity = loginServiceMap.get(loginType).getLoginEntity(loginQueryVo);
         return loginEntity;
     }

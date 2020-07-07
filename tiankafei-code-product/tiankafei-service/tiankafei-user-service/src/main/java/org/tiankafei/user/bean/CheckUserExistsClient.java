@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
-public class VerificationClient implements InitializingBean {
+public class CheckUserExistsClient implements InitializingBean {
 
     private Map<Integer, CheckUserExistsService> userExistsServiceMap = Maps.newHashMap();
 

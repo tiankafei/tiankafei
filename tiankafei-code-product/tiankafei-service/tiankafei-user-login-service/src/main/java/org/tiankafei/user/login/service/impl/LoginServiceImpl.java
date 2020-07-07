@@ -1,14 +1,10 @@
 package org.tiankafei.user.login.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tiankafei.user.login.bean.GetLoginClient;
+import org.tiankafei.user.login.bean.GetLoginEntityClient;
 import org.tiankafei.user.login.entity.LoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
@@ -18,8 +14,6 @@ import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
-
-import java.util.Set;
 
 /**
  * @author tiankafei
@@ -32,7 +26,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
     private CaptchaService captchaService;
 
     @Autowired
-    private GetLoginClient loginClient;
+    private GetLoginEntityClient getLoginEntityClient;
 
     /**
      * 针对用户登录的这个场景，用户数据不需要进行数据预热
@@ -67,7 +61,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
         checkDataValid(loginQueryVo, request);
 
         // 获取用户信息对象
-        LoginEntity loginEntity = loginClient.doHandler(loginQueryVo.getLoginType(), loginQueryVo);
+        LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginQueryVo.getLoginType(), loginQueryVo);
         System.out.println(loginEntity);
 
 
@@ -80,13 +74,6 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
      * @return
      */
     private Integer getLoginType(String userAccount) {
-        ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
-        Validator validator = vf.getValidator();
-
-        Set<ConstraintViolation<String>> set = validator.validate(userAccount);
-        for (ConstraintViolation<String> constraintViolation : set) {
-            System.out.println(constraintViolation.getMessage());
-        }
 
 
         return LoginEnums.MORE.getCode();

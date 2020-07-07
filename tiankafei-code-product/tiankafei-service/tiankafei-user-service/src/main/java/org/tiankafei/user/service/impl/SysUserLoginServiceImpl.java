@@ -2,7 +2,7 @@ package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.collections4.CollectionUtils;
-import org.tiankafei.user.bean.VerificationClient;
+import org.tiankafei.user.bean.CheckUserExistsClient;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
@@ -50,7 +50,7 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     private SysUserInfoMapper userInfoMapper;
 
     @Autowired
-    private VerificationClient verificationClient;
+    private CheckUserExistsClient checkUserExistsClient;
 
     @Override
     public boolean checkSysUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
@@ -62,9 +62,9 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     @Override
     public Object addSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
         // 新增时校验用户信息是否存在
-        verificationClient.checkSysUserExists(LoginEnums.USER_NAME.getCode(), sysUserLoginQueryVo.getUsername());
-        verificationClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), sysUserLoginQueryVo.getEmail());
-        verificationClient.checkSysUserExists(LoginEnums.PHONE.getCode(), sysUserLoginQueryVo.getTelephone());
+        checkUserExistsClient.checkSysUserExists(LoginEnums.USER_NAME.getCode(), sysUserLoginQueryVo.getUsername());
+        checkUserExistsClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), sysUserLoginQueryVo.getEmail());
+        checkUserExistsClient.checkSysUserExists(LoginEnums.PHONE.getCode(), sysUserLoginQueryVo.getTelephone());
 
         // 保存用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
@@ -98,9 +98,9 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     public boolean updateSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
         SysUserLoginEntity oldUserEntity = super.getById(sysUserLoginQueryVo.getId());
         // 修改时，校验用户信息是否存在
-        verificationClient.checkSysUserExists(LoginEnums.USER_NAME.getCode(), sysUserLoginQueryVo.getUsername(), oldUserEntity.getUsername());
-        verificationClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), sysUserLoginQueryVo.getEmail(), oldUserEntity.getEmail());
-        verificationClient.checkSysUserExists(LoginEnums.PHONE.getCode(), sysUserLoginQueryVo.getTelephone(), oldUserEntity.getTelephone());
+        checkUserExistsClient.checkSysUserExists(LoginEnums.USER_NAME.getCode(), sysUserLoginQueryVo.getUsername(), oldUserEntity.getUsername());
+        checkUserExistsClient.checkSysUserExists(LoginEnums.EMAIL.getCode(), sysUserLoginQueryVo.getEmail(), oldUserEntity.getEmail());
+        checkUserExistsClient.checkSysUserExists(LoginEnums.PHONE.getCode(), sysUserLoginQueryVo.getTelephone(), oldUserEntity.getTelephone());
 
         // 更新用户信息表数据
         SysUserInfoEntity userInfoEntity = userInfoMapper.selectById(sysUserLoginQueryVo.getId());
