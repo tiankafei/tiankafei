@@ -1,6 +1,6 @@
 package org.tiankafei.user.controller;
 
-import org.tiankafei.user.bean.QueryUserAndCheckExistsClient;
+import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.service.SysUserInfoService;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
@@ -41,7 +41,7 @@ public class SysUserInfoController extends BaseController {
     private SysUserInfoService sysUserInfoService;
 
     @Autowired
-    private QueryUserAndCheckExistsClient queryUserAndCheckExistsClient;
+    private CheckExistsClient checkExistsClient;
 
     /**
      * 校验 用户名 是否已经存在
@@ -49,7 +49,7 @@ public class SysUserInfoController extends BaseController {
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
     public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
-        Boolean flag = queryUserAndCheckExistsClient.checkAddSysUserExists(LoginEnums.USER_NAME.getCode(), username);
+        Boolean flag = checkExistsClient.checkAddSysUserExists(LoginEnums.USER_NAME.getCode(), username);
         return ApiResult.ok(flag);
     }
 
@@ -59,7 +59,7 @@ public class SysUserInfoController extends BaseController {
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
-        Boolean flag = queryUserAndCheckExistsClient.checkAddSysUserExists(LoginEnums.EMAIL.getCode(), email);
+        Boolean flag = checkExistsClient.checkAddSysUserExists(LoginEnums.EMAIL.getCode(), email);
         return ApiResult.ok(flag);
     }
 
@@ -69,7 +69,7 @@ public class SysUserInfoController extends BaseController {
     @GetMapping("/checkTelephone/{telephone}")
     @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
     public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
-        Boolean flag = queryUserAndCheckExistsClient.checkAddSysUserExists(LoginEnums.PHONE.getCode(), telephone);
+        Boolean flag = checkExistsClient.checkAddSysUserExists(LoginEnums.PHONE.getCode(), telephone);
         return ApiResult.ok(flag);
     }
 

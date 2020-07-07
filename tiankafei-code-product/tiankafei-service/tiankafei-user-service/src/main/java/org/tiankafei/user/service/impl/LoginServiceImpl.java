@@ -4,7 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tiankafei.user.bean.QueryUserAndCheckExistsClient;
+import org.tiankafei.user.bean.CheckExistsClient;
+import org.tiankafei.user.bean.QueryUserClient;
 import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.entity.SysUserLoginEntity;
@@ -32,7 +33,7 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
     private UserInfoCache userInfoCache;
 
     @Autowired
-    private QueryUserAndCheckExistsClient queryUserAndCheckExistsClient;
+    private QueryUserClient queryUserClient;
 
     /**
      * 针对用户登录的这个场景，用户数据不需要进行数据预热
@@ -71,7 +72,7 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
 
         // 根据用户名密码进行登录
         String keywords = loginParamVo.getKeywords();
-        SysUserLoginQueryVo userLoginQueryVo = queryUserAndCheckExistsClient.getSysUserLoginQueryVo(loginType, keywords, loginParamVo.getPassword());
+        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginType, keywords, loginParamVo.getPassword());
         if(userLoginQueryVo != null){
             // 登录成功，获取其他用户数据
 
@@ -81,7 +82,7 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
 //            userInfoCache.setUserInfo(null);
         }else{
             // 登录失败，用户名或密码错误，查询当前登录的用户名是否存在
-            if(!queryUserAndCheckExistsClient.checkLoginSysUserExists(loginType, keywords)){
+            if(!queryUserClient.checkUserExists(loginType, keywords)){
                 // 当前用户名不存在，存放空值到缓存中，避免缓存穿透
                 userInfoCache.setUsernameNullValue(keywords);
             }
