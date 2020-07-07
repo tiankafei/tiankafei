@@ -75,6 +75,8 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
         SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginType, keywords, loginParamVo.getPassword());
         if(userLoginQueryVo != null){
             // 登录成功，获取其他用户数据
+            Long userId = userLoginQueryVo.getId();
+
 
             // 获取角色，功能清单的数据
 

@@ -32,9 +32,12 @@ public interface QueryUserService {
      * @return
      */
     default SysUserLoginQueryVo switchObject(SysUserLoginEntity sysUserLoginEntity){
-        SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
-        BeanUtils.copyProperties(sysUserLoginEntity, sysUserLoginQueryVo);
-        return sysUserLoginQueryVo;
+        if(sysUserLoginEntity != null){
+            SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
+            BeanUtils.copyProperties(sysUserLoginEntity, sysUserLoginQueryVo);
+            return sysUserLoginQueryVo;
+        }
+        return null;
     }
 
     /**
