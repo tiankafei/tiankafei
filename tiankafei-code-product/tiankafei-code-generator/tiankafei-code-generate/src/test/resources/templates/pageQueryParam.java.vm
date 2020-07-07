@@ -13,7 +13,7 @@ import ${cfg.orderQueryParamPath};
  * </pre>
  *
  * @author ${author}
- * @date ${date}
+ * @date 1.0
  */
 @Data
 @Accessors(chain = true)

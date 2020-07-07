@@ -19,7 +19,7 @@ import java.io.Serializable;
  * </pre>
  *
  * @author ${author}
- * @since ${date}
+ * @since 1.0
  */
 @Repository
 public interface ${table.mapperName} extends ${superMapperClass}<${cfg.entityClassName}> {

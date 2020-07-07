@@ -1,6 +1,7 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
 
@@ -51,5 +52,34 @@ public class SysUserRoleEntity extends BaseEntity {
     @TableField("role_id")
     @NotNull(message = "角色id不能为空")
     private Integer roleId;
+
+    /**
+     * 状态：1在用，0停用
+     */
+    @ApiModelProperty(value = "状态：1在用，0停用")
+    @TableField("status")
+    @NotNull(message = "状态：1在用，0停用不能为空")
+    private Boolean status;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    @TableField("create_time")
+    private Timestamp createTime;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    @TableField("update_time")
+    private Timestamp updateTime;
+
+    /**
+     * 创建用户ID
+     */
+    @ApiModelProperty(value = "创建用户ID")
+    @TableField("create_user_id")
+    private Long createUserId;
 
 }

@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
  * </pre>
  *
  * @author ${author}
- * @since ${date}
+ * @since 1.0
  */
 @Data
 @Accessors(chain = true)
