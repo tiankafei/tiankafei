@@ -1,4 +1,4 @@
-package org.tiankafei.user.login.service;
+package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.LoginEnums;

@@ -1,4 +1,4 @@
-package org.tiankafei.user.login.service.impl;
+package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.lang3.StringUtils;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
-import org.tiankafei.user.login.mapper.LoginMapper;
-import org.tiankafei.user.login.service.GetLoginService;
+import org.tiankafei.user.mapper.LoginMapper;
+import org.tiankafei.user.service.GetLoginService;
 import org.tiankafei.web.common.exception.LoginException;
 
 @Service

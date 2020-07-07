@@ -1,4 +1,4 @@
-package org.tiankafei.user.login.mapper;
+package org.tiankafei.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;

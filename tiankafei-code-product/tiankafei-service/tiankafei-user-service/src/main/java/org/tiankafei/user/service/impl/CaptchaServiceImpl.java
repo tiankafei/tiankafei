@@ -1,10 +1,10 @@
-package org.tiankafei.user.login.service.impl;
+package org.tiankafei.user.service.impl;
 
 import com.ramostear.captcha.HappyCaptcha;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
-import org.tiankafei.user.login.service.CaptchaService;
+import org.tiankafei.user.service.CaptchaService;
 import org.tiankafei.web.common.exception.VerificationException;
 
 /**

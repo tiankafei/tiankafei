@@ -1,4 +1,4 @@
-package org.tiankafei.user.login.bean;
+package org.tiankafei.user.bean;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.login.service.GetLoginService;
+import org.tiankafei.user.service.GetLoginService;
 import org.tiankafei.web.common.component.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.LoginException;
 

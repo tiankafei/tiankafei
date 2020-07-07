@@ -1,4 +1,4 @@
-package org.tiankafei.user.login.service.impl;
+package org.tiankafei.user.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.login.bean.LoginClient;
+import org.tiankafei.user.bean.LoginClient;
 import org.tiankafei.user.enums.LoginEnums;
-import org.tiankafei.user.login.mapper.LoginMapper;
-import org.tiankafei.user.login.param.LoginParamVo;
-import org.tiankafei.user.login.service.CaptchaService;
-import org.tiankafei.user.login.service.LoginService;
+import org.tiankafei.user.mapper.LoginMapper;
+import org.tiankafei.user.param.LoginParamVo;
+import org.tiankafei.user.service.CaptchaService;
+import org.tiankafei.user.service.LoginService;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;

@@ -1,4 +1,4 @@
-package org.tiankafei.user.login.service;
+package org.tiankafei.user.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

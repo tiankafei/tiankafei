@@ -1,10 +1,10 @@
-package org.tiankafei.user.login.service;
+package org.tiankafei.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import javax.servlet.http.HttpServletRequest;
 
 import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.login.param.LoginParamVo;
+import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**
