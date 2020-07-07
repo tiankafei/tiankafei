@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
-import org.tiankafei.user.mapper.LoginMapper;
+import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.service.GetLoginService;
 import org.tiankafei.web.common.exception.LoginException;
 
@@ -14,7 +14,7 @@ import org.tiankafei.web.common.exception.LoginException;
 public class GetLoginMoreService implements GetLoginService {
 
     @Autowired
-    private LoginMapper loginMapper;
+    private SysUserLoginMapper userLoginMapper;
 
     @Override
     public Boolean checkSysUserExists(String keywords) throws LoginException {
@@ -28,7 +28,7 @@ public class GetLoginMoreService implements GetLoginService {
                         .or().eq(SysUserLoginEntity::getEmail, keywords)
                         .or().eq(SysUserLoginEntity::getTelephone, keywords));
 
-        return loginMapper.selectCount(lambdaQueryWrapper) > 0;
+        return userLoginMapper.selectCount(lambdaQueryWrapper) > 0;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class GetLoginMoreService implements GetLoginService {
                         .or().eq(SysUserLoginEntity::getTelephone, keywords))
                 .eq(SysUserLoginEntity::getPassword, password);
 
-        SysUserLoginEntity userLoginEntity = loginMapper.selectOne(lambdaQueryWrapper);
+        SysUserLoginEntity userLoginEntity = userLoginMapper.selectOne(lambdaQueryWrapper);
         return userLoginEntity;
     }
 

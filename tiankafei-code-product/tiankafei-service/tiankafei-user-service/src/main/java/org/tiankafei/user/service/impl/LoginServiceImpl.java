@@ -9,7 +9,7 @@ import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.bean.LoginClient;
 import org.tiankafei.user.enums.LoginEnums;
-import org.tiankafei.user.mapper.LoginMapper;
+import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.service.CaptchaService;
 import org.tiankafei.user.service.LoginService;
@@ -22,7 +22,7 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  * @since 1.0
  **/
 @Service
-public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, SysUserLoginEntity> implements LoginService {
+public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUserLoginEntity> implements LoginService {
 
     @Autowired
     private CaptchaService captchaService;
