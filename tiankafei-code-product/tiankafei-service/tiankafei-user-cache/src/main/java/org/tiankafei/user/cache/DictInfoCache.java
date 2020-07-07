@@ -2,8 +2,7 @@ package org.tiankafei.user.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.tiankafei.cache.GetCache;
-import org.tiankafei.cache.PutCache;
+import org.tiankafei.cache.CacheManagerRepository;
 
 /**
  * 字典数据缓存
@@ -20,9 +19,6 @@ import org.tiankafei.cache.PutCache;
 public class DictInfoCache {
 
     @Autowired
-    private GetCache getCache;
-
-    @Autowired
-    private PutCache putCache;
+    private CacheManagerRepository cacheManagerRepository;
 
 }
