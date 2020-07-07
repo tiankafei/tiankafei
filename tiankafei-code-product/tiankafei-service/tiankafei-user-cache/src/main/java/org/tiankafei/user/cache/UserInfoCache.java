@@ -24,24 +24,48 @@ public class UserInfoCache {
     private CacheManagerRepository cacheManagerRepository;
 
     /**
-     * 从缓存中获取用户信息对象
+     * 从缓存中获取用户对象
      * @param keywords
      * @return
      */
-    public SysUserInfoQueryVo getSysUserInfoQueryVo(String keywords) throws LoginException {
+    public SysUserInfoQueryVo getUserInfo(String keywords){
         String sha1 = cacheManagerRepository.<String>getCacheObject(keywords);
         if(StringUtils.isNotBlank(sha1)){
-            // 当前用户登录过
+            SysUserInfoQueryVo userInfoQueryVo = cacheManagerRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
+            return userInfoQueryVo;
+        }
+        return null;
+    }
+
+    /**
+     * 再次登录缓存处理
+     * @param keywords
+     * @return
+     */
+    public SysUserInfoQueryVo againLoginCacheHandler(String keywords, String passwrod) throws LoginException {
+        String sha1 = cacheManagerRepository.<String>getCacheObject(keywords);
+        if(StringUtils.isNotBlank(sha1)){
             if(UserCacheEnums.CACHE_NULL_VALUE.getCode().equals(sha1)){
-                // 但是当前用户名不存在，则可直接提示
-                throw new LoginException("您输入的用户名密码不正确，请重新输入");
+                // 当前用户不存在，
+                throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
             }else{
-                // 当前用户信息已经放进缓存中了，如果为空，说明缓存失效了
+                // 当前用户信息已经放进缓存中了
                 SysUserInfoQueryVo userInfoQueryVo = cacheManagerRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
-                return userInfoQueryVo;
+                if(userInfoQueryVo == null){
+                    // 如果为空，说明缓存失效了
+                    return null;
+                }
+                // 缓存没有失效
+                if(passwrod.equalsIgnoreCase(userInfoQueryVo.getPassword())){
+                    // 输入的密码和缓存中的密码再次比对一样
+                    return userInfoQueryVo;
+                }else{
+                    // 用户信息已存在，但是密码输入错误时的处理
+                    throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
+                }
             }
         }else{
-            // 说明当前输入的keywords还没有登录过
+            // 说明当前输入的用户还没有登录过
             return null;
         }
     }
@@ -50,7 +74,7 @@ public class UserInfoCache {
      * 给不存在的用户设置null值，避免缓存穿透的问题
      * @param keywords
      */
-    public void setSysUserInfoToNull(String keywords){
+    public void setUserNoExistSaveNullValue(String keywords){
         cacheManagerRepository.setCacheObject(keywords, UserCacheEnums.CACHE_NULL_VALUE.getCode());
     }
 

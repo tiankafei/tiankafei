@@ -9,7 +9,6 @@ import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.web.common.exception.LoginException;
-import org.tiankafei.web.common.exception.UserException;
 
 @Service
 public class GetLoginEmailService implements GetLoginService {
