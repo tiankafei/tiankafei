@@ -11,7 +11,7 @@ public interface QueryUserExistsService {
      * @param keywords
      * @return
      */
-    Boolean checkSysUserExists(String keywords) throws UserException ;
+    Boolean checkAddSysUserExists(String keywords) throws UserException ;
 
     /**
      * 编辑时验证系统用户是否存在
@@ -29,7 +29,7 @@ public interface QueryUserExistsService {
             emailChangeFlag = !keywords.equals(oldKeywords);
         }
         if(emailChangeFlag){
-            return checkSysUserExists(keywords);
+            return checkAddSysUserExists(keywords);
         }
         return Boolean.FALSE;
     }
