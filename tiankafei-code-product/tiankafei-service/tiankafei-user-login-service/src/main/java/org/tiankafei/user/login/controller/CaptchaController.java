@@ -29,6 +29,8 @@ public class CaptchaController {
     @ApiOperation(value = "生成验证码", notes = "生成验证码")
     public void createCaptcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         captchaService.createCaptcha(request, response);
+        String captcha = (String) request.getSession().getAttribute("happy-captcha");
+        log.info("生成的验证码：{}", captcha);
     }
 
 }
