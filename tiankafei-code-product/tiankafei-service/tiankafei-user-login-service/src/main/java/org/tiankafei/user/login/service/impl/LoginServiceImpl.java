@@ -2,19 +2,17 @@ package org.tiankafei.user.login.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
-import org.tiankafei.user.login.bean.GetLoginEntityClient;
-import org.tiankafei.user.login.entity.LoginEntity;
+import org.tiankafei.user.entity.SysUserLoginEntity;
+import org.tiankafei.user.login.bean.LoginClient;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.param.LoginParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.user.login.service.LoginService;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
@@ -24,7 +22,7 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  * @since 1.0
  **/
 @Service
-public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> implements LoginService {
+public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, SysUserLoginEntity> implements LoginService {
 
     @Autowired
     private CaptchaService captchaService;
@@ -33,7 +31,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
     private UserInfoCache userInfoCache;
 
     @Autowired
-    private GetLoginEntityClient loginEntityClient;
+    private LoginClient loginClient;
 
     /**
      * 针对用户登录的这个场景，用户数据不需要进行数据预热
@@ -67,51 +65,45 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
         // 0.验证数据合法性
 //        checkDataValid(loginParamVo, request);
 
-        // 1.用户输入的登录用户名
-        String keywords = loginParamVo.getKeywords();
-        String password = loginParamVo.getPassword();
-        SysUserInfoQueryVo sysUserInfoQueryVo = userInfoCache.againLoginCacheHandler(keywords, password);
-        if(sysUserInfoQueryVo != null){
-            // 2.已经存在，说明已经登录，取出缓存的数据，直接返回，
-            return;
-        }
-
         // 根据用户输入的用户名判断登录类型
-        Integer loginType = loginParamVo.getLoginType();
-        if(loginType == null || loginType == 0){
-            loginType = getLoginType(keywords);
-            loginParamVo.setLoginType(loginType);
-        }
+        Integer loginType = getLoginType(loginParamVo);
 
-        // 3.从数据库读取数据进行验证
-        LoginEntity loginEntity = loginEntityClient.getLoginEntity(loginType, keywords, password);
-        if(loginEntity != null){
-            // 登录成功
-            SysUserInfoQueryVo userInfoQueryVo = new SysUserInfoQueryVo();
-            BeanUtils.copyProperties(loginEntity, userInfoQueryVo);
-            // 7.如果验证通过，根据用户id获取用户详细数据和角色及功能清单相关数据保存在缓存中。
-            userInfoCache.setSysUserInfoQueryVo(userInfoQueryVo);
+        // 根据用户名密码进行登录
+        String keywords = loginParamVo.getKeywords();
+        SysUserLoginEntity userLoginEntity = loginClient.login(loginType, keywords, loginParamVo.getPassword());
+        if(userLoginEntity != null){
+            // 登录成功，获取其他用户数据
+
+            // 获取角色，功能清单的数据
+
+            // 存放缓存
+//            userInfoCache.setUserInfo(null);
         }else{
-            // 用户名或密码输出错误时
-            if(!loginEntityClient.checkSysUserExists(loginType, keywords)){
-                // 4.如果用户名不存在，则以该用户名为key，空值存储到缓存中，避免下次使用该不存在的用户访问时造成缓存穿透的问题
-                userInfoCache.setUserNoExistSaveNullValue(keywords);
+            // 登录失败，用户名或密码错误，查询当前登录的用户名是否存在
+            if(!loginClient.userExists(loginType, keywords)){
+                // 当前用户名不存在，存放空值到缓存中，避免缓存穿透
+                userInfoCache.setUsernameNullValue(keywords);
             }
             throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
         }
     }
 
     /**
-     * TODO 判断用户账户属于什么登录类型
+     * 根据用户输入的用户名判断登录类型
      *
-     * @param userAccount
+     * @param loginParamVo
      * @return
      */
-    private Integer getLoginType(String userAccount) {
+    private Integer getLoginType(LoginParamVo loginParamVo) {
+        Integer loginType = loginParamVo.getLoginType();
 
+        if(loginType == null || loginType == 0){
+            // TODO
+            loginType = LoginEnums.MORE.getCode();
+            loginParamVo.setLoginType(loginType);
+        }
 
-
-        return LoginEnums.MORE.getCode();
+        return loginType;
     }
 
     /**

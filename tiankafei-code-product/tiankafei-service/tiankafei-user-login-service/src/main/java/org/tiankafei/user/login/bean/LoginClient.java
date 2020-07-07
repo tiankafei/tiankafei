@@ -6,7 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tiankafei.user.login.entity.LoginEntity;
+import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.login.service.GetLoginService;
 import org.tiankafei.web.common.component.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.LoginException;
@@ -17,7 +17,7 @@ import org.tiankafei.web.common.exception.LoginException;
  * @Version V1.0
  **/
 @Component
-public class GetLoginEntityClient implements InitializingBean {
+public class LoginClient implements InitializingBean {
 
     private Map<Integer, GetLoginService> loginServiceMap = Maps.newConcurrentMap();
 
@@ -35,7 +35,7 @@ public class GetLoginEntityClient implements InitializingBean {
     }
 
     /**
-     * 红球用户对象
+     * 获取用户对象
      *
      * @param loginType
      * @param keywords
@@ -43,9 +43,8 @@ public class GetLoginEntityClient implements InitializingBean {
      * @return
      * @throws LoginException
      */
-    public LoginEntity getLoginEntity(Integer loginType, String keywords, String password) throws LoginException {
-        LoginEntity loginEntity = loginServiceMap.get(loginType).getLoginEntity(keywords, password);
-        return loginEntity;
+    public SysUserLoginEntity login(Integer loginType, String keywords, String password) throws LoginException {
+        return loginServiceMap.get(loginType).getLoginEntity(keywords, password);
     }
 
     /**
@@ -56,7 +55,7 @@ public class GetLoginEntityClient implements InitializingBean {
      * @return
      * @throws LoginException
      */
-    public Boolean checkSysUserExists(Integer loginType, String keywords) throws LoginException {
+    public Boolean userExists(Integer loginType, String keywords) throws LoginException {
         return loginServiceMap.get(loginType).checkSysUserExists(keywords);
     }
 

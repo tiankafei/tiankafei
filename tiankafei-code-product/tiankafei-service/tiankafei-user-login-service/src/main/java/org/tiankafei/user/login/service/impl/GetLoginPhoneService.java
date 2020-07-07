@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tiankafei.user.login.entity.LoginEntity;
+import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.service.GetLoginService;
@@ -21,22 +21,22 @@ public class GetLoginPhoneService implements GetLoginService {
         if (StringUtils.isBlank(keywords)) {
             throw new LoginException("手机号码不能为空");
         }
-        LambdaQueryWrapper<LoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(LoginEntity::getTelephone, keywords);
+        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(SysUserLoginEntity::getTelephone, keywords);
 
         return loginMapper.selectCount(lambdaQueryWrapper) > 0;
     }
 
     @Override
-    public LoginEntity getLoginEntity(String keywords, String password) throws LoginException {
+    public SysUserLoginEntity getLoginEntity(String keywords, String password) throws LoginException {
         if (StringUtils.isBlank(keywords)) {
             throw new LoginException("手机号码不能为空");
         }
-        LambdaQueryWrapper<LoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(LoginEntity::getTelephone, keywords);
-        lambdaQueryWrapper.eq(LoginEntity::getPassword, password);
-        LoginEntity loginEntity = loginMapper.selectOne(lambdaQueryWrapper);
-        return loginEntity;
+        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(SysUserLoginEntity::getTelephone, keywords);
+        lambdaQueryWrapper.eq(SysUserLoginEntity::getPassword, password);
+        SysUserLoginEntity userLoginEntity = loginMapper.selectOne(lambdaQueryWrapper);
+        return userLoginEntity;
     }
 
     @Override

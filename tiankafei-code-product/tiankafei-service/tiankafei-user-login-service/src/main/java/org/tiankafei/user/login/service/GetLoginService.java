@@ -1,6 +1,6 @@
 package org.tiankafei.user.login.service;
 
-import org.tiankafei.user.login.entity.LoginEntity;
+import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.web.common.exception.LoginException;
 
@@ -27,7 +27,7 @@ public interface GetLoginService {
      * @return
      * @throws LoginException
      */
-    LoginEntity getLoginEntity(String keywords, String password) throws LoginException;
+    SysUserLoginEntity getLoginEntity(String keywords, String password) throws LoginException;
 
     /**
      * 获取登录类型
