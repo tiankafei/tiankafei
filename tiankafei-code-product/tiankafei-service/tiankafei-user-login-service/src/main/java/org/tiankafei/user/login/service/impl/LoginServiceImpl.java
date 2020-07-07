@@ -58,10 +58,17 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
     @Override
     public void login(LoginQueryVo loginQueryVo, HttpServletRequest request) throws LoginException {
         // 验证数据合法性
-        checkDataValid(loginQueryVo, request);
+//        checkDataValid(loginQueryVo, request);
+
+        // 登录类型判断
+        Integer loginType = loginQueryVo.getLoginType();
+        if(loginType == null || loginType == 0){
+            loginType = getLoginType(loginQueryVo.getUserAccount());
+            loginQueryVo.setLoginType(loginType);
+        }
 
         // 获取用户信息对象
-        LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginQueryVo.getLoginType(), loginQueryVo);
+        LoginEntity loginEntity = getLoginEntityClient.getLoginEntity(loginType, loginQueryVo);
         System.out.println(loginEntity);
 
 
@@ -74,6 +81,7 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
      * @return
      */
     private Integer getLoginType(String userAccount) {
+
 
 
         return LoginEnums.MORE.getCode();
@@ -92,18 +100,12 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, LoginEntity> 
             // 手机号码
             // 是否合法
 
-
-            Integer loginType = loginQueryVo.getLoginType();
-            if(loginType == null || loginType == 0){
-                loginQueryVo.setLoginType(getLoginType(loginQueryVo.getUserAccount()));
-            }
-
             boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginQueryVo.getVerificationCode(), request);
             if (verifyCaptchaFlag) {
                 // 验证完成，删除
                 captchaService.removeCaptcha(request);
             } else {
-//                throw new LoginException("验证码输入错误，请重新输入！");
+                throw new LoginException("验证码输入错误，请重新输入！");
             }
         } catch (VerificationException e) {
             e.printStackTrace();

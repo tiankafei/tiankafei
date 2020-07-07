@@ -24,6 +24,9 @@ public class CaptchaServiceImpl implements CaptchaService {
      */
     @Override
     public Object createCaptcha(HttpServletRequest request, HttpServletResponse response) throws VerificationException {
+        // 先删除
+        removeCaptcha(request);
+        // 再创建
         boolean finish = HappyCaptcha.require(request, response).build().finish();
         return finish;
     }
