@@ -25,8 +25,21 @@
         <result property="updateTime" column="update_time" />
         <result property="createUserId" column="create_user_id" />
         <result property="updateUserId" column="update_user_id" />
+        <collection property="roleMenuList" resultMap="roleMenuMap" />
     </resultMap>
 
+    <resultMap id="roleMenuMap" type="org.tiankafei.user.vo.SysRoleMenuQueryVo">
+        <id property="id" column="id" />
+        <result property="roleId" column="role_id" />
+        <result property="menuId" column="menu_id" />
+        <association property="menuInfoQueryVo" resultMap="" />
+    </resultMap>
+
+    <resultMap id="menuInfoMap" type="org.tiankafei.user.vo.SysMenuInfoQueryVo">
+        <id property="id" column="id" />
+        <result property="roleId" column="role_id" />
+        <result property="menuId" column="menu_id" />
+    </resultMap>
             <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, username, nickname, email, telephone, gender, born_time, avatar, remark, user_type, department_id, create_time, update_time, create_user_id, update_user_id
@@ -39,7 +52,7 @@
     </select>
 
     <select id="getSysUserRoleListFromUserId" resultMap="userRoleMap">
-        select * from sys_user_role t1 join sys_role_info t2 on t1.role_id=t2.id and t1.`status`='1' and t2.`status`='1' and t1.user_id=#{param};
+        select * from sys_user_role t1 join sys_role_info t2 on t1.role_id=t2.id and t1.`status`='1' and t2.`status`='1' and t1.user_id=#{param} left join sys_role_menu t3 on t2.id=t3.role_id left join sys_menu_info t4 on t3.menu_id=t4.id and t4.`status`='1'
     </select>
 
 </mapper>
