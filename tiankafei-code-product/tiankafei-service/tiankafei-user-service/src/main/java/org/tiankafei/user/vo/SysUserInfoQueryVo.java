@@ -46,53 +46,62 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
      * 昵称，中文名
      */
     @ApiModelProperty(value = "昵称，中文名")
-    @Size(max = 20, message = "昵称，中文名长度不能超过 20 ！")
+    @Size(max = 30, message = "昵称，中文名长度不能超过 30 ！")
     private String nickname;
 
     /**
      * 邮箱
      */
     @ApiModelProperty(value = "邮箱")
-    @Size(max = 100, message = "邮箱长度不能超过 100 ！")
+    @Size(max = 50, message = "邮箱长度不能超过 50 ！")
     private String email;
 
     /**
      * 手机号码
      */
     @ApiModelProperty(value = "手机号码")
-    @Size(max = 13, message = "手机号码长度不能超过 13 ！")
+    @Size(max = 11, message = "手机号码长度不能超过 11 ！")
     private String telephone;
 
     /**
-     * 状态
+     * 性别：1男，2女，3未知
      */
-    @ApiModelProperty(value = "状态")
-    @Size(max = 2, message = "状态长度不能超过 2 ！")
-    private String status;
+    @ApiModelProperty(value = "性别：1男，2女，3未知")
+    @Size(max = 1, message = "性别：1男，2女，3未知长度不能超过 1 ！")
+    private String gender;
 
     /**
-     * 有效期截至时间
+     * 出生日期
      */
-    @ApiModelProperty(value = "有效期截至时间")
-    private Timestamp expirationDate;
+    @ApiModelProperty(value = "出生日期")
+    private Timestamp bornTime;
+
+    /**
+     * 用户头像
+     */
+    @ApiModelProperty(value = "用户头像")
+    @Size(max = 100, message = "用户头像长度不能超过 100 ！")
+    private String avatar;
+
+    /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
+    private String remark;
+
+    /**
+     * 用户类型
+     */
+    @ApiModelProperty(value = "用户类型")
+    @Size(max = 2, message = "用户类型长度不能超过 2 ！")
+    private String userType;
 
     /**
      * 部门id
      */
     @ApiModelProperty(value = "部门id")
     private Integer departmentId;
-
-    /**
-     * 性别：1男，2女
-     */
-    @ApiModelProperty(value = "性别：1男，2女")
-    private Integer gender;
-
-    /**
-     * 出生日期
-     */
-    @ApiModelProperty(value = "出生日期")
-    private Date bornTime;
 
     /**
      * 创建时间
@@ -107,9 +116,15 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
     private Timestamp updateTime;
 
     /**
-     * 创建人
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建用户ID")
     private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    private Long updateUserId;
 
 }

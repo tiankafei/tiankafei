@@ -56,6 +56,13 @@ public class SysRoleInfoEntity extends BaseEntity {
     private String roleName;
 
     /**
+     * 角色状态:1启用，0停用
+     */
+    @ApiModelProperty(value = "角色状态:1启用，0停用")
+    @TableField("status")
+    private Boolean status;
+
+    /**
      * 描述
      */
     @ApiModelProperty(value = "描述")
@@ -63,11 +70,12 @@ public class SysRoleInfoEntity extends BaseEntity {
     private String description;
 
     /**
-     * 角色状态:1启用，0停用
+     * 备注
      */
-    @ApiModelProperty(value = "角色状态:1启用，0停用")
-    @TableField("status")
-    private Boolean status;
+    @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
+    @TableField("remark")
+    private String remark;
 
     /**
      * 创建时间
@@ -84,10 +92,17 @@ public class SysRoleInfoEntity extends BaseEntity {
     private Timestamp updateTime;
 
     /**
-     * 创建用户id
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建用户id")
+    @ApiModelProperty(value = "创建用户ID")
     @TableField("create_user_id")
     private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    @TableField("update_user_id")
+    private Long updateUserId;
 
 }

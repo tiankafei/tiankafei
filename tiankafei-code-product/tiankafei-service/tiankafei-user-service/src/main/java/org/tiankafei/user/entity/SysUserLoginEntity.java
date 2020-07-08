@@ -52,7 +52,7 @@ public class SysUserLoginEntity extends BaseEntity {
      * 邮箱
      */
     @ApiModelProperty(value = "邮箱")
-    @Size(max = 100, message = "邮箱长度不能超过 100 ！")
+    @Size(max = 50, message = "邮箱长度不能超过 50 ！")
     @TableField("email")
     private String email;
 
@@ -60,7 +60,7 @@ public class SysUserLoginEntity extends BaseEntity {
      * 手机号码
      */
     @ApiModelProperty(value = "手机号码")
-    @Size(max = 13, message = "手机号码长度不能超过 13 ！")
+    @Size(max = 11, message = "手机号码长度不能超过 11 ！")
     @TableField("telephone")
     private String telephone;
 
@@ -73,10 +73,10 @@ public class SysUserLoginEntity extends BaseEntity {
     private String password;
 
     /**
-     * 状态
+     * 状态：1正常，2停用，3指定有效期
      */
-    @ApiModelProperty(value = "状态")
-    @Size(max = 2, message = "状态长度不能超过 2 ！")
+    @ApiModelProperty(value = "状态：1正常，2停用，3指定有效期")
+    @Size(max = 1, message = "状态：1正常，2停用，3指定有效期长度不能超过 1 ！")
     @TableField("status")
     private String status;
 

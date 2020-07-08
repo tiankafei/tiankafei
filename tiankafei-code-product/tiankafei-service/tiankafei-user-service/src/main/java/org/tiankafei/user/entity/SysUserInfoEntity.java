@@ -1,7 +1,6 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
@@ -52,7 +51,7 @@ public class SysUserInfoEntity extends BaseEntity {
      * 昵称，中文名
      */
     @ApiModelProperty(value = "昵称，中文名")
-    @Size(max = 20, message = "昵称，中文名长度不能超过 20 ！")
+    @Size(max = 30, message = "昵称，中文名长度不能超过 30 ！")
     @TableField("nickname")
     private String nickname;
 
@@ -60,7 +59,7 @@ public class SysUserInfoEntity extends BaseEntity {
      * 邮箱
      */
     @ApiModelProperty(value = "邮箱")
-    @Size(max = 100, message = "邮箱长度不能超过 100 ！")
+    @Size(max = 50, message = "邮箱长度不能超过 50 ！")
     @TableField("email")
     private String email;
 
@@ -68,24 +67,48 @@ public class SysUserInfoEntity extends BaseEntity {
      * 手机号码
      */
     @ApiModelProperty(value = "手机号码")
-    @Size(max = 13, message = "手机号码长度不能超过 13 ！")
+    @Size(max = 11, message = "手机号码长度不能超过 11 ！")
     @TableField("telephone")
     private String telephone;
 
     /**
-     * 状态
+     * 性别：1男，2女，3未知
      */
-    @ApiModelProperty(value = "状态")
-    @Size(max = 2, message = "状态长度不能超过 2 ！")
-    @TableField("status")
-    private String status;
+    @ApiModelProperty(value = "性别：1男，2女，3未知")
+    @Size(max = 1, message = "性别：1男，2女，3未知长度不能超过 1 ！")
+    @TableField("gender")
+    private String gender;
 
     /**
-     * 有效期截至时间
+     * 出生日期
      */
-    @ApiModelProperty(value = "有效期截至时间")
-    @TableField("expiration_date")
-    private Timestamp expirationDate;
+    @ApiModelProperty(value = "出生日期")
+    @TableField("born_time")
+    private Timestamp bornTime;
+
+    /**
+     * 用户头像
+     */
+    @ApiModelProperty(value = "用户头像")
+    @Size(max = 100, message = "用户头像长度不能超过 100 ！")
+    @TableField("avatar")
+    private String avatar;
+
+    /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
+    @TableField("remark")
+    private String remark;
+
+    /**
+     * 用户类型
+     */
+    @ApiModelProperty(value = "用户类型")
+    @Size(max = 2, message = "用户类型长度不能超过 2 ！")
+    @TableField("user_type")
+    private String userType;
 
     /**
      * 部门id
@@ -93,20 +116,6 @@ public class SysUserInfoEntity extends BaseEntity {
     @ApiModelProperty(value = "部门id")
     @TableField("department_id")
     private Integer departmentId;
-
-    /**
-     * 性别：1男，2女
-     */
-    @ApiModelProperty(value = "性别：1男，2女")
-    @TableField("gender")
-    private Integer gender;
-
-    /**
-     * 出生日期
-     */
-    @ApiModelProperty(value = "出生日期")
-    @TableField("born_time")
-    private Date bornTime;
 
     /**
      * 创建时间
@@ -123,10 +132,17 @@ public class SysUserInfoEntity extends BaseEntity {
     private Timestamp updateTime;
 
     /**
-     * 创建人
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建用户ID")
     @TableField("create_user_id")
     private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    @TableField("update_user_id")
+    private Long updateUserId;
 
 }

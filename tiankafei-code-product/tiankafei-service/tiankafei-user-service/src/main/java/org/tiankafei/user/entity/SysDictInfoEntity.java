@@ -100,10 +100,17 @@ public class SysDictInfoEntity extends BaseEntity {
     private Timestamp updateTime;
 
     /**
-     * 创建人
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建用户ID")
     @TableField("create_user_id")
     private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    @TableField("update_user_id")
+    private Long updateUserId;
 
 }

@@ -85,9 +85,15 @@ public class SysDepartmentQueryVo extends BaseQueryVo {
     private Timestamp updateTime;
 
     /**
-     * 部门创建人
+     * 部门创建用户ID
      */
-    @ApiModelProperty(value = "部门创建人")
+    @ApiModelProperty(value = "部门创建用户ID")
     private Long createUserId;
+
+    /**
+     * 部门修改用户ID
+     */
+    @ApiModelProperty(value = "部门修改用户ID")
+    private Long updateUserId;
 
 }

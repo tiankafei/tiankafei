@@ -47,4 +47,35 @@ public class SysUserRoleQueryVo extends BaseQueryVo {
     @NotNull(message = "角色id不能为空")
     private Integer roleId;
 
+    /**
+     * 状态：1在用，0停用
+     */
+    @ApiModelProperty(value = "状态：1在用，0停用")
+    @NotNull(message = "状态：1在用，0停用不能为空")
+    private Boolean status;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    private Timestamp createTime;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    private Timestamp updateTime;
+
+    /**
+     * 创建用户ID
+     */
+    @ApiModelProperty(value = "创建用户ID")
+    private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    private Long updateUserId;
+
 }

@@ -89,9 +89,15 @@ public class SysDictInfoQueryVo extends BaseQueryVo {
     private Timestamp updateTime;
 
     /**
-     * 创建人
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建用户ID")
     private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    private Long updateUserId;
 
 }

@@ -4,7 +4,7 @@
 
             <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, nickname, email, telephone, status, expiration_date, department_id, gender, born_time, create_time, update_time, create_user_id
+        id, username, nickname, email, telephone, gender, born_time, avatar, remark, user_type, department_id, create_time, update_time, create_user_id, update_user_id
     </sql>
 
     <select id="getSysUserInfoList" resultType="org.tiankafei.user.vo.SysUserInfoQueryVo">

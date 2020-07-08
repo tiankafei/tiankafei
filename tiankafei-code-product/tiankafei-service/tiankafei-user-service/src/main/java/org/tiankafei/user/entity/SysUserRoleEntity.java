@@ -82,4 +82,11 @@ public class SysUserRoleEntity extends BaseEntity {
     @TableField("create_user_id")
     private Long createUserId;
 
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    @TableField("update_user_id")
+    private Long updateUserId;
+
 }

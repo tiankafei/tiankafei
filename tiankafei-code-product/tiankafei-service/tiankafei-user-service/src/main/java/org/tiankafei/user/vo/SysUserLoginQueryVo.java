@@ -46,14 +46,14 @@ public class SysUserLoginQueryVo extends BaseQueryVo {
      * 邮箱
      */
     @ApiModelProperty(value = "邮箱")
-    @Size(max = 100, message = "邮箱长度不能超过 100 ！")
+    @Size(max = 50, message = "邮箱长度不能超过 50 ！")
     private String email;
 
     /**
      * 手机号码
      */
     @ApiModelProperty(value = "手机号码")
-    @Size(max = 13, message = "手机号码长度不能超过 13 ！")
+    @Size(max = 11, message = "手机号码长度不能超过 11 ！")
     private String telephone;
 
     /**
@@ -64,10 +64,10 @@ public class SysUserLoginQueryVo extends BaseQueryVo {
     private String password;
 
     /**
-     * 状态
+     * 状态：1正常，2停用，3指定有效期
      */
-    @ApiModelProperty(value = "状态")
-    @Size(max = 2, message = "状态长度不能超过 2 ！")
+    @ApiModelProperty(value = "状态：1正常，2停用，3指定有效期")
+    @Size(max = 1, message = "状态：1正常，2停用，3指定有效期长度不能超过 1 ！")
     private String status;
 
     /**

@@ -68,10 +68,24 @@ public class SysLinksEntity extends BaseEntity {
     private Timestamp createTime;
 
     /**
-     * 创建人
+     * 修改时间
      */
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "修改时间")
+    @TableField("update_time")
+    private Timestamp updateTime;
+
+    /**
+     * 创建用户ID
+     */
+    @ApiModelProperty(value = "创建用户ID")
     @TableField("create_user_id")
     private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    @TableField("update_user_id")
+    private Long updateUserId;
 
 }

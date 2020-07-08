@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <pre>
@@ -50,16 +51,23 @@ public class SysRoleInfoQueryVo extends BaseQueryVo {
     private String roleName;
 
     /**
+     * 角色状态:1启用，0停用
+     */
+    @ApiModelProperty(value = "角色状态:1启用，0停用")
+    private Boolean status;
+
+    /**
      * 描述
      */
     @ApiModelProperty(value = "描述")
     private String description;
 
     /**
-     * 角色状态:1启用，0停用
+     * 备注
      */
-    @ApiModelProperty(value = "角色状态:1启用，0停用")
-    private Boolean status;
+    @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
+    private String remark;
 
     /**
      * 创建时间
@@ -74,9 +82,15 @@ public class SysRoleInfoQueryVo extends BaseQueryVo {
     private Timestamp updateTime;
 
     /**
-     * 创建用户id
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建用户id")
+    @ApiModelProperty(value = "创建用户ID")
     private Long createUserId;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    private Long updateUserId;
 
 }
