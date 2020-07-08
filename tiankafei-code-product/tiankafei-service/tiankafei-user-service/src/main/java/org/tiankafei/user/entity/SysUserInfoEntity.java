@@ -73,14 +73,6 @@ public class SysUserInfoEntity extends BaseEntity {
     private String telephone;
 
     /**
-     * 密码
-     */
-    @ApiModelProperty(value = "密码")
-    @Size(max = 64, message = "密码长度不能超过 64 ！")
-    @TableField("password")
-    private String password;
-
-    /**
      * 状态
      */
     @ApiModelProperty(value = "状态")

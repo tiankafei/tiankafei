@@ -64,13 +64,6 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
     private String telephone;
 
     /**
-     * 密码
-     */
-    @ApiModelProperty(value = "密码")
-    @Size(max = 64, message = "密码长度不能超过 64 ！")
-    private String password;
-
-    /**
      * 状态
      */
     @ApiModelProperty(value = "状态")
