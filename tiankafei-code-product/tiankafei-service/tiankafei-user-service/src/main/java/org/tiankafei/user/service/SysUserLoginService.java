@@ -37,7 +37,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @throws Exception
      */
     Object addSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception;
-    
+
     /**
      * 保存 用户登录信息表 集合
      *
@@ -64,7 +64,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @throws Exception
      */
     boolean deleteSysUserLogin(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 用户登录信息表
      *
@@ -81,7 +81,7 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-     SysUserLoginQueryVo getSysUserLoginById(Serializable id) throws Exception;
+    SysUserLoginQueryVo getSysUserLoginById(Serializable id) throws Exception;
 
     /**
      * 获取 用户登录信息表 分页对象列表
@@ -99,8 +99,8 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @return
      * @throws Exception
      */
-     List<SysUserLoginQueryVo> getSysUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
-    
+    List<SysUserLoginQueryVo> getSysUserLoginList(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
+
     /**
      * 计算 用户登录信息表 总记录数
      *

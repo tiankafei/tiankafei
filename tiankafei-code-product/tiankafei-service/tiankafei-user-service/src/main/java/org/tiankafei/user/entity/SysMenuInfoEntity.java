@@ -1,20 +1,18 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.sql.Timestamp;
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.tiankafei.web.common.entity.BaseEntity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.tiankafei.web.common.entity.BaseEntity;
 
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -27,14 +25,14 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @TableName("sys_menu_info")
-@ApiModel(value = " 系统功能菜单信息表 实体对象" , description = "系统功能菜单信息表")
+@ApiModel(value = " 系统功能菜单信息表 实体对象", description = "系统功能菜单信息表")
 public class SysMenuInfoEntity extends BaseEntity {
 
     /**
      * 主键id
      */
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "id" , type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**

@@ -11,7 +11,7 @@ public interface CheckExistService {
      * @param keywords
      * @return
      */
-    Boolean checkAddSysUserExists(String keywords) throws UserException ;
+    Boolean checkAddSysUserExists(String keywords) throws UserException;
 
     /**
      * 编辑时验证系统用户是否存在
@@ -23,12 +23,12 @@ public interface CheckExistService {
      */
     default Boolean checkUpdateSysUserExists(String keywords, String oldKeywords) throws UserException {
         boolean emailChangeFlag = Boolean.FALSE;
-        if(StringUtils.isNotEmpty(oldKeywords)){
+        if (StringUtils.isNotEmpty(oldKeywords)) {
             emailChangeFlag = !oldKeywords.equals(keywords);
-        }else if(StringUtils.isNotEmpty(keywords)){
+        } else if (StringUtils.isNotEmpty(keywords)) {
             emailChangeFlag = !keywords.equals(oldKeywords);
         }
-        if(emailChangeFlag){
+        if (emailChangeFlag) {
             return checkAddSysUserExists(keywords);
         }
         return Boolean.FALSE;
@@ -36,6 +36,7 @@ public interface CheckExistService {
 
     /**
      * 获取用户标识，
+     *
      * @return
      */
     Integer getUserFlag();

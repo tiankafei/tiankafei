@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.enums.LoginEnums;
+import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.service.QueryUserService;
 import org.tiankafei.user.service.SysUserLoginService;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
@@ -34,13 +34,13 @@ public class QueryMoreService implements QueryUserService {
             throw new LoginException("输入的用户账号不能为空");
         }
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        if(StringUtils.isNotBlank(keywords)){
+        if (StringUtils.isNotBlank(keywords)) {
             lambdaQueryWrapper
                     .and(i -> i.eq(SysUserLoginEntity::getUsername, keywords)
                             .or().eq(SysUserLoginEntity::getEmail, keywords)
                             .or().eq(SysUserLoginEntity::getTelephone, keywords));
         }
-        if(StringUtils.isNotBlank(password)){
+        if (StringUtils.isNotBlank(password)) {
             lambdaQueryWrapper.eq(SysUserLoginEntity::getPassword, password);
         }
         return lambdaQueryWrapper;
@@ -48,6 +48,6 @@ public class QueryMoreService implements QueryUserService {
 
     @Override
     public Integer getUserFlag() {
-        return LoginEnums.MORE.getCode();
+        return UserEnums.MORE.getCode();
     }
 }

@@ -1,17 +1,17 @@
 package org.tiankafei.user.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.tiankafei.user.entity.SysUserRoleEntity;
-import org.tiankafei.user.param.SysUserRoleQueryParam;
-import org.tiankafei.user.param.SysUserRolePageQueryParam;
-import org.tiankafei.user.vo.SysUserRoleQueryVo;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.tiankafei.user.entity.SysUserRoleEntity;
+import org.tiankafei.user.param.SysUserRolePageQueryParam;
+import org.tiankafei.user.param.SysUserRoleQueryParam;
+import org.tiankafei.user.vo.SysUserRoleQueryVo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -30,7 +30,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRoleEntity> {
      * @param id
      * @return
      */
-     SysUserRoleQueryVo getSysUserRoleById(Serializable id);
+    SysUserRoleQueryVo getSysUserRoleById(Serializable id);
 
     /**
      * 获取 用户拥有的角色关系表 分页对象
@@ -39,14 +39,14 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRoleEntity> {
      * @param sysUserRolePageQueryParam
      * @return
      */
-     IPage<SysUserRoleQueryVo> getSysUserRolePageList(@Param("page") Page page, @Param("param") SysUserRolePageQueryParam sysUserRolePageQueryParam);
-    
+    IPage<SysUserRoleQueryVo> getSysUserRolePageList(@Param("page") Page page, @Param("param") SysUserRolePageQueryParam sysUserRolePageQueryParam);
+
     /**
      * 获取 用户拥有的角色关系表 对象列表
      *
      * @param sysUserRoleQueryParam
      * @return
      */
-     List<SysUserRoleQueryVo> getSysUserRoleList(@Param("param") SysUserRoleQueryParam sysUserRoleQueryParam);
+    List<SysUserRoleQueryVo> getSysUserRoleList(@Param("param") SysUserRoleQueryParam sysUserRoleQueryParam);
 
 }

@@ -1,25 +1,27 @@
 package org.tiankafei.user.controller;
 
-import org.tiankafei.user.service.SysLinksService;
-import org.tiankafei.user.param.SysLinksQueryParam;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.param.SysLinksPageQueryParam;
+import org.tiankafei.user.param.SysLinksQueryParam;
+import org.tiankafei.user.service.SysLinksService;
 import org.tiankafei.user.vo.SysLinksQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
 
 import javax.validation.Valid;
-
-import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
-
 import java.util.List;
 
 /**
@@ -85,7 +87,7 @@ public class SysLinksController extends BaseController {
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 系统的友情链接 对象详情", notes = "获取 系统的友情链接 对象详情")
     public ApiResult<SysLinksQueryVo> getSysLinks(@PathVariable("id") String id) throws Exception {
-         SysLinksQueryVo sysLinksQueryVo = sysLinksService.getSysLinksById(id);
+        SysLinksQueryVo sysLinksQueryVo = sysLinksService.getSysLinksById(id);
         return ApiResult.ok(sysLinksQueryVo);
     }
 
@@ -95,20 +97,20 @@ public class SysLinksController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的友情链接 分页列表", notes = "获取 系统的友情链接 分页列表")
     public ApiResult<Paging<SysLinksQueryVo>> getSysLinksPageList(@Valid @RequestBody SysLinksPageQueryParam sysLinksPageQueryParam) throws Exception {
-         Paging<SysLinksQueryVo> paging = sysLinksService.getSysLinksPageList(sysLinksPageQueryParam);
+        Paging<SysLinksQueryVo> paging = sysLinksService.getSysLinksPageList(sysLinksPageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 系统的友情链接 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的友情链接 列表", notes = "获取 系统的友情链接 列表")
     public ApiResult<List<SysLinksQueryVo>> getSysLinksList(@Valid @RequestBody SysLinksQueryParam sysLinksQueryParam) throws Exception {
-         List<SysLinksQueryVo> paging = sysLinksService.getSysLinksList(sysLinksQueryParam);
+        List<SysLinksQueryVo> paging = sysLinksService.getSysLinksList(sysLinksQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 系统的友情链接 总记录数
      */

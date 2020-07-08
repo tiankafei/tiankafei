@@ -1,29 +1,28 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.tiankafei.web.common.constants.CommonConstant;
-import org.tiankafei.user.entity.SysMenuInfoEntity;
-import org.tiankafei.user.mapper.SysMenuInfoMapper;
-import org.tiankafei.user.service.SysMenuInfoService;
-import org.tiankafei.user.param.SysMenuInfoQueryParam;
-import org.tiankafei.user.param.SysMenuInfoPageQueryParam;
-import org.tiankafei.user.vo.SysMenuInfoQueryVo;
-import org.tiankafei.web.common.service.impl.BaseServiceImpl;
-import org.tiankafei.web.common.vo.Paging;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.tiankafei.user.entity.SysMenuInfoEntity;
+import org.tiankafei.user.mapper.SysMenuInfoMapper;
+import org.tiankafei.user.param.SysMenuInfoPageQueryParam;
+import org.tiankafei.user.param.SysMenuInfoQueryParam;
+import org.tiankafei.user.service.SysMenuInfoService;
+import org.tiankafei.user.vo.SysMenuInfoQueryVo;
+import org.tiankafei.web.common.constants.CommonConstant;
+import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <pre>
@@ -47,7 +46,7 @@ public class SysMenuInfoServiceImpl extends BaseServiceImpl<SysMenuInfoMapper, S
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
-    
+
     @Override
     public Object addSysMenuInfo(SysMenuInfoQueryVo sysMenuInfoQueryVo) throws Exception {
         SysMenuInfoEntity sysMenuInfoEntity = new SysMenuInfoEntity();
@@ -55,12 +54,12 @@ public class SysMenuInfoServiceImpl extends BaseServiceImpl<SysMenuInfoMapper, S
         super.save(sysMenuInfoEntity);
         return sysMenuInfoEntity.getId();
     }
-        
+
     @Override
     public boolean addSysMenuInfoList(List<SysMenuInfoQueryVo> sysMenuInfoQueryVoList) throws Exception {
-        if(sysMenuInfoQueryVoList != null && !sysMenuInfoQueryVoList.isEmpty()){
+        if (sysMenuInfoQueryVoList != null && !sysMenuInfoQueryVoList.isEmpty()) {
             List<SysMenuInfoEntity> sysMenuInfoList = new ArrayList<>();
-            for ( SysMenuInfoQueryVo sysMenuInfoQueryVo : sysMenuInfoQueryVoList) {
+            for (SysMenuInfoQueryVo sysMenuInfoQueryVo : sysMenuInfoQueryVoList) {
                 SysMenuInfoEntity sysMenuInfoEntity = new SysMenuInfoEntity();
                 BeanUtils.copyProperties(sysMenuInfoQueryVo, sysMenuInfoEntity);
                 sysMenuInfoList.add(sysMenuInfoEntity);
@@ -82,26 +81,26 @@ public class SysMenuInfoServiceImpl extends BaseServiceImpl<SysMenuInfoMapper, S
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
-	
+
     @Override
     public boolean deleteSysMenuInfo(SysMenuInfoQueryParam sysMenuInfoQueryParam) throws Exception {
-        LambdaQueryWrapper <SysMenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysMenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
 
     @Override
     public SysMenuInfoQueryVo getSysMenuInfoById(Serializable id) throws Exception {
-         SysMenuInfoEntity sysMenuInfoEntity = super.getById(id);
-         SysMenuInfoQueryVo sysMenuInfoQueryVo = new SysMenuInfoQueryVo();
-         BeanUtils.copyProperties(sysMenuInfoEntity, sysMenuInfoQueryVo);
+        SysMenuInfoEntity sysMenuInfoEntity = super.getById(id);
+        SysMenuInfoQueryVo sysMenuInfoQueryVo = new SysMenuInfoQueryVo();
+        BeanUtils.copyProperties(sysMenuInfoEntity, sysMenuInfoQueryVo);
         return sysMenuInfoQueryVo;
     }
 
     @Override
     public Paging<SysMenuInfoQueryVo> getSysMenuInfoPageList(SysMenuInfoPageQueryParam sysMenuInfoPageQueryParam) throws Exception {
         Page page = setPageParam(sysMenuInfoPageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper <SysMenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysMenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysMenuInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
@@ -111,10 +110,10 @@ public class SysMenuInfoServiceImpl extends BaseServiceImpl<SysMenuInfoMapper, S
         List<SysMenuInfoQueryVo> sysMenuInfoQueryVoList = sysMenuInfoMapper.getSysMenuInfoList(sysMenuInfoQueryParam);
         return sysMenuInfoQueryVoList;
     }
-    
+
     @Override
     public int countSysMenuInfo(SysMenuInfoQueryParam sysMenuInfoQueryParam) throws Exception {
-        LambdaQueryWrapper <SysMenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysMenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }

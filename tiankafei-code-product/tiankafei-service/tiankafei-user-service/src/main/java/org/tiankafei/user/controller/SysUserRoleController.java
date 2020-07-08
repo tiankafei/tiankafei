@@ -1,25 +1,27 @@
 package org.tiankafei.user.controller;
 
-import org.tiankafei.user.service.SysUserRoleService;
-import org.tiankafei.user.param.SysUserRoleQueryParam;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.param.SysUserRolePageQueryParam;
+import org.tiankafei.user.param.SysUserRoleQueryParam;
+import org.tiankafei.user.service.SysUserRoleService;
 import org.tiankafei.user.vo.SysUserRoleQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
 
 import javax.validation.Valid;
-
-import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
-
 import java.util.List;
 
 /**
@@ -85,7 +87,7 @@ public class SysUserRoleController extends BaseController {
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 用户拥有的角色关系表 对象详情", notes = "获取 用户拥有的角色关系表 对象详情")
     public ApiResult<SysUserRoleQueryVo> getSysUserRole(@PathVariable("id") String id) throws Exception {
-         SysUserRoleQueryVo sysUserRoleQueryVo = sysUserRoleService.getSysUserRoleById(id);
+        SysUserRoleQueryVo sysUserRoleQueryVo = sysUserRoleService.getSysUserRoleById(id);
         return ApiResult.ok(sysUserRoleQueryVo);
     }
 
@@ -95,20 +97,20 @@ public class SysUserRoleController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户拥有的角色关系表 分页列表", notes = "获取 用户拥有的角色关系表 分页列表")
     public ApiResult<Paging<SysUserRoleQueryVo>> getSysUserRolePageList(@Valid @RequestBody SysUserRolePageQueryParam sysUserRolePageQueryParam) throws Exception {
-         Paging<SysUserRoleQueryVo> paging = sysUserRoleService.getSysUserRolePageList(sysUserRolePageQueryParam);
+        Paging<SysUserRoleQueryVo> paging = sysUserRoleService.getSysUserRolePageList(sysUserRolePageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 用户拥有的角色关系表 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 用户拥有的角色关系表 列表", notes = "获取 用户拥有的角色关系表 列表")
     public ApiResult<List<SysUserRoleQueryVo>> getSysUserRoleList(@Valid @RequestBody SysUserRoleQueryParam sysUserRoleQueryParam) throws Exception {
-         List<SysUserRoleQueryVo> paging = sysUserRoleService.getSysUserRoleList(sysUserRoleQueryParam);
+        List<SysUserRoleQueryVo> paging = sysUserRoleService.getSysUserRoleList(sysUserRoleQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 用户拥有的角色关系表 总记录数
      */

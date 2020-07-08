@@ -1,20 +1,18 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.sql.Timestamp;
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.tiankafei.web.common.entity.BaseEntity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.tiankafei.web.common.entity.BaseEntity;
 
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -27,7 +25,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @TableName("sys_dict_table")
-@ApiModel(value = " 系统数据字典的数据表 实体对象" , description = "系统数据字典的数据表")
+@ApiModel(value = " 系统数据字典的数据表 实体对象", description = "系统数据字典的数据表")
 public class SysDictTableEntity extends BaseEntity {
 
     /**
@@ -35,7 +33,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "主键id")
     @Size(max = 20, message = "主键id长度不能超过 20 ！")
-    @TableId(value = "id" , type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
     /**

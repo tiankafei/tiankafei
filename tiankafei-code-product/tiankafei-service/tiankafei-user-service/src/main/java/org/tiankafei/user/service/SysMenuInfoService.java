@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysMenuInfoEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysMenuInfoQueryParam;
 import org.tiankafei.user.param.SysMenuInfoPageQueryParam;
+import org.tiankafei.user.param.SysMenuInfoQueryParam;
 import org.tiankafei.user.vo.SysMenuInfoQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysMenuInfoService extends BaseService<SysMenuInfoEntity> {
-    
+
     /**
      * 校验 系统功能菜单信息表 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysMenuInfoService extends BaseService<SysMenuInfoEntity> {
      * @throws Exception
      */
     Object addSysMenuInfo(SysMenuInfoQueryVo sysMenuInfoQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统功能菜单信息表 集合
      *
@@ -64,7 +64,7 @@ public interface SysMenuInfoService extends BaseService<SysMenuInfoEntity> {
      * @throws Exception
      */
     boolean deleteSysMenuInfo(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统功能菜单信息表
      *
@@ -81,7 +81,7 @@ public interface SysMenuInfoService extends BaseService<SysMenuInfoEntity> {
      * @return
      * @throws Exception
      */
-     SysMenuInfoQueryVo getSysMenuInfoById(Serializable id) throws Exception;
+    SysMenuInfoQueryVo getSysMenuInfoById(Serializable id) throws Exception;
 
     /**
      * 获取 系统功能菜单信息表 分页对象列表
@@ -99,8 +99,8 @@ public interface SysMenuInfoService extends BaseService<SysMenuInfoEntity> {
      * @return
      * @throws Exception
      */
-     List<SysMenuInfoQueryVo> getSysMenuInfoList(SysMenuInfoQueryParam sysMenuInfoQueryParam) throws Exception;
-    
+    List<SysMenuInfoQueryVo> getSysMenuInfoList(SysMenuInfoQueryParam sysMenuInfoQueryParam) throws Exception;
+
     /**
      * 计算 系统功能菜单信息表 总记录数
      *

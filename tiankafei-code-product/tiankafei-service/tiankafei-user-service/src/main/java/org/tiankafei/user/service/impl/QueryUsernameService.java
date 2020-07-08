@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.enums.LoginEnums;
+import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.service.QueryUserService;
 import org.tiankafei.user.service.SysUserLoginService;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
@@ -34,10 +34,10 @@ public class QueryUsernameService implements QueryUserService {
             throw new LoginException("用户名不能为空");
         }
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        if(StringUtils.isNotBlank(keywords)){
+        if (StringUtils.isNotBlank(keywords)) {
             lambdaQueryWrapper.eq(SysUserLoginEntity::getUsername, keywords);
         }
-        if(StringUtils.isNotBlank(password)){
+        if (StringUtils.isNotBlank(password)) {
             lambdaQueryWrapper.eq(SysUserLoginEntity::getPassword, password);
         }
         return lambdaQueryWrapper;
@@ -45,6 +45,6 @@ public class QueryUsernameService implements QueryUserService {
 
     @Override
     public Integer getUserFlag() {
-        return LoginEnums.USER_NAME.getCode();
+        return UserEnums.USER_NAME.getCode();
     }
 }

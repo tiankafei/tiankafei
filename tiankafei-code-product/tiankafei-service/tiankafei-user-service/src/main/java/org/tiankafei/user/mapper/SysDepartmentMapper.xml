@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tiankafei.user.mapper.SysDepartmentMapper">
 
-            <!-- 通用查询结果列 -->
+    <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, department_code, department_name, parent_id, serial_number, level, description, create_time, update_time, create_user_id, update_user_id
     </sql>

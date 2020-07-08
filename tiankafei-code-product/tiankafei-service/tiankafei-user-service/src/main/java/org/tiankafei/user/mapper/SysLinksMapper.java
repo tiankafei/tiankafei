@@ -1,17 +1,17 @@
 package org.tiankafei.user.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.tiankafei.user.entity.SysLinksEntity;
-import org.tiankafei.user.param.SysLinksQueryParam;
-import org.tiankafei.user.param.SysLinksPageQueryParam;
-import org.tiankafei.user.vo.SysLinksQueryVo;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.tiankafei.user.entity.SysLinksEntity;
+import org.tiankafei.user.param.SysLinksPageQueryParam;
+import org.tiankafei.user.param.SysLinksQueryParam;
+import org.tiankafei.user.vo.SysLinksQueryVo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -30,7 +30,7 @@ public interface SysLinksMapper extends BaseMapper<SysLinksEntity> {
      * @param id
      * @return
      */
-     SysLinksQueryVo getSysLinksById(Serializable id);
+    SysLinksQueryVo getSysLinksById(Serializable id);
 
     /**
      * 获取 系统的友情链接 分页对象
@@ -39,14 +39,14 @@ public interface SysLinksMapper extends BaseMapper<SysLinksEntity> {
      * @param sysLinksPageQueryParam
      * @return
      */
-     IPage<SysLinksQueryVo> getSysLinksPageList(@Param("page") Page page, @Param("param") SysLinksPageQueryParam sysLinksPageQueryParam);
-    
+    IPage<SysLinksQueryVo> getSysLinksPageList(@Param("page") Page page, @Param("param") SysLinksPageQueryParam sysLinksPageQueryParam);
+
     /**
      * 获取 系统的友情链接 对象列表
      *
      * @param sysLinksQueryParam
      * @return
      */
-     List<SysLinksQueryVo> getSysLinksList(@Param("param") SysLinksQueryParam sysLinksQueryParam);
+    List<SysLinksQueryVo> getSysLinksList(@Param("param") SysLinksQueryParam sysLinksQueryParam);
 
 }

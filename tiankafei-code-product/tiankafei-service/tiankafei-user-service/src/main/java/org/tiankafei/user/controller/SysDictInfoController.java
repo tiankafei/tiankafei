@@ -1,25 +1,27 @@
 package org.tiankafei.user.controller;
 
-import org.tiankafei.user.service.SysDictInfoService;
-import org.tiankafei.user.param.SysDictInfoQueryParam;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.param.SysDictInfoPageQueryParam;
+import org.tiankafei.user.param.SysDictInfoQueryParam;
+import org.tiankafei.user.service.SysDictInfoService;
 import org.tiankafei.user.vo.SysDictInfoQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
 
 import javax.validation.Valid;
-
-import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
-
 import java.util.List;
 
 /**
@@ -105,7 +107,7 @@ public class SysDictInfoController extends BaseController {
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 系统数据字典表 对象详情", notes = "获取 系统数据字典表 对象详情")
     public ApiResult<SysDictInfoQueryVo> getSysDictInfo(@PathVariable("id") String id) throws Exception {
-         SysDictInfoQueryVo sysDictInfoQueryVo = sysDictInfoService.getSysDictInfoById(id);
+        SysDictInfoQueryVo sysDictInfoQueryVo = sysDictInfoService.getSysDictInfoById(id);
         return ApiResult.ok(sysDictInfoQueryVo);
     }
 
@@ -115,20 +117,20 @@ public class SysDictInfoController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统数据字典表 分页列表", notes = "获取 系统数据字典表 分页列表")
     public ApiResult<Paging<SysDictInfoQueryVo>> getSysDictInfoPageList(@Valid @RequestBody SysDictInfoPageQueryParam sysDictInfoPageQueryParam) throws Exception {
-         Paging<SysDictInfoQueryVo> paging = sysDictInfoService.getSysDictInfoPageList(sysDictInfoPageQueryParam);
+        Paging<SysDictInfoQueryVo> paging = sysDictInfoService.getSysDictInfoPageList(sysDictInfoPageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 系统数据字典表 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统数据字典表 列表", notes = "获取 系统数据字典表 列表")
     public ApiResult<List<SysDictInfoQueryVo>> getSysDictInfoList(@Valid @RequestBody SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception {
-         List<SysDictInfoQueryVo> paging = sysDictInfoService.getSysDictInfoList(sysDictInfoQueryParam);
+        List<SysDictInfoQueryVo> paging = sysDictInfoService.getSysDictInfoList(sysDictInfoQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 系统数据字典表 总记录数
      */

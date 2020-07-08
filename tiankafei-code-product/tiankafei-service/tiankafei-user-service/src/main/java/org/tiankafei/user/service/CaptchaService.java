@@ -1,8 +1,9 @@
 package org.tiankafei.user.service;
 
+import org.tiankafei.web.common.exception.VerificationException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.tiankafei.web.common.exception.VerificationException;
 
 /**
  * @author tiankafei

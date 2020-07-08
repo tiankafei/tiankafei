@@ -1,14 +1,14 @@
 package org.tiankafei.user.service.impl;
 
-import javax.servlet.http.HttpServletRequest;
-
+import cn.hutool.core.lang.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.bean.QueryUserClient;
 import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.enums.LoginEnums;
+import org.tiankafei.user.enums.UserEnums;
+import org.tiankafei.user.enums.UserStatusEnums;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.service.CaptchaService;
@@ -19,6 +19,9 @@ import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 
 /**
  * @author tiankafei
@@ -70,20 +73,27 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
     public SysUserInfoQueryVo login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
         String keywords = loginParamVo.getKeywords();
         // 0.验证数据合法性
-//        checkDataValid(loginParamVo, request);
+        checkDataValid(loginParamVo, request);
 
         // 不存在的用户名，会放进缓存中，仅允许查询一次数据库，避免缓存穿透的问题
         SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(keywords);
-//        if(userInfo != null){
-//            return userInfo;
-//        }
-
-        // 根据用户输入的用户名判断登录类型
-        Integer loginType = getLoginType(loginParamVo);
+        if (userInfo != null) {
+            return userInfo;
+        }
 
         // 根据用户名密码进行登录
-        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginType, keywords, loginParamVo.getPassword());
-        if(userLoginQueryVo != null){
+        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords, loginParamVo.getPassword());
+        if (userLoginQueryVo != null) {
+            String status = userLoginQueryVo.getStatus();
+            if (UserStatusEnums.DISABLE.getCode().equalsIgnoreCase(status)) {
+                throw new LoginException("该账号已经被禁用！");
+            } else if (UserStatusEnums.EXPIRATION_DATE.getCode().equalsIgnoreCase(status)) {
+                Timestamp expirationDate = userLoginQueryVo.getExpirationDate();
+                boolean isExpirationFlag = expirationDate != null && System.currentTimeMillis() > expirationDate.getTime();
+                if (isExpirationFlag) {
+                    throw new LoginException("该账号已经过期，请重新续约！");
+                }
+            }
             // 登录成功，获取其他用户数据
             Long userId = userLoginQueryVo.getId();
             try {
@@ -96,32 +106,14 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
                 e.printStackTrace();
                 throw new Exception("获取用户数据发生异常！");
             }
-        }else{
+        } else {
             // 登录失败，用户名或密码错误，查询当前登录的用户名是否存在
-            if(!queryUserClient.checkUserExists(loginType, keywords)){
+            if (!queryUserClient.checkUserExists(loginParamVo.getLoginType(), keywords)) {
                 // 当前用户名不存在，存放空值到缓存中，避免缓存穿透
                 userInfoCache.setUsernameNullValue(keywords);
             }
             throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
         }
-    }
-
-    /**
-     * 根据用户输入的用户名判断登录类型
-     *
-     * @param loginParamVo
-     * @return
-     */
-    private Integer getLoginType(LoginParamVo loginParamVo) {
-        Integer loginType = loginParamVo.getLoginType();
-
-        if(loginType == null || loginType == 0){
-            // TODO
-            loginType = LoginEnums.MORE.getCode();
-            loginParamVo.setLoginType(loginType);
-        }
-
-        return loginType;
     }
 
     /**
@@ -132,11 +124,38 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
      */
     private void checkDataValid(LoginParamVo loginParamVo, HttpServletRequest request) throws LoginException {
         try {
-            // 用户名
-            // 邮箱
-            // 手机号码
-            // 是否合法
+            // 输入的登录用户名
+            String keywords = loginParamVo.getKeywords();
 
+            // 登录类型
+            Integer loginType = loginParamVo.getLoginType();
+            if (loginType == null || loginType == 0) {
+                // 验证并设置登录类型
+                if (Validator.isEmail(keywords)) {
+                    loginType = UserEnums.EMAIL.getCode();
+                } else if (Validator.isMobile(keywords)) {
+                    loginType = UserEnums.PHONE.getCode();
+                } else if (Validator.isGeneral(keywords)) {
+                    loginType = UserEnums.USER_NAME.getCode();
+                } else {
+                    throw new LoginException("登录用户名不符合要求，请重新输入！");
+                }
+                // 设置登录类型
+                loginParamVo.setLoginType(loginType);
+            } else {
+                boolean validatorFlag = false;
+                if (UserEnums.USER_NAME.getCode() == loginType) {
+                    validatorFlag = Validator.isGeneral(keywords);
+                } else if (UserEnums.PHONE.getCode() == loginType) {
+                    validatorFlag = Validator.isMobile(keywords);
+                } else if (UserEnums.EMAIL.getCode() == loginType) {
+                    validatorFlag = Validator.isEmail(keywords);
+                }
+                if (!validatorFlag) {
+                    throw new LoginException("登录用户名不符合要求，请重新输入！");
+                }
+            }
+            // 验证码
             boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginParamVo.getVerificationCode(), request);
             if (verifyCaptchaFlag) {
                 // 验证完成，删除

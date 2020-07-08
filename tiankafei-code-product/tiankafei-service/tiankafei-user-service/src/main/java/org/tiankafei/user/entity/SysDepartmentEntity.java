@@ -1,20 +1,17 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.sql.Timestamp;
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.tiankafei.web.common.entity.BaseEntity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.tiankafei.web.common.entity.BaseEntity;
 
 import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -27,14 +24,14 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @TableName("sys_department")
-@ApiModel(value = " 系统部门表信息 实体对象" , description = "系统部门表信息")
+@ApiModel(value = " 系统部门表信息 实体对象", description = "系统部门表信息")
 public class SysDepartmentEntity extends BaseEntity {
 
     /**
      * 主键id
      */
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "id" , type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**

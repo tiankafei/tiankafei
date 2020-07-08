@@ -1,18 +1,15 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.tiankafei.web.common.entity.BaseEntity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.tiankafei.web.common.entity.BaseEntity;
 
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -26,14 +23,14 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @TableName("sys_role_menu")
-@ApiModel(value = " 系统角色对应的功能配置表 实体对象" , description = "系统角色对应的功能配置表")
+@ApiModel(value = " 系统角色对应的功能配置表 实体对象", description = "系统角色对应的功能配置表")
 public class SysRoleMenuEntity extends BaseEntity {
 
     /**
      * 主键id
      */
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "id" , type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**

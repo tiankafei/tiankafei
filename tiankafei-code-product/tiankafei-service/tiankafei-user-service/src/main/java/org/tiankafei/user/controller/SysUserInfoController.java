@@ -1,26 +1,29 @@
 package org.tiankafei.user.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.bean.CheckExistsClient;
-import org.tiankafei.user.enums.LoginEnums;
-import org.tiankafei.user.service.SysUserInfoService;
-import org.tiankafei.user.param.SysUserInfoQueryParam;
+import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
+import org.tiankafei.user.param.SysUserInfoQueryParam;
+import org.tiankafei.user.service.SysUserInfoService;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
 
 import javax.validation.Valid;
-
-import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
-
 import java.util.List;
 
 /**
@@ -49,7 +52,7 @@ public class SysUserInfoController extends BaseController {
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
     public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
-        Boolean flag = checkExistsClient.checkAddSysUserExists(LoginEnums.USER_NAME.getCode(), username);
+        Boolean flag = checkExistsClient.checkAddSysUserExists(UserEnums.USER_NAME.getCode(), username);
         return ApiResult.ok(flag);
     }
 
@@ -59,7 +62,7 @@ public class SysUserInfoController extends BaseController {
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
-        Boolean flag = checkExistsClient.checkAddSysUserExists(LoginEnums.EMAIL.getCode(), email);
+        Boolean flag = checkExistsClient.checkAddSysUserExists(UserEnums.EMAIL.getCode(), email);
         return ApiResult.ok(flag);
     }
 
@@ -69,7 +72,7 @@ public class SysUserInfoController extends BaseController {
     @GetMapping("/checkTelephone/{telephone}")
     @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
     public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
-        Boolean flag = checkExistsClient.checkAddSysUserExists(LoginEnums.PHONE.getCode(), telephone);
+        Boolean flag = checkExistsClient.checkAddSysUserExists(UserEnums.PHONE.getCode(), telephone);
         return ApiResult.ok(flag);
     }
 
@@ -120,7 +123,7 @@ public class SysUserInfoController extends BaseController {
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 用户基本信息表 对象详情", notes = "获取 用户基本信息表 对象详情")
     public ApiResult<SysUserInfoQueryVo> getSysUserInfo(@PathVariable("id") String id) throws Exception {
-         SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoService.getSysUserInfoById(id);
+        SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoService.getSysUserInfoById(id);
         return ApiResult.ok(sysUserInfoQueryVo);
     }
 
@@ -130,20 +133,20 @@ public class SysUserInfoController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户基本信息表 分页列表", notes = "获取 用户基本信息表 分页列表")
     public ApiResult<Paging<SysUserInfoQueryVo>> getSysUserInfoPageList(@Valid @RequestBody SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
-         Paging<SysUserInfoQueryVo> paging = sysUserInfoService.getSysUserInfoPageList(sysUserInfoPageQueryParam);
+        Paging<SysUserInfoQueryVo> paging = sysUserInfoService.getSysUserInfoPageList(sysUserInfoPageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 用户基本信息表 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 用户基本信息表 列表", notes = "获取 用户基本信息表 列表")
     public ApiResult<List<SysUserInfoQueryVo>> getSysUserInfoList(@Valid @RequestBody SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
-         List<SysUserInfoQueryVo> paging = sysUserInfoService.getSysUserInfoList(sysUserInfoQueryParam);
+        List<SysUserInfoQueryVo> paging = sysUserInfoService.getSysUserInfoList(sysUserInfoQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 用户基本信息表 总记录数
      */

@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysLinksEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysLinksQueryParam;
 import org.tiankafei.user.param.SysLinksPageQueryParam;
+import org.tiankafei.user.param.SysLinksQueryParam;
 import org.tiankafei.user.vo.SysLinksQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysLinksService extends BaseService<SysLinksEntity> {
-    
+
     /**
      * 校验 系统的友情链接 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysLinksService extends BaseService<SysLinksEntity> {
      * @throws Exception
      */
     Object addSysLinks(SysLinksQueryVo sysLinksQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统的友情链接 集合
      *
@@ -64,7 +64,7 @@ public interface SysLinksService extends BaseService<SysLinksEntity> {
      * @throws Exception
      */
     boolean deleteSysLinks(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统的友情链接
      *
@@ -81,7 +81,7 @@ public interface SysLinksService extends BaseService<SysLinksEntity> {
      * @return
      * @throws Exception
      */
-     SysLinksQueryVo getSysLinksById(Serializable id) throws Exception;
+    SysLinksQueryVo getSysLinksById(Serializable id) throws Exception;
 
     /**
      * 获取 系统的友情链接 分页对象列表
@@ -99,8 +99,8 @@ public interface SysLinksService extends BaseService<SysLinksEntity> {
      * @return
      * @throws Exception
      */
-     List<SysLinksQueryVo> getSysLinksList(SysLinksQueryParam sysLinksQueryParam) throws Exception;
-    
+    List<SysLinksQueryVo> getSysLinksList(SysLinksQueryParam sysLinksQueryParam) throws Exception;
+
     /**
      * 计算 系统的友情链接 总记录数
      *

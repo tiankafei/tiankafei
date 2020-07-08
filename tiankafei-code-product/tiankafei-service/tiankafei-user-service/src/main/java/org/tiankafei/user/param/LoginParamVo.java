@@ -2,11 +2,12 @@ package org.tiankafei.user.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.web.common.vo.BaseQueryVo;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * @Author 魏双双

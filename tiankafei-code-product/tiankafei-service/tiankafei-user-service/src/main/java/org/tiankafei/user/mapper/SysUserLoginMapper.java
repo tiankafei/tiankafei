@@ -1,17 +1,17 @@
 package org.tiankafei.user.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.tiankafei.user.entity.SysUserLoginEntity;
-import org.tiankafei.user.param.SysUserLoginQueryParam;
-import org.tiankafei.user.param.SysUserLoginPageQueryParam;
-import org.tiankafei.user.vo.SysUserLoginQueryVo;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.tiankafei.user.entity.SysUserLoginEntity;
+import org.tiankafei.user.param.SysUserLoginPageQueryParam;
+import org.tiankafei.user.param.SysUserLoginQueryParam;
+import org.tiankafei.user.vo.SysUserLoginQueryVo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -30,7 +30,7 @@ public interface SysUserLoginMapper extends BaseMapper<SysUserLoginEntity> {
      * @param id
      * @return
      */
-     SysUserLoginQueryVo getSysUserLoginById(Serializable id);
+    SysUserLoginQueryVo getSysUserLoginById(Serializable id);
 
     /**
      * 获取 用户登录信息表 分页对象
@@ -39,14 +39,14 @@ public interface SysUserLoginMapper extends BaseMapper<SysUserLoginEntity> {
      * @param sysUserLoginPageQueryParam
      * @return
      */
-     IPage<SysUserLoginQueryVo> getSysUserLoginPageList(@Param("page") Page page, @Param("param") SysUserLoginPageQueryParam sysUserLoginPageQueryParam);
-    
+    IPage<SysUserLoginQueryVo> getSysUserLoginPageList(@Param("page") Page page, @Param("param") SysUserLoginPageQueryParam sysUserLoginPageQueryParam);
+
     /**
      * 获取 用户登录信息表 对象列表
      *
      * @param sysUserLoginQueryParam
      * @return
      */
-     List<SysUserLoginQueryVo> getSysUserLoginList(@Param("param") SysUserLoginQueryParam sysUserLoginQueryParam);
+    List<SysUserLoginQueryVo> getSysUserLoginList(@Param("param") SysUserLoginQueryParam sysUserLoginQueryParam);
 
 }

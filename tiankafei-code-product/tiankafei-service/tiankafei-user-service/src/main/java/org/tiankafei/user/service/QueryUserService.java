@@ -19,6 +19,7 @@ public interface QueryUserService {
 
     /**
      * 获取用户登录对象
+     *
      * @param keywords
      * @param password
      * @return
@@ -28,11 +29,12 @@ public interface QueryUserService {
 
     /**
      * 转换对象
+     *
      * @param sysUserLoginEntity
      * @return
      */
-    default SysUserLoginQueryVo switchObject(SysUserLoginEntity sysUserLoginEntity){
-        if(sysUserLoginEntity != null){
+    default SysUserLoginQueryVo switchObject(SysUserLoginEntity sysUserLoginEntity) {
+        if (sysUserLoginEntity != null) {
             SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
             BeanUtils.copyProperties(sysUserLoginEntity, sysUserLoginQueryVo);
             return sysUserLoginQueryVo;
@@ -61,6 +63,7 @@ public interface QueryUserService {
 
     /**
      * 获取用户标识，
+     *
      * @return
      */
     Integer getUserFlag();

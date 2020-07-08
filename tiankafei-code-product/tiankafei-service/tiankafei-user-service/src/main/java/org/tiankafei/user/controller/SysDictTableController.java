@@ -1,24 +1,28 @@
 package org.tiankafei.user.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.tiankafei.user.service.SysDictTableService;
-import org.tiankafei.user.param.SysDictTableQueryParam;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.param.SysDictTablePageQueryParam;
+import org.tiankafei.user.param.SysDictTableQueryParam;
+import org.tiankafei.user.service.SysDictTableService;
 import org.tiankafei.user.vo.SysDictTableQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
 import org.tiankafei.web.common.vo.Paging;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -86,7 +90,7 @@ public class SysDictTableController extends BaseController {
     @GetMapping("/info/{dataTable}/{id}")
     @ApiOperation(value = "获取 系统数据字典的数据表 对象详情", notes = "获取 系统数据字典的数据表 对象详情")
     public ApiResult<SysDictTableQueryVo> getSysDictTable(@PathVariable("dataTable") String dataTable, @PathVariable("id") String id) throws Exception {
-         SysDictTableQueryVo sysDictTableQueryVo = sysDictTableService.getSysDictTableById(dataTable, id);
+        SysDictTableQueryVo sysDictTableQueryVo = sysDictTableService.getSysDictTableById(dataTable, id);
         return ApiResult.ok(sysDictTableQueryVo);
     }
 
@@ -96,20 +100,20 @@ public class SysDictTableController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统数据字典的数据表 分页列表", notes = "获取 系统数据字典的数据表 分页列表")
     public ApiResult<Paging<SysDictTableQueryVo>> getSysDictTablePageList(@Valid @RequestBody SysDictTablePageQueryParam sysDictTablePageQueryParam) throws Exception {
-         Paging<SysDictTableQueryVo> paging = sysDictTableService.getSysDictTablePageList(sysDictTablePageQueryParam);
+        Paging<SysDictTableQueryVo> paging = sysDictTableService.getSysDictTablePageList(sysDictTablePageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 系统数据字典的数据表 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统数据字典的数据表 列表", notes = "获取 系统数据字典的数据表 列表")
     public ApiResult<List<SysDictTableQueryVo>> getSysDictTableList(@Valid @RequestBody SysDictTableQueryParam sysDictTableQueryParam) throws Exception {
-         List<SysDictTableQueryVo> paging = sysDictTableService.getSysDictTableList(sysDictTableQueryParam);
+        List<SysDictTableQueryVo> paging = sysDictTableService.getSysDictTableList(sysDictTableQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 系统数据字典的数据表 总记录数
      */

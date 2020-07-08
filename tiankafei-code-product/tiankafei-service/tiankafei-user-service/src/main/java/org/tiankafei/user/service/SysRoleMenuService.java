@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysRoleMenuEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysRoleMenuQueryParam;
 import org.tiankafei.user.param.SysRoleMenuPageQueryParam;
+import org.tiankafei.user.param.SysRoleMenuQueryParam;
 import org.tiankafei.user.vo.SysRoleMenuQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysRoleMenuService extends BaseService<SysRoleMenuEntity> {
-    
+
     /**
      * 校验 系统角色对应的功能配置表 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysRoleMenuService extends BaseService<SysRoleMenuEntity> {
      * @throws Exception
      */
     Object addSysRoleMenu(SysRoleMenuQueryVo sysRoleMenuQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统角色对应的功能配置表 集合
      *
@@ -64,7 +64,7 @@ public interface SysRoleMenuService extends BaseService<SysRoleMenuEntity> {
      * @throws Exception
      */
     boolean deleteSysRoleMenu(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统角色对应的功能配置表
      *
@@ -81,7 +81,7 @@ public interface SysRoleMenuService extends BaseService<SysRoleMenuEntity> {
      * @return
      * @throws Exception
      */
-     SysRoleMenuQueryVo getSysRoleMenuById(Serializable id) throws Exception;
+    SysRoleMenuQueryVo getSysRoleMenuById(Serializable id) throws Exception;
 
     /**
      * 获取 系统角色对应的功能配置表 分页对象列表
@@ -99,8 +99,8 @@ public interface SysRoleMenuService extends BaseService<SysRoleMenuEntity> {
      * @return
      * @throws Exception
      */
-     List<SysRoleMenuQueryVo> getSysRoleMenuList(SysRoleMenuQueryParam sysRoleMenuQueryParam) throws Exception;
-    
+    List<SysRoleMenuQueryVo> getSysRoleMenuList(SysRoleMenuQueryParam sysRoleMenuQueryParam) throws Exception;
+
     /**
      * 计算 系统角色对应的功能配置表 总记录数
      *

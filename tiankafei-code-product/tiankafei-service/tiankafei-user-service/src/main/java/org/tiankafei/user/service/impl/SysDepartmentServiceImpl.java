@@ -1,29 +1,28 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.tiankafei.web.common.constants.CommonConstant;
-import org.tiankafei.user.entity.SysDepartmentEntity;
-import org.tiankafei.user.mapper.SysDepartmentMapper;
-import org.tiankafei.user.service.SysDepartmentService;
-import org.tiankafei.user.param.SysDepartmentQueryParam;
-import org.tiankafei.user.param.SysDepartmentPageQueryParam;
-import org.tiankafei.user.vo.SysDepartmentQueryVo;
-import org.tiankafei.web.common.service.impl.BaseServiceImpl;
-import org.tiankafei.web.common.vo.Paging;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.tiankafei.user.entity.SysDepartmentEntity;
+import org.tiankafei.user.mapper.SysDepartmentMapper;
+import org.tiankafei.user.param.SysDepartmentPageQueryParam;
+import org.tiankafei.user.param.SysDepartmentQueryParam;
+import org.tiankafei.user.service.SysDepartmentService;
+import org.tiankafei.user.vo.SysDepartmentQueryVo;
+import org.tiankafei.web.common.constants.CommonConstant;
+import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <pre>
@@ -47,7 +46,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
-    
+
     @Override
     public Object addSysDepartment(SysDepartmentQueryVo sysDepartmentQueryVo) throws Exception {
         SysDepartmentEntity sysDepartmentEntity = new SysDepartmentEntity();
@@ -55,12 +54,12 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
         super.save(sysDepartmentEntity);
         return sysDepartmentEntity.getId();
     }
-        
+
     @Override
     public boolean addSysDepartmentList(List<SysDepartmentQueryVo> sysDepartmentQueryVoList) throws Exception {
-        if(sysDepartmentQueryVoList != null && !sysDepartmentQueryVoList.isEmpty()){
+        if (sysDepartmentQueryVoList != null && !sysDepartmentQueryVoList.isEmpty()) {
             List<SysDepartmentEntity> sysDepartmentList = new ArrayList<>();
-            for ( SysDepartmentQueryVo sysDepartmentQueryVo : sysDepartmentQueryVoList) {
+            for (SysDepartmentQueryVo sysDepartmentQueryVo : sysDepartmentQueryVoList) {
                 SysDepartmentEntity sysDepartmentEntity = new SysDepartmentEntity();
                 BeanUtils.copyProperties(sysDepartmentQueryVo, sysDepartmentEntity);
                 sysDepartmentList.add(sysDepartmentEntity);
@@ -82,26 +81,26 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
-	
+
     @Override
     public boolean deleteSysDepartment(SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception {
-        LambdaQueryWrapper <SysDepartmentEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysDepartmentEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
 
     @Override
     public SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception {
-         SysDepartmentEntity sysDepartmentEntity = super.getById(id);
-         SysDepartmentQueryVo sysDepartmentQueryVo = new SysDepartmentQueryVo();
-         BeanUtils.copyProperties(sysDepartmentEntity, sysDepartmentQueryVo);
+        SysDepartmentEntity sysDepartmentEntity = super.getById(id);
+        SysDepartmentQueryVo sysDepartmentQueryVo = new SysDepartmentQueryVo();
+        BeanUtils.copyProperties(sysDepartmentEntity, sysDepartmentQueryVo);
         return sysDepartmentQueryVo;
     }
 
     @Override
     public Paging<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentPageQueryParam sysDepartmentPageQueryParam) throws Exception {
         Page page = setPageParam(sysDepartmentPageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper <SysDepartmentEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysDepartmentEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysDepartmentQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
@@ -111,10 +110,10 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
         List<SysDepartmentQueryVo> sysDepartmentQueryVoList = sysDepartmentMapper.getSysDepartmentList(sysDepartmentQueryParam);
         return sysDepartmentQueryVoList;
     }
-    
+
     @Override
     public int countSysDepartment(SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception {
-        LambdaQueryWrapper <SysDepartmentEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysDepartmentEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }

@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysUserInfoEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysUserInfoQueryParam;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
+import org.tiankafei.user.param.SysUserInfoQueryParam;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -85,6 +85,7 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
 
     /**
      * 获取用户、角色、功能的所有数据
+     *
      * @param id
      * @return
      * @throws Exception

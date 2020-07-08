@@ -43,6 +43,7 @@ public class QueryUserClient implements InitializingBean {
 
     /**
      * 获取登录对象
+     *
      * @param userFlag
      * @param keywords
      * @param password

@@ -1,20 +1,18 @@
 package org.tiankafei.user.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.sql.Timestamp;
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.tiankafei.web.common.entity.BaseEntity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.tiankafei.web.common.entity.BaseEntity;
 
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -27,7 +25,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Accessors(chain = true)
 @TableName("sys_user_info")
-@ApiModel(value = " 用户基本信息表 实体对象" , description = "用户基本信息表")
+@ApiModel(value = " 用户基本信息表 实体对象", description = "用户基本信息表")
 public class SysUserInfoEntity extends BaseEntity {
 
     /**
@@ -35,7 +33,7 @@ public class SysUserInfoEntity extends BaseEntity {
      * 跟随 SysUserLoginEntity 这个对象入库之后，得到其id，然后再赋值给该对象
      */
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id" , type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     /**

@@ -1,34 +1,33 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.service.DbService;
 import org.tiankafei.user.constants.UserConstants;
-import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysDictInfoEntity;
 import org.tiankafei.user.mapper.SysDictInfoMapper;
-import org.tiankafei.user.service.SysDictInfoService;
-import org.tiankafei.user.param.SysDictInfoQueryParam;
 import org.tiankafei.user.param.SysDictInfoPageQueryParam;
+import org.tiankafei.user.param.SysDictInfoQueryParam;
+import org.tiankafei.user.service.SysDictInfoService;
 import org.tiankafei.user.vo.SysDictInfoQueryVo;
+import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.exception.UserException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.utils.SequenceUtil;
 import org.tiankafei.web.common.vo.Paging;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <pre>
@@ -54,17 +53,17 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         return checkSysDictCodeExists(sysDictInfoQueryParam.getDictCode());
     }
 
-    private boolean checkSysDictCodeExists(String dictCode){
+    private boolean checkSysDictCodeExists(String dictCode) {
         LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.eq(SysDictInfoEntity::getDictCode, dictCode);
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
-    
+
     @Override
     public Object addSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
         String dictCode = sysDictInfoQueryVo.getDictCode();
-        if(checkSysDictCodeExists(dictCode)){
+        if (checkSysDictCodeExists(dictCode)) {
             throw new UserException("字典代码：" + dictCode + " 已经存在！");
         }
         // 生成序列号
@@ -77,12 +76,12 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         super.save(sysDictInfoEntity);
         return sysDictInfoEntity.getId();
     }
-        
+
     @Override
     public boolean addSysDictInfoList(List<SysDictInfoQueryVo> sysDictInfoQueryVoList) throws Exception {
-        if(sysDictInfoQueryVoList != null && !sysDictInfoQueryVoList.isEmpty()){
+        if (sysDictInfoQueryVoList != null && !sysDictInfoQueryVoList.isEmpty()) {
             List<SysDictInfoEntity> sysDictInfoList = new ArrayList<>();
-            for ( SysDictInfoQueryVo sysDictInfoQueryVo : sysDictInfoQueryVoList) {
+            for (SysDictInfoQueryVo sysDictInfoQueryVo : sysDictInfoQueryVoList) {
                 SysDictInfoEntity sysDictInfoEntity = new SysDictInfoEntity();
                 BeanUtils.copyProperties(sysDictInfoQueryVo, sysDictInfoEntity);
                 sysDictInfoList.add(sysDictInfoEntity);
@@ -96,8 +95,8 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     public boolean updateSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception {
         SysDictInfoEntity sysDictInfoEntity = sysDictInfoMapper.selectById(sysDictInfoQueryVo.getId());
         String dictCode = sysDictInfoQueryVo.getDictCode();
-        if(!sysDictInfoEntity.getDictCode().equals(dictCode)){
-            if(checkSysDictCodeExists(dictCode)){
+        if (!sysDictInfoEntity.getDictCode().equals(dictCode)) {
+            if (checkSysDictCodeExists(dictCode)) {
                 throw new UserException("字典代码：" + dictCode + " 已经存在！");
             }
         }
@@ -114,7 +113,7 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
         // 如果表已经存在，则直接返回
         String dataTable = sysDictInfoEntity.getDataTable();
-        if(dbService.checkTableExists(dataTable)){
+        if (dbService.checkTableExists(dataTable)) {
             return Boolean.TRUE;
         }
 
@@ -135,7 +134,7 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
     public boolean deleteSysDictInfo(String ids) throws Exception {
         String[] idArray = ids.split(",");
         List<String> idList = Arrays.asList(idArray);
-        if(CollectionUtils.isNotEmpty(idList)){
+        if (CollectionUtils.isNotEmpty(idList)) {
             LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
             // 设置只查询这一列的数据
             lambdaQueryWrapper.select(SysDictInfoEntity::getDataTable);
@@ -153,26 +152,26 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
         return Boolean.TRUE;
     }
-	
+
     @Override
     public boolean deleteSysDictInfo(SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception {
-        LambdaQueryWrapper <SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
 
     @Override
     public SysDictInfoQueryVo getSysDictInfoById(Serializable id) throws Exception {
-         SysDictInfoEntity sysDictInfoEntity = super.getById(id);
-         SysDictInfoQueryVo sysDictInfoQueryVo = new SysDictInfoQueryVo();
-         BeanUtils.copyProperties(sysDictInfoEntity, sysDictInfoQueryVo);
+        SysDictInfoEntity sysDictInfoEntity = super.getById(id);
+        SysDictInfoQueryVo sysDictInfoQueryVo = new SysDictInfoQueryVo();
+        BeanUtils.copyProperties(sysDictInfoEntity, sysDictInfoQueryVo);
         return sysDictInfoQueryVo;
     }
 
     @Override
     public Paging<SysDictInfoQueryVo> getSysDictInfoPageList(SysDictInfoPageQueryParam sysDictInfoPageQueryParam) throws Exception {
         Page page = setPageParam(sysDictInfoPageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper <SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysDictInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
@@ -182,10 +181,10 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
         List<SysDictInfoQueryVo> sysDictInfoQueryVoList = sysDictInfoMapper.getSysDictInfoList(sysDictInfoQueryParam);
         return sysDictInfoQueryVoList;
     }
-    
+
     @Override
     public int countSysDictInfo(SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception {
-        LambdaQueryWrapper <SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }

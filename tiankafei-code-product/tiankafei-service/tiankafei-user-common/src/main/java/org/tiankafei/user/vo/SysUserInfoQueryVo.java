@@ -129,6 +129,12 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
     private Long updateUserId;
 
     /**
+     * 登录用户对象
+     */
+    @ApiModelProperty(value = "登录用户对象")
+    private SysUserLoginQueryVo userLoginQueryVo;
+
+    /**
      * 用户对应的角色集合
      */
     @ApiModelProperty(value = "用户对应的角色集合")

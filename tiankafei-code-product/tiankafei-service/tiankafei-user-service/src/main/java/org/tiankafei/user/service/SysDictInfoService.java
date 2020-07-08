@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysDictInfoEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysDictInfoQueryParam;
 import org.tiankafei.user.param.SysDictInfoPageQueryParam;
+import org.tiankafei.user.param.SysDictInfoQueryParam;
 import org.tiankafei.user.vo.SysDictInfoQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
-    
+
     /**
      * 校验 系统数据字典表 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
      * @throws Exception
      */
     Object addSysDictInfo(SysDictInfoQueryVo sysDictInfoQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统数据字典表 集合
      *
@@ -58,19 +58,21 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
 
     /**
      * 启用字段
-     * @param id    字典id
+     *
+     * @param id 字典id
      * @return
      * @throws Exception
      */
-    boolean enable(String id) throws Exception ;
+    boolean enable(String id) throws Exception;
 
     /**
      * 禁用字典
-     * @param id    字典id
+     *
+     * @param id 字典id
      * @return
      * @throws Exception
      */
-    boolean disable(String id) throws Exception ;
+    boolean disable(String id) throws Exception;
 
     /**
      * 删除 系统数据字典表
@@ -80,7 +82,7 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
      * @throws Exception
      */
     boolean deleteSysDictInfo(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统数据字典表
      *
@@ -97,7 +99,7 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
      * @return
      * @throws Exception
      */
-     SysDictInfoQueryVo getSysDictInfoById(Serializable id) throws Exception;
+    SysDictInfoQueryVo getSysDictInfoById(Serializable id) throws Exception;
 
     /**
      * 获取 系统数据字典表 分页对象列表
@@ -115,8 +117,8 @@ public interface SysDictInfoService extends BaseService<SysDictInfoEntity> {
      * @return
      * @throws Exception
      */
-     List<SysDictInfoQueryVo> getSysDictInfoList(SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception;
-    
+    List<SysDictInfoQueryVo> getSysDictInfoList(SysDictInfoQueryParam sysDictInfoQueryParam) throws Exception;
+
     /**
      * 计算 系统数据字典表 总记录数
      *

@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysUserRoleEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysUserRoleQueryParam;
 import org.tiankafei.user.param.SysUserRolePageQueryParam;
+import org.tiankafei.user.param.SysUserRoleQueryParam;
 import org.tiankafei.user.vo.SysUserRoleQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
-    
+
     /**
      * 校验 用户拥有的角色关系表 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @throws Exception
      */
     Object addSysUserRole(SysUserRoleQueryVo sysUserRoleQueryVo) throws Exception;
-    
+
     /**
      * 保存 用户拥有的角色关系表 集合
      *
@@ -64,7 +64,7 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @throws Exception
      */
     boolean deleteSysUserRole(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 用户拥有的角色关系表
      *
@@ -81,7 +81,7 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @return
      * @throws Exception
      */
-     SysUserRoleQueryVo getSysUserRoleById(Serializable id) throws Exception;
+    SysUserRoleQueryVo getSysUserRoleById(Serializable id) throws Exception;
 
     /**
      * 获取 用户拥有的角色关系表 分页对象列表
@@ -99,8 +99,8 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @return
      * @throws Exception
      */
-     List<SysUserRoleQueryVo> getSysUserRoleList(SysUserRoleQueryParam sysUserRoleQueryParam) throws Exception;
-    
+    List<SysUserRoleQueryVo> getSysUserRoleList(SysUserRoleQueryParam sysUserRoleQueryParam) throws Exception;
+
     /**
      * 计算 用户拥有的角色关系表 总记录数
      *

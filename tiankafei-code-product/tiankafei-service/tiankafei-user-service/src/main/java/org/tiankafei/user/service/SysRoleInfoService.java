@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysRoleInfoEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysRoleInfoQueryParam;
 import org.tiankafei.user.param.SysRoleInfoPageQueryParam;
+import org.tiankafei.user.param.SysRoleInfoQueryParam;
 import org.tiankafei.user.vo.SysRoleInfoQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysRoleInfoService extends BaseService<SysRoleInfoEntity> {
-    
+
     /**
      * 校验 角色信息表 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysRoleInfoService extends BaseService<SysRoleInfoEntity> {
      * @throws Exception
      */
     Object addSysRoleInfo(SysRoleInfoQueryVo sysRoleInfoQueryVo) throws Exception;
-    
+
     /**
      * 保存 角色信息表 集合
      *
@@ -64,7 +64,7 @@ public interface SysRoleInfoService extends BaseService<SysRoleInfoEntity> {
      * @throws Exception
      */
     boolean deleteSysRoleInfo(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 角色信息表
      *
@@ -81,7 +81,7 @@ public interface SysRoleInfoService extends BaseService<SysRoleInfoEntity> {
      * @return
      * @throws Exception
      */
-     SysRoleInfoQueryVo getSysRoleInfoById(Serializable id) throws Exception;
+    SysRoleInfoQueryVo getSysRoleInfoById(Serializable id) throws Exception;
 
     /**
      * 获取 角色信息表 分页对象列表
@@ -99,8 +99,8 @@ public interface SysRoleInfoService extends BaseService<SysRoleInfoEntity> {
      * @return
      * @throws Exception
      */
-     List<SysRoleInfoQueryVo> getSysRoleInfoList(SysRoleInfoQueryParam sysRoleInfoQueryParam) throws Exception;
-    
+    List<SysRoleInfoQueryVo> getSysRoleInfoList(SysRoleInfoQueryParam sysRoleInfoQueryParam) throws Exception;
+
     /**
      * 计算 角色信息表 总记录数
      *

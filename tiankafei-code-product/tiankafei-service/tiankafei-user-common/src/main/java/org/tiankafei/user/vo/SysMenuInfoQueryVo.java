@@ -8,11 +8,11 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.List;
 
 /**
  * <pre>
@@ -138,5 +138,11 @@ public class SysMenuInfoQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
+
+    /**
+     * 子系统功能菜单信息表对象集合
+     */
+    @ApiModelProperty(value = "子系统功能菜单信息表对象集合")
+    private List<SysMenuInfoQueryVo> menuInfoList;
 
 }

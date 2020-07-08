@@ -1,10 +1,10 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysDepartmentEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.user.param.SysDepartmentQueryParam;
 import org.tiankafei.user.param.SysDepartmentPageQueryParam;
+import org.tiankafei.user.param.SysDepartmentQueryParam;
 import org.tiankafei.user.vo.SysDepartmentQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
-    
+
     /**
      * 校验 系统部门表信息 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
      * @throws Exception
      */
     Object addSysDepartment(SysDepartmentQueryVo sysDepartmentQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统部门表信息 集合
      *
@@ -64,7 +64,7 @@ public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
      * @throws Exception
      */
     boolean deleteSysDepartment(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统部门表信息
      *
@@ -81,7 +81,7 @@ public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
      * @return
      * @throws Exception
      */
-     SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception;
+    SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception;
 
     /**
      * 获取 系统部门表信息 分页对象列表
@@ -99,8 +99,8 @@ public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
      * @return
      * @throws Exception
      */
-     List<SysDepartmentQueryVo> getSysDepartmentList(SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception;
-    
+    List<SysDepartmentQueryVo> getSysDepartmentList(SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception;
+
     /**
      * 计算 系统部门表信息 总记录数
      *
