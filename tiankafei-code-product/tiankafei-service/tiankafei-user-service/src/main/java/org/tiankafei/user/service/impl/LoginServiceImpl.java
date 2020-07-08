@@ -72,17 +72,18 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
     @Override
     public SysUserInfoQueryVo login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
         String keywords = loginParamVo.getKeywords();
+        String password = loginParamVo.getPassword();
         // 0.验证数据合法性
         checkDataValid(loginParamVo, request);
 
         // 不存在的用户名，会放进缓存中，仅允许查询一次数据库，避免缓存穿透的问题
-        SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(keywords);
+        SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(keywords, password);
         if (userInfo != null) {
             return userInfo;
         }
 
         // 根据用户名密码进行登录
-        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords, loginParamVo.getPassword());
+        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords, password);
         if (userLoginQueryVo != null) {
             String status = userLoginQueryVo.getStatus();
             if (UserStatusEnums.DISABLE.getCode().equalsIgnoreCase(status)) {
@@ -161,7 +162,7 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
                 // 验证完成，删除
                 captchaService.removeCaptcha(request);
             } else {
-                throw new LoginException("验证码输入错误，请重新输入！");
+//                throw new LoginException("验证码输入错误，请重新输入！");
             }
         } catch (VerificationException e) {
             e.printStackTrace();

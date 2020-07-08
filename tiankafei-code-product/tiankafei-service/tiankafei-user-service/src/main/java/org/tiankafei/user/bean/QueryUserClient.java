@@ -1,5 +1,6 @@
 package org.tiankafei.user.bean;
 
+import cn.hutool.crypto.SecureUtil;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,8 @@ public class QueryUserClient implements InitializingBean {
      * @throws LoginException
      */
     public SysUserLoginQueryVo login(int userFlag, String keywords, String password) throws LoginException {
-        return userExistsServiceMap.get(userFlag).login(keywords, password);
+        // 登录时，先加密然后从数据库取数
+        return userExistsServiceMap.get(userFlag).login(keywords, SecureUtil.md5(password));
     }
 
 }

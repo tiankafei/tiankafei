@@ -1,5 +1,6 @@
 package org.tiankafei.user.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
@@ -68,6 +69,8 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         // 保存用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
+        // 新增时密码加密
+        sysUserLoginEntity.setPassword(SecureUtil.md5(sysUserLoginEntity.getPassword()));
         super.save(sysUserLoginEntity);
         Long id = sysUserLoginEntity.getId();
 

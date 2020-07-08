@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -132,12 +133,17 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
      * 登录用户对象
      */
     @ApiModelProperty(value = "登录用户对象")
-    private SysUserLoginQueryVo userLoginQueryVo;
+    private @Valid SysUserLoginQueryVo userLoginQueryVo;
 
     /**
      * 用户对应的角色集合
      */
-    @ApiModelProperty(value = "用户对应的角色集合")
+    @ApiModelProperty(value = "用户对应的角色集合", hidden = true)
     private List<SysUserRoleQueryVo> userRoleList;
+
+    /**
+     * 已经组装成树结构的功能菜单集合
+     */
+    private List<SysMenuInfoQueryVo> menuInfoList;
 
 }

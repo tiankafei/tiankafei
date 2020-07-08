@@ -61,6 +61,7 @@ public class SysUserLoginQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "密码")
     @Size(max = 64, message = "密码长度不能超过 64 ！")
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     /**
@@ -68,6 +69,7 @@ public class SysUserLoginQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "状态：1正常，2停用，3指定有效期")
     @Size(max = 1, message = "状态：1正常，2停用，3指定有效期长度不能超过 1 ！")
+    @NotBlank(message = "状态不能为空")
     private String status;
 
     /**
