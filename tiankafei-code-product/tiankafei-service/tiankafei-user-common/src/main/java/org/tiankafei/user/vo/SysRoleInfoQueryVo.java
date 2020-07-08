@@ -2,6 +2,7 @@ package org.tiankafei.user.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -92,5 +93,11 @@ public class SysRoleInfoQueryVo extends BaseQueryVo {
      */
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
+
+    /**
+     * 角色对应的功能菜单集合
+     */
+    @ApiModelProperty(value = "角色对应的功能菜单集合")
+    private List<SysRoleMenuQueryVo> roleMenuList;
 
 }

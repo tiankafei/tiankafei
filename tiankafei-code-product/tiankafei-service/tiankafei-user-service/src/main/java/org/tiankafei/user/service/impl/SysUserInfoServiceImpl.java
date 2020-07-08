@@ -6,6 +6,7 @@ import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.LoginEnums;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
+import org.tiankafei.user.vo.SysUserRoleQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.mapper.SysUserInfoMapper;
@@ -151,6 +152,8 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
         BeanUtils.copyProperties(sysUserInfoEntity, sysUserInfoQueryVo);
 
         // 获取角色，功能清单的数据
+        List<SysUserRoleQueryVo> userRoleList = userInfoMapper.getSysUserRoleListFromUserId(id);
+        System.out.println(userRoleList);
 
         return sysUserInfoQueryVo;
     }
