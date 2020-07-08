@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.tiankafei.cache.CacheManagerRepository;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.web.common.exception.LoginException;
 
 /**
  * 1.对于用户登录场景不需要进行数据预热
@@ -23,15 +24,22 @@ public class UserInfoCache {
     private CacheManagerRepository cacheManagerRepository;
 
     /**
-     * 从缓存中获取用户对象
+     * 从缓存中验证该登录用户是否存在，
+     *      1.缓存存在，但是值是写死的固定值，则说明该用户不存在，则直接抛出异常即可
+     *      2.缓存存在，值就是用户数据本身，则直接返回即可
      * @param keywords
      * @return
      */
-    public SysUserInfoQueryVo getUserInfo(String keywords){
+    public SysUserInfoQueryVo getUserInfo(String keywords) throws LoginException {
         String sha1 = cacheManagerRepository.<String>getCacheObject(keywords);
         if(StringUtils.isNotBlank(sha1)){
-            SysUserInfoQueryVo userInfoQueryVo = cacheManagerRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
-            return userInfoQueryVo;
+            if(UserCacheEnums.CACHE_NULL_VALUE.getCode().equals(sha1)){
+                // 该用户名不存在，在缓存中放置一个空值
+                throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
+            }else{
+                SysUserInfoQueryVo userInfoQueryVo = cacheManagerRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
+                return userInfoQueryVo;
+            }
         }
         return null;
     }

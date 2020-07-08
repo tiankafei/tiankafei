@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.param.LoginParamVo;
+import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**
@@ -19,7 +20,7 @@ public interface LoginService extends IService<SysUserLoginEntity> {
      * @param loginParamVo
      * @throws LoginException
      */
-    void login(LoginParamVo loginParamVo, HttpServletRequest request) throws LoginException;
+    SysUserInfoQueryVo login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception;
 
     /**
      * 注销

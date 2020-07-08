@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
-    
+
     /**
      * 校验 用户基本信息表 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @throws Exception
      */
     Object addSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception;
-    
+
     /**
      * 保存 用户基本信息表 集合
      *
@@ -64,7 +64,7 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @throws Exception
      */
     boolean deleteSysUserInfo(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 用户基本信息表
      *
@@ -81,7 +81,15 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @return
      * @throws Exception
      */
-     SysUserInfoQueryVo getSysUserInfoById(Serializable id) throws Exception;
+    SysUserInfoQueryVo getSysUserInfoById(Serializable id) throws Exception;
+
+    /**
+     * 获取用户、角色、功能的所有数据
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    SysUserInfoQueryVo getSysUserAndRoleAndFeatureById(Serializable id) throws Exception;
 
     /**
      * 获取 用户基本信息表 分页对象列表
@@ -99,8 +107,8 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @return
      * @throws Exception
      */
-     List<SysUserInfoQueryVo> getSysUserInfoList(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception;
-    
+    List<SysUserInfoQueryVo> getSysUserInfoList(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception;
+
     /**
      * 计算 用户基本信息表 总记录数
      *

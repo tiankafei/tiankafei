@@ -145,6 +145,17 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     }
 
     @Override
+    public SysUserInfoQueryVo getSysUserAndRoleAndFeatureById(Serializable id) throws Exception {
+        SysUserInfoEntity sysUserInfoEntity = super.getById(id);
+        SysUserInfoQueryVo sysUserInfoQueryVo = new SysUserInfoQueryVo();
+        BeanUtils.copyProperties(sysUserInfoEntity, sysUserInfoQueryVo);
+
+        // 获取角色，功能清单的数据
+
+        return sysUserInfoQueryVo;
+    }
+
+    @Override
     public Paging<SysUserInfoQueryVo> getSysUserInfoPageList(SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
         Page page = setPageParam(sysUserInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <SysUserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();

@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.bean.QueryUserClient;
 import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
@@ -14,6 +13,8 @@ import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.service.CaptchaService;
 import org.tiankafei.user.service.LoginService;
+import org.tiankafei.user.service.SysUserInfoService;
+import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
@@ -31,6 +32,9 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
 
     @Autowired
     private UserInfoCache userInfoCache;
+
+    @Autowired
+    private SysUserInfoService userInfoService;
 
     @Autowired
     private QueryUserClient queryUserClient;
@@ -63,25 +67,34 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
      * @throws LoginException
      */
     @Override
-    public void login(LoginParamVo loginParamVo, HttpServletRequest request) throws LoginException {
+    public SysUserInfoQueryVo login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
+        String keywords = loginParamVo.getKeywords();
         // 0.验证数据合法性
 //        checkDataValid(loginParamVo, request);
+
+        // 不存在的用户名，会放进缓存中，仅允许查询一次数据库，避免缓存穿透的问题
+        SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(keywords);
+        if(userInfo != null){
+            return userInfo;
+        }
 
         // 根据用户输入的用户名判断登录类型
         Integer loginType = getLoginType(loginParamVo);
 
         // 根据用户名密码进行登录
-        String keywords = loginParamVo.getKeywords();
         SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginType, keywords, loginParamVo.getPassword());
         if(userLoginQueryVo != null){
             // 登录成功，获取其他用户数据
             Long userId = userLoginQueryVo.getId();
-
-
-            // 获取角色，功能清单的数据
-
-            // 存放缓存
-//            userInfoCache.setUserInfo(null);
+            try {
+                SysUserInfoQueryVo userInfoQueryVo = userInfoService.getSysUserAndRoleAndFeatureById(userId);
+                // 存放缓存
+                userInfoCache.setUserInfo(userInfoQueryVo);
+                return userInfoQueryVo;
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new Exception("获取用户数据发生异常！");
+            }
         }else{
             // 登录失败，用户名或密码错误，查询当前登录的用户名是否存在
             if(!queryUserClient.checkUserExists(loginType, keywords)){
