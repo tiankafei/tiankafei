@@ -1,6 +1,7 @@
 package org.tiankafei.user.param;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -19,5 +20,22 @@ import java.io.Serializable;
 @ApiModel(value = "用户拥有的角色关系表 查询参数对象", description = "用户拥有的角色关系表查询参数")
 public class SysUserRoleQueryParam implements Serializable {
 
+    /**
+     * 主键id集合
+     */
+    @ApiModelProperty(value = "主键id集合")
+    String ids;
+
+    /**
+     * 用户id集合
+     */
+    @ApiModelProperty(value = "用户id集合")
+    String userIds;
+
+    /**
+     * 角色id集合
+     */
+    @ApiModelProperty(value = "角色id集合")
+    String roleIds;
 
 }

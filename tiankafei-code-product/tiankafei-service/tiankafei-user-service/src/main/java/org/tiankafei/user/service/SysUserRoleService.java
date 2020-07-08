@@ -66,6 +66,24 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
     boolean deleteSysUserRole(String ids) throws Exception;
 
     /**
+     * 根据用户id删除 用户拥有的角色关系表
+     *
+     * @param userIds
+     * @return
+     * @throws Exception
+     */
+    boolean deleteSysUserRoleFromUserId(String userIds) throws Exception;
+
+    /**
+     * 根据角色id删除 用户拥有的角色关系表
+     *
+     * @param roleIds
+     * @return
+     * @throws Exception
+     */
+    boolean deleteSysUserRoleFromRoleId(String roleIds) throws Exception;
+
+    /**
      * 根据条件删除 用户拥有的角色关系表
      *
      * @param sysUserRoleQueryParam

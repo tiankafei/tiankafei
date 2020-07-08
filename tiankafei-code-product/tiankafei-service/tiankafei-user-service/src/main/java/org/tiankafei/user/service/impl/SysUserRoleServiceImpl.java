@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,13 +79,35 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
 
     @Override
     public boolean deleteSysUserRole(String ids) throws Exception {
-        String[] idArray = ids.split(",");
-        return super.removeByIds(Arrays.asList(idArray));
+        List<String> idList = Arrays.asList(ids.split(","));
+        return super.removeByIds(idList);
+    }
+
+    @Override
+    public boolean deleteSysUserRoleFromUserId(String userIds) throws Exception {
+        return deleteSysUserRole(new SysUserRoleQueryParam().setUserIds(userIds));
+    }
+
+    @Override
+    public boolean deleteSysUserRoleFromRoleId(String roleIds) throws Exception {
+        return deleteSysUserRole(new SysUserRoleQueryParam().setRoleIds(roleIds));
     }
 
     @Override
     public boolean deleteSysUserRole(SysUserRoleQueryParam sysUserRoleQueryParam) throws Exception {
         LambdaQueryWrapper<SysUserRoleEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+
+        String userIds = sysUserRoleQueryParam.getUserIds();
+        if(StringUtils.isNotBlank(userIds)){
+            List<String> userIdList = Arrays.asList(userIds.split(","));
+            lambdaQueryWrapper.in(SysUserRoleEntity::getUserId, userIdList);
+        }
+
+        String roleIds = sysUserRoleQueryParam.getRoleIds();
+        if(StringUtils.isNotBlank(roleIds)){
+            List<String> roleIdList = Arrays.asList(roleIds.split(","));
+            lambdaQueryWrapper.in(SysUserRoleEntity::getRoleId, roleIdList);
+        }
 
         return super.remove(lambdaQueryWrapper);
     }

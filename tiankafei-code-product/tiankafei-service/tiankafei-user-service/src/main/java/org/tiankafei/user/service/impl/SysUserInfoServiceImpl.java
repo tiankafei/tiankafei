@@ -22,6 +22,7 @@ import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
 import org.tiankafei.user.service.SysUserInfoService;
+import org.tiankafei.user.service.SysUserRoleService;
 import org.tiankafei.user.vo.SysMenuInfoQueryVo;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
@@ -55,6 +56,9 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
 
     @Autowired
     private SysUserLoginMapper userLoginMapper;
+
+    @Autowired
+    private SysUserRoleService userRoleService;
 
     @Autowired
     private CheckExistsClient checkExistsClient;
@@ -134,6 +138,8 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
             userLoginMapper.deleteBatchIds(idList);
             // 删除用户信息表数据
             super.removeByIds(idList);
+            // 删除用户和角色的对应关系
+            userRoleService.deleteSysUserRoleFromUserId(ids);
         }
         return Boolean.TRUE;
     }
