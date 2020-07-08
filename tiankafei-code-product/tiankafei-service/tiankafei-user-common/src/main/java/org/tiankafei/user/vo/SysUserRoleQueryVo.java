@@ -78,4 +78,10 @@ public class SysUserRoleQueryVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
+    /**
+     * 角色信息表 对象
+     */
+    @ApiModelProperty(value = "角色信息表 对象")
+    private SysRoleInfoQueryVo roleInfoQueryVo;
+
 }

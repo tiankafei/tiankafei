@@ -48,4 +48,10 @@ public class SysRoleMenuQueryVo extends BaseQueryVo {
     @NotNull(message = "菜单id不能为空")
     private Integer menuId;
 
+    /**
+     * 系统功能菜单信息表 对象
+     */
+    @ApiModelProperty(value = "系统功能菜单信息表 对象")
+    private SysMenuInfoQueryVo menuInfoQueryVo;
+
 }
