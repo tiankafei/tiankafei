@@ -13,8 +13,8 @@ import java.util.List;
 @Data
 public class ColsBeanInfo implements ColsProperty {
 
-    private Integer length;
+    protected Integer length;
 
-    private List<ColProperty> colList;
+    protected List<ColProperty> colList;
 
 }

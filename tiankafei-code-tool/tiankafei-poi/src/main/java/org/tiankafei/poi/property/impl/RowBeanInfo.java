@@ -14,9 +14,9 @@ import java.util.List;
 @Data
 public class RowBeanInfo implements RowProperty {
 
-    private Integer rowIndex;
+    protected Integer rowIndex;
 
-    private List<CellProperty> cellList;
+    protected List<CellProperty> cellList;
 
     @Override
     public void addCell(CellProperty cell) {
@@ -25,4 +25,5 @@ public class RowBeanInfo implements RowProperty {
         }
         cellList.add(cell);
     }
+
 }

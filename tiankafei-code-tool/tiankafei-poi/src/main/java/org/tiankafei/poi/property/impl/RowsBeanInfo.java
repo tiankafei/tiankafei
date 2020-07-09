@@ -14,9 +14,9 @@ import java.util.List;
 @Data
 public class RowsBeanInfo implements RowsProperty {
 
-    private Integer rowCount;
+    protected Integer rowCount;
 
-    private List<RowProperty> rowList;
+    protected List<RowProperty> rowList;
 
     @Override
     public void addRow(RowProperty row) {

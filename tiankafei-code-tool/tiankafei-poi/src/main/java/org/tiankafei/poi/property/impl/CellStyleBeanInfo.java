@@ -12,8 +12,8 @@ import lombok.Data;
 @Data
 public class CellStyleBeanInfo implements CellStyleProperty {
 
-    private BorderProperty border;
+    protected BorderProperty border;
 
-    private FontProperty font;
+    protected FontProperty font;
 
 }

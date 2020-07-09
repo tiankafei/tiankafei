@@ -25,11 +25,6 @@ public class SheetBeanInfo implements SheetProperty {
     protected String sheetName;
 
     @Override
-    public void setSheetName(String sheetName) {
-        this.sheetName = sheetName;
-    }
-
-    @Override
     public void addCellStyle(CellStyleProperty cellStyle) {
         if (cellStyleList == null) {
             cellStyleList = Lists.newArrayList();

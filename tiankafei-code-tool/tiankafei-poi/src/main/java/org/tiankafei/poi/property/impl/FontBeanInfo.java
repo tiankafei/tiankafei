@@ -12,22 +12,22 @@ import java.awt.Color;
 @Data
 public class FontBeanInfo implements FontProperty {
 
-    private int underline;
+    protected int underline;
 
-    private int typeOffset;
+    protected int typeOffset;
 
-    private boolean bold;
+    protected boolean bold;
 
-    private int charSet;
+    protected int charSet;
 
-    private Color color;
+    protected Color color;
 
-    private int fontSize;
+    protected int fontSize;
 
-    private String fontName;
+    protected String fontName;
 
-    private boolean italic;
+    protected boolean italic;
 
-    private boolean strikeout;
+    protected boolean strikeout;
 
 }

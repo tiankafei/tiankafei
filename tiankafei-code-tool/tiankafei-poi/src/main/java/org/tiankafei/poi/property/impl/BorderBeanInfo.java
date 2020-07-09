@@ -12,20 +12,20 @@ import java.awt.Color;
 @Data
 public class BorderBeanInfo implements BorderProperty {
 
-    private String borderBottomStyle;
+    protected String borderBottomStyle;
 
-    private String borderTopStyle;
+    protected String borderTopStyle;
 
-    private String borderLeftStyle;
+    protected String borderLeftStyle;
 
-    private String borderRightStyle;
+    protected String borderRightStyle;
 
-    private Color borderBottomColor;
+    protected Color borderBottomColor;
 
-    private Color borderTopColor;
+    protected Color borderTopColor;
 
-    private Color borderLeftColor;
+    protected Color borderLeftColor;
 
-    private Color borderRightColor;
+    protected Color borderRightColor;
 
 }

@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 public class CellBeanInfo implements CellProperty {
 
-    private Integer colIndex;
+    protected Integer colIndex;
 
-    private Integer styleIndex;
+    protected Integer styleIndex;
 
-    private Object value;
+    protected Object value;
 
 }
