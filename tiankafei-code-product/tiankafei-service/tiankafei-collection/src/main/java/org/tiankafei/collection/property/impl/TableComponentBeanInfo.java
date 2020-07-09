@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.TableComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.TableComponentProperty;
 public class TableComponentBeanInfo extends BaseComponentProperty implements TableComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.TABLE.getCode();
+        return ComponentTypeEnum.TABLE.getCode();
     }
 }

@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.TimeRangeComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.TimeRangeComponentProperty;
 public class TimeRangeComponentBeanInfo extends BaseComponentProperty implements TimeRangeComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.TIME_RANGE.getCode();
+        return ComponentTypeEnum.TIME_RANGE.getCode();
     }
 }

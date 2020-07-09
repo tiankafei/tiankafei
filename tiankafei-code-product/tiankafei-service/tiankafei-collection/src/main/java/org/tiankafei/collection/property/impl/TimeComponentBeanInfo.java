@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.TimeComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.TimeComponentProperty;
 public class TimeComponentBeanInfo extends BaseComponentProperty implements TimeComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.TIME.getCode();
+        return ComponentTypeEnum.TIME.getCode();
     }
 }

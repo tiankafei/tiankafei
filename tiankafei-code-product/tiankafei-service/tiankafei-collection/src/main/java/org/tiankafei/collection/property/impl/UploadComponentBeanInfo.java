@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.UploadComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.UploadComponentProperty;
 public class UploadComponentBeanInfo extends BaseComponentProperty implements UploadComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.UPLOAD.getCode();
+        return ComponentTypeEnum.UPLOAD.getCode();
     }
 }

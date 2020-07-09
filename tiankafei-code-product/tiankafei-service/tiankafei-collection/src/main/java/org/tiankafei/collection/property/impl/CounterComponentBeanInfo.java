@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.CounterComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.CounterComponentProperty;
 public class CounterComponentBeanInfo extends BaseComponentProperty implements CounterComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.COUNTER.getCode();
+        return ComponentTypeEnum.COUNTER.getCode();
     }
 }

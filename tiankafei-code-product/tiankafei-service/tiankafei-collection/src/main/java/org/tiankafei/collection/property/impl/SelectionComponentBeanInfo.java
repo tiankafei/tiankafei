@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.SelectionComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.SelectionComponentProperty;
 public class SelectionComponentBeanInfo extends BaseComponentProperty implements SelectionComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.SELECTION.getCode();
+        return ComponentTypeEnum.SELECTION.getCode();
     }
 }

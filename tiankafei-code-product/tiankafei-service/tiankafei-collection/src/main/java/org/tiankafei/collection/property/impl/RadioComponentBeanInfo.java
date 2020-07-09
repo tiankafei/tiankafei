@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.RadioComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.RadioComponentProperty;
 public class RadioComponentBeanInfo extends BaseComponentProperty implements RadioComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.RADIO.getCode();
+        return ComponentTypeEnum.RADIO.getCode();
     }
 }

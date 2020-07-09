@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.CheckBoxComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.CheckBoxComponentProperty;
 public class CheckBoxComponentBeanInfo extends BaseComponentProperty implements CheckBoxComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.CHECK_BOX.getCode();
+        return ComponentTypeEnum.CHECK_BOX.getCode();
     }
 }

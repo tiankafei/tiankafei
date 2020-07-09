@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.SingleLineComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.SingleLineComponentProperty;
 public class SingleLineComponentBeanInfo extends BaseComponentProperty implements SingleLineComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.SINGLE_LINE.getCode();
+        return ComponentTypeEnum.SINGLE_LINE.getCode();
     }
 }

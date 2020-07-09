@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.DateRangeComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.DateRangeComponentProperty;
 public class DateRangeComponentBeanInfo extends BaseComponentProperty implements DateRangeComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.DATE_RANGE.getCode();
+        return ComponentTypeEnum.DATE_RANGE.getCode();
     }
 }

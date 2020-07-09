@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.CascadeSelectionComponentProperty;
 
 /**
@@ -13,7 +13,7 @@ public class CascadeSelectionComponentBeanInfo extends BaseComponentProperty imp
 
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.CASCADE_SELECTION.getCode();
+        return ComponentTypeEnum.CASCADE_SELECTION.getCode();
     }
 
 }

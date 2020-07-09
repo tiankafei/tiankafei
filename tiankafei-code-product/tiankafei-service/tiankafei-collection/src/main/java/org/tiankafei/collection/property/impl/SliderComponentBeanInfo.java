@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.SliderComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.SliderComponentProperty;
 public class SliderComponentBeanInfo extends BaseComponentProperty implements SliderComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.SLIDER.getCode();
+        return ComponentTypeEnum.SLIDER.getCode();
     }
 }

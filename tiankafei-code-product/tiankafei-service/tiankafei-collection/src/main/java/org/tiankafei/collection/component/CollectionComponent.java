@@ -1,5 +1,6 @@
 package org.tiankafei.collection.component;
 
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.ComponentProperty;
 
 /**
@@ -17,6 +18,6 @@ public interface CollectionComponent {
      * 获取组件类型
      * @return
      */
-    Integer getComponentType();
+    ComponentTypeEnum getComponentType();
 
 }

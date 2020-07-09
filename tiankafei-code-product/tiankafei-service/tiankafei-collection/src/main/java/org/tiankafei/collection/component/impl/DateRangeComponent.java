@@ -1,7 +1,7 @@
 package org.tiankafei.collection.component.impl;
 
 import org.springframework.stereotype.Component;
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.ComponentProperty;
 import org.tiankafei.collection.property.impl.DateRangeComponentBeanInfo;
 
@@ -20,8 +20,8 @@ public class DateRangeComponent extends BaseCollectionComponent {
     }
 
     @Override
-    public Integer getComponentType() {
-        return ComponentEnum.DATE_RANGE.getCode();
+    public ComponentTypeEnum getComponentType() {
+        return ComponentTypeEnum.DATE_RANGE;
     }
 
 }

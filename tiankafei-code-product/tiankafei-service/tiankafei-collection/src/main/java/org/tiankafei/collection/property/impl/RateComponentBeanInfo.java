@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.RateComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.RateComponentProperty;
 public class RateComponentBeanInfo extends BaseComponentProperty implements RateComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.RATE.getCode();
+        return ComponentTypeEnum.RATE.getCode();
     }
 }

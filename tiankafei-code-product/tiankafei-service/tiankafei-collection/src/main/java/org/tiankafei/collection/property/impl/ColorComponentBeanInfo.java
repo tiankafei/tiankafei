@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.ColorComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.ColorComponentProperty;
 public class ColorComponentBeanInfo extends BaseComponentProperty implements ColorComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.COLOR.getCode();
+        return ComponentTypeEnum.COLOR.getCode();
     }
 }

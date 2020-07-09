@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.PanelComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.PanelComponentProperty;
 public class PanelComponentBeanInfo extends BaseComponentProperty implements PanelComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.PANEL.getCode();
+        return ComponentTypeEnum.PANEL.getCode();
     }
 }

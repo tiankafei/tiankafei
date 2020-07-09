@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.PasswordComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.PasswordComponentProperty;
 public class PasswordComponentBeanInfo extends BaseComponentProperty implements PasswordComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.PASSWORD.getCode();
+        return ComponentTypeEnum.PASSWORD.getCode();
     }
 }

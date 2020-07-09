@@ -1,6 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
-import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.SwitchComponentProperty;
 
 /**
@@ -12,6 +12,6 @@ import org.tiankafei.collection.property.SwitchComponentProperty;
 public class SwitchComponentBeanInfo extends BaseComponentProperty implements SwitchComponentProperty {
     @Override
     public Integer getComponentType() {
-        return ComponentEnum.SWITCH.getCode();
+        return ComponentTypeEnum.SWITCH.getCode();
     }
 }
