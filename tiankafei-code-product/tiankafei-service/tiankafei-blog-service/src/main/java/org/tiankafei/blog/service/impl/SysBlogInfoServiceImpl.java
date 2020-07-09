@@ -92,15 +92,19 @@ public class SysBlogInfoServiceImpl extends BaseServiceImpl<SysBlogInfoMapper, S
 
     @Override
     public SysBlogInfoQueryVo getSysBlogInfoById(Serializable id) throws Exception {
-         SysBlogInfoEntity sysBlogInfoEntity = super.getById(id);
-         SysBlogInfoQueryVo sysBlogInfoQueryVo = new SysBlogInfoQueryVo();
-         BeanUtils.copyProperties(sysBlogInfoEntity, sysBlogInfoQueryVo);
+		//SysBlogInfoQueryVo sysBlogInfoQueryVo = sysBlogInfoMapper.getSysBlogInfoById(id);
+	
+        SysBlogInfoEntity sysBlogInfoEntity = super.getById(id);
+        SysBlogInfoQueryVo sysBlogInfoQueryVo = new SysBlogInfoQueryVo();
+        BeanUtils.copyProperties(sysBlogInfoEntity, sysBlogInfoQueryVo);
         return sysBlogInfoQueryVo;
     }
 
     @Override
     public Paging<SysBlogInfoQueryVo> getSysBlogInfoPageList(SysBlogInfoPageQueryParam sysBlogInfoPageQueryParam) throws Exception {
-        Page page = setPageParam(sysBlogInfoPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysBlogInfoQueryVo> iPage = sysBlogInfoMapper.getSysBlogInfoPageList(page, sysBlogInfoPageQueryParam);
+		
+		Page page = setPageParam(sysBlogInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <SysBlogInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysBlogInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

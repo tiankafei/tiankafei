@@ -92,15 +92,19 @@ public class SysBlogLabelServiceImpl extends BaseServiceImpl<SysBlogLabelMapper,
 
     @Override
     public SysBlogLabelQueryVo getSysBlogLabelById(Serializable id) throws Exception {
-         SysBlogLabelEntity sysBlogLabelEntity = super.getById(id);
-         SysBlogLabelQueryVo sysBlogLabelQueryVo = new SysBlogLabelQueryVo();
-         BeanUtils.copyProperties(sysBlogLabelEntity, sysBlogLabelQueryVo);
+		//SysBlogLabelQueryVo sysBlogLabelQueryVo = sysBlogLabelMapper.getSysBlogLabelById(id);
+	
+        SysBlogLabelEntity sysBlogLabelEntity = super.getById(id);
+        SysBlogLabelQueryVo sysBlogLabelQueryVo = new SysBlogLabelQueryVo();
+        BeanUtils.copyProperties(sysBlogLabelEntity, sysBlogLabelQueryVo);
         return sysBlogLabelQueryVo;
     }
 
     @Override
     public Paging<SysBlogLabelQueryVo> getSysBlogLabelPageList(SysBlogLabelPageQueryParam sysBlogLabelPageQueryParam) throws Exception {
-        Page page = setPageParam(sysBlogLabelPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysBlogLabelQueryVo> iPage = sysBlogLabelMapper.getSysBlogLabelPageList(page, sysBlogLabelPageQueryParam);
+		
+		Page page = setPageParam(sysBlogLabelPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <SysBlogLabelEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysBlogLabelQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

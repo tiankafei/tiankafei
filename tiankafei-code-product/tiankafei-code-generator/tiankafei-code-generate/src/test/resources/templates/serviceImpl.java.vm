@@ -92,15 +92,19 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 
     @Override
     public ${cfg.TableName}QueryVo get${cfg.TableName}ById(Serializable id) throws Exception {
-         ${cfg.entityClassName} ${cfg.entityObjectName} = super.getById(id);
-         ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = new ${cfg.TableName}QueryVo();
-         BeanUtils.copyProperties(${cfg.entityObjectName}, ${cfg.tableName}QueryVo);
+		//${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = ${cfg.mapperObjectName}.get${cfg.TableName}ById(id);
+	
+        ${cfg.entityClassName} ${cfg.entityObjectName} = super.getById(id);
+        ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = new ${cfg.TableName}QueryVo();
+        BeanUtils.copyProperties(${cfg.entityObjectName}, ${cfg.tableName}QueryVo);
         return ${cfg.tableName}QueryVo;
     }
 
     @Override
     public Paging<${cfg.TableName}QueryVo> get${cfg.TableName}PageList(${cfg.TableName}PageQueryParam ${cfg.tableName}PageQueryParam) throws Exception {
-        Page page = setPageParam(${cfg.tableName}PageQueryParam, OrderItem.desc("create_time"));
+        //IPage<${cfg.TableName}QueryVo> iPage = ${cfg.mapperObjectName}.get${cfg.TableName}PageList(page, ${cfg.tableName}PageQueryParam);
+		
+		Page page = setPageParam(${cfg.tableName}PageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <${cfg.entityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<${cfg.TableName}QueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

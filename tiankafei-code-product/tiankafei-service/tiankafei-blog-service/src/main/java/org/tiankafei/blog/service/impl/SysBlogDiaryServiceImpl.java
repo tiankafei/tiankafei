@@ -92,15 +92,19 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
 
     @Override
     public SysBlogDiaryQueryVo getSysBlogDiaryById(Serializable id) throws Exception {
-         SysBlogDiaryEntity sysBlogDiaryEntity = super.getById(id);
-         SysBlogDiaryQueryVo sysBlogDiaryQueryVo = new SysBlogDiaryQueryVo();
-         BeanUtils.copyProperties(sysBlogDiaryEntity, sysBlogDiaryQueryVo);
+		//SysBlogDiaryQueryVo sysBlogDiaryQueryVo = sysBlogDiaryMapper.getSysBlogDiaryById(id);
+	
+        SysBlogDiaryEntity sysBlogDiaryEntity = super.getById(id);
+        SysBlogDiaryQueryVo sysBlogDiaryQueryVo = new SysBlogDiaryQueryVo();
+        BeanUtils.copyProperties(sysBlogDiaryEntity, sysBlogDiaryQueryVo);
         return sysBlogDiaryQueryVo;
     }
 
     @Override
     public Paging<SysBlogDiaryQueryVo> getSysBlogDiaryPageList(SysBlogDiaryPageQueryParam sysBlogDiaryPageQueryParam) throws Exception {
-        Page page = setPageParam(sysBlogDiaryPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysBlogDiaryQueryVo> iPage = sysBlogDiaryMapper.getSysBlogDiaryPageList(page, sysBlogDiaryPageQueryParam);
+		
+		Page page = setPageParam(sysBlogDiaryPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <SysBlogDiaryEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysBlogDiaryQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

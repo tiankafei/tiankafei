@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${package.Mapper}.${table.mapperName}">
-
     #if(${enableCache})
         <!-- 开启二级缓存 -->
         <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-
     #end
-    #if(${baseResultMap})
-        <!-- 通用查询映射结果 -->
-        <resultMap id="BaseResultMap" type="${package.Entity}.${cfg.TableName}">
-            #foreach($field in ${table.fields})
-                #if(${field.keyFlag})##生成主键排在第一位
-                    <id column="${field.name}" property="${field.propertyName}"/>
-                #end
-            #end
-            #foreach($field in ${table.commonFields})##生成公共字段
-                <result column="${field.name}" property="${field.propertyName}"/>
-            #end
-            #foreach($field in ${table.fields})
-                #if(!${field.keyFlag})##生成普通字段
-                    <result column="${field.name}" property="${field.propertyName}"/>
-                #end
-            #end
-        </resultMap>
 
-    #end
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="${cfg.queryVoPath}">
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##生成主键排在第一位
+		<id column="${field.name}" property="${field.propertyName}"/>
+#end
+#end
+#foreach($field in ${table.commonFields})##生成公共字段
+		<result column="${field.name}" property="${field.propertyName}"/>
+#end
+#foreach($field in ${table.fields})
+#if(!${field.keyFlag})##生成普通字段
+		<result column="${field.name}" property="${field.propertyName}"/>
+#end
+#end
+    </resultMap>
+
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <sql id="base_Column_List">
 #foreach($field in ${table.commonFields})
         ${field.name},
 #end
         ${table.fieldNames}
     </sql>
 
-    <select id="get${cfg.TableName}List" resultType="${cfg.queryVoPath}">
+    <!-- 根据主键获取 $!{table.comment} 对象 -->
+    <select id="get${cfg.TableName}ById" resultMap="baseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="base_Column_List"/>
+        from ${table.name} where ${cfg.pkIdColumnName} = #{id}
+    </select>
+
+    <!-- 分页查询 $!{table.comment} 对象集合 -->
+    <select id="get${cfg.TableName}PageList" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"/>
+        from ${table.name}
+    </select>
+
+    <!-- 查询 $!{table.comment} 对象集合 -->
+    <select id="get${cfg.TableName}List" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"/>
         from ${table.name}
     </select>
 

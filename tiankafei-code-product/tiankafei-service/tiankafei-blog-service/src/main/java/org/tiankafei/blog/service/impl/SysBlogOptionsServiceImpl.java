@@ -92,15 +92,19 @@ public class SysBlogOptionsServiceImpl extends BaseServiceImpl<SysBlogOptionsMap
 
     @Override
     public SysBlogOptionsQueryVo getSysBlogOptionsById(Serializable id) throws Exception {
-         SysBlogOptionsEntity sysBlogOptionsEntity = super.getById(id);
-         SysBlogOptionsQueryVo sysBlogOptionsQueryVo = new SysBlogOptionsQueryVo();
-         BeanUtils.copyProperties(sysBlogOptionsEntity, sysBlogOptionsQueryVo);
+		//SysBlogOptionsQueryVo sysBlogOptionsQueryVo = sysBlogOptionsMapper.getSysBlogOptionsById(id);
+	
+        SysBlogOptionsEntity sysBlogOptionsEntity = super.getById(id);
+        SysBlogOptionsQueryVo sysBlogOptionsQueryVo = new SysBlogOptionsQueryVo();
+        BeanUtils.copyProperties(sysBlogOptionsEntity, sysBlogOptionsQueryVo);
         return sysBlogOptionsQueryVo;
     }
 
     @Override
     public Paging<SysBlogOptionsQueryVo> getSysBlogOptionsPageList(SysBlogOptionsPageQueryParam sysBlogOptionsPageQueryParam) throws Exception {
-        Page page = setPageParam(sysBlogOptionsPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysBlogOptionsQueryVo> iPage = sysBlogOptionsMapper.getSysBlogOptionsPageList(page, sysBlogOptionsPageQueryParam);
+		
+		Page page = setPageParam(sysBlogOptionsPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper <SysBlogOptionsEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysBlogOptionsQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

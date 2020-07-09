@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tiankafei.blog.mapper.SysBlogLabelMapper">
+    
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="org.tiankafei.blog.vo.SysBlogLabelQueryVo">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="count" property="count"/>
+		<result column="create_time" property="createTime"/>
+		<result column="create_user_id" property="createUserId"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="update_user_id" property="updateUserId"/>
+    </resultMap>
 
-            <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <!-- 通用查询结果列 -->
+    <sql id="base_Column_List">
         id, name, count, create_time, create_user_id, update_time, update_user_id
     </sql>
 
-    <select id="getSysBlogLabelList" resultType="org.tiankafei.blog.vo.SysBlogLabelQueryVo">
+    <!-- 根据主键获取 系统的博客标签 对象 -->
+    <select id="getSysBlogLabelById" resultMap="baseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="base_Column_List"/>
+        from sys_blog_label where id = #{id}
+    </select>
+
+    <!-- 分页查询 系统的博客标签 对象集合 -->
+    <select id="getSysBlogLabelPageList" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"/>
+        from sys_blog_label
+    </select>
+
+    <!-- 查询 系统的博客标签 对象集合 -->
+    <select id="getSysBlogLabelList" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"/>
         from sys_blog_label
     </select>
 
