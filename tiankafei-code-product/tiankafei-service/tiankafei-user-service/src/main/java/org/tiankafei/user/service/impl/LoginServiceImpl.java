@@ -100,10 +100,10 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
             try {
                 // 获取用户、角色、功能的所有数据
                 SysUserInfoQueryVo userInfoQueryVo = userInfoService.getSysUserAndRoleAndFeatureById(userId);
-                // 生成token
+                // TODO 生成token
                 String token = "";
                 // 存放缓存
-                userInfoCache.setUserInfo(userInfoQueryVo);
+                userInfoCache.setUserInfo(userInfoQueryVo, token);
                 return token;
             } catch (Exception e) {
                 e.printStackTrace();
