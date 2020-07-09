@@ -18,10 +18,36 @@ public enum ComponentEnum {
     SELECTION(5),
     // 级联下拉框
     CASCADE_SELECTION(6),
-    // 单选按钮组
+    // 单选框组
     RADIO(7),
-
-
+    // 多选框组
+    CHECK_BOX(8),
+    // 开关
+    SWITCH(9),
+    // 滑块
+    SLIDER(10),
+    // 时间选择
+    TIME(11),
+    // 时间范围
+    TIME_RANGE(12),
+    // 日期选择
+    DATE(13),
+    // 日期范围
+    DATE_RANGE(14),
+    // 日期时间选择
+    DATE_TIME(15),
+    // 日期时间范围
+    DATE_TIME_RANGE(16),
+    // 评分
+    RATE(17),
+    // 颜色选择
+    COLOR(18),
+    // 上传
+    UPLOAD(19),
+    // 面板
+    PANEL(20),
+    // 表格
+    TABLE(21),
     ;
 
     private Integer code;

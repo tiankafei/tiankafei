@@ -1,4 +1,4 @@
-package org.tiankafei.collection.service;
+package org.tiankafei.collection.component;
 
 /**
  * @author 魏双双
