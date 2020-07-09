@@ -6,5 +6,5 @@ import org.tiankafei.poi.WordExport;
  * @author tiankafei
  * @since 1.0
  **/
-public abstract class WordExportImpl implements WordExport {
+public abstract class BaseWordExportImpl implements WordExport {
 }

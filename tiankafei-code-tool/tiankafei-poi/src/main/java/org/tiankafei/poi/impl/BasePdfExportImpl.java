@@ -6,5 +6,5 @@ import org.tiankafei.poi.PdfExport;
  * @author tiankafei
  * @since 1.0
  **/
-public abstract class PdfExportImpl implements PdfExport {
+public abstract class BasePdfExportImpl implements PdfExport {
 }

@@ -5,5 +5,5 @@ import org.tiankafei.poi.ExcelReadStyle;
 /**
  * @author tiankafei
  */
-public abstract class ExcelReadStyleImpl implements ExcelReadStyle {
+public abstract class BaseExcelReadStyleImpl implements ExcelReadStyle {
 }
