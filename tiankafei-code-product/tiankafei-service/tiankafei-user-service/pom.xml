@@ -46,10 +46,6 @@
             <artifactId>tiankafei-db</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ramostear</groupId>
-            <artifactId>Happy-Captcha</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-user-cache</artifactId>
         </dependency>
