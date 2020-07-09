@@ -1,59 +1,59 @@
-package org.tiankafei.poi.model;
+package org.tiankafei.poi.property;
 
 import java.util.List;
 
 /**
  * @author tiankafei
  */
-public interface ISheet {
+public interface SheetProperty {
 
     /**
      * 获取行对象
      *
      * @return
      */
-    IRows getRows();
+    RowsProperty getRows();
 
     /**
      * 设置行对象
      *
      * @param rows
      */
-    void setRows(IRows rows);
+    void setRows(RowsProperty rows);
 
     /**
      * 获取列对象
      *
      * @return
      */
-    ICols getCols();
+    ColsProperty getCols();
 
     /**
      * 设置列对象
      *
      * @param cols
      */
-    void setCols(ICols cols);
+    void setCols(ColsProperty cols);
 
     /**
      * 获取样式集合
      *
      * @return
      */
-    List<ICellStyle> getCellStyleList();
+    List<CellStyleProperty> getCellStyleList();
 
     /**
      * 设置样式集合
      *
      * @param cellStyleList
      */
-    void setCellStyleList(List<ICellStyle> cellStyleList);
+    void setCellStyleList(List<CellStyleProperty> cellStyleList);
 
     /**
      * 添加样式
      *
      * @param cellStyle
      */
-    void addCellStyle(ICellStyle cellStyle);
+    void addCellStyle(CellStyleProperty cellStyle);
 
 }

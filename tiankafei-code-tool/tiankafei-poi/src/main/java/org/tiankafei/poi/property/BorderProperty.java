@@ -1,11 +1,11 @@
-package org.tiankafei.poi.model;
+package org.tiankafei.poi.property;
 
 import java.awt.Color;
 
 /**
  * @author tiankafei
  */
-public interface IBorder {
+public interface BorderProperty {
 
     /**
      * 获取下边框样式

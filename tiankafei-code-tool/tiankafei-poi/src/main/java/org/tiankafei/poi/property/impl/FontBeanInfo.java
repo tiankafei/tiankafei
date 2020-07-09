@@ -1,6 +1,6 @@
-package org.tiankafei.poi.model.impl;
+package org.tiankafei.poi.property.impl;
 
-import org.tiankafei.poi.model.IFont;
+import org.tiankafei.poi.property.FontProperty;
 import lombok.Data;
 
 import java.awt.Color;
@@ -10,7 +10,7 @@ import java.awt.Color;
  * @since 1.0
  **/
 @Data
-public class FontVo implements IFont {
+public class FontBeanInfo implements FontProperty {
 
     private int underline;
 

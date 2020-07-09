@@ -1,11 +1,11 @@
-package org.tiankafei.poi.model;
+package org.tiankafei.poi.property;
 
 import java.util.List;
 
 /**
  * @author tiankafei
  */
-public interface IRow {
+public interface RowProperty {
 
     /**
      * 获取行索引位置
@@ -26,20 +26,20 @@ public interface IRow {
      *
      * @return
      */
-    List<ICell> getCellList();
+    List<CellProperty> getCellList();
 
     /**
      * 设置列结合
      *
      * @param cellList
      */
-    void setCellList(List<ICell> cellList);
+    void setCellList(List<CellProperty> cellList);
 
     /**
      * 添加单元格对象
      *
      * @param cell
      */
-    void addCell(ICell cell);
+    void addCell(CellProperty cell);
 
 }

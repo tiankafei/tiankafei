@@ -1,6 +1,6 @@
-package org.tiankafei.poi.model.impl;
+package org.tiankafei.poi.property.impl;
 
-import org.tiankafei.poi.model.IBorder;
+import org.tiankafei.poi.property.BorderProperty;
 import lombok.Data;
 
 import java.awt.Color;
@@ -10,7 +10,7 @@ import java.awt.Color;
  * @since 1.0
  **/
 @Data
-public class BorderVo implements IBorder {
+public class BorderBeanInfo implements BorderProperty {
 
     private String borderBottomStyle;
 

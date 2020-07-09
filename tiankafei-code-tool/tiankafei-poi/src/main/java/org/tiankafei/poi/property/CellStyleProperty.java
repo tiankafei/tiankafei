@@ -1,37 +1,37 @@
-package org.tiankafei.poi.model;
+package org.tiankafei.poi.property;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
-public interface ICellStyle {
+public interface CellStyleProperty {
 
     /**
      * 获取边框样式
      *
      * @return
      */
-    IBorder getBorder();
+    BorderProperty getBorder();
 
     /**
      * 设置边框样式
      *
      * @param border
      */
-    void setBorder(IBorder border);
+    void setBorder(BorderProperty border);
 
     /**
      * 获取字体
      *
      * @return
      */
-    public IFont getFont();
+    public FontProperty getFont();
 
     /**
      * 设置字体
      *
      * @param font
      */
-    public void setFont(IFont font);
+    public void setFont(FontProperty font);
 
 }

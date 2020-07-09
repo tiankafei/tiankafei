@@ -1,6 +1,6 @@
-package org.tiankafei.poi.model.impl;
+package org.tiankafei.poi.property.impl;
 
-import org.tiankafei.poi.model.ICell;
+import org.tiankafei.poi.property.CellProperty;
 import lombok.Data;
 
 /**
@@ -8,7 +8,7 @@ import lombok.Data;
  * @since 1.0
  **/
 @Data
-public class CellVo implements ICell {
+public class CellBeanInfo implements CellProperty {
 
     private Integer colIndex;
 

@@ -1,7 +1,7 @@
-package org.tiankafei.poi.model.impl;
+package org.tiankafei.poi.property.impl;
 
-import org.tiankafei.poi.model.IRow;
-import org.tiankafei.poi.model.IRows;
+import org.tiankafei.poi.property.RowProperty;
+import org.tiankafei.poi.property.RowsProperty;
 import lombok.Data;
 import org.apache.commons.compress.utils.Lists;
 
@@ -12,14 +12,14 @@ import java.util.List;
  * @since 1.0
  **/
 @Data
-public class RowsVo implements IRows {
+public class RowsBeanInfo implements RowsProperty {
 
     private Integer rowCount;
 
-    private List<IRow> rowList;
+    private List<RowProperty> rowList;
 
     @Override
-    public void addRow(IRow row) {
+    public void addRow(RowProperty row) {
         if (rowList == null) {
             rowList = Lists.newArrayList();
         }

@@ -1,4 +1,4 @@
-package org.tiankafei.poi.model;
+package org.tiankafei.poi.property;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  **/
-public interface IRows {
+public interface RowsProperty {
 
     /**
      * 获取行的个数
@@ -27,20 +27,20 @@ public interface IRows {
      *
      * @return
      */
-    List<IRow> getRowList();
+    List<RowProperty> getRowList();
 
     /**
      * 设置行集合
      *
      * @param rowList
      */
-    void setRowList(List<IRow> rowList);
+    void setRowList(List<RowProperty> rowList);
 
     /**
      * 添加每一行的行对象
      *
      * @param row
      */
-    void addRow(IRow row);
+    void addRow(RowProperty row);
 
 }

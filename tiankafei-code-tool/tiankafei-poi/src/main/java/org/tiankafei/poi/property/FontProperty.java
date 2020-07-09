@@ -1,11 +1,11 @@
-package org.tiankafei.poi.model;
+package org.tiankafei.poi.property;
 
 import java.awt.Color;
 
 /**
  * @author tiankafei
  */
-public interface IFont {
+public interface FontProperty {
 
     /**
      * 获取下划线类型

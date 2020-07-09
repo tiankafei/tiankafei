@@ -1,4 +1,4 @@
-package org.tiankafei.poi.model;
+package org.tiankafei.poi.property;
 
 import java.util.List;
 
@@ -6,27 +6,27 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  **/
-public interface IWorkbook {
+public interface WorkbookProperty {
 
     /**
      * 获取sheet列表
      *
      * @return
      */
-    List<ISheet> getSheetList();
+    List<SheetProperty> getSheetList();
 
     /**
      * 设置sheet列表
      *
      * @param sheetList
      */
-    void setSheetList(List<ISheet> sheetList);
+    void setSheetList(List<SheetProperty> sheetList);
 
     /**
      * 添加sheet
      *
      * @param sheet
      */
-    void addSheet(ISheet sheet);
+    void addSheet(SheetProperty sheet);
 
 }
