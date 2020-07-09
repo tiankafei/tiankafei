@@ -84,15 +84,6 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
     SysUserInfoQueryVo getSysUserInfoById(Serializable id) throws Exception;
 
     /**
-     * 获取用户、角色、功能的所有数据
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    SysUserInfoQueryVo getSysUserAndRoleAndFeatureById(Serializable id) throws Exception;
-
-    /**
      * 获取 用户基本信息表 分页对象列表
      *
      * @param sysUserInfoPageQueryParam

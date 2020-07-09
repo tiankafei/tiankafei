@@ -3,7 +3,14 @@ package org.tiankafei.user.login.service.impl;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.sql.Timestamp;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +23,7 @@ import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.param.LoginParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.user.login.service.LoginService;
+import org.tiankafei.user.vo.SysMenuInfoQueryVo;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
@@ -98,7 +106,7 @@ public class LoginServiceImpl implements LoginService {
             Long userId = userLoginQueryVo.getId();
             try {
                 // 获取用户、角色、功能的所有数据
-                SysUserInfoQueryVo userInfoQueryVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
+                SysUserInfoQueryVo userInfoQueryVo = getSysUserInfoQueryVo(userId);
                 // TODO 生成token，暂时使用md5的方式对对象进行摘要
                 String token = SecureUtil.md5(JSONUtil.toJsonStr(userInfoQueryVo));
                 // 存放缓存
@@ -169,6 +177,49 @@ public class LoginServiceImpl implements LoginService {
             e.printStackTrace();
             throw new LoginException("验证码校验异常！");
         }
+    }
+
+    private SysUserInfoQueryVo getSysUserInfoQueryVo(Long userId){
+        SysUserInfoQueryVo userInfoQueryVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
+
+        // 获取去重的功能清单集合
+        Set<SysMenuInfoQueryVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream()
+                .flatMap(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo().getRoleMenuList().stream())
+                .map(sysRoleMenuQueryVo -> sysRoleMenuQueryVo.getMenuInfoQueryVo())
+                .collect(Collectors.toSet());
+        // 找出所有的非跟节点
+        Map<Integer, List<SysMenuInfoQueryVo>> menuInfoListMap = Maps.newHashMap();
+        menuInfoSet.stream().forEach(sysMenuInfoQueryVo -> {
+            Integer parentId = sysMenuInfoQueryVo.getParentId();
+            if(parentId != null){
+                List<SysMenuInfoQueryVo> menuInfoList = null;
+                if(menuInfoListMap.containsKey(parentId)){
+                    menuInfoList = menuInfoListMap.get(parentId);
+                }else {
+                    menuInfoList = Lists.newArrayList();
+                    menuInfoListMap.put(parentId, menuInfoList);
+                }
+                menuInfoList.add(sysMenuInfoQueryVo);
+            }
+        });
+        // 找出根节点，并根据id找出所有的子节点，并从小到大排序
+        List<SysMenuInfoQueryVo> rootMenuInfoList = menuInfoSet.stream()
+                .filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() == null)
+                .map(sysMenuInfoQueryVo -> {
+                    Integer id = sysMenuInfoQueryVo.getId();
+                    if (menuInfoListMap.containsKey(id)) {
+                        List<SysMenuInfoQueryVo> menuInfoList = menuInfoListMap.get(id);
+                        // 排序
+                        List<SysMenuInfoQueryVo> sortedMenuInfoList = menuInfoList.stream().sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber)).collect(Collectors.toList());
+                        sysMenuInfoQueryVo.setMenuInfoList(sortedMenuInfoList);
+                    }
+                    return sysMenuInfoQueryVo;
+                })
+                .sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber))
+                .collect(Collectors.toList());
+        userInfoQueryVo.setMenuInfoList(rootMenuInfoList);
+
+        return userInfoQueryVo;
     }
 
     /**

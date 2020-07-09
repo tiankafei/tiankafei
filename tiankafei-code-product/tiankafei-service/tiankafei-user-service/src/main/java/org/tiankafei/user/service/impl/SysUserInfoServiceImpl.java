@@ -23,7 +23,6 @@ import org.tiankafei.user.param.SysUserInfoPageQueryParam;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
 import org.tiankafei.user.service.SysUserInfoService;
 import org.tiankafei.user.service.SysUserRoleService;
-import org.tiankafei.user.vo.SysMenuInfoQueryVo;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
@@ -32,11 +31,7 @@ import org.tiankafei.web.common.vo.Paging;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -159,51 +154,6 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
         SysUserInfoQueryVo sysUserInfoQueryVo = new SysUserInfoQueryVo();
         BeanUtils.copyProperties(sysUserInfoEntity, sysUserInfoQueryVo);
         return sysUserInfoQueryVo;
-    }
-
-    @Override
-    public SysUserInfoQueryVo getSysUserAndRoleAndFeatureById(Serializable userId) throws Exception {
-        // 获取用户、角色、功能的所有数据
-        SysUserInfoQueryVo userInfoQueryVo = userInfoMapper.getSysUserInfoQueryVo(userId);
-
-        // 获取去重的功能清单集合
-        Set<SysMenuInfoQueryVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream()
-                .flatMap(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo().getRoleMenuList().stream())
-                .map(sysRoleMenuQueryVo -> sysRoleMenuQueryVo.getMenuInfoQueryVo())
-                .collect(Collectors.toSet());
-        // 找出所有的非跟节点
-        Map<Integer, List<SysMenuInfoQueryVo>> menuInfoListMap = Maps.newHashMap();
-        menuInfoSet.stream().forEach(sysMenuInfoQueryVo -> {
-            Integer parentId = sysMenuInfoQueryVo.getParentId();
-            if(parentId != null){
-                List<SysMenuInfoQueryVo> menuInfoList = null;
-                if(menuInfoListMap.containsKey(parentId)){
-                    menuInfoList = menuInfoListMap.get(parentId);
-                }else {
-                    menuInfoList = Lists.newArrayList();
-                    menuInfoListMap.put(parentId, menuInfoList);
-                }
-                menuInfoList.add(sysMenuInfoQueryVo);
-            }
-        });
-        // 找出根节点，并根据id找出所有的子节点，并从小到大排序
-        List<SysMenuInfoQueryVo> rootMenuInfoList = menuInfoSet.stream()
-                .filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() == null)
-                .map(sysMenuInfoQueryVo -> {
-                    Integer id = sysMenuInfoQueryVo.getId();
-                    if (menuInfoListMap.containsKey(id)) {
-                        List<SysMenuInfoQueryVo> menuInfoList = menuInfoListMap.get(id);
-                        // 排序
-                        List<SysMenuInfoQueryVo> sortedMenuInfoList = menuInfoList.stream().sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber)).collect(Collectors.toList());
-                        sysMenuInfoQueryVo.setMenuInfoList(sortedMenuInfoList);
-                    }
-                    return sysMenuInfoQueryVo;
-                })
-                .sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber))
-                .collect(Collectors.toList());
-        userInfoQueryVo.setMenuInfoList(rootMenuInfoList);
-
-        return userInfoQueryVo;
     }
 
     @Override
