@@ -12,6 +12,7 @@ import org.tiankafei.cache.CacheManagerRepository;
 import org.tiankafei.cache.CacheQueryRepository;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.web.common.config.TokenConfig;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**
@@ -30,6 +31,17 @@ public class UserInfoCache {
     @Autowired
     private CacheQueryRepository cacheQueryRepository;
 
+    @Autowired
+    private TokenConfig tokenConfig;
+
+    /**
+     * 获取用户ID
+     * @return
+     */
+    public Long getUserId(){
+        return getUserId(tokenConfig.getToken());
+    }
+
     /**
      * 获取用户ID
      * @param token
@@ -45,6 +57,14 @@ public class UserInfoCache {
 
     /**
      * 获取用户昵称
+     * @return
+     */
+    public String getUserNickname(){
+        return getUserNickname(tokenConfig.getToken());
+    }
+
+    /**
+     * 获取用户昵称
      * @param token
      * @return
      */
@@ -54,6 +74,14 @@ public class UserInfoCache {
             return userInfo.getNickname();
         }
         return null;
+    }
+
+    /**
+     * 根据用户名获取缓存的用户信息
+     * @return
+     */
+    public SysUserInfoQueryVo getUserInfo(){
+        return getUserInfo(tokenConfig.getToken());
     }
 
     /**

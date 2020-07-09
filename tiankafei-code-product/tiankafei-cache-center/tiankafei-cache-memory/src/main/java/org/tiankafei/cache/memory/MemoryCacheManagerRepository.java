@@ -13,7 +13,7 @@ import org.tiankafei.cache.CacheManagerRepository;
  * @since 1.0
  **/
 @Repository
-public class MemoryCacheManagerRepository implements CacheManagerRepository {
+public class MemoryCacheManagerRepository extends MemoryCacheRepository implements CacheManagerRepository {
 
     @Override
     public <T> void setCacheObject(String key, T value) {
@@ -51,36 +51,6 @@ public class MemoryCacheManagerRepository implements CacheManagerRepository {
     }
 
     @Override
-    public void expireKey(String key, Integer timeout, TimeUnit timeUnit) {
-
-    }
-
-    @Override
-    public <T> T getCacheObject(String key) {
-        return null;
-    }
-
-    @Override
-    public <T> List<T> getCacheList(String key) {
-        return null;
-    }
-
-    @Override
-    public <T> Set<T> getCacheSet(String key) {
-        return null;
-    }
-
-    @Override
-    public <T> Map<String, T> getCacheMap(String key) {
-        return null;
-    }
-
-    @Override
-    public <T> T getCacheMap(String key, String mapKey) {
-        return null;
-    }
-
-    @Override
     public void deleteObject(String key) {
 
     }
@@ -88,10 +58,5 @@ public class MemoryCacheManagerRepository implements CacheManagerRepository {
     @Override
     public void deleteObject(Collection keys) {
 
-    }
-
-    @Override
-    public Collection<String> keys(String pattern) {
-        return null;
     }
 }

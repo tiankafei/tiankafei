@@ -11,7 +11,7 @@ import org.tiankafei.cache.CacheRepository;
  * @author 魏双双
  * @since 1.0
  **/
-public class RedisCacheRepository implements CacheRepository {
+public abstract class RedisCacheRepository implements CacheRepository {
 
     @Autowired
     protected RedisTemplate redisTemplate;

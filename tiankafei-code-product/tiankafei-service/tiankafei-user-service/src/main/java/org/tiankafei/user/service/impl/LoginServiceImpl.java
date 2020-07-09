@@ -1,6 +1,8 @@
 package org.tiankafei.user.service.impl;
 
 import cn.hutool.core.lang.Validator;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.bean.QueryUserClient;
@@ -100,8 +102,8 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
             try {
                 // 获取用户、角色、功能的所有数据
                 SysUserInfoQueryVo userInfoQueryVo = userInfoService.getSysUserAndRoleAndFeatureById(userId);
-                // TODO 生成token
-                String token = "";
+                // TODO 生成token，暂时使用md5的方式对对象进行摘要
+                String token = SecureUtil.md5(JSONUtil.toJsonStr(userInfoQueryVo));
                 // 存放缓存
                 userInfoCache.setUserInfo(userInfoQueryVo, token);
                 return token;
