@@ -114,6 +114,8 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
 
     @Override
     public SysUserRoleQueryVo getSysUserRoleById(Serializable id) throws Exception {
+		//SysUserRoleQueryVo sysUserRoleQueryVo = sysUserRoleMapper.getSysUserRoleById(id);
+
         SysUserRoleEntity sysUserRoleEntity = super.getById(id);
         SysUserRoleQueryVo sysUserRoleQueryVo = new SysUserRoleQueryVo();
         BeanUtils.copyProperties(sysUserRoleEntity, sysUserRoleQueryVo);
@@ -122,7 +124,9 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
 
     @Override
     public Paging<SysUserRoleQueryVo> getSysUserRolePageList(SysUserRolePageQueryParam sysUserRolePageQueryParam) throws Exception {
-        Page page = setPageParam(sysUserRolePageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysUserRoleQueryVo> iPage = sysUserRoleMapper.getSysUserRolePageList(page, sysUserRolePageQueryParam);
+
+		Page page = setPageParam(sysUserRolePageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysUserRoleEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysUserRoleQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

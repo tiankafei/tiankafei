@@ -141,6 +141,8 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
 
     @Override
     public SysUserLoginQueryVo getSysUserLoginById(Serializable id) throws Exception {
+		//SysUserLoginQueryVo sysUserLoginQueryVo = sysUserLoginMapper.getSysUserLoginById(id);
+
         SysUserLoginEntity sysUserLoginEntity = super.getById(id);
         SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
         BeanUtils.copyProperties(sysUserLoginEntity, sysUserLoginQueryVo);
@@ -149,7 +151,9 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
 
     @Override
     public Paging<SysUserLoginQueryVo> getSysUserLoginPageList(SysUserLoginPageQueryParam sysUserLoginPageQueryParam) throws Exception {
-        Page page = setPageParam(sysUserLoginPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysUserLoginQueryVo> iPage = sysUserLoginMapper.getSysUserLoginPageList(page, sysUserLoginPageQueryParam);
+
+		Page page = setPageParam(sysUserLoginPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysUserLoginQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

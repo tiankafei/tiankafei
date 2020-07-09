@@ -162,6 +162,8 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
     @Override
     public SysDictInfoQueryVo getSysDictInfoById(Serializable id) throws Exception {
+		//SysDictInfoQueryVo sysDictInfoQueryVo = sysDictInfoMapper.getSysDictInfoById(id);
+
         SysDictInfoEntity sysDictInfoEntity = super.getById(id);
         SysDictInfoQueryVo sysDictInfoQueryVo = new SysDictInfoQueryVo();
         BeanUtils.copyProperties(sysDictInfoEntity, sysDictInfoQueryVo);
@@ -170,7 +172,9 @@ public class SysDictInfoServiceImpl extends BaseServiceImpl<SysDictInfoMapper, S
 
     @Override
     public Paging<SysDictInfoQueryVo> getSysDictInfoPageList(SysDictInfoPageQueryParam sysDictInfoPageQueryParam) throws Exception {
-        Page page = setPageParam(sysDictInfoPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysDictInfoQueryVo> iPage = sysDictInfoMapper.getSysDictInfoPageList(page, sysDictInfoPageQueryParam);
+
+		Page page = setPageParam(sysDictInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysDictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysDictInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

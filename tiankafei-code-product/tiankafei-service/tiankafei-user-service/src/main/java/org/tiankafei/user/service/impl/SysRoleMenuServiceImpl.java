@@ -91,6 +91,8 @@ public class SysRoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenuMapper, S
 
     @Override
     public SysRoleMenuQueryVo getSysRoleMenuById(Serializable id) throws Exception {
+		//SysRoleMenuQueryVo sysRoleMenuQueryVo = sysRoleMenuMapper.getSysRoleMenuById(id);
+
         SysRoleMenuEntity sysRoleMenuEntity = super.getById(id);
         SysRoleMenuQueryVo sysRoleMenuQueryVo = new SysRoleMenuQueryVo();
         BeanUtils.copyProperties(sysRoleMenuEntity, sysRoleMenuQueryVo);
@@ -99,7 +101,9 @@ public class SysRoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenuMapper, S
 
     @Override
     public Paging<SysRoleMenuQueryVo> getSysRoleMenuPageList(SysRoleMenuPageQueryParam sysRoleMenuPageQueryParam) throws Exception {
-        Page page = setPageParam(sysRoleMenuPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysRoleMenuQueryVo> iPage = sysRoleMenuMapper.getSysRoleMenuPageList(page, sysRoleMenuPageQueryParam);
+
+		Page page = setPageParam(sysRoleMenuPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysRoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysRoleMenuQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

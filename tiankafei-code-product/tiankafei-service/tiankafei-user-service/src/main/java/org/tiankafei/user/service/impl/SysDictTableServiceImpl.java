@@ -103,7 +103,7 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
 
     @Override
     public SysDictTableQueryVo getSysDictTableById(String dataTable, Serializable id) throws Exception {
-        setDynamicTableName(dataTable);
+		//SysDictTableQueryVo sysDictTableQueryVo = sysDictTableMapper.getSysDictTableById(id);
 
         SysDictTableEntity sysDictTableEntity = super.getById(id);
         SysDictTableQueryVo sysDictTableQueryVo = new SysDictTableQueryVo();
@@ -113,7 +113,7 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
 
     @Override
     public Paging<SysDictTableQueryVo> getSysDictTablePageList(SysDictTablePageQueryParam sysDictTablePageQueryParam) throws Exception {
-        setDynamicTableName(sysDictTablePageQueryParam.getDataTable());
+        //IPage<SysDictTableQueryVo> iPage = sysDictTableMapper.getSysDictTablePageList(page, sysDictTablePageQueryParam);
 
         Page page = setPageParam(sysDictTablePageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysDictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();

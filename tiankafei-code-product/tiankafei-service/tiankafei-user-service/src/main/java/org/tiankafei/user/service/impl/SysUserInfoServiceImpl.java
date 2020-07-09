@@ -150,6 +150,8 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
 
     @Override
     public SysUserInfoQueryVo getSysUserInfoById(Serializable id) throws Exception {
+		//SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoMapper.getSysUserInfoById(id);
+
         SysUserInfoEntity sysUserInfoEntity = super.getById(id);
         SysUserInfoQueryVo sysUserInfoQueryVo = new SysUserInfoQueryVo();
         BeanUtils.copyProperties(sysUserInfoEntity, sysUserInfoQueryVo);
@@ -158,7 +160,9 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
 
     @Override
     public Paging<SysUserInfoQueryVo> getSysUserInfoPageList(SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
-        Page page = setPageParam(sysUserInfoPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysUserInfoQueryVo> iPage = sysUserInfoMapper.getSysUserInfoPageList(page, sysUserInfoPageQueryParam);
+
+		Page page = setPageParam(sysUserInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysUserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysUserInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

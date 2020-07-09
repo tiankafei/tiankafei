@@ -91,6 +91,8 @@ public class SysMenuInfoServiceImpl extends BaseServiceImpl<SysMenuInfoMapper, S
 
     @Override
     public SysMenuInfoQueryVo getSysMenuInfoById(Serializable id) throws Exception {
+		//SysMenuInfoQueryVo sysMenuInfoQueryVo = sysMenuInfoMapper.getSysMenuInfoById(id);
+
         SysMenuInfoEntity sysMenuInfoEntity = super.getById(id);
         SysMenuInfoQueryVo sysMenuInfoQueryVo = new SysMenuInfoQueryVo();
         BeanUtils.copyProperties(sysMenuInfoEntity, sysMenuInfoQueryVo);
@@ -99,7 +101,9 @@ public class SysMenuInfoServiceImpl extends BaseServiceImpl<SysMenuInfoMapper, S
 
     @Override
     public Paging<SysMenuInfoQueryVo> getSysMenuInfoPageList(SysMenuInfoPageQueryParam sysMenuInfoPageQueryParam) throws Exception {
-        Page page = setPageParam(sysMenuInfoPageQueryParam, OrderItem.desc("create_time"));
+        //IPage<SysMenuInfoQueryVo> iPage = sysMenuInfoMapper.getSysMenuInfoPageList(page, sysMenuInfoPageQueryParam);
+
+		Page page = setPageParam(sysMenuInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysMenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysMenuInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
