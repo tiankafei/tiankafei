@@ -12,8 +12,10 @@ public enum TokenEnum {
     COOKIES(2),
 //    从请求参数中获取token信息
     REQUEST_PARAM(3),
+//    从请求的body信息中获取token信息
+    REQUEST_BODY(4),
 //    从session中获取token信息（需要做session同步）
-    SESSION(4),
+    SESSION(5),
     ;
 
     private Integer code;
