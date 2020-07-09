@@ -1,8 +1,9 @@
 package org.tiankafei.collection.component.impl;
 
 import org.springframework.stereotype.Component;
-import org.tiankafei.collection.component.CollectionComponent;
 import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.property.ComponentProperty;
+import org.tiankafei.collection.property.impl.TableComponentBeanInfo;
 
 /**
  * 表格
@@ -11,7 +12,12 @@ import org.tiankafei.collection.enums.ComponentEnum;
  * @since 1.0
  **/
 @Component
-public class TableComponent implements CollectionComponent {
+public class TableComponent extends BaseCollectionComponent {
+
+    @Override
+    public ComponentProperty createComponentProperty() {
+        return new TableComponentBeanInfo();
+    }
 
     @Override
     public Integer getComponentType() {

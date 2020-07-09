@@ -1,8 +1,9 @@
 package org.tiankafei.collection.component.impl;
 
 import org.springframework.stereotype.Component;
-import org.tiankafei.collection.component.CollectionComponent;
 import org.tiankafei.collection.enums.ComponentEnum;
+import org.tiankafei.collection.property.ComponentProperty;
+import org.tiankafei.collection.property.impl.TimeComponentBeanInfo;
 
 /**
  * 时间选择
@@ -11,7 +12,12 @@ import org.tiankafei.collection.enums.ComponentEnum;
  * @since 1.0
  **/
 @Component
-public class TimeComponent implements CollectionComponent {
+public class TimeComponent extends BaseCollectionComponent {
+
+    @Override
+    public ComponentProperty createComponentProperty() {
+        return new TimeComponentBeanInfo();
+    }
 
     @Override
     public Integer getComponentType() {
