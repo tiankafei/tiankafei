@@ -30,7 +30,7 @@
         <result property="createUserId" column="create_user_id"/>
         <result property="updateUserId" column="update_user_id"/>
         <association property="userLoginQueryVo" resultMap="userLoginMap"/>
-        <collection property="userRoleList" resultMap="userRoleMap"/>
+        <collection property="userRoleList" resultMap="userRoleMap" notNullColumn="user_role_id"/>
     </resultMap>
 
     <resultMap id="userLoginMap" type="org.tiankafei.user.vo.SysUserLoginQueryVo">
@@ -53,7 +53,7 @@
         <result property="updateTime" column="update_time"/>
         <result property="createUserId" column="create_user_id"/>
         <result property="updateUserId" column="update_user_id"/>
-        <association property="roleInfoQueryVo" resultMap="roleInfoMap"/>
+        <association property="roleInfoQueryVo" resultMap="roleInfoMap" notNullColumn="role_info_id"/>
     </resultMap>
 
     <resultMap id="roleInfoMap" type="org.tiankafei.user.vo.SysRoleInfoQueryVo">
@@ -67,14 +67,14 @@
         <result property="updateTime" column="update_time"/>
         <result property="createUserId" column="create_user_id"/>
         <result property="updateUserId" column="update_user_id"/>
-        <collection property="roleMenuList" resultMap="roleMenuMap"/>
+        <collection property="roleMenuList" resultMap="roleMenuMap" notNullColumn="role_menu_id"/>
     </resultMap>
 
     <resultMap id="roleMenuMap" type="org.tiankafei.user.vo.SysRoleMenuQueryVo">
         <id property="id" column="role_menu_id"/>
         <result property="roleId" column="role_id"/>
         <result property="menuId" column="menu_id"/>
-        <association property="menuInfoQueryVo" resultMap="menuInfoMap"/>
+        <association property="menuInfoQueryVo" resultMap="menuInfoMap" notNullColumn="menu_info_id"/>
     </resultMap>
 
     <resultMap id="menuInfoMap" type="org.tiankafei.user.vo.SysMenuInfoQueryVo">

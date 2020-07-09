@@ -78,9 +78,9 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
 
         // 不存在的用户名，会放进缓存中，仅允许查询一次数据库，避免缓存穿透的问题
         SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(keywords, password);
-        if (userInfo != null) {
-            return userInfo;
-        }
+//        if (userInfo != null) {
+//            return userInfo;
+//        }
 
         // 根据用户名密码进行登录
         SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords, password);
