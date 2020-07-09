@@ -1,8 +1,8 @@
 package org.tiankafei.web.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.tiankafei.web.common.bean.QueryTokenClient;
 import org.tiankafei.web.common.enums.TokenEnum;
 
@@ -10,13 +10,13 @@ import org.tiankafei.web.common.enums.TokenEnum;
  * @author 魏双双
  * @since 1.0
  **/
-@Configuration
+@Component
+@ConfigurationProperties(prefix = "tiankafei")
 public class TokenConfig {
 
     @Autowired
     protected QueryTokenClient queryTokenClient;
 
-    @Value("${tokenType}")
     private Integer tokenType;
 
     /**
