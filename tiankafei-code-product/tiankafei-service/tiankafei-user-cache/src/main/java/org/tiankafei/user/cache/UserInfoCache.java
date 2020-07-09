@@ -31,7 +31,53 @@ public class UserInfoCache {
     private CacheQueryRepository cacheQueryRepository;
 
     /**
-     * 从缓存中验证该登录用户是否存在，
+     * 获取用户ID
+     * @param token
+     * @return
+     */
+    public Long getUserId(String token){
+        SysUserInfoQueryVo userInfo = getUserInfo(token);
+        if(userInfo != null){
+            return userInfo.getId();
+        }
+        return null;
+    }
+
+    /**
+     * 获取用户昵称
+     * @param token
+     * @return
+     */
+    public String getUserNickname(String token){
+        SysUserInfoQueryVo userInfo = getUserInfo(token);
+        if(userInfo != null){
+            return userInfo.getNickname();
+        }
+        return null;
+    }
+
+    /**
+     * 根据用户名获取缓存的用户信息
+     * @param token
+     * @return
+     */
+    public SysUserInfoQueryVo getUserInfo(String token){
+        String sha1 = cacheQueryRepository.<String>getCacheObject(token);
+        if(StringUtils.isNotBlank(sha1)){
+            if(!UserCacheEnums.CACHE_NULL_VALUE.getCode().equals(sha1)){
+                SysUserInfoQueryVo userInfoQueryVo = cacheQueryRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
+                if(userInfoQueryVo != null){
+                    // 每调用一次该方法，就延长一次时间
+                    setUserInfoExtendTime(userInfoQueryVo, token);
+                }
+                return userInfoQueryVo;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 登录时调用从缓存中验证该登录用户是否存在，
      *      1.缓存存在，但是值是写死的固定值，则说明该用户不存在，则直接抛出异常即可
      *      2.缓存存在，值就是用户数据本身，则直接返回即可
      * @param keywords
@@ -76,9 +122,11 @@ public class UserInfoCache {
 
     /**
      * 设置用户信息对象到缓存中
+     *
      * @param userInfoQueryVo
+     * @param token
      */
-    public void setUserInfo(SysUserInfoQueryVo userInfoQueryVo){
+    public void setUserInfo(SysUserInfoQueryVo userInfoQueryVo, String token){
         String username = userInfoQueryVo.getUsername();
         String email = userInfoQueryVo.getEmail();
         String telephone = userInfoQueryVo.getTelephone();
@@ -88,11 +136,37 @@ public class UserInfoCache {
         dataMap.put(username, sha1);
         dataMap.put(email, sha1);
         dataMap.put(telephone, sha1);
+        dataMap.put(token, sha1);
         dataMap.put(sha1, userInfoQueryVo);
+        // 批量设置缓存
         cacheManagerRepository.setCacheObject(dataMap);
-
         // 设置过期时间
-        cacheManagerRepository.batchExpireKey(Arrays.asList(username, email, telephone, sha1), 30, TimeUnit.MINUTES);;
+        setUserInfoExtendTime(username, email, telephone, token, sha1);
+    }
+
+    /**
+     * 延长过期时间
+     * @param username
+     * @param email
+     * @param telephone
+     * @param sha1
+     */
+    private void setUserInfoExtendTime(String username, String email, String telephone, String token, String sha1){
+        // 延长过期时间
+        cacheManagerRepository.batchExpireKey(Arrays.asList(username, email, telephone, token, sha1), 30, TimeUnit.MINUTES);;
+    }
+
+    /**
+     * 设置用户信息过期时间
+     * @param userInfoQueryVo
+     */
+    private void setUserInfoExtendTime(SysUserInfoQueryVo userInfoQueryVo, String token){
+        String username = userInfoQueryVo.getUsername();
+        String email = userInfoQueryVo.getEmail();
+        String telephone = userInfoQueryVo.getTelephone();
+        String sha1 = SecureUtil.sha1(username + "-" + email + "-" + telephone);
+        // 延长过期时间
+        setUserInfoExtendTime(username, email, telephone, token, sha1);
     }
 
 }

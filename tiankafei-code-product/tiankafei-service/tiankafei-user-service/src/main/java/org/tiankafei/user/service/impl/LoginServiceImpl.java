@@ -70,7 +70,7 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
      * @throws LoginException
      */
     @Override
-    public SysUserInfoQueryVo login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
+    public String login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
         String keywords = loginParamVo.getKeywords();
         String password = loginParamVo.getPassword();
         // 0.验证数据合法性
@@ -100,9 +100,11 @@ public class LoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper, SysUse
             try {
                 // 获取用户、角色、功能的所有数据
                 SysUserInfoQueryVo userInfoQueryVo = userInfoService.getSysUserAndRoleAndFeatureById(userId);
+                // 生成token
+                String token = "";
                 // 存放缓存
                 userInfoCache.setUserInfo(userInfoQueryVo);
-                return userInfoQueryVo;
+                return token;
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new Exception("获取用户数据发生异常！");

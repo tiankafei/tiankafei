@@ -3,7 +3,6 @@ package org.tiankafei.user.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.param.LoginParamVo;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,7 @@ public interface LoginService extends IService<SysUserLoginEntity> {
      * @param loginParamVo
      * @throws LoginException
      */
-    SysUserInfoQueryVo login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception;
+    String login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception;
 
     /**
      * 注销
