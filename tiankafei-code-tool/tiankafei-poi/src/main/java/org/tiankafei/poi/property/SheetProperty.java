@@ -8,6 +8,12 @@ import java.util.List;
 public interface SheetProperty {
 
     /**
+     * 设置sheet的名字
+     * @param sheetName
+     */
+    void setSheetName(String sheetName);
+
+    /**
      * 获取行对象
      *
      * @return

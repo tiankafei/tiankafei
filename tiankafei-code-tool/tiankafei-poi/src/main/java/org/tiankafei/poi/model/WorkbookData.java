@@ -1,4 +1,4 @@
 package org.tiankafei.poi.model;
 
-public interface WorkBookData {
+public interface WorkbookData {
 }

@@ -16,11 +16,18 @@ import java.util.List;
 @Data
 public class SheetBeanInfo implements SheetProperty {
 
-    private RowsProperty rows;
+    protected RowsProperty rows;
 
-    private ColsProperty cols;
+    protected ColsProperty cols;
 
-    private List<CellStyleProperty> cellStyleList;
+    protected List<CellStyleProperty> cellStyleList;
+
+    protected String sheetName;
+
+    @Override
+    public void setSheetName(String sheetName) {
+        this.sheetName = sheetName;
+    }
 
     @Override
     public void addCellStyle(CellStyleProperty cellStyle) {

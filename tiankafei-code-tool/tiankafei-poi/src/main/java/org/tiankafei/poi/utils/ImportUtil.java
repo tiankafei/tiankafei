@@ -14,7 +14,7 @@ import org.tiankafei.poi.impl.Excel2007ImportImpl;
 import org.tiankafei.poi.impl.Excel2007ReadStyleImpl;
 import org.tiankafei.poi.impl.Excel9999ImportImpl;
 import org.tiankafei.poi.impl.Excel9999ReadStyleImpl;
-import org.tiankafei.poi.model.WorkBookData;
+import org.tiankafei.poi.model.WorkbookData;
 import org.tiankafei.poi.property.WorkbookProperty;
 
 import java.io.File;
@@ -38,7 +38,7 @@ public abstract class ImportUtil {
      * @param filePath  excel路径
      * @return
      */
-    public static WorkBookData importExcel(String filePath) throws ExcelException {
+    public static WorkbookData importExcel(String filePath) throws ExcelException {
         return importExcel(new File(filePath));
     }
 
@@ -47,7 +47,7 @@ public abstract class ImportUtil {
      * @param inputStream   excel输入流
      * @return
      */
-    public static WorkBookData importExcel(InputStream inputStream) throws ExcelException {
+    public static WorkbookData importExcel(InputStream inputStream) throws ExcelException {
         try {
             Workbook workbook = WorkbookFactory.create(inputStream);
             return importExcel(workbook);
@@ -62,7 +62,7 @@ public abstract class ImportUtil {
      * @param file   excel文件对象
      * @return
      */
-    public static WorkBookData importExcel(File file) throws ExcelException {
+    public static WorkbookData importExcel(File file) throws ExcelException {
         try {
             Workbook workbook = WorkbookFactory.create(file);
             return importExcel(workbook);
@@ -78,7 +78,7 @@ public abstract class ImportUtil {
      * @return
      * @throws ExcelException
      */
-    private static WorkBookData importExcel(Workbook workbook) throws ExcelException {
+    private static WorkbookData importExcel(Workbook workbook) throws ExcelException {
         BaseExcelImportImpl baseExcelImport = null;
 
         if(workbook instanceof HSSFWorkbook){
