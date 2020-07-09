@@ -3,7 +3,7 @@ package ${package.Entity};
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
-
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -52,7 +52,7 @@ public class ${cfg.entityClassName} extends ${superEntityClass} {
     @TableId(value = "${field.name}" , type = IdType.${idType})
 #else
 ## 普通字段
-    @TableField(value = "${field.name}")
+    @TableField(value = "${field.name}"#if(${field.columnName} == 'create_time' || ${field.columnName} == 'create_user_id'), fill = FieldFill.INSERT#elseif(${field.columnName} == 'update_time' || ${field.columnName} == 'update_user_id'), fill = FieldFill.UPDATE#end)
 #end
 ## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
 #if(${field.customMap.null} == 'NO' && !${field.keyFlag})
