@@ -52,7 +52,7 @@ public class ${cfg.entityClassName} extends ${superEntityClass} {
     @TableId(value = "${field.name}" , type = IdType.${idType})
 #else
 ## 普通字段
-    @TableField("${field.name}")
+    @TableField(value = "${field.name}")
 #end
 ## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
 #if(${field.customMap.null} == 'NO' && !${field.keyFlag})

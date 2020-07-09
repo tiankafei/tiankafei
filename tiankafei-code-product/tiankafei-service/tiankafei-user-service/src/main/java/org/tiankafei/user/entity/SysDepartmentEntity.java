@@ -1,5 +1,6 @@
 package org.tiankafei.user.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -82,28 +83,28 @@ public class SysDepartmentEntity extends BaseEntity {
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Timestamp createTime;
 
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
-    @TableField("update_time")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Timestamp updateTime;
 
     /**
      * 部门创建用户ID
      */
     @ApiModelProperty(value = "部门创建用户ID")
-    @TableField("create_user_id")
+    @TableField(value = "create_user_id", fill = FieldFill.INSERT)
     private Long createUserId;
 
     /**
      * 部门修改用户ID
      */
     @ApiModelProperty(value = "部门修改用户ID")
-    @TableField("update_user_id")
+    @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
     private Long updateUserId;
 
 }

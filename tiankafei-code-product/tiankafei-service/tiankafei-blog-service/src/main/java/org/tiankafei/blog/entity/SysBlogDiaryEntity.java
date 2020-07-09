@@ -1,5 +1,6 @@
 package org.tiankafei.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -72,21 +73,21 @@ public class SysBlogDiaryEntity extends BaseEntity {
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Timestamp createTime;
 
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
-    @TableField("update_time")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Timestamp updateTime;
 
     /**
      * 创建人
      */
     @ApiModelProperty(value = "创建人")
-    @TableField("create_user_id")
+    @TableField(value = "create_user_id", fill = FieldFill.INSERT)
     private Long createUserId;
 
 }

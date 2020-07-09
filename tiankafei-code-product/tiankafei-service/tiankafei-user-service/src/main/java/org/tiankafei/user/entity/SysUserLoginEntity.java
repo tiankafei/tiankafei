@@ -1,5 +1,6 @@
 package org.tiankafei.user.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -89,7 +90,7 @@ public class SysUserLoginEntity extends BaseEntity {
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Timestamp createTime;
 
 }

@@ -1,5 +1,6 @@
 package org.tiankafei.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -64,7 +65,7 @@ public class SysBlogOptionsEntity extends BaseEntity {
      * 创建用户id
      */
     @ApiModelProperty(value = "创建用户id")
-    @TableField("create_user_id")
+    @TableField(value = "create_user_id", fill = FieldFill.INSERT)
     private Long createUserId;
 
 }
