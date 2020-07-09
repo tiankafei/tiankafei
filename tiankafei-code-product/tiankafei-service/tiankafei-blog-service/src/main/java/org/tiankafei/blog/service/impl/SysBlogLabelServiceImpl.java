@@ -47,7 +47,7 @@ public class SysBlogLabelServiceImpl extends BaseServiceImpl<SysBlogLabelMapper,
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
-    
+
     @Override
     public Object addSysBlogLabel(SysBlogLabelQueryVo sysBlogLabelQueryVo) throws Exception {
         SysBlogLabelEntity sysBlogLabelEntity = new SysBlogLabelEntity();
@@ -55,12 +55,12 @@ public class SysBlogLabelServiceImpl extends BaseServiceImpl<SysBlogLabelMapper,
         super.save(sysBlogLabelEntity);
         return sysBlogLabelEntity.getId();
     }
-        
+
     @Override
     public boolean addSysBlogLabelList(List<SysBlogLabelQueryVo> sysBlogLabelQueryVoList) throws Exception {
-        if(sysBlogLabelQueryVoList != null && !sysBlogLabelQueryVoList.isEmpty()){
+        if (sysBlogLabelQueryVoList != null && !sysBlogLabelQueryVoList.isEmpty()) {
             List<SysBlogLabelEntity> sysBlogLabelList = new ArrayList<>();
-            for ( SysBlogLabelQueryVo sysBlogLabelQueryVo : sysBlogLabelQueryVoList) {
+            for (SysBlogLabelQueryVo sysBlogLabelQueryVo : sysBlogLabelQueryVoList) {
                 SysBlogLabelEntity sysBlogLabelEntity = new SysBlogLabelEntity();
                 BeanUtils.copyProperties(sysBlogLabelQueryVo, sysBlogLabelEntity);
                 sysBlogLabelList.add(sysBlogLabelEntity);
@@ -82,10 +82,10 @@ public class SysBlogLabelServiceImpl extends BaseServiceImpl<SysBlogLabelMapper,
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
-	
+
     @Override
     public boolean deleteSysBlogLabel(SysBlogLabelQueryParam sysBlogLabelQueryParam) throws Exception {
-        LambdaQueryWrapper <SysBlogLabelEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogLabelEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
@@ -93,7 +93,7 @@ public class SysBlogLabelServiceImpl extends BaseServiceImpl<SysBlogLabelMapper,
     @Override
     public SysBlogLabelQueryVo getSysBlogLabelById(Serializable id) throws Exception {
 		//SysBlogLabelQueryVo sysBlogLabelQueryVo = sysBlogLabelMapper.getSysBlogLabelById(id);
-	
+
         SysBlogLabelEntity sysBlogLabelEntity = super.getById(id);
         SysBlogLabelQueryVo sysBlogLabelQueryVo = new SysBlogLabelQueryVo();
         BeanUtils.copyProperties(sysBlogLabelEntity, sysBlogLabelQueryVo);
@@ -103,9 +103,9 @@ public class SysBlogLabelServiceImpl extends BaseServiceImpl<SysBlogLabelMapper,
     @Override
     public Paging<SysBlogLabelQueryVo> getSysBlogLabelPageList(SysBlogLabelPageQueryParam sysBlogLabelPageQueryParam) throws Exception {
         //IPage<SysBlogLabelQueryVo> iPage = sysBlogLabelMapper.getSysBlogLabelPageList(page, sysBlogLabelPageQueryParam);
-		
+
 		Page page = setPageParam(sysBlogLabelPageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper <SysBlogLabelEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogLabelEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysBlogLabelQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
@@ -115,10 +115,10 @@ public class SysBlogLabelServiceImpl extends BaseServiceImpl<SysBlogLabelMapper,
         List<SysBlogLabelQueryVo> sysBlogLabelQueryVoList = sysBlogLabelMapper.getSysBlogLabelList(sysBlogLabelQueryParam);
         return sysBlogLabelQueryVoList;
     }
-    
+
     @Override
     public int countSysBlogLabel(SysBlogLabelQueryParam sysBlogLabelQueryParam) throws Exception {
-        LambdaQueryWrapper <SysBlogLabelEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogLabelEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }

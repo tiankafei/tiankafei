@@ -30,7 +30,7 @@ public interface SysBlogOptionsMapper extends BaseMapper<SysBlogOptionsEntity> {
      * @param id
      * @return
      */
-     SysBlogOptionsQueryVo getSysBlogOptionsById(Serializable id);
+    SysBlogOptionsQueryVo getSysBlogOptionsById(Serializable id);
 
     /**
      * 获取 系统的博客选项设置 分页对象
@@ -39,14 +39,14 @@ public interface SysBlogOptionsMapper extends BaseMapper<SysBlogOptionsEntity> {
      * @param sysBlogOptionsPageQueryParam
      * @return
      */
-     IPage<SysBlogOptionsQueryVo> getSysBlogOptionsPageList(@Param("page") Page page, @Param("param") SysBlogOptionsPageQueryParam sysBlogOptionsPageQueryParam);
-    
+    IPage<SysBlogOptionsQueryVo> getSysBlogOptionsPageList(@Param("page") Page page, @Param("param") SysBlogOptionsPageQueryParam sysBlogOptionsPageQueryParam);
+
     /**
      * 获取 系统的博客选项设置 对象列表
      *
      * @param sysBlogOptionsQueryParam
      * @return
      */
-     List<SysBlogOptionsQueryVo> getSysBlogOptionsList(@Param("param") SysBlogOptionsQueryParam sysBlogOptionsQueryParam);
+    List<SysBlogOptionsQueryVo> getSysBlogOptionsList(@Param("param") SysBlogOptionsQueryParam sysBlogOptionsQueryParam);
 
 }

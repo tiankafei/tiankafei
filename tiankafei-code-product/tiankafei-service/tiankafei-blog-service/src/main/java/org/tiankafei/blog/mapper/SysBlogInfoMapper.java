@@ -30,7 +30,7 @@ public interface SysBlogInfoMapper extends BaseMapper<SysBlogInfoEntity> {
      * @param id
      * @return
      */
-     SysBlogInfoQueryVo getSysBlogInfoById(Serializable id);
+    SysBlogInfoQueryVo getSysBlogInfoById(Serializable id);
 
     /**
      * 获取 系统的博客数据 分页对象
@@ -39,14 +39,14 @@ public interface SysBlogInfoMapper extends BaseMapper<SysBlogInfoEntity> {
      * @param sysBlogInfoPageQueryParam
      * @return
      */
-     IPage<SysBlogInfoQueryVo> getSysBlogInfoPageList(@Param("page") Page page, @Param("param") SysBlogInfoPageQueryParam sysBlogInfoPageQueryParam);
-    
+    IPage<SysBlogInfoQueryVo> getSysBlogInfoPageList(@Param("page") Page page, @Param("param") SysBlogInfoPageQueryParam sysBlogInfoPageQueryParam);
+
     /**
      * 获取 系统的博客数据 对象列表
      *
      * @param sysBlogInfoQueryParam
      * @return
      */
-     List<SysBlogInfoQueryVo> getSysBlogInfoList(@Param("param") SysBlogInfoQueryParam sysBlogInfoQueryParam);
+    List<SysBlogInfoQueryVo> getSysBlogInfoList(@Param("param") SysBlogInfoQueryParam sysBlogInfoQueryParam);
 
 }

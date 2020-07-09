@@ -47,7 +47,7 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
-    
+
     @Override
     public Object addSysBlogDiary(SysBlogDiaryQueryVo sysBlogDiaryQueryVo) throws Exception {
         SysBlogDiaryEntity sysBlogDiaryEntity = new SysBlogDiaryEntity();
@@ -55,12 +55,12 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
         super.save(sysBlogDiaryEntity);
         return sysBlogDiaryEntity.getId();
     }
-        
+
     @Override
     public boolean addSysBlogDiaryList(List<SysBlogDiaryQueryVo> sysBlogDiaryQueryVoList) throws Exception {
-        if(sysBlogDiaryQueryVoList != null && !sysBlogDiaryQueryVoList.isEmpty()){
+        if (sysBlogDiaryQueryVoList != null && !sysBlogDiaryQueryVoList.isEmpty()) {
             List<SysBlogDiaryEntity> sysBlogDiaryList = new ArrayList<>();
-            for ( SysBlogDiaryQueryVo sysBlogDiaryQueryVo : sysBlogDiaryQueryVoList) {
+            for (SysBlogDiaryQueryVo sysBlogDiaryQueryVo : sysBlogDiaryQueryVoList) {
                 SysBlogDiaryEntity sysBlogDiaryEntity = new SysBlogDiaryEntity();
                 BeanUtils.copyProperties(sysBlogDiaryQueryVo, sysBlogDiaryEntity);
                 sysBlogDiaryList.add(sysBlogDiaryEntity);
@@ -82,10 +82,10 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
-	
+
     @Override
     public boolean deleteSysBlogDiary(SysBlogDiaryQueryParam sysBlogDiaryQueryParam) throws Exception {
-        LambdaQueryWrapper <SysBlogDiaryEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogDiaryEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
@@ -93,7 +93,7 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
     @Override
     public SysBlogDiaryQueryVo getSysBlogDiaryById(Serializable id) throws Exception {
 		//SysBlogDiaryQueryVo sysBlogDiaryQueryVo = sysBlogDiaryMapper.getSysBlogDiaryById(id);
-	
+
         SysBlogDiaryEntity sysBlogDiaryEntity = super.getById(id);
         SysBlogDiaryQueryVo sysBlogDiaryQueryVo = new SysBlogDiaryQueryVo();
         BeanUtils.copyProperties(sysBlogDiaryEntity, sysBlogDiaryQueryVo);
@@ -103,9 +103,9 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
     @Override
     public Paging<SysBlogDiaryQueryVo> getSysBlogDiaryPageList(SysBlogDiaryPageQueryParam sysBlogDiaryPageQueryParam) throws Exception {
         //IPage<SysBlogDiaryQueryVo> iPage = sysBlogDiaryMapper.getSysBlogDiaryPageList(page, sysBlogDiaryPageQueryParam);
-		
+
 		Page page = setPageParam(sysBlogDiaryPageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper <SysBlogDiaryEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogDiaryEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysBlogDiaryQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
@@ -115,10 +115,10 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
         List<SysBlogDiaryQueryVo> sysBlogDiaryQueryVoList = sysBlogDiaryMapper.getSysBlogDiaryList(sysBlogDiaryQueryParam);
         return sysBlogDiaryQueryVoList;
     }
-    
+
     @Override
     public int countSysBlogDiary(SysBlogDiaryQueryParam sysBlogDiaryQueryParam) throws Exception {
-        LambdaQueryWrapper <SysBlogDiaryEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogDiaryEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }

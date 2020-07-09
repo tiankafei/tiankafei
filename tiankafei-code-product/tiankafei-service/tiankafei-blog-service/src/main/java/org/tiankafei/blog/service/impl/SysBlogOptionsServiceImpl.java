@@ -47,7 +47,7 @@ public class SysBlogOptionsServiceImpl extends BaseServiceImpl<SysBlogOptionsMap
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
-    
+
     @Override
     public Object addSysBlogOptions(SysBlogOptionsQueryVo sysBlogOptionsQueryVo) throws Exception {
         SysBlogOptionsEntity sysBlogOptionsEntity = new SysBlogOptionsEntity();
@@ -55,12 +55,12 @@ public class SysBlogOptionsServiceImpl extends BaseServiceImpl<SysBlogOptionsMap
         super.save(sysBlogOptionsEntity);
         return sysBlogOptionsEntity.getId();
     }
-        
+
     @Override
     public boolean addSysBlogOptionsList(List<SysBlogOptionsQueryVo> sysBlogOptionsQueryVoList) throws Exception {
-        if(sysBlogOptionsQueryVoList != null && !sysBlogOptionsQueryVoList.isEmpty()){
+        if (sysBlogOptionsQueryVoList != null && !sysBlogOptionsQueryVoList.isEmpty()) {
             List<SysBlogOptionsEntity> sysBlogOptionsList = new ArrayList<>();
-            for ( SysBlogOptionsQueryVo sysBlogOptionsQueryVo : sysBlogOptionsQueryVoList) {
+            for (SysBlogOptionsQueryVo sysBlogOptionsQueryVo : sysBlogOptionsQueryVoList) {
                 SysBlogOptionsEntity sysBlogOptionsEntity = new SysBlogOptionsEntity();
                 BeanUtils.copyProperties(sysBlogOptionsQueryVo, sysBlogOptionsEntity);
                 sysBlogOptionsList.add(sysBlogOptionsEntity);
@@ -82,10 +82,10 @@ public class SysBlogOptionsServiceImpl extends BaseServiceImpl<SysBlogOptionsMap
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
-	
+
     @Override
     public boolean deleteSysBlogOptions(SysBlogOptionsQueryParam sysBlogOptionsQueryParam) throws Exception {
-        LambdaQueryWrapper <SysBlogOptionsEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogOptionsEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
@@ -93,7 +93,7 @@ public class SysBlogOptionsServiceImpl extends BaseServiceImpl<SysBlogOptionsMap
     @Override
     public SysBlogOptionsQueryVo getSysBlogOptionsById(Serializable id) throws Exception {
 		//SysBlogOptionsQueryVo sysBlogOptionsQueryVo = sysBlogOptionsMapper.getSysBlogOptionsById(id);
-	
+
         SysBlogOptionsEntity sysBlogOptionsEntity = super.getById(id);
         SysBlogOptionsQueryVo sysBlogOptionsQueryVo = new SysBlogOptionsQueryVo();
         BeanUtils.copyProperties(sysBlogOptionsEntity, sysBlogOptionsQueryVo);
@@ -103,9 +103,9 @@ public class SysBlogOptionsServiceImpl extends BaseServiceImpl<SysBlogOptionsMap
     @Override
     public Paging<SysBlogOptionsQueryVo> getSysBlogOptionsPageList(SysBlogOptionsPageQueryParam sysBlogOptionsPageQueryParam) throws Exception {
         //IPage<SysBlogOptionsQueryVo> iPage = sysBlogOptionsMapper.getSysBlogOptionsPageList(page, sysBlogOptionsPageQueryParam);
-		
+
 		Page page = setPageParam(sysBlogOptionsPageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper <SysBlogOptionsEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogOptionsEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysBlogOptionsQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
@@ -115,10 +115,10 @@ public class SysBlogOptionsServiceImpl extends BaseServiceImpl<SysBlogOptionsMap
         List<SysBlogOptionsQueryVo> sysBlogOptionsQueryVoList = sysBlogOptionsMapper.getSysBlogOptionsList(sysBlogOptionsQueryParam);
         return sysBlogOptionsQueryVoList;
     }
-    
+
     @Override
     public int countSysBlogOptions(SysBlogOptionsQueryParam sysBlogOptionsQueryParam) throws Exception {
-        LambdaQueryWrapper <SysBlogOptionsEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysBlogOptionsEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }

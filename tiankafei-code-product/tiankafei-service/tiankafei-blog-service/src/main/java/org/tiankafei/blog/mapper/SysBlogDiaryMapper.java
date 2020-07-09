@@ -30,7 +30,7 @@ public interface SysBlogDiaryMapper extends BaseMapper<SysBlogDiaryEntity> {
      * @param id
      * @return
      */
-     SysBlogDiaryQueryVo getSysBlogDiaryById(Serializable id);
+    SysBlogDiaryQueryVo getSysBlogDiaryById(Serializable id);
 
     /**
      * 获取 系统的博客日记 分页对象
@@ -39,14 +39,14 @@ public interface SysBlogDiaryMapper extends BaseMapper<SysBlogDiaryEntity> {
      * @param sysBlogDiaryPageQueryParam
      * @return
      */
-     IPage<SysBlogDiaryQueryVo> getSysBlogDiaryPageList(@Param("page") Page page, @Param("param") SysBlogDiaryPageQueryParam sysBlogDiaryPageQueryParam);
-    
+    IPage<SysBlogDiaryQueryVo> getSysBlogDiaryPageList(@Param("page") Page page, @Param("param") SysBlogDiaryPageQueryParam sysBlogDiaryPageQueryParam);
+
     /**
      * 获取 系统的博客日记 对象列表
      *
      * @param sysBlogDiaryQueryParam
      * @return
      */
-     List<SysBlogDiaryQueryVo> getSysBlogDiaryList(@Param("param") SysBlogDiaryQueryParam sysBlogDiaryQueryParam);
+    List<SysBlogDiaryQueryVo> getSysBlogDiaryList(@Param("param") SysBlogDiaryQueryParam sysBlogDiaryQueryParam);
 
 }

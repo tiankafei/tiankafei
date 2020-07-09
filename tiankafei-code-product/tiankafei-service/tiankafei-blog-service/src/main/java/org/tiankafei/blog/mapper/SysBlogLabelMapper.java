@@ -30,7 +30,7 @@ public interface SysBlogLabelMapper extends BaseMapper<SysBlogLabelEntity> {
      * @param id
      * @return
      */
-     SysBlogLabelQueryVo getSysBlogLabelById(Serializable id);
+    SysBlogLabelQueryVo getSysBlogLabelById(Serializable id);
 
     /**
      * 获取 系统的博客标签 分页对象
@@ -39,14 +39,14 @@ public interface SysBlogLabelMapper extends BaseMapper<SysBlogLabelEntity> {
      * @param sysBlogLabelPageQueryParam
      * @return
      */
-     IPage<SysBlogLabelQueryVo> getSysBlogLabelPageList(@Param("page") Page page, @Param("param") SysBlogLabelPageQueryParam sysBlogLabelPageQueryParam);
-    
+    IPage<SysBlogLabelQueryVo> getSysBlogLabelPageList(@Param("page") Page page, @Param("param") SysBlogLabelPageQueryParam sysBlogLabelPageQueryParam);
+
     /**
      * 获取 系统的博客标签 对象列表
      *
      * @param sysBlogLabelQueryParam
      * @return
      */
-     List<SysBlogLabelQueryVo> getSysBlogLabelList(@Param("param") SysBlogLabelQueryParam sysBlogLabelQueryParam);
+    List<SysBlogLabelQueryVo> getSysBlogLabelList(@Param("param") SysBlogLabelQueryParam sysBlogLabelQueryParam);
 
 }
