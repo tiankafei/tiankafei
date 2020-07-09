@@ -82,6 +82,8 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
         BeanUtils.copyProperties(sysUserInfoQueryVo.getUserLoginQueryVo(), sysUserLoginEntity);
         // 新增时密码加密
         sysUserLoginEntity.setPassword(SecureUtil.md5(sysUserLoginEntity.getPassword()));
+        // id值赋为空，使用自动生成的ID
+        sysUserLoginEntity.setId(null);
         userLoginMapper.insert(sysUserLoginEntity);
 
         // 保存用户信息表数据
@@ -162,7 +164,7 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     @Override
     public SysUserInfoQueryVo getSysUserAndRoleAndFeatureById(Serializable userId) throws Exception {
         // 获取用户、角色、功能的所有数据
-        SysUserInfoQueryVo userInfoQueryVo = userInfoMapper.getSysUserRoleQueryVo(userId);
+        SysUserInfoQueryVo userInfoQueryVo = userInfoMapper.getSysUserInfoQueryVo(userId);
 
         // 获取去重的功能清单集合
         Set<SysMenuInfoQueryVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream()

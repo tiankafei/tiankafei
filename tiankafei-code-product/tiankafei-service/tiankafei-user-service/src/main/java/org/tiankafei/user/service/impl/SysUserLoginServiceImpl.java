@@ -71,6 +71,8 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
         // 新增时密码加密
         sysUserLoginEntity.setPassword(SecureUtil.md5(sysUserLoginEntity.getPassword()));
+        // id值赋为空，使用自动生成的ID
+        sysUserLoginEntity.setId(null);
         super.save(sysUserLoginEntity);
         Long id = sysUserLoginEntity.getId();
 

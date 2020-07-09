@@ -92,7 +92,6 @@ public class SysUserLoginController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户登录信息表 对象", notes = "添加 用户登录信息表")
     public ApiResult<String> addSysUserLogin(@Valid @RequestBody SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
-        sysUserLoginQueryVo.setId(null);
         Object id = sysUserLoginService.addSysUserLogin(sysUserLoginQueryVo);
         return ApiResult.ok(id);
     }

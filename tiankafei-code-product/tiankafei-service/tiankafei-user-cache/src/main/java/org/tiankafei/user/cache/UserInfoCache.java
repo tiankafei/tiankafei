@@ -1,11 +1,15 @@
 package org.tiankafei.user.cache;
 
 import cn.hutool.crypto.SecureUtil;
+import com.google.common.collect.Maps;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.tiankafei.cache.CacheManagerRepository;
+import org.tiankafei.cache.CacheQueryRepository;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
@@ -23,6 +27,9 @@ public class UserInfoCache {
     @Autowired
     private CacheManagerRepository cacheManagerRepository;
 
+    @Autowired
+    private CacheQueryRepository cacheQueryRepository;
+
     /**
      * 从缓存中验证该登录用户是否存在，
      *      1.缓存存在，但是值是写死的固定值，则说明该用户不存在，则直接抛出异常即可
@@ -33,14 +40,14 @@ public class UserInfoCache {
      * @throws LoginException
      */
     public SysUserInfoQueryVo getUserInfo(String keywords, String password) throws LoginException {
-        String sha1 = cacheManagerRepository.<String>getCacheObject(keywords);
+        String sha1 = cacheQueryRepository.<String>getCacheObject(keywords);
         if(StringUtils.isNotBlank(sha1)){
             // 该用户名输入过
             if(UserCacheEnums.CACHE_NULL_VALUE.getCode().equals(sha1)){
                 // 该用户名不存在时，在缓存中放置一个空值
                 throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
             }else{
-                SysUserInfoQueryVo userInfoQueryVo = cacheManagerRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
+                SysUserInfoQueryVo userInfoQueryVo = cacheQueryRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
                 if(userInfoQueryVo != null){
                     String cachePassword = userInfoQueryVo.getUserLoginQueryVo().getPassword();
                     // 密码加密后和缓存中的密码进行校验
@@ -77,10 +84,15 @@ public class UserInfoCache {
         String telephone = userInfoQueryVo.getTelephone();
         String sha1 = SecureUtil.sha1(username + "-" + email + "-" + telephone);
 
-        cacheManagerRepository.setCacheObject(username, sha1, 30, TimeUnit.MINUTES);
-        cacheManagerRepository.setCacheObject(email, sha1, 30, TimeUnit.MINUTES);
-        cacheManagerRepository.setCacheObject(telephone, sha1, 30, TimeUnit.MINUTES);
-        cacheManagerRepository.setCacheObject(sha1, userInfoQueryVo, 30, TimeUnit.MINUTES);
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put(username, sha1);
+        dataMap.put(email, sha1);
+        dataMap.put(telephone, sha1);
+        dataMap.put(sha1, userInfoQueryVo);
+        cacheManagerRepository.setCacheObject(dataMap);
+
+        // 设置过期时间
+        cacheManagerRepository.batchExpireKey(Arrays.asList(username, email, telephone, sha1), 30, TimeUnit.MINUTES);;
     }
 
 }

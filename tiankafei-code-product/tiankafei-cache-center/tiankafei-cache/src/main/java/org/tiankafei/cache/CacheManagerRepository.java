@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author tiankafei
  */
-public interface CacheManagerRepository {
+public interface CacheManagerRepository extends CacheRepository {
 
     /**
      * 设置缓存数据对象
@@ -79,55 +79,6 @@ public interface CacheManagerRepository {
     <T> void setCacheObject(String key, T value, Integer timeout, TimeUnit timeUnit);
 
     /**
-     * 给key设置过期时间
-     *
-     * @param key
-     * @param timeout
-     * @param timeUnit
-     */
-    void expireKey(String key, Integer timeout, TimeUnit timeUnit);
-
-    /**
-     * 获取缓存数据对象
-     * @param key
-     * @param <T>
-     * @return
-     */
-    <T> T getCacheObject(String key);
-
-    /**
-     * 获取缓存数据对象集合
-     * @param key
-     * @param <T>
-     * @return
-     */
-    <T> List<T> getCacheList(String key);
-
-    /**
-     * 获取缓存数据对象集合
-     * @param key
-     * @param <T>
-     * @return
-     */
-    <T> Set<T> getCacheSet(String key);
-
-    /**
-     * 获取缓存数据对象集合
-     * @param key
-     * @param <T>
-     * @return
-     */
-    <T> Map<String, T> getCacheMap(String key);
-
-    /**
-     * 获取缓存数据对象
-     * @param key
-     * @param <T>
-     * @return
-     */
-    <T> T getCacheMap(String key, String mapKey);
-
-    /**
      * 删除缓存数据
      * @param key
      */
@@ -138,12 +89,5 @@ public interface CacheManagerRepository {
      * @param keys
      */
     void deleteObject(Collection keys);
-
-    /**
-     * 获取key集合
-     * @param pattern
-     * @return
-     */
-    Collection<String> keys(String pattern);
 
 }

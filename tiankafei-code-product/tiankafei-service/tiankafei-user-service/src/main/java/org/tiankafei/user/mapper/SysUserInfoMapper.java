@@ -55,6 +55,6 @@ public interface SysUserInfoMapper extends BaseMapper<SysUserInfoEntity> {
      * @param userId
      * @return
      */
-    SysUserInfoQueryVo getSysUserRoleQueryVo(@Param("param") Serializable userId);
+    SysUserInfoQueryVo getSysUserInfoQueryVo(@Param("param") Serializable userId);
 
 }
