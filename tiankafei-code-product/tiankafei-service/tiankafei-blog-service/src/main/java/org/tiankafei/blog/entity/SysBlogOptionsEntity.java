@@ -54,17 +54,46 @@ public class SysBlogOptionsEntity extends BaseEntity {
     private String optionsValue;
 
     /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
+    @TableField(value = "remark")
+    private String remark;
+
+    /**
+     * 描述
+     */
+    @ApiModelProperty(value = "描述")
+    @TableField(value = "description")
+    private String description;
+
+    /**
      * 设置时间
      */
     @ApiModelProperty(value = "设置时间")
-    @TableField(value = "setting_time")
-    private Timestamp settingTime;
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Timestamp createTime;
 
     /**
-     * 创建用户id
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建用户id")
+    @ApiModelProperty(value = "创建用户ID")
     @TableField(value = "create_user_id", fill = FieldFill.INSERT)
     private Long createUserId;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    private Timestamp updateTime;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
+    private Long updateUserId;
 
 }

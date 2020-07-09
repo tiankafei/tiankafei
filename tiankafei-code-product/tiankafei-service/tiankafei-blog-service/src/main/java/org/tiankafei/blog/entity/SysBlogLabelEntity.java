@@ -60,10 +60,24 @@ public class SysBlogLabelEntity extends BaseEntity {
     private Timestamp createTime;
 
     /**
-     * 创建人
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建用户ID")
     @TableField(value = "create_user_id", fill = FieldFill.INSERT)
     private Long createUserId;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    private Timestamp updateTime;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
+    private Long updateUserId;
 
 }

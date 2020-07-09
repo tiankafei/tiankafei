@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 06/07/2020 20:59:08
+ Date: 09/07/2020 14:06:19
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,8 @@ CREATE TABLE `sys_blog_diary`  (
   `password` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码保护',
   `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建人',
+  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
+  `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_title`(`title`) USING BTREE COMMENT '按照日记标题查询日记'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统的博客日记' ROW_FORMAT = Dynamic;
@@ -58,7 +59,8 @@ CREATE TABLE `sys_blog_info`  (
   `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间',
   `release_time` timestamp(0) NULL DEFAULT NULL COMMENT '发布时间',
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建人',
+  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
+  `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_title`(`title`) USING BTREE COMMENT '按照标题查询博客',
   INDEX `idx_type`(`type`) USING BTREE COMMENT '按照分类查找博客'
@@ -77,7 +79,9 @@ CREATE TABLE `sys_blog_label`  (
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标签名称',
   `count` int(0) NULL DEFAULT NULL COMMENT '博客数量',
   `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建人',
+  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
+  `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_name`(`name`) USING BTREE COMMENT '按照name查询标签'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统的博客标签' ROW_FORMAT = Dynamic;
@@ -94,8 +98,12 @@ CREATE TABLE `sys_blog_options`  (
   `id` int(0) NOT NULL COMMENT '主键id',
   `options_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '选项名称',
   `options_value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '选项值',
-  `setting_time` timestamp(0) NULL DEFAULT NULL COMMENT '设置时间',
-  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户id',
+  `remark` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '描述',
+  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '设置时间',
+  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
+  `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_create_user_id`(`create_user_id`) USING BTREE COMMENT '按照用户id查询当前用户的设置'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统的博客选项设置' ROW_FORMAT = Dynamic;

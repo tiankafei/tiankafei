@@ -49,15 +49,40 @@ public class SysBlogOptionsQueryVo extends BaseQueryVo {
     private String optionsValue;
 
     /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
+    private String remark;
+
+    /**
+     * 描述
+     */
+    @ApiModelProperty(value = "描述")
+    private String description;
+
+    /**
      * 设置时间
      */
     @ApiModelProperty(value = "设置时间")
-    private Timestamp settingTime;
+    private Timestamp createTime;
 
     /**
-     * 创建用户id
+     * 创建用户ID
      */
-    @ApiModelProperty(value = "创建用户id")
+    @ApiModelProperty(value = "创建用户ID")
     private Long createUserId;
+
+    /**
+     * 修改时间
+     */
+    @ApiModelProperty(value = "修改时间")
+    private Timestamp updateTime;
+
+    /**
+     * 修改用户ID
+     */
+    @ApiModelProperty(value = "修改用户ID")
+    private Long updateUserId;
 
 }
