@@ -1,11 +1,10 @@
 package org.tiankafei.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
-
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -43,14 +42,14 @@ public class SysBlogDiaryEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "标题")
     @Size(max = 100, message = "标题长度不能超过 100 ！")
-    @TableField("title")
+    @TableField(value = "title")
     private String title;
 
     /**
      * 日记内容，text：bai65535和字符，MEDIUMTEXT ：16777215个字符，LONGTEXT ：4294967295个字符
      */
     @ApiModelProperty(value = "日记内容，text：bai65535和字符，MEDIUMTEXT ：16777215个字符，LONGTEXT ：4294967295个字符")
-    @TableField("content")
+    @TableField(value = "content")
     private String content;
 
     /**
@@ -58,7 +57,7 @@ public class SysBlogDiaryEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "自定义访问路径的名称，默认使用id")
     @Size(max = 30, message = "自定义访问路径的名称，默认使用id长度不能超过 30 ！")
-    @TableField("custom_name")
+    @TableField(value = "custom_name")
     private String customName;
 
     /**
@@ -66,7 +65,7 @@ public class SysBlogDiaryEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "密码保护")
     @Size(max = 64, message = "密码保护长度不能超过 64 ！")
-    @TableField("password")
+    @TableField(value = "password")
     private String password;
 
     /**

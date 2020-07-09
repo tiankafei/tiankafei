@@ -37,7 +37,7 @@ public class SysRoleMenuEntity extends BaseEntity {
      * 角色id
      */
     @ApiModelProperty(value = "角色id")
-    @TableField("role_id")
+    @TableField(value = "role_id")
     @NotNull(message = "角色id不能为空")
     private Integer roleId;
 
@@ -45,7 +45,7 @@ public class SysRoleMenuEntity extends BaseEntity {
      * 菜单id
      */
     @ApiModelProperty(value = "菜单id")
-    @TableField("menu_id")
+    @TableField(value = "menu_id")
     @NotNull(message = "菜单id不能为空")
     private Integer menuId;
 

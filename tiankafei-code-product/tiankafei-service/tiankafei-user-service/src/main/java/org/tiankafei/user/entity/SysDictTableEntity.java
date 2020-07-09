@@ -42,7 +42,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "代码")
     @Size(max = 100, message = "代码长度不能超过 100 ！")
-    @TableField("code")
+    @TableField(value = "code")
     @NotBlank(message = "代码不能为空")
     private String code;
 
@@ -51,7 +51,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "名称")
     @Size(max = 500, message = "名称长度不能超过 500 ！")
-    @TableField("name")
+    @TableField(value = "name")
     @NotBlank(message = "名称不能为空")
     private String name;
 
@@ -59,7 +59,7 @@ public class SysDictTableEntity extends BaseEntity {
      * 描述
      */
     @ApiModelProperty(value = "描述")
-    @TableField("description")
+    @TableField(value = "description")
     private String description;
 
     /**
@@ -67,7 +67,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "备注")
     @Size(max = 100, message = "备注长度不能超过 100 ！")
-    @TableField("remarks")
+    @TableField(value = "remarks")
     private String remarks;
 
     /**
@@ -75,7 +75,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "父id")
     @Size(max = 20, message = "父id长度不能超过 20 ！")
-    @TableField("parent_id")
+    @TableField(value = "parent_id")
     private String parentId;
 
     /**
@@ -83,21 +83,21 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "所有父id，用逗号分隔")
     @Size(max = 2100, message = "所有父id，用逗号分隔长度不能超过 2100 ！")
-    @TableField("all_parent_id")
+    @TableField(value = "all_parent_id")
     private String allParentId;
 
     /**
      * 顺序
      */
     @ApiModelProperty(value = "顺序")
-    @TableField("serial_number")
+    @TableField(value = "serial_number")
     private Integer serialNumber;
 
     /**
      * 所在层级
      */
     @ApiModelProperty(value = "所在层级")
-    @TableField("level")
+    @TableField(value = "level")
     private Integer level;
 
     /**
@@ -105,7 +105,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "计量单位1")
     @Size(max = 10, message = "计量单位1长度不能超过 10 ！")
-    @TableField("unit1")
+    @TableField(value = "unit1")
     private String unit1;
 
     /**
@@ -113,7 +113,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "计量单位2")
     @Size(max = 10, message = "计量单位2长度不能超过 10 ！")
-    @TableField("unit2")
+    @TableField(value = "unit2")
     private String unit2;
 
     /**
@@ -121,7 +121,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "计量单位3")
     @Size(max = 10, message = "计量单位3长度不能超过 10 ！")
-    @TableField("unit3")
+    @TableField(value = "unit3")
     private String unit3;
 
     /**
@@ -129,7 +129,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "计量单位4")
     @Size(max = 10, message = "计量单位4长度不能超过 10 ！")
-    @TableField("unit4")
+    @TableField(value = "unit4")
     private String unit4;
 
     /**
@@ -137,7 +137,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "计量单位5")
     @Size(max = 10, message = "计量单位5长度不能超过 10 ！")
-    @TableField("unit5")
+    @TableField(value = "unit5")
     private String unit5;
 
     /**
@@ -145,7 +145,7 @@ public class SysDictTableEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "计量单位6")
     @Size(max = 10, message = "计量单位6长度不能超过 10 ！")
-    @TableField("unit6")
+    @TableField(value = "unit6")
     private String unit6;
 
     /**

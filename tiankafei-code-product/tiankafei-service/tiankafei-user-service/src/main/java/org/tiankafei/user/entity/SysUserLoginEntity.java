@@ -43,7 +43,7 @@ public class SysUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
-    @TableField("username")
+    @TableField(value = "username")
     @NotBlank(message = "用户名不能为空")
     private String username;
 
@@ -52,7 +52,7 @@ public class SysUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "邮箱")
     @Size(max = 50, message = "邮箱长度不能超过 50 ！")
-    @TableField("email")
+    @TableField(value = "email")
     private String email;
 
     /**
@@ -60,7 +60,7 @@ public class SysUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "手机号码")
     @Size(max = 11, message = "手机号码长度不能超过 11 ！")
-    @TableField("telephone")
+    @TableField(value = "telephone")
     private String telephone;
 
     /**
@@ -68,7 +68,7 @@ public class SysUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "密码")
     @Size(max = 64, message = "密码长度不能超过 64 ！")
-    @TableField("password")
+    @TableField(value = "password")
     private String password;
 
     /**
@@ -76,14 +76,14 @@ public class SysUserLoginEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "状态：1正常，2停用，3指定有效期")
     @Size(max = 1, message = "状态：1正常，2停用，3指定有效期长度不能超过 1 ！")
-    @TableField("status")
+    @TableField(value = "status")
     private String status;
 
     /**
      * 有效期截至时间
      */
     @ApiModelProperty(value = "有效期截至时间")
-    @TableField("expiration_date")
+    @TableField(value = "expiration_date")
     private Timestamp expirationDate;
 
     /**

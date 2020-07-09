@@ -39,7 +39,7 @@ public class SysUserRoleEntity extends BaseEntity {
      * 用户id
      */
     @ApiModelProperty(value = "用户id")
-    @TableField("user_id")
+    @TableField(value = "user_id")
     @NotNull(message = "用户id不能为空")
     private Long userId;
 
@@ -47,7 +47,7 @@ public class SysUserRoleEntity extends BaseEntity {
      * 角色id
      */
     @ApiModelProperty(value = "角色id")
-    @TableField("role_id")
+    @TableField(value = "role_id")
     @NotNull(message = "角色id不能为空")
     private Integer roleId;
 
@@ -55,7 +55,7 @@ public class SysUserRoleEntity extends BaseEntity {
      * 状态：1在用，0停用
      */
     @ApiModelProperty(value = "状态：1在用，0停用")
-    @TableField("status")
+    @TableField(value = "status")
     @NotNull(message = "状态：1在用，0停用不能为空")
     private Boolean status;
 

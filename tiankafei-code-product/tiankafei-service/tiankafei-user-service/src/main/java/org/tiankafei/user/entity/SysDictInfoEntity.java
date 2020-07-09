@@ -41,7 +41,7 @@ public class SysDictInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "字典代码")
     @Size(max = 20, message = "字典代码长度不能超过 20 ！")
-    @TableField("dict_code")
+    @TableField(value = "dict_code")
     @NotBlank(message = "字典代码不能为空")
     private String dictCode;
 
@@ -50,7 +50,7 @@ public class SysDictInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "字典名称")
     @Size(max = 100, message = "字典名称长度不能超过 100 ！")
-    @TableField("dict_name")
+    @TableField(value = "dict_name")
     @NotBlank(message = "字典名称不能为空")
     private String dictName;
 
@@ -58,14 +58,14 @@ public class SysDictInfoEntity extends BaseEntity {
      * 状态：1启用，0停用
      */
     @ApiModelProperty(value = "状态：1启用，0停用")
-    @TableField("status")
+    @TableField(value = "status")
     private Boolean status;
 
     /**
      * 描述
      */
     @ApiModelProperty(value = "描述")
-    @TableField("description")
+    @TableField(value = "description")
     private String description;
 
     /**
@@ -73,7 +73,7 @@ public class SysDictInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "备注")
     @Size(max = 60, message = "备注长度不能超过 60 ！")
-    @TableField("remarks")
+    @TableField(value = "remarks")
     private String remarks;
 
     /**
@@ -81,7 +81,7 @@ public class SysDictInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "数据表")
     @Size(max = 30, message = "数据表长度不能超过 30 ！")
-    @TableField("data_table")
+    @TableField(value = "data_table")
     private String dataTable;
 
     /**

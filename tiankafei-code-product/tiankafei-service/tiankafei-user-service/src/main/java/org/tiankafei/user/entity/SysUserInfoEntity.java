@@ -42,7 +42,7 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "用户名")
     @Size(max = 30, message = "用户名长度不能超过 30 ！")
-    @TableField("username")
+    @TableField(value = "username")
     @NotBlank(message = "用户名不能为空")
     private String username;
 
@@ -51,7 +51,7 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "昵称，中文名")
     @Size(max = 30, message = "昵称，中文名长度不能超过 30 ！")
-    @TableField("nickname")
+    @TableField(value = "nickname")
     private String nickname;
 
     /**
@@ -59,7 +59,7 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "邮箱")
     @Size(max = 50, message = "邮箱长度不能超过 50 ！")
-    @TableField("email")
+    @TableField(value = "email")
     private String email;
 
     /**
@@ -67,7 +67,7 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "手机号码")
     @Size(max = 11, message = "手机号码长度不能超过 11 ！")
-    @TableField("telephone")
+    @TableField(value = "telephone")
     private String telephone;
 
     /**
@@ -75,14 +75,14 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "性别：1男，2女，3未知")
     @Size(max = 1, message = "性别：1男，2女，3未知长度不能超过 1 ！")
-    @TableField("gender")
+    @TableField(value = "gender")
     private String gender;
 
     /**
      * 出生日期
      */
     @ApiModelProperty(value = "出生日期")
-    @TableField("born_time")
+    @TableField(value = "born_time")
     private Timestamp bornTime;
 
     /**
@@ -90,7 +90,7 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "用户头像")
     @Size(max = 100, message = "用户头像长度不能超过 100 ！")
-    @TableField("avatar")
+    @TableField(value = "avatar")
     private String avatar;
 
     /**
@@ -98,7 +98,7 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "备注")
     @Size(max = 100, message = "备注长度不能超过 100 ！")
-    @TableField("remark")
+    @TableField(value = "remark")
     private String remark;
 
     /**
@@ -106,14 +106,14 @@ public class SysUserInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "用户类型")
     @Size(max = 2, message = "用户类型长度不能超过 2 ！")
-    @TableField("user_type")
+    @TableField(value = "user_type")
     private String userType;
 
     /**
      * 部门id
      */
     @ApiModelProperty(value = "部门id")
-    @TableField("department_id")
+    @TableField(value = "department_id")
     private Integer departmentId;
 
     /**

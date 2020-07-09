@@ -1,11 +1,10 @@
 package org.tiankafei.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
-
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -43,14 +42,14 @@ public class SysBlogLabelEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "标签名称")
     @Size(max = 20, message = "标签名称长度不能超过 20 ！")
-    @TableField("name")
+    @TableField(value = "name")
     private String name;
 
     /**
      * 博客数量
      */
     @ApiModelProperty(value = "博客数量")
-    @TableField("count")
+    @TableField(value = "count")
     private Integer count;
 
     /**

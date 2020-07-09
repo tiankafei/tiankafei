@@ -40,7 +40,7 @@ public class SysDepartmentEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "部门代码")
     @Size(max = 20, message = "部门代码长度不能超过 20 ！")
-    @TableField("department_code")
+    @TableField(value = "department_code")
     private String departmentCode;
 
     /**
@@ -48,35 +48,35 @@ public class SysDepartmentEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "部门名称")
     @Size(max = 100, message = "部门名称长度不能超过 100 ！")
-    @TableField("department_name")
+    @TableField(value = "department_name")
     private String departmentName;
 
     /**
      * 父部门
      */
     @ApiModelProperty(value = "父部门")
-    @TableField("parent_id")
+    @TableField(value = "parent_id")
     private Integer parentId;
 
     /**
      * 顺序
      */
     @ApiModelProperty(value = "顺序")
-    @TableField("serial_number")
+    @TableField(value = "serial_number")
     private Integer serialNumber;
 
     /**
      * 当前部门所处的层级(在第几级)
      */
     @ApiModelProperty(value = "当前部门所处的层级(在第几级)")
-    @TableField("level")
+    @TableField(value = "level")
     private Integer level;
 
     /**
      * 部门职责
      */
     @ApiModelProperty(value = "部门职责")
-    @TableField("description")
+    @TableField(value = "description")
     private String description;
 
     /**

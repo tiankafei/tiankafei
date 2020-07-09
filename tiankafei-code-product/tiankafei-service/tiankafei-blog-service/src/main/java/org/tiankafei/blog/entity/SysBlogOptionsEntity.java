@@ -1,11 +1,10 @@
 package org.tiankafei.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.tiankafei.web.common.entity.BaseEntity;
-
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -43,7 +42,7 @@ public class SysBlogOptionsEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "选项名称")
     @Size(max = 100, message = "选项名称长度不能超过 100 ！")
-    @TableField("options_name")
+    @TableField(value = "options_name")
     private String optionsName;
 
     /**
@@ -51,14 +50,14 @@ public class SysBlogOptionsEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "选项值")
     @Size(max = 100, message = "选项值长度不能超过 100 ！")
-    @TableField("options_value")
+    @TableField(value = "options_value")
     private String optionsValue;
 
     /**
      * 设置时间
      */
     @ApiModelProperty(value = "设置时间")
-    @TableField("setting_time")
+    @TableField(value = "setting_time")
     private Timestamp settingTime;
 
     /**

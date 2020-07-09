@@ -40,7 +40,7 @@ public class SysLinksEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "链接名称")
     @Size(max = 20, message = "链接名称长度不能超过 20 ！")
-    @TableField("name")
+    @TableField(value = "name")
     private String name;
 
     /**
@@ -48,14 +48,14 @@ public class SysLinksEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "链接地址")
     @Size(max = 100, message = "链接地址长度不能超过 100 ！")
-    @TableField("links")
+    @TableField(value = "links")
     private String links;
 
     /**
      * 状态：是否启用，1启用，2停用
      */
     @ApiModelProperty(value = "状态：是否启用，1启用，2停用")
-    @TableField("status")
+    @TableField(value = "status")
     private Boolean status;
 
     /**

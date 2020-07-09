@@ -41,7 +41,7 @@ public class SysRoleInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "角色代码")
     @Size(max = 20, message = "角色代码长度不能超过 20 ！")
-    @TableField("role_code")
+    @TableField(value = "role_code")
     @NotBlank(message = "角色代码不能为空")
     private String roleCode;
 
@@ -50,7 +50,7 @@ public class SysRoleInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "角色名称")
     @Size(max = 100, message = "角色名称长度不能超过 100 ！")
-    @TableField("role_name")
+    @TableField(value = "role_name")
     @NotBlank(message = "角色名称不能为空")
     private String roleName;
 
@@ -58,14 +58,14 @@ public class SysRoleInfoEntity extends BaseEntity {
      * 角色状态:1启用，0停用
      */
     @ApiModelProperty(value = "角色状态:1启用，0停用")
-    @TableField("status")
+    @TableField(value = "status")
     private Boolean status;
 
     /**
      * 描述
      */
     @ApiModelProperty(value = "描述")
-    @TableField("description")
+    @TableField(value = "description")
     private String description;
 
     /**
@@ -73,7 +73,7 @@ public class SysRoleInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "备注")
     @Size(max = 100, message = "备注长度不能超过 100 ！")
-    @TableField("remark")
+    @TableField(value = "remark")
     private String remark;
 
     /**

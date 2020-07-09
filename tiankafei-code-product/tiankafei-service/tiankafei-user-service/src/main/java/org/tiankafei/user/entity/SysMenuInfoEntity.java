@@ -41,7 +41,7 @@ public class SysMenuInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "功能代码")
     @Size(max = 20, message = "功能代码长度不能超过 20 ！")
-    @TableField("menu_code")
+    @TableField(value = "menu_code")
     @NotBlank(message = "功能代码不能为空")
     private String menuCode;
 
@@ -50,7 +50,7 @@ public class SysMenuInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "功能名称")
     @Size(max = 100, message = "功能名称长度不能超过 100 ！")
-    @TableField("menu_name")
+    @TableField(value = "menu_name")
     @NotBlank(message = "功能名称不能为空")
     private String menuName;
 
@@ -59,7 +59,7 @@ public class SysMenuInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "图标的名称")
     @Size(max = 20, message = "图标的名称长度不能超过 20 ！")
-    @TableField("icon")
+    @TableField(value = "icon")
     private String icon;
 
     /**
@@ -67,7 +67,7 @@ public class SysMenuInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "菜单类型：1目录，2菜单，3按钮")
     @Size(max = 1, message = "菜单类型：1目录，2菜单，3按钮长度不能超过 1 ！")
-    @TableField("menu_type")
+    @TableField(value = "menu_type")
     private String menuType;
 
     /**
@@ -75,7 +75,7 @@ public class SysMenuInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "打开方式：1页签，2新窗口")
     @Size(max = 1, message = "打开方式：1页签，2新窗口长度不能超过 1 ！")
-    @TableField("open_type")
+    @TableField(value = "open_type")
     private String openType;
 
     /**
@@ -83,21 +83,21 @@ public class SysMenuInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "功能的url路径")
     @Size(max = 50, message = "功能的url路径长度不能超过 50 ！")
-    @TableField("path")
+    @TableField(value = "path")
     private String path;
 
     /**
      * 是否外部链接：1是，0否
      */
     @ApiModelProperty(value = "是否外部链接：1是，0否")
-    @TableField("is_outside_url")
+    @TableField(value = "is_outside_url")
     private Boolean isOutsideUrl;
 
     /**
      * 状态：1启用，0停用
      */
     @ApiModelProperty(value = "状态：1启用，0停用")
-    @TableField("status")
+    @TableField(value = "status")
     private Boolean status;
 
     /**
@@ -105,28 +105,28 @@ public class SysMenuInfoEntity extends BaseEntity {
      */
     @ApiModelProperty(value = "权限关键字标识")
     @Size(max = 60, message = "权限关键字标识长度不能超过 60 ！")
-    @TableField("keys")
+    @TableField(value = "keys")
     private String keys;
 
     /**
      * 父id
      */
     @ApiModelProperty(value = "父id")
-    @TableField("parent_id")
+    @TableField(value = "parent_id")
     private Integer parentId;
 
     /**
      * 顺序
      */
     @ApiModelProperty(value = "顺序")
-    @TableField("serial_number")
+    @TableField(value = "serial_number")
     private Integer serialNumber;
 
     /**
      * 描述
      */
     @ApiModelProperty(value = "描述")
-    @TableField("description")
+    @TableField(value = "description")
     private String description;
 
     /**
