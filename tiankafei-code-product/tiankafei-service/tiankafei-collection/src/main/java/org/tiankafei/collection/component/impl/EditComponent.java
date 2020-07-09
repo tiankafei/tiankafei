@@ -3,25 +3,25 @@ package org.tiankafei.collection.component.impl;
 import org.springframework.stereotype.Component;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.ComponentProperty;
-import org.tiankafei.collection.property.impl.DateTimeRangeComponentBeanInfo;
+import org.tiankafei.collection.property.impl.EditComponentBeanInfo;
 
 /**
- * 日期时间范围选择
+ * 编辑器
  *
  * @author tiankafei
  * @since 1.0
  **/
 @Component
-public class DateTimeRangeComponent extends BaseCollectionComponent {
+public class EditComponent extends BaseCollectionComponent {
 
     @Override
     public ComponentProperty createComponentProperty() {
-        return new DateTimeRangeComponentBeanInfo();
+        return new EditComponentBeanInfo();
     }
 
     @Override
     public ComponentTypeEnum getComponentType() {
-        return ComponentTypeEnum.DATE_TIME_RANGE;
+        return ComponentTypeEnum.EDIT;
     }
 
 }

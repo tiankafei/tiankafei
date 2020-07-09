@@ -11,7 +11,7 @@ import org.tiankafei.base.base.exceptions.BaseException;
 import org.tiankafei.user.cache.UserInfoCache;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Component

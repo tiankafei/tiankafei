@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.tiankafei.cache.CacheRepository;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 public abstract class RedisCacheRepository implements CacheRepository {

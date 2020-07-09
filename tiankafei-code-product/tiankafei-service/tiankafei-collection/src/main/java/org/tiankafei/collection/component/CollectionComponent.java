@@ -4,7 +4,7 @@ import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.ComponentProperty;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 public interface CollectionComponent {

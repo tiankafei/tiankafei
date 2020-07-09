@@ -7,7 +7,7 @@ import org.tiankafei.web.common.bean.QueryTokenClient;
 import org.tiankafei.web.common.enums.TokenEnum;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Component

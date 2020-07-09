@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 /**
- * @Author 魏双双
+ * @author tiankafei
  * @Date 2020/7/7
  * @Version V1.0
  **/

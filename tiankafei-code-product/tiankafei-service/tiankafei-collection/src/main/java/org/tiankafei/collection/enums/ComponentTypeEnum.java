@@ -1,53 +1,34 @@
 package org.tiankafei.collection.enums;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 public enum ComponentTypeEnum {
 
-    // 单行文本
-    SINGLE_LINE(1, "单行文本"),
-    // 多行文本
-    MULTI_LINE(2, "多行文本"),
-    // 密码
-    PASSWORD(3, "密码"),
-    // 计数器
-    COUNTER(4, "计数器"),
-    // 下拉选择
-    SELECTION(5, "下拉选择"),
-    // 级联选择
-    CASCADE_SELECTION(6, "级联选择"),
-    // 单选框组
-    RADIO(7, "单选框组"),
-    // 多选框组
-    CHECK_BOX(8, "多选框组"),
-    // 开关
-    SWITCH(9, "开关"),
-    // 滑块
-    SLIDER(10, "滑块"),
-    // 时间选择
-    TIME(11, "时间选择"),
-    // 时间范围
-    TIME_RANGE(12, "时间范围"),
-    // 日期选择
-    DATE(13, "日期选择"),
-    // 日期范围
-    DATE_RANGE(14, "日期范围"),
-    // 日期时间选择
-    DATE_TIME(15, "日期时间选择"),
-    // 日期时间范围
-    DATE_TIME_RANGE(16, "日期时间范围"),
-    // 评分
-    RATE(17, "评分"),
-    // 颜色选择
-    COLOR(18, "颜色选择"),
-    // 上传
-    UPLOAD(19, "上传"),
-    // 面板
-    PANEL(20, "面板"),
-    // 表格
-    TABLE(21, "表格"),
+    SINGLE_LINE(10, "单行文本"),
+    MULTI_LINE(20, "多行文本"),
+    PASSWORD(30, "密码"),
+    COUNTER(40, "计数器"),
+    EDIT(41, "编辑器"),
+    SELECTION(50, "下拉选择"),
+    CASCADE_SELECTION(60, "级联选择"),
+    RADIO(70, "单选框组"),
+    CHECK_BOX(80, "多选框组"),
+    SWITCH(90, "开关"),
+    SLIDER(100, "滑块"),
+    TIME(110, "时间选择"),
+    TIME_RANGE(120, "时间范围"),
+    DATE(130, "日期选择"),
+    DATE_RANGE(140, "日期范围"),
+    DATE_TIME(150, "日期时间选择"),
+    DATE_TIME_RANGE(160, "日期时间范围"),
+    RATE(170, "评分"),
+    COLOR(180, "颜色选择"),
+    UPLOAD(190, "上传"),
+    PANEL(200, "面板"),
+    TABLE(210, "表格"),
+    BUTTON(220, "按钮"),
     ;
 
     private Integer code;

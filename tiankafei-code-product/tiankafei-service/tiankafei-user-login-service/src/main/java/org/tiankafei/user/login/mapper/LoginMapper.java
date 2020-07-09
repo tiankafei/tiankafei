@@ -7,7 +7,7 @@ import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Repository

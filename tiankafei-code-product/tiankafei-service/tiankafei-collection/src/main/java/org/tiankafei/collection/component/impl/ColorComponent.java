@@ -8,7 +8,7 @@ import org.tiankafei.collection.property.impl.ColorComponentBeanInfo;
 /**
  * 颜色选择
  *
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Component

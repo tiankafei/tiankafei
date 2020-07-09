@@ -8,7 +8,7 @@ import org.tiankafei.collection.property.impl.SingleLineComponentBeanInfo;
 /**
  * 单行文本
  *
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Component

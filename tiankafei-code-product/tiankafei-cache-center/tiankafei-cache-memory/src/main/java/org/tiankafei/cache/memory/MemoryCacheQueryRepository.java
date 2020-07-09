@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.tiankafei.cache.CacheQueryRepository;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Repository

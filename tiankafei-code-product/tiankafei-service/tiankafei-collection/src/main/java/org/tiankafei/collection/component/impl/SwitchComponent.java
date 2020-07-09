@@ -8,7 +8,7 @@ import org.tiankafei.collection.property.impl.SwitchComponentBeanInfo;
 /**
  * 开关
  *
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Component

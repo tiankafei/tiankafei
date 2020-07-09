@@ -1,7 +1,7 @@
 package org.tiankafei.user.cache.enums;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 public enum UserCacheEnums {

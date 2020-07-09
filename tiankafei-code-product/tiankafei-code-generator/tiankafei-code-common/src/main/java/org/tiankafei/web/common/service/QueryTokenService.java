@@ -7,7 +7,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 /**
  * 获取token
  *
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 public interface QueryTokenService {

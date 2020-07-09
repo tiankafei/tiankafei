@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 public interface CacheRepository {

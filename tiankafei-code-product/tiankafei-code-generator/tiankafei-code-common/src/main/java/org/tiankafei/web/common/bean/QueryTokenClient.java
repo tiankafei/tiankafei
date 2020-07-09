@@ -10,7 +10,7 @@ import org.tiankafei.web.common.component.ApplicationContextHelper;
 import org.tiankafei.web.common.service.QueryTokenService;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 @Component

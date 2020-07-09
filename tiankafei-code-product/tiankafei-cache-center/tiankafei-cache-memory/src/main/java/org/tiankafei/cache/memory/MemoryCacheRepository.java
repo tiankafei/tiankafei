@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.tiankafei.cache.CacheRepository;
 
 /**
- * @author 魏双双
+ * @author tiankafei
  * @since 1.0
  **/
 public abstract class MemoryCacheRepository implements CacheRepository {
