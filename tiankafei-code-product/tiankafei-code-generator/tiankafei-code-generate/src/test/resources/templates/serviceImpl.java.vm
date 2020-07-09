@@ -47,7 +47,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
-    
+
     @Override
     public Object add${cfg.TableName}(${cfg.TableName}QueryVo ${cfg.tableName}QueryVo) throws Exception {
         ${cfg.entityClassName} ${cfg.entityObjectName} = new ${cfg.entityClassName}();
@@ -55,12 +55,12 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
         super.save(${cfg.entityObjectName});
         return ${cfg.entityObjectName}.getId();
     }
-        
+
     @Override
     public boolean add${cfg.TableName}List(List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList) throws Exception {
-        if(${cfg.tableName}QueryVoList != null && !${cfg.tableName}QueryVoList.isEmpty()){
+        if (${cfg.tableName}QueryVoList != null && !${cfg.tableName}QueryVoList.isEmpty()) {
             List<${cfg.entityClassName}> ${cfg.tableName}List = new ArrayList<>();
-            for ( ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo : ${cfg.tableName}QueryVoList) {
+            for (${cfg.TableName}QueryVo ${cfg.tableName}QueryVo : ${cfg.tableName}QueryVoList) {
                 ${cfg.entityClassName} ${cfg.entityObjectName} = new ${cfg.entityClassName}();
                 BeanUtils.copyProperties(${cfg.tableName}QueryVo, ${cfg.entityObjectName});
                 ${cfg.tableName}List.add(${cfg.entityObjectName});
@@ -82,10 +82,10 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
         String[] idArray = ids.split(",");
         return super.removeByIds(Arrays.asList(idArray));
     }
-	
+
     @Override
     public boolean delete${cfg.TableName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
-        LambdaQueryWrapper <${cfg.entityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<${cfg.entityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         return super.remove(lambdaQueryWrapper);
     }
@@ -93,7 +93,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     @Override
     public ${cfg.TableName}QueryVo get${cfg.TableName}ById(Serializable id) throws Exception {
 		//${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = ${cfg.mapperObjectName}.get${cfg.TableName}ById(id);
-	
+
         ${cfg.entityClassName} ${cfg.entityObjectName} = super.getById(id);
         ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = new ${cfg.TableName}QueryVo();
         BeanUtils.copyProperties(${cfg.entityObjectName}, ${cfg.tableName}QueryVo);
@@ -103,9 +103,9 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     @Override
     public Paging<${cfg.TableName}QueryVo> get${cfg.TableName}PageList(${cfg.TableName}PageQueryParam ${cfg.tableName}PageQueryParam) throws Exception {
         //IPage<${cfg.TableName}QueryVo> iPage = ${cfg.mapperObjectName}.get${cfg.TableName}PageList(page, ${cfg.tableName}PageQueryParam);
-		
+
 		Page page = setPageParam(${cfg.tableName}PageQueryParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper <${cfg.entityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<${cfg.entityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<${cfg.TableName}QueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
@@ -115,10 +115,10 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
         List<${cfg.TableName}QueryVo> ${cfg.tableName}QueryVoList = ${cfg.mapperObjectName}.get${cfg.TableName}List(${cfg.tableName}QueryParam);
         return ${cfg.tableName}QueryVoList;
     }
-    
+
     @Override
     public int count${cfg.TableName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
-        LambdaQueryWrapper <${cfg.entityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<${cfg.entityClassName}> lambdaQueryWrapper = new LambdaQueryWrapper();
         int count = super.count(lambdaQueryWrapper);
         return count;
     }
