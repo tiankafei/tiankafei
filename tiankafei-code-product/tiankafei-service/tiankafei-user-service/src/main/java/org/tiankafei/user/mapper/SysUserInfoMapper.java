@@ -49,12 +49,4 @@ public interface SysUserInfoMapper extends BaseMapper<SysUserInfoEntity> {
      */
     List<SysUserInfoQueryVo> getSysUserInfoList(@Param("param") SysUserInfoQueryParam sysUserInfoQueryParam);
 
-    /**
-     * 根据用户ID获取用户和角色的对应关系
-     *
-     * @param userId
-     * @return
-     */
-    SysUserInfoQueryVo getSysUserInfoQueryVo(@Param("param") Serializable userId);
-
 }
