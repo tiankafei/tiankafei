@@ -8,6 +8,7 @@ public enum ComponentTypeEnum {
 
     SINGLE_LINE(10, "单行文本"),
     MULTI_LINE(20, "多行文本"),
+    NUMBER(21, "数字"),
     PASSWORD(30, "密码"),
     COUNTER(40, "计数器"),
     EDIT(41, "编辑器"),
