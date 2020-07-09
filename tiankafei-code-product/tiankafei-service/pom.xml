@@ -18,6 +18,7 @@
 
     <modules>
         <module>tiankafei-db</module>
+        <module>tiankafei-collection</module>
         <module>tiankafei-user-common</module>
         <module>tiankafei-user-cache</module>
         <module>tiankafei-user-login-service</module>
