@@ -12,7 +12,7 @@ import org.tiankafei.collection.property.CheckBoxComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class CheckBoxComponentBeanInfo extends BaseComponentProperty implements CheckBoxComponentProperty {
+public class CheckBoxComponentBeanInfo extends ChooseComponentProperty implements CheckBoxComponentProperty {
 
     /**
      * 字段名

@@ -12,7 +12,7 @@ import org.tiankafei.collection.property.SwitchComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class SwitchComponentBeanInfo extends BaseComponentProperty implements SwitchComponentProperty {
+public class SwitchComponentBeanInfo extends ChooseComponentProperty implements SwitchComponentProperty {
 
     /**
      * 字段名

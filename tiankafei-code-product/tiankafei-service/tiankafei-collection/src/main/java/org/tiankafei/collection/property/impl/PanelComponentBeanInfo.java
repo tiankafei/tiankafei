@@ -12,7 +12,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-public class PanelComponentBeanInfo implements PanelComponentProperty {
+public class PanelComponentBeanInfo extends LayoutComponentProperty implements PanelComponentProperty {
 
     /**
      * 面板模式

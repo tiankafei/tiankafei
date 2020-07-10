@@ -11,7 +11,7 @@ import org.tiankafei.collection.property.DateRangeComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class DateRangeComponentBeanInfo extends BaseComponentProperty implements DateRangeComponentProperty {
+public class DateRangeComponentBeanInfo extends InputComponentProperty implements DateRangeComponentProperty {
 
     /**
      * 字段名

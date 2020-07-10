@@ -11,7 +11,7 @@ import org.tiankafei.collection.property.TimeRangeComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class TimeRangeComponentBeanInfo extends BaseComponentProperty implements TimeRangeComponentProperty {
+public class TimeRangeComponentBeanInfo extends InputComponentProperty implements TimeRangeComponentProperty {
 
     /**
      * 字段名

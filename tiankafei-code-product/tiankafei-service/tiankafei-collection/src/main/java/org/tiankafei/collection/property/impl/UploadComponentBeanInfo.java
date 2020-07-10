@@ -13,7 +13,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-public class UploadComponentBeanInfo extends BaseComponentProperty implements UploadComponentProperty {
+public class UploadComponentBeanInfo extends ChooseComponentProperty implements UploadComponentProperty {
 
     /**
      * 字段名

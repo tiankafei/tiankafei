@@ -11,7 +11,7 @@ import org.tiankafei.collection.property.EditComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class EditComponentBeanInfo extends BaseComponentProperty implements EditComponentProperty {
+public class EditComponentBeanInfo extends InputComponentProperty implements EditComponentProperty {
 
     /**
      * 字段名

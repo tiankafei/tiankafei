@@ -12,7 +12,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-public class PasswordComponentBeanInfo extends BaseComponentProperty implements PasswordComponentProperty {
+public class PasswordComponentBeanInfo extends InputComponentProperty implements PasswordComponentProperty {
 
     /**
      * 字段名

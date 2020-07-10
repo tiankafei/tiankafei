@@ -1,7 +1,6 @@
 package org.tiankafei.collection.property.impl;
 
 import java.util.List;
-import org.tiankafei.base.base.model.CodeNameVo;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.param.RegularExpressionVo;
 import org.tiankafei.collection.property.RateComponentProperty;
@@ -12,7 +11,7 @@ import org.tiankafei.collection.property.RateComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class RateComponentBeanInfo extends BaseComponentProperty implements RateComponentProperty {
+public class RateComponentBeanInfo extends ChooseComponentProperty implements RateComponentProperty {
 
     /**
      * 字段名

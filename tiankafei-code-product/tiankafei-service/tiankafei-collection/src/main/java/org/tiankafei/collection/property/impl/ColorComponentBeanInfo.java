@@ -9,7 +9,7 @@ import org.tiankafei.collection.property.ColorComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class ColorComponentBeanInfo extends BaseComponentProperty implements ColorComponentProperty {
+public class ColorComponentBeanInfo extends ChooseComponentProperty implements ColorComponentProperty {
 
     /**
      * 字段名

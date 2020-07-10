@@ -12,7 +12,7 @@ import org.tiankafei.collection.property.TimeComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class TimeComponentBeanInfo extends BaseComponentProperty implements TimeComponentProperty {
+public class TimeComponentBeanInfo extends InputComponentProperty implements TimeComponentProperty {
 
     /**
      * 字段名

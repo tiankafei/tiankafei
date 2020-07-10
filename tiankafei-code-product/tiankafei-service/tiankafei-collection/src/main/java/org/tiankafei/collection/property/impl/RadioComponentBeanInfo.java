@@ -12,7 +12,7 @@ import org.tiankafei.collection.property.RadioComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class RadioComponentBeanInfo extends BaseComponentProperty implements RadioComponentProperty {
+public class RadioComponentBeanInfo extends ChooseComponentProperty implements RadioComponentProperty {
 
     /**
      * 字段名

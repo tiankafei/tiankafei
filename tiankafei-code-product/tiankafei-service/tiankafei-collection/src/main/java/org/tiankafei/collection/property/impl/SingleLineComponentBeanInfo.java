@@ -12,7 +12,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-public class SingleLineComponentBeanInfo extends BaseComponentProperty implements SingleLineComponentProperty {
+public class SingleLineComponentBeanInfo extends InputComponentProperty implements SingleLineComponentProperty {
 
     /**
      * 字段名

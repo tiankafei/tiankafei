@@ -9,7 +9,7 @@ import org.tiankafei.collection.property.NumberComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class NumberComponentBeanInfo extends BaseComponentProperty implements NumberComponentProperty {
+public class NumberComponentBeanInfo extends InputComponentProperty implements NumberComponentProperty {
     @Override
     public Integer getComponentType() {
         return ComponentTypeEnum.NUMBER.getCode();

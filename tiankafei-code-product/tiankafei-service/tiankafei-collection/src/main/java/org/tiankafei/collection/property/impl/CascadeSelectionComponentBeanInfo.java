@@ -12,7 +12,7 @@ import org.tiankafei.collection.property.CascadeSelectionComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class CascadeSelectionComponentBeanInfo extends BaseComponentProperty implements CascadeSelectionComponentProperty {
+public class CascadeSelectionComponentBeanInfo extends ChooseComponentProperty implements CascadeSelectionComponentProperty {
 
     /**
      * 字段名

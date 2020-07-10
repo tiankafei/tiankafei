@@ -12,7 +12,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-public class MultiLineComponentBeanInfo extends BaseComponentProperty implements MultiLineComponentProperty {
+public class MultiLineComponentBeanInfo extends InputComponentProperty implements MultiLineComponentProperty {
 
     /**
      * 字段名

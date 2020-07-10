@@ -12,7 +12,7 @@ import org.tiankafei.collection.property.SliderComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class SliderComponentBeanInfo extends BaseComponentProperty implements SliderComponentProperty {
+public class SliderComponentBeanInfo extends ChooseComponentProperty implements SliderComponentProperty {
 
     /**
      * 字段名

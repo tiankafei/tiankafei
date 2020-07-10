@@ -12,7 +12,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-public class CounterComponentBeanInfo extends BaseComponentProperty implements CounterComponentProperty {
+public class CounterComponentBeanInfo extends InputComponentProperty implements CounterComponentProperty {
 
     /**
      * 字段名

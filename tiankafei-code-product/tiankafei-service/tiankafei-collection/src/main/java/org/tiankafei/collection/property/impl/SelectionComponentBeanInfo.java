@@ -12,7 +12,7 @@ import org.tiankafei.collection.property.SelectionComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class SelectionComponentBeanInfo extends BaseComponentProperty implements SelectionComponentProperty {
+public class SelectionComponentBeanInfo extends ChooseComponentProperty implements SelectionComponentProperty {
 
     /**
      * 字段名

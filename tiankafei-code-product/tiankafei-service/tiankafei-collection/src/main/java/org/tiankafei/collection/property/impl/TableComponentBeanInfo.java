@@ -9,7 +9,7 @@ import org.tiankafei.collection.property.TableComponentProperty;
  * @author tiankafei
  * @since 1.0
  */
-public class TableComponentBeanInfo extends BaseComponentProperty implements TableComponentProperty {
+public class TableComponentBeanInfo extends LayoutComponentProperty implements TableComponentProperty {
     @Override
     public Integer getComponentType() {
         return ComponentTypeEnum.TABLE.getCode();
