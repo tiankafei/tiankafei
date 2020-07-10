@@ -22,8 +22,6 @@ public enum ComponentTypeEnum {
     TIME_RANGE(120, "时间范围"),
     DATE(130, "日期选择"),
     DATE_RANGE(140, "日期范围"),
-    DATE_TIME(150, "日期时间选择"),
-    DATE_TIME_RANGE(160, "日期时间范围"),
     RATE(170, "评分"),
     COLOR(180, "颜色选择"),
     UPLOAD(190, "上传"),
