@@ -1,6 +1,7 @@
 package org.tiankafei.collection.property.impl;
 
-import lombok.Setter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.tiankafei.collection.property.ComponentProperty;
 import org.tiankafei.collection.property.TableFormDataProperty;
 
@@ -12,13 +13,18 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-@Setter
+@Data
+@Accessors(chain = true)
 public class TableFormDataBeanInfo implements TableFormDataProperty {
 
     /**
      * 表单名称
      */
     protected String tableFormName;
+
+    public void setTableFormName(String tableFormName) {
+        this.tableFormName = tableFormName;
+    }
 
     /**
      * 组件集合

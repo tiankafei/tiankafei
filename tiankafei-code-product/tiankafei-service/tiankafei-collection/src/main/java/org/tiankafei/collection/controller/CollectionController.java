@@ -29,6 +29,7 @@ public class CollectionController extends BaseController {
 
     /**
      * 获取所有的组件类型集合
+     *
      * @return
      * @throws Exception
      */

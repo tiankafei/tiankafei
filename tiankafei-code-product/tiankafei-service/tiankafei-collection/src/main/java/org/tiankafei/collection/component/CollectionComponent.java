@@ -16,6 +16,7 @@ public interface CollectionComponent {
 
     /**
      * 获取组件类型
+     *
      * @return
      */
     ComponentTypeEnum getComponentType();

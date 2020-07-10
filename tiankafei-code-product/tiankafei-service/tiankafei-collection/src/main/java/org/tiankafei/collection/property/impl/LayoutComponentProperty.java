@@ -1,10 +1,16 @@
 package org.tiankafei.collection.property.impl;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+import org.tiankafei.collection.property.ComponentProperty;
+
 /**
  * 选择型组件
  *
  * @author tiankafei
  * @since 1.0
  */
-public abstract class LayoutComponentProperty extends BaseComponentProperty {
+@Data
+@Accessors(chain = true)
+public abstract class LayoutComponentProperty implements ComponentProperty {
 }

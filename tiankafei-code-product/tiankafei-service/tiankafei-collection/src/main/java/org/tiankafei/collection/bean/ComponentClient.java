@@ -8,8 +8,12 @@ import org.springframework.stereotype.Component;
 import org.tiankafei.collection.component.CollectionComponent;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.param.ComponentTypeVo;
+import org.tiankafei.collection.property.ComponentProperty;
 import org.tiankafei.web.common.component.ApplicationContextHelper;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -55,10 +59,30 @@ public class ComponentClient implements InitializingBean {
 
     /**
      * 获取所有的组件类型集合
+     *
      * @return
      */
-    public List<ComponentTypeVo> getComponentTypeList(){
-        return componentTypeList.stream().sorted(Comparator.comparing(ComponentTypeVo::getCode)).collect(Collectors.toList());
+    public List<ComponentTypeVo> getComponentTypeList() {
+        List<ComponentTypeVo> collect = componentTypeList.stream().sorted(Comparator.comparing(ComponentTypeVo::getCode)).collect(Collectors.toList());
+        collect.stream().forEach(componentTypeVo -> {
+            Integer code = componentTypeVo.getCode();
+            Class<? extends ComponentProperty> aClass = userExistsServiceMap.get(code).createComponentProperty().getClass();
+            List<Method> methods = Arrays.asList(aClass.getMethods());
+            System.out.println(aClass);
+            methods.stream().forEach(method -> {
+
+                String name = method.getName();
+                if(name.startsWith("set")){
+                    System.out.println(name);
+                }
+            });
+            System.out.println("===================================");
+
+
+            List<Field> fields1 = Arrays.asList(aClass.getDeclaredFields());
+
+        });
+        return collect;
     }
 
 }

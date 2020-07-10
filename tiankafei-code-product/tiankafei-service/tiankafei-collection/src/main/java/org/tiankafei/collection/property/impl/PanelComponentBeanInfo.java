@@ -1,5 +1,7 @@
 package org.tiankafei.collection.property.impl;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.ComponentProperty;
 import org.tiankafei.collection.property.PanelComponentProperty;
@@ -12,6 +14,8 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
+@Data
+@Accessors(chain = true)
 public class PanelComponentBeanInfo extends LayoutComponentProperty implements PanelComponentProperty {
 
     /**
@@ -33,11 +37,6 @@ public class PanelComponentBeanInfo extends LayoutComponentProperty implements P
      * 垂直排列
      */
     protected String vertical;
-
-    /**
-     * 面板中的组件集合
-     */
-    protected List<ComponentProperty> componentPropertyList;
 
     @Override
     public Integer getComponentType() {
