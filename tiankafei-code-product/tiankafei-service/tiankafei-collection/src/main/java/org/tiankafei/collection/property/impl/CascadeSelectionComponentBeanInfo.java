@@ -3,10 +3,7 @@ package org.tiankafei.collection.property.impl;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
-import org.tiankafei.collection.param.RegularExpressionVo;
 import org.tiankafei.collection.property.CascadeSelectionComponentProperty;
-
-import java.util.List;
 
 /**
  * 级联下拉框组件的属性对象

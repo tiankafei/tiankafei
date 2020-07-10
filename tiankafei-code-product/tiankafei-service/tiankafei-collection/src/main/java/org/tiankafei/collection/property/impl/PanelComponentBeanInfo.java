@@ -3,10 +3,7 @@ package org.tiankafei.collection.property.impl;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
-import org.tiankafei.collection.property.ComponentProperty;
 import org.tiankafei.collection.property.PanelComponentProperty;
-
-import java.util.List;
 
 /**
  * 面板组件的属性对象
