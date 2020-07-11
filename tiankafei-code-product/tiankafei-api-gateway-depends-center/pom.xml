@@ -4,24 +4,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>tiankafei-micro-depends-center</artifactId>
+        <artifactId>code-produce-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-micro-depends</artifactId>
+    <artifactId>tiankafei-api-gateway-depends-center</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>tiankafei-micro-depends</name>
+    <name>tiankafei-api-gateway-depends-center</name>
     <description></description>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-micro-depends-eureka</artifactId>
-            <version>${code-produce.version}</version>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>tiankafei-api-gateway-depends</module>
+        <module>tiankafei-api-gateway-depends-eureka</module>
+        <module>tiankafei-api-gateway-depends-nacos</module>
+        <module>tiankafei-api-gateway-depends-consul</module>
+    </modules>
 
 </project>
