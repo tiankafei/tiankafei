@@ -7,10 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
+import org.tiankafei.web.common.bean.CaptchaClient;
+import org.tiankafei.web.common.enums.CaptchaEnum;
 import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
-import org.tiankafei.web.common.utils.Captchaor;
-import org.tiankafei.web.common.utils.ImageCaptcha;
+import org.tiankafei.web.common.utils.ImageCaptchaUtil;
 import org.tiankafei.web.common.exception.VerificationException;
 
 import java.io.ByteArrayOutputStream;
@@ -26,6 +27,9 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Autowired
     private UserInfoCache userInfoCache;
 
+    @Autowired
+    private CaptchaClient captchaClient;
+
     /**
      * 生成验证码
      *
@@ -36,10 +40,10 @@ public class CaptchaServiceImpl implements CaptchaService {
     public CaptchaParamVo createCaptcha() throws VerificationException {
         String uuid = IdUtil.simpleUUID();
         // 组装验证码的key值
-        String key = ImageCaptcha.getCaptchaKey(uuid);
+        String key = ImageCaptchaUtil.getCaptchaKey(uuid);
         // 生成验证码及图片
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        String captchaCode = Captchaor.buildImage(outputStream);
+        String captchaCode = captchaClient.buildImage(CaptchaEnum.RUO_YI_UTIL.getCode(), outputStream);
         log.info("生成的验证码是：{}", captchaCode);
         // 验证码放进缓存当中
         userInfoCache.setCaptchaCode(key, captchaCode);
@@ -58,7 +62,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public boolean verifyCaptcha(String uuid, String captcha) throws VerificationException {
         // 组装验证码的key值
-        String key = ImageCaptcha.getCaptchaKey(uuid);
+        String key = ImageCaptchaUtil.getCaptchaKey(uuid);
         String captchaCode = userInfoCache.getCaptchaCode(key);
         if(captcha.equalsIgnoreCase(captchaCode)){
             userInfoCache.removeKey(key);

@@ -15,7 +15,7 @@ import java.io.OutputStream;
  * @author tiankafei
  * @since 1.0
  */
-public class ImageCaptcha {
+public class ImageCaptchaUtil {
 
     private CaptchaType type;
     private CaptchaStyle style;
@@ -70,7 +70,7 @@ public class ImageCaptcha {
 
     }
 
-    private ImageCaptcha(Builder builder){
+    private ImageCaptchaUtil(Builder builder){
         this.type = builder.type;
         this.style = builder.style;
         this.font = builder.font;
@@ -93,35 +93,35 @@ public class ImageCaptcha {
             this.outputStream = outputStream;
         }
 
-        public ImageCaptcha build(){
-            return new ImageCaptcha(this);
+        public ImageCaptchaUtil build(){
+            return new ImageCaptchaUtil(this);
         }
 
-        public ImageCaptcha.Builder type(CaptchaType type){
+        public ImageCaptchaUtil.Builder type(CaptchaType type){
             this.type = type;
             return this;
         }
 
-        public ImageCaptcha.Builder style(CaptchaStyle style){
+        public ImageCaptchaUtil.Builder style(CaptchaStyle style){
             this.style = style;
             return this;
         }
 
-        public ImageCaptcha.Builder width(int width){
+        public ImageCaptchaUtil.Builder width(int width){
             this.width = width;
             return this;
         }
 
-        public ImageCaptcha.Builder height(int height){
+        public ImageCaptchaUtil.Builder height(int height){
             this.height = height;
             return this;
         }
 
-        public ImageCaptcha.Builder length(int length){
+        public ImageCaptchaUtil.Builder length(int length){
             this.length = length;
             return this;
         }
-        public ImageCaptcha.Builder font(Font font){
+        public ImageCaptchaUtil.Builder font(Font font){
             this.font = font;
             return this;
         }
