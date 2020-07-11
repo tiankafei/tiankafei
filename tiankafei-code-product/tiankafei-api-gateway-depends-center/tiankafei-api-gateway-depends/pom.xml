@@ -18,17 +18,17 @@
 
     <dependencies>
         <!--使用eureka注册中心时使用以下依赖-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-api-gateway-depends-eureka</artifactId>
             <version>${code-produce.version}</version>
-        </dependency>
+        </dependency>-->
         <!--使用nacos注册中心时使用以下依赖-->
-        <!--<dependency>
+        <dependency>
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-api-gateway-depends-nacos</artifactId>
             <version>${code-produce.version}</version>
-        </dependency>-->
+        </dependency>
         <!--使用consul注册中心时使用以下依赖-->
         <!--<dependency>
             <groupId>org.tiankafei</groupId>

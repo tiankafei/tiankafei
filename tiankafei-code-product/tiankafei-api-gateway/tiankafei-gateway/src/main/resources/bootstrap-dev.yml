@@ -1,4 +1,3 @@
 spring:
   profiles:
-#    active: dev-nacos
-    active: dev-eureka
+    active: dev-nacos
