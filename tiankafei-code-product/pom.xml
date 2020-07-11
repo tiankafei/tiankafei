@@ -208,6 +208,11 @@
             <!--产品自己的工具包-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-micro-depends-eureka</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-micro-depends-nacos</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
