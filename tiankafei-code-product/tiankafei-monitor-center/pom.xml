@@ -16,4 +16,8 @@
     <name>tiankafei-monitor-center</name>
     <description></description>
 
+    <modules>
+        <module>tiankafei-monitor-admin</module>
+    </modules>
+
 </project>
