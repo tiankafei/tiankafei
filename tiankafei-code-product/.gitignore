@@ -11,3 +11,4 @@ target
 **/data/
 **/logs/
 **/dump.rdb
+**/consul.exe
