@@ -5,7 +5,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.user.service.CheckExistService;
-import org.tiankafei.web.common.component.ApplicationContextHelper;
+import org.tiankafei.web.common.bean.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.UserException;
 
 import java.util.Map;

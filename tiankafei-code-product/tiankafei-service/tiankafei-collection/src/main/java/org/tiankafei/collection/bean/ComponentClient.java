@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.tiankafei.collection.component.CollectionComponent;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.param.ComponentTypeVo;
-import org.tiankafei.web.common.component.ApplicationContextHelper;
+import org.tiankafei.web.common.bean.ApplicationContextHelper;
 
 import java.util.Comparator;
 import java.util.List;

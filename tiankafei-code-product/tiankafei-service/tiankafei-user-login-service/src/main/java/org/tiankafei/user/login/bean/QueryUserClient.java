@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.user.login.service.QueryUserService;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
-import org.tiankafei.web.common.component.ApplicationContextHelper;
+import org.tiankafei.web.common.bean.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.LoginException;
 
 @Component

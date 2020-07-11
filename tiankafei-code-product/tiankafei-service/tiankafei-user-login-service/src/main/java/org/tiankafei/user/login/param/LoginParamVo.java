@@ -46,4 +46,9 @@ public class LoginParamVo extends BaseQueryVo {
     @NotBlank(message = "验证码不允许为空")
     private String verificationCode;
 
+
+    @ApiModelProperty(value = "当前获取的随机字符串")
+    @NotBlank(message = "当前登录生成的随机字符串不能为空")
+    private String uuid;
+
 }

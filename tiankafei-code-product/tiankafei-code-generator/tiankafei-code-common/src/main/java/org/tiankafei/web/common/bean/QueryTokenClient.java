@@ -6,7 +6,6 @@ import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tiankafei.web.common.component.ApplicationContextHelper;
 import org.tiankafei.web.common.service.QueryTokenService;
 
 /**

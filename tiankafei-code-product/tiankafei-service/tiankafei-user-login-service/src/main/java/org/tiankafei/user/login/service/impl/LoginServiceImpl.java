@@ -166,11 +166,8 @@ public class LoginServiceImpl implements LoginService {
                 }
             }
             // 验证码
-            boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginParamVo.getVerificationCode(), request);
-            if (verifyCaptchaFlag) {
-                // 验证完成，删除
-                captchaService.removeCaptcha(request);
-            } else {
+            boolean verifyCaptchaFlag = captchaService.verifyCaptcha(loginParamVo.getUuid(), loginParamVo.getVerificationCode());
+            if (!verifyCaptchaFlag) {
 //                throw new LoginException("验证码输入错误，请重新输入！");
             }
         } catch (VerificationException e) {

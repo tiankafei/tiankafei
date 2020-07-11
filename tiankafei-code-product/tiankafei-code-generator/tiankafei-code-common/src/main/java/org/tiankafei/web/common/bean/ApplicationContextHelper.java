@@ -1,4 +1,4 @@
-package org.tiankafei.web.common.component;
+package org.tiankafei.web.common.bean;
 
 import java.util.Map;
 import org.springframework.beans.BeansException;

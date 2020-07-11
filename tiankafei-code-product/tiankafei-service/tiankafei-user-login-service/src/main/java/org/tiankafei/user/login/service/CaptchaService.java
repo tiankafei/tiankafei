@@ -1,7 +1,6 @@
 package org.tiankafei.user.login.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.tiankafei.user.login.param.CaptchaParamVo;
 import org.tiankafei.web.common.exception.VerificationException;
 
 /**
@@ -12,28 +11,19 @@ public interface CaptchaService {
     /**
      * 生成验证码
      *
-     * @param request
-     * @param response
      * @return
      * @throws VerificationException
      */
-    Object createCaptcha(HttpServletRequest request, HttpServletResponse response) throws VerificationException;
+    CaptchaParamVo createCaptcha() throws VerificationException;
 
     /**
      * 校验验证码
      *
+     * @param uuid
      * @param captcha
-     * @param request
      * @return
      * @throws VerificationException
      */
-    boolean verifyCaptcha(String captcha, HttpServletRequest request) throws VerificationException;
-
-    /**
-     * 删除验证码
-     *
-     * @param request
-     */
-    void removeCaptcha(HttpServletRequest request);
+    boolean verifyCaptcha(String uuid, String captcha) throws VerificationException;
 
 }

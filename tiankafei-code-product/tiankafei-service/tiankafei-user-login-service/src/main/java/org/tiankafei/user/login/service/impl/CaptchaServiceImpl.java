@@ -1,11 +1,18 @@
 package org.tiankafei.user.login.service.impl;
 
-import com.ramostear.captcha.HappyCaptcha;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.IdUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tiankafei.user.cache.UserInfoCache;
+import org.tiankafei.user.login.param.CaptchaParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
+import org.tiankafei.user.login.utils.ImageCaptcha;
+import org.tiankafei.web.common.enums.CommonEnum;
 import org.tiankafei.web.common.exception.VerificationException;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * @author tiankafei
@@ -14,45 +21,56 @@ import org.tiankafei.web.common.exception.VerificationException;
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
 
+    @Autowired
+    private UserInfoCache userInfoCache;
+
     /**
      * 生成验证码
      *
-     * @param request
-     * @param response
      * @return
      * @throws VerificationException
      */
     @Override
-    public Object createCaptcha(HttpServletRequest request, HttpServletResponse response) throws VerificationException {
-        // 先删除
-        removeCaptcha(request);
-        // 再创建
-        boolean finish = HappyCaptcha.require(request, response).build().finish();
-        return finish;
+    public CaptchaParamVo createCaptcha() throws VerificationException {
+        String uuid = IdUtil.randomUUID();
+        // 组装验证码的key值
+        String key = getCaptchaCodeKey(uuid);
+        // 生成验证码及图片
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String captchaCode = ImageCaptcha.require(outputStream).build().finish();
+        // 验证码放进缓存当中
+        userInfoCache.setCaptchaCode(key, captchaCode);
+
+        CaptchaParamVo captchaParamVo = new CaptchaParamVo().setUuid(uuid).setImg(Base64.encode(outputStream.toByteArray()));
+        return captchaParamVo;
     }
 
     /**
      * 校验验证码
      *
      * @param captcha
-     * @param request
      * @return
      * @throws VerificationException
      */
     @Override
-    public boolean verifyCaptcha(String captcha, HttpServletRequest request) throws VerificationException {
-        boolean flag = HappyCaptcha.verification(request, captcha, true);
-        return flag;
+    public boolean verifyCaptcha(String uuid, String captcha) throws VerificationException {
+        // 组装验证码的key值
+        String key = getCaptchaCodeKey(uuid);
+        String captchaCode = userInfoCache.getCaptchaCode(key);
+        if(captcha.equalsIgnoreCase(captchaCode)){
+            userInfoCache.removeKey(key);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     /**
-     * 删除验证码
-     *
-     * @param request
+     * 获取验证码的key值
+     * @param uuid
+     * @return
      */
-    @Override
-    public void removeCaptcha(HttpServletRequest request) {
-        HappyCaptcha.remove(request);
+    private String getCaptchaCodeKey(String uuid){
+        return CommonEnum.CAPTCHA_CODE_KEY.getCode() + uuid;
     }
 
 }

@@ -8,6 +8,8 @@ public enum CommonEnum {
 
 //    token的key值
     TOKEN_PARAM("SYS_USER_TOKEN"),
+//    验证码的key前缀
+    CAPTCHA_CODE_KEY("captcha_codes:"),
     ;
 
     private String code;
