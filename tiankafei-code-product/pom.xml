@@ -40,6 +40,7 @@
         <mysql.version>8.0.20</mysql.version>
         <velocity.version>1.7</velocity.version>
         <shiro-spring.version>1.5.3</shiro-spring.version>
+        <springboot-admin.version>2.2.3</springboot-admin.version>
     </properties>
 
     <modules>
@@ -106,6 +107,12 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${springboot-admin.version}</version>
             </dependency>
 
             <!--依赖的工具包-->
