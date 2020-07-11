@@ -24,7 +24,7 @@
         <!--注册中心依赖-->
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-api-gateway-depends</artifactId>
+            <artifactId>tiankafei-register-depends</artifactId>
         </dependency>
         <!--feign服务与服务之间的调用-->
         <dependency>

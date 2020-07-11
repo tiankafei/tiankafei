@@ -49,7 +49,6 @@
         <module>tiankafei-monitor-center</module>
         <module>tiankafei-message-center</module>
         <module>tiankafei-micro-depends</module>
-        <module>tiankafei-api-gateway-depends-center</module>
         <module>tiankafei-cache-center</module>
         <module>tiankafei-api-gateway</module>
         <module>tiankafei-frame-start</module>
@@ -212,7 +211,7 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei</groupId>
-                <artifactId>tiankafei-api-gateway-depends</artifactId>
+                <artifactId>tiankafei-register-depends</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
             <dependency>

@@ -4,35 +4,35 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>tiankafei-api-gateway-depends-center</artifactId>
+        <artifactId>tiankafei-register-center</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-api-gateway-depends</artifactId>
+    <artifactId>tiankafei-register-depends</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>tiankafei-api-gateway-depends</name>
+    <name>tiankafei-register-depends</name>
     <description></description>
 
     <dependencies>
         <!--使用eureka注册中心时使用以下依赖-->
-        <!--<dependency>
-            <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-api-gateway-depends-eureka</artifactId>
-            <version>${code-produce.version}</version>
-        </dependency>-->
-        <!--使用nacos注册中心时使用以下依赖-->
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-api-gateway-depends-nacos</artifactId>
+            <artifactId>tiankafei-register-depends-eureka</artifactId>
             <version>${code-produce.version}</version>
         </dependency>
+        <!--使用nacos注册中心时使用以下依赖-->
+        <!--<dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-register-depends-nacos</artifactId>
+            <version>${code-produce.version}</version>
+        </dependency>-->
         <!--使用consul注册中心时使用以下依赖-->
         <!--<dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-api-gateway-depends-consul</artifactId>
+            <artifactId>tiankafei-register-depends-consul</artifactId>
             <version>${code-produce.version}</version>
         </dependency>-->
     </dependencies>

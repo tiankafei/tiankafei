@@ -20,7 +20,7 @@
         <!--网关的注册中心依赖-->
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-api-gateway-depends</artifactId>
+            <artifactId>tiankafei-register-depends</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.cloud</groupId>

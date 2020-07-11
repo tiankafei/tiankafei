@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>tiankafei-api-gateway-depends-center</artifactId>
+        <artifactId>tiankafei-register-center</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-api-gateway-depends-nacos</artifactId>
+    <artifactId>tiankafei-register-depends-nacos</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tiankafei-api-gateway-depends-nacos</name>
+    <name>tiankafei-register-depends-nacos</name>
     <description></description>
 
     <dependencies>

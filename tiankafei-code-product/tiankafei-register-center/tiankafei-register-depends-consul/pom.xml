@@ -4,23 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>code-produce-parent</artifactId>
+        <artifactId>tiankafei-register-center</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-api-gateway-depends-center</artifactId>
+    <artifactId>tiankafei-register-depends-consul</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>tiankafei-api-gateway-depends-center</name>
+    <name>tiankafei-register-depends-consul</name>
     <description></description>
-
-    <modules>
-        <module>tiankafei-api-gateway-depends</module>
-        <module>tiankafei-api-gateway-depends-eureka</module>
-        <module>tiankafei-api-gateway-depends-nacos</module>
-        <module>tiankafei-api-gateway-depends-consul</module>
-    </modules>
 
 </project>
