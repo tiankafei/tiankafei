@@ -17,24 +17,20 @@
     <description></description>
 
     <dependencies>
-        <!--使用eureka注册中心时使用以下依赖-->
-        <!--<dependency>
-            <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-micro-depends-eureka</artifactId>
-            <version>${code-produce.version}</version>
-        </dependency>-->
-        <!--使用nacos注册中心时使用以下依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--注册中心依赖-->
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-micro-depends-nacos</artifactId>
-            <version>${code-produce.version}</version>
+            <artifactId>tiankafei-api-gateway-depends</artifactId>
         </dependency>
-        <!--使用consul注册中心时使用以下依赖-->
-        <!--<dependency>
-            <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-micro-depends-consul</artifactId>
-            <version>${code-produce.version}</version>
-        </dependency>-->
+        <!--feign服务与服务之间的调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

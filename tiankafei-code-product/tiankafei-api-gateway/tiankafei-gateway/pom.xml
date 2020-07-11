@@ -21,6 +21,12 @@
         <dependency>
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-api-gateway-depends</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--gateway网关-->
         <dependency>
