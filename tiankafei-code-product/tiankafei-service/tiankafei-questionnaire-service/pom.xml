@@ -29,9 +29,13 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-micro-depends-nacos</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-micro-depends-eureka</artifactId>
         </dependency>
         <dependency>
             <groupId>org.tiankafei</groupId>
