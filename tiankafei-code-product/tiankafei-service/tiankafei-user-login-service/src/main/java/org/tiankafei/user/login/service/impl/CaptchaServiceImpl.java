@@ -3,6 +3,7 @@ package org.tiankafei.user.login.service.impl;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
@@ -17,6 +18,7 @@ import java.io.ByteArrayOutputStream;
  * @author tiankafei
  * @since 1.0
  **/
+@Slf4j
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
 
@@ -31,12 +33,13 @@ public class CaptchaServiceImpl implements CaptchaService {
      */
     @Override
     public CaptchaParamVo createCaptcha() throws VerificationException {
-        String uuid = IdUtil.randomUUID();
+        String uuid = IdUtil.simpleUUID();
         // 组装验证码的key值
         String key = ImageCaptcha.getCaptchaKey(uuid);
         // 生成验证码及图片
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String captchaCode = ImageCaptcha.require(outputStream).build().finish();
+        log.info("生成的验证码是：{}", captchaCode);
         // 验证码放进缓存当中
         userInfoCache.setCaptchaCode(key, captchaCode);
 
