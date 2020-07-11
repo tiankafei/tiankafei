@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
+import org.tiankafei.web.common.utils.Captchaor;
 import org.tiankafei.web.common.utils.ImageCaptcha;
 import org.tiankafei.web.common.exception.VerificationException;
 
@@ -38,7 +39,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         String key = ImageCaptcha.getCaptchaKey(uuid);
         // 生成验证码及图片
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        String captchaCode = ImageCaptcha.require(outputStream).build().finish();
+        String captchaCode = Captchaor.buildImage(outputStream);
         log.info("生成的验证码是：{}", captchaCode);
         // 验证码放进缓存当中
         userInfoCache.setCaptchaCode(key, captchaCode);
