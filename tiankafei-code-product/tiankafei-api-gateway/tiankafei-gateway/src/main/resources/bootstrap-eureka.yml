@@ -8,4 +8,4 @@ eureka:
     # 续约到期时间，默认90秒
     lease-expiration-duration-in-seconds: 60
     metadata-map:
-      key: jejjaj
+      key: 这是springcloud-gateway注册erueka的自定义元数据
