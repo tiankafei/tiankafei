@@ -6,10 +6,9 @@ import cn.hutool.core.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
-import org.tiankafei.user.login.param.CaptchaParamVo;
+import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
-import org.tiankafei.user.login.utils.ImageCaptcha;
-import org.tiankafei.web.common.enums.CommonEnum;
+import org.tiankafei.web.common.utils.ImageCaptcha;
 import org.tiankafei.web.common.exception.VerificationException;
 
 import java.io.ByteArrayOutputStream;
@@ -34,7 +33,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     public CaptchaParamVo createCaptcha() throws VerificationException {
         String uuid = IdUtil.randomUUID();
         // 组装验证码的key值
-        String key = getCaptchaCodeKey(uuid);
+        String key = ImageCaptcha.getCaptchaKey(uuid);
         // 生成验证码及图片
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String captchaCode = ImageCaptcha.require(outputStream).build().finish();
@@ -55,22 +54,13 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public boolean verifyCaptcha(String uuid, String captcha) throws VerificationException {
         // 组装验证码的key值
-        String key = getCaptchaCodeKey(uuid);
+        String key = ImageCaptcha.getCaptchaKey(uuid);
         String captchaCode = userInfoCache.getCaptchaCode(key);
         if(captcha.equalsIgnoreCase(captchaCode)){
             userInfoCache.removeKey(key);
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
-    }
-
-    /**
-     * 获取验证码的key值
-     * @param uuid
-     * @return
-     */
-    private String getCaptchaCodeKey(String uuid){
-        return CommonEnum.CAPTCHA_CODE_KEY.getCode() + uuid;
     }
 
 }

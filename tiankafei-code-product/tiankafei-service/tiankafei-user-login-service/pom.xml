@@ -30,10 +30,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.ramostear</groupId>
-            <artifactId>Happy-Captcha</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-micro-depends</artifactId>
         </dependency>

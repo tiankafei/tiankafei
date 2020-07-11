@@ -1,6 +1,6 @@
 package org.tiankafei.user.login.service;
 
-import org.tiankafei.user.login.param.CaptchaParamVo;
+import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.web.common.exception.VerificationException;
 
 /**

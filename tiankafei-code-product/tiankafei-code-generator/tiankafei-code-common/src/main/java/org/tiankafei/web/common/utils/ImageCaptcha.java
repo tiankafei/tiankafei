@@ -1,10 +1,11 @@
-package org.tiankafei.user.login.utils;
+package org.tiankafei.web.common.utils;
 
 import com.ramostear.captcha.common.Fonts;
 import com.ramostear.captcha.core.AnimCaptcha;
 import com.ramostear.captcha.core.Captcha;
 import com.ramostear.captcha.support.CaptchaStyle;
 import com.ramostear.captcha.support.CaptchaType;
+import org.tiankafei.web.common.enums.CommonEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 
 import java.awt.Font;
@@ -26,6 +27,15 @@ public class ImageCaptcha {
 
     public static Builder require(OutputStream outputStream){
         return new Builder(outputStream);
+    }
+
+    /**
+     * 获取验证码的key值
+     * @param uuid
+     * @return
+     */
+    public static String getCaptchaKey(String uuid){
+        return CommonEnum.CAPTCHA_CODE_KEY.getCode() + uuid;
     }
 
     public String finish() throws VerificationException {
