@@ -52,3 +52,8 @@ logging:
     com.alibaba.nacos.client.config.impl: WARN
     # spring自动装配日志的包路径
     org.springframework.boot.autoconfigure: ERROR
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
