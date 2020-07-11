@@ -1,12 +1,12 @@
-package org.tiankafei.db.mysql.param;
+package org.tiankafei.db.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.tiankafei.web.common.param.QueryParam;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 /**
  * <pre>
@@ -18,13 +18,13 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "数据库表的字段 查询参数对象", description = "数据库表的字段 查询参数对象")
-public class FieldNameEntityQueryParam implements Serializable {
+@ApiModel(value = "数据库表的字段集合 分页查询参数对象", description = "数据库表的字段集合 分页查询参数对象")
+public class FieldNamePageListQueryParam extends QueryParam {
 
     /**
      * 表名称
      */
-    @ApiModelProperty(value = "表名")
+    @ApiModelProperty(value = "表名称")
     @NotBlank(message = "查询单个数据表字段时，表名不能为空！")
     private String tableName;
 
@@ -38,7 +38,6 @@ public class FieldNameEntityQueryParam implements Serializable {
      * 字段名
      */
     @ApiModelProperty(value = "字段名")
-    @NotBlank(message = "查询单个数据表字段时，字段名不能为空！")
     private String fieldName;
 
 }

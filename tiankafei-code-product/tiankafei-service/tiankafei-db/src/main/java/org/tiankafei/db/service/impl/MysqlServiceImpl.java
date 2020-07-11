@@ -1,4 +1,4 @@
-package org.tiankafei.db.mysql.service.impl;
+package org.tiankafei.db.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.tiankafei.db.mysql.entity.TableEntity;
+import org.tiankafei.db.entity.TableEntity;
 import org.tiankafei.db.service.DbService;
-import org.tiankafei.db.mysql.service.TableService;
+import org.tiankafei.db.service.TableService;
 
 import java.util.List;
 import java.util.Map;

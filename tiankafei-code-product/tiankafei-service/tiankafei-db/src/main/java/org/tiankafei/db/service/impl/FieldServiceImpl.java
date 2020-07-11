@@ -1,4 +1,4 @@
-package org.tiankafei.db.mysql.service.impl;
+package org.tiankafei.db.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -8,13 +8,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.tiankafei.db.mysql.entity.FieldEntity;
-import org.tiankafei.db.mysql.mapper.FieldMapper;
+import org.tiankafei.db.entity.FieldEntity;
+import org.tiankafei.db.mapper.FieldMapper;
 import org.tiankafei.db.service.DbService;
-import org.tiankafei.db.mysql.service.FieldService;
-import org.tiankafei.db.mysql.param.FieldNameEntityQueryParam;
-import org.tiankafei.db.mysql.param.FieldNameListQueryParam;
-import org.tiankafei.db.mysql.param.FieldNamePageListQueryParam;
+import org.tiankafei.db.service.FieldService;
+import org.tiankafei.db.param.FieldNameEntityQueryParam;
+import org.tiankafei.db.param.FieldNameListQueryParam;
+import org.tiankafei.db.param.FieldNamePageListQueryParam;
 import org.tiankafei.web.common.exception.DaoException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;

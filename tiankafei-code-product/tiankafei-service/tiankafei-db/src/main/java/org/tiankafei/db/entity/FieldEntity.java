@@ -1,4 +1,4 @@
-package org.tiankafei.db.mysql.entity;
+package org.tiankafei.db.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

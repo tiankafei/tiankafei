@@ -1,10 +1,11 @@
-package org.tiankafei.db.mysql.param;
+package org.tiankafei.db.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -17,13 +18,14 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "数据库表集合 查询参数对象", description = "数据库表集合 查询参数对象")
-public class TableNameListQueryParam implements Serializable {
+@ApiModel(value = "数据库表 查询参数对象", description = "数据库表 查询参数对象")
+public class TableNameEntityQueryParam implements Serializable {
 
     /**
      * 表名称
      */
     @ApiModelProperty(value = "表名称")
+    @NotBlank(message = "查询单个数据表时，表名称不能为空！")
     private String tableName;
 
     /**

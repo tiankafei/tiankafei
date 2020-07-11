@@ -1,9 +1,9 @@
-package org.tiankafei.db.mysql.service;
+package org.tiankafei.db.service;
 
-import org.tiankafei.db.mysql.entity.FieldEntity;
-import org.tiankafei.db.mysql.param.FieldNameEntityQueryParam;
-import org.tiankafei.db.mysql.param.FieldNameListQueryParam;
-import org.tiankafei.db.mysql.param.FieldNamePageListQueryParam;
+import org.tiankafei.db.entity.FieldEntity;
+import org.tiankafei.db.param.FieldNameEntityQueryParam;
+import org.tiankafei.db.param.FieldNameListQueryParam;
+import org.tiankafei.db.param.FieldNamePageListQueryParam;
 import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
