@@ -2,7 +2,7 @@ server:
   port: 9000
 spring:
   profiles:
-    active: dev, dev-eureka
+    active: eureka
   application:
     name: monitor-admin-service
   jackson:

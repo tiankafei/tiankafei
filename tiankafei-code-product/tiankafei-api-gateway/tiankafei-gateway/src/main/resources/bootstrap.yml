@@ -7,7 +7,7 @@ exclusions:
     - /api/user-login/login
 spring:
   profiles:
-    active: dev, dev-eureka
+    active: eureka
   application:
     name: gateway-service
   cloud:
