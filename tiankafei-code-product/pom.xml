@@ -48,7 +48,7 @@
         <module>tiankafei-config-center</module>
         <module>tiankafei-monitor-center</module>
         <module>tiankafei-message-center</module>
-        <module>tiankafei-micro-depends-center</module>
+        <module>tiankafei-micro-depends</module>
         <module>tiankafei-api-gateway-depends-center</module>
         <module>tiankafei-cache-center</module>
         <module>tiankafei-api-gateway</module>
