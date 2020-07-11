@@ -141,9 +141,10 @@ public class SysUserInfoQueryVo extends BaseQueryVo {
     @ApiModelProperty(value = "用户对应的角色集合", hidden = true)
     private List<SysUserRoleQueryVo> userRoleList;
 
-    /**
-     * 已经组装成树结构的功能菜单集合
-     */
+    @ApiModelProperty(value = "用户分配的角色集合")
+    private List<SysRoleInfoQueryVo> roleInfoList;
+
+    @ApiModelProperty(value = "已经组装成树结构的功能菜单集合")
     private List<SysMenuInfoQueryVo> menuInfoList;
 
 }

@@ -24,6 +24,7 @@ import org.tiankafei.user.login.param.LoginParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.user.vo.SysMenuInfoQueryVo;
+import org.tiankafei.user.vo.SysRoleInfoQueryVo;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
@@ -178,6 +179,9 @@ public class LoginServiceImpl implements LoginService {
 
     private SysUserInfoQueryVo getSysUserInfoQueryVo(Long userId){
         SysUserInfoQueryVo userInfoQueryVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
+        // 设置给当前用户分配的角色集合
+        List<SysRoleInfoQueryVo> roleInfoList = userInfoQueryVo.getUserRoleList().stream().map(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo()).collect(Collectors.toList());
+        userInfoQueryVo.setRoleInfoList(roleInfoList);
 
         // 获取去重的功能清单集合
         Set<SysMenuInfoQueryVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream()
@@ -214,6 +218,7 @@ public class LoginServiceImpl implements LoginService {
                 })
                 .sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber))
                 .collect(Collectors.toList());
+        // 设置当前用户对应的功能菜单的权限集合
         userInfoQueryVo.setMenuInfoList(rootMenuInfoList);
 
         return userInfoQueryVo;
