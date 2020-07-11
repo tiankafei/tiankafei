@@ -1,6 +1,8 @@
 server:
   port: 7010
 spring:
+  profiles:
+    active: dev, dev-eureka
   application:
     name: zuul-service
 exclusions:

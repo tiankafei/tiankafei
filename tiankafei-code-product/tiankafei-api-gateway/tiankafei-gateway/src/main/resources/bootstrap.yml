@@ -6,6 +6,8 @@ exclusions:
   auth-urls:
     - /api/user-login/login
 spring:
+  profiles:
+    active: dev, dev-eureka
   application:
     name: gateway-service
   cloud:

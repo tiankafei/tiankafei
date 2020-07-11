@@ -1,6 +1,8 @@
 server:
   port: 7100
 spring:
+  profiles:
+    active: dev, dev-eureka
   application:
     name: user-login-service
   jackson:
@@ -47,6 +49,7 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
+  enable: false
   contact:
     email: 798971170@qq.com
     name: user-login-service
@@ -56,3 +59,11 @@ swagger:
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################
+
+#################################### tiankafei自定义配置 start #################################
+tiankafei:
+  tokenType: 1  # 从请求头中获取token信息
+#  tokenType: 2  # 从cookies中获取token信息
+#  tokenType: 3  # 从请求参数中获取token信息
+#  tokenType: 4  # 从session中获取token信息（需要做session同步）
+#################################### tiankafei自定义配置 end ###################################

@@ -2,9 +2,8 @@ package org.tiankafei.web.common.filters;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.tiankafei.web.common.constants.CommonConstant;
+import org.tiankafei.web.common.properties.SwaggerProperties;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,8 +14,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author tiankafei
@@ -25,20 +22,18 @@ import java.util.List;
 @Slf4j
 public class ApiDocFilter implements Filter {
 
-    private Environment environment;
+    private SwaggerProperties swaggerProperties;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         ServletContext servletContext = filterConfig.getServletContext();
         ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-        environment = ctx.getBean(Environment.class);
+        swaggerProperties = ctx.getBean(SwaggerProperties.class);
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String[] activeProfiles = environment.getActiveProfiles();
-        List<String> profiles = Arrays.asList(activeProfiles);
-        if(profiles.contains(CommonConstant.ACTIVE_PROFILE_DEV)){
+        if(swaggerProperties.getEnable()){
             // 只有在开发模式才提供api文档支持
             chain.doFilter(request, response);
         }else{

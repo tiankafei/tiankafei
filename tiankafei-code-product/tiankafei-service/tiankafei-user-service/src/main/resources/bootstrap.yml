@@ -1,6 +1,8 @@
 server:
   port: 7200
 spring:
+  profiles:
+    active: dev, dev-eureka
   application:
     name: user-service
   jackson:
@@ -50,6 +52,7 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
+  enable: false
   contact:
     email: 798971170@qq.com
     name: user-service

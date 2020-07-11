@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 public class SwaggerProperties {
 
     /**
+     * 是否开启文档
+     */
+    private Boolean enable;
+
+    /**
      * 标题
      */
     private String title;
