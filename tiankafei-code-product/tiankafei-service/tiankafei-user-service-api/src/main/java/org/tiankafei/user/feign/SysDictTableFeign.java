@@ -29,28 +29,28 @@ public interface SysDictTableFeign {
     /**
      * 校验 系统数据字典的数据表 是否已经存在
      */
-    @PostMapping("/check")
+    @PostMapping("/sysDictTable/check")
     @ApiOperation(value = "校验 系统数据字典的数据表 是否已经存在", notes = "校验 系统数据字典的数据表 是否已经存在")
     public ApiResult<Boolean> checkSysDictTableExists(@Valid @RequestBody SysDictTableQueryParam sysDictTableQueryParam) throws Exception ;
 
     /**
      * 添加 系统数据字典的数据表 对象
      */
-    @PostMapping("/add")
+    @PostMapping("/sysDictTable/add")
     @ApiOperation(value = "添加 系统数据字典的数据表 对象", notes = "添加 系统数据字典的数据表")
     public ApiResult<String> addSysDictTable(@Valid @RequestBody SysDictTableQueryVo sysDictTableQueryVo) throws Exception ;
 
     /**
      * 修改 系统数据字典的数据表 对象
      */
-    @PutMapping("/update")
+    @PutMapping("/sysDictTable/update")
     @ApiOperation(value = "修改 系统数据字典的数据表 对象", notes = "修改 系统数据字典的数据表")
     public ApiResult<Boolean> updateSysDictTable(@Valid @RequestBody SysDictTableQueryVo sysDictTableQueryVo) throws Exception ;
 
     /**
      * 删除 系统数据字典的数据表 对象
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping("/sysDictTable/delete")
     @ApiOperation(value = "删除 系统数据字典的数据表 对象", notes = "删除 系统数据字典的数据表")
     public ApiResult<Boolean> deleteSysDictTable(
             @ApiParam(name = "dataTable", value = "字典数据表") @RequestParam("dataTable") String dataTable,
@@ -59,28 +59,28 @@ public interface SysDictTableFeign {
     /**
      * 获取 系统数据字典的数据表 对象详情
      */
-    @GetMapping("/info/{dataTable}/{id}")
+    @GetMapping("/sysDictTable/info/{dataTable}/{id}")
     @ApiOperation(value = "获取 系统数据字典的数据表 对象详情", notes = "获取 系统数据字典的数据表 对象详情")
     public ApiResult<SysDictTableQueryVo> getSysDictTable(@PathVariable("dataTable") String dataTable, @PathVariable("id") String id) throws Exception ;
 
     /**
      * 获取 系统数据字典的数据表 分页列表
      */
-    @PostMapping("/pageList")
+    @PostMapping("/sysDictTable/pageList")
     @ApiOperation(value = "获取 系统数据字典的数据表 分页列表", notes = "获取 系统数据字典的数据表 分页列表")
     public ApiResult<Paging<SysDictTableQueryVo>> getSysDictTablePageList(@Valid @RequestBody SysDictTablePageQueryParam sysDictTablePageQueryParam) throws Exception ;
 
     /**
      * 获取 系统数据字典的数据表 列表
      */
-    @PostMapping("/list")
+    @PostMapping("/sysDictTable/list")
     @ApiOperation(value = "获取 系统数据字典的数据表 列表", notes = "获取 系统数据字典的数据表 列表")
     public ApiResult<List<SysDictTableQueryVo>> getSysDictTableList(@Valid @RequestBody SysDictTableQueryParam sysDictTableQueryParam) throws Exception ;
 
     /**
      * 计算 系统数据字典的数据表 总记录数
      */
-    @PostMapping("/count")
+    @PostMapping("/sysDictTable/count")
     @ApiOperation(value = "计算 系统数据字典的数据表 总记录数", notes = "计算 系统数据字典的数据表 总记录数")
     public ApiResult<Integer> countSysDictTable(@Valid @RequestBody SysDictTableQueryParam sysDictTableQueryParam) throws Exception ;
 
