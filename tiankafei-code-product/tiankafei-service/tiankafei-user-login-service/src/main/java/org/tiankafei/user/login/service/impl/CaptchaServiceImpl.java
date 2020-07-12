@@ -4,6 +4,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
@@ -37,8 +38,13 @@ public class CaptchaServiceImpl implements CaptchaService {
      * @throws VerificationException
      */
     @Override
-    public CaptchaParamVo createCaptcha() throws VerificationException {
-        String uuid = IdUtil.simpleUUID();
+    public CaptchaParamVo createCaptcha(String uuid) throws VerificationException {
+        if(StringUtils.isNotBlank(uuid)){
+            // 当传入的uuid不为空时，删除之前的验证码缓存
+            String key = ImageCaptchaUtil.getCaptchaKey(uuid);
+            userInfoCache.removeKey(key);
+        }
+        uuid = IdUtil.simpleUUID();
         // 组装验证码的key值
         String key = ImageCaptchaUtil.getCaptchaKey(uuid);
         // 生成验证码及图片

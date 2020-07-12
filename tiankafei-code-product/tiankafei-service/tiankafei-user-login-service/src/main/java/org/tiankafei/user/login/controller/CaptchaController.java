@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
@@ -27,8 +28,8 @@ public class CaptchaController {
      */
     @GetMapping("/captcha")
     @ApiOperation(value = "生成验证码", notes = "生成验证码")
-    public ApiResult<CaptchaParamVo> createCaptcha() throws Exception {
-        CaptchaParamVo captchaParamVo = captchaService.createCaptcha();
+    public ApiResult<CaptchaParamVo> createCaptcha(@RequestParam(value = "uuid", required = false) String uuid) throws Exception {
+        CaptchaParamVo captchaParamVo = captchaService.createCaptcha(uuid);
         return ApiResult.ok(captchaParamVo);
     }
 

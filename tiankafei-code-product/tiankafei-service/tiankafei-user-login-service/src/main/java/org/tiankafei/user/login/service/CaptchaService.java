@@ -10,11 +10,11 @@ public interface CaptchaService {
 
     /**
      * 生成验证码
-     *
+     * @param uuid
      * @return
      * @throws VerificationException
      */
-    CaptchaParamVo createCaptcha() throws VerificationException;
+    CaptchaParamVo createCaptcha(String uuid) throws VerificationException;
 
     /**
      * 校验验证码
