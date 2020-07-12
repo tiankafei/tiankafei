@@ -2,7 +2,7 @@ package org.tiankafei.user.login.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.tiankafei.user.login.param.LoginParamVo;
+import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 

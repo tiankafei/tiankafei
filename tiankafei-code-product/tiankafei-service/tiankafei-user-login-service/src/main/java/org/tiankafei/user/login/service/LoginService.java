@@ -1,7 +1,7 @@
 package org.tiankafei.user.login.service;
 
 import javax.servlet.http.HttpServletRequest;
-import org.tiankafei.user.login.param.LoginParamVo;
+import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**

@@ -20,7 +20,7 @@ import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.enums.UserStatusEnums;
 import org.tiankafei.user.login.bean.QueryUserClient;
 import org.tiankafei.user.login.mapper.LoginMapper;
-import org.tiankafei.user.login.param.LoginParamVo;
+import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.user.vo.SysMenuInfoQueryVo;

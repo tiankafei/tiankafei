@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
-import org.tiankafei.user.login.param.LoginParamVo;
+import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.login.service.QueryUserService;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
