@@ -45,8 +45,8 @@ logging:
     # mapper sql日志的包路径
     org.tiankafei.user.mapper: debug
     # db 工程的日志包路径
-    org.tiankafei.db.mysql.mapper: debug
-    org.tiankafei.db.mysql.service.impl: debug
+    org.tiankafei.db.mapper: debug
+    org.tiankafei.db.service.impl: debug
     # nacos日志的包路径
     com.alibaba.nacos.client.naming: WARN
     # nacos日志的包路径
