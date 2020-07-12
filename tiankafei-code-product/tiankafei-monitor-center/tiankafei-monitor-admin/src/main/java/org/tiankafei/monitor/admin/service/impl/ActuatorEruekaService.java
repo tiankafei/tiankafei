@@ -27,7 +27,7 @@ public class ActuatorEruekaService implements ActuatorService {
 
     @Override
     public Health health() {
-        log.info("当前状态：{}", this.status);
+//        log.info("当前状态：{}", this.status);
         if(status){
             // 上线
             return new Health.Builder().up().build();
