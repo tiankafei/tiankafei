@@ -2,6 +2,9 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+    # 手动控制服务的健康状态：在client端配置，将自己真正的健康状态传播到server
+    healthcheck:
+      enabled: true
   instance:
     # 续约发送间隔，默认30s，也就是心跳间隔
     lease-renewal-interval-in-seconds: 5
