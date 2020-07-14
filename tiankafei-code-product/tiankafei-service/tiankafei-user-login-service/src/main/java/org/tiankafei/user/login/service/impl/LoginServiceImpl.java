@@ -177,35 +177,19 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
-    private SysUserInfoQueryVo getSysUserInfoQueryVo(Long userId){
+    private SysUserInfoQueryVo getSysUserInfoQueryVo(Long userId) {
         SysUserInfoQueryVo userInfoQueryVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
         // 设置给当前用户分配的角色集合
         List<SysRoleInfoQueryVo> roleInfoList = userInfoQueryVo.getUserRoleList().stream().map(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo()).collect(Collectors.toList());
         userInfoQueryVo.setRoleInfoList(roleInfoList);
 
         // 获取去重的功能清单集合
-        Set<SysMenuInfoQueryVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream()
-                .flatMap(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo().getRoleMenuList().stream())
-                .map(sysRoleMenuQueryVo -> sysRoleMenuQueryVo.getMenuInfoQueryVo())
-                .collect(Collectors.toSet());
+        Set<SysMenuInfoQueryVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream().flatMap(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo().getRoleMenuList().stream()).map(sysRoleMenuQueryVo -> sysRoleMenuQueryVo.getMenuInfoQueryVo()).collect(Collectors.toSet());
         // 找出所有的非跟节点
-        Map<Integer, List<SysMenuInfoQueryVo>> menuInfoListMap = Maps.newHashMap();
-        menuInfoSet.stream().forEach(sysMenuInfoQueryVo -> {
-            Integer parentId = sysMenuInfoQueryVo.getParentId();
-            if(parentId != null){
-                List<SysMenuInfoQueryVo> menuInfoList = null;
-                if(menuInfoListMap.containsKey(parentId)){
-                    menuInfoList = menuInfoListMap.get(parentId);
-                }else {
-                    menuInfoList = Lists.newArrayList();
-                    menuInfoListMap.put(parentId, menuInfoList);
-                }
-                menuInfoList.add(sysMenuInfoQueryVo);
-            }
-        });
+        Map<Integer, List<SysMenuInfoQueryVo>> menuInfoListMap = menuInfoSet.stream().filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() != null).collect(Collectors.groupingBy(SysMenuInfoQueryVo::getParentId));
+
         // 找出根节点，并根据id找出所有的子节点，并从小到大排序
         List<SysMenuInfoQueryVo> rootMenuInfoList = menuInfoSet.stream()
-                .filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() == null)
                 .map(sysMenuInfoQueryVo -> {
                     Integer id = sysMenuInfoQueryVo.getId();
                     if (menuInfoListMap.containsKey(id)) {
@@ -216,6 +200,7 @@ public class LoginServiceImpl implements LoginService {
                     }
                     return sysMenuInfoQueryVo;
                 })
+                .filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() == null)
                 .sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber))
                 .collect(Collectors.toList());
         // 设置当前用户对应的功能菜单的权限集合
