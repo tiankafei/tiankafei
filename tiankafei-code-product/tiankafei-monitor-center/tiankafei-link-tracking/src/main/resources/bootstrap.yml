@@ -12,6 +12,10 @@ spring:
 #    user:
 #      name: "admin"
 #      password: "admin123"
+  boot:
+    admin:
+      client:
+        url: http://localhost:9000
   #zipkin
   zipkin:
     base-url: http://localhost:9411/
@@ -62,6 +66,8 @@ management:
     web:
       exposure:
         include: "*"
+    health:
+      show-details: always
   endpoint:
     shutdown:
       #可以远程关闭服务节点

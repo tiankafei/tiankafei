@@ -40,11 +40,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--健康监控-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

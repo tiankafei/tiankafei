@@ -8,6 +8,10 @@ exclusions:
 spring:
   profiles:
     active: eureka
+  boot:
+    admin:
+      client:
+        url: http://localhost:9000
   application:
     name: gateway-service
   cloud:
@@ -59,3 +63,9 @@ management:
     web:
       exposure:
         include: "*"
+    health:
+      show-details: always
+  endpoint:
+    shutdown:
+      #可以远程关闭服务节点
+      enabled: true
