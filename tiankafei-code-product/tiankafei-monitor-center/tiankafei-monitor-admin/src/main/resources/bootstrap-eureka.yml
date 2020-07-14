@@ -13,3 +13,12 @@ eureka:
     lease-expiration-duration-in-seconds: 60
     metadata-map:
       key: 这是springboot-admin注册erueka的自定义元数据
+
+spring:
+  #zipkin
+  zipkin:
+    base-url: http://localhost:9411/
+    #采样比例1
+  sleuth:
+    sampler:
+      rate: 1
