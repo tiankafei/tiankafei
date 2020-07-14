@@ -49,10 +49,6 @@
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-collection</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-user-service-api</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
