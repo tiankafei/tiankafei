@@ -203,6 +203,11 @@
                 <artifactId>tiankafei-aviator-extend</artifactId>
                 <version>${code-tool.version}</version>
             </dependency>
+
+
+
+
+
             <!--产品自己的工具包-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
@@ -241,6 +246,18 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-user-api</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-user-login-api</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+
+            <!--缓存工程-->
+            <dependency>
+                <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-cache</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
@@ -254,6 +271,8 @@
                 <artifactId>tiankafei-cache-memory</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+
+            <!--消息MQ工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-message</artifactId>
