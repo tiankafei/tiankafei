@@ -28,7 +28,7 @@ import java.io.InputStream;
 public abstract class ImportUtil {
 
     public static void main(String[] args) throws ExcelException {
-        String filePath = "D:\\test\\1—1  全省行政区划(1999年末).xls";
+        String filePath = "D:\\test\\x-spreadsheet功能清单.xlsx";
         WorkbookProperty workbookProperty = ImportUtil.parseExcel(filePath);
         System.out.println(workbookProperty);
     }
