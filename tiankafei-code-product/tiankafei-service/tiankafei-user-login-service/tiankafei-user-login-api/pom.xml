@@ -9,11 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-user-login-service-api</artifactId>
+    <artifactId>tiankafei-user-login-api</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tiankafei-user-login-service-api</name>
+    <name>tiankafei-user-login-api</name>
     <description></description>
 
     <dependencies>
