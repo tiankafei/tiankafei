@@ -64,9 +64,9 @@ public class ApiResult<T> implements Serializable {
         return ok(ApiStatusEnum.OK);
     }
 
-    public static ApiResult ok(String message) {
-        return ok(message, null);
-    }
+//    public static ApiResult ok(String message) {
+//        return ok(message, null);
+//    }
 
     public static ApiResult ok(BaseEnums enums) {
         return result(enums, null);

@@ -31,6 +31,10 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-user-login-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
