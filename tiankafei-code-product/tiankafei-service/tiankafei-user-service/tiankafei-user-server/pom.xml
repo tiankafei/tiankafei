@@ -35,7 +35,11 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-user-common</artifactId>
+            <artifactId>tiankafei-db</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-user-cache</artifactId>
         </dependency>
     </dependencies>
 

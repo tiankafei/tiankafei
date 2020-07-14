@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>code-produce-parent</artifactId>
+        <artifactId>tiankafei-micro-depends-center</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-micro-depends</artifactId>
+    <artifactId>tiankafei-micro-depends-eureka</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tiankafei-micro-depends</name>
+    <name>tiankafei-micro-depends-eureka</name>
     <description></description>
 
     <dependencies>
