@@ -18,6 +18,7 @@
 
     <modules>
         <module>tiankafei-monitor-admin</module>
+        <module>tiankafei-link-tracking</module>
     </modules>
 
 </project>
