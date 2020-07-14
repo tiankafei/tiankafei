@@ -1,5 +1,7 @@
 package org.tiankafei.base.base.lamda;
 
+import com.google.common.collect.Lists;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +59,12 @@ public class StreamTest {
         strToIntToSum();
         System.out.println("=======================");
         allMatch();
+        System.out.println("=======================");
+        reduce01();
+        System.out.println("=======================");
+        reduce02();
+        System.out.println("=======================");
+        reduce03();
         System.out.println("=======================");
     }
 
@@ -225,6 +233,37 @@ public class StreamTest {
         List<String> strings = Arrays.asList("hello world", "hello mashibing", "good idea");
         strings.stream().map(word -> word.split(" ")).flatMap(Arrays::stream).forEach(System.out::println);
 
+    }
+
+
+    private static void reduce01() {
+        List<Integer> numList = Arrays.asList(1,2,3,4,5);
+        Optional<Integer> reduce = numList.stream().reduce((a, b) -> {
+            System.out.println("a=" + a + ",b=" + b);
+            return a + b;
+        });
+        int result = reduce.get();
+        System.out.println(result);
+    }
+
+
+    private static void reduce02() {
+        List<Integer> numList = Arrays.asList(1,2,3,4,5);
+        Integer result = numList.stream().reduce(10, (a, b) -> {
+            System.out.println("a=" + a + ",b=" + b);
+            return a + b;
+        });
+        System.out.println(result);
+    }
+
+
+    private static void reduce03() {
+        List<Integer> numList = Arrays.asList(1, 2, 3, 4, 5, 6);
+        ArrayList<String> result = numList.stream().reduce(new ArrayList<String>(), (a, b) -> {
+            a.add("element-" + Integer.toString(b));
+            return a;
+        }, (a, b) -> Lists.newArrayList());
+        System.out.println(result);
     }
 
 }
