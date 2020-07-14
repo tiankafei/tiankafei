@@ -12,10 +12,10 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
 @SpringCloudApplication
 @EnableAdminServer
 @EnableHystrixDashboard
-public class SpringBootAdminServerApplication {
+public class MonitorAdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootAdminServerApplication.class, args);
+        SpringApplication.run(MonitorAdminApplication.class, args);
     }
 
 }
