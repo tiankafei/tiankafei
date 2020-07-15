@@ -5,6 +5,10 @@ spring:
 #    user:
 #      name: "admin"
 #      password: "admin123"
+  boot:
+    admin:
+      client:
+        url: http://localhost:9000
 server:
   port: 8761
 eureka:
@@ -20,6 +24,17 @@ eureka:
   server:
     # 开启自我保护
     enable-self-preservation: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  endpoint:
+    shutdown:
+      #可以远程关闭服务节点
+      enabled: true
 logging:
   level:
     # 不打印 spring 的 CONDITIONS EVALUATION REPORT 的日志的输出
