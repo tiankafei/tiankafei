@@ -24,3 +24,14 @@ management:
     shutdown:
       #可以远程关闭服务节点
       enabled: true
+logging:
+  level:
+    ROOT: info
+    # nacos日志的包路径
+    com.alibaba.nacos.client.naming: WARN
+    # nacos日志的包路径
+    com.alibaba.nacos.client.config.impl: WARN
+    # eureka日志的包路径
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+    # spring自动装配日志的包路径
+    org.springframework.boot.autoconfigure: ERROR
