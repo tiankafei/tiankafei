@@ -33,8 +33,12 @@ management:
       enabled: true
 logging:
   level:
-    # 不打印 spring 的 CONDITIONS EVALUATION REPORT 的日志的输出
-    org.springframework.boot.autoconfigure: ERROR
-    # 不打印 eureka 的心跳日志的输出
-    com.netflix.eureka: ERROR
     ROOT: info
+    # nacos日志的包路径
+    com.alibaba.nacos.client.naming: WARN
+    # nacos日志的包路径
+    com.alibaba.nacos.client.config.impl: WARN
+    # eureka日志的包路径
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+    # spring自动装配日志的包路径
+    org.springframework.boot.autoconfigure: ERROR
