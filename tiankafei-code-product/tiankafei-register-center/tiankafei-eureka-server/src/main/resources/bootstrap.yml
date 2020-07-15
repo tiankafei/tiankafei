@@ -5,10 +5,6 @@ spring:
 #    user:
 #      name: "admin"
 #      password: "admin123"
-  boot:
-    admin:
-      client:
-        url: http://localhost:9000
 server:
   port: 8761
 eureka:

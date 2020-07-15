@@ -1,0 +1,26 @@
+server:
+  port: 6000
+spring:
+  profiles:
+    active: eureka
+  application:
+    name: cloud-config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/tiankafei/tiankafei-config.git
+          username: weishuangshuang89@163.com
+          password: weiss798971170@qq.com
+          basedir: E:/gits/tiankafei/tiankafei-code-product/tiankafei-config-center/config
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  endpoint:
+    shutdown:
+      #可以远程关闭服务节点
+      enabled: true

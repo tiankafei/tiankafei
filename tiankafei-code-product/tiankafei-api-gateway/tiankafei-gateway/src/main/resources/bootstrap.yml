@@ -8,10 +8,6 @@ exclusions:
 spring:
   profiles:
     active: eureka
-  boot:
-    admin:
-      client:
-        url: http://localhost:9000
   application:
     name: gateway-service
   cloud:

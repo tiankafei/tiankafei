@@ -5,10 +5,6 @@ spring:
     active: eureka
   application:
     name: zuul-service
-  boot:
-    admin:
-      client:
-        url: http://localhost:9000
 exclusions:
   urls:
     - /api/user-login/logout

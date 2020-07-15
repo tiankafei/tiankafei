@@ -12,10 +12,6 @@ spring:
 #    user:
 #      name: "admin"
 #      password: "admin123"
-  boot:
-    admin:
-      client:
-        url: http://localhost:9000
   datasource:
     url: jdbc:mysql://localhost:3306/db-blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
