@@ -11,13 +11,15 @@ eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false
+    # 允许自己注册到注册中心上
+    register-with-eureka: true
+    # 是否允许拉取别的注册中心的信息
     fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
-    # 关闭自我保护
-    enable-self-preservation: false
+    # 开启自我保护
+    enable-self-preservation: true
 logging:
   level:
     # 不打印 spring 的 CONDITIONS EVALUATION REPORT 的日志的输出

@@ -41,6 +41,7 @@
         <velocity.version>1.7</velocity.version>
         <shiro-spring.version>1.5.3</shiro-spring.version>
         <springboot-admin.version>2.2.3</springboot-admin.version>
+        <poi.version>4.1.2</poi.version>
     </properties>
 
     <modules>
@@ -202,6 +203,32 @@
                 <artifactId>Happy-Captcha</artifactId>
                 <version>1.0.1</version>
             </dependency>
+            <!--poi依赖包-->
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
 
             <!--自己的工具包-->
             <dependency>
