@@ -33,8 +33,8 @@ public class LoginController extends BaseController {
     private UserProperties userProperties;
 
     @GetMapping("get1")
-    public String get1(){
-        return JSON.toJSONString(userProperties);
+    public UserProperties get1(){
+        return userProperties;
     }
 
     /**

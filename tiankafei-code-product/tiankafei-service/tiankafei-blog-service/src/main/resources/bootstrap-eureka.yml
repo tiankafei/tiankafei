@@ -33,5 +33,5 @@ spring:
         enabled: true
         service-id: cloud-config-service
       name: ${spring.application.name}
-      profile: eureka
+      profile: dev, eureka
       label: master
