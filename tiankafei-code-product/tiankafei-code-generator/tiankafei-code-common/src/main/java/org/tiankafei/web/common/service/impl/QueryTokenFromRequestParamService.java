@@ -1,11 +1,12 @@
 package org.tiankafei.web.common.service.impl;
 
-import java.util.Enumeration;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.tiankafei.web.common.enums.CommonEnum;
 import org.tiankafei.web.common.enums.TokenEnum;
 import org.tiankafei.web.common.service.QueryTokenService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 /**
  * @author tiankafei
@@ -18,9 +19,9 @@ public class QueryTokenFromRequestParamService implements QueryTokenService {
     public String getToken() {
         HttpServletRequest request = getRequest();
         Enumeration<String> parameterNames = request.getParameterNames();
-        while(parameterNames.hasMoreElements()){
+        while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
-            if(CommonEnum.TOKEN_PARAM.getCode().equals(paramName)){
+            if (CommonEnum.TOKEN_PARAM.getCode().equals(paramName)) {
                 return request.getParameter(paramName);
             }
         }

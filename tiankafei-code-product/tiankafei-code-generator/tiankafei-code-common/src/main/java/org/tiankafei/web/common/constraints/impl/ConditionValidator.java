@@ -28,7 +28,7 @@ public class ConditionValidator implements ConstraintValidator<Condition, String
         Map<String, Object> env = Maps.newHashMap();
         env.put("a", value);
         Object result = AviatorEvaluator.execute(expression, env);
-        if(result instanceof Boolean){
+        if (result instanceof Boolean) {
             return Boolean.valueOf(result.toString());
         }
         return false;

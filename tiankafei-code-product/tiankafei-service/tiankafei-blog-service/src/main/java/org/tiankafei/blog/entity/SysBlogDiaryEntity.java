@@ -1,21 +1,19 @@
 package org.tiankafei.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.sql.Timestamp;
-import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.EqualsAndHashCode;
-import org.tiankafei.web.common.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.tiankafei.web.common.entity.BaseEntity;
 
 import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -29,14 +27,14 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_blog_diary")
-@ApiModel(value = " 系统的博客日记 实体对象" , description = "系统的博客日记")
+@ApiModel(value = " 系统的博客日记 实体对象", description = "系统的博客日记")
 public class SysBlogDiaryEntity extends BaseEntity {
 
     /**
      * 主键id
      */
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "id" , type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

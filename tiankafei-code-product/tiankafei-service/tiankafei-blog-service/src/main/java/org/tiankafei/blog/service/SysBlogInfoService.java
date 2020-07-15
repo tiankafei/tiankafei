@@ -1,10 +1,10 @@
 package org.tiankafei.blog.service;
 
 import org.tiankafei.blog.entity.SysBlogInfoEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.blog.param.SysBlogInfoQueryParam;
 import org.tiankafei.blog.param.SysBlogInfoPageQueryParam;
+import org.tiankafei.blog.param.SysBlogInfoQueryParam;
 import org.tiankafei.blog.vo.SysBlogInfoQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysBlogInfoService extends BaseService<SysBlogInfoEntity> {
-    
+
     /**
      * 校验 系统的博客数据 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysBlogInfoService extends BaseService<SysBlogInfoEntity> {
      * @throws Exception
      */
     Object addSysBlogInfo(SysBlogInfoQueryVo sysBlogInfoQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统的博客数据 集合
      *
@@ -64,7 +64,7 @@ public interface SysBlogInfoService extends BaseService<SysBlogInfoEntity> {
      * @throws Exception
      */
     boolean deleteSysBlogInfo(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统的博客数据
      *
@@ -81,7 +81,7 @@ public interface SysBlogInfoService extends BaseService<SysBlogInfoEntity> {
      * @return
      * @throws Exception
      */
-     SysBlogInfoQueryVo getSysBlogInfoById(Serializable id) throws Exception;
+    SysBlogInfoQueryVo getSysBlogInfoById(Serializable id) throws Exception;
 
     /**
      * 获取 系统的博客数据 分页对象列表
@@ -99,8 +99,8 @@ public interface SysBlogInfoService extends BaseService<SysBlogInfoEntity> {
      * @return
      * @throws Exception
      */
-     List<SysBlogInfoQueryVo> getSysBlogInfoList(SysBlogInfoQueryParam sysBlogInfoQueryParam) throws Exception;
-    
+    List<SysBlogInfoQueryVo> getSysBlogInfoList(SysBlogInfoQueryParam sysBlogInfoQueryParam) throws Exception;
+
     /**
      * 计算 系统的博客数据 总记录数
      *

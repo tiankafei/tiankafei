@@ -1,24 +1,27 @@
 package org.tiankafei.blog.controller;
 
-import org.tiankafei.blog.service.SysBlogInfoService;
-import org.tiankafei.blog.param.SysBlogInfoQueryParam;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.blog.param.SysBlogInfoPageQueryParam;
+import org.tiankafei.blog.param.SysBlogInfoQueryParam;
+import org.tiankafei.blog.service.SysBlogInfoService;
 import org.tiankafei.blog.vo.SysBlogInfoQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
 
 import javax.validation.Valid;
-
-import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
-
 import java.util.List;
 
 /**
@@ -84,7 +87,7 @@ public class SysBlogInfoController extends BaseController {
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 系统的博客数据 对象详情", notes = "获取 系统的博客数据 对象详情")
     public ApiResult<SysBlogInfoQueryVo> getSysBlogInfo(@PathVariable("id") String id) throws Exception {
-         SysBlogInfoQueryVo sysBlogInfoQueryVo = sysBlogInfoService.getSysBlogInfoById(id);
+        SysBlogInfoQueryVo sysBlogInfoQueryVo = sysBlogInfoService.getSysBlogInfoById(id);
         return ApiResult.ok(sysBlogInfoQueryVo);
     }
 
@@ -94,20 +97,20 @@ public class SysBlogInfoController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客数据 分页列表", notes = "获取 系统的博客数据 分页列表")
     public ApiResult<Paging<SysBlogInfoQueryVo>> getSysBlogInfoPageList(@Valid @RequestBody SysBlogInfoPageQueryParam sysBlogInfoPageQueryParam) throws Exception {
-         Paging<SysBlogInfoQueryVo> paging = sysBlogInfoService.getSysBlogInfoPageList(sysBlogInfoPageQueryParam);
+        Paging<SysBlogInfoQueryVo> paging = sysBlogInfoService.getSysBlogInfoPageList(sysBlogInfoPageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 系统的博客数据 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客数据 列表", notes = "获取 系统的博客数据 列表")
     public ApiResult<List<SysBlogInfoQueryVo>> getSysBlogInfoList(@Valid @RequestBody SysBlogInfoQueryParam sysBlogInfoQueryParam) throws Exception {
-         List<SysBlogInfoQueryVo> paging = sysBlogInfoService.getSysBlogInfoList(sysBlogInfoQueryParam);
+        List<SysBlogInfoQueryVo> paging = sysBlogInfoService.getSysBlogInfoList(sysBlogInfoQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 系统的博客数据 总记录数
      */

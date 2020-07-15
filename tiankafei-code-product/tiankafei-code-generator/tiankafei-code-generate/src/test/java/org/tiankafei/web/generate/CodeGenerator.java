@@ -278,7 +278,7 @@ public class CodeGenerator {
         dsc.setUsername(userName);
         dsc.setPassword(password);
         // 设置自定义查询
-        dsc.setDbQuery(new MySqlQuery(){
+        dsc.setDbQuery(new MySqlQuery() {
             @Override
             public String[] fieldCustom() {
                 return new String[]{"null", "default"};
@@ -288,11 +288,11 @@ public class CodeGenerator {
             @Override
             public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
                 String columnType = fieldType.toLowerCase();
-                if(columnType.equals("timestamp") || columnType.equals("datetime")){
+                if (columnType.equals("timestamp") || columnType.equals("datetime")) {
                     return DbColumnType.TIMESTAMP;
                 }
                 //其它字段采用默认转换（非mysql数据库可以使用其它默认的数据库转换器）
-                return new MySqlTypeConvert().processTypeConvert(globalConfig,fieldType);
+                return new MySqlTypeConvert().processTypeConvert(globalConfig, fieldType);
             }
         });
 
@@ -388,7 +388,7 @@ public class CodeGenerator {
             });
         }
 
-        if(generatorEntity){
+        if (generatorEntity) {
             focList.add(new FileOutConfig("/templates/entity.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
@@ -526,7 +526,7 @@ public class CodeGenerator {
      * @return
      */
     private String getCurrentProjectRootFilePath(Object object, String directory) {
-        if(StringUtils.isNotBlank(directory)){
+        if (StringUtils.isNotBlank(directory)) {
             return directory;
         }
         StringBuilder filePath = new StringBuilder();

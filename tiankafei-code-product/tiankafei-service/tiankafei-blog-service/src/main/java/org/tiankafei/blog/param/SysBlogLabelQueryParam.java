@@ -20,6 +20,4 @@ import java.io.Serializable;
 public class SysBlogLabelQueryParam implements Serializable {
 
 
-
-
 }

@@ -1,10 +1,10 @@
 package org.tiankafei.blog.service;
 
 import org.tiankafei.blog.entity.SysBlogDiaryEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.blog.param.SysBlogDiaryQueryParam;
 import org.tiankafei.blog.param.SysBlogDiaryPageQueryParam;
+import org.tiankafei.blog.param.SysBlogDiaryQueryParam;
 import org.tiankafei.blog.vo.SysBlogDiaryQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysBlogDiaryService extends BaseService<SysBlogDiaryEntity> {
-    
+
     /**
      * 校验 系统的博客日记 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysBlogDiaryService extends BaseService<SysBlogDiaryEntity> {
      * @throws Exception
      */
     Object addSysBlogDiary(SysBlogDiaryQueryVo sysBlogDiaryQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统的博客日记 集合
      *
@@ -64,7 +64,7 @@ public interface SysBlogDiaryService extends BaseService<SysBlogDiaryEntity> {
      * @throws Exception
      */
     boolean deleteSysBlogDiary(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统的博客日记
      *
@@ -81,7 +81,7 @@ public interface SysBlogDiaryService extends BaseService<SysBlogDiaryEntity> {
      * @return
      * @throws Exception
      */
-     SysBlogDiaryQueryVo getSysBlogDiaryById(Serializable id) throws Exception;
+    SysBlogDiaryQueryVo getSysBlogDiaryById(Serializable id) throws Exception;
 
     /**
      * 获取 系统的博客日记 分页对象列表
@@ -99,8 +99,8 @@ public interface SysBlogDiaryService extends BaseService<SysBlogDiaryEntity> {
      * @return
      * @throws Exception
      */
-     List<SysBlogDiaryQueryVo> getSysBlogDiaryList(SysBlogDiaryQueryParam sysBlogDiaryQueryParam) throws Exception;
-    
+    List<SysBlogDiaryQueryVo> getSysBlogDiaryList(SysBlogDiaryQueryParam sysBlogDiaryQueryParam) throws Exception;
+
     /**
      * 计算 系统的博客日记 总记录数
      *

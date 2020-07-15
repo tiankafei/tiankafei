@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
 import org.tiankafei.web.common.param.OrderQueryParam;
 
 /**
@@ -20,8 +19,6 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "系统的博客日记 分页查询参数对象", description = "系统的博客日记 分页查询参数对象")
 public class SysBlogDiaryPageQueryParam extends OrderQueryParam {
-
-
 
 
 }

@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -150,7 +148,7 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
 
     @Override
     public SysUserInfoQueryVo getSysUserInfoById(Serializable id) throws Exception {
-		//SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoMapper.getSysUserInfoById(id);
+        //SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoMapper.getSysUserInfoById(id);
 
         SysUserInfoEntity sysUserInfoEntity = super.getById(id);
         SysUserInfoQueryVo sysUserInfoQueryVo = new SysUserInfoQueryVo();
@@ -162,7 +160,7 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     public Paging<SysUserInfoQueryVo> getSysUserInfoPageList(SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
         //IPage<SysUserInfoQueryVo> iPage = sysUserInfoMapper.getSysUserInfoPageList(page, sysUserInfoPageQueryParam);
 
-		Page page = setPageParam(sysUserInfoPageQueryParam, OrderItem.desc("create_time"));
+        Page page = setPageParam(sysUserInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysUserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysUserInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

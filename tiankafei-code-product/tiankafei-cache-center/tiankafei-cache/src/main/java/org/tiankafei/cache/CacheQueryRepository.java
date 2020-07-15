@@ -14,6 +14,7 @@ public interface CacheQueryRepository extends CacheRepository {
 
     /**
      * 获取缓存数据对象
+     *
      * @param key
      * @param <T>
      * @return
@@ -22,6 +23,7 @@ public interface CacheQueryRepository extends CacheRepository {
 
     /**
      * 获取缓存数据对象
+     *
      * @param keys
      * @param <T>
      * @return
@@ -30,6 +32,7 @@ public interface CacheQueryRepository extends CacheRepository {
 
     /**
      * 获取缓存数据对象集合
+     *
      * @param key
      * @param <T>
      * @return
@@ -38,6 +41,7 @@ public interface CacheQueryRepository extends CacheRepository {
 
     /**
      * 获取缓存数据对象集合
+     *
      * @param key
      * @param <T>
      * @return
@@ -46,6 +50,7 @@ public interface CacheQueryRepository extends CacheRepository {
 
     /**
      * 获取缓存数据对象集合
+     *
      * @param key
      * @param <T>
      * @return
@@ -54,6 +59,7 @@ public interface CacheQueryRepository extends CacheRepository {
 
     /**
      * 获取缓存数据对象
+     *
      * @param key
      * @param <T>
      * @return

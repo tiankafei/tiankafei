@@ -39,7 +39,7 @@ public class MysqlServiceImpl implements DbService {
 
     @Override
     public String getTableSchema() {
-        if(StringUtils.isNotBlank(tableSchema)){
+        if (StringUtils.isNotBlank(tableSchema)) {
             return tableSchema;
         }
 //        jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
@@ -86,9 +86,9 @@ public class MysqlServiceImpl implements DbService {
             Object key_name = dataMap.get("Key_name");
             Object column_name = dataMap.get("Column_name");
             Integer non_unique = (Integer) dataMap.get("Non_unique");
-            String index_comment  = (String) dataMap.get("Index_comment");
+            String index_comment = (String) dataMap.get("Index_comment");
 
-            if(!"PRIMARY".equals(key_name)){
+            if (!"PRIMARY".equals(key_name)) {
                 // 3. 创建索引语句
                 StringBuilder createIndexSql = new StringBuilder();
                 createIndexSql.append("ALTER TABLE `")
@@ -100,7 +100,7 @@ public class MysqlServiceImpl implements DbService {
             }
         }
         // 4. 创建表注释
-        if(StringUtils.isNotBlank(name)){
+        if (StringUtils.isNotBlank(name)) {
             StringBuilder tableCommentSql = new StringBuilder();
             tableCommentSql.append("ALTER TABLE `").append(getTableSchema()).append("`.`").append(tableName).append("` COMMENT = '").append(name).append("'");
             log.debug("alter table comment : {}", tableCommentSql.toString());

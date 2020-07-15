@@ -91,7 +91,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
 
     @Override
     public SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception {
-		//SysDepartmentQueryVo sysDepartmentQueryVo = sysDepartmentMapper.getSysDepartmentById(id);
+        //SysDepartmentQueryVo sysDepartmentQueryVo = sysDepartmentMapper.getSysDepartmentById(id);
 
         SysDepartmentEntity sysDepartmentEntity = super.getById(id);
         SysDepartmentQueryVo sysDepartmentQueryVo = new SysDepartmentQueryVo();
@@ -103,7 +103,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     public Paging<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentPageQueryParam sysDepartmentPageQueryParam) throws Exception {
         //IPage<SysDepartmentQueryVo> iPage = sysDepartmentMapper.getSysDepartmentPageList(page, sysDepartmentPageQueryParam);
 
-		Page page = setPageParam(sysDepartmentPageQueryParam, OrderItem.desc("create_time"));
+        Page page = setPageParam(sysDepartmentPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysDepartmentEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysDepartmentQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

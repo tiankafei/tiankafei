@@ -98,13 +98,13 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
         LambdaQueryWrapper<SysUserRoleEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
 
         String userIds = sysUserRoleQueryParam.getUserIds();
-        if(StringUtils.isNotBlank(userIds)){
+        if (StringUtils.isNotBlank(userIds)) {
             List<String> userIdList = Arrays.asList(userIds.split(","));
             lambdaQueryWrapper.in(SysUserRoleEntity::getUserId, userIdList);
         }
 
         String roleIds = sysUserRoleQueryParam.getRoleIds();
-        if(StringUtils.isNotBlank(roleIds)){
+        if (StringUtils.isNotBlank(roleIds)) {
             List<String> roleIdList = Arrays.asList(roleIds.split(","));
             lambdaQueryWrapper.in(SysUserRoleEntity::getRoleId, roleIdList);
         }
@@ -114,7 +114,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
 
     @Override
     public SysUserRoleQueryVo getSysUserRoleById(Serializable id) throws Exception {
-		//SysUserRoleQueryVo sysUserRoleQueryVo = sysUserRoleMapper.getSysUserRoleById(id);
+        //SysUserRoleQueryVo sysUserRoleQueryVo = sysUserRoleMapper.getSysUserRoleById(id);
 
         SysUserRoleEntity sysUserRoleEntity = super.getById(id);
         SysUserRoleQueryVo sysUserRoleQueryVo = new SysUserRoleQueryVo();
@@ -126,7 +126,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, S
     public Paging<SysUserRoleQueryVo> getSysUserRolePageList(SysUserRolePageQueryParam sysUserRolePageQueryParam) throws Exception {
         //IPage<SysUserRoleQueryVo> iPage = sysUserRoleMapper.getSysUserRolePageList(page, sysUserRolePageQueryParam);
 
-		Page page = setPageParam(sysUserRolePageQueryParam, OrderItem.desc("create_time"));
+        Page page = setPageParam(sysUserRolePageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysUserRoleEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysUserRoleQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

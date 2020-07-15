@@ -91,7 +91,7 @@ public class SysLinksServiceImpl extends BaseServiceImpl<SysLinksMapper, SysLink
 
     @Override
     public SysLinksQueryVo getSysLinksById(Serializable id) throws Exception {
-		//SysLinksQueryVo sysLinksQueryVo = sysLinksMapper.getSysLinksById(id);
+        //SysLinksQueryVo sysLinksQueryVo = sysLinksMapper.getSysLinksById(id);
 
         SysLinksEntity sysLinksEntity = super.getById(id);
         SysLinksQueryVo sysLinksQueryVo = new SysLinksQueryVo();
@@ -103,7 +103,7 @@ public class SysLinksServiceImpl extends BaseServiceImpl<SysLinksMapper, SysLink
     public Paging<SysLinksQueryVo> getSysLinksPageList(SysLinksPageQueryParam sysLinksPageQueryParam) throws Exception {
         //IPage<SysLinksQueryVo> iPage = sysLinksMapper.getSysLinksPageList(page, sysLinksPageQueryParam);
 
-		Page page = setPageParam(sysLinksPageQueryParam, OrderItem.desc("create_time"));
+        Page page = setPageParam(sysLinksPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysLinksEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysLinksQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

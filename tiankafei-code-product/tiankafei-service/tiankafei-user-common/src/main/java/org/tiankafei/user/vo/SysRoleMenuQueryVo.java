@@ -5,14 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 /**
  * <pre>

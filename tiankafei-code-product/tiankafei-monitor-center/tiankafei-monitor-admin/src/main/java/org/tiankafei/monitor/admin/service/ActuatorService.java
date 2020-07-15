@@ -8,8 +8,8 @@ import org.springframework.boot.actuate.health.HealthIndicator;
  */
 public interface ActuatorService extends HealthIndicator {
 
-    void setStatus(Boolean status) ;
+    void setStatus(Boolean status);
 
-    Boolean getStatus() ;
+    Boolean getStatus();
 
 }

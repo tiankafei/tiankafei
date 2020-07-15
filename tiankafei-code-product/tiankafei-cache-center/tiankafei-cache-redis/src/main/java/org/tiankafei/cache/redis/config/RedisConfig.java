@@ -15,7 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    public RedisTemplate redisTemplate(LettuceConnectionFactory lettuceConnectionFactory){
+    public RedisTemplate redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
         RedisTemplate redisTemplate = new RedisTemplate();
 
         redisTemplate.setKeySerializer(new StringRedisSerializer());

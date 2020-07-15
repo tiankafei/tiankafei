@@ -1,10 +1,10 @@
 package org.tiankafei.blog.service;
 
 import org.tiankafei.blog.entity.SysBlogLabelEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.blog.param.SysBlogLabelQueryParam;
 import org.tiankafei.blog.param.SysBlogLabelPageQueryParam;
+import org.tiankafei.blog.param.SysBlogLabelQueryParam;
 import org.tiankafei.blog.vo.SysBlogLabelQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysBlogLabelService extends BaseService<SysBlogLabelEntity> {
-    
+
     /**
      * 校验 系统的博客标签 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysBlogLabelService extends BaseService<SysBlogLabelEntity> {
      * @throws Exception
      */
     Object addSysBlogLabel(SysBlogLabelQueryVo sysBlogLabelQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统的博客标签 集合
      *
@@ -64,7 +64,7 @@ public interface SysBlogLabelService extends BaseService<SysBlogLabelEntity> {
      * @throws Exception
      */
     boolean deleteSysBlogLabel(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统的博客标签
      *
@@ -81,7 +81,7 @@ public interface SysBlogLabelService extends BaseService<SysBlogLabelEntity> {
      * @return
      * @throws Exception
      */
-     SysBlogLabelQueryVo getSysBlogLabelById(Serializable id) throws Exception;
+    SysBlogLabelQueryVo getSysBlogLabelById(Serializable id) throws Exception;
 
     /**
      * 获取 系统的博客标签 分页对象列表
@@ -99,8 +99,8 @@ public interface SysBlogLabelService extends BaseService<SysBlogLabelEntity> {
      * @return
      * @throws Exception
      */
-     List<SysBlogLabelQueryVo> getSysBlogLabelList(SysBlogLabelQueryParam sysBlogLabelQueryParam) throws Exception;
-    
+    List<SysBlogLabelQueryVo> getSysBlogLabelList(SysBlogLabelQueryParam sysBlogLabelQueryParam) throws Exception;
+
     /**
      * 计算 系统的博客标签 总记录数
      *

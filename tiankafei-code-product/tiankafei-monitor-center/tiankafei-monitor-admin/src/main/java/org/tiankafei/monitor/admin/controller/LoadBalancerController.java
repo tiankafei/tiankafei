@@ -19,7 +19,7 @@ public class LoadBalancerController {
     private LoadBalancerClient client;
 
     @GetMapping("/client")
-    public String client(){
+    public String client() {
 
         ServiceInstance serviceInstance = client.choose("");
         String host = serviceInstance.getHost();

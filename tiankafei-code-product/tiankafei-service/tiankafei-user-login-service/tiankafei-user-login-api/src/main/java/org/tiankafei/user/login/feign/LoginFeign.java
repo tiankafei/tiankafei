@@ -23,13 +23,13 @@ public interface LoginFeign {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    public ApiResult<String> login(@Valid @RequestBody LoginParamVo loginParamVo) throws Exception ;
+    public ApiResult<String> login(@Valid @RequestBody LoginParamVo loginParamVo) throws Exception;
 
     /**
      * 用户注销
      */
     @GetMapping("/logout/{userId}")
     @ApiOperation(value = "用户注销", notes = "用户注销")
-    public ApiResult<Boolean> logout(@PathVariable String userId) throws Exception ;
+    public ApiResult<Boolean> logout(@PathVariable String userId) throws Exception;
 
 }

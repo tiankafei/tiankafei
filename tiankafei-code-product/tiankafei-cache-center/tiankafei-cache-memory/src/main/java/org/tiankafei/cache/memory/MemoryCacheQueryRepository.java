@@ -1,11 +1,12 @@
 package org.tiankafei.cache.memory;
 
+import org.springframework.stereotype.Repository;
+import org.tiankafei.cache.CacheQueryRepository;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.springframework.stereotype.Repository;
-import org.tiankafei.cache.CacheQueryRepository;
 
 /**
  * @author tiankafei

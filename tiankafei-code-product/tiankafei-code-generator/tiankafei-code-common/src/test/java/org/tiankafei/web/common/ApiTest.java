@@ -4,9 +4,10 @@ import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSON;
-import java.util.List;
 import org.junit.Test;
 import org.tiankafei.web.common.api.ApiResult;
+
+import java.util.List;
 
 /**
  * @author tiankafei
@@ -23,7 +24,7 @@ public class ApiTest {
     }
 
     @Test
-    public void test02(){
+    public void test02() {
         String filePath = "D:\\test\\x-spreadsheet功能清单.xlsx";
         ExcelReader reader = ExcelUtil.getReader(ResourceUtil.getStream(filePath));
         List<List<Object>> read = reader.read();

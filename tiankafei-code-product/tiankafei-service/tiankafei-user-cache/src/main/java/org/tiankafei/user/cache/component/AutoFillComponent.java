@@ -1,7 +1,6 @@
 package org.tiankafei.user.cache.component;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import java.sql.Timestamp;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +8,8 @@ import org.tiankafei.base.base.datetime.DateTimeUtil;
 import org.tiankafei.base.base.enums.DateTimeEnum;
 import org.tiankafei.base.base.exceptions.BaseException;
 import org.tiankafei.user.cache.UserInfoCache;
+
+import java.sql.Timestamp;
 
 /**
  * @author tiankafei

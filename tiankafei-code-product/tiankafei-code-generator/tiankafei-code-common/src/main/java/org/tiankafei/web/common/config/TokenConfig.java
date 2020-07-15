@@ -21,10 +21,11 @@ public class TokenConfig {
 
     /**
      * 获取token
+     *
      * @return
      */
-    public String getToken(){
-        if(tokenType == null || tokenType == 0){
+    public String getToken() {
+        if (tokenType == null || tokenType == 0) {
             // 默认从header中获取
             tokenType = TokenEnum.HEADER.getCode();
         }

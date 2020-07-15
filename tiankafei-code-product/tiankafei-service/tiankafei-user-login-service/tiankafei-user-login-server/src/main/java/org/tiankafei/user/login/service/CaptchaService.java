@@ -1,7 +1,7 @@
 package org.tiankafei.user.login.service;
 
-import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.web.common.exception.VerificationException;
+import org.tiankafei.web.common.param.CaptchaParamVo;
 
 /**
  * @author tiankafei
@@ -10,6 +10,7 @@ public interface CaptchaService {
 
     /**
      * 生成验证码
+     *
      * @param uuid
      * @return
      * @throws VerificationException

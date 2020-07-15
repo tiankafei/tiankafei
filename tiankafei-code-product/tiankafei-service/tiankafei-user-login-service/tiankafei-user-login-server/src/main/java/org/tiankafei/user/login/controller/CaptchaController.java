@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.web.common.api.ApiResult;
+import org.tiankafei.web.common.param.CaptchaParamVo;
 
 /**
  * @author tiankafei

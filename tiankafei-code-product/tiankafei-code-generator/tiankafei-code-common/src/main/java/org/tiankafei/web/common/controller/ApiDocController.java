@@ -32,11 +32,12 @@ public class ApiDocController extends BaseController {
 
     /**
      * api文档错误提示
+     *
      * @return
      */
     @GetMapping("/apiDocError")
     @ResponseBody
-    public ApiResult apiDocError(){
+    public ApiResult apiDocError() {
         return ApiResult.error("只有 swagger.enable 设置为true的时候，才提供api文档支持");
     }
 

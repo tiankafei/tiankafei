@@ -2,19 +2,16 @@ package org.tiankafei.user.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.List;
 
 /**
  * <pre>

@@ -3,10 +3,10 @@ package org.tiankafei.web.common.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.tiankafei.web.common.config.TokenConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.tiankafei.web.common.config.TokenConfig;
 
 /**
  * @author tiankafei
@@ -19,9 +19,10 @@ public abstract class BaseController {
 
     /**
      * 获取token
+     *
      * @return
      */
-    public String getToken(){
+    public String getToken() {
         return tokenConfig.getToken();
     }
 

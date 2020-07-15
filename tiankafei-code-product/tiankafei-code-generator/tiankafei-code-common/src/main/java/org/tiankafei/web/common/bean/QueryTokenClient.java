@@ -1,12 +1,13 @@
 package org.tiankafei.web.common.bean;
 
 import com.google.common.collect.Maps;
-import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.web.common.service.QueryTokenService;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author tiankafei
@@ -32,10 +33,11 @@ public class QueryTokenClient implements InitializingBean {
 
     /**
      * 获取token
+     *
      * @param type
      * @return
      */
-    public String getToken(Integer type){
+    public String getToken(Integer type) {
         return tokenServiceMap.get(type).getToken();
     }
 

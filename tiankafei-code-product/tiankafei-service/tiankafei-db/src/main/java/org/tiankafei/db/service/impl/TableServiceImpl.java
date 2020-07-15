@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.entity.TableEntity;
 import org.tiankafei.db.mapper.TableMapper;
+import org.tiankafei.db.param.TableNameEntityQueryParam;
+import org.tiankafei.db.param.TableNameListQueryParam;
 import org.tiankafei.db.param.TableNamePageListQueryParam;
 import org.tiankafei.db.service.DbService;
 import org.tiankafei.db.service.TableService;
-import org.tiankafei.db.param.TableNameListQueryParam;
-import org.tiankafei.db.param.TableNameEntityQueryParam;
 import org.tiankafei.web.common.exception.DaoException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
@@ -37,14 +37,14 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(TableEntity::getTableName, tableNameEntityQueryParam.getTableName());
         String tableSchema = tableNameEntityQueryParam.getTableSchema();
-        if(StringUtils.isBlank(tableSchema)){
+        if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
         }
         lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         try {
             TableEntity tableEntity = super.getOne(lambdaQueryWrapper);
             return tableEntity;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new DaoException("获取数据库表对象发生异常！");
         }
@@ -55,11 +55,11 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         Page page = setPageParam(tableNamePageListQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         String tableName = tableNamePageListQueryParam.getTableName();
-        if(StringUtils.isNotBlank(tableName)){
+        if (StringUtils.isNotBlank(tableName)) {
             lambdaQueryWrapper.eq(TableEntity::getTableName, tableName);
         }
         String tableSchema = tableNamePageListQueryParam.getTableSchema();
-        if(StringUtils.isBlank(tableSchema)){
+        if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
@@ -72,11 +72,11 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
     public List<TableEntity> getTableEntityList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
         LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         String tableName = tableNameListQueryParam.getTableName();
-        if(StringUtils.isNotBlank(tableName)){
+        if (StringUtils.isNotBlank(tableName)) {
             lambdaQueryWrapper.eq(TableEntity::getTableName, tableName);
         }
         String tableSchema = tableNameListQueryParam.getTableSchema();
-        if(StringUtils.isBlank(tableSchema)){
+        if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }

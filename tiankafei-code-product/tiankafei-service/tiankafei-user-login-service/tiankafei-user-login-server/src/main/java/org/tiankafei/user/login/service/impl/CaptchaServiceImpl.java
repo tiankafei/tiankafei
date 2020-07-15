@@ -2,18 +2,17 @@ package org.tiankafei.user.login.service.impl;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
+import org.tiankafei.user.login.service.CaptchaService;
 import org.tiankafei.web.common.bean.CaptchaClient;
 import org.tiankafei.web.common.enums.CaptchaEnum;
-import org.tiankafei.web.common.param.CaptchaParamVo;
-import org.tiankafei.user.login.service.CaptchaService;
-import org.tiankafei.web.common.utils.ImageCaptchaUtil;
 import org.tiankafei.web.common.exception.VerificationException;
+import org.tiankafei.web.common.param.CaptchaParamVo;
+import org.tiankafei.web.common.utils.ImageCaptchaUtil;
 
 import java.io.ByteArrayOutputStream;
 
@@ -39,7 +38,7 @@ public class CaptchaServiceImpl implements CaptchaService {
      */
     @Override
     public CaptchaParamVo createCaptcha(String uuid) throws VerificationException {
-        if(StringUtils.isNotBlank(uuid)){
+        if (StringUtils.isNotBlank(uuid)) {
             // 当传入的uuid不为空时，删除之前的验证码缓存
             String key = ImageCaptchaUtil.getCaptchaKey(uuid);
             userInfoCache.removeKey(key);
@@ -70,7 +69,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         // 组装验证码的key值
         String key = ImageCaptchaUtil.getCaptchaKey(uuid);
         String captchaCode = userInfoCache.getCaptchaCode(key);
-        if(captcha.equalsIgnoreCase(captchaCode)){
+        if (captcha.equalsIgnoreCase(captchaCode)) {
             userInfoCache.removeKey(key);
             return Boolean.TRUE;
         }

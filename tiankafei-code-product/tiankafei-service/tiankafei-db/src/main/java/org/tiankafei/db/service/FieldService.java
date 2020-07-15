@@ -16,11 +16,12 @@ public interface FieldService extends BaseService<FieldEntity> {
 
     /**
      * 获取 数据库表的字段
+     *
      * @param fieldNameEntityQueryParam
      * @return
      * @throws Exception
      */
-    FieldEntity getFieldEntity(FieldNameEntityQueryParam fieldNameEntityQueryParam) throws Exception ;
+    FieldEntity getFieldEntity(FieldNameEntityQueryParam fieldNameEntityQueryParam) throws Exception;
 
     /**
      * 获取 数据库表的字段 分页对象列表

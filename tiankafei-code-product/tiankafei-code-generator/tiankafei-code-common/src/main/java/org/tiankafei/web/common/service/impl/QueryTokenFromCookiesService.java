@@ -1,13 +1,14 @@
 package org.tiankafei.web.common.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.tiankafei.web.common.enums.CommonEnum;
 import org.tiankafei.web.common.enums.TokenEnum;
 import org.tiankafei.web.common.service.QueryTokenService;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author tiankafei
@@ -20,9 +21,9 @@ public class QueryTokenFromCookiesService implements QueryTokenService {
     public String getToken() {
         HttpServletRequest request = getRequest();
         List<Cookie> cookies = Arrays.asList(request.getCookies());
-        for (Cookie cookie : cookies){
+        for (Cookie cookie : cookies) {
             String name = cookie.getName();
-            if(CommonEnum.TOKEN_PARAM.getCode().equals(name)){
+            if (CommonEnum.TOKEN_PARAM.getCode().equals(name)) {
                 return cookie.getValue();
             }
         }

@@ -1,7 +1,6 @@
 package org.tiankafei.user.controller;
 
 import cn.hutool.core.util.IdUtil;
-import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +32,7 @@ public class LoginController extends BaseController {
     private UserProperties userProperties;
 
     @GetMapping("get1")
-    public UserProperties get1(){
+    public UserProperties get1() {
         return userProperties;
     }
 

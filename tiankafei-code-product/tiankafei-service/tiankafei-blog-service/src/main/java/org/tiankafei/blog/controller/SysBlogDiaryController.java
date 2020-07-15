@@ -1,25 +1,27 @@
 package org.tiankafei.blog.controller;
 
-import org.tiankafei.blog.service.SysBlogDiaryService;
-import org.tiankafei.blog.param.SysBlogDiaryQueryParam;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.blog.param.SysBlogDiaryPageQueryParam;
+import org.tiankafei.blog.param.SysBlogDiaryQueryParam;
+import org.tiankafei.blog.service.SysBlogDiaryService;
 import org.tiankafei.blog.vo.SysBlogDiaryQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
 
 import javax.validation.Valid;
-
-import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
-
 import java.util.List;
 
 /**
@@ -85,7 +87,7 @@ public class SysBlogDiaryController extends BaseController {
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 系统的博客日记 对象详情", notes = "获取 系统的博客日记 对象详情")
     public ApiResult<SysBlogDiaryQueryVo> getSysBlogDiary(@PathVariable("id") String id) throws Exception {
-         SysBlogDiaryQueryVo sysBlogDiaryQueryVo = sysBlogDiaryService.getSysBlogDiaryById(id);
+        SysBlogDiaryQueryVo sysBlogDiaryQueryVo = sysBlogDiaryService.getSysBlogDiaryById(id);
         return ApiResult.ok(sysBlogDiaryQueryVo);
     }
 
@@ -95,20 +97,20 @@ public class SysBlogDiaryController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客日记 分页列表", notes = "获取 系统的博客日记 分页列表")
     public ApiResult<Paging<SysBlogDiaryQueryVo>> getSysBlogDiaryPageList(@Valid @RequestBody SysBlogDiaryPageQueryParam sysBlogDiaryPageQueryParam) throws Exception {
-         Paging<SysBlogDiaryQueryVo> paging = sysBlogDiaryService.getSysBlogDiaryPageList(sysBlogDiaryPageQueryParam);
+        Paging<SysBlogDiaryQueryVo> paging = sysBlogDiaryService.getSysBlogDiaryPageList(sysBlogDiaryPageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 系统的博客日记 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客日记 列表", notes = "获取 系统的博客日记 列表")
     public ApiResult<List<SysBlogDiaryQueryVo>> getSysBlogDiaryList(@Valid @RequestBody SysBlogDiaryQueryParam sysBlogDiaryQueryParam) throws Exception {
-         List<SysBlogDiaryQueryVo> paging = sysBlogDiaryService.getSysBlogDiaryList(sysBlogDiaryQueryParam);
+        List<SysBlogDiaryQueryVo> paging = sysBlogDiaryService.getSysBlogDiaryList(sysBlogDiaryQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 系统的博客日记 总记录数
      */

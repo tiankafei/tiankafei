@@ -17,7 +17,7 @@ public class ActuatorController {
     private ActuatorService actuatorService;
 
     @GetMapping("health/{status}")
-    public boolean health(@PathVariable String status){
+    public boolean health(@PathVariable String status) {
         actuatorService.setStatus(Boolean.valueOf(status));
         return actuatorService.getStatus();
     }

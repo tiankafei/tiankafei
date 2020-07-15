@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.db.entity.TableEntity;
-import org.tiankafei.db.param.TableNamePageListQueryParam;
-import org.tiankafei.db.service.TableService;
 import org.tiankafei.db.param.TableNameEntityQueryParam;
 import org.tiankafei.db.param.TableNameListQueryParam;
+import org.tiankafei.db.param.TableNamePageListQueryParam;
+import org.tiankafei.db.service.TableService;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.vo.Paging;
@@ -33,6 +33,7 @@ public class TableController extends BaseController {
 
     /**
      * 获取 数据库表
+     *
      * @param tableNameEntityQueryParam
      * @return
      * @throws Exception

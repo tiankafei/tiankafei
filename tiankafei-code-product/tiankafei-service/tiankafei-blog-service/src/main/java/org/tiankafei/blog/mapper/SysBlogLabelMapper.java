@@ -1,17 +1,17 @@
 package org.tiankafei.blog.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.tiankafei.blog.entity.SysBlogLabelEntity;
-import org.tiankafei.blog.param.SysBlogLabelQueryParam;
-import org.tiankafei.blog.param.SysBlogLabelPageQueryParam;
-import org.tiankafei.blog.vo.SysBlogLabelQueryVo;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.tiankafei.blog.entity.SysBlogLabelEntity;
+import org.tiankafei.blog.param.SysBlogLabelPageQueryParam;
+import org.tiankafei.blog.param.SysBlogLabelQueryParam;
+import org.tiankafei.blog.vo.SysBlogLabelQueryVo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>

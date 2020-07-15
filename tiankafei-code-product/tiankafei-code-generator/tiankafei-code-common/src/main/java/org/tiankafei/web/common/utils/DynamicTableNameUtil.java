@@ -10,17 +10,19 @@ public class DynamicTableNameUtil {
 
     /**
      * 设置动态表名
+     *
      * @param dataTable
      */
-    public static void setDynamicTableName(String dataTable){
+    public static void setDynamicTableName(String dataTable) {
         myTableNameLocal.set(dataTable);
     }
 
     /**
      * 获取动态表名
+     *
      * @return
      */
-    public static String getDynamicTableName(){
+    public static String getDynamicTableName() {
         String tableName = myTableNameLocal.get();
         myTableNameLocal.remove();
         return tableName;

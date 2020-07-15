@@ -1,8 +1,9 @@
 package org.tiankafei.cache.memory;
 
+import org.tiankafei.cache.CacheRepository;
+
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import org.tiankafei.cache.CacheRepository;
 
 /**
  * @author tiankafei

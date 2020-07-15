@@ -1,9 +1,9 @@
 package org.tiankafei.db.service;
 
 import org.tiankafei.db.entity.TableEntity;
-import org.tiankafei.db.param.TableNamePageListQueryParam;
-import org.tiankafei.db.param.TableNameListQueryParam;
 import org.tiankafei.db.param.TableNameEntityQueryParam;
+import org.tiankafei.db.param.TableNameListQueryParam;
+import org.tiankafei.db.param.TableNamePageListQueryParam;
 import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
@@ -21,11 +21,12 @@ public interface TableService extends BaseService<TableEntity> {
 
     /**
      * 获取 数据库表
+     *
      * @param tableNameEntityQueryParam
      * @return
      * @throws Exception
      */
-    TableEntity getTableEntity(TableNameEntityQueryParam tableNameEntityQueryParam) throws Exception ;
+    TableEntity getTableEntity(TableNameEntityQueryParam tableNameEntityQueryParam) throws Exception;
 
     /**
      * 获取 数据库表 分页对象列表

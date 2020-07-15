@@ -11,6 +11,7 @@ public interface CacheRepository {
 
     /**
      * 批量设置过期时间
+     *
      * @param keys
      * @param timeout
      * @param timeUnit
@@ -28,6 +29,7 @@ public interface CacheRepository {
 
     /**
      * 获取key集合
+     *
      * @param pattern
      * @return
      */

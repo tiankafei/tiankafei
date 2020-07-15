@@ -1,25 +1,27 @@
 package org.tiankafei.blog.controller;
 
-import org.tiankafei.blog.service.SysBlogOptionsService;
-import org.tiankafei.blog.param.SysBlogOptionsQueryParam;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.blog.param.SysBlogOptionsPageQueryParam;
+import org.tiankafei.blog.param.SysBlogOptionsQueryParam;
+import org.tiankafei.blog.service.SysBlogOptionsService;
 import org.tiankafei.blog.vo.SysBlogOptionsQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
 
 import javax.validation.Valid;
-
-import org.tiankafei.web.common.vo.Paging;
-import org.tiankafei.web.common.param.IdsParam;
-
 import java.util.List;
 
 /**
@@ -85,7 +87,7 @@ public class SysBlogOptionsController extends BaseController {
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 系统的博客选项设置 对象详情", notes = "获取 系统的博客选项设置 对象详情")
     public ApiResult<SysBlogOptionsQueryVo> getSysBlogOptions(@PathVariable("id") String id) throws Exception {
-         SysBlogOptionsQueryVo sysBlogOptionsQueryVo = sysBlogOptionsService.getSysBlogOptionsById(id);
+        SysBlogOptionsQueryVo sysBlogOptionsQueryVo = sysBlogOptionsService.getSysBlogOptionsById(id);
         return ApiResult.ok(sysBlogOptionsQueryVo);
     }
 
@@ -95,20 +97,20 @@ public class SysBlogOptionsController extends BaseController {
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客选项设置 分页列表", notes = "获取 系统的博客选项设置 分页列表")
     public ApiResult<Paging<SysBlogOptionsQueryVo>> getSysBlogOptionsPageList(@Valid @RequestBody SysBlogOptionsPageQueryParam sysBlogOptionsPageQueryParam) throws Exception {
-         Paging<SysBlogOptionsQueryVo> paging = sysBlogOptionsService.getSysBlogOptionsPageList(sysBlogOptionsPageQueryParam);
+        Paging<SysBlogOptionsQueryVo> paging = sysBlogOptionsService.getSysBlogOptionsPageList(sysBlogOptionsPageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 系统的博客选项设置 列表
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客选项设置 列表", notes = "获取 系统的博客选项设置 列表")
     public ApiResult<List<SysBlogOptionsQueryVo>> getSysBlogOptionsList(@Valid @RequestBody SysBlogOptionsQueryParam sysBlogOptionsQueryParam) throws Exception {
-         List<SysBlogOptionsQueryVo> paging = sysBlogOptionsService.getSysBlogOptionsList(sysBlogOptionsQueryParam);
+        List<SysBlogOptionsQueryVo> paging = sysBlogOptionsService.getSysBlogOptionsList(sysBlogOptionsQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 系统的博客选项设置 总记录数
      */

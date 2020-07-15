@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("information_schema.TABLES")
-@ApiModel(value = "数据库表 实体对象" , description = "数据库表 实体对象")
+@ApiModel(value = "数据库表 实体对象", description = "数据库表 实体对象")
 public class TableEntity extends BaseEntity {
 
     /**

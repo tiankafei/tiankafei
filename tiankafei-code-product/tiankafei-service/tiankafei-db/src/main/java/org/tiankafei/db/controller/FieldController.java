@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.db.entity.FieldEntity;
-import org.tiankafei.db.service.FieldService;
 import org.tiankafei.db.param.FieldNameEntityQueryParam;
 import org.tiankafei.db.param.FieldNameListQueryParam;
 import org.tiankafei.db.param.FieldNamePageListQueryParam;
+import org.tiankafei.db.service.FieldService;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.vo.Paging;
@@ -31,6 +31,7 @@ public class FieldController extends BaseController {
 
     /**
      * 获取 数据库表
+     *
      * @param fieldNameEntityQueryParam
      * @return
      * @throws Exception

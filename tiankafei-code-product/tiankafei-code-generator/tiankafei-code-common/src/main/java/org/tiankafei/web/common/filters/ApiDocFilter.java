@@ -33,10 +33,10 @@ public class ApiDocFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if(swaggerProperties.getEnable()){
+        if (swaggerProperties.getEnable()) {
             // 只有在开发模式才提供api文档支持
             chain.doFilter(request, response);
-        }else{
+        } else {
 //            // 重定向到错误页面
 //            HttpServletResponse servletResponse = (HttpServletResponse) response;
 //            servletResponse.sendRedirect("/apiDocError");

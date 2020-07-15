@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.entity.FieldEntity;
 import org.tiankafei.db.mapper.FieldMapper;
-import org.tiankafei.db.service.DbService;
-import org.tiankafei.db.service.FieldService;
 import org.tiankafei.db.param.FieldNameEntityQueryParam;
 import org.tiankafei.db.param.FieldNameListQueryParam;
 import org.tiankafei.db.param.FieldNamePageListQueryParam;
+import org.tiankafei.db.service.DbService;
+import org.tiankafei.db.service.FieldService;
 import org.tiankafei.web.common.exception.DaoException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
@@ -38,14 +38,14 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNameEntityQueryParam.getTableName());
         lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldNameEntityQueryParam.getFieldName());
         String tableSchema = fieldNameEntityQueryParam.getTableSchema();
-        if(StringUtils.isBlank(tableSchema)){
+        if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
         }
         lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         try {
             FieldEntity fieldEntity = super.getOne(lambdaQueryWrapper);
             return fieldEntity;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new DaoException("获取数据库表对象发生异常！");
         }
@@ -57,11 +57,11 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         LambdaQueryWrapper<FieldEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNamePageListQueryParam.getTableName());
         String fieldName = fieldNamePageListQueryParam.getFieldName();
-        if(StringUtils.isNotBlank(fieldName)){
+        if (StringUtils.isNotBlank(fieldName)) {
             lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldName);
         }
         String tableSchema = fieldNamePageListQueryParam.getTableSchema();
-        if(StringUtils.isBlank(tableSchema)){
+        if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }
@@ -74,11 +74,11 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         LambdaQueryWrapper<FieldEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNameListQueryParam.getTableName());
         String fieldName = fieldNameListQueryParam.getFieldName();
-        if(StringUtils.isNotBlank(fieldName)){
+        if (StringUtils.isNotBlank(fieldName)) {
             lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldName);
         }
         String tableSchema = fieldNameListQueryParam.getTableSchema();
-        if(StringUtils.isBlank(tableSchema)){
+        if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }

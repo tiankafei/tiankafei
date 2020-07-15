@@ -19,6 +19,6 @@ public interface CaptchaFeign {
      */
     @GetMapping("/captcha")
     @ApiOperation(value = "生成验证码", notes = "生成验证码")
-    public ApiResult<CaptchaParamVo> createCaptcha(@RequestParam(value = "uuid", required = false) String uuid) throws Exception ;
+    public ApiResult<CaptchaParamVo> createCaptcha(@RequestParam(value = "uuid", required = false) String uuid) throws Exception;
 
 }

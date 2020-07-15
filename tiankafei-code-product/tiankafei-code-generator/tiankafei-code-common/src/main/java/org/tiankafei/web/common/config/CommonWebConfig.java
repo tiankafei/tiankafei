@@ -3,12 +3,7 @@ package org.tiankafei.web.common.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import org.tiankafei.web.common.filters.ApiDocFilter;
-
-import java.util.Arrays;
 
 /**
  * @author tiankafei
@@ -18,7 +13,7 @@ import java.util.Arrays;
 public class CommonWebConfig {
 
     @Bean
-    public FilterRegistrationBean<ApiDocFilter> apiDocFilter(){
+    public FilterRegistrationBean<ApiDocFilter> apiDocFilter() {
         FilterRegistrationBean<ApiDocFilter> bean = new FilterRegistrationBean<>(new ApiDocFilter());
         bean.setOrder(2);
         bean.addUrlPatterns("/doc");

@@ -91,7 +91,7 @@ public class SysRoleInfoServiceImpl extends BaseServiceImpl<SysRoleInfoMapper, S
 
     @Override
     public SysRoleInfoQueryVo getSysRoleInfoById(Serializable id) throws Exception {
-		//SysRoleInfoQueryVo sysRoleInfoQueryVo = sysRoleInfoMapper.getSysRoleInfoById(id);
+        //SysRoleInfoQueryVo sysRoleInfoQueryVo = sysRoleInfoMapper.getSysRoleInfoById(id);
 
         SysRoleInfoEntity sysRoleInfoEntity = super.getById(id);
         SysRoleInfoQueryVo sysRoleInfoQueryVo = new SysRoleInfoQueryVo();
@@ -103,7 +103,7 @@ public class SysRoleInfoServiceImpl extends BaseServiceImpl<SysRoleInfoMapper, S
     public Paging<SysRoleInfoQueryVo> getSysRoleInfoPageList(SysRoleInfoPageQueryParam sysRoleInfoPageQueryParam) throws Exception {
         //IPage<SysRoleInfoQueryVo> iPage = sysRoleInfoMapper.getSysRoleInfoPageList(page, sysRoleInfoPageQueryParam);
 
-		Page page = setPageParam(sysRoleInfoPageQueryParam, OrderItem.desc("create_time"));
+        Page page = setPageParam(sysRoleInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysRoleInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         IPage<SysRoleInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);

@@ -18,7 +18,7 @@ public class DiscoveryClientController {
     private DiscoveryClient client;
 
     @GetMapping("/get1")
-    public List<String> get1(){
+    public List<String> get1() {
         List<String> services = client.getServices();
         return services;
     }

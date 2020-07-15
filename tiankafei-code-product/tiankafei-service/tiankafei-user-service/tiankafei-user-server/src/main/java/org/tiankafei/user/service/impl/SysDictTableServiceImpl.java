@@ -103,7 +103,7 @@ public class SysDictTableServiceImpl extends BaseServiceImpl<SysDictTableMapper,
 
     @Override
     public SysDictTableQueryVo getSysDictTableById(String dataTable, Serializable id) throws Exception {
-		//SysDictTableQueryVo sysDictTableQueryVo = sysDictTableMapper.getSysDictTableById(id);
+        //SysDictTableQueryVo sysDictTableQueryVo = sysDictTableMapper.getSysDictTableById(id);
 
         SysDictTableEntity sysDictTableEntity = super.getById(id);
         SysDictTableQueryVo sysDictTableQueryVo = new SysDictTableQueryVo();

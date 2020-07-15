@@ -1,10 +1,10 @@
 package org.tiankafei.blog.service;
 
 import org.tiankafei.blog.entity.SysBlogOptionsEntity;
-import org.tiankafei.web.common.service.BaseService;
-import org.tiankafei.blog.param.SysBlogOptionsQueryParam;
 import org.tiankafei.blog.param.SysBlogOptionsPageQueryParam;
+import org.tiankafei.blog.param.SysBlogOptionsQueryParam;
 import org.tiankafei.blog.vo.SysBlogOptionsQueryVo;
+import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 public interface SysBlogOptionsService extends BaseService<SysBlogOptionsEntity> {
-    
+
     /**
      * 校验 系统的博客选项设置 是否已经存在
      *
@@ -37,7 +37,7 @@ public interface SysBlogOptionsService extends BaseService<SysBlogOptionsEntity>
      * @throws Exception
      */
     Object addSysBlogOptions(SysBlogOptionsQueryVo sysBlogOptionsQueryVo) throws Exception;
-    
+
     /**
      * 保存 系统的博客选项设置 集合
      *
@@ -64,7 +64,7 @@ public interface SysBlogOptionsService extends BaseService<SysBlogOptionsEntity>
      * @throws Exception
      */
     boolean deleteSysBlogOptions(String ids) throws Exception;
-	
+
     /**
      * 根据条件删除 系统的博客选项设置
      *
@@ -81,7 +81,7 @@ public interface SysBlogOptionsService extends BaseService<SysBlogOptionsEntity>
      * @return
      * @throws Exception
      */
-     SysBlogOptionsQueryVo getSysBlogOptionsById(Serializable id) throws Exception;
+    SysBlogOptionsQueryVo getSysBlogOptionsById(Serializable id) throws Exception;
 
     /**
      * 获取 系统的博客选项设置 分页对象列表
@@ -99,8 +99,8 @@ public interface SysBlogOptionsService extends BaseService<SysBlogOptionsEntity>
      * @return
      * @throws Exception
      */
-     List<SysBlogOptionsQueryVo> getSysBlogOptionsList(SysBlogOptionsQueryParam sysBlogOptionsQueryParam) throws Exception;
-    
+    List<SysBlogOptionsQueryVo> getSysBlogOptionsList(SysBlogOptionsQueryParam sysBlogOptionsQueryParam) throws Exception;
+
     /**
      * 计算 系统的博客选项设置 总记录数
      *

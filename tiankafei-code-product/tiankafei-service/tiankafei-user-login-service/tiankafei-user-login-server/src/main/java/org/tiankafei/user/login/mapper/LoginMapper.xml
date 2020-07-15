@@ -130,7 +130,7 @@
         select t.*, t.id as user_login_id from sys_user_login t
         <where>
             (
-                t.username = #{param.keywords} or t.email = #{param.keywords} or t.telephone = #{param.keywords}
+            t.username = #{param.keywords} or t.email = #{param.keywords} or t.telephone = #{param.keywords}
             )
             <if test="param.password != null">
                 and t.password = #{param.password}

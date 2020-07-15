@@ -15,6 +15,7 @@ public interface LoginMapper {
 
     /**
      * 获取用户、角色、功能的所有数据
+     *
      * @param userId
      * @return
      */
@@ -22,6 +23,7 @@ public interface LoginMapper {
 
     /**
      * 根据用户名登录获取用户对象
+     *
      * @param loginParamVo
      * @return
      */
@@ -29,6 +31,7 @@ public interface LoginMapper {
 
     /**
      * 根据邮箱登录获取用户对象
+     *
      * @param loginParamVo
      * @return
      */
@@ -36,6 +39,7 @@ public interface LoginMapper {
 
     /**
      * 根据手机号码登录获取用户对象
+     *
      * @param loginParamVo
      * @return
      */
@@ -43,6 +47,7 @@ public interface LoginMapper {
 
     /**
      * 登录获取用户对象
+     *
      * @param loginParamVo
      * @return
      */

@@ -25,22 +25,23 @@ public class ImageCaptchaUtil {
     private int length;
     private OutputStream outputStream;
 
-    public static Builder require(OutputStream outputStream){
+    public static Builder require(OutputStream outputStream) {
         return new Builder(outputStream);
     }
 
     /**
      * 获取验证码的key值
+     *
      * @param uuid
      * @return
      */
-    public static String getCaptchaKey(String uuid){
+    public static String getCaptchaKey(String uuid) {
         return CommonEnum.CAPTCHA_CODE_KEY.getCode() + uuid;
     }
 
     public String finish() throws VerificationException {
         try {
-            if(this.style.equals(CaptchaStyle.IMG)){
+            if (this.style.equals(CaptchaStyle.IMG)) {
                 Captcha captcha = new Captcha();
                 captcha.setType(this.type);
                 captcha.setWidth(this.width);
@@ -50,7 +51,7 @@ public class ImageCaptchaUtil {
                 String captchaCode = captcha.getCaptchaCode();
                 captcha.render(outputStream);
                 return captchaCode;
-            }else if(this.style.equals(CaptchaStyle.ANIM)){
+            } else if (this.style.equals(CaptchaStyle.ANIM)) {
                 AnimCaptcha captcha = new AnimCaptcha();
                 captcha.setType(this.type);
                 captcha.setWidth(this.width);
@@ -60,17 +61,17 @@ public class ImageCaptchaUtil {
                 String captchaCode = captcha.getCaptchaCode();
                 captcha.render(outputStream);
                 return captchaCode;
-            }else{
+            } else {
                 throw new VerificationException("验证码生成错误");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new VerificationException("验证码生成错误");
         }
 
     }
 
-    private ImageCaptchaUtil(Builder builder){
+    private ImageCaptchaUtil(Builder builder) {
         this.type = builder.type;
         this.style = builder.style;
         this.font = builder.font;
@@ -80,7 +81,7 @@ public class ImageCaptchaUtil {
         this.outputStream = builder.outputStream;
     }
 
-    public static class Builder{
+    public static class Builder {
         private CaptchaType type = CaptchaType.DEFAULT;
         private CaptchaStyle style = CaptchaStyle.IMG;
         private Font font = Fonts.getInstance().defaultFont();
@@ -89,39 +90,40 @@ public class ImageCaptchaUtil {
         private int length = 5;
         private OutputStream outputStream;
 
-        public Builder(OutputStream outputStream){
+        public Builder(OutputStream outputStream) {
             this.outputStream = outputStream;
         }
 
-        public ImageCaptchaUtil build(){
+        public ImageCaptchaUtil build() {
             return new ImageCaptchaUtil(this);
         }
 
-        public ImageCaptchaUtil.Builder type(CaptchaType type){
+        public ImageCaptchaUtil.Builder type(CaptchaType type) {
             this.type = type;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder style(CaptchaStyle style){
+        public ImageCaptchaUtil.Builder style(CaptchaStyle style) {
             this.style = style;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder width(int width){
+        public ImageCaptchaUtil.Builder width(int width) {
             this.width = width;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder height(int height){
+        public ImageCaptchaUtil.Builder height(int height) {
             this.height = height;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder length(int length){
+        public ImageCaptchaUtil.Builder length(int length) {
             this.length = length;
             return this;
         }
-        public ImageCaptchaUtil.Builder font(Font font){
+
+        public ImageCaptchaUtil.Builder font(Font font) {
             this.font = font;
             return this;
         }
