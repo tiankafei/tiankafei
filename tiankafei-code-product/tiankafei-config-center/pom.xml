@@ -16,4 +16,8 @@
     <name>tiankafei-config-center</name>
     <description></description>
 
+    <modules>
+        <module>tiankafei-config</module>
+    </modules>
+
 </project>

@@ -12,3 +12,4 @@ target
 **/logs/
 **/dump.rdb
 **/consul.exe
+/tiankafei-config-center/config/
