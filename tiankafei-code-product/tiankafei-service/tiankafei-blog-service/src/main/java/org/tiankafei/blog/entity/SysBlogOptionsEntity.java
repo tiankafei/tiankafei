@@ -3,6 +3,7 @@ package org.tiankafei.blog.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.sql.Timestamp;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.EqualsAndHashCode;
 import org.tiankafei.web.common.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -25,6 +26,7 @@ import javax.validation.constraints.NotNull;
  * @since 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_blog_options")
 @ApiModel(value = " 系统的博客选项设置 实体对象" , description = "系统的博客选项设置")

@@ -31,10 +31,6 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-code-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-user-common</artifactId>
         </dependency>
         <dependency>

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.tiankafei.web.common.entity.BaseEntity;
 
@@ -23,6 +24,7 @@ import java.sql.Timestamp;
  * @since 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_user_role")
 @ApiModel(value = " 用户拥有的角色关系表 实体对象", description = "用户拥有的角色关系表")

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.tiankafei.web.common.entity.BaseEntity;
 
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotNull;
  * @since 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_role_menu")
 @ApiModel(value = " 系统角色对应的功能配置表 实体对象", description = "系统角色对应的功能配置表")

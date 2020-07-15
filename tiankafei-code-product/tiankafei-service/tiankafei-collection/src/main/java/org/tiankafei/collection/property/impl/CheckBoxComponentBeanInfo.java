@@ -1,6 +1,7 @@
 package org.tiankafei.collection.property.impl;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.tiankafei.base.base.model.CodeNameVo;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
@@ -15,6 +16,7 @@ import java.util.List;
  * @since 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class CheckBoxComponentBeanInfo extends ChooseComponentProperty implements CheckBoxComponentProperty {
 

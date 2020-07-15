@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.tiankafei.web.common.entity.BaseEntity;
 
 import java.math.BigInteger;
@@ -13,6 +14,7 @@ import java.math.BigInteger;
  * @since 1.0
  **/
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("information_schema.COLUMNS")
 public class FieldEntity extends BaseEntity {
 

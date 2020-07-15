@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.tiankafei.web.common.entity.BaseEntity;
 
 import java.math.BigInteger;
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
  * @since 1.0
  **/
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("information_schema.TABLES")
 @ApiModel(value = "数据库表 实体对象" , description = "数据库表 实体对象")
 public class TableEntity extends BaseEntity {

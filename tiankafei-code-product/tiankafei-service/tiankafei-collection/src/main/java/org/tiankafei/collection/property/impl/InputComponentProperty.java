@@ -1,6 +1,7 @@
 package org.tiankafei.collection.property.impl;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -10,6 +11,7 @@ import lombok.experimental.Accessors;
  * @since 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public abstract class InputComponentProperty extends BaseComponentProperty {
 
