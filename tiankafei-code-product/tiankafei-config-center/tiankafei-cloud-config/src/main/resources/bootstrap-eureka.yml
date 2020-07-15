@@ -16,11 +16,3 @@ spring:
     username: guest
     password: guest
     virtual-host: /
-  cloud:
-    config:
-      discovery:
-        enabled: true
-        service-id: cloud-config-service
-      name: ${spring.application.name}
-      profile: eureka
-      label: master
