@@ -4,7 +4,6 @@ import org.tiankafei.blog.service.SysBlogInfoService;
 import org.tiankafei.blog.param.SysBlogInfoQueryParam;
 import org.tiankafei.blog.param.SysBlogInfoPageQueryParam;
 import org.tiankafei.blog.vo.SysBlogInfoQueryVo;
-import org.tiankafei.user.feign.SysUserInfoFeign;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 
@@ -38,39 +37,6 @@ public class SysBlogInfoController extends BaseController {
 
     @Autowired
     private SysBlogInfoService sysBlogInfoService;
-
-    @Autowired
-    private SysUserInfoFeign userInfoFeign;
-
-    /**
-     * 校验 用户名 是否已经存在
-     */
-    @GetMapping("/checkUsername/{username}")
-    @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
-    public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
-        Boolean flag = userInfoFeign.checkUsernameExists(username).getData();
-        return ApiResult.ok(flag);
-    }
-
-    /**
-     * 校验  邮箱 是否已经存在
-     */
-    @GetMapping("/checkEmail/{email}")
-    @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
-    public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
-        Boolean flag = userInfoFeign.checkEmailExists(email).getData();
-        return ApiResult.ok(flag);
-    }
-
-    /**
-     * 校验 手机号码 是否已经存在
-     */
-    @GetMapping("/checkTelephone/{telephone}")
-    @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
-    public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
-        Boolean flag = userInfoFeign.checkTelephoneExists(telephone).getData();
-        return ApiResult.ok(flag);
-    }
 
     /**
      * 校验 系统的博客数据 是否已经存在
