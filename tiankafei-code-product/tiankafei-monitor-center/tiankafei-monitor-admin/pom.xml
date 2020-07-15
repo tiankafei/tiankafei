@@ -25,9 +25,28 @@
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-micro-depends</artifactId>
             <exclusions>
+                <!--排除springboot-admin客户端依赖，因为自己无法给自己汇报健康状态-->
                 <exclusion>
                     <groupId>de.codecentric</groupId>
                     <artifactId>spring-boot-admin-starter-client</artifactId>
+                </exclusion>
+                <!--监控中心不需要进行动态配置更新-->
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-config-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+                </exclusion>
+                <!--监控中心不需要进行链路追踪-->
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-sleuth</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-zipkin</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
