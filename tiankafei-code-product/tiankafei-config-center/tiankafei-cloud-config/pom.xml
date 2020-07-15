@@ -24,8 +24,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--注册中心依赖-->
+        <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-micro-depends</artifactId>
+            <artifactId>tiankafei-register-depends</artifactId>
         </dependency>
         <!--spring-cloud-config-->
         <dependency>

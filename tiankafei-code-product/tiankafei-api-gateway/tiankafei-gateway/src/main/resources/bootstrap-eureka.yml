@@ -9,3 +9,18 @@ eureka:
     lease-expiration-duration-in-seconds: 60
     metadata-map:
       key: 这是springcloud-gateway注册erueka的自定义元数据
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: cloud-config-service
+      name: ${spring.application.name}
+      profile: eureka
+      label: master
