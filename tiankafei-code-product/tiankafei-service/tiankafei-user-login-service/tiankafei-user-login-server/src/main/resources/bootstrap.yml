@@ -90,3 +90,6 @@ tiankafei:
 #  tokenType: 3  # 从请求参数中获取token信息
 #  tokenType: 4  # 从session中获取token信息（需要做session同步）
 #################################### tiankafei自定义配置 end ###################################
+feign:
+  hystrix:
+    enabled: true
