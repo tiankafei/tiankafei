@@ -23,12 +23,22 @@ public class EncryptionController {
     private EncryptionService encryptionService;
 
     /**
-     * 生成验证码
+     * 加密
      */
-    @GetMapping("/captcha")
-    @ApiOperation(value = "生成验证码", notes = "生成验证码")
-    public ApiResult<String> createCaptcha(@RequestParam(value = "str") String str) throws Exception {
+    @GetMapping("/encryption")
+    @ApiOperation(value = "加密", notes = "加密")
+    public ApiResult<String> encryption(@RequestParam(value = "str") String str) throws Exception {
         String encryption = encryptionService.encryption(str);
+        return ApiResult.ok(encryption);
+    }
+
+    /**
+     * 生成token
+     */
+    @GetMapping("/token")
+    @ApiOperation(value = "生成token", notes = "生成token")
+    public ApiResult<String> token(@RequestParam(value = "str") String str) throws Exception {
+        String encryption = encryptionService.token(str);
         return ApiResult.ok(encryption);
     }
 

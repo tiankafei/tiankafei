@@ -1,6 +1,5 @@
 package org.tiankafei.user.service.impl;
 
-import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
@@ -15,6 +14,7 @@ import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.UserEnums;
+import org.tiankafei.user.login.feign.EncryptionFeign;
 import org.tiankafei.user.mapper.SysUserInfoMapper;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.SysUserLoginPageQueryParam;
@@ -52,6 +52,9 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     @Autowired
     private CheckExistsClient checkExistsClient;
 
+    @Autowired
+    private EncryptionFeign encryptionFeign;
+
     @Override
     public boolean checkSysUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
         LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
@@ -70,7 +73,7 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
         // 新增时密码加密
-        sysUserLoginEntity.setPassword(SecureUtil.md5(sysUserLoginEntity.getPassword()));
+        sysUserLoginEntity.setPassword(encryptionFeign.encryption(sysUserLoginEntity.getPassword()).getData());
         // id值赋为空，使用自动生成的ID
         sysUserLoginEntity.setId(null);
         super.save(sysUserLoginEntity);
@@ -114,6 +117,8 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         // 更新用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
+        // 编辑时密码加密
+        sysUserLoginEntity.setPassword(encryptionFeign.encryption(sysUserLoginEntity.getPassword()).getData());
         super.updateById(sysUserLoginEntity);
 
         return Boolean.TRUE;

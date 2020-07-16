@@ -13,4 +13,11 @@ public interface EncryptionService {
      */
     public String encryption(String str);
 
+    /**
+     * 生成token
+     * @param str
+     * @return
+     */
+    public String token(String str);
+
 }

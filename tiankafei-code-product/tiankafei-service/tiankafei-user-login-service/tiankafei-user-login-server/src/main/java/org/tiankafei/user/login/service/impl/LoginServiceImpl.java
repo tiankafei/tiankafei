@@ -1,7 +1,6 @@
 package org.tiankafei.user.login.service.impl;
 
 import cn.hutool.core.lang.Validator;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import org.tiankafei.user.enums.UserStatusEnums;
 import org.tiankafei.user.login.bean.QueryUserClient;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.service.CaptchaService;
+import org.tiankafei.user.login.service.EncryptionService;
 import org.tiankafei.user.login.service.LoginService;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.vo.SysMenuInfoQueryVo;
@@ -46,6 +46,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private LoginMapper loginMapper;
+
+    @Autowired
+    private EncryptionService encryptionService;
 
     /**
      * 针对用户登录的这个场景，用户数据不需要进行数据预热
@@ -92,7 +95,7 @@ public class LoginServiceImpl implements LoginService {
         SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords);
         if (userLoginQueryVo != null) {
             // TODO 密码规则修改 验证密码是否正确
-            String inputPassword = SecureUtil.md5(loginParamVo.getPassword());
+            String inputPassword = encryptionService.encryption(loginParamVo.getPassword());
             if(!userLoginQueryVo.getPassword().equals(inputPassword)){
                 throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
             }
@@ -113,7 +116,7 @@ public class LoginServiceImpl implements LoginService {
                 // 获取用户、角色、功能的所有数据
                 SysUserInfoQueryVo userInfoQueryVo = getSysUserInfoQueryVo(userId);
                 // TODO 生成token，暂时使用md5的方式对对象进行摘要
-                String token = SecureUtil.md5(JSONUtil.toJsonStr(userInfoQueryVo));
+                String token = encryptionService.token(JSONUtil.toJsonStr(userInfoQueryVo));
                 // 存放缓存
                 userInfoCache.setUserInfo(userInfoQueryVo, token);
                 return token;
