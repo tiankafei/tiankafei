@@ -14,7 +14,6 @@ import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -34,8 +33,8 @@ public class LoginController extends BaseController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    public ApiResult<String> login(@Valid @RequestBody LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
-        String token = loginService.login(loginParamVo, request);
+    public ApiResult<String> login(@Valid @RequestBody LoginParamVo loginParamVo) throws Exception {
+        String token = loginService.login(loginParamVo);
         return ApiResult.ok(token);
     }
 

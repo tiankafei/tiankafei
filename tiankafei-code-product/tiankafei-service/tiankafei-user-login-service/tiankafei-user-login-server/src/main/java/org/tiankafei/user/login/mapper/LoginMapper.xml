@@ -99,42 +99,28 @@
     <select id="queryUserLoginFromUsername" resultMap="userLoginMap">
         select t.*, t.id as user_login_id from sys_user_login t
         <where>
-            t.username = #{param.keywords}
-            <if test="param.password != null">
-                and t.password = #{param.password}
-            </if>
+            t.username = #{param}
         </where>
     </select>
 
     <select id="queryUserLoginFromEmail" resultMap="userLoginMap">
         select t.*, t.id as user_login_id from sys_user_login t
         <where>
-            t.email = #{param.keywords}
-            <if test="param.password != null">
-                and t.password = #{param.password}
-            </if>
+            t.email = #{param}
         </where>
     </select>
 
     <select id="queryUserLoginFromTelephone" resultMap="userLoginMap">
         select t.*, t.id as user_login_id from sys_user_login t
         <where>
-            t.telephone = #{param.keywords}
-            <if test="param.password != null">
-                and t.password = #{param.password}
-            </if>
+            t.telephone = #{param}
         </where>
     </select>
 
-    <select id="queryUserLogin" resultMap="userLoginMap">
+    <select id="queryUserLoginFromMore" resultMap="userLoginMap">
         select t.*, t.id as user_login_id from sys_user_login t
         <where>
-            (
-            t.username = #{param.keywords} or t.email = #{param.keywords} or t.telephone = #{param.keywords}
-            )
-            <if test="param.password != null">
-                and t.password = #{param.password}
-            </if>
+            t.username = #{param} or t.email = #{param} or t.telephone = #{param}
         </where>
     </select>
 

@@ -3,6 +3,8 @@ package org.tiankafei.user.login.service.impl;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.cache.UserInfoCache;
@@ -76,11 +78,11 @@ public class LoginServiceImpl implements LoginService {
      * @throws LoginException
      */
     @Override
-    public String login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception {
+    public String login(LoginParamVo loginParamVo) throws Exception {
         String keywords = loginParamVo.getKeywords();
         String password = loginParamVo.getPassword();
         // 0.验证数据合法性
-        checkDataValid(loginParamVo, request);
+        checkDataValid(loginParamVo);
 
         // 不存在的用户名，会放进缓存中，仅允许查询一次数据库，避免缓存穿透的问题
         SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(keywords, password);
@@ -89,9 +91,15 @@ public class LoginServiceImpl implements LoginService {
 //            return token;
 //        }
 
-        // 根据用户名密码进行登录
-        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords, password);
+        // 根据用户名查询用户对象
+        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords);
         if (userLoginQueryVo != null) {
+            // TODO 密码规则修改 验证密码是否正确
+            String inputPassword = SecureUtil.md5(loginParamVo.getPassword());
+            if(!userLoginQueryVo.getPassword().equals(inputPassword)){
+                throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
+            }
+
             String status = userLoginQueryVo.getStatus();
             if (UserStatusEnums.DISABLE.getCode().equalsIgnoreCase(status)) {
                 throw new LoginException("该账号已经被禁用！");
@@ -117,11 +125,8 @@ public class LoginServiceImpl implements LoginService {
                 throw new Exception("获取用户数据发生异常！");
             }
         } else {
-            // 登录失败，用户名或密码错误，查询当前登录的用户名是否存在
-            if (!queryUserClient.checkUserExists(loginParamVo.getLoginType(), keywords)) {
-                // 当前用户名不存在，存放空值到缓存中，避免缓存穿透
-                userInfoCache.setUsernameNullValue(keywords);
-            }
+            // 当前用户名不存在，存放空值到缓存中，避免缓存穿透
+            userInfoCache.setUsernameNullValue(keywords);
             throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
         }
     }
@@ -130,9 +135,9 @@ public class LoginServiceImpl implements LoginService {
      * 验证数据合法性
      *
      * @param loginParamVo
-     * @param request
+     * @throws LoginException
      */
-    private void checkDataValid(LoginParamVo loginParamVo, HttpServletRequest request) throws LoginException {
+    private void checkDataValid(LoginParamVo loginParamVo) throws LoginException {
         try {
             // 输入的登录用户名
             String keywords = loginParamVo.getKeywords();

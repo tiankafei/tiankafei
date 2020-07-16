@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.login.mapper.LoginMapper;
 import org.tiankafei.user.login.service.QueryUserService;
-import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.exception.LoginException;
 
@@ -16,14 +15,8 @@ public class QueryPhoneService implements QueryUserService {
     private LoginMapper loginMapper;
 
     @Override
-    public Boolean checkUserExists(String keywords) throws LoginException {
-        SysUserLoginQueryVo sysUserLoginQueryVo = loginMapper.queryUserLoginFromTelephone(new LoginParamVo().setKeywords(keywords));
-        return sysUserLoginQueryVo == null;
-    }
-
-    @Override
-    public SysUserLoginQueryVo login(String keywords, String password) throws LoginException {
-        SysUserLoginQueryVo sysUserLoginQueryVo = loginMapper.queryUserLoginFromTelephone(new LoginParamVo().setKeywords(keywords).setPassword(password));
+    public SysUserLoginQueryVo login(String keywords) throws LoginException {
+        SysUserLoginQueryVo sysUserLoginQueryVo = loginMapper.queryUserLoginFromTelephone(keywords);
         return sysUserLoginQueryVo;
     }
 

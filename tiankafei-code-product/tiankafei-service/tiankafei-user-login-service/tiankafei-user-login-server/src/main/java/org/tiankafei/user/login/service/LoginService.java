@@ -3,8 +3,6 @@ package org.tiankafei.user.login.service;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.web.common.exception.LoginException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author tiankafei
  * @since 1.0
@@ -15,13 +13,13 @@ public interface LoginService {
      * 登录
      *
      * @param loginParamVo
-     * @throws LoginException
+     * @return
+     * @throws Exception
      */
-    String login(LoginParamVo loginParamVo, HttpServletRequest request) throws Exception;
+    String login(LoginParamVo loginParamVo) throws Exception;
 
     /**
      * 注销
-     *
      * @param userId
      * @throws LoginException
      */

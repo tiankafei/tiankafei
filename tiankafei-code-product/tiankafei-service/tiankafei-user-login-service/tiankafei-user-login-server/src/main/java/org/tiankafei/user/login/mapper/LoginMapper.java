@@ -24,33 +24,33 @@ public interface LoginMapper {
     /**
      * 根据用户名登录获取用户对象
      *
-     * @param loginParamVo
+     * @param keywords
      * @return
      */
-    SysUserLoginQueryVo queryUserLoginFromUsername(@Param("param") LoginParamVo loginParamVo);
+    SysUserLoginQueryVo queryUserLoginFromUsername(@Param("param") String keywords);
 
     /**
      * 根据邮箱登录获取用户对象
      *
-     * @param loginParamVo
+     * @param keywords
      * @return
      */
-    SysUserLoginQueryVo queryUserLoginFromEmail(@Param("param") LoginParamVo loginParamVo);
+    SysUserLoginQueryVo queryUserLoginFromEmail(@Param("param") String keywords);
 
     /**
      * 根据手机号码登录获取用户对象
      *
-     * @param loginParamVo
+     * @param keywords
      * @return
      */
-    SysUserLoginQueryVo queryUserLoginFromTelephone(@Param("param") LoginParamVo loginParamVo);
+    SysUserLoginQueryVo queryUserLoginFromTelephone(@Param("param") String keywords);
 
     /**
      * 登录获取用户对象
      *
-     * @param loginParamVo
+     * @param keywords
      * @return
      */
-    SysUserLoginQueryVo queryUserLogin(@Param("param") LoginParamVo loginParamVo);
+    SysUserLoginQueryVo queryUserLoginFromMore(@Param("param") String keywords);
 
 }
