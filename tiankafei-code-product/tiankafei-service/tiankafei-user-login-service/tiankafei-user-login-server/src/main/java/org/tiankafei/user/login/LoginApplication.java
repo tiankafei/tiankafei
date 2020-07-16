@@ -16,10 +16,10 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
 @ComponentScan(basePackages = {"org.tiankafei"})
 @EnableHystrixDashboard
-public class UserLoginApplication {
+public class LoginApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserLoginApplication.class, args);
+        SpringApplication.run(LoginApplication.class, args);
     }
 
 }
