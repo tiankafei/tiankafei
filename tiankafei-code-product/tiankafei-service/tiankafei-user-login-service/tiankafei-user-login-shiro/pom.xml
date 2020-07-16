@@ -9,21 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-user-login-service</artifactId>
+    <artifactId>tiankafei-user-login-shiro</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>tiankafei-user-login-service</name>
+    <name>tiankafei-user-login-shiro</name>
     <description></description>
-
-    <modules>
-        <module>tiankafei-user-login</module>
-        <module>tiankafei-user-login-api</module>
-        <module>tiankafei-user-login-common</module>
-        <module>tiankafei-user-login-shiro</module>
-        <module>tiankafei-user-login-jwt</module>
-        <module>tiankafei-user-login-springsecurity</module>
-        <module>tiankafei-user-login-server</module>
-    </modules>
 
 </project>
