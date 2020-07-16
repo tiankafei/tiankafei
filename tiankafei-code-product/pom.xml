@@ -244,41 +244,50 @@
 
 
             <!--产品自己的工具包-->
+            <!--微服务依赖的工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-micro-depends</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+            <!--注册中心依赖的工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-register-depends</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+            <!--公共代码工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-code-common</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+            <!--用户公共属性工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-user-common</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+            <!--用户缓存工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-user-cache</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+            <!--通用的数据库查询工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-db</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+            <!--公共采集控件工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-collection</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+
+            <!--feign调用客户端工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-user-api</artifactId>
@@ -287,6 +296,18 @@
             <dependency>
                 <groupId>org.tiankafei</groupId>
                 <artifactId>tiankafei-user-login-api</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+
+            <!--用户登录相关工程-->
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-user-login</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-user-login-common</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
 
