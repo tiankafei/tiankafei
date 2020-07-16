@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 /**
  * @author tiankafei
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
 @ComponentScan(basePackages = {"org.tiankafei"})
 @EnableHystrixDashboard
+@EnableWebSecurity
 public class LoginSpringSecurityApplication {
 
     public static void main(String[] args) {
