@@ -11,7 +11,7 @@ import org.tiankafei.web.common.param.CaptchaParamVo;
  * @author tiankafei
  * @since 1.0
  */
-@FeignClient(value = "user-login-service", contextId = "captcha")
+@FeignClient(value = "login-service", contextId = "captcha")
 public interface CaptchaFeign {
 
     /**
