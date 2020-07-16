@@ -157,26 +157,6 @@ public class UserInfoCache {
     }
 
     /**
-     * 设置验证码，有效期5分钟
-     *
-     * @param key
-     * @param value
-     */
-    public void setCaptchaCode(String key, String value) {
-        cacheManagerRepository.setCacheObject(key, value, 5, TimeUnit.MINUTES);
-    }
-
-    /**
-     * 从缓存当中获取验证码
-     *
-     * @param key
-     * @return
-     */
-    public String getCaptchaCode(String key) {
-        return cacheQueryRepository.<String>getCacheObject(key);
-    }
-
-    /**
      * 设置用户信息对象到缓存中
      *
      * @param userInfoQueryVo
