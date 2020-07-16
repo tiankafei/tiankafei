@@ -41,7 +41,7 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-user-cache</artifactId>
+            <artifactId>tiankafei-code-common</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.alibaba</groupId>
@@ -57,6 +57,24 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--<dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-user-cache</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>druid-spring-boot-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
     </dependencies>
 
     <build>
