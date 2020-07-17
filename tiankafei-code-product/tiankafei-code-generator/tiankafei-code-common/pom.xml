@@ -105,6 +105,10 @@
             <groupId>com.ramostear</groupId>
             <artifactId>Happy-Captcha</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+        </dependency>
         <!--poi依赖包-->
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>

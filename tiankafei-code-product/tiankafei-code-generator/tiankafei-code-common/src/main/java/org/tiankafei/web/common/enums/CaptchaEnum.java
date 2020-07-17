@@ -7,6 +7,7 @@ package org.tiankafei.web.common.enums;
 public enum CaptchaEnum {
 
     HAPPY_CAPTCHA("HAPPY_CAPTCHA"),
+    KAPTCHA_CAPTCHA("KAPTCHA_CAPTCHA"),
     RUO_YI_UTIL("RUO_YI_UTIL"),
     ;
 

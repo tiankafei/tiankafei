@@ -203,6 +203,11 @@
                 <artifactId>Happy-Captcha</artifactId>
                 <version>1.0.1</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>2.3.2</version>
+            </dependency>
             <!--poi依赖包-->
             <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
             <dependency>
