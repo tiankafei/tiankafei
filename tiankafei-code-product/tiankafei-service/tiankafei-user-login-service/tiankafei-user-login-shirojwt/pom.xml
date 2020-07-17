@@ -9,11 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-user-login-shiro</artifactId>
+    <artifactId>tiankafei-user-login-shirojwt</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tiankafei-user-login-shiro</name>
+    <name>tiankafei-user-login-shirojwt</name>
     <description></description>
 
 </project>

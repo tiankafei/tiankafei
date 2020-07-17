@@ -20,8 +20,7 @@
         <module>tiankafei-user-login</module>
         <module>tiankafei-user-login-api</module>
         <module>tiankafei-user-login-common</module>
-        <module>tiankafei-user-login-shiro</module>
-        <module>tiankafei-user-login-jwt</module>
+        <module>tiankafei-user-login-shirojwt</module>
         <module>tiankafei-user-login-springsecurity</module>
         <module>tiankafei-user-login-server</module>
     </modules>
