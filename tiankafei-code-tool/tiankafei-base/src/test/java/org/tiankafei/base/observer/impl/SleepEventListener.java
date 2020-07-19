@@ -1,7 +1,7 @@
 package org.tiankafei.base.observer.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.tiankafei.base.observer.EventListener;
+import org.tiankafei.base.observer.ListenerManager;
 import org.tiankafei.base.observer.event.SleepEventModel;
 
 /**
@@ -9,7 +9,11 @@ import org.tiankafei.base.observer.event.SleepEventModel;
  * @since 1.0
  */
 @Slf4j
-public class SleepEventListener implements EventListener<SleepEventModel> {
+public class SleepEventListener extends BaseEventListener<SleepEventModel> {
+
+    public SleepEventListener(ListenerManager listenerManager) {
+        super(listenerManager);
+    }
 
     @Override
     public void onEvent(SleepEventModel event) {

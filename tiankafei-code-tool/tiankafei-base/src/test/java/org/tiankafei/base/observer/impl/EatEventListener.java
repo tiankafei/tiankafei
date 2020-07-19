@@ -1,7 +1,6 @@
 package org.tiankafei.base.observer.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.tiankafei.base.observer.EventListener;
 import org.tiankafei.base.observer.ListenerManager;
 import org.tiankafei.base.observer.event.EatEventModel;
 import org.tiankafei.base.observer.event.WorkEventModel;
@@ -11,7 +10,11 @@ import org.tiankafei.base.observer.event.WorkEventModel;
  * @since 1.0
  */
 @Slf4j
-public class EatEventListener implements EventListener<EatEventModel> {
+public class EatEventListener extends BaseEventListener<EatEventModel> {
+
+    public EatEventListener(ListenerManager listenerManager) {
+        super(listenerManager);
+    }
 
     @Override
     public void onEvent(EatEventModel event) {
@@ -19,9 +22,7 @@ public class EatEventListener implements EventListener<EatEventModel> {
         // TODO 执行事件处理
         log.info("执行了{}观察者的方法", this.getClass().getName());
 
-        ListenerManager listenerManager = new WorkListenerManager();
-        listenerManager.addObserver(new WorkEventListener());
-        listenerManager.executeObserver(new WorkEventModel(new Object()));
+        listenerManager.onWorkEvent(new WorkEventModel(sourceEvent));
     }
 
 }
