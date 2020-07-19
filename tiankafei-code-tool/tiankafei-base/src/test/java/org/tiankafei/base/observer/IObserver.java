@@ -1,5 +1,7 @@
 package org.tiankafei.base.observer;
 
+import java.util.EventObject;
+
 /**
  * 观察者接口
  * @author tiankafei

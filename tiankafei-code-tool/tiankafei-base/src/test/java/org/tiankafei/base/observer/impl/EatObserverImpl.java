@@ -1,8 +1,9 @@
 package org.tiankafei.base.observer.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.tiankafei.base.observer.EventObject;
 import org.tiankafei.base.observer.IObserver;
+
+import java.util.EventObject;
 
 /**
  * @author tiankafei

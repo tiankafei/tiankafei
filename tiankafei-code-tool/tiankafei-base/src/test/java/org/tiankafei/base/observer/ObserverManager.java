@@ -2,6 +2,7 @@ package org.tiankafei.base.observer;
 
 import com.google.common.collect.Lists;
 
+import java.util.EventObject;
 import java.util.List;
 
 /**

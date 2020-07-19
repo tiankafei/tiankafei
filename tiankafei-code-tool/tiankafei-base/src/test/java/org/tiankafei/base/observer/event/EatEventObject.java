@@ -1,6 +1,6 @@
 package org.tiankafei.base.observer.event;
 
-import org.tiankafei.base.observer.EventObject;
+import java.util.EventObject;
 
 /**
  * 吃饭
@@ -10,6 +10,12 @@ import org.tiankafei.base.observer.EventObject;
  */
 public class EatEventObject extends EventObject {
 
+    /**
+     * Constructs a prototypical Event.
+     *
+     * @param source the object on which the Event initially occurred
+     * @throws IllegalArgumentException if source is null
+     */
     public EatEventObject(Object source) {
         super(source);
     }

@@ -1,6 +1,6 @@
 package org.tiankafei.base.observer.event;
 
-import org.tiankafei.base.observer.EventObject;
+import java.util.EventObject;
 
 /**
  * 工作
@@ -10,6 +10,12 @@ import org.tiankafei.base.observer.EventObject;
  */
 public class WorkEventObject extends EventObject {
 
+    /**
+     * Constructs a prototypical Event.
+     *
+     * @param source the object on which the Event initially occurred
+     * @throws IllegalArgumentException if source is null
+     */
     public WorkEventObject(Object source) {
         super(source);
     }

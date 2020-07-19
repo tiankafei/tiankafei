@@ -4,6 +4,8 @@ import org.tiankafei.base.observer.impl.EatObserverImpl;
 import org.tiankafei.base.observer.impl.SleepObserverImpl;
 import org.tiankafei.base.observer.impl.WorkObserverImpl;
 
+import java.util.EventObject;
+
 /**
  *
  *
