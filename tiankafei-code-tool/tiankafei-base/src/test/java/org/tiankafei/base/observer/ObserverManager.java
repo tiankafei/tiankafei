@@ -16,8 +16,8 @@ public class ObserverManager {
         observerList.add(observer);
     }
 
-    public void executeObserver(ObserverEvent event){
-        observerList.stream().forEach(observer -> observer.execute(event));
+    public void executeObserver(EventObject event){
+        observerList.stream().forEach(observer -> observer.publishEvent(event));
     }
 
 }

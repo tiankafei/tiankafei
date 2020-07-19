@@ -5,8 +5,8 @@ package org.tiankafei.base.observer;
  * @author tiankafei
  * @since 1.0
  */
-public interface IObserver<T extends ObserverEvent> {
+public interface IObserver {
 
-    void execute(ObserverEvent event);
+    void publishEvent(EventObject event);
 
 }

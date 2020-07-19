@@ -1,7 +1,8 @@
 package org.tiankafei.base.observer;
 
-import org.tiankafei.base.observer.impl.Observer1Impl;
-import org.tiankafei.base.observer.impl.Observer2Impl;
+import org.tiankafei.base.observer.impl.EatObserverImpl;
+import org.tiankafei.base.observer.impl.SleepObserverImpl;
+import org.tiankafei.base.observer.impl.WorkObserverImpl;
 
 /**
  *
@@ -14,11 +15,12 @@ public class ObserverTest {
     public static void main(String[] args) {
         ObserverManager observerManager = new ObserverManager();
 
-        observerManager.addObserver(new Observer1Impl());
-        observerManager.addObserver(new Observer2Impl());
+        observerManager.addObserver(new EatObserverImpl());
+        observerManager.addObserver(new WorkObserverImpl());
+        observerManager.addObserver(new SleepObserverImpl());
 
         Object object = new Object();
-        observerManager.executeObserver(new ObserverEvent(object));
+        observerManager.executeObserver(new EventObject(object));
     }
 
 }
