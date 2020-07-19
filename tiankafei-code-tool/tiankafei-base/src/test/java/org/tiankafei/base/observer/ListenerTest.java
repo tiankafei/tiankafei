@@ -10,7 +10,7 @@ import org.tiankafei.base.observer.impl.EatListenerManager;
  * @author tiankafei
  * @since 1.0
  */
-public class ObserverTest {
+public class ListenerTest {
 
     public static void main(String[] args) {
         ListenerManager listenerManager = new EatListenerManager();
