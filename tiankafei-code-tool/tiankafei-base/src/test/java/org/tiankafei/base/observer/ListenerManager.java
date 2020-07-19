@@ -8,7 +8,7 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  */
-public class ObserverManager {
+public abstract class ListenerManager<E extends EventListener> {
 
     protected List<EventListener> observerList = Lists.newArrayList();
 

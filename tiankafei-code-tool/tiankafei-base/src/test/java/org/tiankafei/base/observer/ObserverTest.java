@@ -2,6 +2,7 @@ package org.tiankafei.base.observer;
 
 import org.tiankafei.base.observer.event.EatEventModel;
 import org.tiankafei.base.observer.impl.EatEventListener;
+import org.tiankafei.base.observer.impl.EatListenerManager;
 
 /**
  *
@@ -12,9 +13,9 @@ import org.tiankafei.base.observer.impl.EatEventListener;
 public class ObserverTest {
 
     public static void main(String[] args) {
-        ObserverManager observerManager = new ObserverManager();
-        observerManager.addObserver(new EatEventListener());
-        observerManager.executeObserver(new EatEventModel(new Object()));
+        ListenerManager listenerManager = new EatListenerManager();
+        listenerManager.addObserver(new EatEventListener());
+        listenerManager.executeObserver(new EatEventModel(new Object()));
     }
 
 }
