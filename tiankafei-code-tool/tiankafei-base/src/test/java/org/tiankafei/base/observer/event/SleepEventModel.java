@@ -1,14 +1,14 @@
 package org.tiankafei.base.observer.event;
 
-import java.util.EventObject;
+import org.tiankafei.base.observer.EventModel;
 
 /**
- * 工作
+ * 睡觉
  *
  * @author tiankafei
  * @since 1.0
  */
-public class WorkEventObject extends EventObject {
+public class SleepEventModel extends EventModel {
 
     /**
      * Constructs a prototypical Event.
@@ -16,7 +16,7 @@ public class WorkEventObject extends EventObject {
      * @param source the object on which the Event initially occurred
      * @throws IllegalArgumentException if source is null
      */
-    public WorkEventObject(Object source) {
+    public SleepEventModel(Object source) {
         super(source);
     }
 

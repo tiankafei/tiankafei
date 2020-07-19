@@ -2,7 +2,6 @@ package org.tiankafei.base.observer;
 
 import com.google.common.collect.Lists;
 
-import java.util.EventObject;
 import java.util.List;
 
 /**
@@ -11,14 +10,14 @@ import java.util.List;
  */
 public class ObserverManager {
 
-    protected List<IObserver> observerList = Lists.newArrayList();
+    protected List<EventListener> observerList = Lists.newArrayList();
 
-    public void addObserver(IObserver observer){
-        observerList.add(observer);
+    public void addObserver(EventListener eventListener){
+        observerList.add(eventListener);
     }
 
-    public void executeObserver(EventObject event){
-        observerList.stream().forEach(observer -> observer.publishEvent(event));
+    public void executeObserver(EventModel event){
+        observerList.stream().forEach(observer -> observer.onEvent(event));
     }
 
 }
