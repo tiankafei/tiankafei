@@ -9,11 +9,13 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.user.login.feign.LoginFeign;
+import org.tiankafei.user.feign.LoginCustomFeign;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.properties.UserProperties;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
+
+import javax.annotation.Resource;
 
 /**
  * @author tiankafei
@@ -25,8 +27,8 @@ import org.tiankafei.web.common.controller.BaseController;
 @RefreshScope
 public class LoginController extends BaseController {
 
-    @Autowired
-    private LoginFeign loginFeign;
+    @Resource
+    private LoginCustomFeign loginFeign;
 
     @Autowired
     private UserProperties userProperties;
