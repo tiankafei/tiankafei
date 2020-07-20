@@ -9,7 +9,7 @@ spring:
     config:
       server:
         git:
-          uri: https://gitee.com/tiankafei/tiankafei-config.git
+          uri: https://gitee.com/tiankafei06/tiankafei-config.git
           username: 798971170@qq.com
           password: abc123456
           basedir: E:/gits/tiankafei/tiankafei-code-product/tiankafei-config-center/config
