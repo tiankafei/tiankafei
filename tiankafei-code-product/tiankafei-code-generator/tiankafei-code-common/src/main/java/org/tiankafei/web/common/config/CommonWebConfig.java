@@ -12,17 +12,17 @@ import org.tiankafei.web.common.filters.ApiDocFilter;
 @Configuration
 public class CommonWebConfig {
 
-    @Bean
-    public FilterRegistrationBean<ApiDocFilter> apiDocFilter() {
-        FilterRegistrationBean<ApiDocFilter> bean = new FilterRegistrationBean<>(new ApiDocFilter());
-        bean.setOrder(2);
-        bean.addUrlPatterns("/doc");
-        bean.addUrlPatterns("/docs");
-        bean.addUrlPatterns("/doc.html");
-        bean.addUrlPatterns("/swagger-ui.html");
-        bean.setName("apiDocFilter");
-        return bean;
-    }
+//    @Bean
+//    public FilterRegistrationBean<ApiDocFilter> apiDocFilter() {
+//        FilterRegistrationBean<ApiDocFilter> bean = new FilterRegistrationBean<>(new ApiDocFilter());
+//        bean.setOrder(2);
+//        bean.addUrlPatterns("/doc");
+//        bean.addUrlPatterns("/docs");
+//        bean.addUrlPatterns("/doc.html");
+//        bean.addUrlPatterns("/swagger-ui.html");
+//        bean.setName("apiDocFilter");
+//        return bean;
+//    }
 
 //    @Bean
 //    public CorsFilter corsFilter() {

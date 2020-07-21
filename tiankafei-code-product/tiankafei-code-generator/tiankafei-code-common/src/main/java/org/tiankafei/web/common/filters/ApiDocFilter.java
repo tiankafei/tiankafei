@@ -1,7 +1,10 @@
 package org.tiankafei.web.common.filters;
 
+import javax.servlet.annotation.WebFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.tiankafei.web.common.properties.SwaggerProperties;
 
@@ -20,6 +23,9 @@ import java.io.IOException;
  * @since 1.0
  **/
 @Slf4j
+@Component
+@Order(value = 2)
+@WebFilter(filterName = "apiDocFilter", urlPatterns = {"/doc", "/docs", "/doc.html", "/swagger-ui.html"})
 public class ApiDocFilter implements Filter {
 
     private SwaggerProperties swaggerProperties;
