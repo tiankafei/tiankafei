@@ -2,7 +2,7 @@ server:
   port: 7100
 spring:
   profiles:
-    active: dev, eureka
+    active: dev, nacos
   application:
     name: login-service
   jackson:

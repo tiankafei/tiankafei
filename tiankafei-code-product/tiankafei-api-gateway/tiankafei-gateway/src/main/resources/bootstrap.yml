@@ -7,7 +7,7 @@ exclusions:
     - /api/user-login/login
 spring:
   profiles:
-    active: eureka
+    active: nacos
   application:
     name: gateway-service
   cloud:
