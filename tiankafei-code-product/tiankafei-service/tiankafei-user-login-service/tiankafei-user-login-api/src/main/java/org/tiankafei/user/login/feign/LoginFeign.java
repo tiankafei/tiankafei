@@ -15,7 +15,7 @@ import javax.validation.Valid;
  * @author tiankafei
  * @since 1.0
  */
-@FeignClient(value = "login-service", contextId = "loginFeign", fallback = LoginError.class)
+@FeignClient(value = "login-service", contextId = "loginFeign", fallbackFactory = LoginError.class)
 public interface LoginFeign {
 
     /**
