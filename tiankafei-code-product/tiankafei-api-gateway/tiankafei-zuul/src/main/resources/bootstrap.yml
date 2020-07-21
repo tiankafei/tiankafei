@@ -2,7 +2,7 @@ server:
   port: 7010
 spring:
   profiles:
-    active: nacos
+    active: eureka
   application:
     name: zuul-service
 exclusions:
