@@ -109,17 +109,25 @@ public class DateTimeUtil {
     /**
      * String类型转换为Timestamp类型
      *
-     * @param time       需要转换的时间值
-     * @param formatType 需要转换的格式
      * @return 返回String类型转换为Timestamp类型的时间
      * @throws BaseException 自定义异常
      */
-    public static Timestamp longToTimestamp(Long time, String formatType) throws BaseException {
-        if (time == null || StringUtils.isEmpty(formatType)) {
+    public static Timestamp longToTimestamp() throws BaseException {
+        return longToTimestamp(System.currentTimeMillis());
+    }
+
+    /**
+     * String类型转换为Timestamp类型
+     *
+     * @param time       需要转换的时间值
+     * @return 返回String类型转换为Timestamp类型的时间
+     * @throws BaseException 自定义异常
+     */
+    public static Timestamp longToTimestamp(Long time) throws BaseException {
+        if (time == null) {
             return null;
         }
-        String currentTime = longToString(time, formatType);
-        return stringToTimestamp(currentTime, formatType);
+        return new Timestamp(time);
     }
 
     /**
