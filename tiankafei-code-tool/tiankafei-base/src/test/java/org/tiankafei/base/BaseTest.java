@@ -1,5 +1,7 @@
 package org.tiankafei.base;
 
+import com.google.common.base.Stopwatch;
+import java.time.LocalDateTime;
 import org.tiankafei.base.sort.MainInterface;
 import org.tiankafei.base.sort.observer.MainObserver;
 import org.tiankafei.base.sort.proxy.MainProxy;
@@ -375,6 +377,24 @@ public class BaseTest {
 
         byteBuffer = ByteBuffer.allocateDirect(4096);
         System.out.println(byteBuffer.getClass());
+    }
+
+    @Test
+    public void test10(){
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        for (int i = 0; i < 1_0000_0000; i++) {
+            long l = System.currentTimeMillis();
+        }
+        System.out.println(stopwatch.elapsed(TimeUnit.MILLISECONDS));
+    }
+
+    @Test
+    public void test11(){
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        for (int i = 0; i < 1_0000_0000; i++) {
+            LocalDateTime now = LocalDateTime.now();
+        }
+        System.out.println(stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
     private int get(int value) {
