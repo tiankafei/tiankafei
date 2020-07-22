@@ -26,7 +26,7 @@ import com.googlecode.aviator.runtime.type.AviatorFunction;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import sun.misc.Service;
+import org.tiankafei.base.util.JdkSpiUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,7 +45,7 @@ public abstract class AviatorExtendUtil {
      * 初始化函数
      */
     public static void initFun() {
-        Iterator<InitFunction> providers = Service.providers(InitFunction.class);
+        Iterator<InitFunction> providers = JdkSpiUtil.service(InitFunction.class);
         InitFunction initFunction = providers.next();
         initFunction.initFun();
     }

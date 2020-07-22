@@ -4,8 +4,10 @@ import org.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.tiankafei.base.util.JdkSpiUtil;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 @Slf4j
@@ -64,8 +66,11 @@ public class TestValue {
 
     @Test
     public void test3() {
-
-
+        Iterator<InitFunction> service = JdkSpiUtil.service(InitFunction.class);
+        while(service.hasNext()){
+            InitFunction next = service.next();
+            System.out.println(next);
+        }
     }
 
 }

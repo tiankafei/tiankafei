@@ -50,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-proxy</artifactId>
+            <artifactId>tiankafei-base</artifactId>
             <version>${code-tool.version}</version>
         </dependency>
     </dependencies>
