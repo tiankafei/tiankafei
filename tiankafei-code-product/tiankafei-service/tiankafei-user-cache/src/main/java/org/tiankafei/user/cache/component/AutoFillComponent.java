@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tiankafei.base.base.datetime.DateTimeUtil;
-import org.tiankafei.base.base.enums.DateTimeEnum;
-import org.tiankafei.base.base.exceptions.BaseException;
+import org.tiankafei.base.datetime.DateTimeUtil;
+import org.tiankafei.base.enums.DateTimeEnum;
+import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.user.cache.UserInfoCache;
 
 import java.sql.Timestamp;
@@ -25,7 +25,7 @@ public class AutoFillComponent implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         // 起始版本 3.3.0(推荐使用)
         try {
-            Timestamp timestamp = DateTimeUtil.longToTimestamp(System.currentTimeMillis(), DateTimeEnum.YYYY_1_MM_1_DDHH_1_MM_1_SS.getCode());
+            Timestamp timestamp = DateTimeUtil.longToTimestamp();
             this.strictInsertFill(metaObject, "createTime", Timestamp.class, timestamp);
         } catch (BaseException e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class AutoFillComponent implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         try {
-            Timestamp timestamp = DateTimeUtil.longToTimestamp(System.currentTimeMillis(), DateTimeEnum.YYYY_1_MM_1_DDHH_1_MM_1_SS.getCode());
+            Timestamp timestamp = DateTimeUtil.longToTimestamp();
             this.strictInsertFill(metaObject, "updateTime", Timestamp.class, timestamp);
         } catch (BaseException e) {
             e.printStackTrace();
