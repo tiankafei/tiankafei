@@ -1,21 +1,17 @@
 package org.tiankafei.web.common.utils;
 
 import com.ramostear.captcha.common.Fonts;
-import com.ramostear.captcha.core.AnimCaptcha;
-import com.ramostear.captcha.core.Captcha;
 import com.ramostear.captcha.support.CaptchaStyle;
 import com.ramostear.captcha.support.CaptchaType;
-import org.tiankafei.web.common.enums.CommonEnum;
-import org.tiankafei.web.common.exception.VerificationException;
-
 import java.awt.Font;
 import java.io.OutputStream;
+import org.tiankafei.web.common.param.CaptchaVo;
 
 /**
  * @author tiankafei
  * @since 1.0
  */
-public class ImageCaptchaUtil {
+public class DefaultHappyCaptcha {
 
     private CaptchaType type;
     private CaptchaStyle style;
@@ -25,53 +21,39 @@ public class ImageCaptchaUtil {
     private int length;
     private OutputStream outputStream;
 
-    public static Builder require(OutputStream outputStream) {
+    public static Builder require(OutputStream outputStream){
         return new Builder(outputStream);
     }
 
-    /**
-     * 获取验证码的key值
-     *
-     * @param uuid
-     * @return
-     */
-    public static String getCaptchaKey(String uuid) {
-        return CommonEnum.CAPTCHA_CODE_KEY.getCode() + uuid;
-    }
-
-    public String finish() throws VerificationException {
+    public String finish() {
         try {
-            if (this.style.equals(CaptchaStyle.IMG)) {
-                Captcha captcha = new Captcha();
+            CaptchaVo captchaVo = CaptchaUtil.getCaptcha(this.type);
+            if(this.style.equals(CaptchaStyle.IMG)){
+                DefaultCaptcha captcha = new DefaultCaptcha(captchaVo.getExpression());
                 captcha.setType(this.type);
                 captcha.setWidth(this.width);
                 captcha.setHeight(this.height);
                 captcha.setLength(this.length);
                 captcha.setFont(this.font);
-                String captchaCode = captcha.getCaptchaCode();
-                captcha.render(outputStream);
-                return captchaCode;
-            } else if (this.style.equals(CaptchaStyle.ANIM)) {
-                AnimCaptcha captcha = new AnimCaptcha();
+                captcha.render(this.outputStream);
+                return captchaVo.getCaptcha();
+            }else if(this.style.equals(CaptchaStyle.ANIM)){
+                DefaultAnimCaptcha captcha = new DefaultAnimCaptcha(captchaVo.getExpression());
                 captcha.setType(this.type);
                 captcha.setWidth(this.width);
                 captcha.setHeight(this.height);
                 captcha.setLength(this.length);
                 captcha.setFont(this.font);
-                String captchaCode = captcha.getCaptchaCode();
-                captcha.render(outputStream);
-                return captchaCode;
-            } else {
-                throw new VerificationException("验证码生成错误");
+                captcha.render(this.outputStream);
+                return captchaVo.getCaptcha();
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
-            throw new VerificationException("验证码生成错误");
         }
-
+        return null;
     }
 
-    private ImageCaptchaUtil(Builder builder) {
+    private DefaultHappyCaptcha(Builder builder){
         this.type = builder.type;
         this.style = builder.style;
         this.font = builder.font;
@@ -81,49 +63,48 @@ public class ImageCaptchaUtil {
         this.outputStream = builder.outputStream;
     }
 
-    public static class Builder {
+    public static class Builder{
         private CaptchaType type = CaptchaType.DEFAULT;
         private CaptchaStyle style = CaptchaStyle.IMG;
-        private Font font = Fonts.getInstance().defaultFont();
+        private Font font = Fonts.getInstance().zhFont();
         private int width = 160;
         private int height = 50;
         private int length = 5;
-        private OutputStream outputStream;
+        private final OutputStream outputStream;
 
-        public Builder(OutputStream outputStream) {
+        public Builder(OutputStream outputStream){
             this.outputStream = outputStream;
         }
 
-        public ImageCaptchaUtil build() {
-            return new ImageCaptchaUtil(this);
+        public DefaultHappyCaptcha build(){
+            return new DefaultHappyCaptcha(this);
         }
 
-        public ImageCaptchaUtil.Builder type(CaptchaType type) {
+        public Builder type(CaptchaType type){
             this.type = type;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder style(CaptchaStyle style) {
+        public Builder style(CaptchaStyle style){
             this.style = style;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder width(int width) {
+        public Builder width(int width){
             this.width = width;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder height(int height) {
+        public Builder height(int height){
             this.height = height;
             return this;
         }
 
-        public ImageCaptchaUtil.Builder length(int length) {
+        public Builder length(int length){
             this.length = length;
             return this;
         }
-
-        public ImageCaptchaUtil.Builder font(Font font) {
+        public Builder font(Font font){
             this.font = font;
             return this;
         }

@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.CaptchaGenerateService;
 
@@ -37,8 +38,8 @@ public class CaptchaClient implements InitializingBean {
         return tokenServiceMap.get(captchaType).buildImage(outputStream);
     }
 
-    public String buildImage(String captchaType, OutputStream outputStream, int width, int height, int length) throws VerificationException {
-        return tokenServiceMap.get(captchaType).buildImage(outputStream, width, height, length);
+    public String buildImage(String captchaType, OutputStream outputStream, int width, int height, int length, CaptchaTypeEnum captchaTypeEnum) throws VerificationException {
+        return tokenServiceMap.get(captchaType).buildImage(outputStream, width, height, length, captchaTypeEnum);
     }
 
 }

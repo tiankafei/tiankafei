@@ -1,6 +1,7 @@
 package org.tiankafei.web.common.service;
 
 import org.tiankafei.web.common.enums.CaptchaEnum;
+import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 
 import java.io.OutputStream;
@@ -19,7 +20,7 @@ public interface CaptchaGenerateService {
      * @throws VerificationException
      */
     default String buildImage(OutputStream outputStream) throws VerificationException {
-        return buildImage(outputStream, 111, 36, 5);
+        return buildImage(outputStream, 111, 36, 5, CaptchaTypeEnum.DEFAULT);
     }
 
     /**
@@ -32,7 +33,7 @@ public interface CaptchaGenerateService {
      * @return
      * @throws VerificationException
      */
-    String buildImage(OutputStream outputStream, int width, int height, int length) throws VerificationException;
+    String buildImage(OutputStream outputStream, int width, int height, int length, CaptchaTypeEnum captchaTypeEnum) throws VerificationException;
 
     /**
      * 获取验证码类型
