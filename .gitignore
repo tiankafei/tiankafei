@@ -32,3 +32,4 @@ tiankafei-code-learn/spark
 /node_modules
 /yarn.lock
 ROOT
+**/launch.json
