@@ -47,7 +47,7 @@
         </dependency>-->
         <dependency>
             <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-user-login-api</artifactId>
+            <artifactId>tiankafei-login-api</artifactId>
         </dependency>
     </dependencies>
 

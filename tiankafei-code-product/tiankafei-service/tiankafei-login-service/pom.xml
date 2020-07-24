@@ -4,16 +4,24 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>tiankafei-user-login-service</artifactId>
+        <artifactId>tiankafei-service</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-user-login</artifactId>
+    <artifactId>tiankafei-login-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <name>tiankafei-user-login</name>
+    <name>tiankafei-login-service</name>
     <description></description>
+
+    <modules>
+        <module>tiankafei-login-api</module>
+        <module>tiankafei-login-common</module>
+        <module>tiankafei-login-shirojwt</module>
+        <module>tiankafei-login-springsecurity</module>
+        <module>tiankafei-login-server</module>
+    </modules>
 
 </project>

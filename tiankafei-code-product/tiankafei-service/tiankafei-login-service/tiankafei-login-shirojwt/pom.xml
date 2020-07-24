@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei</groupId>
-        <artifactId>tiankafei-user-login-service</artifactId>
+        <artifactId>tiankafei-login-service</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-user-login-shirojwt</artifactId>
+    <artifactId>tiankafei-login-shirojwt</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tiankafei-user-login-shirojwt</name>
+    <name>tiankafei-login-shirojwt</name>
     <description></description>
 
 </project>

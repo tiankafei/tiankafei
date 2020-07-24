@@ -300,19 +300,14 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei</groupId>
-                <artifactId>tiankafei-user-login-api</artifactId>
+                <artifactId>tiankafei-login-api</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
 
             <!--用户登录相关工程-->
             <dependency>
                 <groupId>org.tiankafei</groupId>
-                <artifactId>tiankafei-user-login</artifactId>
-                <version>${code-produce.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.tiankafei</groupId>
-                <artifactId>tiankafei-user-login-common</artifactId>
+                <artifactId>tiankafei-login-common</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
 
