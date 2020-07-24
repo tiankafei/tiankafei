@@ -1,4 +1,4 @@
-package org.tiankafei.web.common.utils;
+package org.tiankafei.web.common.service.impl;
 
 import com.ramostear.captcha.core.Captcha;
 import com.ramostear.captcha.support.CaptchaType;
@@ -14,7 +14,7 @@ import org.tiankafei.web.common.param.CaptchaVo;
  * @author tiankafei
  * @since 1.0
  */
-public abstract class CaptchaUtil {
+public abstract class CommonCaptchaUtil {
 
     public static final SecureRandom RANDOM = new SecureRandom();
 
@@ -27,7 +27,7 @@ public abstract class CaptchaUtil {
      * @return
      */
     public static String getColorStr() {
-        return CaptchaUtil.colorStrs[RANDOM.nextInt(CaptchaUtil.colorStrs.length)];
+        return CommonCaptchaUtil.colorStrs[RANDOM.nextInt(CommonCaptchaUtil.colorStrs.length)];
     }
 
     /**
@@ -35,7 +35,7 @@ public abstract class CaptchaUtil {
      * @return
      */
     public static Color getColor() {
-        return CaptchaUtil.colors[RANDOM.nextInt(CaptchaUtil.colors.length)];
+        return CommonCaptchaUtil.colors[RANDOM.nextInt(CommonCaptchaUtil.colors.length)];
     }
 
     /**

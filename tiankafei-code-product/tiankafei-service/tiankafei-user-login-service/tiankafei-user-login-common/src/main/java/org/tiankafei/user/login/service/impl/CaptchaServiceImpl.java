@@ -14,7 +14,7 @@ import org.tiankafei.web.common.bean.CaptchaClient;
 import org.tiankafei.web.common.enums.CaptchaEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.param.CaptchaParamVo;
-import org.tiankafei.web.common.utils.CaptchaUtil;
+import org.tiankafei.web.common.service.impl.CommonCaptchaUtil;
 
 import java.io.ByteArrayOutputStream;
 
@@ -45,12 +45,12 @@ public class CaptchaServiceImpl implements CaptchaService {
     public CaptchaParamVo createCaptcha(String uuid) throws VerificationException {
         if (StringUtils.isNotBlank(uuid)) {
             // 当传入的uuid不为空时，删除之前的验证码缓存
-            String key = CaptchaUtil.getCaptchaKey(uuid);
+            String key = CommonCaptchaUtil.getCaptchaKey(uuid);
             cacheManagerRepository.deleteObject(key);
         }
         uuid = IdUtil.simpleUUID();
         // 组装验证码的key值
-        String key = CaptchaUtil.getCaptchaKey(uuid);
+        String key = CommonCaptchaUtil.getCaptchaKey(uuid);
         // 生成验证码及图片
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String captchaCode = captchaClient.buildImage(CaptchaEnum.RUO_YI_UTIL.getCode(), outputStream);
@@ -72,7 +72,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public boolean verifyCaptcha(String uuid, String captcha) throws VerificationException {
         // 组装验证码的key值
-        String key = CaptchaUtil.getCaptchaKey(uuid);
+        String key = CommonCaptchaUtil.getCaptchaKey(uuid);
         String captchaCode = cacheQueryRepository.<String>getCacheObject(key);
         if (captcha.equalsIgnoreCase(captchaCode)) {
             cacheManagerRepository.deleteObject(key);

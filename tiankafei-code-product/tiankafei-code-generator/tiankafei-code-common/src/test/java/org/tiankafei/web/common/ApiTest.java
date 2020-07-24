@@ -8,7 +8,7 @@ import java.awt.Color;
 import org.junit.Test;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
-import org.tiankafei.web.common.utils.CaptchaUtil;
+import org.tiankafei.web.common.service.impl.CommonCaptchaUtil;
 
 import java.util.List;
 
@@ -41,23 +41,23 @@ public class ApiTest {
 
     @Test
     public void test03(){
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.DEFAULT));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.ARITHMETIC));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.ARITHMETIC_ZH));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.NUMBER));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.NUMBER_ZH_CN));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.NUMBER_ZH_HK));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_UPPER));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_LOWER));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_NUMBER_UPPER));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_NUMBER_LOWER));
-        System.out.println(CaptchaUtil.getCaptcha(CaptchaTypeEnum.CHINESE));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.DEFAULT));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.ARITHMETIC));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.ARITHMETIC_ZH));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.NUMBER));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.NUMBER_ZH_CN));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.NUMBER_ZH_HK));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_UPPER));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_LOWER));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_NUMBER_UPPER));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.WORD_NUMBER_LOWER));
+        System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.CHINESE));
     }
 
     @Test
     public void test04(){
-        Color color = CaptchaUtil.getColor();
+        Color color = CommonCaptchaUtil.getColor();
         System.out.println(color.getColorSpace().toString());
     }
 

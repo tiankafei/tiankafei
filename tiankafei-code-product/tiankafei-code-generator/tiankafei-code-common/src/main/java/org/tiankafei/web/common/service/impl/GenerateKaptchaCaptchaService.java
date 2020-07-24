@@ -8,7 +8,6 @@ import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.param.CaptchaVo;
 import org.tiankafei.web.common.service.CaptchaGenerateService;
-import org.tiankafei.web.common.utils.CaptchaUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -24,12 +23,16 @@ import java.util.Properties;
 public class GenerateKaptchaCaptchaService implements CaptchaGenerateService {
 
     @Override
+    public CaptchaEnum getCaptchaType() {
+        return CaptchaEnum.KAPTCHA_CAPTCHA;
+    }
+
+    @Override
     public String buildImage(OutputStream outputStream, int width, int height, int length, CaptchaTypeEnum captchaTypeEnum) throws VerificationException {
         try {
             DefaultKaptcha defaultKaptcha = getDefaultKaptcha(width, height, length, 28);
-
-//            String captchaCode = VerifyCodeUtils.generateVerifyCode(length);
-            CaptchaVo captcha = CaptchaUtil.getCaptcha(captchaTypeEnum);
+//            String captcha = defaultKaptcha.createText();
+            CaptchaVo captcha = CommonCaptchaUtil.getCaptcha(captchaTypeEnum);
 
             BufferedImage bufferedImage = defaultKaptcha.createImage(captcha.getExpression());
             ImageIO.write(bufferedImage, "jpg", outputStream);
@@ -86,7 +89,7 @@ public class GenerateKaptchaCaptchaService implements CaptchaGenerateService {
         properties.setProperty("kaptcha.border.color", "105,179,90");
         // 验证码文本字符颜色 默认为Color.BLACK
 //        properties.setProperty("kaptcha.textproducer.font.color", "blue");
-        properties.setProperty("kaptcha.textproducer.font.color", CaptchaUtil.getColorStr());
+        properties.setProperty("kaptcha.textproducer.font.color", CommonCaptchaUtil.getColorStr());
         // 验证码图片宽度 默认为200
         properties.setProperty("kaptcha.image.width", String.valueOf(width));
         // 验证码图片高度 默认为50
@@ -116,11 +119,6 @@ public class GenerateKaptchaCaptchaService implements CaptchaGenerateService {
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
-    }
-
-    @Override
-    public CaptchaEnum getCaptchaType() {
-        return CaptchaEnum.KAPTCHA_CAPTCHA;
     }
 
 }

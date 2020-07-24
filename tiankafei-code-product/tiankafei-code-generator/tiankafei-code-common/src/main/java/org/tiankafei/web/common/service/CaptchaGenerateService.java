@@ -13,6 +13,13 @@ import java.io.OutputStream;
 public interface CaptchaGenerateService {
 
     /**
+     * 获取验证码类型
+     *
+     * @return
+     */
+    CaptchaEnum getCaptchaType();
+
+    /**
      * 生成验证码及图片
      *
      * @param outputStream
@@ -34,12 +41,5 @@ public interface CaptchaGenerateService {
      * @throws VerificationException
      */
     String buildImage(OutputStream outputStream, int width, int height, int length, CaptchaTypeEnum captchaTypeEnum) throws VerificationException;
-
-    /**
-     * 获取验证码类型
-     *
-     * @return
-     */
-    CaptchaEnum getCaptchaType();
 
 }
