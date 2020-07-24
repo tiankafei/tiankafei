@@ -14,7 +14,7 @@ import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.UserEnums;
-import org.tiankafei.user.login.feign.EncryptionFeign;
+import org.tiankafei.login.feign.EncryptionFeign;
 import org.tiankafei.user.mapper.SysUserInfoMapper;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.SysUserLoginPageQueryParam;
