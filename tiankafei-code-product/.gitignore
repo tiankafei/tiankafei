@@ -13,3 +13,4 @@ target
 **/dump.rdb
 **/consul.exe
 /tiankafei-config-center/config/
+**/rebel.xml
