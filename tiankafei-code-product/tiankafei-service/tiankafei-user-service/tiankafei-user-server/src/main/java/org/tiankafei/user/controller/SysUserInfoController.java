@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.enums.UserEnums;
+import org.tiankafei.user.model.SysUserInfoDto;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
 import org.tiankafei.user.service.SysUserInfoService;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.param.IdsParam;
@@ -77,22 +77,12 @@ public class SysUserInfoController extends BaseController {
     }
 
     /**
-     * 校验 用户基本信息表 是否已经存在
-     */
-    @PostMapping("/check")
-    @ApiOperation(value = "校验 用户基本信息表 是否已经存在", notes = "校验 用户基本信息表 是否已经存在")
-    public ApiResult<Boolean> checkSysUserInfoExists(@Valid @RequestBody SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
-        Boolean flag = sysUserInfoService.checkSysUserInfoExists(sysUserInfoQueryParam);
-        return ApiResult.ok(flag);
-    }
-
-    /**
      * 添加 用户基本信息表 对象
      */
     @PostMapping("/add")
     @ApiOperation(value = "添加 用户基本信息表 对象", notes = "添加 用户基本信息表")
-    public ApiResult<String> addSysUserInfo(@Valid @RequestBody SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
-        Object id = sysUserInfoService.addSysUserInfo(sysUserInfoQueryVo);
+    public ApiResult<String> addSysUserInfo(@Valid @RequestBody SysUserInfoDto sysUserInfoDto) throws Exception {
+        Object id = sysUserInfoService.addSysUserInfo(sysUserInfoDto);
         return ApiResult.ok(id);
     }
 
@@ -101,8 +91,8 @@ public class SysUserInfoController extends BaseController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "修改 用户基本信息表 对象", notes = "修改 用户基本信息表")
-    public ApiResult<Boolean> updateSysUserInfo(@Valid @RequestBody SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
-        boolean flag = sysUserInfoService.updateSysUserInfo(sysUserInfoQueryVo);
+    public ApiResult<Boolean> updateSysUserInfo(@Valid @RequestBody SysUserInfoDto sysUserInfoDto) throws Exception {
+        boolean flag = sysUserInfoService.updateSysUserInfo(sysUserInfoDto);
         return ApiResult.ok(flag);
     }
 
@@ -121,9 +111,9 @@ public class SysUserInfoController extends BaseController {
      */
     @GetMapping("/info/{id}")
     @ApiOperation(value = "获取 用户基本信息表 对象详情", notes = "获取 用户基本信息表 对象详情")
-    public ApiResult<SysUserInfoQueryVo> getSysUserInfo(@PathVariable("id") String id) throws Exception {
-        SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoService.getSysUserInfoById(id);
-        return ApiResult.ok(sysUserInfoQueryVo);
+    public ApiResult<SysUserInfoDto> getSysUserInfo(@PathVariable("id") String id) throws Exception {
+        SysUserInfoDto sysUserInfoDto = sysUserInfoService.getSysUserInfoById(id);
+        return ApiResult.ok(sysUserInfoDto);
     }
 
     /**
@@ -131,8 +121,8 @@ public class SysUserInfoController extends BaseController {
      */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户基本信息表 分页列表", notes = "获取 用户基本信息表 分页列表")
-    public ApiResult<Paging<SysUserInfoQueryVo>> getSysUserInfoPageList(@Valid @RequestBody SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
-        Paging<SysUserInfoQueryVo> paging = sysUserInfoService.getSysUserInfoPageList(sysUserInfoPageQueryParam);
+    public ApiResult<Paging<SysUserInfoDto>> getSysUserInfoPageList(@Valid @RequestBody SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
+        Paging<SysUserInfoDto> paging = sysUserInfoService.getSysUserInfoPageList(sysUserInfoPageQueryParam);
         return ApiResult.ok(paging);
     }
 
@@ -141,8 +131,8 @@ public class SysUserInfoController extends BaseController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 用户基本信息表 列表", notes = "获取 用户基本信息表 列表")
-    public ApiResult<List<SysUserInfoQueryVo>> getSysUserInfoList(@Valid @RequestBody SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
-        List<SysUserInfoQueryVo> paging = sysUserInfoService.getSysUserInfoList(sysUserInfoQueryParam);
+    public ApiResult<List<SysUserInfoDto>> getSysUserInfoList(@Valid @RequestBody SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
+        List<SysUserInfoDto> paging = sysUserInfoService.getSysUserInfoList(sysUserInfoQueryParam);
         return ApiResult.ok(paging);
     }
 

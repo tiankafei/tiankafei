@@ -27,21 +27,21 @@
     </sql>
 
     <!-- 根据主键获取 用户基本信息表 对象 -->
-    <select id="getSysUserInfoById" resultMap="baseResultMap">
+    <select id="getSysUserInfoById" resultType="org.tiankafei.user.model.SysUserInfoDto">
         select
         <include refid="base_Column_List"/>
         from sys_user_info where id = #{id}
     </select>
 
     <!-- 分页查询 用户基本信息表 对象集合 -->
-    <select id="getSysUserInfoPageList" resultMap="baseResultMap">
+    <select id="getSysUserInfoPageList" resultType="org.tiankafei.user.model.SysUserInfoDto">
         select
         <include refid="base_Column_List"/>
         from sys_user_info
     </select>
 
     <!-- 查询 用户基本信息表 对象集合 -->
-    <select id="getSysUserInfoList" resultMap="baseResultMap">
+    <select id="getSysUserInfoList" resultType="org.tiankafei.user.model.SysUserInfoDto">
         select
         <include refid="base_Column_List"/>
         from sys_user_info
