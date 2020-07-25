@@ -77,16 +77,6 @@ public class SysUserLoginController extends BaseController {
     }
 
     /**
-     * 校验 用户登录信息表 是否已经存在
-     */
-    @PostMapping("/check")
-    @ApiOperation(value = "校验 用户登录信息表 是否已经存在", notes = "校验 用户登录信息表 是否已经存在")
-    public ApiResult<Boolean> checkSysUserLoginExists(@Valid @RequestBody SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-        Boolean flag = sysUserLoginService.checkSysUserLoginExists(sysUserLoginQueryParam);
-        return ApiResult.ok(flag);
-    }
-
-    /**
      * 添加 用户登录信息表 对象
      */
     @PostMapping("/add")

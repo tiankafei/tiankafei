@@ -5,17 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.user.bean.CheckExistsClient;
-import org.tiankafei.user.entity.SysUserInfoEntity;
 import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.login.feign.EncryptionFeign;
-import org.tiankafei.user.mapper.SysUserInfoMapper;
 import org.tiankafei.user.mapper.SysUserLoginMapper;
 import org.tiankafei.user.param.SysUserLoginPageQueryParam;
 import org.tiankafei.user.param.SysUserLoginQueryParam;
@@ -47,20 +44,10 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
     private SysUserLoginMapper userLoginMapper;
 
     @Autowired
-    private SysUserInfoMapper userInfoMapper;
-
-    @Autowired
     private CheckExistsClient checkExistsClient;
 
     @Autowired
     private EncryptionFeign encryptionFeign;
-
-    @Override
-    public boolean checkSysUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        int count = super.count(lambdaQueryWrapper);
-        return count > 0;
-    }
 
     @Override
     public Object addSysUserLogin(SysUserLoginQueryVo sysUserLoginQueryVo) throws Exception {
@@ -77,14 +64,8 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         // id值赋为空，使用自动生成的ID
         sysUserLoginEntity.setId(null);
         super.save(sysUserLoginEntity);
-        Long id = sysUserLoginEntity.getId();
 
-        // 保存用户信息表数据
-        SysUserInfoEntity userInfoEntity = new SysUserInfoEntity();
-        BeanUtils.copyProperties(sysUserLoginQueryVo, userInfoEntity);
-        userInfoEntity.setId(id);
-        userInfoMapper.insert(userInfoEntity);
-        return id;
+        return sysUserLoginEntity.getId();
     }
 
     @Override
@@ -109,15 +90,10 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
         checkExistsClient.checkUpdateSysUserExists(UserEnums.EMAIL.getCode(), sysUserLoginQueryVo.getEmail(), oldUserEntity.getEmail());
         checkExistsClient.checkUpdateSysUserExists(UserEnums.PHONE.getCode(), sysUserLoginQueryVo.getTelephone(), oldUserEntity.getTelephone());
 
-        // 更新用户信息表数据
-        SysUserInfoEntity userInfoEntity = userInfoMapper.selectById(sysUserLoginQueryVo.getId());
-        BeanUtils.copyProperties(sysUserLoginQueryVo, userInfoEntity);
-        userInfoMapper.updateById(userInfoEntity);
-
         // 更新用户登录表数据
         SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
         BeanUtils.copyProperties(sysUserLoginQueryVo, sysUserLoginEntity);
-        // 编辑时密码加密
+        // TODO 有待测试 编辑时密码加密
         sysUserLoginEntity.setPassword(encryptionFeign.encryption(sysUserLoginEntity.getPassword()).getData());
         super.updateById(sysUserLoginEntity);
 
@@ -126,22 +102,9 @@ public class SysUserLoginServiceImpl extends BaseServiceImpl<SysUserLoginMapper,
 
     @Override
     public boolean deleteSysUserLogin(String ids) throws Exception {
-        String[] idArray = ids.split(",");
-        List<String> idList = Arrays.asList(idArray);
-        if (CollectionUtils.isNotEmpty(idList)) {
-            // 删除用户信息表
-            userInfoMapper.deleteBatchIds(idList);
-            // 删除登录用户表
-            super.removeByIds(idList);
-        }
-        return Boolean.TRUE;
-    }
-
-    @Override
-    public boolean deleteSysUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception {
-        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-
-        return super.remove(lambdaQueryWrapper);
+        // 删除登录用户表
+        List<String> idList = Arrays.asList(ids.split(","));
+        return super.removeByIds(idList);
     }
 
     @Override
