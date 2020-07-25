@@ -1,5 +1,6 @@
 package org.tiankafei.login.service;
 
+import org.tiankafei.login.model.LoginResultDto;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.web.common.exception.LoginException;
 
@@ -16,7 +17,7 @@ public interface LoginService {
      * @return
      * @throws Exception
      */
-    String login(LoginParamVo loginParamVo) throws Exception;
+    LoginResultDto login(LoginParamVo loginParamVo) throws Exception;
 
     /**
      * 注销

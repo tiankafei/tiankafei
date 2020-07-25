@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.login.bean.QueryUserClient;
 import org.tiankafei.login.mapper.LoginMapper;
+import org.tiankafei.login.model.LoginResultDto;
 import org.tiankafei.login.service.CaptchaService;
 import org.tiankafei.login.service.EncryptionService;
 import org.tiankafei.login.service.LoginService;
@@ -78,7 +79,7 @@ public class LoginServiceImpl implements LoginService {
      * @throws LoginException
      */
     @Override
-    public String login(LoginParamVo loginParamVo) throws Exception {
+    public LoginResultDto login(LoginParamVo loginParamVo) throws Exception {
         String keywords = loginParamVo.getKeywords();
         String password = loginParamVo.getPassword();
         // 0.验证数据合法性
@@ -119,7 +120,8 @@ public class LoginServiceImpl implements LoginService {
                 String token = encryptionService.token(JSONUtil.toJsonStr(userInfoQueryVo));
                 // 存放缓存
                 userInfoCache.setUserInfo(userInfoQueryVo, token);
-                return token;
+
+                return new LoginResultDto().setId(userInfoQueryVo.getId()).setToken(token);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new Exception("获取用户数据发生异常！");

@@ -1,6 +1,7 @@
 package org.tiankafei.login.springsecurity.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.tiankafei.login.model.LoginResultDto;
 import org.tiankafei.login.service.LoginService;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.web.common.exception.LoginException;
@@ -13,7 +14,7 @@ import org.tiankafei.web.common.exception.LoginException;
 public class LoginSpringSecurityServiceImpl implements LoginService {
 
     @Override
-    public String login(LoginParamVo loginParamVo) throws Exception {
+    public LoginResultDto login(LoginParamVo loginParamVo) throws Exception {
         return null;
     }
 
