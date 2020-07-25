@@ -2,9 +2,9 @@ server:
   port: 7000
 exclusions:
   urls:
-    - /api/user-login/logout
+    - /api/signin/logout
   auth-urls:
-    - /api/user-login/login
+    - /api/signin/login
 spring:
   profiles:
     active: eureka
@@ -22,10 +22,10 @@ spring:
             - Path=/api/user/**
           filters:
             - StripPrefix=2
-        - id: user-login-service
-          uri: lb://user-login-service
+        - id: login-service
+          uri: lb://login-service
           predicates:
-            - Path=/api/user-login/**
+            - Path=/api/signin/**
           filters:
             - StripPrefix=2
         - id: blog-service
