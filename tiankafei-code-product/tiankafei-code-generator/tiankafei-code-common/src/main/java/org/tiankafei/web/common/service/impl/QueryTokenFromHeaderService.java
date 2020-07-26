@@ -1,5 +1,6 @@
 package org.tiankafei.web.common.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.tiankafei.web.common.enums.CommonEnum;
 import org.tiankafei.web.common.enums.TokenEnum;
@@ -18,6 +19,9 @@ public class QueryTokenFromHeaderService implements QueryTokenService {
     public String getToken() {
         HttpServletRequest request = getRequest();
         String token = request.getHeader(CommonEnum.TOKEN_PARAM.getCode());
+        if(StringUtils.isNotBlank(token) && token.startsWith(CommonEnum.TOKEN_PREFIX.getCode())){
+            token = token.replaceAll(CommonEnum.TOKEN_PREFIX.getCode(), "");
+        }
         return token;
     }
 

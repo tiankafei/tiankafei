@@ -133,6 +133,12 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
+    @Override
+    public SysUserInfoQueryVo getUserInfo(String token) throws Exception {
+        SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(token);
+        return userInfo;
+    }
+
     /**
      * 验证数据合法性
      *
