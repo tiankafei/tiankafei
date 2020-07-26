@@ -41,13 +41,12 @@ public class LoginController extends BaseController {
     }
 
     /**
-     * 获取用户角色和权限
+     * 获取用户详细信息，以及角色和权限
      */
     @GetMapping("/getUserInfo")
-    @ApiOperation(value = "用户登录", notes = "用户登录")
+    @ApiOperation(value = "获取用户详细信息，以及角色和权限", notes = "获取用户详细信息，以及角色和权限")
     public ApiResult<SysUserInfoQueryVo> getUserInfo() throws Exception {
-        String token = getToken();
-        SysUserInfoQueryVo sysUserInfoQueryVo = loginService.getUserInfo(token);
+        SysUserInfoQueryVo sysUserInfoQueryVo = loginService.getUserInfo(getToken());
         return ApiResult.ok(sysUserInfoQueryVo);
     }
 
