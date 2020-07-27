@@ -1,9 +1,9 @@
 package org.tiankafei.user.service;
 
 import org.tiankafei.user.entity.SysUserInfoEntity;
+import org.tiankafei.user.model.SysUserInfoDto;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
 import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
@@ -21,40 +21,31 @@ import java.util.List;
 public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
 
     /**
-     * 校验 用户基本信息表 是否已经存在
-     *
-     * @param sysUserInfoQueryParam
-     * @return
-     * @throws Exception
-     */
-    boolean checkSysUserInfoExists(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception;
-
-    /**
      * 保存 用户基本信息表
      *
-     * @param sysUserInfoQueryVo
+     * @param sysUserInfoDto
      * @return
      * @throws Exception
      */
-    Object addSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception;
+    Object addSysUserInfo(SysUserInfoDto sysUserInfoDto) throws Exception;
 
     /**
      * 保存 用户基本信息表 集合
      *
-     * @param sysUserInfoQueryVoList
+     * @param sysUserInfoList
      * @return
      * @throws Exception
      */
-    boolean addSysUserInfoList(List<SysUserInfoQueryVo> sysUserInfoQueryVoList) throws Exception;
+    boolean addSysUserInfoList(List<SysUserInfoDto> sysUserInfoList) throws Exception;
 
     /**
      * 修改 用户基本信息表
      *
-     * @param sysUserInfoQueryVo
+     * @param sysUserInfoDto
      * @return
      * @throws Exception
      */
-    boolean updateSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception;
+    boolean updateSysUserInfo(SysUserInfoDto sysUserInfoDto) throws Exception;
 
     /**
      * 删除 用户基本信息表
@@ -66,22 +57,13 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
     boolean deleteSysUserInfo(String ids) throws Exception;
 
     /**
-     * 根据条件删除 用户基本信息表
-     *
-     * @param sysUserInfoQueryParam
-     * @return
-     * @throws Exception
-     */
-    boolean deleteSysUserInfo(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception;
-
-    /**
      * 根据ID获取 用户基本信息表 对象
      *
      * @param id
      * @return
      * @throws Exception
      */
-    SysUserInfoQueryVo getSysUserInfoById(Serializable id) throws Exception;
+    SysUserInfoDto getSysUserInfoById(Serializable id) throws Exception;
 
     /**
      * 获取 用户基本信息表 分页对象列表
@@ -90,7 +72,7 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @return
      * @throws Exception
      */
-    Paging<SysUserInfoQueryVo> getSysUserInfoPageList(SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception;
+    Paging<SysUserInfoDto> getSysUserInfoPageList(SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception;
 
     /**
      * 获取 用户基本信息表 对象列表
@@ -99,7 +81,7 @@ public interface SysUserInfoService extends BaseService<SysUserInfoEntity> {
      * @return
      * @throws Exception
      */
-    List<SysUserInfoQueryVo> getSysUserInfoList(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception;
+    List<SysUserInfoDto> getSysUserInfoList(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception;
 
     /**
      * 计算 用户基本信息表 总记录数

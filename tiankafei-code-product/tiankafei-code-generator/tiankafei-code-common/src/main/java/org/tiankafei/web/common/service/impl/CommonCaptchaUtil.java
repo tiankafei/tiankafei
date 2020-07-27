@@ -18,9 +18,9 @@ public abstract class CommonCaptchaUtil {
 
     public static final SecureRandom RANDOM = new SecureRandom();
 
-    public static Color[] colors = new Color[]{Color.BLUE, Color.RED, Color.BLACK, Color.MAGENTA, Color.GREEN};
+    public static Color[] colors = new Color[]{Color.BLUE, Color.RED, Color.BLACK};
 
-    public static String[] colorStrs = new String[]{"white", "cyan", "gray", "magenta", "orange", "pink", "yellow", "blue", "red"};
+    public static String[] colorStrs = new String[]{"blue", "red", "black"};
 
     /**
      * 随机获取颜色

@@ -1,7 +1,7 @@
 package org.tiankafei.user.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.tiankafei.user.login.feign.LoginFeign;
+import org.tiankafei.login.feign.LoginFeign;
 
 /**
  * @author 魏双双

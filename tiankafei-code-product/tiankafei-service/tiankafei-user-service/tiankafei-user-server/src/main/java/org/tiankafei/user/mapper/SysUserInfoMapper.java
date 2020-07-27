@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.tiankafei.user.entity.SysUserInfoEntity;
+import org.tiankafei.user.model.SysUserInfoDto;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,7 +30,7 @@ public interface SysUserInfoMapper extends BaseMapper<SysUserInfoEntity> {
      * @param id
      * @return
      */
-    SysUserInfoQueryVo getSysUserInfoById(Serializable id);
+    SysUserInfoDto getSysUserInfoById(Serializable id);
 
     /**
      * 获取 用户基本信息表 分页对象
@@ -39,7 +39,7 @@ public interface SysUserInfoMapper extends BaseMapper<SysUserInfoEntity> {
      * @param sysUserInfoPageQueryParam
      * @return
      */
-    IPage<SysUserInfoQueryVo> getSysUserInfoPageList(@Param("page") Page page, @Param("param") SysUserInfoPageQueryParam sysUserInfoPageQueryParam);
+    IPage<SysUserInfoDto> getSysUserInfoPageList(@Param("page") Page page, @Param("param") SysUserInfoPageQueryParam sysUserInfoPageQueryParam);
 
     /**
      * 获取 用户基本信息表 对象列表
@@ -47,6 +47,6 @@ public interface SysUserInfoMapper extends BaseMapper<SysUserInfoEntity> {
      * @param sysUserInfoQueryParam
      * @return
      */
-    List<SysUserInfoQueryVo> getSysUserInfoList(@Param("param") SysUserInfoQueryParam sysUserInfoQueryParam);
+    List<SysUserInfoDto> getSysUserInfoList(@Param("param") SysUserInfoQueryParam sysUserInfoQueryParam);
 
 }

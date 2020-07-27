@@ -1,6 +1,8 @@
 package org.tiankafei.web.common.bean;
 
 import com.google.common.collect.Maps;
+import javax.validation.ValidationException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +40,11 @@ public class QueryTokenClient implements InitializingBean {
      * @return
      */
     public String getToken(Integer type) {
-        return tokenServiceMap.get(type).getToken();
+        String token = tokenServiceMap.get(type).getToken();
+        if(StringUtils.isBlank(token)){
+            throw new ValidationException("token参数为空，请确认！");
+        }
+        return token;
     }
 
 }

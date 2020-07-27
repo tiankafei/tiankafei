@@ -21,15 +21,6 @@ import java.util.List;
 public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
 
     /**
-     * 校验 用户登录信息表 是否已经存在
-     *
-     * @param sysUserLoginQueryParam
-     * @return
-     * @throws Exception
-     */
-    boolean checkSysUserLoginExists(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
-
-    /**
      * 保存 用户登录信息表
      *
      * @param sysUserLoginQueryVo
@@ -64,15 +55,6 @@ public interface SysUserLoginService extends BaseService<SysUserLoginEntity> {
      * @throws Exception
      */
     boolean deleteSysUserLogin(String ids) throws Exception;
-
-    /**
-     * 根据条件删除 用户登录信息表
-     *
-     * @param sysUserLoginQueryParam
-     * @return
-     * @throws Exception
-     */
-    boolean deleteSysUserLogin(SysUserLoginQueryParam sysUserLoginQueryParam) throws Exception;
 
     /**
      * 根据ID获取 用户登录信息表 对象

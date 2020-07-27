@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.SysUserInfoEntity;
-import org.tiankafei.user.entity.SysUserLoginEntity;
 import org.tiankafei.user.enums.UserEnums;
-import org.tiankafei.user.login.feign.EncryptionFeign;
 import org.tiankafei.user.mapper.SysUserInfoMapper;
-import org.tiankafei.user.mapper.SysUserLoginMapper;
+import org.tiankafei.user.model.SysUserInfoDto;
 import org.tiankafei.user.param.SysUserInfoPageQueryParam;
 import org.tiankafei.user.param.SysUserInfoQueryParam;
 import org.tiankafei.user.service.SysUserInfoService;
+import org.tiankafei.user.service.SysUserLoginService;
 import org.tiankafei.user.service.SysUserRoleService;
 import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.user.vo.SysUserLoginQueryVo;
 import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
@@ -48,81 +48,67 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     private SysUserInfoMapper userInfoMapper;
 
     @Autowired
-    private SysUserLoginMapper userLoginMapper;
+    private SysUserRoleService userRoleService;
 
     @Autowired
-    private SysUserRoleService userRoleService;
+    private SysUserLoginService userLoginService;
 
     @Autowired
     private CheckExistsClient checkExistsClient;
 
-    @Autowired
-    private EncryptionFeign encryptionFeign;
-
     @Override
-    public boolean checkSysUserInfoExists(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
-        LambdaQueryWrapper<SysUserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        int count = super.count(lambdaQueryWrapper);
-        return count > 0;
-    }
-
-    @Override
-    public Object addSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
+    public Object addSysUserInfo(SysUserInfoDto sysUserInfoDto) throws Exception {
         // 新增时校验用户信息是否存在
-        checkExistsClient.checkAddSysUserExists(UserEnums.USER_NAME.getCode(), sysUserInfoQueryVo.getUsername());
-        checkExistsClient.checkAddSysUserExists(UserEnums.EMAIL.getCode(), sysUserInfoQueryVo.getEmail());
-        checkExistsClient.checkAddSysUserExists(UserEnums.PHONE.getCode(), sysUserInfoQueryVo.getTelephone());
+        checkExistsClient.checkAddSysUserExists(UserEnums.USER_NAME.getCode(), sysUserInfoDto.getUsername());
+        checkExistsClient.checkAddSysUserExists(UserEnums.EMAIL.getCode(), sysUserInfoDto.getEmail());
+        checkExistsClient.checkAddSysUserExists(UserEnums.PHONE.getCode(), sysUserInfoDto.getTelephone());
 
         // 保存用户登录表数据
-        SysUserLoginEntity sysUserLoginEntity = new SysUserLoginEntity();
-        BeanUtils.copyProperties(sysUserInfoQueryVo.getUserLoginQueryVo(), sysUserLoginEntity);
-        // 新增时密码加密
-        sysUserLoginEntity.setPassword(encryptionFeign.encryption(sysUserLoginEntity.getPassword()).getData());
-        // id值赋为空，使用自动生成的ID
-        sysUserLoginEntity.setId(null);
-        userLoginMapper.insert(sysUserLoginEntity);
+        SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
+        BeanUtils.copyProperties(sysUserInfoDto, sysUserLoginQueryVo);
+        Long id = (Long) userLoginService.addSysUserLogin(sysUserLoginQueryVo);
 
         // 保存用户信息表数据
         SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
-        BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserInfoEntity);
-        sysUserInfoEntity.setId(sysUserLoginEntity.getId());
+        BeanUtils.copyProperties(sysUserInfoDto, sysUserInfoEntity);
+        sysUserInfoEntity.setId(id);
         super.save(sysUserInfoEntity);
 
-        return sysUserInfoEntity.getId();
+        return id;
     }
 
     @Override
-    public boolean addSysUserInfoList(List<SysUserInfoQueryVo> sysUserInfoQueryVoList) throws Exception {
-        if (sysUserInfoQueryVoList != null && !sysUserInfoQueryVoList.isEmpty()) {
-            List<SysUserInfoEntity> sysUserInfoList = new ArrayList<>();
-            for (SysUserInfoQueryVo sysUserInfoQueryVo : sysUserInfoQueryVoList) {
+    public boolean addSysUserInfoList(List<SysUserInfoDto> sysUserInfoList) throws Exception {
+        if (CollectionUtils.isNotEmpty(sysUserInfoList)) {
+            // 用户信息实体对象集合
+            List<SysUserInfoEntity> sysUserInfoEntityList = new ArrayList<>();
+            for (SysUserInfoDto sysUserInfoDto : sysUserInfoList) {
+                // 对象转换
                 SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
-                BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserInfoEntity);
-                sysUserInfoList.add(sysUserInfoEntity);
+                BeanUtils.copyProperties(sysUserInfoDto, sysUserInfoEntity);
+                sysUserInfoEntityList.add(sysUserInfoEntity);
             }
-            super.saveBatch(sysUserInfoList, CommonConstant.BATCH_SAVE_COUNT);
+            super.saveBatch(sysUserInfoEntityList, CommonConstant.BATCH_SAVE_COUNT);
         }
         return Boolean.TRUE;
     }
 
     @Override
-    public boolean updateSysUserInfo(SysUserInfoQueryVo sysUserInfoQueryVo) throws Exception {
-        SysUserInfoEntity oldUserInfoEntity = super.getById(sysUserInfoQueryVo.getId());
+    public boolean updateSysUserInfo(SysUserInfoDto sysUserInfoDto) throws Exception {
+        SysUserInfoEntity oldUserInfoEntity = super.getById(sysUserInfoDto.getId());
         // 修改时，校验用户信息是否存在
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.USER_NAME.getCode(), sysUserInfoQueryVo.getUsername(), oldUserInfoEntity.getUsername());
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.EMAIL.getCode(), sysUserInfoQueryVo.getEmail(), oldUserInfoEntity.getEmail());
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.PHONE.getCode(), sysUserInfoQueryVo.getTelephone(), oldUserInfoEntity.getTelephone());
+        checkExistsClient.checkUpdateSysUserExists(UserEnums.USER_NAME.getCode(), sysUserInfoDto.getUsername(), oldUserInfoEntity.getUsername());
+        checkExistsClient.checkUpdateSysUserExists(UserEnums.EMAIL.getCode(), sysUserInfoDto.getEmail(), oldUserInfoEntity.getEmail());
+        checkExistsClient.checkUpdateSysUserExists(UserEnums.PHONE.getCode(), sysUserInfoDto.getTelephone(), oldUserInfoEntity.getTelephone());
 
         // 更新用户登录表数据
-        SysUserLoginEntity userLoginEntity = new SysUserLoginEntity();
-        BeanUtils.copyProperties(sysUserInfoQueryVo, userLoginEntity);
-        // 编辑时密码加密
-        userLoginEntity.setPassword(encryptionFeign.encryption(userLoginEntity.getPassword()).getData());
-        userLoginMapper.updateById(userLoginEntity);
+        SysUserLoginQueryVo sysUserLoginQueryVo = new SysUserLoginQueryVo();
+        BeanUtils.copyProperties(sysUserInfoDto, sysUserLoginQueryVo);
+        userLoginService.updateSysUserLogin(sysUserLoginQueryVo);
 
         // 更新用户信息表数据
         SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
-        BeanUtils.copyProperties(sysUserInfoQueryVo, sysUserInfoEntity);
+        BeanUtils.copyProperties(sysUserInfoDto, sysUserInfoEntity);
         super.updateById(sysUserInfoEntity);
 
         return Boolean.TRUE;
@@ -135,7 +121,7 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
 
         if (CollectionUtils.isNotEmpty(idList)) {
             // 删除用户登录表数据
-            userLoginMapper.deleteBatchIds(idList);
+            userLoginService.deleteSysUserLogin(ids);
             // 删除用户信息表数据
             super.removeByIds(idList);
             // 删除用户和角色的对应关系
@@ -145,35 +131,28 @@ public class SysUserInfoServiceImpl extends BaseServiceImpl<SysUserInfoMapper, S
     }
 
     @Override
-    public boolean deleteSysUserInfo(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
-        LambdaQueryWrapper<SysUserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-
-        return super.remove(lambdaQueryWrapper);
-    }
-
-    @Override
-    public SysUserInfoQueryVo getSysUserInfoById(Serializable id) throws Exception {
+    public SysUserInfoDto getSysUserInfoById(Serializable id) throws Exception {
         //SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoMapper.getSysUserInfoById(id);
-
         SysUserInfoEntity sysUserInfoEntity = super.getById(id);
-        SysUserInfoQueryVo sysUserInfoQueryVo = new SysUserInfoQueryVo();
-        BeanUtils.copyProperties(sysUserInfoEntity, sysUserInfoQueryVo);
-        return sysUserInfoQueryVo;
+
+        SysUserInfoDto sysUserInfoDto = new SysUserInfoDto();
+        BeanUtils.copyProperties(sysUserInfoEntity, sysUserInfoDto);
+        return sysUserInfoDto;
     }
 
     @Override
-    public Paging<SysUserInfoQueryVo> getSysUserInfoPageList(SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
+    public Paging<SysUserInfoDto> getSysUserInfoPageList(SysUserInfoPageQueryParam sysUserInfoPageQueryParam) throws Exception {
         //IPage<SysUserInfoQueryVo> iPage = sysUserInfoMapper.getSysUserInfoPageList(page, sysUserInfoPageQueryParam);
 
         Page page = setPageParam(sysUserInfoPageQueryParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysUserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        IPage<SysUserInfoQueryVo> iPage = super.page(page, lambdaQueryWrapper);
+        IPage<SysUserInfoDto> iPage = super.page(page, lambdaQueryWrapper);
         return new Paging(iPage);
     }
 
     @Override
-    public List<SysUserInfoQueryVo> getSysUserInfoList(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
-        List<SysUserInfoQueryVo> sysUserInfoQueryVoList = userInfoMapper.getSysUserInfoList(sysUserInfoQueryParam);
+    public List<SysUserInfoDto> getSysUserInfoList(SysUserInfoQueryParam sysUserInfoQueryParam) throws Exception {
+        List<SysUserInfoDto> sysUserInfoQueryVoList = userInfoMapper.getSysUserInfoList(sysUserInfoQueryParam);
         return sysUserInfoQueryVoList;
     }
 

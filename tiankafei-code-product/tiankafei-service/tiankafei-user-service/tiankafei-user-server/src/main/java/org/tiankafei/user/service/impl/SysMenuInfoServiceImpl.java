@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,7 +116,21 @@ public class SysMenuInfoServiceImpl extends BaseServiceImpl<SysMenuInfoMapper, S
     @Override
     public List<SysMenuInfoQueryVo> getSysMenuInfoList(SysMenuInfoQueryParam sysMenuInfoQueryParam) throws Exception {
         List<SysMenuInfoQueryVo> sysMenuInfoQueryVoList = sysMenuInfoMapper.getSysMenuInfoList(sysMenuInfoQueryParam);
-        return sysMenuInfoQueryVoList;
+
+        // 按照getParentId进行分组
+        Map<Integer, List<SysMenuInfoQueryVo>> sysMenuInfoQueryVoListMap = sysMenuInfoQueryVoList.stream().filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() != null).collect(Collectors.groupingBy(SysMenuInfoQueryVo::getParentId));
+
+        List<SysMenuInfoQueryVo> resultList = sysMenuInfoQueryVoList.stream().map(sysMenuInfoQueryVo -> {
+            Integer id = sysMenuInfoQueryVo.getId();
+            List<SysMenuInfoQueryVo> tempSysMenuInfoQueryVoList = sysMenuInfoQueryVoListMap.get(id);
+            if (CollectionUtils.isNotEmpty(tempSysMenuInfoQueryVoList)) {
+                List<SysMenuInfoQueryVo> menuInfoList = tempSysMenuInfoQueryVoList.stream().sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber)).collect(Collectors.toList());
+                sysMenuInfoQueryVo.setMenuInfoList(menuInfoList);
+            }
+            return sysMenuInfoQueryVo;
+        }).filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getId() == null).collect(Collectors.toList());
+
+        return resultList;
     }
 
     @Override
