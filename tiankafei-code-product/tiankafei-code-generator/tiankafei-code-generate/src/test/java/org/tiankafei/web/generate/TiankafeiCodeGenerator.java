@@ -1,6 +1,7 @@
 package org.tiankafei.web.generate;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
@@ -12,6 +13,7 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -23,6 +25,12 @@ import java.util.List;
  * @since 1.0
  */
 public class TiankafeiCodeGenerator {
+
+    private String author;
+    private String outputDir;
+
+    private String baseParentPath = "org.tiankafei.web.common";
+    private String moduleName = "org.tiankafei.web.common";
 
     private String baseEntityClassPath = "org.tiankafei.web.common.entity.BaseEntity";
     private String baseMapperClassPath = "org.tiankafei.web.common.entity.BaseEntity";
@@ -74,6 +82,24 @@ public class TiankafeiCodeGenerator {
     // 全局策略配置
     private GlobalConfig initGlobalConfig(){
         GlobalConfig globalConfig = new GlobalConfig();
+        globalConfig.setOutputDir(outputDir);
+        globalConfig.setFileOverride(true);
+        globalConfig.setOpen(true);
+        globalConfig.setEnableCache(false);
+        globalConfig.setAuthor(author);
+        globalConfig.setKotlin(false);
+        globalConfig.setSwagger2(true);
+        globalConfig.setActiveRecord(true);
+        globalConfig.setBaseResultMap(true);
+        globalConfig.setBaseColumnList(true);
+        globalConfig.setDateType(DateType.SQL_PACK);
+        globalConfig.setEntityName("%sEntity");
+        globalConfig.setMapperName("%sMapper");
+        globalConfig.setXmlName("%sMapper");
+        globalConfig.setServiceName("%sService");
+        globalConfig.setServiceImplName("%sServiceImpl");
+        globalConfig.setControllerName("%sController");
+        globalConfig.setIdType(IdType.ASSIGN_ID);
 
         return globalConfig;
     }
@@ -81,6 +107,12 @@ public class TiankafeiCodeGenerator {
     // 模板配置，可自定义代码生成的模板，实现个性化操作
     private TemplateConfig initTemplateConfig(){
         TemplateConfig templateConfig = new TemplateConfig();
+        templateConfig.setEntity("");
+        templateConfig.setService("");
+        templateConfig.setServiceImpl("");
+        templateConfig.setMapper("");
+        templateConfig.setXml("");
+        templateConfig.setController("");
 
         return templateConfig;
     }
@@ -88,6 +120,15 @@ public class TiankafeiCodeGenerator {
     // 包名配置，通过该配置，指定生成代码的包路径
     private PackageConfig initPackageConfig(){
         PackageConfig packageConfig = new PackageConfig();
+        packageConfig.setParent(baseParentPath);
+        packageConfig.setModuleName(moduleName);
+        packageConfig.setEntity("entity");
+        packageConfig.setService("service");
+        packageConfig.setServiceImpl("service.impl");
+        packageConfig.setMapper("mapper");
+        packageConfig.setXml("mapper.xml");
+        packageConfig.setController("controller");
+//        packageConfig.setPathInfo();
 
         return packageConfig;
     }
@@ -108,7 +149,7 @@ public class TiankafeiCodeGenerator {
         strategyConfig.setSuperServiceImplClass(baseServiceImplClassPath);
         strategyConfig.setSuperControllerClass(baseControllerClassPath);
         strategyConfig.setEnableSqlFilter(true);
-//        strategyConfig.setInclude();
+        strategyConfig.setInclude(tableNameList.toArray(new String[]{}));
 //        strategyConfig.setLikeTable();
 //        strategyConfig.setExclude();
 //        strategyConfig.setNotLikeTable();
@@ -127,7 +168,6 @@ public class TiankafeiCodeGenerator {
                 new TableFill("update_user_id", FieldFill.UPDATE),
                 new TableFill("update_time", FieldFill.UPDATE));
         strategyConfig.setTableFillList(tableFieldList);
-        strategyConfig.setInclude(tableNameList.toArray(new String[]{}));
 
         return strategyConfig;
     }
