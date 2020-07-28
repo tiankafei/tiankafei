@@ -50,6 +50,7 @@ public class TiankafeiCodeGenerator {
     private String baseServiceClassPath = "org.tiankafei.web.common.service.BaseService";
     private String baseServiceImplClassPath = "org.tiankafei.web.common.service.impl.BaseServiceImpl";
     private String baseControllerClassPath = "org.tiankafei.web.common.controller.BaseController";
+    private String baseVoClassPath = "org.tiankafei.web.common.vo.BaseQueryVo";
     private List<String> tableNameList = Arrays.asList("sys_user_test");
 
     private AutoGenerator autoGenerator;
@@ -122,6 +123,7 @@ public class TiankafeiCodeGenerator {
                     nameMap.put("voName", voName);
                     nameMap.put("voConstName", firstToLowerCase(voName));
                     nameMap.put("voPath", baseParentPath + "." + moduleName + ".vo");
+                    nameMap.put("superVoClass", baseVoClassPath);
 
                     String permission = underlineToColon(name);
                     nameMap.put("shiroAuthority", permission);

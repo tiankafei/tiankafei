@@ -38,7 +38,7 @@ import lombok.experimental.Accessors;
 #if(${swagger2})
 @ApiModel(value="${entity}对象", description="$!{table.comment}")
 #end
-public class ${cfg.name.get(${table.name}).voName} implements Serializable {
+public class ${cfg.name.get(${table.name}).voName} extends ${cfg.name.get(${table.name}).superVoClass} {
 
 #if(${entitySerialVersionUID})
     private static final long serialVersionUID=1L;
