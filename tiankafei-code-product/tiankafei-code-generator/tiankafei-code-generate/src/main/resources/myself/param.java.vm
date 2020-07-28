@@ -4,11 +4,10 @@ package ${cfg.name.get(${table.name}).paramPath};
 import io.swagger.annotations.ApiModel;
 #end
 import java.io.Serializable;
-#if(${entityLombokModel})
+###if(${entityLombokModel})
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-#end
+###end
 
 /**
  * <pre>
@@ -18,10 +17,10 @@ import lombok.experimental.Accessors;
  * @author ${author}
  * @date ${date}
  */
-#if(${entityLombokModel})
+###if(${entityLombokModel})
 @Data
 @Accessors(chain = true)
-#end
+###end
 #if(${swagger2})
 @ApiModel(value = "$!{table.comment}参数对象")
 #end

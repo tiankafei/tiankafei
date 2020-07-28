@@ -3,11 +3,11 @@ package ${cfg.name.get(${table.name}).pageParamPath};
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;
 #end
-#if(${entityLombokModel})
+###if(${entityLombokModel})
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-#end
+###end
 
 /**
  * <pre>
@@ -17,13 +17,13 @@ import lombok.experimental.Accessors;
  * @author ${author}
  * @date ${date}
  */
-#if(${entityLombokModel})
+###if(${entityLombokModel})
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-#end
+###end
 #if(${swagger2})
-@ApiModel(value = "$!{table.comment}分页参数")
+@ApiModel(value = "$!{table.comment}分页参数对象")
 #end
 public class ${cfg.name.get(${table.name}).pageParamName} extends ${cfg.name.get(${table.name}).superPageParamClass} {
 
