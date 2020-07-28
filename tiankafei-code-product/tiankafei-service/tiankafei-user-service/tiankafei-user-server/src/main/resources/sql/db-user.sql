@@ -294,4 +294,36 @@ CREATE TABLE `sys_user_role`  (
 -- Records of sys_user_role
 -- ----------------------------
 
+-- ----------------------------
+-- Table structure for sys_user_test
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_test`;
+CREATE TABLE `sys_user_test`  (
+  `id` bigint(0) NOT NULL COMMENT '主键',
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
+  `nickname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '昵称，中文名',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `telephone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '手机号码',
+  `gender` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '性别：1男，2女，3未知',
+  `born_time` timestamp(0) NULL DEFAULT NULL COMMENT '出生日期',
+  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户头像',
+  `remark` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户类型',
+  `version` int(0) NULL DEFAULT NULL COMMENT '乐观锁版本',
+  `delete_mark` int(0) NULL DEFAULT NULL COMMENT '逻辑删除字段',
+  `department_id` int(0) NULL DEFAULT NULL COMMENT '部门id',
+  `create_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+  `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
+  `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `idx_username`(`username`) USING BTREE COMMENT '按用户名查询或登录',
+  UNIQUE INDEX `idx_email`(`email`) USING BTREE COMMENT '按电子邮件查询或登录',
+  UNIQUE INDEX `idx_phone`(`telephone`) USING BTREE COMMENT '按手机号码查询或登录'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户基本信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_user_test
+-- ----------------------------
+
 SET FOREIGN_KEY_CHECKS = 1;

@@ -26,18 +26,18 @@ import java.util.List;
  */
 public class TiankafeiCodeGenerator {
 
-    private String author;
-    private String outputDir;
+    private String author = "tiankafei";
+    private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-code-generator\\tiankafei-code-generate\\src\\main\\java";
 
-    private String baseParentPath = "org.tiankafei.web.common";
-    private String moduleName = "org.tiankafei.web.common";
+    private String baseParentPath = "org.tiankafei.mybatisplus";
+    private String moduleName = "user";
 
-    private String baseEntityClassPath = "org.tiankafei.web.common.entity.BaseEntity";
-    private String baseMapperClassPath = "org.tiankafei.web.common.entity.BaseEntity";
-    private String baseServiceClassPath = "org.tiankafei.web.common.entity.BaseEntity";
-    private String baseServiceImplClassPath = "org.tiankafei.web.common.entity.BaseEntity";
-    private String baseControllerClassPath = "org.tiankafei.web.common.entity.BaseEntity";
-    private List<String> tableNameList = Arrays.asList();
+    private String baseEntityClassPath = "com.baomidou.mybatisplus.extension.activerecord.Model";
+    private String baseMapperClassPath = "com.baomidou.mybatisplus.core.mapper.BaseMapper";
+    private String baseServiceClassPath = "org.tiankafei.web.common.service.BaseService";
+    private String baseServiceImplClassPath = "org.tiankafei.web.common.service.impl.BaseServiceImpl";
+    private String baseControllerClassPath = "org.tiankafei.web.common.controller.BaseController";
+    private List<String> tableNameList = Arrays.asList("sys_user_test");
 
     public static void main(String[] args) throws Exception {
         new TiankafeiCodeGenerator();
@@ -84,7 +84,7 @@ public class TiankafeiCodeGenerator {
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setOutputDir(outputDir);
         globalConfig.setFileOverride(true);
-        globalConfig.setOpen(true);
+        globalConfig.setOpen(false);
         globalConfig.setEnableCache(false);
         globalConfig.setAuthor(author);
         globalConfig.setKotlin(false);
@@ -107,12 +107,12 @@ public class TiankafeiCodeGenerator {
     // 模板配置，可自定义代码生成的模板，实现个性化操作
     private TemplateConfig initTemplateConfig(){
         TemplateConfig templateConfig = new TemplateConfig();
-        templateConfig.setEntity("");
-        templateConfig.setService("");
-        templateConfig.setServiceImpl("");
-        templateConfig.setMapper("");
-        templateConfig.setXml("");
-        templateConfig.setController("");
+        templateConfig.setEntity("/myself/entity.java.vm");
+        templateConfig.setService("/myself/service.java.vm");
+        templateConfig.setServiceImpl("/myself/serviceImpl.java.vm");
+        templateConfig.setMapper("/myself/mapper.java.vm");
+        templateConfig.setXml("/myself/mapper.xml.vm");
+        templateConfig.setController("/myself/controller.java.vm");
 
         return templateConfig;
     }
@@ -143,7 +143,7 @@ public class TiankafeiCodeGenerator {
         strategyConfig.setTablePrefix("sys_");
 //        strategyConfig.setFieldPrefix("");
         strategyConfig.setSuperEntityClass(Class.forName(baseEntityClassPath));
-        strategyConfig.setSuperEntityColumns("create_user_id", "create_time", "update_user_id", "update_time");
+//        strategyConfig.setSuperEntityColumns("create_user_id", "create_time", "update_user_id", "update_time");
         strategyConfig.setSuperMapperClass(baseMapperClassPath);
         strategyConfig.setSuperServiceClass(baseServiceClassPath);
         strategyConfig.setSuperServiceImplClass(baseServiceImplClassPath);
@@ -155,7 +155,7 @@ public class TiankafeiCodeGenerator {
 //        strategyConfig.setNotLikeTable();
         strategyConfig.setEntityColumnConstant(false);
         strategyConfig.setChainModel(true);
-        strategyConfig.setEntityLombokModel(true);
+        strategyConfig.setEntityLombokModel(false);
         strategyConfig.setEntityBooleanColumnRemoveIsPrefix(false);
         strategyConfig.setRestControllerStyle(true);
         strategyConfig.setControllerMappingHyphenStyle(true);
@@ -175,7 +175,7 @@ public class TiankafeiCodeGenerator {
     // 数据源配置，通过该配置，指定需要生成代码的具体数据库
     private DataSourceConfig initDataSourceConfig(){
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/master?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
+        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
         dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("tiankafei");
