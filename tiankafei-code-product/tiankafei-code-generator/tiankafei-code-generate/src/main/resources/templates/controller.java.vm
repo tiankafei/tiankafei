@@ -100,7 +100,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
 #end
     @ApiOperation(value = "获取 $!{table.comment} 对象详情", notes = "获取 $!{table.comment} 对象详情")
     public ApiResult<${cfg.TableName}QueryVo> get${cfg.TableName}(@PathVariable("id") String id) throws Exception {
-         ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = ${cfg.serviceObjectName}.get${cfg.TableName}ById(id);
+        ${cfg.TableName}QueryVo ${cfg.tableName}QueryVo = ${cfg.serviceObjectName}.get${cfg.TableName}ById(id);
         return ApiResult.ok(${cfg.tableName}QueryVo);
     }
 
@@ -113,7 +113,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
 #end
     @ApiOperation(value = "获取 $!{table.comment} 分页列表", notes = "获取 $!{table.comment} 分页列表")
     public ApiResult<Paging<${cfg.TableName}QueryVo>> get${cfg.TableName}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}PageQueryParam ${cfg.tableName}PageQueryParam) throws Exception {
-         Paging<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}PageList(${cfg.tableName}PageQueryParam);
+        Paging<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}PageList(${cfg.tableName}PageQueryParam);
         return ApiResult.ok(paging);
     }
     
@@ -126,7 +126,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
 #end
     @ApiOperation(value = "获取 $!{table.comment} 列表", notes = "获取 $!{table.comment} 列表")
     public ApiResult<List<${cfg.TableName}QueryVo>> get${cfg.TableName}List(#if(${cfg.paramValidation})@Valid#end @RequestBody ${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception {
-         List<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}List(${cfg.tableName}QueryParam);
+        List<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}List(${cfg.tableName}QueryParam);
         return ApiResult.ok(paging);
     }
     
