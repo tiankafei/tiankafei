@@ -1,5 +1,6 @@
 package ${package.ServiceImpl};
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
@@ -22,5 +23,7 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 #else
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
+    @Autowired
+    private ${table.mapperName} ${cfg.name.get(${table.name}).mapperConstName};
 }
 #end

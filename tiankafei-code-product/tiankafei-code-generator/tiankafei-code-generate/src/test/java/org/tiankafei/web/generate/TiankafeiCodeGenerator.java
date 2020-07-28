@@ -12,13 +12,17 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author tiankafei
@@ -29,6 +33,7 @@ public class TiankafeiCodeGenerator {
     private String author = "tiankafei";
     private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-code-generator\\tiankafei-code-generate\\src\\main\\java";
 
+    private boolean shiroAuthority = false;
     private String baseParentPath = "org.tiankafei.mybatisplus";
     private String moduleName = "user";
 
@@ -72,7 +77,35 @@ public class TiankafeiCodeGenerator {
         InjectionConfig injectionConfig = new InjectionConfig(){
             @Override
             public void initMap() {
+                Map<String, Object> map = new HashMap<>();
+                map.put("shiroAuthority", shiroAuthority);
 
+                Map<String, Map<String, String>> nameMapMap = new HashMap<>();
+                List<TableInfo> tableInfoList = getConfig().getTableInfoList();
+                tableInfoList.stream().forEach(tableInfo -> {
+                    String name = tableInfo.getName();
+
+                    Map<String, String> nameMap = new HashMap<>();
+                    String entityName = tableInfo.getEntityName();
+                    String entityConstName = firstToLowerCase(entityName);
+                    nameMap.put("entityConstName", entityConstName);
+
+                    String permission = underlineToColon(name);
+                    nameMap.put("shiroAuthority", permission);
+
+                    String serviceName = tableInfo.getServiceName();
+                    String serviceConstName = firstToLowerCase(serviceName);
+                    nameMap.put("serviceConstName", serviceConstName);
+
+                    String mapperName = tableInfo.getMapperName();
+                    String mapperConstName = firstToLowerCase(mapperName);
+                    nameMap.put("mapperConstName", mapperConstName);
+
+                    nameMapMap.put(name, nameMap);
+                });
+
+                map.put("name", nameMapMap);
+                setMap(map);
             }
         };
 
@@ -200,4 +233,55 @@ public class TiankafeiCodeGenerator {
         });
         return dataSourceConfig;
     }
+
+    /**
+     * 下划线转换成冒号连接命名
+     * sys_user --> sys:user
+     *
+     * @param underline
+     * @return
+     */
+    public static String firstToLowerCase(String underline) {
+        if (StringUtils.isNotBlank(underline)) {
+            return underline.substring(0, 1).toLowerCase() + underline.substring(1);
+        }
+        return null;
+    }
+
+    /**
+     * 下划线转换成冒号连接命名
+     * sys_user --> sys:user
+     *
+     * @param underline
+     * @return
+     */
+    public static String underlineToColon(String underline) {
+        if (StringUtils.isNotBlank(underline)) {
+            String string = underline.toLowerCase();
+            return string.replaceAll("_", ":");
+        }
+        return null;
+    }
+
+    /**
+     * 下划线转换成冒号连接命名
+     * sys_user --> sys:user
+     *
+     * @param underline
+     * @return
+     */
+    public static String underlineToColon(String underline, String tablePrefixs[]) {
+        if (StringUtils.isNotBlank(underline)) {
+            String string = underline.toLowerCase();
+            for (int index = 0; index < tablePrefixs.length; index++) {
+                String tablePrefix = tablePrefixs[index];
+                if(string.startsWith(tablePrefix)){
+                    string = string.replace(tablePrefix, "");
+                }
+            }
+            return string.replaceAll("_", ":");
+        }
+        return null;
+    }
+
 }
