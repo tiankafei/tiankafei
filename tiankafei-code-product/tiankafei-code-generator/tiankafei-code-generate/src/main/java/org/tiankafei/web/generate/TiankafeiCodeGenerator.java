@@ -136,6 +136,10 @@ public class TiankafeiCodeGenerator {
                     String mapperConstName = firstToLowerCase(mapperName);
                     nameMap.put("mapperConstName", mapperConstName);
 
+                    String controllerName = tableInfo.getControllerName();
+                    String controllerConstName = firstToLowerCase(controllerName);
+                    nameMap.put("controllerConstName", controllerConstName);
+
                     nameMapMap.put(name, nameMap);
                 });
 
