@@ -51,6 +51,7 @@ public class TiankafeiCodeGenerator {
     private String baseServiceImplClassPath = "org.tiankafei.web.common.service.impl.BaseServiceImpl";
     private String baseControllerClassPath = "org.tiankafei.web.common.controller.BaseController";
     private String baseVoClassPath = "org.tiankafei.web.common.vo.BaseQueryVo";
+    private String basePageParamClassPath = "org.tiankafei.web.common.param.OrderQueryParam";
     private List<String> tableNameList = Arrays.asList("sys_user_test");
 
     private AutoGenerator autoGenerator;
@@ -125,6 +126,17 @@ public class TiankafeiCodeGenerator {
                     nameMap.put("voPath", baseParentPath + "." + moduleName + ".vo");
                     nameMap.put("superVoClass", baseVoClassPath);
 
+                    String paramName = entityName.replace("Entity", "Param");
+                    nameMap.put("paramName", paramName);
+                    nameMap.put("paramConstName", firstToLowerCase(paramName));
+                    nameMap.put("paramPath", baseParentPath + "." + moduleName + ".param");
+
+                    String pageParamName = entityName.replace("Entity", "PageParam");
+                    nameMap.put("pageParamName", pageParamName);
+                    nameMap.put("pageParamConstName", firstToLowerCase(pageParamName));
+                    nameMap.put("pageParamPath", baseParentPath + "." + moduleName + ".param");
+                    nameMap.put("superPageParamClass", basePageParamClassPath);
+
                     String permission = underlineToColon(name);
                     nameMap.put("shiroAuthority", permission);
 
@@ -160,6 +172,30 @@ public class TiankafeiCodeGenerator {
 
                 String path = outputDir + File.separator + baseParentPath.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator + moduleName + File.separator + "vo" + File.separator + voName + StringPool.DOT_JAVA;
                 System.out.println(path);
+                return path;
+            }
+        });
+        fileOutConfigList.add(new FileOutConfig("/myself/param.java.vm"){
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String name = tableInfo.getName();
+                Map<String, Object> map = autoGenerator.getCfg().getMap();
+                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
+                String paramName = nameMap.get(name).get("paramName");
+
+                String path = outputDir + File.separator + baseParentPath.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator + moduleName + File.separator + "param" + File.separator + paramName + StringPool.DOT_JAVA;
+                return path;
+            }
+        });
+        fileOutConfigList.add(new FileOutConfig("/myself/pageParam.java.vm"){
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String name = tableInfo.getName();
+                Map<String, Object> map = autoGenerator.getCfg().getMap();
+                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
+                String pageParamName = nameMap.get(name).get("pageParamName");
+
+                String path = outputDir + File.separator + baseParentPath.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator + moduleName + File.separator + "param" + File.separator + pageParamName + StringPool.DOT_JAVA;
                 return path;
             }
         });

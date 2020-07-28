@@ -3,6 +3,8 @@ package ${package.Service};
 import java.io.Serializable;
 import java.util.List;
 import ${package.Entity}.${entity};
+import ${cfg.name.get(${table.name}).pageParamPath}.${cfg.name.get(${table.name}).pageParamName};
+import ${cfg.name.get(${table.name}).paramPath}.${cfg.name.get(${table.name}).paramName};
 import ${cfg.name.get(${table.name}).voPath}.${cfg.name.get(${table.name}).voName};
 import ${superServiceClassPackage};
 import org.tiankafei.web.common.vo.Paging;
@@ -23,11 +25,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 校验 $!{table.comment} 是否已经存在
      *
-     * @param ${cfg.tableName}QueryParam
+     * @param ${cfg.name.get(${table.name}).paramConstName}
      * @return
      * @throws Exception
      */
-    boolean check${table.serviceName}Exists(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+    boolean check${table.serviceName}Exists(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
 
     /**
      * 保存 $!{table.comment}
@@ -68,11 +70,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 根据条件删除 $!{table.comment}
      *
-     * @param ${cfg.tableName}QueryParam
+     * @param ${cfg.name.get(${table.name}).paramConstName}
      * @return
      * @throws Exception
      */
-    boolean delete${table.serviceName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+    boolean delete${table.serviceName}(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
 
     /**
      * 根据ID获取 $!{table.comment} 对象
@@ -86,29 +88,29 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 获取 $!{table.comment} 分页对象列表
      *
-     * @param ${cfg.tableName}PageQueryParam
+     * @param ${cfg.name.get(${table.name}).pageParamConstName}
      * @return
      * @throws Exception
      */
-    Paging<${cfg.name.get(${table.name}).voName}> get${table.serviceName}PageList(${cfg.TableName}PageQueryParam ${cfg.tableName}PageQueryParam) throws Exception;
+    Paging<${cfg.name.get(${table.name}).voName}> get${table.serviceName}PageList(${cfg.name.get(${table.name}).pageParamName} ${cfg.name.get(${table.name}).pageParamConstName}) throws Exception;
 
     /**
      * 获取 $!{table.comment} 对象列表
      *
-     * @param ${cfg.tableName}QueryParam
+     * @param ${cfg.name.get(${table.name}).paramConstName}
      * @return
      * @throws Exception
      */
-    List<${cfg.name.get(${table.name}).voName}> get${table.serviceName}List(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+    List<${cfg.name.get(${table.name}).voName}> get${table.serviceName}List(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
 
     /**
      * 计算 $!{table.comment} 总记录数
      *
-     * @param ${cfg.tableName}QueryParam
+     * @param ${cfg.name.get(${table.name}).paramConstName}
      * @return
      * @throws Exception
      */
-    int count${table.serviceName}(${cfg.TableName}QueryParam ${cfg.tableName}QueryParam) throws Exception;
+    int count${table.serviceName}(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
 	
 }
 #end

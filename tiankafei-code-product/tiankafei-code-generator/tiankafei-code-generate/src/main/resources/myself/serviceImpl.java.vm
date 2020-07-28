@@ -1,11 +1,17 @@
 package ${package.ServiceImpl};
 
+import java.io.Serializable;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Entity}.${entity};
+import ${cfg.name.get(${table.name}).pageParamPath}.${cfg.name.get(${table.name}).pageParamName};
+import ${cfg.name.get(${table.name}).paramPath}.${cfg.name.get(${table.name}).paramName};
+import ${cfg.name.get(${table.name}).voPath}.${cfg.name.get(${table.name}).voName};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
+import org.tiankafei.web.common.vo.Paging;
 
 /**
  * <p>
@@ -25,5 +31,128 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Autowired
     private ${table.mapperName} ${cfg.name.get(${table.name}).mapperConstName};
+
+
+    /**
+     * 校验 用户基本信息表 是否已经存在
+     *
+     * @param userTestParam
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public boolean checkUserTestServiceExists(UserTestParam userTestParam) throws Exception {
+		return false;
+	}
+
+    /**
+     * 保存 用户基本信息表
+     *
+     * @param userTestVo
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public Object saveUserTestService(UserTestVo userTestVo) throws Exception {
+		return null;
+	}
+
+    /**
+     * 保存 用户基本信息表 集合
+     *
+     * @param userTestVoList
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public boolean saveUserTestServiceList(List<UserTestVo> userTestVoList) throws Exception {
+		return false;
+	}
+
+    /**
+     * 修改 用户基本信息表
+     *
+     * @param userTestVo
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public boolean updateUserTestService(UserTestVo userTestVo) throws Exception {
+		return false;
+	}
+
+    /**
+     * 删除 用户基本信息表
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public boolean deleteUserTestService(String ids) throws Exception {
+		return false;
+	}
+
+    /**
+     * 根据条件删除 用户基本信息表
+     *
+     * @param userTestParam
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public boolean deleteUserTestService(UserTestParam userTestParam) throws Exception {
+		return false;
+	}
+
+    /**
+     * 根据ID获取 用户基本信息表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public UserTestVo getUserTestServiceById(Serializable id) throws Exception {
+		return null;
+	}
+
+    /**
+     * 获取 用户基本信息表 分页对象列表
+     *
+     * @param userTestPageParam
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public Paging<UserTestVo> getUserTestServicePageList(UserTestPageParam userTestPageParam) throws Exception {
+		return null;
+	}
+
+    /**
+     * 获取 用户基本信息表 对象列表
+     *
+     * @param userTestParam
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public List<UserTestVo> getUserTestServiceList(UserTestParam userTestParam) throws Exception {
+		return null;
+	}
+
+    /**
+     * 计算 用户基本信息表 总记录数
+     *
+     * @param userTestParam
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public int countUserTestService(UserTestParam userTestParam) throws Exception {
+		return 0;
+	}
+	
+
 }
 #end
