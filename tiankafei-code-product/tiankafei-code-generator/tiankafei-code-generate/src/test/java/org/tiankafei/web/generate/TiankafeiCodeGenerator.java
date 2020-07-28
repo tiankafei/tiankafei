@@ -136,8 +136,8 @@ public class TiankafeiCodeGenerator {
     // 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
     private StrategyConfig initStrategyConfig() throws ClassNotFoundException {
         StrategyConfig strategyConfig = new StrategyConfig();
-        strategyConfig.setCapitalMode(false);
-        strategyConfig.setSkipView(false);
+//        strategyConfig.setCapitalMode(false);
+//        strategyConfig.setSkipView(false);
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setTablePrefix("sys_");
@@ -148,12 +148,12 @@ public class TiankafeiCodeGenerator {
         strategyConfig.setSuperServiceClass(baseServiceClassPath);
         strategyConfig.setSuperServiceImplClass(baseServiceImplClassPath);
         strategyConfig.setSuperControllerClass(baseControllerClassPath);
-        strategyConfig.setEnableSqlFilter(true);
+//        strategyConfig.setEnableSqlFilter(true);
         strategyConfig.setInclude(tableNameList.toArray(new String[]{}));
 //        strategyConfig.setLikeTable();
 //        strategyConfig.setExclude();
 //        strategyConfig.setNotLikeTable();
-        strategyConfig.setEntityColumnConstant(false);
+        strategyConfig.setEntityColumnConstant(true);
         strategyConfig.setChainModel(true);
         strategyConfig.setEntityLombokModel(false);
         strategyConfig.setEntityBooleanColumnRemoveIsPrefix(false);
