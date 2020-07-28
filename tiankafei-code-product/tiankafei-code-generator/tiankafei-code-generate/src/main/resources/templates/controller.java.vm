@@ -116,7 +116,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
         Paging<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}PageList(${cfg.tableName}PageQueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 获取 $!{table.comment} 列表
      */
@@ -129,7 +129,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
         List<${cfg.TableName}QueryVo> paging = ${cfg.serviceObjectName}.get${cfg.TableName}List(${cfg.tableName}QueryParam);
         return ApiResult.ok(paging);
     }
-    
+
     /**
      * 计算 $!{table.comment} 总记录数
      */

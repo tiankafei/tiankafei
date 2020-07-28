@@ -28,7 +28,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("${table.name}")
-@ApiModel(value = " $!{table.comment} 实体对象" , description = "$!{table.comment}")
+@ApiModel(value = " $!{table.comment} 实体对象", description = "$!{table.comment}")
 public class ${cfg.entityClassName} extends ${superEntityClass} {
 
 ## ----------  BEGIN 字段循环遍历  ----------
