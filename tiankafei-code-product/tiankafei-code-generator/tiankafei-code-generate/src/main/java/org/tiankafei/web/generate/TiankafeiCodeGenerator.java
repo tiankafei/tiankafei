@@ -1,36 +1,21 @@
 package org.tiankafei.web.generate;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.ITypeConvert;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
-import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
-import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
-import com.baomidou.mybatisplus.generator.config.po.TableFill;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
-import com.baomidou.mybatisplus.generator.config.rules.DateType;
-import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
+import org.tiankafei.web.generate.config.CodeGeneratorDataSourceConfig;
+import org.tiankafei.web.generate.config.CodeGeneratorGlobalConfig;
+import org.tiankafei.web.generate.config.CodeGeneratorInjectionConfig;
+import org.tiankafei.web.generate.config.CodeGeneratorPackageConfig;
+import org.tiankafei.web.generate.config.CodeGeneratorStrategyConfig;
+import org.tiankafei.web.generate.config.CodeGeneratorTemplateConfig;
+import org.tiankafei.web.generate.properties.CodeProperties;
 
 /**
  * @author tiankafei
@@ -54,326 +39,60 @@ public class TiankafeiCodeGenerator {
     private String basePageParamClassPath = "org.tiankafei.web.common.param.OrderQueryParam";
     private List<String> tableNameList = Arrays.asList("sys_user_test");
 
-    private AutoGenerator autoGenerator;
-
     public static void main(String[] args) throws Exception {
-        new TiankafeiCodeGenerator();
-    }
+        TiankafeiCodeGenerator tiankafeiCodeGenerator = new TiankafeiCodeGenerator();
+        CodeProperties codeProperties = tiankafeiCodeGenerator.initCodeProperties();
 
-    public TiankafeiCodeGenerator() throws Exception {
-        autoGenerator = new AutoGenerator();
+        DataSourceConfig dataSourceConfig = CodeGeneratorDataSourceConfig.initDataSourceConfig(codeProperties);
+        StrategyConfig strategyConfig = CodeGeneratorStrategyConfig.initStrategyConfig(codeProperties);
+        PackageConfig packageConfig = CodeGeneratorPackageConfig.initPackageConfig(codeProperties);
+        TemplateConfig templateConfig = CodeGeneratorTemplateConfig.initTemplateConfig(codeProperties);
+        GlobalConfig globalConfig = CodeGeneratorGlobalConfig.initGlobalConfig(codeProperties);
+        InjectionConfig cfg = CodeGeneratorInjectionConfig.initInjectionConfig(codeProperties);
+
+        AutoGenerator autoGenerator = new AutoGenerator();
         // 数据源配置，通过该配置，指定需要生成代码的具体数据库
-        autoGenerator.setDataSource(initDataSourceConfig());
-
+        autoGenerator.setDataSource(dataSourceConfig);
         // 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
-        autoGenerator.setStrategy(initStrategyConfig());
-
+        autoGenerator.setStrategy(strategyConfig);
         // 包名配置，通过该配置，指定生成代码的包路径
-        autoGenerator.setPackageInfo(initPackageConfig());
-
+        autoGenerator.setPackageInfo(packageConfig);
         // 模板配置，可自定义代码生成的模板，实现个性化操作
-        autoGenerator.setTemplate(initTemplateConfig());
-
+        autoGenerator.setTemplate(templateConfig);
         // 全局策略配置
-        autoGenerator.setGlobalConfig(initGlobalConfig());
-
+        autoGenerator.setGlobalConfig(globalConfig);
         // 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
-        autoGenerator.setCfg(initInjectionConfig());
-
+        autoGenerator.setCfg(cfg);
         autoGenerator.execute();
     }
 
-    // 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
-    private InjectionConfig initInjectionConfig(){
-        InjectionConfig injectionConfig = new InjectionConfig(){
-            @Override
-            public void initMap() {
-                ConfigBuilder config = getConfig();
 
-                Map<String, Object> map = new HashMap<>();
-                map.put("shiroAuthority", shiroAuthority);
-
-                Map<String, Map<String, String>> nameMapMap = new HashMap<>();
-                Map<String, List<String>> importPackageList = new HashMap<>();
-                List<TableInfo> tableInfoList = config.getTableInfoList();
-                tableInfoList.stream().forEach(tableInfo -> {
-                    String name = tableInfo.getName();
-
-                    Set<String> importPackages = tableInfo.getImportPackages();
-                    List<String> voImportPackages = importPackages.stream().filter(importPackage -> {
-                        if (importPackage.endsWith("TableName")
-                                || importPackage.endsWith("IdType")
-                                || importPackage.endsWith("Model")
-                                || importPackage.endsWith("Version")
-                                || importPackage.endsWith("TableId")
-                                || importPackage.endsWith("FieldFill")
-                                || importPackage.endsWith("TableLogic")
-                                || importPackage.endsWith("TableField")) {
-                            return false;
-                        }
-                        return true;
-                    }).collect(Collectors.toList());
-                    importPackageList.put(name, voImportPackages);
-
-                    Map<String, String> nameMap = new HashMap<>();
-                    String entityName = tableInfo.getEntityName();
-                    String entityConstName = firstToLowerCase(entityName);
-                    nameMap.put("entityConstName", entityConstName);
-
-                    String voName = entityName.replace("Entity", "Vo");
-                    nameMap.put("voName", voName);
-                    nameMap.put("voConstName", firstToLowerCase(voName));
-                    nameMap.put("voPath", baseParentPath + "." + moduleName + ".vo");
-                    nameMap.put("superVoClass", baseVoClassPath);
-
-                    String paramName = entityName.replace("Entity", "Param");
-                    nameMap.put("paramName", paramName);
-                    nameMap.put("paramConstName", firstToLowerCase(paramName));
-                    nameMap.put("paramPath", baseParentPath + "." + moduleName + ".param");
-
-                    String pageParamName = entityName.replace("Entity", "PageParam");
-                    nameMap.put("pageParamName", pageParamName);
-                    nameMap.put("pageParamConstName", firstToLowerCase(pageParamName));
-                    nameMap.put("pageParamPath", baseParentPath + "." + moduleName + ".param");
-                    nameMap.put("superPageParamClass", basePageParamClassPath);
-
-                    String permission = underlineToColon(name);
-                    nameMap.put("shiroAuthority", permission);
-
-                    String serviceName = tableInfo.getServiceName();
-                    String serviceConstName = firstToLowerCase(serviceName);
-                    nameMap.put("serviceConstName", serviceConstName);
-
-                    String mapperName = tableInfo.getMapperName();
-                    String mapperConstName = firstToLowerCase(mapperName);
-                    nameMap.put("mapperConstName", mapperConstName);
-
-                    String controllerName = tableInfo.getControllerName();
-                    String controllerConstName = firstToLowerCase(controllerName);
-                    nameMap.put("controllerConstName", controllerConstName);
-
-                    nameMapMap.put(name, nameMap);
-                });
-
-                map.put("name", nameMapMap);
-                map.put("packages", importPackageList);
-                setMap(map);
-            }
-        };
-
-        List<FileOutConfig> fileOutConfigList = new ArrayList<>();
-        fileOutConfigList.add(new FileOutConfig("/myself/vo.java.vm"){
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = autoGenerator.getCfg().getMap();
-                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
-                String voName = nameMap.get(name).get("voName");
-
-                String path = outputDir + File.separator + baseParentPath.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator + moduleName + File.separator + "vo" + File.separator + voName + StringPool.DOT_JAVA;
-                System.out.println(path);
-                return path;
-            }
-        });
-        fileOutConfigList.add(new FileOutConfig("/myself/param.java.vm"){
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = autoGenerator.getCfg().getMap();
-                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
-                String paramName = nameMap.get(name).get("paramName");
-
-                String path = outputDir + File.separator + baseParentPath.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator + moduleName + File.separator + "param" + File.separator + paramName + StringPool.DOT_JAVA;
-                return path;
-            }
-        });
-        fileOutConfigList.add(new FileOutConfig("/myself/pageParam.java.vm"){
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = autoGenerator.getCfg().getMap();
-                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
-                String pageParamName = nameMap.get(name).get("pageParamName");
-
-                String path = outputDir + File.separator + baseParentPath.replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator + moduleName + File.separator + "param" + File.separator + pageParamName + StringPool.DOT_JAVA;
-                return path;
-            }
-        });
-
-        injectionConfig.setFileOutConfigList(fileOutConfigList);
-        return injectionConfig;
-    }
-
-    // 全局策略配置
-    private GlobalConfig initGlobalConfig(){
-        GlobalConfig globalConfig = new GlobalConfig();
-        globalConfig.setOutputDir(outputDir);
-        globalConfig.setFileOverride(true);
-        globalConfig.setOpen(false);
-        globalConfig.setEnableCache(false);
-        globalConfig.setAuthor(author);
-        globalConfig.setKotlin(false);
-        globalConfig.setSwagger2(true);
-        globalConfig.setActiveRecord(true);
-        globalConfig.setBaseResultMap(true);
-        globalConfig.setBaseColumnList(true);
-        globalConfig.setDateType(DateType.SQL_PACK);
-        globalConfig.setEntityName("%sEntity");
-        globalConfig.setMapperName("%sMapper");
-        globalConfig.setXmlName("%sMapper");
-        globalConfig.setServiceName("%sService");
-        globalConfig.setServiceImplName("%sServiceImpl");
-        globalConfig.setControllerName("%sController");
-        globalConfig.setIdType(IdType.ASSIGN_ID);
-
-        return globalConfig;
-    }
-
-    // 模板配置，可自定义代码生成的模板，实现个性化操作
-    private TemplateConfig initTemplateConfig(){
-        TemplateConfig templateConfig = new TemplateConfig();
-        templateConfig.setEntity("/myself/entity.java.vm");
-        templateConfig.setService("/myself/service.java.vm");
-        templateConfig.setServiceImpl("/myself/serviceImpl.java.vm");
-        templateConfig.setMapper("/myself/mapper.java.vm");
-        templateConfig.setXml("/myself/mapper.xml.vm");
-        templateConfig.setController("/myself/controller.java.vm");
-
-        return templateConfig;
-    }
-
-    // 包名配置，通过该配置，指定生成代码的包路径
-    private PackageConfig initPackageConfig(){
-        PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setParent(baseParentPath);
-        packageConfig.setModuleName(moduleName);
-        packageConfig.setEntity("entity");
-        packageConfig.setService("service");
-        packageConfig.setServiceImpl("service.impl");
-        packageConfig.setMapper("mapper");
-        packageConfig.setXml("mapper.xml");
-        packageConfig.setController("controller");
-//        packageConfig.setPathInfo();
-
-        return packageConfig;
-    }
-
-    // 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
-    private StrategyConfig initStrategyConfig() throws ClassNotFoundException {
-        StrategyConfig strategyConfig = new StrategyConfig();
-//        strategyConfig.setCapitalMode(false);
-//        strategyConfig.setSkipView(false);
-        strategyConfig.setNaming(NamingStrategy.underline_to_camel);
-        strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategyConfig.setTablePrefix("sys_");
-//        strategyConfig.setFieldPrefix("");
-        strategyConfig.setSuperEntityClass(Class.forName(baseEntityClassPath));
-//        strategyConfig.setSuperEntityColumns("create_user_id", "create_time", "update_user_id", "update_time");
-        strategyConfig.setSuperMapperClass(baseMapperClassPath);
-        strategyConfig.setSuperServiceClass(baseServiceClassPath);
-        strategyConfig.setSuperServiceImplClass(baseServiceImplClassPath);
-        strategyConfig.setSuperControllerClass(baseControllerClassPath);
-//        strategyConfig.setEnableSqlFilter(true);
-        strategyConfig.setInclude(tableNameList.toArray(new String[]{}));
-//        strategyConfig.setLikeTable();
-//        strategyConfig.setExclude();
-//        strategyConfig.setNotLikeTable();
-        strategyConfig.setEntityColumnConstant(true);
-        strategyConfig.setChainModel(true);
-        strategyConfig.setEntityLombokModel(false);
-        strategyConfig.setEntityBooleanColumnRemoveIsPrefix(false);
-        strategyConfig.setRestControllerStyle(true);
-        strategyConfig.setControllerMappingHyphenStyle(true);
-        strategyConfig.setEntityTableFieldAnnotationEnable(true);
-        strategyConfig.setVersionFieldName("version");
-        strategyConfig.setLogicDeleteFieldName("delete_mark");
-        List<TableFill> tableFieldList = Arrays.asList(
-                new TableFill("create_user_id", FieldFill.INSERT),
-                new TableFill("create_time", FieldFill.INSERT),
-                new TableFill("update_user_id", FieldFill.UPDATE),
-                new TableFill("update_time", FieldFill.UPDATE));
-        strategyConfig.setTableFillList(tableFieldList);
-
-        return strategyConfig;
-    }
-
-    // 数据源配置，通过该配置，指定需要生成代码的具体数据库
-    private DataSourceConfig initDataSourceConfig(){
-        DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
-        dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
-        dataSourceConfig.setUsername("root");
-        dataSourceConfig.setPassword("tiankafei");
-        // 设置自定义查询
-        dataSourceConfig.setDbQuery(new MySqlQuery(){
-            @Override
-            public String[] fieldCustom() {
-                return new String[]{"null", "default"};
-            }
-        });
-        dataSourceConfig.setTypeConvert(new ITypeConvert() {
-            @Override
-            public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
-                if (fieldType.equalsIgnoreCase("timestamp")
-                        || fieldType.equalsIgnoreCase("datetime")
-                        || fieldType.equalsIgnoreCase("date")) {
-                    return DbColumnType.TIMESTAMP;
-                }
-                //其它字段采用默认转换（非mysql数据库可以使用其它默认的数据库转换器）
-                return new MySqlTypeConvert().processTypeConvert(globalConfig, fieldType);
-            }
-        });
-        return dataSourceConfig;
-    }
-
-    /**
-     * 下划线转换成冒号连接命名
-     * sys_user --> sys:user
-     *
-     * @param underline
-     * @return
-     */
-    public static String firstToLowerCase(String underline) {
-        if (StringUtils.isNotBlank(underline)) {
-            return underline.substring(0, 1).toLowerCase() + underline.substring(1);
-        }
-        return null;
-    }
-
-    /**
-     * 下划线转换成冒号连接命名
-     * sys_user --> sys:user
-     *
-     * @param underline
-     * @return
-     */
-    public static String underlineToColon(String underline) {
-        if (StringUtils.isNotBlank(underline)) {
-            String string = underline.toLowerCase();
-            return string.replaceAll("_", ":");
-        }
-        return null;
-    }
-
-    /**
-     * 下划线转换成冒号连接命名
-     * sys_user --> sys:user
-     *
-     * @param underline
-     * @return
-     */
-    public static String underlineToColon(String underline, String tablePrefixs[]) {
-        if (StringUtils.isNotBlank(underline)) {
-            String string = underline.toLowerCase();
-            for (int index = 0; index < tablePrefixs.length; index++) {
-                String tablePrefix = tablePrefixs[index];
-                if(string.startsWith(tablePrefix)){
-                    string = string.replace(tablePrefix, "");
-                }
-            }
-            return string.replaceAll("_", ":");
-        }
-        return null;
+    private CodeProperties initCodeProperties(){
+        CodeProperties codeProperties = new CodeProperties();
+        codeProperties.setUrl("jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
+        codeProperties.setDriverName("com.mysql.cj.jdbc.Driver");
+        codeProperties.setUsername("root");
+        codeProperties.setPassword("tiankafei");
+        codeProperties.setShiroAuthority(shiroAuthority);
+        codeProperties.setAuthor(author);
+        codeProperties.setOutputDir(outputDir);
+        codeProperties.setProjectPath(baseParentPath);
+        codeProperties.setModuleName(moduleName);
+        codeProperties.setSuperControllerClassPath(baseControllerClassPath);
+        codeProperties.setSuperEntityClassPath(baseEntityClassPath);
+        codeProperties.setSuperServiceClassPath(baseServiceClassPath);
+        codeProperties.setSuperServiceImplClassPath(baseServiceImplClassPath);
+        codeProperties.setSuperMapperClassPath(baseMapperClassPath);
+        codeProperties.setSuperVoClassPath(baseVoClassPath);
+        codeProperties.setSuperPageParamClassPath(basePageParamClassPath);
+        codeProperties.setTableNameList(tableNameList);
+        codeProperties.setEntity("/myself/entity.java.vm");
+        codeProperties.setService("/myself/service.java.vm");
+        codeProperties.setServiceImpl("/myself/serviceImpl.java.vm");
+        codeProperties.setMapper("/myself/mapper.java.vm");
+        codeProperties.setXml("/myself/mapper.xml.vm");
+        codeProperties.setController("/myself/controller.java.vm");
+        return codeProperties;
     }
 
 }
