@@ -24,7 +24,7 @@ import ${cfg.superParamPackage}.${cfg.superPageParamClassName};
 @EqualsAndHashCode(callSuper = true)
 ###end
 #if(${swagger2})
-@ApiModel(value = "$!{table.comment}分页参数对象")
+@ApiModel(value = "$!{table.comment} 分页列表参数对象")
 #end
 public class ${cfg.get(${table.name}).pageParamClassName} extends ${cfg.superPageParamClassName} {
 

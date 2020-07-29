@@ -44,7 +44,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     Object save${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception;
 
     /**
-     * 保存 $!{table.comment} 集合
+     * 批量保存 $!{table.comment}
      *
      * @param ${cfg.get(${table.name}).voConstName}List
      * @return

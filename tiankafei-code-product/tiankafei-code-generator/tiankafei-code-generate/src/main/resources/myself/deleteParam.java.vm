@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 ###end
 #if(${swagger2})
-@ApiModel(value = "$!{table.comment}参数对象")
+@ApiModel(value = "$!{table.comment} 删除参数对象")
 #end
 public class ${cfg.get(${table.name}).deleteParamClassName} implements Serializable {
 

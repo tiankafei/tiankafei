@@ -37,7 +37,7 @@ import ${superControllerClassPackage};
 #end
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 #if(${swagger2})
-@Api(value = "$!{table.comment}API", tags = {"$!{table.comment}"})
+@Api(value = "$!{table.comment} API", tags = {"$!{table.comment}"})
 #end
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
@@ -54,7 +54,7 @@ public class ${table.controllerName} {
 
 	@PostMapping("/save")
 #if(${swagger2})
-	@ApiOperation(value = "添加$!{table.comment}", response = ApiResult.class)
+	@ApiOperation(value = "添加 $!{table.comment}", response = ApiResult.class)
 #end	
 	public ApiResult<Boolean> save${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
 		Object id = ${cfg.get(${table.name}).serviceConstName}.save${table.serviceName}(${cfg.get(${table.name}).voConstName});
