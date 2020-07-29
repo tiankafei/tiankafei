@@ -18,7 +18,7 @@ public class CodeGeneratorPackageConfig {
         packageConfig.setService("service");
         packageConfig.setServiceImpl("service.impl");
         packageConfig.setMapper("mapper");
-        packageConfig.setXml("mapper.xml");
+        packageConfig.setXml("mapper");
         packageConfig.setController("controller");
 //        packageConfig.setPathInfo();
 
