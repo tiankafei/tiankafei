@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Entity}.${entity};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).checkParamClassName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).countParamClassName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).deleteParamClassName};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).pageParamClassName};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).listParamClassName};
 import ${cfg.voPackage}.${cfg.get(${table.name}).voClassName};
@@ -36,12 +39,12 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 校验 $!{table.comment} 是否已经存在
      *
-     * @param ${cfg.get(${table.name}).listParamConstName}
+     * @param ${cfg.get(${table.name}).checkParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean check${table.serviceName}Exists(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+    public boolean check${table.serviceName}Exists(${cfg.get(${table.name}).checkParamClassName} ${cfg.get(${table.name}).checkParamConstName}) throws Exception {
 		return false;
 	}
 
@@ -96,12 +99,12 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 根据条件删除 $!{table.comment}
      *
-     * @param ${cfg.get(${table.name}).listParamConstName}
+     * @param ${cfg.get(${table.name}).deleteParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean delete${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+    public boolean delete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception {
 		return false;
 	}
 
@@ -144,12 +147,12 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 计算 $!{table.comment} 总记录数
      *
-     * @param ${cfg.get(${table.name}).listParamConstName}
+     * @param ${cfg.get(${table.name}).countParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public int count${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+    public int count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
 		return 0;
 	}
 	

@@ -25,6 +25,15 @@ public class CfgProperties implements Serializable {
     private String listParamClassName;
     private String listParamConstName;
 
+    private String countParamClassName;
+    private String countParamConstName;
+
+    private String deleteParamClassName;
+    private String deleteParamConstName;
+
+    private String checkParamClassName;
+    private String checkParamConstName;
+
     private String pageParamClassName;
     private String pageParamConstName;
 

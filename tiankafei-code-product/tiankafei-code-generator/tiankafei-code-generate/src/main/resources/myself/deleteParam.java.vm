@@ -1,0 +1,33 @@
+package ${cfg.paramPackage};
+
+#if(${swagger2})
+import io.swagger.annotations.ApiModel;
+#end
+import java.io.Serializable;
+###if(${entityLombokModel})
+import lombok.Data;
+import lombok.experimental.Accessors;
+###end
+
+/**
+ * <pre>
+ * $!{table.comment} 分页参数对象
+ * </pre>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+###if(${entityLombokModel})
+@Data
+@Accessors(chain = true)
+###end
+#if(${swagger2})
+@ApiModel(value = "$!{table.comment}参数对象")
+#end
+public class ${cfg.get(${table.name}).deleteParamClassName} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+
+
+}

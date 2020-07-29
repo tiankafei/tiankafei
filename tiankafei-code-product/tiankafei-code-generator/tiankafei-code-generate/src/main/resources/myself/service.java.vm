@@ -3,6 +3,9 @@ package ${package.Service};
 import java.io.Serializable;
 import java.util.List;
 import ${package.Entity}.${entity};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).checkParamClassName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).countParamClassName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).deleteParamClassName};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).pageParamClassName};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).listParamClassName};
 import ${cfg.voPackage}.${cfg.get(${table.name}).voClassName};
@@ -25,11 +28,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 校验 $!{table.comment} 是否已经存在
      *
-     * @param ${cfg.get(${table.name}).listParamConstName}
+     * @param ${cfg.get(${table.name}).checkParamConstName}
      * @return
      * @throws Exception
      */
-    boolean check${table.serviceName}Exists(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
+    boolean check${table.serviceName}Exists(${cfg.get(${table.name}).checkParamClassName} ${cfg.get(${table.name}).checkParamConstName}) throws Exception;
 
     /**
      * 保存 $!{table.comment}
@@ -70,11 +73,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 根据条件删除 $!{table.comment}
      *
-     * @param ${cfg.get(${table.name}).listParamConstName}
+     * @param ${cfg.get(${table.name}).deleteParamConstName}
      * @return
      * @throws Exception
      */
-    boolean delete${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
+    boolean delete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception;
 
     /**
      * 根据ID获取 $!{table.comment} 对象
@@ -106,11 +109,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 计算 $!{table.comment} 总记录数
      *
-     * @param ${cfg.get(${table.name}).listParamConstName}
+     * @param ${cfg.get(${table.name}).countParamConstName}
      * @return
      * @throws Exception
      */
-    int count${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
+    int count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception;
 	
 }
 #end

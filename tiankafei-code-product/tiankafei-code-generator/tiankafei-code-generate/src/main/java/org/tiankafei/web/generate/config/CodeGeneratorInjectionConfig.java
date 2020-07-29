@@ -88,6 +88,18 @@ public class CodeGeneratorInjectionConfig {
                     cfgProperties.setListParamClassName(listParamName);
                     cfgProperties.setListParamConstName(firstToLowerCase(listParamName));
 
+                    String countParamName = entityName.replace("Entity", "CountParam");
+                    cfgProperties.setCountParamClassName(countParamName);
+                    cfgProperties.setCountParamConstName(firstToLowerCase(countParamName));
+
+                    String deleteParamName = entityName.replace("Entity", "DeleteParam");
+                    cfgProperties.setDeleteParamClassName(deleteParamName);
+                    cfgProperties.setDeleteParamConstName(firstToLowerCase(deleteParamName));
+
+                    String checkParamName = entityName.replace("Entity", "CheckParam");
+                    cfgProperties.setCheckParamClassName(checkParamName);
+                    cfgProperties.setCheckParamConstName(firstToLowerCase(checkParamName));
+
                     String pageParamName = entityName.replace("Entity", "PageParam");
                     cfgProperties.setPageParamClassName(pageParamName);
                     cfgProperties.setPageParamConstName(firstToLowerCase(pageParamName));
@@ -152,6 +164,57 @@ public class CodeGeneratorInjectionConfig {
                 String path = codePropertie.getOutputDir() + File.separator
                         + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
                         + codePropertie.getModuleName() + File.separator + "param" + File.separator + listParamClassName + StringPool.DOT_JAVA;
+                return path;
+            }
+        });
+        fileOutConfigList.add(new FileOutConfig("/myself/countParam.java.vm") {
+            @SneakyThrows
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String name = tableInfo.getName();
+                Map<String, Object> map = injectionConfig.getMap();
+                Map tmpMap = (Map) map.get(name);
+                String json = objectMapper.writeValueAsString(tmpMap);
+                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
+                String countParamClassName = cfgProperties.getCountParamClassName();
+
+                String path = codePropertie.getOutputDir() + File.separator
+                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + countParamClassName + StringPool.DOT_JAVA;
+                return path;
+            }
+        });
+        fileOutConfigList.add(new FileOutConfig("/myself/deleteParam.java.vm") {
+            @SneakyThrows
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String name = tableInfo.getName();
+                Map<String, Object> map = injectionConfig.getMap();
+                Map tmpMap = (Map) map.get(name);
+                String json = objectMapper.writeValueAsString(tmpMap);
+                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
+                String deleteParamClassName = cfgProperties.getDeleteParamClassName();
+
+                String path = codePropertie.getOutputDir() + File.separator
+                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + deleteParamClassName + StringPool.DOT_JAVA;
+                return path;
+            }
+        });
+        fileOutConfigList.add(new FileOutConfig("/myself/checkParam.java.vm") {
+            @SneakyThrows
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String name = tableInfo.getName();
+                Map<String, Object> map = injectionConfig.getMap();
+                Map tmpMap = (Map) map.get(name);
+                String json = objectMapper.writeValueAsString(tmpMap);
+                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
+                String checkParamClassName = cfgProperties.getCheckParamClassName();
+
+                String path = codePropertie.getOutputDir() + File.separator
+                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + checkParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });
