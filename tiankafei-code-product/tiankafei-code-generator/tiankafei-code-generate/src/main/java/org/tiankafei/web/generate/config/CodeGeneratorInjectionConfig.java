@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +14,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
+import org.tiankafei.web.generate.properties.CfgProperties;
 import org.tiankafei.web.generate.properties.CodeProperties;
 
 /**
@@ -23,23 +29,39 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class CodeGeneratorInjectionConfig {
 
     // 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
-    public static InjectionConfig initInjectionConfig(CodeProperties codePropertie){
-        InjectionConfig injectionConfig = new InjectionConfig(){
+    public static InjectionConfig initInjectionConfig(CodeProperties codePropertie) {
+        // 转换器
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        InjectionConfig injectionConfig = new InjectionConfig() {
             @Override
             public void initMap() {
                 ConfigBuilder config = getConfig();
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("shiroAuthority", codePropertie.isShiroAuthority());
+                map.put("voPackage", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".vo");
+                map.put("paramPackage", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".param");
 
-                Map<String, Map<String, String>> nameMapMap = new HashMap<>();
-                Map<String, List<String>> importPackageList = new HashMap<>();
+                String superVoClassPath = codePropertie.getSuperVoClassPath();
+                String superVoPackage = superVoClassPath.substring(0, superVoClassPath.lastIndexOf("."));
+                String superVoName = superVoClassPath.substring(superVoClassPath.lastIndexOf(".") + 1);
+                map.put("superVoPackage", superVoPackage);
+                map.put("superVoClassName", superVoName);
+
+                String superPageParamClassPath = codePropertie.getSuperPageParamClassPath();
+                String superPageParamPackage = superPageParamClassPath.substring(0, superPageParamClassPath.lastIndexOf("."));
+                String superPageParamName = superPageParamClassPath.substring(superPageParamClassPath.lastIndexOf(".") + 1);
+                map.put("superParamPackage", superPageParamPackage);
+                map.put("superPageParamClassName", superPageParamName);
+
                 List<TableInfo> tableInfoList = config.getTableInfoList();
                 tableInfoList.stream().forEach(tableInfo -> {
+                    CfgProperties cfgProperties = new CfgProperties();
                     String name = tableInfo.getName();
 
                     Set<String> importPackages = tableInfo.getImportPackages();
-                    List<String> voImportPackages = importPackages.stream().filter(importPackage -> {
+                    List<String> importPackageList = importPackages.stream().filter(importPackage -> {
                         if (importPackage.endsWith("TableName")
                                 || importPackage.endsWith("IdType")
                                 || importPackage.endsWith("Model")
@@ -52,95 +74,101 @@ public class CodeGeneratorInjectionConfig {
                         }
                         return true;
                     }).collect(Collectors.toList());
-                    importPackageList.put(name, voImportPackages);
+                    cfgProperties.setImportPackageList(importPackageList);
 
-                    Map<String, String> nameMap = new HashMap<>();
                     String entityName = tableInfo.getEntityName();
                     String entityConstName = firstToLowerCase(entityName);
-                    nameMap.put("entityConstName", entityConstName);
+                    cfgProperties.setEntityConstName(entityConstName);
 
                     String voName = entityName.replace("Entity", "Vo");
-                    nameMap.put("voName", voName);
-                    nameMap.put("voConstName", firstToLowerCase(voName));
-                    nameMap.put("voPath", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".vo");
-                    nameMap.put("superVoClass", codePropertie.getSuperVoClassPath());
+                    cfgProperties.setVoClassName(voName);
+                    cfgProperties.setVoConstName(firstToLowerCase(voName));
 
-                    String paramName = entityName.replace("Entity", "Param");
-                    nameMap.put("paramName", paramName);
-                    nameMap.put("paramConstName", firstToLowerCase(paramName));
-                    nameMap.put("paramPath", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".param");
+                    String listParamName = entityName.replace("Entity", "ListParam");
+                    cfgProperties.setListParamClassName(listParamName);
+                    cfgProperties.setListParamConstName(firstToLowerCase(listParamName));
 
                     String pageParamName = entityName.replace("Entity", "PageParam");
-                    nameMap.put("pageParamName", pageParamName);
-                    nameMap.put("pageParamConstName", firstToLowerCase(pageParamName));
-                    nameMap.put("pageParamPath", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".param");
-                    nameMap.put("superPageParamClass", codePropertie.getSuperPageParamClassPath());
+                    cfgProperties.setPageParamClassName(pageParamName);
+                    cfgProperties.setPageParamConstName(firstToLowerCase(pageParamName));
 
                     String permission = underlineToColon(name);
-                    nameMap.put("shiroAuthority", permission);
+                    cfgProperties.setAuthority(permission);
 
                     String serviceName = tableInfo.getServiceName();
                     String serviceConstName = firstToLowerCase(serviceName);
-                    nameMap.put("serviceConstName", serviceConstName);
+                    cfgProperties.setServiceConstName(serviceConstName);
 
                     String mapperName = tableInfo.getMapperName();
                     String mapperConstName = firstToLowerCase(mapperName);
-                    nameMap.put("mapperConstName", mapperConstName);
+                    cfgProperties.setMapperConstName(mapperConstName);
 
                     String controllerName = tableInfo.getControllerName();
                     String controllerConstName = firstToLowerCase(controllerName);
-                    nameMap.put("controllerConstName", controllerConstName);
+                    cfgProperties.setControllerConstName(controllerConstName);
 
-                    nameMapMap.put(name, nameMap);
+                    try {
+                        String json = objectMapper.writeValueAsString(cfgProperties);
+                        Map tmpMap = objectMapper.readValue(json, Map.class);
+                        map.put(name, tmpMap);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
                 });
-
-                map.put("name", nameMapMap);
-                map.put("packages", importPackageList);
                 setMap(map);
             }
         };
 
         List<FileOutConfig> fileOutConfigList = new ArrayList<>();
-        fileOutConfigList.add(new FileOutConfig("/myself/vo.java.vm"){
+        fileOutConfigList.add(new FileOutConfig("/myself/vo.java.vm") {
+            @SneakyThrows
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String name = tableInfo.getName();
                 Map<String, Object> map = injectionConfig.getMap();
-                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
-                String voName = nameMap.get(name).get("voName");
+                Map tmpMap = (Map) map.get(name);
+                String json = objectMapper.writeValueAsString(tmpMap);
+                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
+                String voClassName = cfgProperties.getVoClassName();
 
                 String path = codePropertie.getOutputDir() + File.separator
                         + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "vo" + File.separator + voName + StringPool.DOT_JAVA;
+                        + codePropertie.getModuleName() + File.separator + "vo" + File.separator + voClassName + StringPool.DOT_JAVA;
                 System.out.println(path);
                 return path;
             }
         });
-        fileOutConfigList.add(new FileOutConfig("/myself/param.java.vm"){
+        fileOutConfigList.add(new FileOutConfig("/myself/listParam.java.vm") {
+            @SneakyThrows
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String name = tableInfo.getName();
                 Map<String, Object> map = injectionConfig.getMap();
-                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
-                String paramName = nameMap.get(name).get("paramName");
+                Map tmpMap = (Map) map.get(name);
+                String json = objectMapper.writeValueAsString(tmpMap);
+                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
+                String listParamClassName = cfgProperties.getListParamClassName();
 
                 String path = codePropertie.getOutputDir() + File.separator
                         + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + paramName + StringPool.DOT_JAVA;
+                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + listParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });
-        fileOutConfigList.add(new FileOutConfig("/myself/pageParam.java.vm"){
+        fileOutConfigList.add(new FileOutConfig("/myself/pageParam.java.vm") {
+            @SneakyThrows
             @Override
             public String outputFile(TableInfo tableInfo) {
                 String name = tableInfo.getName();
                 Map<String, Object> map = injectionConfig.getMap();
-                Map<String, Map<String, String>> nameMap = (Map<String, Map<String, String>>) map.get("name");
-                String pageParamName = nameMap.get(name).get("pageParamName");
+                Map tmpMap = (Map) map.get(name);
+                String json = objectMapper.writeValueAsString(tmpMap);
+                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
+                String pageParamClassName = cfgProperties.getPageParamClassName();
 
                 String path = codePropertie.getOutputDir() + File.separator
                         + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + pageParamName + StringPool.DOT_JAVA;
+                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + pageParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });

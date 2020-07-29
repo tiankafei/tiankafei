@@ -3,9 +3,9 @@ package ${package.Service};
 import java.io.Serializable;
 import java.util.List;
 import ${package.Entity}.${entity};
-import ${cfg.name.get(${table.name}).pageParamPath}.${cfg.name.get(${table.name}).pageParamName};
-import ${cfg.name.get(${table.name}).paramPath}.${cfg.name.get(${table.name}).paramName};
-import ${cfg.name.get(${table.name}).voPath}.${cfg.name.get(${table.name}).voName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).pageParamClassName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).listParamClassName};
+import ${cfg.voPackage}.${cfg.get(${table.name}).voClassName};
 import ${superServiceClassPackage};
 import org.tiankafei.web.common.vo.Paging;
 
@@ -25,38 +25,38 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 校验 $!{table.comment} 是否已经存在
      *
-     * @param ${cfg.name.get(${table.name}).paramConstName}
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
-    boolean check${table.serviceName}Exists(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
+    boolean check${table.serviceName}Exists(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
 
     /**
      * 保存 $!{table.comment}
      *
-     * @param ${cfg.name.get(${table.name}).voConstName}
+     * @param ${cfg.get(${table.name}).voConstName}
      * @return
      * @throws Exception
      */
-    Object save${table.serviceName}(${cfg.name.get(${table.name}).voName} ${cfg.name.get(${table.name}).voConstName}) throws Exception;
+    Object save${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception;
 
     /**
      * 保存 $!{table.comment} 集合
      *
-     * @param ${cfg.name.get(${table.name}).voConstName}List
+     * @param ${cfg.get(${table.name}).voConstName}List
      * @return
      * @throws Exception
      */
-    boolean save${table.serviceName}List(List<${cfg.name.get(${table.name}).voName}> ${cfg.name.get(${table.name}).voConstName}List) throws Exception;
+    boolean save${table.serviceName}List(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception;
 
     /**
      * 修改 $!{table.comment}
      *
-     * @param ${cfg.name.get(${table.name}).voConstName}
+     * @param ${cfg.get(${table.name}).voConstName}
      * @return
      * @throws Exception
      */
-    boolean update${table.serviceName}(${cfg.name.get(${table.name}).voName} ${cfg.name.get(${table.name}).voConstName}) throws Exception;
+    boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception;
 
     /**
      * 删除 $!{table.comment}
@@ -70,11 +70,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 根据条件删除 $!{table.comment}
      *
-     * @param ${cfg.name.get(${table.name}).paramConstName}
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
-    boolean delete${table.serviceName}(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
+    boolean delete${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
 
     /**
      * 根据ID获取 $!{table.comment} 对象
@@ -83,34 +83,34 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    ${cfg.name.get(${table.name}).voName} get${table.serviceName}ById(Serializable id) throws Exception;
+    ${cfg.get(${table.name}).voClassName} get${table.serviceName}ById(Serializable id) throws Exception;
 
     /**
      * 获取 $!{table.comment} 分页对象列表
      *
-     * @param ${cfg.name.get(${table.name}).pageParamConstName}
+     * @param ${cfg.get(${table.name}).pageParamConstName}
      * @return
      * @throws Exception
      */
-    Paging<${cfg.name.get(${table.name}).voName}> get${table.serviceName}PageList(${cfg.name.get(${table.name}).pageParamName} ${cfg.name.get(${table.name}).pageParamConstName}) throws Exception;
+    Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception;
 
     /**
      * 获取 $!{table.comment} 对象列表
      *
-     * @param ${cfg.name.get(${table.name}).paramConstName}
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
-    List<${cfg.name.get(${table.name}).voName}> get${table.serviceName}List(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
+    List<${cfg.get(${table.name}).voClassName}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
 
     /**
      * 计算 $!{table.comment} 总记录数
      *
-     * @param ${cfg.name.get(${table.name}).paramConstName}
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
-    int count${table.serviceName}(${cfg.name.get(${table.name}).paramName} ${cfg.name.get(${table.name}).paramConstName}) throws Exception;
+    int count${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
 	
 }
 #end

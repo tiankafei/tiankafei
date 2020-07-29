@@ -1,4 +1,4 @@
-package ${cfg.name.get(${table.name}).pageParamPath};
+package ${cfg.paramPackage};
 
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;
@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 ###end
+import ${cfg.superParamPackage}.${cfg.superPageParamClassName};
 
 /**
  * <pre>
@@ -25,7 +26,7 @@ import lombok.experimental.Accessors;
 #if(${swagger2})
 @ApiModel(value = "$!{table.comment}分页参数对象")
 #end
-public class ${cfg.name.get(${table.name}).pageParamName} extends ${cfg.name.get(${table.name}).superPageParamClass} {
+public class ${cfg.get(${table.name}).pageParamClassName} extends ${cfg.superPageParamClassName} {
 
     private static final long serialVersionUID = 1L;
 

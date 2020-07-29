@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Entity}.${entity};
-import ${cfg.name.get(${table.name}).pageParamPath}.${cfg.name.get(${table.name}).pageParamName};
-import ${cfg.name.get(${table.name}).paramPath}.${cfg.name.get(${table.name}).paramName};
-import ${cfg.name.get(${table.name}).voPath}.${cfg.name.get(${table.name}).voName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).pageParamClassName};
+import ${cfg.paramPackage}.${cfg.get(${table.name}).listParamClassName};
+import ${cfg.voPackage}.${cfg.get(${table.name}).voClassName};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
@@ -30,126 +30,126 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
     @Autowired
-    private ${table.mapperName} ${cfg.name.get(${table.name}).mapperConstName};
+    private ${table.mapperName} ${cfg.get(${table.name}).mapperConstName};
 
 
     /**
-     * 校验 用户基本信息表 是否已经存在
+     * 校验 $!{table.comment} 是否已经存在
      *
-     * @param userTestParam
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean checkUserTestServiceExists(UserTestParam userTestParam) throws Exception {
+    public boolean check${table.serviceName}Exists(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
 		return false;
 	}
 
     /**
-     * 保存 用户基本信息表
+     * 保存 $!{table.comment}
      *
-     * @param userTestVo
+     * @param ${cfg.get(${table.name}).voConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public Object saveUserTestService(UserTestVo userTestVo) throws Exception {
+    public Object save${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
 		return null;
 	}
 
     /**
-     * 保存 用户基本信息表 集合
+     * 保存 $!{table.comment} 集合
      *
-     * @param userTestVoList
+     * @param ${cfg.get(${table.name}).voConstName}List
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean saveUserTestServiceList(List<UserTestVo> userTestVoList) throws Exception {
+    public boolean save${table.serviceName}List(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception {
 		return false;
 	}
 
     /**
-     * 修改 用户基本信息表
+     * 修改 $!{table.comment}
      *
-     * @param userTestVo
+     * @param ${cfg.get(${table.name}).voConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean updateUserTestService(UserTestVo userTestVo) throws Exception {
+    public boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
 		return false;
 	}
 
     /**
-     * 删除 用户基本信息表
+     * 删除 $!{table.comment}
      *
      * @param ids
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean deleteUserTestService(String ids) throws Exception {
+    public boolean delete${table.serviceName}(String ids) throws Exception {
 		return false;
 	}
 
     /**
-     * 根据条件删除 用户基本信息表
+     * 根据条件删除 $!{table.comment}
      *
-     * @param userTestParam
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean deleteUserTestService(UserTestParam userTestParam) throws Exception {
+    public boolean delete${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
 		return false;
 	}
 
     /**
-     * 根据ID获取 用户基本信息表 对象
+     * 根据ID获取 $!{table.comment} 对象
      *
      * @param id
      * @return
      * @throws Exception
      */
 	@Override
-    public UserTestVo getUserTestServiceById(Serializable id) throws Exception {
+    public ${cfg.get(${table.name}).voClassName} get${table.serviceName}ById(Serializable id) throws Exception {
 		return null;
 	}
 
     /**
-     * 获取 用户基本信息表 分页对象列表
+     * 获取 $!{table.comment} 分页对象列表
      *
-     * @param userTestPageParam
+     * @param ${cfg.get(${table.name}).pageParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public Paging<UserTestVo> getUserTestServicePageList(UserTestPageParam userTestPageParam) throws Exception {
+    public Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
 		return null;
 	}
 
     /**
-     * 获取 用户基本信息表 对象列表
+     * 获取 $!{table.comment} 对象列表
      *
-     * @param userTestParam
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public List<UserTestVo> getUserTestServiceList(UserTestParam userTestParam) throws Exception {
+    public List<${cfg.get(${table.name}).voClassName}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
 		return null;
 	}
 
     /**
-     * 计算 用户基本信息表 总记录数
+     * 计算 $!{table.comment} 总记录数
      *
-     * @param userTestParam
+     * @param ${cfg.get(${table.name}).listParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public int countUserTestService(UserTestParam userTestParam) throws Exception {
+    public int count${table.serviceName}(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
 		return 0;
 	}
 	

@@ -1,4 +1,4 @@
-package ${cfg.name.get(${table.name}).paramPath};
+package ${cfg.paramPackage};
 
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;
@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 #if(${swagger2})
 @ApiModel(value = "$!{table.comment}参数对象")
 #end
-public class ${cfg.name.get(${table.name}).paramName} implements Serializable {
+public class ${cfg.get(${table.name}).listParamClassName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiOperation;
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 import ${package.Service}.${table.serviceName};
-import ${cfg.name.get(${table.name}).voPath}.${cfg.name.get(${table.name}).voName};
+import ${cfg.voPackage}.${cfg.get(${table.name}).voClassName};
 import org.tiankafei.web.common.api.ApiResult;
 #else
 import org.springframework.stereotype.Controller;
@@ -50,14 +50,14 @@ public class ${table.controllerName} {
 #end
 
     @Autowired
-    private ${table.serviceName} ${cfg.name.get(${table.name}).serviceConstName};
+    private ${table.serviceName} ${cfg.get(${table.name}).serviceConstName};
 
 	@PostMapping("/save")
 #if(${swagger2})
 	@ApiOperation(value = "添加$!{table.comment}", response = ApiResult.class)
 #end	
-	public ApiResult<Boolean> save${table.controllerName}(@Valid @RequestBody ${cfg.name.get(${table.name}).voName} ${cfg.name.get(${table.name}).voConstName}) throws Exception {
-		Object id = ${cfg.name.get(${table.name}).serviceConstName}.save${table.serviceName}(${cfg.name.get(${table.name}).voConstName});
+	public ApiResult<Boolean> save${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
+		Object id = ${cfg.get(${table.name}).serviceConstName}.save${table.serviceName}(${cfg.get(${table.name}).voConstName});
 		return ApiResult.ok(id);
 	}
 
