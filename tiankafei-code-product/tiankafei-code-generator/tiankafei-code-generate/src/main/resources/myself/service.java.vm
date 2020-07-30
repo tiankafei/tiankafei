@@ -41,7 +41,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    Object save${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception;
+    Object add${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception;
 
     /**
      * 批量保存 $!{table.comment}
@@ -50,7 +50,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean save${table.serviceName}List(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception;
+    List<Object> batchAdd${table.serviceName}(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception;
 
     /**
      * 修改 $!{table.comment}
@@ -64,11 +64,20 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 删除 $!{table.comment}
      *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean delete${table.serviceName}(String id) throws Exception;
+	
+    /**
+     * 删除 $!{table.comment}
+     *
      * @param ids
      * @return
      * @throws Exception
      */
-    boolean delete${table.serviceName}(String ids) throws Exception;
+    boolean batchDelete${table.serviceName}(String ids) throws Exception;
 
     /**
      * 根据条件删除 $!{table.comment}
@@ -77,7 +86,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean delete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception;
+    boolean conditionDelete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception;
 
     /**
      * 根据ID获取 $!{table.comment} 对象
@@ -113,7 +122,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    int count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception;
+    Long count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception;
 	
 }
 #end

@@ -37,6 +37,11 @@ public class TiankafeiCodeGenerator {
     private String baseControllerClassPath = "org.tiankafei.web.common.controller.BaseController";
     private String baseVoClassPath = "org.tiankafei.web.common.vo.BaseQueryVo";
     private String basePageParamClassPath = "org.tiankafei.web.common.param.OrderQueryParam";
+    private String idsParamClassPath = "org.tiankafei.web.common.param.IdsParam";
+    private String pageClassPath = "org.tiankafei.web.common.vo.Paging";
+    private String apiResultClassPath = "org.tiankafei.web.common.api.ApiResult";
+
+
     private List<String> tableNameList = Arrays.asList("sys_user_test");
 
     public static void main(String[] args) throws Exception {
@@ -92,6 +97,9 @@ public class TiankafeiCodeGenerator {
         codeProperties.setMapper("/myself/mapper.java.vm");
         codeProperties.setXml("/myself/mapper.xml.vm");
         codeProperties.setController("/myself/controller.java.vm");
+        codeProperties.setIdsParamClassPath(idsParamClassPath);
+        codeProperties.setPageClassPath(pageClassPath);
+        codeProperties.setApiResultClassPath(apiResultClassPath);
         return codeProperties;
     }
 

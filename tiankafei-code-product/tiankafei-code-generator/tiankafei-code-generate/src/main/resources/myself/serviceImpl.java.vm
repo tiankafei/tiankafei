@@ -56,7 +56,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public Object save${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
+    public Object add${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
 		return null;
 	}
 
@@ -68,8 +68,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public boolean save${table.serviceName}List(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception {
-		return false;
+    public List<Object> batchAdd${table.serviceName}(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception {
+		return null;
 	}
 
     /**
@@ -87,12 +87,24 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 删除 $!{table.comment}
      *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public boolean delete${table.serviceName}(String id) throws Exception {
+		return false;
+	}
+	
+    /**
+     * 删除 $!{table.comment}
+     *
      * @param ids
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean delete${table.serviceName}(String ids) throws Exception {
+    public boolean batchDelete${table.serviceName}(String ids) throws Exception {
 		return false;
 	}
 
@@ -104,7 +116,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public boolean delete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception {
+    public boolean conditionDelete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception {
 		return false;
 	}
 
@@ -152,8 +164,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public int count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
-		return 0;
+    public Long count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
+		return 0l;
 	}
 	
 

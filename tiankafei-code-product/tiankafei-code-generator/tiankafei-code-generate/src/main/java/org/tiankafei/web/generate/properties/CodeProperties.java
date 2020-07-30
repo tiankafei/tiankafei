@@ -65,4 +65,9 @@ public class CodeProperties implements Serializable {
     private String superVoClassPath;
     private String superPageParamClassPath;
 
+
+    private String idsParamClassPath;
+    private String pageClassPath;
+    private String apiResultClassPath;
+
 }

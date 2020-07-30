@@ -42,6 +42,9 @@ public class CodeGeneratorInjectionConfig {
                 map.put("shiroAuthority", codePropertie.isShiroAuthority());
                 map.put("voPackage", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".vo");
                 map.put("paramPackage", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".param");
+                map.put("idsParamClassPath", codePropertie.getIdsParamClassPath());
+                map.put("pageClassPath", codePropertie.getPageClassPath());
+                map.put("apiResultClassPath", codePropertie.getApiResultClassPath());
 
                 String superVoClassPath = codePropertie.getSuperVoClassPath();
                 String superVoPackage = superVoClassPath.substring(0, superVoClassPath.lastIndexOf("."));
