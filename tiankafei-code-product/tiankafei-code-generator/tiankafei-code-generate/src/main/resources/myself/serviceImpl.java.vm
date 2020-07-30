@@ -73,18 +73,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 	}
 
     /**
-     * 修改 $!{table.comment}
-     *
-     * @param ${cfg.get(${table.name}).voConstName}
-     * @return
-     * @throws Exception
-     */
-	@Override
-    public boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
-		return false;
-	}
-
-    /**
      * 删除 $!{table.comment}
      *
      * @param id
@@ -121,6 +109,18 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 	}
 
     /**
+     * 修改 $!{table.comment}
+     *
+     * @param ${cfg.get(${table.name}).voConstName}
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
+		return false;
+	}
+
+    /**
      * 根据ID获取 $!{table.comment} 对象
      *
      * @param id
@@ -133,18 +133,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 	}
 
     /**
-     * 获取 $!{table.comment} 分页对象列表
-     *
-     * @param ${cfg.get(${table.name}).pageParamConstName}
-     * @return
-     * @throws Exception
-     */
-	@Override
-    public Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
-		return null;
-	}
-
-    /**
      * 获取 $!{table.comment} 对象列表
      *
      * @param ${cfg.get(${table.name}).listParamConstName}
@@ -153,6 +141,18 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public List<${cfg.get(${table.name}).voClassName}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+		return null;
+	}
+
+    /**
+     * 获取 $!{table.comment} 分页对象列表
+     *
+     * @param ${cfg.get(${table.name}).pageParamConstName}
+     * @return
+     * @throws Exception
+     */
+	@Override
+    public Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
 		return null;
 	}
 

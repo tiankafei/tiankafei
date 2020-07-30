@@ -64,15 +64,6 @@ public class ${table.controllerName} {
     @Autowired
     private ${table.serviceName} ${cfg.get(${table.name}).serviceConstName};
 
-	@PostMapping("/count")
-#if(${swagger2})
-	@ApiOperation(value = "求 $!{table.comment} 对象的记录数")
-#end	
-	public ApiResult<Long> count${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
-		Long count = ${cfg.get(${table.name}).serviceConstName}.count${table.serviceName}(${cfg.get(${table.name}).countParamConstName});
-		return ApiResult.ok(count);
-	}
-
 	@PostMapping("/check")
 #if(${swagger2})
 	@ApiOperation(value = "校验 $!{table.comment} 对象是否存在")
@@ -80,42 +71,6 @@ public class ${table.controllerName} {
 	public ApiResult<Boolean> check${table.controllerName}Exists(@Valid @RequestBody ${cfg.get(${table.name}).checkParamClassName} ${cfg.get(${table.name}).checkParamConstName}) throws Exception {
 		Boolean flag = ${cfg.get(${table.name}).serviceConstName}.check${table.serviceName}Exists(${cfg.get(${table.name}).checkParamConstName});
 		return ApiResult.ok(flag);
-	}
-	
-	@PostMapping("/pageList")
-#if(${swagger2})
-	@ApiOperation(value = "获取 $!{table.comment} 分页对象列表")
-#end	
-	public ApiResult<Paging<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}PageList(@Valid @RequestBody ${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
-		Paging<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamConstName});
-		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
-	}
-
-	@PostMapping("/list")
-#if(${swagger2})
-	@ApiOperation(value = "获取 $!{table.comment} 对象列表")
-#end	
-	public ApiResult<List<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}List(@Valid @RequestBody ${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
-		List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(${cfg.get(${table.name}).listParamConstName});
-		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
-	}
-	
-	@GetMapping
-#if(${swagger2})
-	@ApiOperation(value = "获取 $!{table.comment} 对象全部列表")
-#end	
-	public ApiResult<List<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}AllList() throws Exception {
-		List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(null);
-		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
-	}
-
-	@GetMapping("/{id}")
-#if(${swagger2})
-	@ApiOperation(value = "获取 $!{table.comment} 对象")
-#end	
-	public ApiResult<${cfg.get(${table.name}).voClassName}> get${table.controllerName}(@PathVariable(value = "id") String id) throws Exception {
-		${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName} = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}ById(id);
-		return ApiResult.ok(${cfg.get(${table.name}).voConstName});
 	}
 
 	@PostMapping
@@ -134,15 +89,6 @@ public class ${table.controllerName} {
 	public ApiResult<List<Object>> batchAdd${table.controllerName}(@Valid @RequestBody List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception {
 		List<Object> idList = ${cfg.get(${table.name}).serviceConstName}.batchAdd${table.serviceName}(${cfg.get(${table.name}).voConstName}List);
 		return ApiResult.ok(idList);
-	}
-	
-	@PatchMapping
-#if(${swagger2})
-	@ApiOperation(value = "更新 $!{table.comment}")
-#end	
-	public ApiResult<Boolean> update${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
-		boolean flag = ${cfg.get(${table.name}).serviceConstName}.update${table.serviceName}(${cfg.get(${table.name}).voConstName});
-		return ApiResult.ok(flag);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -171,6 +117,61 @@ public class ${table.controllerName} {
 		boolean flag = ${cfg.get(${table.name}).serviceConstName}.conditionDelete${table.serviceName}(${cfg.get(${table.name}).deleteParamConstName});
 		return ApiResult.ok(flag);
 	}
+	
+	@PatchMapping
+#if(${swagger2})
+	@ApiOperation(value = "更新 $!{table.comment}")
+#end	
+	public ApiResult<Boolean> update${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
+		boolean flag = ${cfg.get(${table.name}).serviceConstName}.update${table.serviceName}(${cfg.get(${table.name}).voConstName});
+		return ApiResult.ok(flag);
+	}
+
+	@GetMapping("/{id}")
+#if(${swagger2})
+	@ApiOperation(value = "获取 $!{table.comment} 对象")
+#end	
+	public ApiResult<${cfg.get(${table.name}).voClassName}> get${table.controllerName}(@PathVariable(value = "id") String id) throws Exception {
+		${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName} = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}ById(id);
+		return ApiResult.ok(${cfg.get(${table.name}).voConstName});
+	}
+	
+	@GetMapping
+#if(${swagger2})
+	@ApiOperation(value = "获取 $!{table.comment} 对象全集")
+#end	
+	public ApiResult<List<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}AllList() throws Exception {
+		List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(null);
+		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
+	}
+
+	@PostMapping("/list")
+#if(${swagger2})
+	@ApiOperation(value = "获取 $!{table.comment} 对象列表")
+#end	
+	public ApiResult<List<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}List(@Valid @RequestBody ${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+		List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(${cfg.get(${table.name}).listParamConstName});
+		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
+	}
+	
+	@PostMapping("/pageList")
+#if(${swagger2})
+	@ApiOperation(value = "获取 $!{table.comment} 分页对象列表")
+#end	
+	public ApiResult<Paging<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}PageList(@Valid @RequestBody ${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
+		Paging<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamConstName});
+		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
+	}
+
+	@PostMapping("/count")
+#if(${swagger2})
+	@ApiOperation(value = "求 $!{table.comment} 对象的记录数")
+#end	
+	public ApiResult<Long> count${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
+		Long count = ${cfg.get(${table.name}).serviceConstName}.count${table.serviceName}(${cfg.get(${table.name}).countParamConstName});
+		return ApiResult.ok(count);
+	}
+
 
 }
 

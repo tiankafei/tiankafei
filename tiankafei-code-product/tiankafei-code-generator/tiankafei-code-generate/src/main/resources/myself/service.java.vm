@@ -53,15 +53,6 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     List<Object> batchAdd${table.serviceName}(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception;
 
     /**
-     * 修改 $!{table.comment}
-     *
-     * @param ${cfg.get(${table.name}).voConstName}
-     * @return
-     * @throws Exception
-     */
-    boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception;
-
-    /**
      * 删除 $!{table.comment}
      *
      * @param id
@@ -89,6 +80,15 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     boolean conditionDelete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception;
 
     /**
+     * 修改 $!{table.comment}
+     *
+     * @param ${cfg.get(${table.name}).voConstName}
+     * @return
+     * @throws Exception
+     */
+    boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception;
+
+    /**
      * 根据ID获取 $!{table.comment} 对象
      *
      * @param id
@@ -98,15 +98,6 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     ${cfg.get(${table.name}).voClassName} get${table.serviceName}ById(Serializable id) throws Exception;
 
     /**
-     * 获取 $!{table.comment} 分页对象列表
-     *
-     * @param ${cfg.get(${table.name}).pageParamConstName}
-     * @return
-     * @throws Exception
-     */
-    Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception;
-
-    /**
      * 获取 $!{table.comment} 对象列表
      *
      * @param ${cfg.get(${table.name}).listParamConstName}
@@ -114,6 +105,15 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @throws Exception
      */
     List<${cfg.get(${table.name}).voClassName}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
+
+    /**
+     * 获取 $!{table.comment} 分页对象列表
+     *
+     * @param ${cfg.get(${table.name}).pageParamConstName}
+     * @return
+     * @throws Exception
+     */
+    Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception;
 
     /**
      * 计算 $!{table.comment} 总记录数
