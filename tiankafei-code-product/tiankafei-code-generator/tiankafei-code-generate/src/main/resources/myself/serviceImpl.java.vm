@@ -1,7 +1,18 @@
 package ${package.ServiceImpl};
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Entity}.${entity};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).checkParamClassName};
@@ -45,7 +56,12 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public boolean check${table.serviceName}Exists(${cfg.get(${table.name}).checkParamClassName} ${cfg.get(${table.name}).checkParamConstName}) throws Exception {
-		return false;
+		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+		if (${cfg.get(${table.name}).checkParamConstName} != null) {
+
+		}
+		int count = super.count(lambdaQueryWrapper);
+		return count > 0;
 	}
 
     /**
@@ -57,7 +73,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public Object add${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
-		return null;
+		${entity} ${cfg.get(${table.name}).entityConstName} = new ${entity}();
+		BeanUtils.copyProperties(${cfg.get(${table.name}).voConstName}, ${cfg.get(${table.name}).entityConstName});
+		super.save(${cfg.get(${table.name}).entityConstName});
+		return ${cfg.get(${table.name}).entityConstName}.getId();
 	}
 
     /**
@@ -69,7 +88,18 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public List<Object> batchAdd${table.serviceName}(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception {
-		return null;
+		if (CollectionUtils.isNotEmpty(${cfg.get(${table.name}).voConstName}List)) {
+			List<${entity}> ${cfg.get(${table.name}).entityConstName}List = new ArrayList<>();
+			for (${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName} : ${cfg.get(${table.name}).voConstName}List) {
+				${entity} ${cfg.get(${table.name}).entityConstName} = new ${entity}();
+				BeanUtils.copyProperties(${cfg.get(${table.name}).voConstName}, ${cfg.get(${table.name}).entityConstName});
+				${cfg.get(${table.name}).entityConstName}List.add(${cfg.get(${table.name}).entityConstName});
+			}
+			super.saveBatch(${cfg.get(${table.name}).entityConstName}List);
+
+			return ${cfg.get(${table.name}).entityConstName}List.stream().map(${cfg.get(${table.name}).entityConstName} -> ${cfg.get(${table.name}).entityConstName}.getId()).collect(Collectors.toList());
+		}
+		return Lists.newArrayList();
 	}
 
     /**
@@ -81,7 +111,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public boolean delete${table.serviceName}(String id) throws Exception {
-		return false;
+		if(StringUtils.isNotBlank(id)){
+			return super.removeById(id);
+		}
+		return Boolean.TRUE;
 	}
 	
     /**
@@ -93,7 +126,11 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public boolean batchDelete${table.serviceName}(String ids) throws Exception {
-		return false;
+		if(StringUtils.isNotBlank(ids)){
+			List<String> idList = Arrays.asList(ids.split(","));
+			return super.removeByIds(idList);
+		}
+		return Boolean.TRUE;
 	}
 
     /**
@@ -105,7 +142,11 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public boolean conditionDelete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception {
-		return false;
+		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+		if (${cfg.get(${table.name}).deleteParamConstName} != null) {
+
+		}
+		return super.remove(lambdaQueryWrapper);
 	}
 
     /**
@@ -117,7 +158,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
-		return false;
+		${entity} ${cfg.get(${table.name}).entityConstName} = new ${entity}();
+		BeanUtils.copyProperties(${cfg.get(${table.name}).voConstName}, ${cfg.get(${table.name}).entityConstName});
+		return super.updateById(${cfg.get(${table.name}).entityConstName});
 	}
 
     /**
@@ -129,7 +172,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public ${cfg.get(${table.name}).voClassName} get${table.serviceName}ById(Serializable id) throws Exception {
-		return null;
+		${entity} ${cfg.get(${table.name}).entityConstName} = super.getById(id);
+		${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName} = new ${cfg.get(${table.name}).voClassName}();
+		BeanUtils.copyProperties(${cfg.get(${table.name}).entityConstName}, ${cfg.get(${table.name}).voConstName});
+		return ${cfg.get(${table.name}).voConstName};
 	}
 
     /**
@@ -140,8 +186,12 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public List<${cfg.get(${table.name}).voClassName}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
-		return null;
+    public List<${entity}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+		if (${cfg.get(${table.name}).listParamConstName} != null) {
+
+		}
+		return super.list(lambdaQueryWrapper);
 	}
 
     /**
@@ -153,7 +203,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
 	@Override
     public Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
-		return null;
+		Page page = setPageParam(${cfg.get(${table.name}).pageParamConstName}, OrderItem.desc("create_time"));
+		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+		IPage<${cfg.get(${table.name}).voClassName}> iPage = super.page(page, lambdaQueryWrapper);
+		return new Paging(iPage);
 	}
 
     /**
@@ -164,8 +217,12 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public Long count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
-		return 0l;
+    public Integer count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
+		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
+		if (${cfg.get(${table.name}).countParamConstName} != null) {
+
+		}
+		return super.count(lambdaQueryWrapper);
 	}
 	
 

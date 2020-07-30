@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,8 +79,11 @@ public class SysBlogDiaryServiceImpl extends BaseServiceImpl<SysBlogDiaryMapper,
 
     @Override
     public boolean deleteSysBlogDiary(String ids) throws Exception {
-        String[] idArray = ids.split(",");
-        return super.removeByIds(Arrays.asList(idArray));
+        if(StringUtils.isNotBlank(ids)){
+            List<String> idList = Arrays.asList(ids.split(","));
+            return super.removeByIds(idList);
+        }
+        return Boolean.TRUE;
     }
 
     @Override

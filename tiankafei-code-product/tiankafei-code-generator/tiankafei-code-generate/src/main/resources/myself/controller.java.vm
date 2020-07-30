@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
+import ${package.Entity}.${entity};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).checkParamClassName};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).countParamClassName};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).deleteParamClassName};
@@ -140,18 +141,18 @@ public class ${table.controllerName} {
 #if(${swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 对象全集")
 #end	
-	public ApiResult<List<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}AllList() throws Exception {
-		List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(null);
-		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
+	public ApiResult<List<${entity}>> get${table.controllerName}AllList() throws Exception {
+		List<${entity}> ${cfg.get(${table.name}).entityConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(null);
+		return ApiResult.ok(${cfg.get(${table.name}).entityConstName}List);
 	}
 
 	@PostMapping("/list")
 #if(${swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 对象列表")
 #end	
-	public ApiResult<List<${cfg.get(${table.name}).voClassName}>> get${table.controllerName}List(@Valid @RequestBody ${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
-		List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(${cfg.get(${table.name}).listParamConstName});
-		return ApiResult.ok(${cfg.get(${table.name}).voConstName}List);
+	public ApiResult<List<${entity}>> get${table.controllerName}List(@Valid @RequestBody ${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+		List<${entity}> ${cfg.get(${table.name}).entityConstName}List = ${cfg.get(${table.name}).serviceConstName}.get${table.serviceName}List(${cfg.get(${table.name}).listParamConstName});
+		return ApiResult.ok(${cfg.get(${table.name}).entityConstName}List);
 	}
 	
 	@PostMapping("/pageList")
@@ -167,8 +168,8 @@ public class ${table.controllerName} {
 #if(${swagger2})
 	@ApiOperation(value = "求 $!{table.comment} 对象的记录数")
 #end	
-	public ApiResult<Long> count${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
-		Long count = ${cfg.get(${table.name}).serviceConstName}.count${table.serviceName}(${cfg.get(${table.name}).countParamConstName});
+	public ApiResult<Integer> count${table.controllerName}(@Valid @RequestBody ${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
+		Integer count = ${cfg.get(${table.name}).serviceConstName}.count${table.serviceName}(${cfg.get(${table.name}).countParamConstName});
 		return ApiResult.ok(count);
 	}
 

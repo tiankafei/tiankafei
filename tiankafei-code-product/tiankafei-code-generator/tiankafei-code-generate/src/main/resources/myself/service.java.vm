@@ -104,7 +104,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    List<${cfg.get(${table.name}).voClassName}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
+    List<${entity}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception;
 
     /**
      * 获取 $!{table.comment} 分页对象列表
@@ -122,7 +122,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    Long count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception;
+    Integer count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception;
 	
 }
 #end
