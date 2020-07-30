@@ -15,10 +15,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cglib.beans.BeanMap;
 import org.tiankafei.web.generate.properties.CfgProperties;
 import org.tiankafei.web.generate.properties.CodeProperties;
 
@@ -119,13 +119,8 @@ public class CodeGeneratorInjectionConfig {
                     String controllerConstName = firstToLowerCase(controllerName);
                     cfgProperties.setControllerConstName(controllerConstName);
 
-                    try {
-                        String json = objectMapper.writeValueAsString(cfgProperties);
-                        Map tmpMap = objectMapper.readValue(json, Map.class);
-                        map.put(name, tmpMap);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
+                    BeanMap beanMap = BeanMap.create(cfgProperties);
+                    map.put(name, beanMap);
                 });
                 setMap(map);
             }
