@@ -4,15 +4,15 @@ package org.tiankafei.web.common.enums;
  * @author tiankafei
  * @since 1.0
  **/
-public enum SnowflakeEnum {
+public enum DistributedIdEnum {
 
-    // mybatis_plus 的雪花算法
-    MYBATIS_PLUS(1);
+    // MyBatisPlusSnowflake 的雪花算法
+    MYBATIS_PLUS_SNOWFLAKE(1);
     ;
 
     private Integer code;
 
-    SnowflakeEnum(Integer code) {
+    DistributedIdEnum(Integer code) {
         this.code = code;
     }
 

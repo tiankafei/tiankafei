@@ -3,15 +3,15 @@ package org.tiankafei.web.common.service.impl;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
-import org.tiankafei.web.common.enums.SnowflakeEnum;
-import org.tiankafei.web.common.service.SnowflakeService;
+import org.tiankafei.web.common.enums.DistributedIdEnum;
+import org.tiankafei.web.common.service.DistributedIdService;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
 @Service
-public class MyBatisPlusSnowflakeService implements SnowflakeService {
+public class MyBatisPlusSnowflakeService implements DistributedIdService {
 
     /**
      * mybatis-plus的雪花算法生成类
@@ -24,8 +24,8 @@ public class MyBatisPlusSnowflakeService implements SnowflakeService {
     }
 
     @Override
-    public SnowflakeEnum getSnowflakeEnum() {
-        return SnowflakeEnum.MYBATIS_PLUS;
+    public DistributedIdEnum getDistributedIdType() {
+        return DistributedIdEnum.MYBATIS_PLUS_SNOWFLAKE;
     }
 
     @Override

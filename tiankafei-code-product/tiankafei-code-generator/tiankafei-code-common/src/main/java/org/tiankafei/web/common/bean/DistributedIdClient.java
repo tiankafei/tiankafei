@@ -6,33 +6,33 @@ import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.tiankafei.web.common.enums.SnowflakeEnum;
-import org.tiankafei.web.common.service.SnowflakeService;
+import org.tiankafei.web.common.enums.DistributedIdEnum;
+import org.tiankafei.web.common.service.DistributedIdService;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
 @Component
-public class SnowflakeClient implements InitializingBean {
+public class DistributedIdClient implements InitializingBean {
 
     /**
      * 默认生成id的雪花算法
      */
-    private Integer defaultType = SnowflakeEnum.MYBATIS_PLUS.getCode();
+    private Integer defaultType = DistributedIdEnum.MYBATIS_PLUS_SNOWFLAKE.getCode();
 
-    private Map<Integer, SnowflakeService> snowflakeServiceMap = Maps.newHashMap();
+    private Map<Integer, DistributedIdService> distributedIdServiceMap = Maps.newHashMap();
 
     @Autowired
     private ApplicationContextHelper applicationContextHelper;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, SnowflakeService> beansOfType = applicationContextHelper.getBeansOfType(SnowflakeService.class);
-        Set<Map.Entry<String, SnowflakeService>> entries = beansOfType.entrySet();
-        for (Map.Entry<String, SnowflakeService> entry : entries) {
-            SnowflakeService snowflakeService = entry.getValue();
-            snowflakeServiceMap.put(snowflakeService.getSnowflakeEnum().getCode(), snowflakeService);
+        Map<String, DistributedIdService> beansOfType = applicationContextHelper.getBeansOfType(DistributedIdService.class);
+        Set<Map.Entry<String, DistributedIdService>> entries = beansOfType.entrySet();
+        for (Map.Entry<String, DistributedIdService> entry : entries) {
+            DistributedIdService distributedIdService = entry.getValue();
+            distributedIdServiceMap.put(distributedIdService.getDistributedIdType().getCode(), distributedIdService);
         }
     }
 
@@ -60,7 +60,7 @@ public class SnowflakeClient implements InitializingBean {
      * @return
      */
     public String nextStringId(Integer type, Object object) {
-        String id = snowflakeServiceMap.get(type).nextStringId(object);
+        String id = distributedIdServiceMap.get(type).nextStringId(object);
         return id;
     }
 
@@ -88,7 +88,7 @@ public class SnowflakeClient implements InitializingBean {
      * @return
      */
     public Long nextLongId(Integer type, Object object) {
-        Long id = snowflakeServiceMap.get(type).nextLongId(object);
+        Long id = distributedIdServiceMap.get(type).nextLongId(object);
         return id;
     }
 

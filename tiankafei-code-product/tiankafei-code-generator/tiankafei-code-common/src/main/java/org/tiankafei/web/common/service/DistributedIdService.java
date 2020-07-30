@@ -1,18 +1,18 @@
 package org.tiankafei.web.common.service;
 
-import org.tiankafei.web.common.enums.SnowflakeEnum;
+import org.tiankafei.web.common.enums.DistributedIdEnum;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
-public interface SnowflakeService {
+public interface DistributedIdService {
 
     /**
      * 雪花算法的枚举类
      * @return
      */
-    SnowflakeEnum getSnowflakeEnum();
+    DistributedIdEnum getDistributedIdType();
 
     /**
      * 获取雪花算法生成的id
