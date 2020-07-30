@@ -10,7 +10,7 @@ import ${cfg.paramPackage}.${cfg.get(${table.name}).pageParamClassName};
 import ${cfg.paramPackage}.${cfg.get(${table.name}).listParamClassName};
 import ${cfg.voPackage}.${cfg.get(${table.name}).voClassName};
 import ${superServiceClassPackage};
-import org.tiankafei.web.common.vo.Paging;
+import ${cfg.pageClassPath};
 
 /**
  * <p>
