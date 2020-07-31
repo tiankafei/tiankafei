@@ -9,7 +9,7 @@
 #end
 #if(${baseResultMap})
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
+    <resultMap id="baseResultMap" type="${package.Entity}.${entity}">
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})##生成主键排在第一位
         <id column="${field.name}" property="${field.propertyName}" />
@@ -26,14 +26,90 @@
     </resultMap>
 
 #end
+
+#if(${baseResultMap})
+    <!-- 通用查询映射结果 -->
+    <resultMap id="voResultMap" type="${cfg.voPackage}.${cfg.get(${table.name}).voClassName}">
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##生成主键排在第一位
+        <id column="${field.name}" property="${field.propertyName}" />
+#end
+#end
+#foreach($field in ${table.commonFields})##生成公共字段
+        <result column="${field.name}" property="${field.propertyName}" />
+#end
+#foreach($field in ${table.fields})
+#if(!${field.keyFlag})##生成普通字段
+        <result column="${field.name}" property="${field.propertyName}" />
+#end
+#end
+    </resultMap>
+
+#end
+
 #if(${baseColumnList})
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <sql id="base_Column_List">
 #foreach($field in ${table.commonFields})
         ${field.columnName},
 #end
         ${table.fieldNames}
     </sql>
+	
+    <!-- 校验 $!{table.comment} 是否已经存在 -->
+    <select id="check${table.serviceName}Exists" resultType="java.lang.Boolean">
+        
+    </select>
+	
+	<!-- 保存 $!{table.comment} -->
+    <select id="add${table.serviceName}" resultType="java.lang.Object">
+        
+    </select>
+
+	<!-- 批量保存 $!{table.comment} -->
+    <select id="batchAdd${table.serviceName}" resultType="java.lang.Object">
+        
+    </select>
+	
+	<!-- 删除 $!{table.comment} -->
+    <select id="delete${table.serviceName}" resultType="java.lang.Boolean">
+        
+    </select>
+	
+	<!-- 批量删除 $!{table.comment} -->
+    <select id="batchDelete${table.serviceName}" resultType="java.lang.Boolean">
+        
+    </select>
+	
+	<!-- 根据条件删除 $!{table.comment} -->
+    <select id="conditionDelete${table.serviceName}" resultType="java.lang.Boolean">
+        
+    </select>
+	
+	<!-- 修改 $!{table.comment} -->
+    <select id="update${table.serviceName}" resultType="java.lang.Boolean">
+        
+    </select>
+	
+	<!-- 根据ID获取 $!{table.comment} 对象 -->
+    <select id="get${table.serviceName}ById" resultMap="voResultMap">
+        
+    </select>
+	
+	<!-- 获取 $!{table.comment} 对象列表 -->
+    <select id="get${table.serviceName}List" resultMap="voResultMap">
+        
+    </select>
+	
+	<!-- 获取 $!{table.comment} 分页对象列表 -->
+    <select id="get${table.serviceName}PageList" resultMap="voResultMap">
+        
+    </select>
+	
+	<!-- 计算 $!{table.comment} 总记录数 -->
+    <select id="count${table.serviceName}" resultType="java.lang.Integer">
+        
+    </select>
 
 #end
 </mapper>
