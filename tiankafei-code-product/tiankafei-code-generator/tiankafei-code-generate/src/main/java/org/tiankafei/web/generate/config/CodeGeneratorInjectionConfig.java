@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
@@ -82,43 +83,34 @@ public class CodeGeneratorInjectionConfig {
                     cfgProperties.setEntityConstName(entityConstName);
 
                     String voName = entityName.replace("Entity", "Vo");
-                    cfgProperties.setVoClassName(voName);
-                    cfgProperties.setVoConstName(firstToLowerCase(voName));
+                    setValue(cfgProperties::setVoClassName, cfgProperties::setVoConstName, voName);
 
                     String listParamName = entityName.replace("Entity", "ListParam");
-                    cfgProperties.setListParamClassName(listParamName);
-                    cfgProperties.setListParamConstName(firstToLowerCase(listParamName));
+                    setValue(cfgProperties::setListParamClassName, cfgProperties::setListParamConstName, listParamName);
 
                     String countParamName = entityName.replace("Entity", "CountParam");
-                    cfgProperties.setCountParamClassName(countParamName);
-                    cfgProperties.setCountParamConstName(firstToLowerCase(countParamName));
+                    setValue(cfgProperties::setCountParamClassName, cfgProperties::setCountParamConstName, countParamName);
 
                     String deleteParamName = entityName.replace("Entity", "DeleteParam");
-                    cfgProperties.setDeleteParamClassName(deleteParamName);
-                    cfgProperties.setDeleteParamConstName(firstToLowerCase(deleteParamName));
+                    setValue(cfgProperties::setDeleteParamClassName, cfgProperties::setDeleteParamConstName, deleteParamName);
 
                     String checkParamName = entityName.replace("Entity", "CheckParam");
-                    cfgProperties.setCheckParamClassName(checkParamName);
-                    cfgProperties.setCheckParamConstName(firstToLowerCase(checkParamName));
+                    setValue(cfgProperties::setCheckParamClassName, cfgProperties::setCheckParamConstName, checkParamName);
 
                     String pageParamName = entityName.replace("Entity", "PageParam");
-                    cfgProperties.setPageParamClassName(pageParamName);
-                    cfgProperties.setPageParamConstName(firstToLowerCase(pageParamName));
+                    setValue(cfgProperties::setPageParamClassName, cfgProperties::setPageParamConstName, pageParamName);
 
                     String permission = underlineToColon(name);
                     cfgProperties.setAuthority(permission);
 
                     String serviceName = tableInfo.getServiceName();
-                    String serviceConstName = firstToLowerCase(serviceName);
-                    cfgProperties.setServiceConstName(serviceConstName);
+                    setValue(cfgProperties::setServiceConstName, serviceName);
 
                     String mapperName = tableInfo.getMapperName();
-                    String mapperConstName = firstToLowerCase(mapperName);
-                    cfgProperties.setMapperConstName(mapperConstName);
+                    setValue(cfgProperties::setMapperConstName, mapperName);
 
                     String controllerName = tableInfo.getControllerName();
-                    String controllerConstName = firstToLowerCase(controllerName);
-                    cfgProperties.setControllerConstName(controllerConstName);
+                    setValue(cfgProperties::setControllerConstName, controllerName);
 
                     BeanMap beanMap = BeanMap.create(cfgProperties);
                     map.put(name, beanMap);
@@ -136,6 +128,27 @@ public class CodeGeneratorInjectionConfig {
 
         injectionConfig.setFileOutConfigList(fileOutConfigList);
         return injectionConfig;
+    }
+
+    /**
+     * 设置值
+     * @param consumer1
+     * @param consumer2
+     * @param paramName
+     */
+    private static void setValue(Consumer<String> consumer1, Consumer<String> consumer2, String paramName){
+        consumer1.accept(paramName);
+        consumer2.accept(firstToLowerCase(paramName));
+    }
+
+    /**
+     * 设置值
+     * @param consumer
+     * @param name
+     */
+    private static void setValue(Consumer<String> consumer, String name){
+        String constName = firstToLowerCase(name);
+        consumer.accept(constName);
     }
 
     /**
