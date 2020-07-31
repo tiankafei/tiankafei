@@ -41,7 +41,7 @@ import ${cfg.pageClassPath};
  * </p>
  *
  * @author ${author}
- * @since ${date}
+ * @since 1.0
  */
 #if(${restControllerStyle})
 @RestController

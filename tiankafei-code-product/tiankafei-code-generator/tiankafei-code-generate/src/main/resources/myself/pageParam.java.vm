@@ -16,7 +16,7 @@ import ${cfg.superParamPackage}.${cfg.superPageParamClassName};
  * </pre>
  *
  * @author ${author}
- * @date ${date}
+ * @since 1.0
  */
 ###if(${entityLombokModel})
 @Data

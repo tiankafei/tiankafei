@@ -23,7 +23,7 @@ import ${cfg.superVoPackage}.${cfg.superVoClassName};
  * </p>
  *
  * @author ${author}
- * @since ${date}
+ * @since 1.0
  */
 #if(${entityLombokModel})
 @Data
