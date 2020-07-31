@@ -12,11 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.beans.BeanMap;
 import org.tiankafei.web.generate.properties.CfgProperties;
@@ -30,8 +29,7 @@ public class CodeGeneratorInjectionConfig {
 
     // 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
     public static InjectionConfig initInjectionConfig(CodeProperties codeProperties) {
-        // 转换器
-        ObjectMapper objectMapper = new ObjectMapper();
+        List<FileOutConfig> fileOutConfigList = new ArrayList<>();
 
         InjectionConfig injectionConfig = new InjectionConfig() {
             @Override
@@ -124,118 +122,42 @@ public class CodeGeneratorInjectionConfig {
 
                     BeanMap beanMap = BeanMap.create(cfgProperties);
                     map.put(name, beanMap);
+
+                    fileOutConfigList.add(getFileOutConfig("/myself/vo.java.vm", cfgProperties::getVoClassName, "vo", codeProperties));
+                    fileOutConfigList.add(getFileOutConfig("/myself/listParam.java.vm", cfgProperties::getListParamClassName, "param", codeProperties));
+                    fileOutConfigList.add(getFileOutConfig("/myself/countParam.java.vm", cfgProperties::getCountParamClassName, "param", codeProperties));
+                    fileOutConfigList.add(getFileOutConfig("/myself/deleteParam.java.vm", cfgProperties::getDeleteParamClassName, "param", codeProperties));
+                    fileOutConfigList.add(getFileOutConfig("/myself/checkParam.java.vm", cfgProperties::getCheckParamClassName, "param", codeProperties));
+                    fileOutConfigList.add(getFileOutConfig("/myself/pageParam.java.vm", cfgProperties::getPageParamClassName, "param", codeProperties));
                 });
                 setMap(map);
             }
         };
 
-        List<FileOutConfig> fileOutConfigList = new ArrayList<>();
-        fileOutConfigList.add(new FileOutConfig("/myself/vo.java.vm") {
-            @SneakyThrows
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = injectionConfig.getMap();
-                Map tmpMap = (Map) map.get(name);
-                String json = objectMapper.writeValueAsString(tmpMap);
-                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
-                String voClassName = cfgProperties.getVoClassName();
-
-                String path = codeProperties.getOutputDir() + File.separator
-                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codeProperties.getModuleName() + File.separator + "vo" + File.separator + voClassName + StringPool.DOT_JAVA;
-                System.out.println(path);
-                return path;
-            }
-        });
-        fileOutConfigList.add(new FileOutConfig("/myself/listParam.java.vm") {
-            @SneakyThrows
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = injectionConfig.getMap();
-                Map tmpMap = (Map) map.get(name);
-                String json = objectMapper.writeValueAsString(tmpMap);
-                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
-                String listParamClassName = cfgProperties.getListParamClassName();
-
-                String path = codeProperties.getOutputDir() + File.separator
-                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + listParamClassName + StringPool.DOT_JAVA;
-                return path;
-            }
-        });
-        fileOutConfigList.add(new FileOutConfig("/myself/countParam.java.vm") {
-            @SneakyThrows
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = injectionConfig.getMap();
-                Map tmpMap = (Map) map.get(name);
-                String json = objectMapper.writeValueAsString(tmpMap);
-                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
-                String countParamClassName = cfgProperties.getCountParamClassName();
-
-                String path = codeProperties.getOutputDir() + File.separator
-                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + countParamClassName + StringPool.DOT_JAVA;
-                return path;
-            }
-        });
-        fileOutConfigList.add(new FileOutConfig("/myself/deleteParam.java.vm") {
-            @SneakyThrows
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = injectionConfig.getMap();
-                Map tmpMap = (Map) map.get(name);
-                String json = objectMapper.writeValueAsString(tmpMap);
-                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
-                String deleteParamClassName = cfgProperties.getDeleteParamClassName();
-
-                String path = codeProperties.getOutputDir() + File.separator
-                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + deleteParamClassName + StringPool.DOT_JAVA;
-                return path;
-            }
-        });
-        fileOutConfigList.add(new FileOutConfig("/myself/checkParam.java.vm") {
-            @SneakyThrows
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = injectionConfig.getMap();
-                Map tmpMap = (Map) map.get(name);
-                String json = objectMapper.writeValueAsString(tmpMap);
-                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
-                String checkParamClassName = cfgProperties.getCheckParamClassName();
-
-                String path = codeProperties.getOutputDir() + File.separator
-                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + checkParamClassName + StringPool.DOT_JAVA;
-                return path;
-            }
-        });
-        fileOutConfigList.add(new FileOutConfig("/myself/pageParam.java.vm") {
-            @SneakyThrows
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                String name = tableInfo.getName();
-                Map<String, Object> map = injectionConfig.getMap();
-                Map tmpMap = (Map) map.get(name);
-                String json = objectMapper.writeValueAsString(tmpMap);
-                CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
-                String pageParamClassName = cfgProperties.getPageParamClassName();
-
-                String path = codeProperties.getOutputDir() + File.separator
-                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + pageParamClassName + StringPool.DOT_JAVA;
-                return path;
-            }
-        });
-
         injectionConfig.setFileOutConfigList(fileOutConfigList);
         return injectionConfig;
+    }
+
+    /**
+     * 获取文件配置
+     * @param vmPath
+     * @param supplier
+     * @param smailPackage
+     * @param codeProperties
+     * @return
+     */
+    private static FileOutConfig getFileOutConfig(String vmPath, Supplier<String> supplier, String smailPackage, CodeProperties codeProperties){
+        return new FileOutConfig(vmPath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String pageParamClassName = supplier.get();
+
+                String path = codeProperties.getOutputDir() + File.separator
+                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codeProperties.getModuleName() + File.separator + smailPackage + File.separator + pageParamClassName + StringPool.DOT_JAVA;
+                return path;
+            }
+        };
     }
 
     /**
