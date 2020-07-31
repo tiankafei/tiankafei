@@ -12,13 +12,13 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class CodeGeneratorGlobalConfig {
 
     // 全局策略配置
-    public static GlobalConfig initGlobalConfig(CodeProperties codePropertie){
+    public static GlobalConfig initGlobalConfig(CodeProperties codeProperties){
         GlobalConfig globalConfig = new GlobalConfig();
-        globalConfig.setOutputDir(codePropertie.getOutputDir());
+        globalConfig.setOutputDir(codeProperties.getOutputDir());
         globalConfig.setFileOverride(true);
         globalConfig.setOpen(false);
         globalConfig.setEnableCache(false);
-        globalConfig.setAuthor(codePropertie.getAuthor());
+        globalConfig.setAuthor(codeProperties.getAuthor());
         globalConfig.setKotlin(false);
         globalConfig.setSwagger2(true);
         globalConfig.setActiveRecord(true);

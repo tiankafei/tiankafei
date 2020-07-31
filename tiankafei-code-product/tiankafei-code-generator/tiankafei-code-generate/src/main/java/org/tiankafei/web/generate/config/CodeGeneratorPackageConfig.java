@@ -10,10 +10,10 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class CodeGeneratorPackageConfig {
 
     // 包名配置，通过该配置，指定生成代码的包路径
-    public static PackageConfig initPackageConfig(CodeProperties codePropertie){
+    public static PackageConfig initPackageConfig(CodeProperties codeProperties){
         PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setParent(codePropertie.getProjectPath());
-        packageConfig.setModuleName(codePropertie.getModuleName());
+        packageConfig.setParent(codeProperties.getProjectPath());
+        packageConfig.setModuleName(codeProperties.getModuleName());
         packageConfig.setEntity("entity");
         packageConfig.setService("service");
         packageConfig.setServiceImpl("service.impl");

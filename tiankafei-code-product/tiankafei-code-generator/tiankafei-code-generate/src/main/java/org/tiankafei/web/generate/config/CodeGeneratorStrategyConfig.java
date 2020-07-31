@@ -15,7 +15,7 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class CodeGeneratorStrategyConfig {
 
     // 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
-    public static StrategyConfig initStrategyConfig(CodeProperties codePropertie) throws ClassNotFoundException {
+    public static StrategyConfig initStrategyConfig(CodeProperties codeProperties) throws ClassNotFoundException {
         StrategyConfig strategyConfig = new StrategyConfig();
 //        strategyConfig.setCapitalMode(false);
 //        strategyConfig.setSkipView(false);
@@ -23,14 +23,14 @@ public class CodeGeneratorStrategyConfig {
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setTablePrefix("sys_");
 //        strategyConfig.setFieldPrefix("");
-        strategyConfig.setSuperEntityClass(Class.forName(codePropertie.getSuperEntityClassPath()));
+        strategyConfig.setSuperEntityClass(Class.forName(codeProperties.getSuperEntityClassPath()));
 //        strategyConfig.setSuperEntityColumns("create_user_id", "create_time", "update_user_id", "update_time");
-        strategyConfig.setSuperMapperClass(codePropertie.getSuperMapperClassPath());
-        strategyConfig.setSuperServiceClass(codePropertie.getSuperServiceClassPath());
-        strategyConfig.setSuperServiceImplClass(codePropertie.getSuperServiceImplClassPath());
-        strategyConfig.setSuperControllerClass(codePropertie.getSuperControllerClassPath());
+        strategyConfig.setSuperMapperClass(codeProperties.getSuperMapperClassPath());
+        strategyConfig.setSuperServiceClass(codeProperties.getSuperServiceClassPath());
+        strategyConfig.setSuperServiceImplClass(codeProperties.getSuperServiceImplClassPath());
+        strategyConfig.setSuperControllerClass(codeProperties.getSuperControllerClassPath());
 //        strategyConfig.setEnableSqlFilter(true);
-        strategyConfig.setInclude(codePropertie.getTableNameList().toArray(new String[]{}));
+        strategyConfig.setInclude(codeProperties.getTableNameList().toArray(new String[]{}));
 //        strategyConfig.setLikeTable();
 //        strategyConfig.setExclude();
 //        strategyConfig.setNotLikeTable();

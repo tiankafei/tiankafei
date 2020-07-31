@@ -29,7 +29,7 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class CodeGeneratorInjectionConfig {
 
     // 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
-    public static InjectionConfig initInjectionConfig(CodeProperties codePropertie) {
+    public static InjectionConfig initInjectionConfig(CodeProperties codeProperties) {
         // 转换器
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -39,20 +39,20 @@ public class CodeGeneratorInjectionConfig {
                 ConfigBuilder config = getConfig();
 
                 Map<String, Object> map = new HashMap<>();
-                map.put("shiroAuthority", codePropertie.isShiroAuthority());
-                map.put("voPackage", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".vo");
-                map.put("paramPackage", codePropertie.getProjectPath() + "." + codePropertie.getModuleName() + ".param");
-                map.put("idsParamClassPath", codePropertie.getIdsParamClassPath());
-                map.put("pageClassPath", codePropertie.getPageClassPath());
-                map.put("apiResultClassPath", codePropertie.getApiResultClassPath());
+                map.put("shiroAuthority", codeProperties.isShiroAuthority());
+                map.put("voPackage", codeProperties.getProjectPath() + "." + codeProperties.getModuleName() + ".vo");
+                map.put("paramPackage", codeProperties.getProjectPath() + "." + codeProperties.getModuleName() + ".param");
+                map.put("idsParamClassPath", codeProperties.getIdsParamClassPath());
+                map.put("pageClassPath", codeProperties.getPageClassPath());
+                map.put("apiResultClassPath", codeProperties.getApiResultClassPath());
 
-                String superVoClassPath = codePropertie.getSuperVoClassPath();
+                String superVoClassPath = codeProperties.getSuperVoClassPath();
                 String superVoPackage = superVoClassPath.substring(0, superVoClassPath.lastIndexOf("."));
                 String superVoName = superVoClassPath.substring(superVoClassPath.lastIndexOf(".") + 1);
                 map.put("superVoPackage", superVoPackage);
                 map.put("superVoClassName", superVoName);
 
-                String superPageParamClassPath = codePropertie.getSuperPageParamClassPath();
+                String superPageParamClassPath = codeProperties.getSuperPageParamClassPath();
                 String superPageParamPackage = superPageParamClassPath.substring(0, superPageParamClassPath.lastIndexOf("."));
                 String superPageParamName = superPageParamClassPath.substring(superPageParamClassPath.lastIndexOf(".") + 1);
                 map.put("superParamPackage", superPageParamPackage);
@@ -141,9 +141,9 @@ public class CodeGeneratorInjectionConfig {
                 CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
                 String voClassName = cfgProperties.getVoClassName();
 
-                String path = codePropertie.getOutputDir() + File.separator
-                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "vo" + File.separator + voClassName + StringPool.DOT_JAVA;
+                String path = codeProperties.getOutputDir() + File.separator
+                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codeProperties.getModuleName() + File.separator + "vo" + File.separator + voClassName + StringPool.DOT_JAVA;
                 System.out.println(path);
                 return path;
             }
@@ -159,9 +159,9 @@ public class CodeGeneratorInjectionConfig {
                 CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
                 String listParamClassName = cfgProperties.getListParamClassName();
 
-                String path = codePropertie.getOutputDir() + File.separator
-                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + listParamClassName + StringPool.DOT_JAVA;
+                String path = codeProperties.getOutputDir() + File.separator
+                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + listParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });
@@ -176,9 +176,9 @@ public class CodeGeneratorInjectionConfig {
                 CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
                 String countParamClassName = cfgProperties.getCountParamClassName();
 
-                String path = codePropertie.getOutputDir() + File.separator
-                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + countParamClassName + StringPool.DOT_JAVA;
+                String path = codeProperties.getOutputDir() + File.separator
+                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + countParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });
@@ -193,9 +193,9 @@ public class CodeGeneratorInjectionConfig {
                 CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
                 String deleteParamClassName = cfgProperties.getDeleteParamClassName();
 
-                String path = codePropertie.getOutputDir() + File.separator
-                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + deleteParamClassName + StringPool.DOT_JAVA;
+                String path = codeProperties.getOutputDir() + File.separator
+                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + deleteParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });
@@ -210,9 +210,9 @@ public class CodeGeneratorInjectionConfig {
                 CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
                 String checkParamClassName = cfgProperties.getCheckParamClassName();
 
-                String path = codePropertie.getOutputDir() + File.separator
-                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + checkParamClassName + StringPool.DOT_JAVA;
+                String path = codeProperties.getOutputDir() + File.separator
+                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + checkParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });
@@ -227,9 +227,9 @@ public class CodeGeneratorInjectionConfig {
                 CfgProperties cfgProperties = objectMapper.readValue(json, CfgProperties.class);
                 String pageParamClassName = cfgProperties.getPageParamClassName();
 
-                String path = codePropertie.getOutputDir() + File.separator
-                        + codePropertie.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
-                        + codePropertie.getModuleName() + File.separator + "param" + File.separator + pageParamClassName + StringPool.DOT_JAVA;
+                String path = codeProperties.getOutputDir() + File.separator
+                        + codeProperties.getProjectPath().replaceAll("\\.", Matcher.quoteReplacement(File.separator)) + File.separator
+                        + codeProperties.getModuleName() + File.separator + "param" + File.separator + pageParamClassName + StringPool.DOT_JAVA;
                 return path;
             }
         });
