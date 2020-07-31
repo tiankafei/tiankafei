@@ -18,14 +18,14 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.google.common.collect.Maps;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.web.common.entity.BaseEntity;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -315,7 +315,7 @@ public class CodeGenerator {
                 String pascalTableName = underlineToPascal(tableName);
                 String colonTableName = underlineToColon(tableName);
 
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = Maps.newHashMap();
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
                 // 查询参数包路径
                 String queryParamPackage = projectMainPackage + StringPool.DOT + pc.getModuleName() + ".param";
@@ -370,7 +370,7 @@ public class CodeGenerator {
                 this.setMap(map);
             }
         };
-        List<FileOutConfig> focList = new ArrayList<>();
+        List<FileOutConfig> focList = Lists.newArrayList();
 
         // 生成mapper xml
         if (generatorMapperXml) {

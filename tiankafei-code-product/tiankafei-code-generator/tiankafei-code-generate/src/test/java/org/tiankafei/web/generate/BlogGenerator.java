@@ -2,7 +2,7 @@ package org.tiankafei.web.generate;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
@@ -35,7 +35,7 @@ public class BlogGenerator {
 
         codeGenerator.setIdType(IdType.ASSIGN_ID);
 
-        Map<String, String[]> map = new HashMap<>();
+        Map<String, String[]> map = Maps.newHashMap();
         map.put("blog", new String[]{"sys_blog_info", "sys_blog_label", "sys_blog_diary", "sys_blog_options"});
 
         String directory = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-blog-service";

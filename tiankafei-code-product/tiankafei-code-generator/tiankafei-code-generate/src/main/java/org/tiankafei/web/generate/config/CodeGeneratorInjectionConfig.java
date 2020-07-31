@@ -6,9 +6,8 @@ import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 
+import com.google.common.collect.Maps;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +16,7 @@ import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.beans.BeanMap;
 import org.tiankafei.web.generate.properties.CfgProperties;
@@ -30,14 +30,14 @@ public class CodeGeneratorInjectionConfig {
 
     // 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
     public static InjectionConfig initInjectionConfig(CodeProperties codeProperties) {
-        List<FileOutConfig> fileOutConfigList = new ArrayList<>();
+        List<FileOutConfig> fileOutConfigList = Lists.newArrayList();
 
         InjectionConfig injectionConfig = new InjectionConfig() {
             @Override
             public void initMap() {
                 ConfigBuilder config = getConfig();
 
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = Maps.newHashMap();
                 map.put("shiroAuthority", codeProperties.isShiroAuthority());
                 map.put("voPackage", codeProperties.getProjectPath() + "." + codeProperties.getModuleName() + ".vo");
                 map.put("paramPackage", codeProperties.getProjectPath() + "." + codeProperties.getModuleName() + ".param");

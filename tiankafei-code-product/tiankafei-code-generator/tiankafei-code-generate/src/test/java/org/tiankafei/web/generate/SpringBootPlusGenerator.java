@@ -1,6 +1,6 @@
 package org.tiankafei.web.generate;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
@@ -31,7 +31,7 @@ public class SpringBootPlusGenerator {
                 .setAuthor("tiankafei")
                 .setPkIdColumnName("id");
 
-        Map<String, String[]> map = new HashMap<>();
+        Map<String, String[]> map = Maps.newHashMap();
         map.put("businessdata", new String[]{"TKF_BUSINESS_DATA"});
         map.put("loginuser", new String[]{"TKF_LOGIN_USER"});
         map.put("rolebusinessdata", new String[]{"TKF_ROLE_BUSINESS_DATA"});

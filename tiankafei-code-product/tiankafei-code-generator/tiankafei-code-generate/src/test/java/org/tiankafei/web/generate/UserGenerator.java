@@ -1,6 +1,6 @@
 package org.tiankafei.web.generate;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
@@ -31,7 +31,7 @@ public class UserGenerator {
                 .setAuthor("tiankafei")
                 .setPkIdColumnName("id");
 
-        Map<String, String[]> map = new HashMap<>();
+        Map<String, String[]> map = Maps.newHashMap();
         map.put("user", new String[]{"sys_user_login", "sys_user_info", "sys_role_info", "sys_user_role", "sys_menu_info", "sys_role_menu", "sys_department", "sys_dict_info", "sys_dict_table", "sys_links"});
 //        map.put("user", new String[]{"sys_user_role"});
 
