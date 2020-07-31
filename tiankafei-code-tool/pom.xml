@@ -173,6 +173,12 @@
                 <artifactId>quasar-core</artifactId>
                 <version>${quasar.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/io.vavr/vavr -->
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>0.10.3</version>
+            </dependency>
 
             <!--poi依赖jar包-->
             <dependency>
