@@ -202,11 +202,22 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public Paging<${cfg.get(${table.name}).voClassName}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
+    public Paging<${entity}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
 		Page page = setPageParam(${cfg.get(${table.name}).pageParamConstName}, OrderItem.desc("create_time"));
+		// 分页查询先查询主键id
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-		IPage<${cfg.get(${table.name}).voClassName}> iPage = super.page(page, lambdaQueryWrapper);
-		return new Paging(iPage);
+		lambdaQueryWrapper.select(${entity}::getId);
+		IPage<${entity}> iPage = super.page(page, lambdaQueryWrapper);
+		List<Long> idList = iPage.getRecords().stream().map(${cfg.get(${table.name}).entityConstName} -> ${cfg.get(${table.name}).entityConstName}.getId()).collect(Collectors.toList());
+
+		// 再根据查到的主键id查询数据
+		lambdaQueryWrapper = new LambdaQueryWrapper();
+		lambdaQueryWrapper.in(${entity}::getId, idList);
+		List<${entity}> ${cfg.get(${table.name}).entityConstName}List = super.list(lambdaQueryWrapper);
+		Paging<${entity}> paging = new Paging();
+		paging.setRecords(userTestEntityList);
+		paging.setTotal(iPage.getTotal());
+		return paging;
 	}
 
     /**
