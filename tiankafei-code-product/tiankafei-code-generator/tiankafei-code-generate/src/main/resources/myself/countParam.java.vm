@@ -2,6 +2,7 @@ package ${cfg.paramPackage};
 
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 #end
 import java.io.Serializable;
 ###if(${entityLombokModel})

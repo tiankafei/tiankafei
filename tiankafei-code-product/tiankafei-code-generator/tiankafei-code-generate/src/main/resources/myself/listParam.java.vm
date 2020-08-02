@@ -2,8 +2,10 @@ package ${cfg.paramPackage};
 
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 #end
 import java.io.Serializable;
+import java.util.List;
 ###if(${entityLombokModel})
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -28,6 +30,13 @@ public class ${cfg.listParamClassName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
+#if(${swagger2})
+@ApiModelProperty(value = "主键id集合")
+#else
+/**
+ * 主键id集合
+ */
+#end
+    private List<${cfg.keyColumnType}> idList;
 
 }

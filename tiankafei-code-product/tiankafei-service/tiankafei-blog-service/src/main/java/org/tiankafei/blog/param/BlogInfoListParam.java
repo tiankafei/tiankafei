@@ -1,7 +1,9 @@
 package org.tiankafei.blog.param;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -20,5 +22,7 @@ public class BlogInfoListParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键id集合")
+    private List<Long> idList;
 
 }
