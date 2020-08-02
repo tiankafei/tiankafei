@@ -14,7 +14,7 @@ public class UserCodeGenerator extends BaseCodeGenerator {
     private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-user-service\\tiankafei-user-server\\src\\main\\java";
 
     private boolean shiroAuthority = false;
-    private String baseParentPath = "org.tiankafei.mybatisplus";
+    private String baseParentPath = "org.tiankafei";
     private String moduleName = "user";
 
     private String baseEntityClassPath = "com.baomidou.mybatisplus.extension.activerecord.Model";
@@ -40,7 +40,7 @@ public class UserCodeGenerator extends BaseCodeGenerator {
                 "sys_dept_info",
                 "sys_dict_info",
                 "sys_dict_table",
-                "sys_links");
+                "sys_links_info");
         tiankafeiCodeGenerator.execute(tableNameList);
     }
 
