@@ -244,6 +244,27 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         return super.updateById(dictInfoEntity);
     }
 
+    @Override
+    public boolean updateDictInfoServiceStatus(String id, Boolean status) throws Exception {
+        // 获取字典数据对象
+        DictInfoEntity oldDictInfoEntity = dictInfoMapper.selectById(id);
+        // 更新状态
+        oldDictInfoEntity.setStatus(status);
+        boolean flag = super.updateById(oldDictInfoEntity);
+
+        if(Boolean.TRUE.equals(status)){
+            // 要求启用
+            Boolean oldStatus = oldDictInfoEntity.getStatus();
+            if(oldStatus){
+               // 已经是启用状态，无需再创建表结构
+            }else{
+                // 创建字段数据表
+                dbService.createTable("sys_dict_table", oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
+            }
+        }
+        return flag;
+    }
+
     /**
      * 根据ID获取 系统数据字典表 对象
      *

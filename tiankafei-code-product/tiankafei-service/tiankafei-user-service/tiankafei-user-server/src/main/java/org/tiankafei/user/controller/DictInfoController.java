@@ -90,6 +90,20 @@ public class DictInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    @GetMapping("/enable/{id}")
+    @ApiOperation(value = "启用 系统数据字典表")
+    public ApiResult<Boolean> enableDictInfoController(@PathVariable(value = "id") String id) throws Exception {
+        boolean flag = dictInfoService.updateDictInfoServiceStatus(id, Boolean.TRUE);
+        return ApiResult.ok(flag);
+    }
+
+    @GetMapping("/disable/{id}")
+    @ApiOperation(value = "停用 系统数据字典表")
+    public ApiResult<Boolean> disableDictInfoController(@PathVariable(value = "id") String id) throws Exception {
+        boolean flag = dictInfoService.updateDictInfoServiceStatus(id, Boolean.FALSE);
+        return ApiResult.ok(flag);
+    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "获取 系统数据字典表 对象")
     public ApiResult<DictInfoVo> getDictInfoController(@PathVariable(value = "id") String id) throws Exception {

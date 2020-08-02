@@ -86,6 +86,16 @@ public interface DictInfoService extends BaseService<DictInfoEntity> {
     boolean updateDictInfoService(DictInfoVo dictInfoVo) throws Exception;
 
     /**
+     * 修改 系统数据字典表
+     *
+     * @param id
+     * @param status
+     * @return
+     * @throws Exception
+     */
+    boolean updateDictInfoServiceStatus(String id, Boolean status) throws Exception;
+
+    /**
      * 根据ID获取 系统数据字典表 对象
      *
      * @param id
