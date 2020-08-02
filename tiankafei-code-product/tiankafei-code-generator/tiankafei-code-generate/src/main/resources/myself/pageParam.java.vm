@@ -26,7 +26,7 @@ import ${cfg.superParamPackage}.${cfg.superPageParamClassName};
 #if(${swagger2})
 @ApiModel(value = "$!{table.comment} 分页列表参数对象")
 #end
-public class ${cfg.get(${table.name}).pageParamClassName} extends ${cfg.superPageParamClassName} {
+public class ${cfg.pageParamClassName} extends ${cfg.superPageParamClassName} {
 
     private static final long serialVersionUID = 1L;
 

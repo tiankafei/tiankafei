@@ -1,7 +1,7 @@
 package ${cfg.voPackage};
 
-###foreach($pkg in ${cfg.packages.get(${table.name})})
-#foreach($pkg in ${cfg.get(${table.name}).importPackageList})
+###foreach($pkg in ${cfg.packages})
+#foreach($pkg in ${cfg.importPackageList})
 import ${pkg};
 #end
 #if(${swagger2})
@@ -39,7 +39,7 @@ import ${cfg.superVoPackage}.${cfg.superVoClassName};
 #if(${swagger2})
 @ApiModel(value="${entity}对象", description="$!{table.comment}")
 #end
-public class ${cfg.get(${table.name}).voClassName} extends ${cfg.superVoClassName} {
+public class ${cfg.voClassName} extends ${cfg.superVoClassName} {
 
 #if(${entitySerialVersionUID})
     private static final long serialVersionUID=1L;
@@ -76,7 +76,7 @@ public class ${cfg.get(${table.name}).voClassName} extends ${cfg.superVoClassNam
     }
 
   #if(${chainModel})
-    public ${cfg.name.get(${table.name}).voName} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public ${cfg.name.voName} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #else
     public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
   #end

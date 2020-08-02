@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 #if(${swagger2})
 @ApiModel(value = "$!{table.comment} 求记录数参数对象")
 #end
-public class ${cfg.get(${table.name}).countParamClassName} implements Serializable {
+public class ${cfg.countParamClassName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

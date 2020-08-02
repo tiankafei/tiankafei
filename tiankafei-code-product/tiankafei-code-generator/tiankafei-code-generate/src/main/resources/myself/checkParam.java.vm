@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 #if(${swagger2})
 @ApiModel(value = "$!{table.comment} 检查是否存在参数对象")
 #end
-public class ${cfg.get(${table.name}).checkParamClassName} implements Serializable {
+public class ${cfg.checkParamClassName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

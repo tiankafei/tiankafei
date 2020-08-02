@@ -14,12 +14,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${package.Entity}.${entity};
-import ${cfg.paramPackage}.${cfg.get(${table.name}).checkParamClassName};
-import ${cfg.paramPackage}.${cfg.get(${table.name}).countParamClassName};
-import ${cfg.paramPackage}.${cfg.get(${table.name}).deleteParamClassName};
-import ${cfg.paramPackage}.${cfg.get(${table.name}).pageParamClassName};
-import ${cfg.paramPackage}.${cfg.get(${table.name}).listParamClassName};
-import ${cfg.voPackage}.${cfg.get(${table.name}).voClassName};
+import ${cfg.paramPackage}.${cfg.checkParamClassName};
+import ${cfg.paramPackage}.${cfg.countParamClassName};
+import ${cfg.paramPackage}.${cfg.deleteParamClassName};
+import ${cfg.paramPackage}.${cfg.pageParamClassName};
+import ${cfg.paramPackage}.${cfg.listParamClassName};
+import ${cfg.voPackage}.${cfg.voClassName};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
@@ -43,20 +43,20 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
     @Autowired
-    private ${table.mapperName} ${cfg.get(${table.name}).mapperConstName};
+    private ${table.mapperName} ${cfg.mapperConstName};
 
 
     /**
      * 校验 $!{table.comment} 是否已经存在
      *
-     * @param ${cfg.get(${table.name}).checkParamConstName}
+     * @param ${cfg.checkParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean check${table.serviceName}Exists(${cfg.get(${table.name}).checkParamClassName} ${cfg.get(${table.name}).checkParamConstName}) throws Exception {
+    public boolean check${table.serviceName}Exists(${cfg.checkParamClassName} ${cfg.checkParamConstName}) throws Exception {
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (${cfg.get(${table.name}).checkParamConstName} != null) {
+		if (${cfg.checkParamConstName} != null) {
 
 		}
 		int count = super.count(lambdaQueryWrapper);
@@ -66,37 +66,37 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 保存 $!{table.comment}
      *
-     * @param ${cfg.get(${table.name}).voConstName}
+     * @param ${cfg.voConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public Object add${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
-		${entity} ${cfg.get(${table.name}).entityConstName} = new ${entity}();
-		BeanUtils.copyProperties(${cfg.get(${table.name}).voConstName}, ${cfg.get(${table.name}).entityConstName});
-		super.save(${cfg.get(${table.name}).entityConstName});
-		return ${cfg.get(${table.name}).entityConstName}.getId();
+    public Object add${table.serviceName}(${cfg.voClassName} ${cfg.voConstName}) throws Exception {
+		${entity} ${cfg.entityConstName} = new ${entity}();
+		BeanUtils.copyProperties(${cfg.voConstName}, ${cfg.entityConstName});
+		super.save(${cfg.entityConstName});
+		return ${cfg.entityConstName}.getId();
 	}
 
     /**
      * 保存 $!{table.comment} 集合
      *
-     * @param ${cfg.get(${table.name}).voConstName}List
+     * @param ${cfg.voConstName}List
      * @return
      * @throws Exception
      */
 	@Override
-    public List<Object> batchAdd${table.serviceName}(List<${cfg.get(${table.name}).voClassName}> ${cfg.get(${table.name}).voConstName}List) throws Exception {
-		if (CollectionUtils.isNotEmpty(${cfg.get(${table.name}).voConstName}List)) {
-			List<${entity}> ${cfg.get(${table.name}).entityConstName}List = Lists.newArrayList();
-			for (${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName} : ${cfg.get(${table.name}).voConstName}List) {
-				${entity} ${cfg.get(${table.name}).entityConstName} = new ${entity}();
-				BeanUtils.copyProperties(${cfg.get(${table.name}).voConstName}, ${cfg.get(${table.name}).entityConstName});
-				${cfg.get(${table.name}).entityConstName}List.add(${cfg.get(${table.name}).entityConstName});
+    public List<Object> batchAdd${table.serviceName}(List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception {
+		if (CollectionUtils.isNotEmpty(${cfg.voConstName}List)) {
+			List<${entity}> ${cfg.entityConstName}List = Lists.newArrayList();
+			for (${cfg.voClassName} ${cfg.voConstName} : ${cfg.voConstName}List) {
+				${entity} ${cfg.entityConstName} = new ${entity}();
+				BeanUtils.copyProperties(${cfg.voConstName}, ${cfg.entityConstName});
+				${cfg.entityConstName}List.add(${cfg.entityConstName});
 			}
-			super.saveBatch(${cfg.get(${table.name}).entityConstName}List);
+			super.saveBatch(${cfg.entityConstName}List);
 
-			return ${cfg.get(${table.name}).entityConstName}List.stream().map(${cfg.get(${table.name}).entityConstName} -> ${cfg.get(${table.name}).entityConstName}.getId()).collect(Collectors.toList());
+			return ${cfg.entityConstName}List.stream().map(${cfg.entityConstName} -> ${cfg.entityConstName}.getId()).collect(Collectors.toList());
 		}
 		return Lists.newArrayList();
 	}
@@ -135,14 +135,14 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 根据条件删除 $!{table.comment}
      *
-     * @param ${cfg.get(${table.name}).deleteParamConstName}
+     * @param ${cfg.deleteParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean conditionDelete${table.serviceName}(${cfg.get(${table.name}).deleteParamClassName} ${cfg.get(${table.name}).deleteParamConstName}) throws Exception {
+    public boolean conditionDelete${table.serviceName}(${cfg.deleteParamClassName} ${cfg.deleteParamConstName}) throws Exception {
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (${cfg.get(${table.name}).deleteParamConstName} != null) {
+		if (${cfg.deleteParamConstName} != null) {
 
 		}
 		return super.remove(lambdaQueryWrapper);
@@ -151,15 +151,15 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 修改 $!{table.comment}
      *
-     * @param ${cfg.get(${table.name}).voConstName}
+     * @param ${cfg.voConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public boolean update${table.serviceName}(${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName}) throws Exception {
-		${entity} ${cfg.get(${table.name}).entityConstName} = new ${entity}();
-		BeanUtils.copyProperties(${cfg.get(${table.name}).voConstName}, ${cfg.get(${table.name}).entityConstName});
-		return super.updateById(${cfg.get(${table.name}).entityConstName});
+    public boolean update${table.serviceName}(${cfg.voClassName} ${cfg.voConstName}) throws Exception {
+		${entity} ${cfg.entityConstName} = new ${entity}();
+		BeanUtils.copyProperties(${cfg.voConstName}, ${cfg.entityConstName});
+		return super.updateById(${cfg.entityConstName});
 	}
 
     /**
@@ -170,24 +170,24 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public ${cfg.get(${table.name}).voClassName} get${table.serviceName}ById(Serializable id) throws Exception {
-		${entity} ${cfg.get(${table.name}).entityConstName} = super.getById(id);
-		${cfg.get(${table.name}).voClassName} ${cfg.get(${table.name}).voConstName} = new ${cfg.get(${table.name}).voClassName}();
-		BeanUtils.copyProperties(${cfg.get(${table.name}).entityConstName}, ${cfg.get(${table.name}).voConstName});
-		return ${cfg.get(${table.name}).voConstName};
+    public ${cfg.voClassName} get${table.serviceName}ById(Serializable id) throws Exception {
+		${entity} ${cfg.entityConstName} = super.getById(id);
+		${cfg.voClassName} ${cfg.voConstName} = new ${cfg.voClassName}();
+		BeanUtils.copyProperties(${cfg.entityConstName}, ${cfg.voConstName});
+		return ${cfg.voConstName};
 	}
 
     /**
      * 获取 $!{table.comment} 对象列表
      *
-     * @param ${cfg.get(${table.name}).listParamConstName}
+     * @param ${cfg.listParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public List<${entity}> get${table.serviceName}List(${cfg.get(${table.name}).listParamClassName} ${cfg.get(${table.name}).listParamConstName}) throws Exception {
+    public List<${entity}> get${table.serviceName}List(${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception {
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (${cfg.get(${table.name}).listParamConstName} != null) {
+		if (${cfg.listParamConstName} != null) {
 
 		}
 		return super.list(lambdaQueryWrapper);
@@ -196,25 +196,25 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 获取 $!{table.comment} 分页对象列表
      *
-     * @param ${cfg.get(${table.name}).pageParamConstName}
+     * @param ${cfg.pageParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public Paging<${entity}> get${table.serviceName}PageList(${cfg.get(${table.name}).pageParamClassName} ${cfg.get(${table.name}).pageParamConstName}) throws Exception {
-		Page page = setPageParam(${cfg.get(${table.name}).pageParamConstName}, OrderItem.desc("create_time"));
+    public Paging<${entity}> get${table.serviceName}PageList(${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception {
+		Page page = setPageParam(${cfg.pageParamConstName}, OrderItem.desc("create_time"));
 		// 分页查询先查询主键id
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
 		lambdaQueryWrapper.select(${entity}::getId);
 		IPage<${entity}> iPage = super.page(page, lambdaQueryWrapper);
-		List<Long> idList = iPage.getRecords().stream().map(${cfg.get(${table.name}).entityConstName} -> ${cfg.get(${table.name}).entityConstName}.getId()).collect(Collectors.toList());
+		List<Number> idList = iPage.getRecords().stream().map(${cfg.entityConstName} -> ${cfg.entityConstName}.getId()).collect(Collectors.toList());
 
 		// 再根据查到的主键id查询数据
 		lambdaQueryWrapper = new LambdaQueryWrapper();
 		lambdaQueryWrapper.in(${entity}::getId, idList);
-		List<${entity}> ${cfg.get(${table.name}).entityConstName}List = super.list(lambdaQueryWrapper);
+		List<${entity}> ${cfg.entityConstName}List = super.list(lambdaQueryWrapper);
 		Paging<${entity}> paging = new Paging();
-		paging.setRecords(userTestEntityList);
+		paging.setRecords(${cfg.entityConstName}List);
 		paging.setTotal(iPage.getTotal());
 		return paging;
 	}
@@ -222,14 +222,14 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     /**
      * 计算 $!{table.comment} 总记录数
      *
-     * @param ${cfg.get(${table.name}).countParamConstName}
+     * @param ${cfg.countParamConstName}
      * @return
      * @throws Exception
      */
 	@Override
-    public Integer count${table.serviceName}(${cfg.get(${table.name}).countParamClassName} ${cfg.get(${table.name}).countParamConstName}) throws Exception {
+    public Integer count${table.serviceName}(${cfg.countParamClassName} ${cfg.countParamConstName}) throws Exception {
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (${cfg.get(${table.name}).countParamConstName} != null) {
+		if (${cfg.countParamConstName} != null) {
 
 		}
 		return super.count(lambdaQueryWrapper);
