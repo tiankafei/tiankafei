@@ -103,10 +103,13 @@
         from ${table.name}
         <where>
             <if test="param.idList != null and param.idList.size != 0">
-                id in
+                and id in
                 <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
                     #{id}
                 </foreach>
+            </if>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
             </if>
         </where>
     </select>
@@ -117,7 +120,9 @@
             id
         from ${table.name}
         <where>
-
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
+            </if>
         </where>
     </select>
 	

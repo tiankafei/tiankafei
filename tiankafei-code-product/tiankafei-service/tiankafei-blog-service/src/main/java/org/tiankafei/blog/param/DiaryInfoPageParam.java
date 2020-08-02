@@ -1,6 +1,7 @@
 package org.tiankafei.blog.param;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,5 +23,7 @@ public class DiaryInfoPageParam extends OrderQueryParam {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
+    private Integer deleteMark = 0;
 
 }
