@@ -101,7 +101,7 @@ public interface GlobalSettingService extends BaseService<GlobalSettingEntity> {
      * @return
      * @throws Exception
      */
-    List<GlobalSettingEntity> getGlobalSettingServiceList(GlobalSettingListParam globalSettingListParam) throws Exception;
+    List<GlobalSettingVo> getGlobalSettingServiceList(GlobalSettingListParam globalSettingListParam) throws Exception;
 
     /**
      * 获取 系统的博客选项设置 分页对象列表
@@ -110,7 +110,7 @@ public interface GlobalSettingService extends BaseService<GlobalSettingEntity> {
      * @return
      * @throws Exception
      */
-    Paging<GlobalSettingEntity> getGlobalSettingServicePageList(GlobalSettingPageParam globalSettingPageParam) throws Exception;
+    Paging<GlobalSettingVo> getGlobalSettingServicePageList(GlobalSettingPageParam globalSettingPageParam) throws Exception;
 
     /**
      * 计算 系统的博客选项设置 总记录数

@@ -104,7 +104,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    List<${entity}> get${table.serviceName}List(${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception;
+    List<${cfg.voClassName}> get${table.serviceName}List(${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception;
 
     /**
      * 获取 $!{table.comment} 分页对象列表
@@ -113,7 +113,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    Paging<${entity}> get${table.serviceName}PageList(${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception;
+    Paging<${cfg.voClassName}> get${table.serviceName}PageList(${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception;
 
     /**
      * 计算 $!{table.comment} 总记录数

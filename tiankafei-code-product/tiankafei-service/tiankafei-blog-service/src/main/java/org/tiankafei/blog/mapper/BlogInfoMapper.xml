@@ -111,7 +111,7 @@
     </select>
 
     <!-- 获取 系统的博客数据 分页对象列表 -->
-    <select id="getBlogInfoServicePageList" resultType="java.lang.Long">
+    <select id="getBlogInfoServicePageList" resultMap="voResultMap">
         select
         id
         from sys_blog_info

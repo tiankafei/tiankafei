@@ -180,12 +180,8 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
      * @throws Exception
      */
     @Override
-    public List<GlobalSettingEntity> getGlobalSettingServiceList(GlobalSettingListParam globalSettingListParam) throws Exception {
-        LambdaQueryWrapper<GlobalSettingEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if (globalSettingListParam != null) {
-
-        }
-        return super.list(lambdaQueryWrapper);
+    public List<GlobalSettingVo> getGlobalSettingServiceList(GlobalSettingListParam globalSettingListParam) throws Exception {
+        return globalSettingMapper.getGlobalSettingServiceList(globalSettingListParam);
     }
 
     /**
@@ -196,22 +192,20 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
      * @throws Exception
      */
     @Override
-    public Paging<GlobalSettingEntity> getGlobalSettingServicePageList(GlobalSettingPageParam globalSettingPageParam) throws Exception {
+    public Paging<GlobalSettingVo> getGlobalSettingServicePageList(GlobalSettingPageParam globalSettingPageParam) throws Exception {
         Page page = setPageParam(globalSettingPageParam, OrderItem.desc("create_time"));
         // 分页查询先查询主键id
-        LambdaQueryWrapper<GlobalSettingEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.select(GlobalSettingEntity::getId);
-        IPage<GlobalSettingEntity> iPage = super.page(page, lambdaQueryWrapper);
-        List<Long> idList = iPage.getRecords().stream().map(globalSettingEntity -> globalSettingEntity.getId()).collect(Collectors.toList());
+        IPage<GlobalSettingVo> iPage = globalSettingMapper.getGlobalSettingServicePageList(page, globalSettingPageParam);
+        List<Long> idList = iPage.getRecords().stream().map(globalSettingVo -> globalSettingVo.getId()).collect(Collectors.toList());
 
         // 再根据查到的主键id查询数据
-        Paging<GlobalSettingEntity> paging = new Paging();
+        Paging<GlobalSettingVo> paging = new Paging();
         paging.setTotal(iPage.getTotal());
         if (CollectionUtils.isNotEmpty(idList)) {
-            lambdaQueryWrapper = new LambdaQueryWrapper();
-            lambdaQueryWrapper.in(GlobalSettingEntity::getId, idList);
-            List<GlobalSettingEntity> globalSettingEntityList = super.list(lambdaQueryWrapper);
-            paging.setRecords(globalSettingEntityList);
+            GlobalSettingListParam globalSettingListParam = new GlobalSettingListParam();
+            globalSettingListParam.setIdList(idList);
+            List<GlobalSettingVo> globalSettingVoList = this.getGlobalSettingServiceList(globalSettingListParam);
+            paging.setRecords(globalSettingVoList);
         }
         return paging;
     }

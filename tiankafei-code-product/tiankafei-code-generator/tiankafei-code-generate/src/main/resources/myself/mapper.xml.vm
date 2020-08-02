@@ -112,7 +112,7 @@
     </select>
 	
 	<!-- 获取 $!{table.comment} 分页对象列表 -->
-    <select id="get${table.serviceName}PageList" resultType="java.lang.${cfg.keyColumnType}">
+    <select id="get${table.serviceName}PageList" resultMap="voResultMap">
         select
             id
         from ${table.name}

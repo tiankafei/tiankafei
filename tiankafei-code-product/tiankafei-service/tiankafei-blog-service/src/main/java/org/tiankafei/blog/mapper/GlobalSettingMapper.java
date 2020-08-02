@@ -1,6 +1,7 @@
 package org.tiankafei.blog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.io.Serializable;
 import java.util.List;
@@ -114,7 +115,7 @@ public interface GlobalSettingMapper extends BaseMapper<GlobalSettingEntity> {
      * @return
      * @throws Exception
      */
-    List<Long> getGlobalSettingServicePageList(@Param("page") Page page, @Param("param") GlobalSettingPageParam globalSettingPageParam) throws Exception;
+    IPage<GlobalSettingVo> getGlobalSettingServicePageList(@Param("page") Page page, @Param("param") GlobalSettingPageParam globalSettingPageParam) throws Exception;
 
     /**
      * 计算 系统的博客选项设置 总记录数

@@ -101,7 +101,7 @@ public interface DiaryInfoService extends BaseService<DiaryInfoEntity> {
      * @return
      * @throws Exception
      */
-    List<DiaryInfoEntity> getDiaryInfoServiceList(DiaryInfoListParam diaryInfoListParam) throws Exception;
+    List<DiaryInfoVo> getDiaryInfoServiceList(DiaryInfoListParam diaryInfoListParam) throws Exception;
 
     /**
      * 获取 系统的博客日记 分页对象列表
@@ -110,7 +110,7 @@ public interface DiaryInfoService extends BaseService<DiaryInfoEntity> {
      * @return
      * @throws Exception
      */
-    Paging<DiaryInfoEntity> getDiaryInfoServicePageList(DiaryInfoPageParam diaryInfoPageParam) throws Exception;
+    Paging<DiaryInfoVo> getDiaryInfoServicePageList(DiaryInfoPageParam diaryInfoPageParam) throws Exception;
 
     /**
      * 计算 系统的博客日记 总记录数

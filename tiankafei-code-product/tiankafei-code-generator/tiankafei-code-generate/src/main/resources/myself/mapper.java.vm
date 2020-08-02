@@ -1,6 +1,7 @@
 package ${package.Mapper};
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.io.Serializable;
 import java.util.List;
@@ -117,7 +118,7 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    List<${cfg.keyColumnType}> get${table.serviceName}PageList(@Param("page") Page page, @Param("param") ${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception;
+    IPage<${cfg.voClassName}> get${table.serviceName}PageList(@Param("page") Page page, @Param("param") ${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception;
 
     /**
      * 计算 $!{table.comment} 总记录数

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.blog.entity.BlogInfoEntity;
 import org.tiankafei.blog.param.BlogInfoCheckParam;
 import org.tiankafei.blog.param.BlogInfoCountParam;
 import org.tiankafei.blog.param.BlogInfoDeleteParam;
@@ -100,23 +99,23 @@ public class BlogInfoController extends BaseController {
 
     @GetMapping
     @ApiOperation(value = "获取 系统的博客数据 对象全部列表")
-    public ApiResult<List<BlogInfoEntity>> getBlogInfoControllerAllList() throws Exception {
-        List<BlogInfoEntity> blogInfoEntityList = blogInfoService.getBlogInfoServiceList(null);
-        return ApiResult.ok(blogInfoEntityList);
+    public ApiResult<List<BlogInfoVo>> getBlogInfoControllerAllList() throws Exception {
+        List<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServiceList(null);
+        return ApiResult.ok(blogInfoVoList);
     }
 
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客数据 对象列表")
-    public ApiResult<List<BlogInfoEntity>> getBlogInfoControllerList(@Valid @RequestBody BlogInfoListParam blogInfoListParam) throws Exception {
-        List<BlogInfoEntity> blogInfoEntityList = blogInfoService.getBlogInfoServiceList(blogInfoListParam);
-        return ApiResult.ok(blogInfoEntityList);
+    public ApiResult<List<BlogInfoVo>> getBlogInfoControllerList(@Valid @RequestBody BlogInfoListParam blogInfoListParam) throws Exception {
+        List<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServiceList(blogInfoListParam);
+        return ApiResult.ok(blogInfoVoList);
     }
 
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客数据 分页对象列表")
-    public ApiResult<Paging<BlogInfoEntity>> getBlogInfoControllerPageList(@Valid @RequestBody BlogInfoPageParam blogInfoPageParam) throws Exception {
-        Paging<BlogInfoEntity> blogInfoEntityList = blogInfoService.getBlogInfoServicePageList(blogInfoPageParam);
-        return ApiResult.ok(blogInfoEntityList);
+    public ApiResult<Paging<BlogInfoVo>> getBlogInfoControllerPageList(@Valid @RequestBody BlogInfoPageParam blogInfoPageParam) throws Exception {
+        Paging<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServicePageList(blogInfoPageParam);
+        return ApiResult.ok(blogInfoVoList);
     }
 
     @PostMapping("/count")

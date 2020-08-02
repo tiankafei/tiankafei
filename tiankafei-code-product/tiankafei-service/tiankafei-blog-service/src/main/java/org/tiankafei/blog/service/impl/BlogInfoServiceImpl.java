@@ -180,12 +180,8 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
      * @throws Exception
      */
     @Override
-    public List<BlogInfoEntity> getBlogInfoServiceList(BlogInfoListParam blogInfoListParam) throws Exception {
-        LambdaQueryWrapper<BlogInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if (blogInfoListParam != null) {
-
-        }
-        return super.list(lambdaQueryWrapper);
+    public List<BlogInfoVo> getBlogInfoServiceList(BlogInfoListParam blogInfoListParam) throws Exception {
+        return blogInfoMapper.getBlogInfoServiceList(blogInfoListParam);
     }
 
     /**
@@ -196,22 +192,20 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
      * @throws Exception
      */
     @Override
-    public Paging<BlogInfoEntity> getBlogInfoServicePageList(BlogInfoPageParam blogInfoPageParam) throws Exception {
+    public Paging<BlogInfoVo> getBlogInfoServicePageList(BlogInfoPageParam blogInfoPageParam) throws Exception {
         Page page = setPageParam(blogInfoPageParam, OrderItem.desc("create_time"));
         // 分页查询先查询主键id
-        LambdaQueryWrapper<BlogInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.select(BlogInfoEntity::getId);
-        IPage<BlogInfoEntity> iPage = super.page(page, lambdaQueryWrapper);
-        List<Long> idList = iPage.getRecords().stream().map(blogInfoEntity -> blogInfoEntity.getId()).collect(Collectors.toList());
+        IPage<BlogInfoVo> iPage = blogInfoMapper.getBlogInfoServicePageList(page, blogInfoPageParam);
+        List<Long> idList = iPage.getRecords().stream().map(blogInfoVo -> blogInfoVo.getId()).collect(Collectors.toList());
 
         // 再根据查到的主键id查询数据
-        Paging<BlogInfoEntity> paging = new Paging();
+        Paging<BlogInfoVo> paging = new Paging();
         paging.setTotal(iPage.getTotal());
         if (CollectionUtils.isNotEmpty(idList)) {
-            lambdaQueryWrapper = new LambdaQueryWrapper();
-            lambdaQueryWrapper.in(BlogInfoEntity::getId, idList);
-            List<BlogInfoEntity> blogInfoEntityList = super.list(lambdaQueryWrapper);
-            paging.setRecords(blogInfoEntityList);
+            BlogInfoListParam blogInfoListParam = new BlogInfoListParam();
+            blogInfoListParam.setIdList(idList);
+            List<BlogInfoVo> blogInfoVoList = this.getBlogInfoServiceList(blogInfoListParam);
+            paging.setRecords(blogInfoVoList);
         }
         return paging;
     }

@@ -1,6 +1,7 @@
 package org.tiankafei.blog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.io.Serializable;
 import java.util.List;
@@ -114,7 +115,7 @@ public interface DiaryInfoMapper extends BaseMapper<DiaryInfoEntity> {
      * @return
      * @throws Exception
      */
-    List<Long> getDiaryInfoServicePageList(@Param("page") Page page, @Param("param") DiaryInfoPageParam diaryInfoPageParam) throws Exception;
+    IPage<DiaryInfoVo> getDiaryInfoServicePageList(@Param("page") Page page, @Param("param") DiaryInfoPageParam diaryInfoPageParam) throws Exception;
 
     /**
      * 计算 系统的博客日记 总记录数

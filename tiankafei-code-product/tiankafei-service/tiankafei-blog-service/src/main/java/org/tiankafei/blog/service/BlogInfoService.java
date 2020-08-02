@@ -101,7 +101,7 @@ public interface BlogInfoService extends BaseService<BlogInfoEntity> {
      * @return
      * @throws Exception
      */
-    List<BlogInfoEntity> getBlogInfoServiceList(BlogInfoListParam blogInfoListParam) throws Exception;
+    List<BlogInfoVo> getBlogInfoServiceList(BlogInfoListParam blogInfoListParam) throws Exception;
 
     /**
      * 获取 系统的博客数据 分页对象列表
@@ -110,7 +110,7 @@ public interface BlogInfoService extends BaseService<BlogInfoEntity> {
      * @return
      * @throws Exception
      */
-    Paging<BlogInfoEntity> getBlogInfoServicePageList(BlogInfoPageParam blogInfoPageParam) throws Exception;
+    Paging<BlogInfoVo> getBlogInfoServicePageList(BlogInfoPageParam blogInfoPageParam) throws Exception;
 
     /**
      * 计算 系统的博客数据 总记录数

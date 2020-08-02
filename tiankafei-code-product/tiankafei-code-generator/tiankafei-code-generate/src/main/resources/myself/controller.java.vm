@@ -141,27 +141,27 @@ public class ${table.controllerName} {
 #if(${swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 对象全部列表")
 #end	
-	public ApiResult<List<${entity}>> get${table.controllerName}AllList() throws Exception {
-		List<${entity}> ${cfg.entityConstName}List = ${cfg.serviceConstName}.get${table.serviceName}List(null);
-		return ApiResult.ok(${cfg.entityConstName}List);
+	public ApiResult<List<${cfg.voClassName}>> get${table.controllerName}AllList() throws Exception {
+		List<${cfg.voClassName}> ${cfg.voConstName}List = ${cfg.serviceConstName}.get${table.serviceName}List(null);
+		return ApiResult.ok(${cfg.voConstName}List);
 	}
 
 	@PostMapping("/list")
 #if(${swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 对象列表")
 #end	
-	public ApiResult<List<${entity}>> get${table.controllerName}List(@Valid @RequestBody ${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception {
-		List<${entity}> ${cfg.entityConstName}List = ${cfg.serviceConstName}.get${table.serviceName}List(${cfg.listParamConstName});
-		return ApiResult.ok(${cfg.entityConstName}List);
+	public ApiResult<List<${cfg.voClassName}>> get${table.controllerName}List(@Valid @RequestBody ${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception {
+		List<${cfg.voClassName}> ${cfg.voConstName}List = ${cfg.serviceConstName}.get${table.serviceName}List(${cfg.listParamConstName});
+		return ApiResult.ok(${cfg.voConstName}List);
 	}
 	
 	@PostMapping("/pageList")
 #if(${swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 分页对象列表")
 #end	
-	public ApiResult<Paging<${entity}>> get${table.controllerName}PageList(@Valid @RequestBody ${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception {
-		Paging<${entity}> ${cfg.entityConstName}List = ${cfg.serviceConstName}.get${table.serviceName}PageList(${cfg.pageParamConstName});
-		return ApiResult.ok(${cfg.entityConstName}List);
+	public ApiResult<Paging<${cfg.voClassName}>> get${table.controllerName}PageList(@Valid @RequestBody ${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception {
+		Paging<${cfg.voClassName}> ${cfg.voConstName}List = ${cfg.serviceConstName}.get${table.serviceName}PageList(${cfg.pageParamConstName});
+		return ApiResult.ok(${cfg.voConstName}List);
 	}
 
 	@PostMapping("/count")

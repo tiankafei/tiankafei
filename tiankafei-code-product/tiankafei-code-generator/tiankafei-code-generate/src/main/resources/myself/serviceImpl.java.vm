@@ -185,12 +185,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public List<${entity}> get${table.serviceName}List(${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception {
-		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (${cfg.listParamConstName} != null) {
-
-		}
-		return super.list(lambdaQueryWrapper);
+    public List<${cfg.voClassName}> get${table.serviceName}List(${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception {
+		return ${cfg.mapperConstName}.get${table.serviceName}List(${cfg.listParamConstName});
 	}
 
     /**
@@ -201,22 +197,20 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public Paging<${entity}> get${table.serviceName}PageList(${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception {
+    public Paging<${cfg.voClassName}> get${table.serviceName}PageList(${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception {
 		Page page = setPageParam(${cfg.pageParamConstName}, OrderItem.desc("create_time"));
 		// 分页查询先查询主键id
-		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
-		lambdaQueryWrapper.select(${entity}::getId);
-		IPage<${entity}> iPage = super.page(page, lambdaQueryWrapper);
-		List<${cfg.keyColumnType}> idList = iPage.getRecords().stream().map(${cfg.entityConstName} -> ${cfg.entityConstName}.getId()).collect(Collectors.toList());
+		IPage<${cfg.voClassName}> iPage = ${cfg.mapperConstName}.get${table.serviceName}PageList(page, ${cfg.pageParamConstName});
+		List<${cfg.keyColumnType}> idList = iPage.getRecords().stream().map(${cfg.voConstName} -> ${cfg.voConstName}.getId()).collect(Collectors.toList());
 
 		// 再根据查到的主键id查询数据
-		Paging<${entity}> paging = new Paging();
+		Paging<${cfg.voClassName}> paging = new Paging();
 		paging.setTotal(iPage.getTotal());
 		if (CollectionUtils.isNotEmpty(idList)) {
-			lambdaQueryWrapper = new LambdaQueryWrapper();
-			lambdaQueryWrapper.in(${entity}::getId, idList);
-			List<${entity}> ${cfg.entityConstName}List = super.list(lambdaQueryWrapper);
-			paging.setRecords(${cfg.entityConstName}List);
+			${cfg.listParamClassName} ${cfg.listParamConstName} = new ${cfg.listParamClassName}();
+			${cfg.listParamConstName}.setIdList(idList);
+			List<${cfg.voClassName}> ${cfg.voConstName}List = this.get${table.serviceName}List(${cfg.listParamConstName});
+			paging.setRecords(${cfg.voConstName}List);
 		}
 		return paging;
 	}

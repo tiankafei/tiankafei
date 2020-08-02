@@ -180,12 +180,8 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
      * @throws Exception
      */
     @Override
-    public List<DiaryInfoEntity> getDiaryInfoServiceList(DiaryInfoListParam diaryInfoListParam) throws Exception {
-        LambdaQueryWrapper<DiaryInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        if (diaryInfoListParam != null) {
-
-        }
-        return super.list(lambdaQueryWrapper);
+    public List<DiaryInfoVo> getDiaryInfoServiceList(DiaryInfoListParam diaryInfoListParam) throws Exception {
+        return diaryInfoMapper.getDiaryInfoServiceList(diaryInfoListParam);
     }
 
     /**
@@ -196,22 +192,20 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
      * @throws Exception
      */
     @Override
-    public Paging<DiaryInfoEntity> getDiaryInfoServicePageList(DiaryInfoPageParam diaryInfoPageParam) throws Exception {
+    public Paging<DiaryInfoVo> getDiaryInfoServicePageList(DiaryInfoPageParam diaryInfoPageParam) throws Exception {
         Page page = setPageParam(diaryInfoPageParam, OrderItem.desc("create_time"));
         // 分页查询先查询主键id
-        LambdaQueryWrapper<DiaryInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        lambdaQueryWrapper.select(DiaryInfoEntity::getId);
-        IPage<DiaryInfoEntity> iPage = super.page(page, lambdaQueryWrapper);
-        List<Long> idList = iPage.getRecords().stream().map(diaryInfoEntity -> diaryInfoEntity.getId()).collect(Collectors.toList());
+        IPage<DiaryInfoVo> iPage = diaryInfoMapper.getDiaryInfoServicePageList(page, diaryInfoPageParam);
+        List<Long> idList = iPage.getRecords().stream().map(diaryInfoVo -> diaryInfoVo.getId()).collect(Collectors.toList());
 
         // 再根据查到的主键id查询数据
-        Paging<DiaryInfoEntity> paging = new Paging();
+        Paging<DiaryInfoVo> paging = new Paging();
         paging.setTotal(iPage.getTotal());
         if (CollectionUtils.isNotEmpty(idList)) {
-            lambdaQueryWrapper = new LambdaQueryWrapper();
-            lambdaQueryWrapper.in(DiaryInfoEntity::getId, idList);
-            List<DiaryInfoEntity> diaryInfoEntityList = super.list(lambdaQueryWrapper);
-            paging.setRecords(diaryInfoEntityList);
+            DiaryInfoListParam diaryInfoListParam = new DiaryInfoListParam();
+            diaryInfoListParam.setIdList(idList);
+            List<DiaryInfoVo> diaryInfoVoList = this.getDiaryInfoServiceList(diaryInfoListParam);
+            paging.setRecords(diaryInfoVoList);
         }
         return paging;
     }

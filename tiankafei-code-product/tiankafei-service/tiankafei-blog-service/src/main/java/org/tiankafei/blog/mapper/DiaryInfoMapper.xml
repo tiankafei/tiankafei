@@ -95,7 +95,7 @@
     </select>
 
     <!-- 获取 系统的博客日记 分页对象列表 -->
-    <select id="getDiaryInfoServicePageList" resultType="java.lang.Long">
+    <select id="getDiaryInfoServicePageList" resultMap="voResultMap">
         select
         id
         from sys_diary_info

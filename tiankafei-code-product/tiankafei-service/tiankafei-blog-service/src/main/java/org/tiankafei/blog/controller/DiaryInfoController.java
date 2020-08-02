@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.blog.entity.DiaryInfoEntity;
 import org.tiankafei.blog.param.DiaryInfoCheckParam;
 import org.tiankafei.blog.param.DiaryInfoCountParam;
 import org.tiankafei.blog.param.DiaryInfoDeleteParam;
@@ -100,23 +99,23 @@ public class DiaryInfoController extends BaseController {
 
     @GetMapping
     @ApiOperation(value = "获取 系统的博客日记 对象全部列表")
-    public ApiResult<List<DiaryInfoEntity>> getDiaryInfoControllerAllList() throws Exception {
-        List<DiaryInfoEntity> diaryInfoEntityList = diaryInfoService.getDiaryInfoServiceList(null);
-        return ApiResult.ok(diaryInfoEntityList);
+    public ApiResult<List<DiaryInfoVo>> getDiaryInfoControllerAllList() throws Exception {
+        List<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServiceList(null);
+        return ApiResult.ok(diaryInfoVoList);
     }
 
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客日记 对象列表")
-    public ApiResult<List<DiaryInfoEntity>> getDiaryInfoControllerList(@Valid @RequestBody DiaryInfoListParam diaryInfoListParam) throws Exception {
-        List<DiaryInfoEntity> diaryInfoEntityList = diaryInfoService.getDiaryInfoServiceList(diaryInfoListParam);
-        return ApiResult.ok(diaryInfoEntityList);
+    public ApiResult<List<DiaryInfoVo>> getDiaryInfoControllerList(@Valid @RequestBody DiaryInfoListParam diaryInfoListParam) throws Exception {
+        List<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServiceList(diaryInfoListParam);
+        return ApiResult.ok(diaryInfoVoList);
     }
 
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客日记 分页对象列表")
-    public ApiResult<Paging<DiaryInfoEntity>> getDiaryInfoControllerPageList(@Valid @RequestBody DiaryInfoPageParam diaryInfoPageParam) throws Exception {
-        Paging<DiaryInfoEntity> diaryInfoEntityList = diaryInfoService.getDiaryInfoServicePageList(diaryInfoPageParam);
-        return ApiResult.ok(diaryInfoEntityList);
+    public ApiResult<Paging<DiaryInfoVo>> getDiaryInfoControllerPageList(@Valid @RequestBody DiaryInfoPageParam diaryInfoPageParam) throws Exception {
+        Paging<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServicePageList(diaryInfoPageParam);
+        return ApiResult.ok(diaryInfoVoList);
     }
 
     @PostMapping("/count")

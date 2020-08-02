@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.blog.entity.GlobalSettingEntity;
 import org.tiankafei.blog.param.GlobalSettingCheckParam;
 import org.tiankafei.blog.param.GlobalSettingCountParam;
 import org.tiankafei.blog.param.GlobalSettingDeleteParam;
@@ -100,23 +99,23 @@ public class GlobalSettingController extends BaseController {
 
     @GetMapping
     @ApiOperation(value = "获取 系统的博客选项设置 对象全部列表")
-    public ApiResult<List<GlobalSettingEntity>> getGlobalSettingControllerAllList() throws Exception {
-        List<GlobalSettingEntity> globalSettingEntityList = globalSettingService.getGlobalSettingServiceList(null);
-        return ApiResult.ok(globalSettingEntityList);
+    public ApiResult<List<GlobalSettingVo>> getGlobalSettingControllerAllList() throws Exception {
+        List<GlobalSettingVo> globalSettingVoList = globalSettingService.getGlobalSettingServiceList(null);
+        return ApiResult.ok(globalSettingVoList);
     }
 
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客选项设置 对象列表")
-    public ApiResult<List<GlobalSettingEntity>> getGlobalSettingControllerList(@Valid @RequestBody GlobalSettingListParam globalSettingListParam) throws Exception {
-        List<GlobalSettingEntity> globalSettingEntityList = globalSettingService.getGlobalSettingServiceList(globalSettingListParam);
-        return ApiResult.ok(globalSettingEntityList);
+    public ApiResult<List<GlobalSettingVo>> getGlobalSettingControllerList(@Valid @RequestBody GlobalSettingListParam globalSettingListParam) throws Exception {
+        List<GlobalSettingVo> globalSettingVoList = globalSettingService.getGlobalSettingServiceList(globalSettingListParam);
+        return ApiResult.ok(globalSettingVoList);
     }
 
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客选项设置 分页对象列表")
-    public ApiResult<Paging<GlobalSettingEntity>> getGlobalSettingControllerPageList(@Valid @RequestBody GlobalSettingPageParam globalSettingPageParam) throws Exception {
-        Paging<GlobalSettingEntity> globalSettingEntityList = globalSettingService.getGlobalSettingServicePageList(globalSettingPageParam);
-        return ApiResult.ok(globalSettingEntityList);
+    public ApiResult<Paging<GlobalSettingVo>> getGlobalSettingControllerPageList(@Valid @RequestBody GlobalSettingPageParam globalSettingPageParam) throws Exception {
+        Paging<GlobalSettingVo> globalSettingVoList = globalSettingService.getGlobalSettingServicePageList(globalSettingPageParam);
+        return ApiResult.ok(globalSettingVoList);
     }
 
     @PostMapping("/count")
