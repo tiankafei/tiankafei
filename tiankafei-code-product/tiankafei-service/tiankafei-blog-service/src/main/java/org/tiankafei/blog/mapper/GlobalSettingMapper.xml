@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.blog.mapper.GlobalSettingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="org.tiankafei.blog.entity.GlobalSettingEntity">
+        <id column="id" property="id"/>
+        <result column="set_name" property="setName"/>
+        <result column="set_value" property="setValue"/>
+        <result column="remark" property="remark"/>
+        <result column="description" property="description"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="voResultMap" type="org.tiankafei.blog.vo.GlobalSettingVo">
+        <id column="id" property="id"/>
+        <result column="set_name" property="setName"/>
+        <result column="set_value" property="setValue"/>
+        <result column="remark" property="remark"/>
+        <result column="description" property="description"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_Column_List">
+        id, set_name, set_value, remark, description, version, delete_mark, create_time, create_user_id, update_time, update_user_id
+    </sql>
+
+    <!-- 校验 系统的博客选项设置 是否已经存在 -->
+    <select id="checkGlobalSettingServiceExists" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 保存 系统的博客选项设置 -->
+    <select id="addGlobalSettingService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 批量保存 系统的博客选项设置 -->
+    <select id="batchAddGlobalSettingService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 删除 系统的博客选项设置 -->
+    <select id="deleteGlobalSettingService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 批量删除 系统的博客选项设置 -->
+    <select id="batchDeleteGlobalSettingService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据条件删除 系统的博客选项设置 -->
+    <select id="conditionDeleteGlobalSettingService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 修改 系统的博客选项设置 -->
+    <select id="updateGlobalSettingService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据ID获取 系统的博客选项设置 对象 -->
+    <select id="getGlobalSettingServiceById" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 系统的博客选项设置 对象列表 -->
+    <select id="getGlobalSettingServiceList" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 系统的博客选项设置 分页对象列表 -->
+    <select id="getGlobalSettingServicePageList" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 计算 系统的博客选项设置 总记录数 -->
+    <select id="countGlobalSettingService" resultType="java.lang.Integer">
+
+    </select>
+
+</mapper>

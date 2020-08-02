@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.blog.mapper.DiaryInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="org.tiankafei.blog.entity.DiaryInfoEntity">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="custom_name" property="customName"/>
+        <result column="password" property="password"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="voResultMap" type="org.tiankafei.blog.vo.DiaryInfoVo">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="custom_name" property="customName"/>
+        <result column="password" property="password"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_Column_List">
+        id, title, content, custom_name, password, version, delete_mark, create_time, update_time, create_user_id, update_user_id
+    </sql>
+
+    <!-- 校验 系统的博客日记 是否已经存在 -->
+    <select id="checkDiaryInfoServiceExists" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 保存 系统的博客日记 -->
+    <select id="addDiaryInfoService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 批量保存 系统的博客日记 -->
+    <select id="batchAddDiaryInfoService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 删除 系统的博客日记 -->
+    <select id="deleteDiaryInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 批量删除 系统的博客日记 -->
+    <select id="batchDeleteDiaryInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据条件删除 系统的博客日记 -->
+    <select id="conditionDeleteDiaryInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 修改 系统的博客日记 -->
+    <select id="updateDiaryInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据ID获取 系统的博客日记 对象 -->
+    <select id="getDiaryInfoServiceById" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 系统的博客日记 对象列表 -->
+    <select id="getDiaryInfoServiceList" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 系统的博客日记 分页对象列表 -->
+    <select id="getDiaryInfoServicePageList" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 计算 系统的博客日记 总记录数 -->
+    <select id="countDiaryInfoService" resultType="java.lang.Integer">
+
+    </select>
+
+</mapper>

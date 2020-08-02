@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.blog.mapper.BlogInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="org.tiankafei.blog.entity.BlogInfoEntity">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="label" property="label"/>
+        <result column="is_top" property="isTop"/>
+        <result column="custom_name" property="customName"/>
+        <result column="access_permission" property="accessPermission"/>
+        <result column="password" property="password"/>
+        <result column="is_discuss" property="isDiscuss"/>
+        <result column="is_subscription" property="isSubscription"/>
+        <result column="release_status" property="releaseStatus"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="release_time" property="releaseTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="voResultMap" type="org.tiankafei.blog.vo.BlogInfoVo">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="label" property="label"/>
+        <result column="is_top" property="isTop"/>
+        <result column="custom_name" property="customName"/>
+        <result column="access_permission" property="accessPermission"/>
+        <result column="password" property="password"/>
+        <result column="is_discuss" property="isDiscuss"/>
+        <result column="is_subscription" property="isSubscription"/>
+        <result column="release_status" property="releaseStatus"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="release_time" property="releaseTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_Column_List">
+        id, title, content, type, label, is_top, custom_name, access_permission, password, is_discuss, is_subscription, release_status, version, delete_mark, create_time, release_time, update_time, create_user_id, update_user_id
+    </sql>
+
+    <!-- 校验 系统的博客数据 是否已经存在 -->
+    <select id="checkBlogInfoServiceExists" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 保存 系统的博客数据 -->
+    <select id="addBlogInfoService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 批量保存 系统的博客数据 -->
+    <select id="batchAddBlogInfoService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 删除 系统的博客数据 -->
+    <select id="deleteBlogInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 批量删除 系统的博客数据 -->
+    <select id="batchDeleteBlogInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据条件删除 系统的博客数据 -->
+    <select id="conditionDeleteBlogInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 修改 系统的博客数据 -->
+    <select id="updateBlogInfoService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据ID获取 系统的博客数据 对象 -->
+    <select id="getBlogInfoServiceById" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 系统的博客数据 对象列表 -->
+    <select id="getBlogInfoServiceList" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 系统的博客数据 分页对象列表 -->
+    <select id="getBlogInfoServicePageList" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 计算 系统的博客数据 总记录数 -->
+    <select id="countBlogInfoService" resultType="java.lang.Integer">
+
+    </select>
+
+</mapper>
