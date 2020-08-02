@@ -52,7 +52,7 @@ public class UserInfoController extends BaseController {
 	@PostMapping
 	@ApiOperation(value = "添加 用户基本信息表")
 	public ApiResult<Long> addUserInfoController(@Valid @RequestBody UserInfoDto userInfoDto) throws Exception {
-	Long id = userInfoService.addUserInfoService(userInfoDto);
+		Long id = userInfoService.addUserInfoService(userInfoDto);
 		return ApiResult.ok(id);
 	}
 

@@ -79,7 +79,7 @@ public class ${table.controllerName} {
 	@ApiOperation(value = "添加 $!{table.comment}")
 #end	
 	public ApiResult<${cfg.keyColumnType}> add${table.controllerName}(@Valid @RequestBody ${cfg.voClassName} ${cfg.voConstName}) throws Exception {
-	${cfg.keyColumnType} id = ${cfg.serviceConstName}.add${table.serviceName}(${cfg.voConstName});
+		${cfg.keyColumnType} id = ${cfg.serviceConstName}.add${table.serviceName}(${cfg.voConstName});
 		return ApiResult.ok(id);
 	}
 	
