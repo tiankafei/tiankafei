@@ -15,6 +15,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.CubicCurve2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.OutputStream;
 import javax.imageio.ImageIO;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -24,8 +25,6 @@ import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.param.CaptchaVo;
 import org.tiankafei.web.common.service.CaptchaGenerateService;
-
-import java.io.OutputStream;
 
 /**
  * @author tiankafei
@@ -62,14 +61,14 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
         private int length;
         private OutputStream outputStream;
 
-        public static Builder require(OutputStream outputStream){
+        public static Builder require(OutputStream outputStream) {
             return new Builder(outputStream);
         }
 
         public String finish() {
             try {
                 CaptchaVo captchaVo = CommonCaptchaUtil.getCaptcha(this.type);
-                if(this.style.equals(CaptchaStyle.IMG)){
+                if (this.style.equals(CaptchaStyle.IMG)) {
                     DefaultCaptcha captcha = new DefaultCaptcha(captchaVo.getExpression());
                     captcha.setType(this.type);
                     captcha.setWidth(this.width);
@@ -78,7 +77,7 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
                     captcha.setFont(this.font);
                     captcha.render(this.outputStream);
                     return captchaVo.getCaptcha();
-                }else if(this.style.equals(CaptchaStyle.ANIM)){
+                } else if (this.style.equals(CaptchaStyle.ANIM)) {
                     DefaultAnimCaptcha captcha = new DefaultAnimCaptcha(captchaVo.getExpression());
                     captcha.setType(this.type);
                     captcha.setWidth(this.width);
@@ -88,12 +87,13 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
                     captcha.render(this.outputStream);
                     return captchaVo.getCaptcha();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
-        private DefaultHappyCaptcha(Builder builder){
+
+        private DefaultHappyCaptcha(Builder builder) {
             this.type = builder.type;
             this.style = builder.style;
             this.font = builder.font;
@@ -106,7 +106,7 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
 
     @Data
     @Accessors(chain = true)
-    static class Builder{
+    static class Builder {
 
         private CaptchaType type = CaptchaType.DEFAULT;
         private CaptchaStyle style = CaptchaStyle.IMG;
@@ -116,11 +116,11 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
         private int length = 5;
         private final OutputStream outputStream;
 
-        public Builder(OutputStream outputStream){
+        public Builder(OutputStream outputStream) {
             this.outputStream = outputStream;
         }
 
-        public DefaultHappyCaptcha builder(){
+        public DefaultHappyCaptcha builder() {
             return new DefaultHappyCaptcha(this);
         }
     }
@@ -139,28 +139,28 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
         }
 
         public void drawImage(char[] chars, OutputStream output) {
-            BufferedImage img = new BufferedImage(width,height,BufferedImage.TYPE_INT_BGR);
-            Graphics2D g = (Graphics2D)img.getGraphics();
+            BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
+            Graphics2D g = (Graphics2D) img.getGraphics();
             g.setBackground(Color.WHITE);
-            g.fillRect(0,0,width,height);
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+            g.fillRect(0, 0, width, height);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             drawLine(g);
             drawOval(g);
             drawBezierLine(g);
             g.setFont(getFont());
             FontMetrics fontMetrics = g.getFontMetrics();
-            int fw = (width/chars.length) - 2;
-            int fm = (fw - (int)fontMetrics.getStringBounds("8",g).getWidth())/2;
+            int fw = (width / chars.length) - 2;
+            int fm = (fw - (int) fontMetrics.getStringBounds("8", g).getWidth()) / 2;
 
             Color fontColor = color();
-            for(int i=0;i<chars.length;i++){
+            for (int i = 0; i < chars.length; i++) {
                 g.setColor(fontColor);
-                int fh = height - ((height-(int)fontMetrics.getStringBounds(String.valueOf(chars[i]),g).getHeight()) >> 1);
-                g.drawString(String.valueOf(chars[i]),i*fw+fm,fh);
+                int fh = height - ((height - (int) fontMetrics.getStringBounds(String.valueOf(chars[i]), g).getHeight()) >> 1);
+                g.drawString(String.valueOf(chars[i]), i * fw + fm, fh);
             }
             g.dispose();
             try {
-                ImageIO.write(img,"png",output);
+                ImageIO.write(img, "png", output);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -168,7 +168,7 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
                 output.flush();
             } catch (IOException e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 try {
                     output.close();
                 } catch (IOException e) {
@@ -186,6 +186,7 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
     static class DefaultAnimCaptcha extends AnimCaptcha {
 
         protected String exp;
+
         public DefaultAnimCaptcha(String exp) {
             this.exp = exp;
         }
@@ -196,10 +197,10 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
         }
 
         public BufferedImage drawImage(Color[] colors, char[] chars, int index, int[][] bezier) {
-            BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_BGR);
+            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
             Graphics2D g = (Graphics2D) image.getGraphics();
             g.setColor(Color.WHITE);
-            g.fillRect(0,0,width,height);
+            g.fillRect(0, 0, width, height);
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.1f * nextInt(10)));
             drawOval(g);
@@ -212,12 +213,12 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
 
             g.setFont(getFont());
             FontMetrics fontMetrics = g.getFontMetrics();
-            int fw = (width/chars.length) - 2;
+            int fw = (width / chars.length) - 2;
             int fm = (fw - (int) fontMetrics.getStringBounds("W", g).getWidth()) / 2;
 
             Color fontColor = color();
-            for(int i=0;i< chars.length;i++){
-                AlphaComposite alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,getAlpha(index,i));
+            for (int i = 0; i < chars.length; i++) {
+                AlphaComposite alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, getAlpha(index, i));
                 g.setComposite(alpha);
                 g.setColor(fontColor);
                 int fY = height - ((height - (int) fontMetrics.getStringBounds(String.valueOf(chars[i]), g).getHeight()) >> 1);  // 文字的纵坐标

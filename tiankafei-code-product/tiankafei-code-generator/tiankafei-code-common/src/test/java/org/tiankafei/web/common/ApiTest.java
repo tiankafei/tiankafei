@@ -5,12 +5,11 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSON;
 import java.awt.Color;
+import java.util.List;
 import org.junit.Test;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.service.impl.CommonCaptchaUtil;
-
-import java.util.List;
 
 /**
  * @author tiankafei
@@ -40,7 +39,7 @@ public class ApiTest {
     }
 
     @Test
-    public void test03(){
+    public void test03() {
         System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.DEFAULT));
         System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.ARITHMETIC));
         System.out.println(CommonCaptchaUtil.getCaptcha(CaptchaTypeEnum.ARITHMETIC_ZH));
@@ -56,7 +55,7 @@ public class ApiTest {
     }
 
     @Test
-    public void test04(){
+    public void test04() {
         Color color = CommonCaptchaUtil.getColor();
         System.out.println(color.getColorSpace().toString());
     }

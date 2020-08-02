@@ -1,12 +1,11 @@
 package org.tiankafei.web.common.constraints;
 
-import org.tiankafei.web.common.constraints.impl.MobilePhoneValidator;
-
-import javax.validation.Constraint;
-import javax.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import org.tiankafei.web.common.constraints.impl.MobilePhoneValidator;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;

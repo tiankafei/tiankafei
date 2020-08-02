@@ -1,10 +1,9 @@
 package org.tiankafei.web.common.service;
 
+import java.io.OutputStream;
 import org.tiankafei.web.common.enums.CaptchaEnum;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
-
-import java.io.OutputStream;
 
 /**
  * @author tiankafei

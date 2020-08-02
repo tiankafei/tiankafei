@@ -24,6 +24,7 @@ public abstract class CommonCaptchaUtil {
 
     /**
      * 随机获取颜色
+     *
      * @return
      */
     public static String getColorStr() {
@@ -32,6 +33,7 @@ public abstract class CommonCaptchaUtil {
 
     /**
      * 随机获取颜色
+     *
      * @return
      */
     public static Color getColor() {
@@ -50,10 +52,11 @@ public abstract class CommonCaptchaUtil {
 
     /**
      * 获取验证码
+     *
      * @param captchaTypeEnum
      * @return
      */
-    public static CaptchaVo getCaptcha(CaptchaTypeEnum captchaTypeEnum){
+    public static CaptchaVo getCaptcha(CaptchaTypeEnum captchaTypeEnum) {
         Captcha captcha = new Captcha();
         captcha.setType(getCaptchaType(captchaTypeEnum));
         String captchaCode = captcha.getCaptchaCode();
@@ -63,10 +66,11 @@ public abstract class CommonCaptchaUtil {
 
     /**
      * 获取验证码
+     *
      * @param captchaType
      * @return
      */
-    public static CaptchaVo getCaptcha(CaptchaType captchaType){
+    public static CaptchaVo getCaptcha(CaptchaType captchaType) {
         Captcha captcha = new Captcha();
         captcha.setType(captchaType);
         String captchaCode = captcha.getCaptchaCode();
@@ -76,25 +80,51 @@ public abstract class CommonCaptchaUtil {
 
     /**
      * 获取验证码类型
+     *
      * @param captchaTypeEnum
      * @return
      */
-    public static CaptchaType getCaptchaType(CaptchaTypeEnum captchaTypeEnum){
+    public static CaptchaType getCaptchaType(CaptchaTypeEnum captchaTypeEnum) {
         String name = CaptchaType.DEFAULT.name();
         switch (captchaTypeEnum) {
-            case DEFAULT: name = CaptchaType.DEFAULT.name();break;
-            case ARITHMETIC: name = CaptchaType.ARITHMETIC.name();break;
-            case ARITHMETIC_ZH: name = CaptchaType.ARITHMETIC_ZH.name();break;
-            case NUMBER: name = CaptchaType.NUMBER.name();break;
-            case NUMBER_ZH_CN: name = CaptchaType.NUMBER_ZH_CN.name();break;
-            case NUMBER_ZH_HK: name = CaptchaType.NUMBER_ZH_HK.name();break;
-            case WORD: name = CaptchaType.WORD.name();break;
-            case WORD_UPPER: name = CaptchaType.WORD_UPPER.name();break;
-            case WORD_LOWER: name = CaptchaType.WORD_LOWER.name();break;
-            case WORD_NUMBER_UPPER: name = CaptchaType.WORD_NUMBER_UPPER.name();break;
-            case WORD_NUMBER_LOWER: name = CaptchaType.WORD_NUMBER_LOWER.name();break;
-            case CHINESE: name = CaptchaType.CHINESE.name();break;
-            default: break;
+            case DEFAULT:
+                name = CaptchaType.DEFAULT.name();
+                break;
+            case ARITHMETIC:
+                name = CaptchaType.ARITHMETIC.name();
+                break;
+            case ARITHMETIC_ZH:
+                name = CaptchaType.ARITHMETIC_ZH.name();
+                break;
+            case NUMBER:
+                name = CaptchaType.NUMBER.name();
+                break;
+            case NUMBER_ZH_CN:
+                name = CaptchaType.NUMBER_ZH_CN.name();
+                break;
+            case NUMBER_ZH_HK:
+                name = CaptchaType.NUMBER_ZH_HK.name();
+                break;
+            case WORD:
+                name = CaptchaType.WORD.name();
+                break;
+            case WORD_UPPER:
+                name = CaptchaType.WORD_UPPER.name();
+                break;
+            case WORD_LOWER:
+                name = CaptchaType.WORD_LOWER.name();
+                break;
+            case WORD_NUMBER_UPPER:
+                name = CaptchaType.WORD_NUMBER_UPPER.name();
+                break;
+            case WORD_NUMBER_LOWER:
+                name = CaptchaType.WORD_NUMBER_LOWER.name();
+                break;
+            case CHINESE:
+                name = CaptchaType.CHINESE.name();
+                break;
+            default:
+                break;
         }
         CaptchaType captchaType = CaptchaType.valueOf(name);
         return captchaType;

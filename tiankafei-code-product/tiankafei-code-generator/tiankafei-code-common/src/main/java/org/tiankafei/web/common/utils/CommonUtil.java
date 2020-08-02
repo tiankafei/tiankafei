@@ -1,8 +1,7 @@
 package org.tiankafei.web.common.utils;
 
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.util.List;
+import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * @author tiankafei

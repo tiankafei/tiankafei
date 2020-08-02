@@ -1,10 +1,9 @@
 package org.tiankafei.web.common.constraints.impl;
 
-import org.tiankafei.web.common.constraints.MobilePhone;
-
+import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.regex.Pattern;
+import org.tiankafei.web.common.constraints.MobilePhone;
 
 /**
  * @author tiankafei

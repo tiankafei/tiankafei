@@ -1,14 +1,5 @@
 package org.tiankafei.web.common.utils;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.Base64Utils;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.FileCopyUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,6 +7,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.Base64Utils;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.FileCopyUtils;
 
 /**
  * @author tiankafei

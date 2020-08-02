@@ -5,7 +5,6 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.base.datetime.DateTimeUtil;
-import org.tiankafei.base.enums.DateTimeEnum;
 import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.user.cache.UserInfoCache;
 

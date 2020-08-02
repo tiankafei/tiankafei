@@ -2,11 +2,10 @@ package org.tiankafei.web.common.constraints.impl;
 
 import com.google.common.collect.Maps;
 import com.googlecode.aviator.AviatorEvaluator;
-import org.tiankafei.web.common.constraints.Condition;
-
+import java.util.Map;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.Map;
+import org.tiankafei.web.common.constraints.Condition;
 
 /**
  * 自定义身份证号码验证注解实现类

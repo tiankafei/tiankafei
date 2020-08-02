@@ -38,6 +38,7 @@ public class DistributedIdClient implements InitializingBean {
 
     /**
      * 获取雪花算法生成的id
+     *
      * @return
      */
     public String nextStringId() {
@@ -46,6 +47,7 @@ public class DistributedIdClient implements InitializingBean {
 
     /**
      * 获取雪花算法生成的id
+     *
      * @param object
      * @return
      */
@@ -55,6 +57,7 @@ public class DistributedIdClient implements InitializingBean {
 
     /**
      * 获取雪花算法生成的id
+     *
      * @param type
      * @param object
      * @return
@@ -66,6 +69,7 @@ public class DistributedIdClient implements InitializingBean {
 
     /**
      * 获取雪花算法生成的id
+     *
      * @return
      */
     public Long nextLongId() {
@@ -74,6 +78,7 @@ public class DistributedIdClient implements InitializingBean {
 
     /**
      * 获取雪花算法生成的id
+     *
      * @param object
      * @return
      */
@@ -83,6 +88,7 @@ public class DistributedIdClient implements InitializingBean {
 
     /**
      * 获取雪花算法生成的id
+     *
      * @param type
      * @param object
      * @return

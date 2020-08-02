@@ -1,16 +1,15 @@
 package org.tiankafei.web.common.bean;
 
 import com.google.common.collect.Maps;
+import java.io.OutputStream;
+import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.service.CaptchaGenerateService;
-
-import java.io.OutputStream;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author tiankafei

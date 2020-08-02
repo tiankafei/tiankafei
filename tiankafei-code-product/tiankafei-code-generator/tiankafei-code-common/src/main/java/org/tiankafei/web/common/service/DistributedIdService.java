@@ -10,12 +10,14 @@ public interface DistributedIdService {
 
     /**
      * 雪花算法的枚举类
+     *
      * @return
      */
     DistributedIdEnum getDistributedIdType();
 
     /**
      * 获取雪花算法生成的id
+     *
      * @param object
      * @return
      */
@@ -23,6 +25,7 @@ public interface DistributedIdService {
 
     /**
      * 获取雪花算法生成的id
+     *
      * @param object
      * @return
      */

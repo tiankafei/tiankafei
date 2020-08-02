@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
@@ -17,9 +19,6 @@ import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.param.CaptchaVo;
 import org.tiankafei.web.common.service.CaptchaGenerateService;
-
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * @author tiankafei

@@ -1,10 +1,9 @@
 package org.tiankafei.web.common.vo;
 
 import io.swagger.annotations.ApiModel;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * @author tiankafei

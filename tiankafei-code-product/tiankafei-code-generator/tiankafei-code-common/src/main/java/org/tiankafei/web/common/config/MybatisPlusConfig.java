@@ -5,12 +5,11 @@ import com.baomidou.mybatisplus.extension.parsers.ITableNameHandler;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.google.common.collect.Maps;
+import java.util.Collections;
+import java.util.HashMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.tiankafei.web.common.config.impl.DynamicTableNameHandler;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * @author tiankafei

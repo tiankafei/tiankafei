@@ -1,6 +1,9 @@
 package org.tiankafei.web.common.exception;
 
 import com.alibaba.fastjson.JSON;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -13,10 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.enums.ApiStatusEnum;
 import org.tiankafei.web.common.enums.ExceptionEnum;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author tiankafei

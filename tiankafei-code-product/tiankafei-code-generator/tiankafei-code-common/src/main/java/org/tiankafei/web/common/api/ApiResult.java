@@ -4,15 +4,14 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.web.common.enums.ApiStatusEnum;
 import org.tiankafei.web.common.enums.BaseEnums;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author tiankafei

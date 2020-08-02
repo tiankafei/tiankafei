@@ -15,7 +15,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 public class JsonConverterConfig {
 
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(){
+    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
         Jackson2ObjectMapperBuilderCustomizer customizer = new Jackson2ObjectMapperBuilderCustomizer() {
             @Override
             public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {

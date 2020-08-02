@@ -1,9 +1,8 @@
 package org.tiankafei.web.common.entity;
 
 import io.swagger.annotations.ApiModel;
-import lombok.Data;
-
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * @author tiankafei

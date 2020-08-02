@@ -2,12 +2,11 @@ package org.tiankafei.web.common.utils;
 
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import org.tiankafei.web.common.vo.ClientInfo;
-import org.tiankafei.web.common.vo.DeviceInfo;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpServletRequest;
+import org.tiankafei.web.common.vo.ClientInfo;
+import org.tiankafei.web.common.vo.DeviceInfo;
 
 /**
  * @author tiankafei

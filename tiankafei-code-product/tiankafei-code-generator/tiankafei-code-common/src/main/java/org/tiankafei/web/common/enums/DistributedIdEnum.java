@@ -7,8 +7,7 @@ package org.tiankafei.web.common.enums;
 public enum DistributedIdEnum {
 
     // MyBatisPlusSnowflake 的雪花算法
-    MYBATIS_PLUS_SNOWFLAKE(1);
-    ;
+    MYBATIS_PLUS_SNOWFLAKE(1);;
 
     private Integer code;
 

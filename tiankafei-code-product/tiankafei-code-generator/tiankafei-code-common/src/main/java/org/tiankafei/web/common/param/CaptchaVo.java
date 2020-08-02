@@ -1,9 +1,8 @@
 package org.tiankafei.web.common.param;
 
+import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * @author tiankafei

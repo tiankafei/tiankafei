@@ -19,7 +19,7 @@ public class MyBatisPlusSnowflakeService implements DistributedIdService {
     private DefaultIdentifierGenerator defaultIdentifierGenerator;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         defaultIdentifierGenerator = new DefaultIdentifierGenerator();
     }
 

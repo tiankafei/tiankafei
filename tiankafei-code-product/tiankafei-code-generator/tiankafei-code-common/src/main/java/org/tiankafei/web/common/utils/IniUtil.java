@@ -1,12 +1,11 @@
 package org.tiankafei.web.common.utils;
 
-import org.ini4j.Config;
-import org.ini4j.Ini;
-import org.ini4j.Profile;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
+import org.ini4j.Config;
+import org.ini4j.Ini;
+import org.ini4j.Profile;
 
 /**
  * @author tiankafei

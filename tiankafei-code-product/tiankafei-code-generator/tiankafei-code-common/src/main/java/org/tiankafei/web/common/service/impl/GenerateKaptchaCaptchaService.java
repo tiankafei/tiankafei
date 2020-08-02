@@ -2,18 +2,17 @@ package org.tiankafei.web.common.service.impl;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Properties;
+import javax.imageio.ImageIO;
 import org.springframework.stereotype.Service;
 import org.tiankafei.web.common.enums.CaptchaEnum;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.param.CaptchaVo;
 import org.tiankafei.web.common.service.CaptchaGenerateService;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Properties;
 
 /**
  * @author tiankafei

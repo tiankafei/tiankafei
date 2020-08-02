@@ -2,11 +2,10 @@ package org.tiankafei.web.common.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 /**
  * @author tiankafei

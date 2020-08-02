@@ -1,11 +1,10 @@
 package org.tiankafei.web.common.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.tiankafei.web.common.enums.CommonEnum;
 import org.tiankafei.web.common.enums.TokenEnum;
 import org.tiankafei.web.common.service.QueryTokenService;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author tiankafei

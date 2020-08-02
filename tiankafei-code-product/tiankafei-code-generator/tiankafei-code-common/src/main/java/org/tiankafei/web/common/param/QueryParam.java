@@ -2,11 +2,10 @@ package org.tiankafei.web.common.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.web.common.constants.CommonConstant;
-
-import java.io.Serializable;
 
 /**
  * @author tiankafei
