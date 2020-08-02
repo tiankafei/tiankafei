@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
+import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 
 import com.google.common.collect.Maps;
@@ -60,6 +61,15 @@ public class CodeGeneratorInjectionConfig {
                 TableInfo tableInfo = config.getTableInfoList().get(0);
                 CfgProperties cfgProperties = new CfgProperties();
                 String name = tableInfo.getName();
+
+                String keyColumnType = "Long";
+                List<TableField> fields = tableInfo.getFields();
+                for (TableField field : fields) {
+                    if(field.isKeyFlag()){
+                        keyColumnType = field.getColumnType().getType();
+                    }
+                }
+                map.put("keyColumnType", keyColumnType);
 
                 Set<String> importPackages = tableInfo.getImportPackages();
                 List<String> importPackageList = importPackages.stream().filter(importPackage -> {

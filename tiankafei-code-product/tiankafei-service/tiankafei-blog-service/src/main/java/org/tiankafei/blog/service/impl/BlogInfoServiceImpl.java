@@ -202,7 +202,7 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
         LambdaQueryWrapper<BlogInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.select(BlogInfoEntity::getId);
         IPage<BlogInfoEntity> iPage = super.page(page, lambdaQueryWrapper);
-        List<Number> idList = iPage.getRecords().stream().map(blogInfoEntity -> blogInfoEntity.getId()).collect(Collectors.toList());
+        List<Long> idList = iPage.getRecords().stream().map(blogInfoEntity -> blogInfoEntity.getId()).collect(Collectors.toList());
 
         // 再根据查到的主键id查询数据
         Paging<BlogInfoEntity> paging = new Paging();

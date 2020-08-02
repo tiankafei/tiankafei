@@ -202,7 +202,7 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
         LambdaQueryWrapper<DiaryInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.select(DiaryInfoEntity::getId);
         IPage<DiaryInfoEntity> iPage = super.page(page, lambdaQueryWrapper);
-        List<Number> idList = iPage.getRecords().stream().map(diaryInfoEntity -> diaryInfoEntity.getId()).collect(Collectors.toList());
+        List<Long> idList = iPage.getRecords().stream().map(diaryInfoEntity -> diaryInfoEntity.getId()).collect(Collectors.toList());
 
         // 再根据查到的主键id查询数据
         Paging<DiaryInfoEntity> paging = new Paging();

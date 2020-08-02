@@ -202,7 +202,7 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
         LambdaQueryWrapper<GlobalSettingEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.select(GlobalSettingEntity::getId);
         IPage<GlobalSettingEntity> iPage = super.page(page, lambdaQueryWrapper);
-        List<Number> idList = iPage.getRecords().stream().map(globalSettingEntity -> globalSettingEntity.getId()).collect(Collectors.toList());
+        List<Long> idList = iPage.getRecords().stream().map(globalSettingEntity -> globalSettingEntity.getId()).collect(Collectors.toList());
 
         // 再根据查到的主键id查询数据
         Paging<GlobalSettingEntity> paging = new Paging();

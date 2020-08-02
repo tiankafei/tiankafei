@@ -207,7 +207,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
 		lambdaQueryWrapper.select(${entity}::getId);
 		IPage<${entity}> iPage = super.page(page, lambdaQueryWrapper);
-		List<Number> idList = iPage.getRecords().stream().map(${cfg.entityConstName} -> ${cfg.entityConstName}.getId()).collect(Collectors.toList());
+		List<${cfg.keyColumnType}> idList = iPage.getRecords().stream().map(${cfg.entityConstName} -> ${cfg.entityConstName}.getId()).collect(Collectors.toList());
 
 		// 再根据查到的主键id查询数据
 		Paging<${entity}> paging = new Paging();
