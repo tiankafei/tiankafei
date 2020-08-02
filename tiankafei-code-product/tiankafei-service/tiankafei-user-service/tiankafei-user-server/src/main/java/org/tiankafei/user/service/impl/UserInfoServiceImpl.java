@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.entity.UserInfoEntity;
+import org.tiankafei.user.entity.UserLoginEntity;
 import org.tiankafei.user.mapper.UserInfoMapper;
 import org.tiankafei.user.model.UserInfoDto;
 import org.tiankafei.user.param.UserInfoCheckParam;
@@ -23,6 +24,7 @@ import org.tiankafei.user.param.UserInfoDeleteParam;
 import org.tiankafei.user.param.UserInfoListParam;
 import org.tiankafei.user.param.UserInfoPageParam;
 import org.tiankafei.user.service.UserInfoService;
+import org.tiankafei.user.service.UserLoginService;
 import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
@@ -40,6 +42,9 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    @Autowired
+    private UserLoginService userLoginService;
 
 
     /**
@@ -68,8 +73,13 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
      */
     @Override
     public Long addUserInfoService(UserInfoDto userInfoDto) throws Exception {
+        UserLoginEntity userLoginEntity = new UserLoginEntity();
+        BeanUtils.copyProperties(userInfoDto, userLoginEntity);
+        boolean save = userLoginService.save(userLoginEntity);
+
         UserInfoEntity userInfoEntity = new UserInfoEntity();
         BeanUtils.copyProperties(userInfoDto, userInfoEntity);
+        userInfoEntity.setId(userLoginEntity.getId());
         super.save(userInfoEntity);
         return userInfoEntity.getId();
     }
@@ -84,14 +94,22 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     @Override
     public List<Long> batchAddUserInfoService(List<UserInfoDto> userInfoDtoList) throws Exception {
         if (CollectionUtils.isNotEmpty(userInfoDtoList)) {
+            List<UserLoginEntity> userLoginEntityList = Lists.newArrayList();
             List<UserInfoEntity> userInfoEntityList = Lists.newArrayList();
             for (UserInfoDto userInfoDto : userInfoDtoList) {
+                UserLoginEntity userLoginEntity = new UserLoginEntity();
+                BeanUtils.copyProperties(userInfoDto, userLoginEntity);
+                userLoginEntityList.add(userLoginEntity);
+
                 UserInfoEntity userInfoEntity = new UserInfoEntity();
                 BeanUtils.copyProperties(userInfoDto, userInfoEntity);
                 userInfoEntityList.add(userInfoEntity);
             }
+            // 批量保存用户登录信息
+            userLoginService.saveBatch(userLoginEntityList);
+            // 批量保存用户基本信息
             super.saveBatch(userInfoEntityList);
-
+            // 返回主键id集合
             return userInfoEntityList.stream().map(userInfoEntity -> userInfoEntity.getId()).collect(Collectors.toList());
         }
         return Lists.newArrayList();
@@ -107,6 +125,9 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     @Override
     public boolean deleteUserInfoService(String id) throws Exception {
         if (StringUtils.isNotBlank(id)) {
+            // 删除用户登录信息
+            userLoginService.deleteUserLoginService(id);
+            // 删除用户基本信息
             return super.removeById(id);
         }
         return Boolean.TRUE;
@@ -122,6 +143,9 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     @Override
     public boolean batchDeleteUserInfoService(String ids) throws Exception {
         if (StringUtils.isNotBlank(ids)) {
+            // 批量删除用户登录信息
+            userLoginService.batchDeleteUserLoginService(ids);
+            // 批量删除用户基本信息
             List<String> idList = Arrays.asList(ids.split(","));
             return super.removeByIds(idList);
         }
@@ -137,11 +161,18 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
      */
     @Override
     public boolean conditionDeleteUserInfoService(UserInfoDeleteParam userInfoDeleteParam) throws Exception {
+        // 查询满足条件的id集合
         LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.select(UserInfoEntity::getId);
         if (userInfoDeleteParam != null) {
 
         }
-        return super.remove(lambdaQueryWrapper);
+        List<UserInfoEntity> userInfoEntityList = super.list(lambdaQueryWrapper);
+        List<Long> idList = userInfoEntityList.stream().map(userInfoEntity -> userInfoEntity.getId()).collect(Collectors.toList());
+        // 批量删除用户登录信息
+        userLoginService.removeByIds(idList);
+        // 批量删除用户基本信息
+        return super.removeByIds(idList);
     }
 
     /**
@@ -153,6 +184,12 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
      */
     @Override
     public boolean updateUserInfoService(UserInfoDto userInfoDto) throws Exception {
+        // 更新用户登录信息
+        UserLoginEntity userLoginEntity = new UserLoginEntity();
+        BeanUtils.copyProperties(userInfoDto, userLoginEntity);
+        userLoginService.updateById(userLoginEntity);
+
+        // 更新用户基本信息
         UserInfoEntity userInfoEntity = new UserInfoEntity();
         BeanUtils.copyProperties(userInfoDto, userInfoEntity);
         return super.updateById(userInfoEntity);

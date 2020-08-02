@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.tiankafei.user.bean.CheckExistsClient;
+import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.model.UserInfoDto;
-import org.tiankafei.user.param.UserInfoCheckParam;
 import org.tiankafei.user.param.UserInfoCountParam;
 import org.tiankafei.user.param.UserInfoDeleteParam;
 import org.tiankafei.user.param.UserInfoListParam;
@@ -42,10 +43,36 @@ public class UserInfoController extends BaseController {
     @Autowired
     private UserInfoService userInfoService;
 
-	@PostMapping("/check")
-	@ApiOperation(value = "校验 用户基本信息表 对象是否存在")
-	public ApiResult<Boolean> checkUserInfoControllerExists(@Valid @RequestBody UserInfoCheckParam userInfoCheckParam) throws Exception {
-		Boolean flag = userInfoService.checkUserInfoServiceExists(userInfoCheckParam);
+	@Autowired
+	private CheckExistsClient checkExistsClient;
+
+	/**
+	 * 校验 用户名 是否已经存在
+	 */
+	@GetMapping("/checkUsername/{username}")
+	@ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
+	public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
+		Boolean flag = checkExistsClient.checkAddSysUserExists(UserEnums.USER_NAME.getCode(), username);
+		return ApiResult.ok(flag);
+	}
+
+	/**
+	 * 校验  邮箱 是否已经存在
+	 */
+	@GetMapping("/checkEmail/{email}")
+	@ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
+	public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
+		Boolean flag = checkExistsClient.checkAddSysUserExists(UserEnums.EMAIL.getCode(), email);
+		return ApiResult.ok(flag);
+	}
+
+	/**
+	 * 校验 手机号码 是否已经存在
+	 */
+	@GetMapping("/checkTelephone/{telephone}")
+	@ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
+	public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
+		Boolean flag = checkExistsClient.checkAddSysUserExists(UserEnums.PHONE.getCode(), telephone);
 		return ApiResult.ok(flag);
 	}
 
