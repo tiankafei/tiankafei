@@ -142,7 +142,7 @@ public class ${table.controllerName} {
 	@ApiOperation(value = "获取 $!{table.comment} 对象全部列表")
 #end	
 	public ApiResult<List<${cfg.voClassName}>> get${table.controllerName}AllList() throws Exception {
-		List<${cfg.voClassName}> ${cfg.voConstName}List = ${cfg.serviceConstName}.get${table.serviceName}List(null);
+		List<${cfg.voClassName}> ${cfg.voConstName}List = ${cfg.serviceConstName}.get${table.serviceName}List(new ${cfg.listParamClassName}());
 		return ApiResult.ok(${cfg.voConstName}List);
 	}
 

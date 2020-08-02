@@ -100,7 +100,7 @@ public class DictInfoController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统数据字典表 对象全部列表")
     public ApiResult<List<DictInfoVo>> getDictInfoControllerAllList() throws Exception {
-        List<DictInfoVo> dictInfoVoList = dictInfoService.getDictInfoServiceList(null);
+        List<DictInfoVo> dictInfoVoList = dictInfoService.getDictInfoServiceList(new DictInfoListParam());
         return ApiResult.ok(dictInfoVoList);
     }
 

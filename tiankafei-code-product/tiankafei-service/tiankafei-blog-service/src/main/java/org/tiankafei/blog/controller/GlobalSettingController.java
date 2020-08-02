@@ -100,7 +100,7 @@ public class GlobalSettingController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统的博客选项设置 对象全部列表")
     public ApiResult<List<GlobalSettingVo>> getGlobalSettingControllerAllList() throws Exception {
-        List<GlobalSettingVo> globalSettingVoList = globalSettingService.getGlobalSettingServiceList(null);
+        List<GlobalSettingVo> globalSettingVoList = globalSettingService.getGlobalSettingServiceList(new GlobalSettingListParam());
         return ApiResult.ok(globalSettingVoList);
     }
 

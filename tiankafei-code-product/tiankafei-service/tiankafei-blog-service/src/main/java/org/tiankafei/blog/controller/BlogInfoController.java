@@ -100,7 +100,7 @@ public class BlogInfoController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统的博客数据 对象全部列表")
     public ApiResult<List<BlogInfoVo>> getBlogInfoControllerAllList() throws Exception {
-        List<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServiceList(null);
+        List<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServiceList(new BlogInfoListParam());
         return ApiResult.ok(blogInfoVoList);
     }
 

@@ -100,7 +100,7 @@ public class UserRoleController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 用户拥有的角色关系表 对象全部列表")
     public ApiResult<List<UserRoleVo>> getUserRoleControllerAllList() throws Exception {
-        List<UserRoleVo> userRoleVoList = userRoleService.getUserRoleServiceList(null);
+        List<UserRoleVo> userRoleVoList = userRoleService.getUserRoleServiceList(new UserRoleListParam());
         return ApiResult.ok(userRoleVoList);
     }
 

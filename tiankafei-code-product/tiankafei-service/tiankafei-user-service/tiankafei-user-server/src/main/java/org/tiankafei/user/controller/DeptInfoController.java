@@ -100,7 +100,7 @@ public class DeptInfoController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统部门表信息 对象全部列表")
     public ApiResult<List<DeptInfoVo>> getDeptInfoControllerAllList() throws Exception {
-        List<DeptInfoVo> deptInfoVoList = deptInfoService.getDeptInfoServiceList(null);
+        List<DeptInfoVo> deptInfoVoList = deptInfoService.getDeptInfoServiceList(new DeptInfoListParam());
         return ApiResult.ok(deptInfoVoList);
     }
 

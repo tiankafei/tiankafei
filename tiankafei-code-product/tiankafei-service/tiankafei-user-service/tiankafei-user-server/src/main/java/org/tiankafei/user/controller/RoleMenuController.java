@@ -100,7 +100,7 @@ public class RoleMenuController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统角色对应的功能配置表 对象全部列表")
     public ApiResult<List<RoleMenuVo>> getRoleMenuControllerAllList() throws Exception {
-        List<RoleMenuVo> roleMenuVoList = roleMenuService.getRoleMenuServiceList(null);
+        List<RoleMenuVo> roleMenuVoList = roleMenuService.getRoleMenuServiceList(new RoleMenuListParam());
         return ApiResult.ok(roleMenuVoList);
     }
 

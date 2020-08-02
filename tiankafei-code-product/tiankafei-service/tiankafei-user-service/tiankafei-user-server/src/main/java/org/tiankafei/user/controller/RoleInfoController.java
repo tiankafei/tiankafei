@@ -100,7 +100,7 @@ public class RoleInfoController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 角色信息表 对象全部列表")
     public ApiResult<List<RoleInfoVo>> getRoleInfoControllerAllList() throws Exception {
-        List<RoleInfoVo> roleInfoVoList = roleInfoService.getRoleInfoServiceList(null);
+        List<RoleInfoVo> roleInfoVoList = roleInfoService.getRoleInfoServiceList(new RoleInfoListParam());
         return ApiResult.ok(roleInfoVoList);
     }
 

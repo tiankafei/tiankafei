@@ -100,7 +100,7 @@ public class DiaryInfoController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统的博客日记 对象全部列表")
     public ApiResult<List<DiaryInfoVo>> getDiaryInfoControllerAllList() throws Exception {
-        List<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServiceList(null);
+        List<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServiceList(new DiaryInfoListParam());
         return ApiResult.ok(diaryInfoVoList);
     }
 

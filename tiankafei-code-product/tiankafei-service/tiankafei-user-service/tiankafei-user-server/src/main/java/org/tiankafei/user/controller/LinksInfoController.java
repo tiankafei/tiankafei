@@ -100,7 +100,7 @@ public class LinksInfoController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统的友情链接 对象全部列表")
     public ApiResult<List<LinksInfoVo>> getLinksInfoControllerAllList() throws Exception {
-        List<LinksInfoVo> linksInfoVoList = linksInfoService.getLinksInfoServiceList(null);
+        List<LinksInfoVo> linksInfoVoList = linksInfoService.getLinksInfoServiceList(new LinksInfoListParam());
         return ApiResult.ok(linksInfoVoList);
     }
 

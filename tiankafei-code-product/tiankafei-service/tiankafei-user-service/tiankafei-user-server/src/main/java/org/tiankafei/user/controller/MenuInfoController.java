@@ -100,7 +100,7 @@ public class MenuInfoController extends BaseController {
     @GetMapping
     @ApiOperation(value = "获取 系统功能菜单信息表 对象全部列表")
     public ApiResult<List<MenuInfoVo>> getMenuInfoControllerAllList() throws Exception {
-        List<MenuInfoVo> menuInfoVoList = menuInfoService.getMenuInfoServiceList(null);
+        List<MenuInfoVo> menuInfoVoList = menuInfoService.getMenuInfoServiceList(new MenuInfoListParam());
         return ApiResult.ok(menuInfoVoList);
     }
 
