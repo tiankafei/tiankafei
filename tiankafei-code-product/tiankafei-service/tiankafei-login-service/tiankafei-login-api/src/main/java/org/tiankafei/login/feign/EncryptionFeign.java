@@ -18,13 +18,13 @@ public interface EncryptionFeign {
      */
     @GetMapping("/encryption")
     @ApiOperation(value = "加密", notes = "加密")
-    public ApiResult<String> encryption(@RequestParam(value = "str") String str) throws Exception ;
+    ApiResult<String> encryption(@RequestParam(value = "str") String str) throws Exception ;
 
     /**
      * 生成token
      */
     @GetMapping("/token")
     @ApiOperation(value = "生成token", notes = "生成token")
-    public ApiResult<String> token(@RequestParam(value = "str") String str) throws Exception ;
+    ApiResult<String> token(@RequestParam(value = "str") String str) throws Exception ;
 
 }

@@ -1,98 +1,78 @@
 package org.tiankafei.user.feign;
 
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
+import javax.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.tiankafei.user.param.DictInfoPageParam;
+import org.tiankafei.user.param.DictInfoCheckParam;
+import org.tiankafei.user.param.DictInfoCountParam;
+import org.tiankafei.user.param.DictInfoDeleteParam;
 import org.tiankafei.user.param.DictInfoListParam;
+import org.tiankafei.user.param.DictInfoPageParam;
 import org.tiankafei.user.vo.DictInfoVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.param.IdsParam;
 import org.tiankafei.web.common.vo.Paging;
 
-import javax.validation.Valid;
-import java.util.List;
-
 /**
  * @author tiankafei
  * @since 1.0
  */
-@FeignClient(value = "user-service", contextId = "sysDictInfo", path = "/sysDictInfo")
+@FeignClient(value = "user-service", contextId = "sysDictInfo", path = "/user/dict-info-entity")
 public interface DictInfoFeign {
 
-    /**
-     * 校验 系统数据字典表 是否已经存在
-     */
     @PostMapping("/check")
-    @ApiOperation(value = "校验 系统数据字典表 是否已经存在", notes = "校验 系统数据字典表 是否已经存在")
-    public ApiResult<Boolean> checkSysDictInfoExists(@Valid @RequestBody DictInfoListParam dictInfoListParam) throws Exception;
+    @ApiOperation(value = "校验 系统数据字典表 对象是否存在")
+    ApiResult<Boolean> checkDictInfoControllerExists(@Valid @RequestBody DictInfoCheckParam dictInfoCheckParam) throws Exception;
 
-    /**
-     * 添加 系统数据字典表 对象
-     */
-    @PostMapping("/add")
-    @ApiOperation(value = "添加 系统数据字典表 对象", notes = "添加 系统数据字典表")
-    public ApiResult<String> addSysDictInfo(@Valid @RequestBody DictInfoVo dictInfoVo) throws Exception;
+    @PostMapping
+    @ApiOperation(value = "添加 系统数据字典表")
+    ApiResult<Long> addDictInfoController(@Valid @RequestBody DictInfoVo dictInfoVo) throws Exception;
 
-    /**
-     * 修改 系统数据字典表 对象
-     */
-    @PutMapping("/update")
-    @ApiOperation(value = "修改 系统数据字典表 对象", notes = "修改 系统数据字典表")
-    public ApiResult<Boolean> updateSysDictInfo(@Valid @RequestBody DictInfoVo dictInfoVo) throws Exception;
+    @PostMapping("/batch")
+    @ApiOperation(value = "批量添加 系统数据字典表")
+    ApiResult<List<Long>> batchAddDictInfoController(@Valid @RequestBody List<DictInfoVo> dictInfoVoList) throws Exception;
 
-    /**
-     * 启用 系统数据字典表 对象
-     */
-    @GetMapping("/enable/{id}")
-    @ApiOperation(value = "启用 系统数据字典表 对象", notes = "启用 系统数据字典表 对象")
-    public ApiResult<Boolean> enable(@PathVariable String id) throws Exception;
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除 系统数据字典表")
+    ApiResult<Boolean> deleteDictInfoController(@PathVariable(value = "id") String id) throws Exception;
 
-    /**
-     * 禁用 系统数据字典表 对象
-     */
-    @PostMapping("/disable/{id}")
-    @ApiOperation(value = "禁用 系统数据字典表 对象", notes = "禁用 系统数据字典表 对象")
-    public ApiResult<Boolean> disable(@PathVariable String id) throws Exception;
+    @DeleteMapping("/batch")
+    @ApiOperation(value = "批量删除 系统数据字典表")
+    ApiResult<Boolean> batchDeleteDictInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception;
 
-    /**
-     * 删除 系统数据字典表 对象
-     */
-    @DeleteMapping("/delete")
-    @ApiOperation(value = "删除 系统数据字典表 对象", notes = "删除 系统数据字典表")
-    public ApiResult<Boolean> deleteSysDictInfo(@Valid @RequestBody IdsParam idsParam) throws Exception;
+    @DeleteMapping("/condition")
+    @ApiOperation(value = "条件删除 系统数据字典表")
+    ApiResult<Boolean> conditionDeleteDictInfoController(@Valid @RequestBody DictInfoDeleteParam dictInfoDeleteParam) throws Exception;
 
-    /**
-     * 获取 系统数据字典表 对象详情
-     */
-    @GetMapping("/info/{id}")
-    @ApiOperation(value = "获取 系统数据字典表 对象详情", notes = "获取 系统数据字典表 对象详情")
-    public ApiResult<DictInfoVo> getSysDictInfo(@PathVariable("id") String id) throws Exception;
+    @PatchMapping
+    @ApiOperation(value = "更新 系统数据字典表")
+    ApiResult<Boolean> updateDictInfoController(@Valid @RequestBody DictInfoVo dictInfoVo) throws Exception;
 
-    /**
-     * 获取 系统数据字典表 分页列表
-     */
-    @PostMapping("/pageList")
-    @ApiOperation(value = "获取 系统数据字典表 分页列表", notes = "获取 系统数据字典表 分页列表")
-    public ApiResult<Paging<DictInfoVo>> getSysDictInfoPageList(@Valid @RequestBody DictInfoPageParam dictInfoPageParam) throws Exception;
+    @GetMapping("/{id}")
+    @ApiOperation(value = "获取 系统数据字典表 对象")
+    ApiResult<DictInfoVo> getDictInfoController(@PathVariable(value = "id") String id) throws Exception;
 
-    /**
-     * 获取 系统数据字典表 列表
-     */
+    @GetMapping
+    @ApiOperation(value = "获取 系统数据字典表 对象全部列表")
+    ApiResult<List<DictInfoVo>> getDictInfoControllerAllList() throws Exception;
+
     @PostMapping("/list")
-    @ApiOperation(value = "获取 系统数据字典表 列表", notes = "获取 系统数据字典表 列表")
-    public ApiResult<List<DictInfoVo>> getSysDictInfoList(@Valid @RequestBody DictInfoListParam dictInfoListParam) throws Exception;
+    @ApiOperation(value = "获取 系统数据字典表 对象列表")
+    ApiResult<List<DictInfoVo>> getDictInfoControllerList(@Valid @RequestBody DictInfoListParam dictInfoListParam) throws Exception;
 
-    /**
-     * 计算 系统数据字典表 总记录数
-     */
+    @PostMapping("/pageList")
+    @ApiOperation(value = "获取 系统数据字典表 分页对象列表")
+    ApiResult<Paging<DictInfoVo>> getDictInfoControllerPageList(@Valid @RequestBody DictInfoPageParam dictInfoPageParam) throws Exception;
+
     @PostMapping("/count")
-    @ApiOperation(value = "计算 系统数据字典表 总记录数", notes = "计算 系统数据字典表 总记录数")
-    public ApiResult<Integer> countSysDictInfo(@Valid @RequestBody DictInfoListParam dictInfoListParam) throws Exception;
+    @ApiOperation(value = "求 系统数据字典表 对象的记录数")
+    ApiResult<Integer> countDictInfoController(@Valid @RequestBody DictInfoCountParam dictInfoCountParam) throws Exception;
 
 }
