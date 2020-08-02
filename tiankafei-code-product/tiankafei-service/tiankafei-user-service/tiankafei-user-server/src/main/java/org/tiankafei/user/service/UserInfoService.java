@@ -23,6 +23,30 @@ import org.tiankafei.web.common.vo.Paging;
 public interface UserInfoService extends BaseService<UserInfoEntity> {
 
     /**
+     * 校验 用户名 是否已经存在
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    Boolean checkUsernameExists(String username) throws Exception ;
+
+    /**
+     * 校验  邮箱 是否已经存在
+     * @param email
+     * @return
+     * @throws Exception
+     */
+    Boolean checkEmailExists(String email) throws Exception ;
+
+    /**
+     * 校验 手机号码 是否已经存在
+     * @param telephone
+     * @return
+     * @throws Exception
+     */
+    Boolean checkTelephoneExists(String telephone) throws Exception ;
+
+    /**
      * 校验 用户基本信息表 是否已经存在
      *
      * @param userInfoCheckParam

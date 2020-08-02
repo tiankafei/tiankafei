@@ -41,6 +41,27 @@ public class UserLoginController extends BaseController {
     @Autowired
     private UserLoginService userLoginService;
 
+    @GetMapping("/checkUsername/{username}")
+    @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
+    public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
+        Boolean flag = userLoginService.checkUsernameExists(username);
+        return ApiResult.ok(flag);
+    }
+
+    @GetMapping("/checkEmail/{email}")
+    @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
+    public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
+        Boolean flag = userLoginService.checkEmailExists(email);
+        return ApiResult.ok(flag);
+    }
+
+    @GetMapping("/checkTelephone/{telephone}")
+    @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
+    public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
+        Boolean flag = userLoginService.checkTelephoneExists(telephone);
+        return ApiResult.ok(flag);
+    }
+
     @PostMapping("/check")
     @ApiOperation(value = "校验 用户登录信息表 对象是否存在")
     public ApiResult<Boolean> checkUserLoginControllerExists(@Valid @RequestBody UserLoginCheckParam userLoginCheckParam) throws Exception {

@@ -14,7 +14,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.UserLoginEntity;
+import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.mapper.UserLoginMapper;
 import org.tiankafei.user.param.UserLoginCheckParam;
 import org.tiankafei.user.param.UserLoginCountParam;
@@ -40,6 +42,41 @@ public class UserLoginServiceImpl extends BaseServiceImpl<UserLoginMapper, UserL
     @Autowired
     private UserLoginMapper userLoginMapper;
 
+    @Autowired
+    private CheckExistsClient checkExistsClient;
+
+    /**
+     * 校验 用户名 是否已经存在
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Boolean checkUsernameExists(String username) throws Exception {
+        return checkExistsClient.checkAddSysUserExists(UserEnums.USER_NAME.getCode(), username);
+    }
+
+    /**
+     * 校验  邮箱 是否已经存在
+     * @param email
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Boolean checkEmailExists(String email) throws Exception {
+        return checkExistsClient.checkAddSysUserExists(UserEnums.EMAIL.getCode(), email);
+    }
+
+    /**
+     * 校验 手机号码 是否已经存在
+     * @param telephone
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Boolean checkTelephoneExists(String telephone) throws Exception {
+        return checkExistsClient.checkAddSysUserExists(UserEnums.PHONE.getCode(), telephone);
+    }
 
     /**
      * 校验 用户登录信息表 是否已经存在
