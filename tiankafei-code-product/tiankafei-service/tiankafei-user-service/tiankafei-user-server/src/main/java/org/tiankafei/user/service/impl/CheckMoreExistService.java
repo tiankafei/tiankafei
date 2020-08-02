@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.service.CheckExistService;
-import org.tiankafei.user.service.SysUserLoginService;
+import org.tiankafei.user.service.UserLoginService;
 import org.tiankafei.web.common.exception.UserException;
 
 @Service
 public class CheckMoreExistService implements CheckExistService {
 
     @Autowired
-    private SysUserLoginService userLoginService;
+    private UserLoginService userLoginService;
 
     /**
      * 验证新增时用户帐号是否存在

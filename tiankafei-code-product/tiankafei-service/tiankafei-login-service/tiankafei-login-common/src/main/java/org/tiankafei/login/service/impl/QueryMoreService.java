@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.login.mapper.LoginMapper;
 import org.tiankafei.login.service.QueryUserService;
 import org.tiankafei.user.enums.UserEnums;
-import org.tiankafei.user.vo.SysUserLoginQueryVo;
+import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 @Service
@@ -15,9 +15,9 @@ public class QueryMoreService implements QueryUserService {
     private LoginMapper loginMapper;
 
     @Override
-    public SysUserLoginQueryVo login(String keywords) throws LoginException {
-        SysUserLoginQueryVo sysUserLoginQueryVo = loginMapper.queryUserLoginFromMore(keywords);
-        return sysUserLoginQueryVo;
+    public UserLoginVo login(String keywords) throws LoginException {
+        UserLoginVo userLoginVo = loginMapper.queryUserLoginFromMore(keywords);
+        return userLoginVo;
     }
 
     @Override

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.login.service.QueryUserService;
-import org.tiankafei.user.vo.SysUserLoginQueryVo;
+import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.bean.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.LoginException;
 
@@ -38,7 +38,7 @@ public class QueryUserClient implements InitializingBean {
      * @return
      * @throws LoginException
      */
-    public SysUserLoginQueryVo login(int userFlag, String keywords) throws LoginException {
+    public UserLoginVo login(int userFlag, String keywords) throws LoginException {
         // 登录时，先加密然后从数据库取数
         return userExistsServiceMap.get(userFlag).login(keywords);
     }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tiankafei.login.mapper.LoginMapper">
 
-    <resultMap id="userInfoMap" type="org.tiankafei.user.vo.SysUserInfoQueryVo">
+    <resultMap id="userInfoMap" type="org.tiankafei.user.vo.UserInfoVo">
         <id property="id" column="user_info_id"/>
         <result property="username" column="username"/>
         <result property="nickname" column="nickname"/>
@@ -22,7 +22,7 @@
         <collection property="userRoleList" resultMap="userRoleMap" notNullColumn="user_role_id"/>
     </resultMap>
 
-    <resultMap id="userLoginMap" type="org.tiankafei.user.vo.SysUserLoginQueryVo">
+    <resultMap id="userLoginMap" type="org.tiankafei.user.vo.UserLoginVo">
         <id property="id" column="user_login_id"/>
         <result property="username" column="username"/>
         <result property="email" column="email"/>
@@ -33,7 +33,7 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <resultMap id="userRoleMap" type="org.tiankafei.user.vo.SysUserRoleQueryVo">
+    <resultMap id="userRoleMap" type="org.tiankafei.user.vo.UserRoleVo">
         <id property="id" column="user_role_id"/>
         <result property="userId" column="user_id"/>
         <result property="roleId" column="role_id"/>
@@ -45,7 +45,7 @@
         <association property="roleInfoQueryVo" resultMap="roleInfoMap" notNullColumn="role_info_id"/>
     </resultMap>
 
-    <resultMap id="roleInfoMap" type="org.tiankafei.user.vo.SysRoleInfoQueryVo">
+    <resultMap id="roleInfoMap" type="org.tiankafei.user.vo.RoleInfoVo">
         <id property="id" column="role_info_id"/>
         <result property="roleCode" column="role_code"/>
         <result property="roleName" column="role_name"/>
@@ -59,14 +59,14 @@
         <collection property="roleMenuList" resultMap="roleMenuMap" notNullColumn="role_menu_id"/>
     </resultMap>
 
-    <resultMap id="roleMenuMap" type="org.tiankafei.user.vo.SysRoleMenuQueryVo">
+    <resultMap id="roleMenuMap" type="org.tiankafei.user.vo.RoleMenuVo">
         <id property="id" column="role_menu_id"/>
         <result property="roleId" column="role_id"/>
         <result property="menuId" column="menu_id"/>
         <association property="menuInfoQueryVo" resultMap="menuInfoMap" notNullColumn="menu_info_id"/>
     </resultMap>
 
-    <resultMap id="menuInfoMap" type="org.tiankafei.user.vo.SysMenuInfoQueryVo">
+    <resultMap id="menuInfoMap" type="org.tiankafei.user.vo.MenuInfoVo">
         <id property="id" column="menu_info_id"/>
         <result property="menuCode" column="menu_code"/>
         <result property="menuName" column="menu_name"/>

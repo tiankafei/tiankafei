@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.user.mapper.DeptInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="org.tiankafei.user.vo.DeptInfoVo">
+        <id column="id" property="id"/>
+        <result column="department_code" property="departmentCode"/>
+        <result column="department_name" property="departmentName"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="level" property="level"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_Column_List">
+        id, department_code, department_name, parent_id, serial_number, level, description, create_time, update_time, create_user_id, update_user_id
+    </sql>
+
+    <!-- 根据主键获取 系统部门表信息 对象 -->
+    <select id="getSysDepartmentById" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"/>
+        from sys_department where id = #{id}
+    </select>
+
+    <!-- 分页查询 系统部门表信息 对象集合 -->
+    <select id="getSysDepartmentPageList" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"/>
+        from sys_department
+    </select>
+
+    <!-- 查询 系统部门表信息 对象集合 -->
+    <select id="getSysDepartmentList" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"/>
+        from sys_department
+    </select>
+
+</mapper>

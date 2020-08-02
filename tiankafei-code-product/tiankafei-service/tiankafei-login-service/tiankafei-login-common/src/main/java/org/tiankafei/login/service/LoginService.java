@@ -2,7 +2,7 @@ package org.tiankafei.login.service;
 
 import org.tiankafei.login.model.LoginResultDto;
 import org.tiankafei.user.param.LoginParamVo;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**
@@ -26,7 +26,7 @@ public interface LoginService {
      * @return
      * @throws Exception
      */
-    SysUserInfoQueryVo getUserInfo(String token) throws Exception;
+    UserInfoVo getUserInfo(String token) throws Exception;
 
     /**
      * 注销

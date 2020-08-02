@@ -3,6 +3,7 @@ package org.tiankafei.user.controller;
 import cn.hutool.core.util.IdUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -14,8 +15,6 @@ import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.properties.UserProperties;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import javax.annotation.Resource;
 
 /**
  * @author tiankafei

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.tiankafei.cache.CacheManagerRepository;
 import org.tiankafei.cache.CacheQueryRepository;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.config.TokenConfig;
 import org.tiankafei.web.common.exception.LoginException;
 
@@ -51,7 +51,7 @@ public class UserInfoCache {
      * @return
      */
     public Long getUserId(String token) {
-        SysUserInfoQueryVo userInfo = getUserInfo(token);
+        UserInfoVo userInfo = getUserInfo(token);
         if (userInfo != null) {
             return userInfo.getId();
         }
@@ -74,7 +74,7 @@ public class UserInfoCache {
      * @return
      */
     public String getUserNickname(String token) {
-        SysUserInfoQueryVo userInfo = getUserInfo(token);
+        UserInfoVo userInfo = getUserInfo(token);
         if (userInfo != null) {
             return userInfo.getNickname();
         }
@@ -86,7 +86,7 @@ public class UserInfoCache {
      *
      * @return
      */
-    public SysUserInfoQueryVo getUserInfo() {
+    public UserInfoVo getUserInfo() {
         return getUserInfo(tokenConfig.getToken());
     }
 
@@ -96,11 +96,11 @@ public class UserInfoCache {
      * @param token
      * @return
      */
-    public SysUserInfoQueryVo getUserInfo(String token) {
+    public UserInfoVo getUserInfo(String token) {
         String sha1 = cacheQueryRepository.<String>getCacheObject(token);
         if (StringUtils.isNotBlank(sha1)) {
             if (!UserCacheEnums.CACHE_NULL_VALUE.getCode().equals(sha1)) {
-                SysUserInfoQueryVo userInfoQueryVo = cacheQueryRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
+                UserInfoVo userInfoQueryVo = cacheQueryRepository.<UserInfoVo>getCacheObject(sha1);
                 if (userInfoQueryVo != null) {
                     // 每调用一次该方法，就延长一次时间
                     setUserInfoExtendTime(userInfoQueryVo, token);
@@ -121,7 +121,7 @@ public class UserInfoCache {
      * @return
      * @throws LoginException
      */
-    public SysUserInfoQueryVo getUserInfo(String keywords, String password) throws LoginException {
+    public UserInfoVo getUserInfo(String keywords, String password) throws LoginException {
         String sha1 = cacheQueryRepository.<String>getCacheObject(keywords);
         if (StringUtils.isNotBlank(sha1)) {
             // 该用户名输入过
@@ -129,7 +129,7 @@ public class UserInfoCache {
                 // 该用户名不存在时，在缓存中放置一个空值
                 throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
             } else {
-                SysUserInfoQueryVo userInfoQueryVo = cacheQueryRepository.<SysUserInfoQueryVo>getCacheObject(sha1);
+                UserInfoVo userInfoQueryVo = cacheQueryRepository.<UserInfoVo>getCacheObject(sha1);
                 if (userInfoQueryVo != null) {
                     String cachePassword = userInfoQueryVo.getUserLoginQueryVo().getPassword();
                     // 密码加密后和缓存中的密码进行校验
@@ -162,7 +162,7 @@ public class UserInfoCache {
      * @param userInfoQueryVo
      * @param token
      */
-    public void setUserInfo(SysUserInfoQueryVo userInfoQueryVo, String token) {
+    public void setUserInfo(UserInfoVo userInfoQueryVo, String token) {
         String username = userInfoQueryVo.getUsername();
         String email = userInfoQueryVo.getEmail();
         String telephone = userInfoQueryVo.getTelephone();
@@ -199,7 +199,7 @@ public class UserInfoCache {
      *
      * @param userInfoQueryVo
      */
-    private void setUserInfoExtendTime(SysUserInfoQueryVo userInfoQueryVo, String token) {
+    private void setUserInfoExtendTime(UserInfoVo userInfoQueryVo, String token) {
         String username = userInfoQueryVo.getUsername();
         String email = userInfoQueryVo.getEmail();
         String telephone = userInfoQueryVo.getTelephone();

@@ -4,17 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tiankafei.user.entity.SysUserLoginEntity;
+import org.tiankafei.user.entity.UserLoginEntity;
 import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.service.CheckExistService;
-import org.tiankafei.user.service.SysUserLoginService;
+import org.tiankafei.user.service.UserLoginService;
 import org.tiankafei.web.common.exception.UserException;
 
 @Service
 public class CheckEmailExistService implements CheckExistService {
 
     @Autowired
-    private SysUserLoginService userLoginService;
+    private UserLoginService userLoginService;
 
     /**
      * 验证新增时邮箱是否存在
@@ -28,8 +28,8 @@ public class CheckEmailExistService implements CheckExistService {
         if (StringUtils.isBlank(keywords)) {
             return Boolean.FALSE;
         }
-        LambdaQueryWrapper<SysUserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(SysUserLoginEntity::getEmail, keywords);
+        LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(UserLoginEntity::getEmail, keywords);
 
         boolean exists = userLoginService.count(lambdaQueryWrapper) > 0;
         if (exists) {

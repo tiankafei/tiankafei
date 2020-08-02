@@ -1,0 +1,123 @@
+package org.tiankafei.user.controller;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import java.util.List;
+import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.tiankafei.user.param.RoleInfoListParam;
+import org.tiankafei.user.param.RoleInfoPageParam;
+import org.tiankafei.user.service.RoleInfoService;
+import org.tiankafei.user.vo.RoleInfoVo;
+import org.tiankafei.web.common.api.ApiResult;
+import org.tiankafei.web.common.controller.BaseController;
+import org.tiankafei.web.common.param.IdsParam;
+import org.tiankafei.web.common.vo.Paging;
+
+/**
+ * <pre>
+ * 角色信息表 前端控制器
+ * </pre>
+ *
+ * @author tiankafei
+ * @since 1.0
+ */
+@Slf4j
+@RestController
+@RequestMapping("/sysRoleInfo")
+@Api(value = "角色信息表 API", tags = "角色信息表 功能维护")
+public class RoleInfoController extends BaseController {
+
+    @Autowired
+    private RoleInfoService roleInfoService;
+
+    /**
+     * 校验 角色信息表 是否已经存在
+     */
+    @PostMapping("/check")
+    @ApiOperation(value = "校验 角色信息表 是否已经存在", notes = "校验 角色信息表 是否已经存在")
+    public ApiResult<Boolean> checkSysRoleInfoExists(@Valid @RequestBody RoleInfoListParam roleInfoListParam) throws Exception {
+        Boolean flag = roleInfoService.checkSysRoleInfoExists(roleInfoListParam);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 添加 角色信息表 对象
+     */
+    @PostMapping("/add")
+    @ApiOperation(value = "添加 角色信息表 对象", notes = "添加 角色信息表")
+    public ApiResult<String> addSysRoleInfo(@Valid @RequestBody RoleInfoVo roleInfoVo) throws Exception {
+        Object id = roleInfoService.addSysRoleInfo(roleInfoVo);
+        return ApiResult.ok(id);
+    }
+
+    /**
+     * 修改 角色信息表 对象
+     */
+    @PutMapping("/update")
+    @ApiOperation(value = "修改 角色信息表 对象", notes = "修改 角色信息表")
+    public ApiResult<Boolean> updateSysRoleInfo(@Valid @RequestBody RoleInfoVo roleInfoVo) throws Exception {
+        boolean flag = roleInfoService.updateSysRoleInfo(roleInfoVo);
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 删除 角色信息表 对象
+     */
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "删除 角色信息表 对象", notes = "删除 角色信息表")
+    public ApiResult<Boolean> deleteSysRoleInfo(@Valid @RequestBody IdsParam idsParam) throws Exception {
+        boolean flag = roleInfoService.deleteSysRoleInfo(idsParam.getIds());
+        return ApiResult.ok(flag);
+    }
+
+    /**
+     * 获取 角色信息表 对象详情
+     */
+    @GetMapping("/info/{id}")
+    @ApiOperation(value = "获取 角色信息表 对象详情", notes = "获取 角色信息表 对象详情")
+    public ApiResult<RoleInfoVo> getSysRoleInfo(@PathVariable("id") String id) throws Exception {
+        RoleInfoVo roleInfoVo = roleInfoService.getSysRoleInfoById(id);
+        return ApiResult.ok(roleInfoVo);
+    }
+
+    /**
+     * 获取 角色信息表 分页列表
+     */
+    @PostMapping("/pageList")
+    @ApiOperation(value = "获取 角色信息表 分页列表", notes = "获取 角色信息表 分页列表")
+    public ApiResult<Paging<RoleInfoVo>> getSysRoleInfoPageList(@Valid @RequestBody RoleInfoPageParam roleInfoPageParam) throws Exception {
+        Paging<RoleInfoVo> paging = roleInfoService.getSysRoleInfoPageList(roleInfoPageParam);
+        return ApiResult.ok(paging);
+    }
+
+    /**
+     * 获取 角色信息表 列表
+     */
+    @PostMapping("/list")
+    @ApiOperation(value = "获取 角色信息表 列表", notes = "获取 角色信息表 列表")
+    public ApiResult<List<RoleInfoVo>> getSysRoleInfoList(@Valid @RequestBody RoleInfoListParam roleInfoListParam) throws Exception {
+        List<RoleInfoVo> paging = roleInfoService.getSysRoleInfoList(roleInfoListParam);
+        return ApiResult.ok(paging);
+    }
+
+    /**
+     * 计算 角色信息表 总记录数
+     */
+    @PostMapping("/count")
+    @ApiOperation(value = "计算 角色信息表 总记录数", notes = "计算 角色信息表 总记录数")
+    public ApiResult<Integer> countSysRoleInfo(@Valid @RequestBody RoleInfoListParam roleInfoListParam) throws Exception {
+        int count = roleInfoService.countSysRoleInfo(roleInfoListParam);
+        return ApiResult.ok(count);
+    }
+
+}

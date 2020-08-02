@@ -15,10 +15,10 @@ import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.enums.UserStatusEnums;
 import org.tiankafei.user.param.LoginParamVo;
-import org.tiankafei.user.vo.SysMenuInfoQueryVo;
-import org.tiankafei.user.vo.SysRoleInfoQueryVo;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
-import org.tiankafei.user.vo.SysUserLoginQueryVo;
+import org.tiankafei.user.vo.MenuInfoVo;
+import org.tiankafei.user.vo.RoleInfoVo;
+import org.tiankafei.user.vo.UserInfoVo;
+import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
 
@@ -86,14 +86,14 @@ public class LoginServiceImpl implements LoginService {
         checkDataValid(loginParamVo);
 
         // 不存在的用户名，会放进缓存中，仅允许查询一次数据库，避免缓存穿透的问题
-        SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(keywords, password);
+        UserInfoVo userInfo = userInfoCache.getUserInfo(keywords, password);
 //        if (userInfo != null) {
 //            String token = SecureUtil.md5(JSONUtil.toJsonStr(userInfo));
 //            return token;
 //        }
 
         // 根据用户名查询用户对象
-        SysUserLoginQueryVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords);
+        UserLoginVo userLoginQueryVo = queryUserClient.login(loginParamVo.getLoginType(), keywords);
         if (userLoginQueryVo != null) {
             // TODO 密码规则修改 验证密码是否正确
             String inputPassword = encryptionService.encryption(loginParamVo.getPassword());
@@ -115,7 +115,7 @@ public class LoginServiceImpl implements LoginService {
             Long userId = userLoginQueryVo.getId();
             try {
                 // 获取用户、角色、功能的所有数据
-                SysUserInfoQueryVo userInfoQueryVo = getSysUserInfoQueryVo(userId);
+                UserInfoVo userInfoQueryVo = getSysUserInfoQueryVo(userId);
                 // TODO 生成token，暂时使用md5的方式对对象进行摘要
                 String token = encryptionService.token(JSONUtil.toJsonStr(userInfoQueryVo));
                 // 存放缓存
@@ -134,8 +134,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public SysUserInfoQueryVo getUserInfo(String token) throws Exception {
-        SysUserInfoQueryVo userInfo = userInfoCache.getUserInfo(token);
+    public UserInfoVo getUserInfo(String token) throws Exception {
+        UserInfoVo userInfo = userInfoCache.getUserInfo(token);
         return userInfo;
     }
 
@@ -189,31 +189,31 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
-    private SysUserInfoQueryVo getSysUserInfoQueryVo(Long userId) {
-        SysUserInfoQueryVo userInfoQueryVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
+    private UserInfoVo getSysUserInfoQueryVo(Long userId) {
+        UserInfoVo userInfoQueryVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
         // 设置给当前用户分配的角色集合
-        List<SysRoleInfoQueryVo> roleInfoList = userInfoQueryVo.getUserRoleList().stream().map(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo()).collect(Collectors.toList());
+        List<RoleInfoVo> roleInfoList = userInfoQueryVo.getUserRoleList().stream().map(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo()).collect(Collectors.toList());
         userInfoQueryVo.setRoleInfoList(roleInfoList);
 
         // 获取去重的功能清单集合
-        Set<SysMenuInfoQueryVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream().flatMap(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo().getRoleMenuList().stream()).map(sysRoleMenuQueryVo -> sysRoleMenuQueryVo.getMenuInfoQueryVo()).collect(Collectors.toSet());
+        Set<MenuInfoVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream().flatMap(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo().getRoleMenuList().stream()).map(sysRoleMenuQueryVo -> sysRoleMenuQueryVo.getMenuInfoQueryVo()).collect(Collectors.toSet());
         // 找出所有的非跟节点
-        Map<Integer, List<SysMenuInfoQueryVo>> menuInfoListMap = menuInfoSet.stream().filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() != null).collect(Collectors.groupingBy(SysMenuInfoQueryVo::getParentId));
+        Map<Integer, List<MenuInfoVo>> menuInfoListMap = menuInfoSet.stream().filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() != null).collect(Collectors.groupingBy(MenuInfoVo::getParentId));
 
         // 找出根节点，并根据id找出所有的子节点，并从小到大排序
-        List<SysMenuInfoQueryVo> rootMenuInfoList = menuInfoSet.stream()
+        List<MenuInfoVo> rootMenuInfoList = menuInfoSet.stream()
                 .map(sysMenuInfoQueryVo -> {
                     Integer id = sysMenuInfoQueryVo.getId();
                     if (menuInfoListMap.containsKey(id)) {
-                        List<SysMenuInfoQueryVo> menuInfoList = menuInfoListMap.get(id);
+                        List<MenuInfoVo> menuInfoList = menuInfoListMap.get(id);
                         // 排序
-                        List<SysMenuInfoQueryVo> sortedMenuInfoList = menuInfoList.stream().sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber)).collect(Collectors.toList());
+                        List<MenuInfoVo> sortedMenuInfoList = menuInfoList.stream().sorted(Comparator.comparing(MenuInfoVo::getSerialNumber)).collect(Collectors.toList());
                         sysMenuInfoQueryVo.setMenuInfoList(sortedMenuInfoList);
                     }
                     return sysMenuInfoQueryVo;
                 })
                 .filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() == null)
-                .sorted(Comparator.comparing(SysMenuInfoQueryVo::getSerialNumber))
+                .sorted(Comparator.comparing(MenuInfoVo::getSerialNumber))
                 .collect(Collectors.toList());
         // 设置当前用户对应的功能菜单的权限集合
         userInfoQueryVo.setMenuInfoList(rootMenuInfoList);

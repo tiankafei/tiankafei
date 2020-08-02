@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.login.model.LoginResultDto;
 import org.tiankafei.login.service.LoginService;
 import org.tiankafei.user.param.LoginParamVo;
-import org.tiankafei.user.vo.SysUserInfoQueryVo;
+import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 
@@ -45,9 +45,9 @@ public class LoginController extends BaseController {
      */
     @GetMapping("/getUserInfo")
     @ApiOperation(value = "获取用户详细信息，以及角色和权限", notes = "获取用户详细信息，以及角色和权限")
-    public ApiResult<SysUserInfoQueryVo> getUserInfo() throws Exception {
-        SysUserInfoQueryVo sysUserInfoQueryVo = loginService.getUserInfo(getToken());
-        return ApiResult.ok(sysUserInfoQueryVo);
+    public ApiResult<UserInfoVo> getUserInfo() throws Exception {
+        UserInfoVo userInfoVo = loginService.getUserInfo(getToken());
+        return ApiResult.ok(userInfoVo);
     }
 
     /**

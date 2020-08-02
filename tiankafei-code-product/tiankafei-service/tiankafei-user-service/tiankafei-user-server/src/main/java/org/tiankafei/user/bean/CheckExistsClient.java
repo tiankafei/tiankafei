@@ -1,15 +1,14 @@
 package org.tiankafei.user.bean;
 
 import com.google.common.collect.Maps;
+import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tiankafei.user.service.CheckExistService;
 import org.tiankafei.web.common.bean.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.UserException;
-
-import java.util.Map;
-import java.util.Set;
 
 @Component
 public class CheckExistsClient implements InitializingBean {
