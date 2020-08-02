@@ -66,7 +66,7 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
      * @throws Exception
      */
     @Override
-    public Object addBlogInfoService(BlogInfoVo blogInfoVo) throws Exception {
+    public Long addBlogInfoService(BlogInfoVo blogInfoVo) throws Exception {
         BlogInfoEntity blogInfoEntity = new BlogInfoEntity();
         BeanUtils.copyProperties(blogInfoVo, blogInfoEntity);
         super.save(blogInfoEntity);
@@ -81,7 +81,7 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
      * @throws Exception
      */
     @Override
-    public List<Object> batchAddBlogInfoService(List<BlogInfoVo> blogInfoVoList) throws Exception {
+    public List<Long> batchAddBlogInfoService(List<BlogInfoVo> blogInfoVoList) throws Exception {
         if (CollectionUtils.isNotEmpty(blogInfoVoList)) {
             List<BlogInfoEntity> blogInfoEntityList = Lists.newArrayList();
             for (BlogInfoVo blogInfoVo : blogInfoVoList) {

@@ -78,8 +78,8 @@ public class ${table.controllerName} {
 #if(${swagger2})
 	@ApiOperation(value = "添加 $!{table.comment}")
 #end	
-	public ApiResult<Object> add${table.controllerName}(@Valid @RequestBody ${cfg.voClassName} ${cfg.voConstName}) throws Exception {
-		Object id = ${cfg.serviceConstName}.add${table.serviceName}(${cfg.voConstName});
+	public ApiResult<${cfg.keyColumnType}> add${table.controllerName}(@Valid @RequestBody ${cfg.voClassName} ${cfg.voConstName}) throws Exception {
+	${cfg.keyColumnType} id = ${cfg.serviceConstName}.add${table.serviceName}(${cfg.voConstName});
 		return ApiResult.ok(id);
 	}
 	
@@ -87,8 +87,8 @@ public class ${table.controllerName} {
 #if(${swagger2})
 	@ApiOperation(value = "批量添加 $!{table.comment}")
 #end	
-	public ApiResult<List<Object>> batchAdd${table.controllerName}(@Valid @RequestBody List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception {
-		List<Object> idList = ${cfg.serviceConstName}.batchAdd${table.serviceName}(${cfg.voConstName}List);
+	public ApiResult<List<${cfg.keyColumnType}>> batchAdd${table.controllerName}(@Valid @RequestBody List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception {
+		List<${cfg.keyColumnType}> idList = ${cfg.serviceConstName}.batchAdd${table.serviceName}(${cfg.voConstName}List);
 		return ApiResult.ok(idList);
 	}
 	

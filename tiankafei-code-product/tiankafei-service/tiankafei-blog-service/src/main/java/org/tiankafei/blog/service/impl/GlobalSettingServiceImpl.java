@@ -66,7 +66,7 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
      * @throws Exception
      */
     @Override
-    public Object addGlobalSettingService(GlobalSettingVo globalSettingVo) throws Exception {
+    public Long addGlobalSettingService(GlobalSettingVo globalSettingVo) throws Exception {
         GlobalSettingEntity globalSettingEntity = new GlobalSettingEntity();
         BeanUtils.copyProperties(globalSettingVo, globalSettingEntity);
         super.save(globalSettingEntity);
@@ -81,7 +81,7 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
      * @throws Exception
      */
     @Override
-    public List<Object> batchAddGlobalSettingService(List<GlobalSettingVo> globalSettingVoList) throws Exception {
+    public List<Long> batchAddGlobalSettingService(List<GlobalSettingVo> globalSettingVoList) throws Exception {
         if (CollectionUtils.isNotEmpty(globalSettingVoList)) {
             List<GlobalSettingEntity> globalSettingEntityList = Lists.newArrayList();
             for (GlobalSettingVo globalSettingVo : globalSettingVoList) {

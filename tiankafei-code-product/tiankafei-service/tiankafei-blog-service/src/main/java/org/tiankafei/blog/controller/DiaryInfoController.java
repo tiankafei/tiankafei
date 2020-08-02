@@ -50,15 +50,15 @@ public class DiaryInfoController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "添加 系统的博客日记")
-    public ApiResult<Object> addDiaryInfoController(@Valid @RequestBody DiaryInfoVo diaryInfoVo) throws Exception {
-        Object id = diaryInfoService.addDiaryInfoService(diaryInfoVo);
+    public ApiResult<Long> addDiaryInfoController(@Valid @RequestBody DiaryInfoVo diaryInfoVo) throws Exception {
+        Long id = diaryInfoService.addDiaryInfoService(diaryInfoVo);
         return ApiResult.ok(id);
     }
 
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的博客日记")
-    public ApiResult<List<Object>> batchAddDiaryInfoController(@Valid @RequestBody List<DiaryInfoVo> diaryInfoVoList) throws Exception {
-        List<Object> idList = diaryInfoService.batchAddDiaryInfoService(diaryInfoVoList);
+    public ApiResult<List<Long>> batchAddDiaryInfoController(@Valid @RequestBody List<DiaryInfoVo> diaryInfoVoList) throws Exception {
+        List<Long> idList = diaryInfoService.batchAddDiaryInfoService(diaryInfoVoList);
         return ApiResult.ok(idList);
     }
 

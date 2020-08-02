@@ -50,15 +50,15 @@ public class GlobalSettingController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "添加 系统的博客选项设置")
-    public ApiResult<Object> addGlobalSettingController(@Valid @RequestBody GlobalSettingVo globalSettingVo) throws Exception {
-        Object id = globalSettingService.addGlobalSettingService(globalSettingVo);
+    public ApiResult<Long> addGlobalSettingController(@Valid @RequestBody GlobalSettingVo globalSettingVo) throws Exception {
+        Long id = globalSettingService.addGlobalSettingService(globalSettingVo);
         return ApiResult.ok(id);
     }
 
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的博客选项设置")
-    public ApiResult<List<Object>> batchAddGlobalSettingController(@Valid @RequestBody List<GlobalSettingVo> globalSettingVoList) throws Exception {
-        List<Object> idList = globalSettingService.batchAddGlobalSettingService(globalSettingVoList);
+    public ApiResult<List<Long>> batchAddGlobalSettingController(@Valid @RequestBody List<GlobalSettingVo> globalSettingVoList) throws Exception {
+        List<Long> idList = globalSettingService.batchAddGlobalSettingService(globalSettingVoList);
         return ApiResult.ok(idList);
     }
 

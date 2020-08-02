@@ -38,7 +38,7 @@ public interface DiaryInfoService extends BaseService<DiaryInfoEntity> {
      * @return
      * @throws Exception
      */
-    Object addDiaryInfoService(DiaryInfoVo diaryInfoVo) throws Exception;
+    Long addDiaryInfoService(DiaryInfoVo diaryInfoVo) throws Exception;
 
     /**
      * 批量保存 系统的博客日记
@@ -47,7 +47,7 @@ public interface DiaryInfoService extends BaseService<DiaryInfoEntity> {
      * @return
      * @throws Exception
      */
-    List<Object> batchAddDiaryInfoService(List<DiaryInfoVo> diaryInfoVoList) throws Exception;
+    List<Long> batchAddDiaryInfoService(List<DiaryInfoVo> diaryInfoVoList) throws Exception;
 
     /**
      * 删除 系统的博客日记

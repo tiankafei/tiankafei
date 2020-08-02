@@ -71,7 +71,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public Object add${table.serviceName}(${cfg.voClassName} ${cfg.voConstName}) throws Exception {
+    public ${cfg.keyColumnType} add${table.serviceName}(${cfg.voClassName} ${cfg.voConstName}) throws Exception {
 		${entity} ${cfg.entityConstName} = new ${entity}();
 		BeanUtils.copyProperties(${cfg.voConstName}, ${cfg.entityConstName});
 		super.save(${cfg.entityConstName});
@@ -86,7 +86,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @throws Exception
      */
 	@Override
-    public List<Object> batchAdd${table.serviceName}(List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception {
+    public List<${cfg.keyColumnType}> batchAdd${table.serviceName}(List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception {
 		if (CollectionUtils.isNotEmpty(${cfg.voConstName}List)) {
 			List<${entity}> ${cfg.entityConstName}List = Lists.newArrayList();
 			for (${cfg.voClassName} ${cfg.voConstName} : ${cfg.voConstName}List) {

@@ -38,7 +38,7 @@ public interface GlobalSettingService extends BaseService<GlobalSettingEntity> {
      * @return
      * @throws Exception
      */
-    Object addGlobalSettingService(GlobalSettingVo globalSettingVo) throws Exception;
+    Long addGlobalSettingService(GlobalSettingVo globalSettingVo) throws Exception;
 
     /**
      * 批量保存 系统的博客选项设置
@@ -47,7 +47,7 @@ public interface GlobalSettingService extends BaseService<GlobalSettingEntity> {
      * @return
      * @throws Exception
      */
-    List<Object> batchAddGlobalSettingService(List<GlobalSettingVo> globalSettingVoList) throws Exception;
+    List<Long> batchAddGlobalSettingService(List<GlobalSettingVo> globalSettingVoList) throws Exception;
 
     /**
      * 删除 系统的博客选项设置

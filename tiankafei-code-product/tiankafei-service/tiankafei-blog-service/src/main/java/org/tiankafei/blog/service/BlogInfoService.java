@@ -38,7 +38,7 @@ public interface BlogInfoService extends BaseService<BlogInfoEntity> {
      * @return
      * @throws Exception
      */
-    Object addBlogInfoService(BlogInfoVo blogInfoVo) throws Exception;
+    Long addBlogInfoService(BlogInfoVo blogInfoVo) throws Exception;
 
     /**
      * 批量保存 系统的博客数据
@@ -47,7 +47,7 @@ public interface BlogInfoService extends BaseService<BlogInfoEntity> {
      * @return
      * @throws Exception
      */
-    List<Object> batchAddBlogInfoService(List<BlogInfoVo> blogInfoVoList) throws Exception;
+    List<Long> batchAddBlogInfoService(List<BlogInfoVo> blogInfoVoList) throws Exception;
 
     /**
      * 删除 系统的博客数据

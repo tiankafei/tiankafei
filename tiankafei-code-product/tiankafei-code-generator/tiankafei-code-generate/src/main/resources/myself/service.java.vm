@@ -41,7 +41,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    Object add${table.serviceName}(${cfg.voClassName} ${cfg.voConstName}) throws Exception;
+    ${cfg.keyColumnType} add${table.serviceName}(${cfg.voClassName} ${cfg.voConstName}) throws Exception;
 
     /**
      * 批量保存 $!{table.comment}
@@ -50,7 +50,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    List<Object> batchAdd${table.serviceName}(List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception;
+    List<${cfg.keyColumnType}> batchAdd${table.serviceName}(List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception;
 
     /**
      * 删除 $!{table.comment}

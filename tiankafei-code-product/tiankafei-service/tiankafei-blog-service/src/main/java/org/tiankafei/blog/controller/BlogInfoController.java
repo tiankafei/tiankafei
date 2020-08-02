@@ -50,15 +50,15 @@ public class BlogInfoController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "添加 系统的博客数据")
-    public ApiResult<Object> addBlogInfoController(@Valid @RequestBody BlogInfoVo blogInfoVo) throws Exception {
-        Object id = blogInfoService.addBlogInfoService(blogInfoVo);
+    public ApiResult<Long> addBlogInfoController(@Valid @RequestBody BlogInfoVo blogInfoVo) throws Exception {
+        Long id = blogInfoService.addBlogInfoService(blogInfoVo);
         return ApiResult.ok(id);
     }
 
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的博客数据")
-    public ApiResult<List<Object>> batchAddBlogInfoController(@Valid @RequestBody List<BlogInfoVo> blogInfoVoList) throws Exception {
-        List<Object> idList = blogInfoService.batchAddBlogInfoService(blogInfoVoList);
+    public ApiResult<List<Long>> batchAddBlogInfoController(@Valid @RequestBody List<BlogInfoVo> blogInfoVoList) throws Exception {
+        List<Long> idList = blogInfoService.batchAddBlogInfoService(blogInfoVoList);
         return ApiResult.ok(idList);
     }
 

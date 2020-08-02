@@ -66,7 +66,7 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
      * @throws Exception
      */
     @Override
-    public Object addDiaryInfoService(DiaryInfoVo diaryInfoVo) throws Exception {
+    public Long addDiaryInfoService(DiaryInfoVo diaryInfoVo) throws Exception {
         DiaryInfoEntity diaryInfoEntity = new DiaryInfoEntity();
         BeanUtils.copyProperties(diaryInfoVo, diaryInfoEntity);
         super.save(diaryInfoEntity);
@@ -81,7 +81,7 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
      * @throws Exception
      */
     @Override
-    public List<Object> batchAddDiaryInfoService(List<DiaryInfoVo> diaryInfoVoList) throws Exception {
+    public List<Long> batchAddDiaryInfoService(List<DiaryInfoVo> diaryInfoVoList) throws Exception {
         if (CollectionUtils.isNotEmpty(diaryInfoVoList)) {
             List<DiaryInfoEntity> diaryInfoEntityList = Lists.newArrayList();
             for (DiaryInfoVo diaryInfoVo : diaryInfoVoList) {
