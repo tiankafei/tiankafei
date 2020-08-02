@@ -7,6 +7,9 @@ import ${pkg};
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 #if(${entityLombokModel})
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -65,6 +68,15 @@ public class ${entity} implements Serializable {
      * ${field.comment}
      */
   #end
+#if(${field.type.indexOf("(")}!=-1)
+#set($start=${field.type.indexOf("(")} + 1)
+#set($end=${field.type.length()} - 1)
+#set($length=${field.type.substring($start, $end)})
+#if($length == 1 && ${field.columnType} == 'BOOLEAN')
+#else
+    @Size(max = ${length}, message = "${field.comment}长度不能超过 ${length} ！")
+#end
+#end
 #end
 #if(${field.keyFlag})
 ## 主键
@@ -93,6 +105,14 @@ public class ${entity} implements Serializable {
 ## 逻辑删除注解
 #if(${logicDeleteFieldName}==${field.name})
     @TableLogic
+#end
+## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
+#if(${field.customMap.null} == 'NO' && !${field.keyFlag})
+#if(${field.propertyType} == 'String')
+    @NotBlank(message = "${field.comment}不能为空")
+#else
+    @NotNull(message = "${field.comment}不能为空")
+#end
 #end
     private ${field.propertyType} ${field.propertyName};
 #end

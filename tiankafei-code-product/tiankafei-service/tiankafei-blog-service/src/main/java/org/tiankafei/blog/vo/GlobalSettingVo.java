@@ -3,6 +3,7 @@ package org.tiankafei.blog.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,12 +29,15 @@ public class GlobalSettingVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "选项名称")
+    @Size(max = 100, message = "选项名称长度不能超过 100 ！")
     private String setName;
 
     @ApiModelProperty(value = "选项值")
+    @Size(max = 100, message = "选项值长度不能超过 100 ！")
     private String setValue;
 
     @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
     private String remark;
 
     @ApiModelProperty(value = "描述")

@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,6 +39,7 @@ public class DiaryInfoEntity extends Model<DiaryInfoEntity> {
     private Long id;
 
     @ApiModelProperty(value = "标题")
+    @Size(max = 100, message = "标题长度不能超过 100 ！")
     @TableField("title")
     private String title;
 
@@ -46,10 +48,12 @@ public class DiaryInfoEntity extends Model<DiaryInfoEntity> {
     private String content;
 
     @ApiModelProperty(value = "自定义访问路径的名称，默认使用id")
+    @Size(max = 30, message = "自定义访问路径的名称，默认使用id长度不能超过 30 ！")
     @TableField("custom_name")
     private String customName;
 
     @ApiModelProperty(value = "密码保护")
+    @Size(max = 64, message = "密码保护长度不能超过 64 ！")
     @TableField("password")
     private String password;
 

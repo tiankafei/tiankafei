@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,14 +39,17 @@ public class GlobalSettingEntity extends Model<GlobalSettingEntity> {
     private Long id;
 
     @ApiModelProperty(value = "选项名称")
+    @Size(max = 100, message = "选项名称长度不能超过 100 ！")
     @TableField("set_name")
     private String setName;
 
     @ApiModelProperty(value = "选项值")
+    @Size(max = 100, message = "选项值长度不能超过 100 ！")
     @TableField("set_value")
     private String setValue;
 
     @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
     @TableField("remark")
     private String remark;
 
