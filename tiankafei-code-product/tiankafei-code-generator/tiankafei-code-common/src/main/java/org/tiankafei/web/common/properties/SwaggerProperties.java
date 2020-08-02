@@ -16,7 +16,7 @@ public class SwaggerProperties {
     /**
      * 是否开启文档
      */
-    private Boolean enable;
+    private Boolean enable = false;
 
     /**
      * 标题
