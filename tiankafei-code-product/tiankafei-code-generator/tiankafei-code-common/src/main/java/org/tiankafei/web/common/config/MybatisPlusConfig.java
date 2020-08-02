@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.google.common.collect.Maps;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.tiankafei.web.common.config.impl.DynamicTableNameHandler;
+import org.tiankafei.web.common.properties.DynamicTableProperties;
 
 /**
  * @author tiankafei
@@ -17,6 +20,9 @@ import org.tiankafei.web.common.config.impl.DynamicTableNameHandler;
  **/
 @Configuration
 public class MybatisPlusConfig {
+
+    @Autowired
+    private DynamicTableProperties dynamicTableProperties;
 
     /**
      * mybatis-plus分页插件
@@ -28,8 +34,11 @@ public class MybatisPlusConfig {
         DynamicTableNameParser dynamicTableNameParser = new DynamicTableNameParser();
         HashMap<String, ITableNameHandler> tableNameHandlerHashMap = Maps.newHashMap();
         //note note note 动态表名在这里配置
-        tableNameHandlerHashMap.put("sys_dict_table", new DynamicTableNameHandler());
-        dynamicTableNameParser.setTableNameHandlerMap(tableNameHandlerHashMap);
+        List<String> tableNames = dynamicTableProperties.getTableNames();
+        for (String tableName : tableNames) {
+            tableNameHandlerHashMap.put(tableName, new DynamicTableNameHandler());
+            dynamicTableNameParser.setTableNameHandlerMap(tableNameHandlerHashMap);
+        }
 
         paginationInterceptor.setSqlParserList(Collections.singletonList(dynamicTableNameParser));
         return paginationInterceptor;
