@@ -99,7 +99,7 @@ public class UserInfoVo extends BaseQueryVo {
      * 部门id
      */
     @ApiModelProperty(value = "部门id")
-    private Integer departmentId;
+    private Integer deptId;
 
     /**
      * 创建时间

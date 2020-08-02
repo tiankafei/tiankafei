@@ -114,8 +114,8 @@ public class UserInfoEntity extends BaseEntity {
      * 部门id
      */
     @ApiModelProperty(value = "部门id")
-    @TableField(value = "department_id")
-    private Integer departmentId;
+    @TableField(value = "dept_id")
+    private Integer deptId;
 
     /**
      * 创建时间
