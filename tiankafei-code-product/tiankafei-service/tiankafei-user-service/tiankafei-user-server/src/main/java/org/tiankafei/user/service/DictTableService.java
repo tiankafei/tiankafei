@@ -52,20 +52,22 @@ public interface DictTableService extends BaseService<DictTableEntity> {
     /**
      * 删除 系统数据字典的数据表
      *
+     * @param dataTable
      * @param id
      * @return
      * @throws Exception
      */
-    boolean deleteDictTableService(String id) throws Exception;
+    boolean deleteDictTableService(String dataTable, String id) throws Exception;
 
     /**
      * 删除 系统数据字典的数据表
      *
+     * @param dataTable
      * @param ids
      * @return
      * @throws Exception
      */
-    boolean batchDeleteDictTableService(String ids) throws Exception;
+    boolean batchDeleteDictTableService(String dataTable, String ids) throws Exception;
 
     /**
      * 根据条件删除 系统数据字典的数据表
@@ -88,11 +90,12 @@ public interface DictTableService extends BaseService<DictTableEntity> {
     /**
      * 根据ID获取 系统数据字典的数据表 对象
      *
+     * @param dataTable
      * @param id
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableServiceById(Serializable id) throws Exception;
+    DictTableVo getDictTableServiceById(String dataTable, Serializable id) throws Exception;
 
     /**
      * 获取 系统数据字典的数据表 对象列表

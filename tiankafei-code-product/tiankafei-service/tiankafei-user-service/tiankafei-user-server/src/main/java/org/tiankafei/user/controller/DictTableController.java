@@ -2,6 +2,7 @@ package org.tiankafei.user.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.param.DictTableCheckParam;
 import org.tiankafei.user.param.DictTableCountParam;
@@ -22,7 +24,6 @@ import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictTableVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-import org.tiankafei.web.common.param.IdsParam;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
@@ -62,17 +63,19 @@ public class DictTableController extends BaseController {
         return ApiResult.ok(idList);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{dataTable}/{id}")
     @ApiOperation(value = "删除 系统数据字典的数据表")
-    public ApiResult<Boolean> deleteDictTableController(@PathVariable(value = "id") String id) throws Exception {
-        boolean flag = dictTableService.deleteDictTableService(id);
+    public ApiResult<Boolean> deleteDictTableController(@PathVariable(value = "dataTable") String dataTable, @PathVariable(value = "id") String id) throws Exception {
+        boolean flag = dictTableService.deleteDictTableService(dataTable, id);
         return ApiResult.ok(flag);
     }
 
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统数据字典的数据表")
-    public ApiResult<Boolean> batchDeleteDictTableController(@Valid @RequestBody IdsParam idsParam) throws Exception {
-        boolean flag = dictTableService.batchDeleteDictTableService(idsParam.getIds());
+    public ApiResult<Boolean> batchDeleteDictTableController(
+            @ApiParam(name = "dataTable", value = "字典数据表") @RequestParam("dataTable") String dataTable,
+            @ApiParam(name = "ids", value = "要删除的字典数据的代码，多个用逗号分隔") @RequestParam("ids") String ids) throws Exception {
+        boolean flag = dictTableService.batchDeleteDictTableService(dataTable, ids);
         return ApiResult.ok(flag);
     }
 
@@ -90,17 +93,19 @@ public class DictTableController extends BaseController {
         return ApiResult.ok(flag);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{dataTable}/{id}")
     @ApiOperation(value = "获取 系统数据字典的数据表 对象")
-    public ApiResult<DictTableVo> getDictTableController(@PathVariable(value = "id") String id) throws Exception {
-        DictTableVo dictTableVo = dictTableService.getDictTableServiceById(id);
+    public ApiResult<DictTableVo> getDictTableController(@PathVariable(value = "dataTable") String dataTable, @PathVariable(value = "id") String id) throws Exception {
+        DictTableVo dictTableVo = dictTableService.getDictTableServiceById(dataTable, id);
         return ApiResult.ok(dictTableVo);
     }
 
-    @GetMapping
+    @GetMapping("/all/{dataTable}")
     @ApiOperation(value = "获取 系统数据字典的数据表 对象全部列表")
-    public ApiResult<List<DictTableVo>> getDictTableControllerAllList() throws Exception {
-        List<DictTableVo> dictTableVoList = dictTableService.getDictTableServiceList(new DictTableListParam());
+    public ApiResult<List<DictTableVo>> getDictTableControllerAllList(@PathVariable(value = "dataTable") String dataTable) throws Exception {
+        DictTableListParam dictTableListParam = new DictTableListParam();
+        dictTableListParam.setDataTable(dataTable);
+        List<DictTableVo> dictTableVoList = dictTableService.getDictTableServiceList(dictTableListParam);
         return ApiResult.ok(dictTableVoList);
     }
 

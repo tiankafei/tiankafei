@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -27,4 +29,10 @@ public class DictTableListParam implements Serializable {
 
     @ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
     private Integer deleteMark = 0;
+
+    @ApiModelProperty(value = "数据表名")
+    @Size(max = 30, message = "数据表名长度不能超过 30 ！")
+    @NotBlank(message = "数据表名不能为空！")
+    private String dataTable;
+
 }

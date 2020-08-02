@@ -24,6 +24,7 @@ import org.tiankafei.user.param.DictTablePageParam;
 import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictTableVo;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.web.common.utils.DynamicTableNameUtil;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
@@ -50,6 +51,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public boolean checkDictTableServiceExists(DictTableCheckParam dictTableCheckParam) throws Exception {
+        setDynamicTableName(dictTableCheckParam.getDataTable());
+
         LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (dictTableCheckParam != null) {
 
@@ -67,6 +70,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public Long addDictTableService(DictTableVo dictTableVo) throws Exception {
+        setDynamicTableName(dictTableVo.getDataTable());
+
         DictTableEntity dictTableEntity = new DictTableEntity();
         BeanUtils.copyProperties(dictTableVo, dictTableEntity);
         super.save(dictTableEntity);
@@ -84,6 +89,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     public List<Long> batchAddDictTableService(List<DictTableVo> dictTableVoList) throws Exception {
         if (CollectionUtils.isNotEmpty(dictTableVoList)) {
             List<DictTableEntity> dictTableEntityList = Lists.newArrayList();
+            setDynamicTableName(dictTableVoList.get(0).getDataTable());
+
             for (DictTableVo dictTableVo : dictTableVoList) {
                 DictTableEntity dictTableEntity = new DictTableEntity();
                 BeanUtils.copyProperties(dictTableVo, dictTableEntity);
@@ -99,12 +106,15 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     /**
      * 删除 系统数据字典的数据表
      *
+     * @param dataTable
      * @param id
      * @return
      * @throws Exception
      */
     @Override
-    public boolean deleteDictTableService(String id) throws Exception {
+    public boolean deleteDictTableService(String dataTable, String id) throws Exception {
+        setDynamicTableName(dataTable);
+
         if (StringUtils.isNotBlank(id)) {
             return super.removeById(id);
         }
@@ -114,12 +124,15 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     /**
      * 删除 系统数据字典的数据表
      *
+     * @param dataTable
      * @param ids
      * @return
      * @throws Exception
      */
     @Override
-    public boolean batchDeleteDictTableService(String ids) throws Exception {
+    public boolean batchDeleteDictTableService(String dataTable, String ids) throws Exception {
+        setDynamicTableName(dataTable);
+
         if (StringUtils.isNotBlank(ids)) {
             List<String> idList = Arrays.asList(ids.split(","));
             return super.removeByIds(idList);
@@ -136,6 +149,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public boolean conditionDeleteDictTableService(DictTableDeleteParam dictTableDeleteParam) throws Exception {
+        setDynamicTableName(dictTableDeleteParam.getDataTable());
+
         LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (dictTableDeleteParam != null) {
 
@@ -152,6 +167,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public boolean updateDictTableService(DictTableVo dictTableVo) throws Exception {
+        setDynamicTableName(dictTableVo.getDataTable());
+
         DictTableEntity dictTableEntity = new DictTableEntity();
         BeanUtils.copyProperties(dictTableVo, dictTableEntity);
         return super.updateById(dictTableEntity);
@@ -160,12 +177,15 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     /**
      * 根据ID获取 系统数据字典的数据表 对象
      *
+     * @param dataTable
      * @param id
      * @return
      * @throws Exception
      */
     @Override
-    public DictTableVo getDictTableServiceById(Serializable id) throws Exception {
+    public DictTableVo getDictTableServiceById(String dataTable, Serializable id) throws Exception {
+        setDynamicTableName(dataTable);
+
         DictTableEntity dictTableEntity = super.getById(id);
         DictTableVo dictTableVo = new DictTableVo();
         BeanUtils.copyProperties(dictTableEntity, dictTableVo);
@@ -181,6 +201,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public List<DictTableVo> getDictTableServiceList(DictTableListParam dictTableListParam) throws Exception {
+        setDynamicTableName(dictTableListParam.getDataTable());
+
         return dictTableMapper.getDictTableServiceList(dictTableListParam);
     }
 
@@ -193,6 +215,9 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public Paging<DictTableVo> getDictTableServicePageList(DictTablePageParam dictTablePageParam) throws Exception {
+        String dataTable = dictTablePageParam.getDataTable();
+        setDynamicTableName(dataTable);
+
         Page page = setPageParam(dictTablePageParam, OrderItem.desc("create_time"));
         // 分页查询先查询主键id
         IPage<DictTableVo> iPage = dictTableMapper.getDictTableServicePageList(page, dictTablePageParam);
@@ -204,6 +229,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         if (CollectionUtils.isNotEmpty(idList)) {
             DictTableListParam dictTableListParam = new DictTableListParam();
             dictTableListParam.setIdList(idList);
+            dictTableListParam.setDataTable(dataTable);
             List<DictTableVo> dictTableVoList = this.getDictTableServiceList(dictTableListParam);
             paging.setRecords(dictTableVoList);
         }
@@ -219,6 +245,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public Integer countDictTableService(DictTableCountParam dictTableCountParam) throws Exception {
+        setDynamicTableName(dictTableCountParam.getDataTable());
+
         LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (dictTableCountParam != null) {
 
@@ -226,5 +254,13 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         return super.count(lambdaQueryWrapper);
     }
 
+    /**
+     * 设置动态表名
+     *
+     * @param dataTable
+     */
+    private void setDynamicTableName(String dataTable) {
+        DynamicTableNameUtil.setDynamicTableName(dataTable);
+    }
 
 }
