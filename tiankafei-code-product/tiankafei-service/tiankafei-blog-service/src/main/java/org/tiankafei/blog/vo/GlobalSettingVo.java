@@ -25,7 +25,7 @@ public class GlobalSettingVo extends BaseQueryVo {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键id")
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(value = "选项名称")
     private String setName;
