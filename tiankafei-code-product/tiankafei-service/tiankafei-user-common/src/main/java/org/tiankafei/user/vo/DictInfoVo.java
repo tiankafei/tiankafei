@@ -3,6 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,7 @@ public class DictInfoVo extends BaseQueryVo {
 
     @ApiModelProperty(value = "字典代码")
     @Size(max = 20, message = "字典代码长度不能超过 20 ！")
+    @NotBlank(message = "字典代码不能为空")
     private String dictCode;
 
     @ApiModelProperty(value = "字典名称")
