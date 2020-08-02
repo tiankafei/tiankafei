@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.user.entity.UserInfoEntity;
 import org.tiankafei.user.mapper.UserInfoMapper;
+import org.tiankafei.user.model.UserInfoDto;
 import org.tiankafei.user.param.UserInfoCheckParam;
 import org.tiankafei.user.param.UserInfoCountParam;
 import org.tiankafei.user.param.UserInfoDeleteParam;
@@ -61,14 +62,14 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     /**
      * 保存 用户基本信息表
      *
-     * @param userInfoVo
+     * @param userInfoDto
      * @return
      * @throws Exception
      */
     @Override
-    public Long addUserInfoService(UserInfoVo userInfoVo) throws Exception {
+    public Long addUserInfoService(UserInfoDto userInfoDto) throws Exception {
         UserInfoEntity userInfoEntity = new UserInfoEntity();
-        BeanUtils.copyProperties(userInfoVo, userInfoEntity);
+        BeanUtils.copyProperties(userInfoDto, userInfoEntity);
         super.save(userInfoEntity);
         return userInfoEntity.getId();
     }
@@ -76,17 +77,17 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     /**
      * 保存 用户基本信息表 集合
      *
-     * @param userInfoVoList
+     * @param userInfoDtoList
      * @return
      * @throws Exception
      */
     @Override
-    public List<Long> batchAddUserInfoService(List<UserInfoVo> userInfoVoList) throws Exception {
-        if (CollectionUtils.isNotEmpty(userInfoVoList)) {
+    public List<Long> batchAddUserInfoService(List<UserInfoDto> userInfoDtoList) throws Exception {
+        if (CollectionUtils.isNotEmpty(userInfoDtoList)) {
             List<UserInfoEntity> userInfoEntityList = Lists.newArrayList();
-            for (UserInfoVo userInfoVo : userInfoVoList) {
+            for (UserInfoDto userInfoDto : userInfoDtoList) {
                 UserInfoEntity userInfoEntity = new UserInfoEntity();
-                BeanUtils.copyProperties(userInfoVo, userInfoEntity);
+                BeanUtils.copyProperties(userInfoDto, userInfoEntity);
                 userInfoEntityList.add(userInfoEntity);
             }
             super.saveBatch(userInfoEntityList);
@@ -146,14 +147,14 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     /**
      * 修改 用户基本信息表
      *
-     * @param userInfoVo
+     * @param userInfoDto
      * @return
      * @throws Exception
      */
     @Override
-    public boolean updateUserInfoService(UserInfoVo userInfoVo) throws Exception {
+    public boolean updateUserInfoService(UserInfoDto userInfoDto) throws Exception {
         UserInfoEntity userInfoEntity = new UserInfoEntity();
-        BeanUtils.copyProperties(userInfoVo, userInfoEntity);
+        BeanUtils.copyProperties(userInfoDto, userInfoEntity);
         return super.updateById(userInfoEntity);
     }
 
