@@ -4,18 +4,18 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.entity.BaseEntity;
 
 /**
- * <pre>
+ * <p>
  * 系统角色对应的功能配置表
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
@@ -24,30 +24,33 @@ import org.tiankafei.web.common.entity.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_role_menu")
-@ApiModel(value = " 系统角色对应的功能配置表 实体对象", description = "系统角色对应的功能配置表")
-public class RoleMenuEntity extends BaseEntity {
+@ApiModel(value = "RoleMenuEntity 对象", description = "系统角色对应的功能配置表")
+public class RoleMenuEntity extends Model<RoleMenuEntity> {
 
-    /**
-     * 主键id
-     */
+    private static final long serialVersionUID = 1L;
+
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
-    /**
-     * 角色id
-     */
     @ApiModelProperty(value = "角色id")
-    @TableField(value = "role_id")
-    @NotNull(message = "角色id不能为空")
+    @TableField("role_id")
     private Integer roleId;
 
-    /**
-     * 菜单id
-     */
     @ApiModelProperty(value = "菜单id")
-    @TableField(value = "menu_id")
-    @NotNull(message = "菜单id不能为空")
+    @TableField("menu_id")
     private Integer menuId;
+
+
+    public static final String ID = "id";
+
+    public static final String ROLE_ID = "role_id";
+
+    public static final String MENU_ID = "menu_id";
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
 }

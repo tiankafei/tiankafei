@@ -129,13 +129,13 @@ public class UserInfoCache {
                 // 该用户名不存在时，在缓存中放置一个空值
                 throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
             } else {
-                UserInfoVo userInfoQueryVo = cacheQueryRepository.<UserInfoVo>getCacheObject(sha1);
-                if (userInfoQueryVo != null) {
-                    String cachePassword = userInfoQueryVo.getUserLoginQueryVo().getPassword();
+                UserInfoVo userInfoVo = cacheQueryRepository.<UserInfoVo>getCacheObject(sha1);
+                if (userInfoVo != null) {
+                    String cachePassword = userInfoVo.getUserLoginVo().getPassword();
                     // 密码加密后和缓存中的密码进行校验
                     if (cachePassword.equalsIgnoreCase(SecureUtil.md5(password))) {
                         // 比对密码是否匹配
-                        return userInfoQueryVo;
+                        return userInfoVo;
                     } else {
                         // 密码输入错误
                         throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());

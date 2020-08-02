@@ -190,35 +190,35 @@ public class LoginServiceImpl implements LoginService {
     }
 
     private UserInfoVo getSysUserInfoQueryVo(Long userId) {
-        UserInfoVo userInfoQueryVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
+        UserInfoVo userInfoVo = loginMapper.getSysUserAndRoleAndFeatureById(userId);
         // 设置给当前用户分配的角色集合
-        List<RoleInfoVo> roleInfoList = userInfoQueryVo.getUserRoleList().stream().map(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo()).collect(Collectors.toList());
-        userInfoQueryVo.setRoleInfoList(roleInfoList);
+        List<RoleInfoVo> roleInfoList = userInfoVo.getUserRoleList().stream().map(userRoleVo -> userRoleVo.getRoleInfoVo()).collect(Collectors.toList());
+        userInfoVo.setRoleInfoList(roleInfoList);
 
         // 获取去重的功能清单集合
-        Set<MenuInfoVo> menuInfoSet = userInfoQueryVo.getUserRoleList().stream().flatMap(sysUserRoleQueryVo -> sysUserRoleQueryVo.getRoleInfoQueryVo().getRoleMenuList().stream()).map(sysRoleMenuQueryVo -> sysRoleMenuQueryVo.getMenuInfoQueryVo()).collect(Collectors.toSet());
+        Set<MenuInfoVo> menuInfoSet = userInfoVo.getUserRoleList().stream().flatMap(userRoleVo -> userRoleVo.getRoleInfoVo().getRoleMenuList().stream()).map(roleMenuVo -> roleMenuVo.getMenuInfoVo()).collect(Collectors.toSet());
         // 找出所有的非跟节点
         Map<Integer, List<MenuInfoVo>> menuInfoListMap = menuInfoSet.stream().filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() != null).collect(Collectors.groupingBy(MenuInfoVo::getParentId));
 
         // 找出根节点，并根据id找出所有的子节点，并从小到大排序
         List<MenuInfoVo> rootMenuInfoList = menuInfoSet.stream()
-                .map(sysMenuInfoQueryVo -> {
-                    Integer id = sysMenuInfoQueryVo.getId();
+                .map(menuInfoVo -> {
+                    Long id = menuInfoVo.getId();
                     if (menuInfoListMap.containsKey(id)) {
                         List<MenuInfoVo> menuInfoList = menuInfoListMap.get(id);
                         // 排序
                         List<MenuInfoVo> sortedMenuInfoList = menuInfoList.stream().sorted(Comparator.comparing(MenuInfoVo::getSerialNumber)).collect(Collectors.toList());
-                        sysMenuInfoQueryVo.setMenuInfoList(sortedMenuInfoList);
+                        menuInfoVo.setMenuInfoList(sortedMenuInfoList);
                     }
-                    return sysMenuInfoQueryVo;
+                    return menuInfoVo;
                 })
                 .filter(sysMenuInfoQueryVo -> sysMenuInfoQueryVo.getParentId() == null)
                 .sorted(Comparator.comparing(MenuInfoVo::getSerialNumber))
                 .collect(Collectors.toList());
         // 设置当前用户对应的功能菜单的权限集合
-        userInfoQueryVo.setMenuInfoList(rootMenuInfoList);
+        userInfoVo.setMenuInfoList(rootMenuInfoList);
 
-        return userInfoQueryVo;
+        return userInfoVo;
     }
 
     /**

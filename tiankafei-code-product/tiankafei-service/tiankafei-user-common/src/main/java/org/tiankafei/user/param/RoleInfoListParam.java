@@ -1,13 +1,15 @@
 package org.tiankafei.user.param;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
  * <pre>
- * 角色信息表 查询参数对象
+ * 角色信息表 分页参数对象
  * </pre>
  *
  * @author tiankafei
@@ -15,8 +17,14 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "角色信息表 查询参数对象", description = "角色信息表查询参数")
+@ApiModel(value = "角色信息表 列表参数对象")
 public class RoleInfoListParam implements Serializable {
 
+    private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键id集合")
+    private List<Long> idList;
+
+    @ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
+    private Integer deleteMark = 0;
 }

@@ -4,16 +4,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.tiankafei.user.param.LinksInfoCheckParam;
+import org.tiankafei.user.param.LinksInfoCountParam;
+import org.tiankafei.user.param.LinksInfoDeleteParam;
 import org.tiankafei.user.param.LinksInfoListParam;
 import org.tiankafei.user.param.LinksInfoPageParam;
 import org.tiankafei.user.service.LinksInfoService;
@@ -24,100 +26,105 @@ import org.tiankafei.web.common.param.IdsParam;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
- * <pre>
+ * <p>
  * 系统的友情链接 前端控制器
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
  */
-@Slf4j
 @RestController
-@RequestMapping("/sysLinks")
-@Api(value = "系统的友情链接 API", tags = "系统的友情链接 功能维护")
+@RequestMapping("/user/links-info-entity")
+@Api(value = "系统的友情链接 API", tags = {"系统的友情链接"})
 public class LinksInfoController extends BaseController {
 
     @Autowired
     private LinksInfoService linksInfoService;
 
-    /**
-     * 校验 系统的友情链接 是否已经存在
-     */
     @PostMapping("/check")
-    @ApiOperation(value = "校验 系统的友情链接 是否已经存在", notes = "校验 系统的友情链接 是否已经存在")
-    public ApiResult<Boolean> checkSysLinksExists(@Valid @RequestBody LinksInfoListParam linksInfoListParam) throws Exception {
-        Boolean flag = linksInfoService.checkSysLinksExists(linksInfoListParam);
+    @ApiOperation(value = "校验 系统的友情链接 对象是否存在")
+    public ApiResult<Boolean> checkLinksInfoControllerExists(@Valid @RequestBody LinksInfoCheckParam linksInfoCheckParam) throws Exception {
+        Boolean flag = linksInfoService.checkLinksInfoServiceExists(linksInfoCheckParam);
         return ApiResult.ok(flag);
     }
 
-    /**
-     * 添加 系统的友情链接 对象
-     */
-    @PostMapping("/add")
-    @ApiOperation(value = "添加 系统的友情链接 对象", notes = "添加 系统的友情链接")
-    public ApiResult<String> addSysLinks(@Valid @RequestBody LinksInfoVo linksInfoVo) throws Exception {
-        Object id = linksInfoService.addSysLinks(linksInfoVo);
+    @PostMapping
+    @ApiOperation(value = "添加 系统的友情链接")
+    public ApiResult<Long> addLinksInfoController(@Valid @RequestBody LinksInfoVo linksInfoVo) throws Exception {
+        Long id = linksInfoService.addLinksInfoService(linksInfoVo);
         return ApiResult.ok(id);
     }
 
-    /**
-     * 修改 系统的友情链接 对象
-     */
-    @PutMapping("/update")
-    @ApiOperation(value = "修改 系统的友情链接 对象", notes = "修改 系统的友情链接")
-    public ApiResult<Boolean> updateSysLinks(@Valid @RequestBody LinksInfoVo linksInfoVo) throws Exception {
-        boolean flag = linksInfoService.updateSysLinks(linksInfoVo);
+    @PostMapping("/batch")
+    @ApiOperation(value = "批量添加 系统的友情链接")
+    public ApiResult<List<Long>> batchAddLinksInfoController(@Valid @RequestBody List<LinksInfoVo> linksInfoVoList) throws Exception {
+        List<Long> idList = linksInfoService.batchAddLinksInfoService(linksInfoVoList);
+        return ApiResult.ok(idList);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除 系统的友情链接")
+    public ApiResult<Boolean> deleteLinksInfoController(@PathVariable(value = "id") String id) throws Exception {
+        boolean flag = linksInfoService.deleteLinksInfoService(id);
         return ApiResult.ok(flag);
     }
 
-    /**
-     * 删除 系统的友情链接 对象
-     */
-    @DeleteMapping("/delete")
-    @ApiOperation(value = "删除 系统的友情链接 对象", notes = "删除 系统的友情链接")
-    public ApiResult<Boolean> deleteSysLinks(@Valid @RequestBody IdsParam idsParam) throws Exception {
-        boolean flag = linksInfoService.deleteSysLinks(idsParam.getIds());
+    @DeleteMapping("/batch")
+    @ApiOperation(value = "批量删除 系统的友情链接")
+    public ApiResult<Boolean> batchDeleteLinksInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception {
+        boolean flag = linksInfoService.batchDeleteLinksInfoService(idsParam.getIds());
         return ApiResult.ok(flag);
     }
 
-    /**
-     * 获取 系统的友情链接 对象详情
-     */
-    @GetMapping("/info/{id}")
-    @ApiOperation(value = "获取 系统的友情链接 对象详情", notes = "获取 系统的友情链接 对象详情")
-    public ApiResult<LinksInfoVo> getSysLinks(@PathVariable("id") String id) throws Exception {
-        LinksInfoVo linksInfoVo = linksInfoService.getSysLinksById(id);
+    @DeleteMapping("/condition")
+    @ApiOperation(value = "条件删除 系统的友情链接")
+    public ApiResult<Boolean> conditionDeleteLinksInfoController(@Valid @RequestBody LinksInfoDeleteParam linksInfoDeleteParam) throws Exception {
+        boolean flag = linksInfoService.conditionDeleteLinksInfoService(linksInfoDeleteParam);
+        return ApiResult.ok(flag);
+    }
+
+    @PatchMapping
+    @ApiOperation(value = "更新 系统的友情链接")
+    public ApiResult<Boolean> updateLinksInfoController(@Valid @RequestBody LinksInfoVo linksInfoVo) throws Exception {
+        boolean flag = linksInfoService.updateLinksInfoService(linksInfoVo);
+        return ApiResult.ok(flag);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "获取 系统的友情链接 对象")
+    public ApiResult<LinksInfoVo> getLinksInfoController(@PathVariable(value = "id") String id) throws Exception {
+        LinksInfoVo linksInfoVo = linksInfoService.getLinksInfoServiceById(id);
         return ApiResult.ok(linksInfoVo);
     }
 
-    /**
-     * 获取 系统的友情链接 分页列表
-     */
-    @PostMapping("/pageList")
-    @ApiOperation(value = "获取 系统的友情链接 分页列表", notes = "获取 系统的友情链接 分页列表")
-    public ApiResult<Paging<LinksInfoVo>> getSysLinksPageList(@Valid @RequestBody LinksInfoPageParam linksInfoPageParam) throws Exception {
-        Paging<LinksInfoVo> paging = linksInfoService.getSysLinksPageList(linksInfoPageParam);
-        return ApiResult.ok(paging);
+    @GetMapping
+    @ApiOperation(value = "获取 系统的友情链接 对象全部列表")
+    public ApiResult<List<LinksInfoVo>> getLinksInfoControllerAllList() throws Exception {
+        List<LinksInfoVo> linksInfoVoList = linksInfoService.getLinksInfoServiceList(null);
+        return ApiResult.ok(linksInfoVoList);
     }
 
-    /**
-     * 获取 系统的友情链接 列表
-     */
     @PostMapping("/list")
-    @ApiOperation(value = "获取 系统的友情链接 列表", notes = "获取 系统的友情链接 列表")
-    public ApiResult<List<LinksInfoVo>> getSysLinksList(@Valid @RequestBody LinksInfoListParam linksInfoListParam) throws Exception {
-        List<LinksInfoVo> paging = linksInfoService.getSysLinksList(linksInfoListParam);
-        return ApiResult.ok(paging);
+    @ApiOperation(value = "获取 系统的友情链接 对象列表")
+    public ApiResult<List<LinksInfoVo>> getLinksInfoControllerList(@Valid @RequestBody LinksInfoListParam linksInfoListParam) throws Exception {
+        List<LinksInfoVo> linksInfoVoList = linksInfoService.getLinksInfoServiceList(linksInfoListParam);
+        return ApiResult.ok(linksInfoVoList);
     }
 
-    /**
-     * 计算 系统的友情链接 总记录数
-     */
+    @PostMapping("/pageList")
+    @ApiOperation(value = "获取 系统的友情链接 分页对象列表")
+    public ApiResult<Paging<LinksInfoVo>> getLinksInfoControllerPageList(@Valid @RequestBody LinksInfoPageParam linksInfoPageParam) throws Exception {
+        Paging<LinksInfoVo> linksInfoVoList = linksInfoService.getLinksInfoServicePageList(linksInfoPageParam);
+        return ApiResult.ok(linksInfoVoList);
+    }
+
     @PostMapping("/count")
-    @ApiOperation(value = "计算 系统的友情链接 总记录数", notes = "计算 系统的友情链接 总记录数")
-    public ApiResult<Integer> countSysLinks(@Valid @RequestBody LinksInfoListParam linksInfoListParam) throws Exception {
-        int count = linksInfoService.countSysLinks(linksInfoListParam);
+    @ApiOperation(value = "求 系统的友情链接 对象的记录数")
+    public ApiResult<Integer> countLinksInfoController(@Valid @RequestBody LinksInfoCountParam linksInfoCountParam) throws Exception {
+        Integer count = linksInfoService.countLinksInfoService(linksInfoCountParam);
         return ApiResult.ok(count);
     }
 
+
 }
+

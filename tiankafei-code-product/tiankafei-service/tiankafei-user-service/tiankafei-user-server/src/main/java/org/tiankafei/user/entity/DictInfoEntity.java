@@ -4,21 +4,22 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
 import java.sql.Timestamp;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.entity.BaseEntity;
 
 /**
- * <pre>
+ * <p>
  * 系统数据字典表
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
@@ -27,90 +28,95 @@ import org.tiankafei.web.common.entity.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_dict_info")
-@ApiModel(value = " 系统数据字典表 实体对象", description = "系统数据字典表")
-public class DictInfoEntity extends BaseEntity {
+@ApiModel(value = "DictInfoEntity 对象", description = "系统数据字典表")
+public class DictInfoEntity extends Model<DictInfoEntity> {
 
-    /**
-     * 主键id
-     */
+    private static final long serialVersionUID = 1L;
+
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
-    /**
-     * 字典代码
-     */
     @ApiModelProperty(value = "字典代码")
-    @Size(max = 20, message = "字典代码长度不能超过 20 ！")
-    @TableField(value = "dict_code")
-    @NotBlank(message = "字典代码不能为空")
+    @TableField("dict_code")
     private String dictCode;
 
-    /**
-     * 字典名称
-     */
     @ApiModelProperty(value = "字典名称")
-    @Size(max = 100, message = "字典名称长度不能超过 100 ！")
-    @TableField(value = "dict_name")
-    @NotBlank(message = "字典名称不能为空")
+    @TableField("dict_name")
     private String dictName;
 
-    /**
-     * 状态：1启用，0停用
-     */
-    @ApiModelProperty(value = "状态：1启用，0停用")
-    @TableField(value = "status")
+    @ApiModelProperty(value = "状态：0设计中，1启用，2停用")
+    @TableField("status")
     private Boolean status;
 
-    /**
-     * 描述
-     */
     @ApiModelProperty(value = "描述")
-    @TableField(value = "description")
+    @TableField("description")
     private String description;
 
-    /**
-     * 备注
-     */
     @ApiModelProperty(value = "备注")
-    @Size(max = 60, message = "备注长度不能超过 60 ！")
-    @TableField(value = "remarks")
+    @TableField("remarks")
     private String remarks;
 
-    /**
-     * 数据表
-     */
     @ApiModelProperty(value = "数据表")
-    @Size(max = 30, message = "数据表长度不能超过 30 ！")
-    @TableField(value = "data_table")
+    @TableField("data_table")
     private String dataTable;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "乐观锁版本")
+    @TableField("version")
+    @Version
+    private Integer version;
+
+    @ApiModelProperty(value = "逻辑删除字段")
+    @TableField("delete_mark")
+    @TableLogic
+    private Integer deleteMark;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Timestamp createTime;
 
-    /**
-     * 修改时间
-     */
     @ApiModelProperty(value = "修改时间")
     @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Timestamp updateTime;
 
-    /**
-     * 创建用户ID
-     */
     @ApiModelProperty(value = "创建用户ID")
     @TableField(value = "create_user_id", fill = FieldFill.INSERT)
     private Long createUserId;
 
-    /**
-     * 修改用户ID
-     */
     @ApiModelProperty(value = "修改用户ID")
     @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
     private Long updateUserId;
+
+
+    public static final String ID = "id";
+
+    public static final String DICT_CODE = "dict_code";
+
+    public static final String DICT_NAME = "dict_name";
+
+    public static final String STATUS = "status";
+
+    public static final String DESCRIPTION = "description";
+
+    public static final String REMARKS = "remarks";
+
+    public static final String DATA_TABLE = "data_table";
+
+    public static final String VERSION = "version";
+
+    public static final String DELETE_MARK = "delete_mark";
+
+    public static final String CREATE_TIME = "create_time";
+
+    public static final String UPDATE_TIME = "update_time";
+
+    public static final String CREATE_USER_ID = "create_user_id";
+
+    public static final String UPDATE_USER_ID = "update_user_id";
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
 }

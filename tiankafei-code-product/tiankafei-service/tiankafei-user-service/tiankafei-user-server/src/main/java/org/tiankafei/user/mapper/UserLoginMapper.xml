@@ -3,41 +3,111 @@
 <mapper namespace="org.tiankafei.user.mapper.UserLoginMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="baseResultMap" type="org.tiankafei.user.vo.UserLoginVo">
+    <resultMap id="baseResultMap" type="org.tiankafei.user.entity.UserLoginEntity">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="email" property="email"/>
         <result column="telephone" property="telephone"/>
         <result column="password" property="password"/>
         <result column="status" property="status"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
         <result column="expiration_date" property="expirationDate"/>
-        <result column="create_time" property="createTime"/>
     </resultMap>
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="voResultMap" type="org.tiankafei.user.vo.UserLoginVo">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+        <result column="telephone" property="telephone"/>
+        <result column="password" property="password"/>
+        <result column="status" property="status"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="expiration_date" property="expirationDate"/>
+    </resultMap>
+
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, username, email, telephone, password, status, expiration_date, create_time
+        id, username, email, telephone, password, status, version, delete_mark, expiration_date
     </sql>
 
-    <!-- 根据主键获取 用户登录信息表 对象 -->
-    <select id="getSysUserLoginById" resultMap="baseResultMap">
-        select
-        <include refid="base_Column_List"/>
-        from sys_user_login where id = #{id}
+    <!-- 校验 用户登录信息表 是否已经存在 -->
+    <select id="checkUserLoginServiceExists" resultType="java.lang.Boolean">
+
     </select>
 
-    <!-- 分页查询 用户登录信息表 对象集合 -->
-    <select id="getSysUserLoginPageList" resultMap="baseResultMap">
+    <!-- 保存 用户登录信息表 -->
+    <select id="addUserLoginService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 批量保存 用户登录信息表 -->
+    <select id="batchAddUserLoginService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 删除 用户登录信息表 -->
+    <select id="deleteUserLoginService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 批量删除 用户登录信息表 -->
+    <select id="batchDeleteUserLoginService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据条件删除 用户登录信息表 -->
+    <select id="conditionDeleteUserLoginService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 修改 用户登录信息表 -->
+    <select id="updateUserLoginService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据ID获取 用户登录信息表 对象 -->
+    <select id="getUserLoginServiceById" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 用户登录信息表 对象列表 -->
+    <select id="getUserLoginServiceList" resultMap="voResultMap">
         select
         <include refid="base_Column_List"/>
         from sys_user_login
+        <where>
+            <if test="param.idList != null and param.idList.size != 0">
+                and id in
+                <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
+            </if>
+        </where>
     </select>
 
-    <!-- 查询 用户登录信息表 对象集合 -->
-    <select id="getSysUserLoginList" resultMap="baseResultMap">
+    <!-- 获取 用户登录信息表 分页对象列表 -->
+    <select id="getUserLoginServicePageList" resultMap="voResultMap">
         select
-        <include refid="base_Column_List"/>
+        id
         from sys_user_login
+        <where>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
+            </if>
+        </where>
+    </select>
+
+    <!-- 计算 用户登录信息表 总记录数 -->
+    <select id="countUserLoginService" resultType="java.lang.Integer">
+
     </select>
 
 </mapper>

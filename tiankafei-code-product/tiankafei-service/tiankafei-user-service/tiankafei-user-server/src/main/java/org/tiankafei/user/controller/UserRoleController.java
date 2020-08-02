@@ -4,16 +4,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.tiankafei.user.param.UserRoleCheckParam;
+import org.tiankafei.user.param.UserRoleCountParam;
+import org.tiankafei.user.param.UserRoleDeleteParam;
 import org.tiankafei.user.param.UserRoleListParam;
 import org.tiankafei.user.param.UserRolePageParam;
 import org.tiankafei.user.service.UserRoleService;
@@ -24,100 +26,105 @@ import org.tiankafei.web.common.param.IdsParam;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
- * <pre>
+ * <p>
  * 用户拥有的角色关系表 前端控制器
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
  */
-@Slf4j
 @RestController
-@RequestMapping("/sysUserRole")
-@Api(value = "用户拥有的角色关系表 API", tags = "用户拥有的角色关系表 功能维护")
+@RequestMapping("/user/user-role-entity")
+@Api(value = "用户拥有的角色关系表 API", tags = {"用户拥有的角色关系表"})
 public class UserRoleController extends BaseController {
 
     @Autowired
     private UserRoleService userRoleService;
 
-    /**
-     * 校验 用户拥有的角色关系表 是否已经存在
-     */
     @PostMapping("/check")
-    @ApiOperation(value = "校验 用户拥有的角色关系表 是否已经存在", notes = "校验 用户拥有的角色关系表 是否已经存在")
-    public ApiResult<Boolean> checkSysUserRoleExists(@Valid @RequestBody UserRoleListParam userRoleListParam) throws Exception {
-        Boolean flag = userRoleService.checkSysUserRoleExists(userRoleListParam);
+    @ApiOperation(value = "校验 用户拥有的角色关系表 对象是否存在")
+    public ApiResult<Boolean> checkUserRoleControllerExists(@Valid @RequestBody UserRoleCheckParam userRoleCheckParam) throws Exception {
+        Boolean flag = userRoleService.checkUserRoleServiceExists(userRoleCheckParam);
         return ApiResult.ok(flag);
     }
 
-    /**
-     * 添加 用户拥有的角色关系表 对象
-     */
-    @PostMapping("/add")
-    @ApiOperation(value = "添加 用户拥有的角色关系表 对象", notes = "添加 用户拥有的角色关系表")
-    public ApiResult<String> addSysUserRole(@Valid @RequestBody UserRoleVo userRoleVo) throws Exception {
-        Object id = userRoleService.addSysUserRole(userRoleVo);
+    @PostMapping
+    @ApiOperation(value = "添加 用户拥有的角色关系表")
+    public ApiResult<Long> addUserRoleController(@Valid @RequestBody UserRoleVo userRoleVo) throws Exception {
+        Long id = userRoleService.addUserRoleService(userRoleVo);
         return ApiResult.ok(id);
     }
 
-    /**
-     * 修改 用户拥有的角色关系表 对象
-     */
-    @PutMapping("/update")
-    @ApiOperation(value = "修改 用户拥有的角色关系表 对象", notes = "修改 用户拥有的角色关系表")
-    public ApiResult<Boolean> updateSysUserRole(@Valid @RequestBody UserRoleVo userRoleVo) throws Exception {
-        boolean flag = userRoleService.updateSysUserRole(userRoleVo);
+    @PostMapping("/batch")
+    @ApiOperation(value = "批量添加 用户拥有的角色关系表")
+    public ApiResult<List<Long>> batchAddUserRoleController(@Valid @RequestBody List<UserRoleVo> userRoleVoList) throws Exception {
+        List<Long> idList = userRoleService.batchAddUserRoleService(userRoleVoList);
+        return ApiResult.ok(idList);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除 用户拥有的角色关系表")
+    public ApiResult<Boolean> deleteUserRoleController(@PathVariable(value = "id") String id) throws Exception {
+        boolean flag = userRoleService.deleteUserRoleService(id);
         return ApiResult.ok(flag);
     }
 
-    /**
-     * 删除 用户拥有的角色关系表 对象
-     */
-    @DeleteMapping("/delete")
-    @ApiOperation(value = "删除 用户拥有的角色关系表 对象", notes = "删除 用户拥有的角色关系表")
-    public ApiResult<Boolean> deleteSysUserRole(@Valid @RequestBody IdsParam idsParam) throws Exception {
-        boolean flag = userRoleService.deleteSysUserRole(idsParam.getIds());
+    @DeleteMapping("/batch")
+    @ApiOperation(value = "批量删除 用户拥有的角色关系表")
+    public ApiResult<Boolean> batchDeleteUserRoleController(@Valid @RequestBody IdsParam idsParam) throws Exception {
+        boolean flag = userRoleService.batchDeleteUserRoleService(idsParam.getIds());
         return ApiResult.ok(flag);
     }
 
-    /**
-     * 获取 用户拥有的角色关系表 对象详情
-     */
-    @GetMapping("/info/{id}")
-    @ApiOperation(value = "获取 用户拥有的角色关系表 对象详情", notes = "获取 用户拥有的角色关系表 对象详情")
-    public ApiResult<UserRoleVo> getSysUserRole(@PathVariable("id") String id) throws Exception {
-        UserRoleVo userRoleVo = userRoleService.getSysUserRoleById(id);
+    @DeleteMapping("/condition")
+    @ApiOperation(value = "条件删除 用户拥有的角色关系表")
+    public ApiResult<Boolean> conditionDeleteUserRoleController(@Valid @RequestBody UserRoleDeleteParam userRoleDeleteParam) throws Exception {
+        boolean flag = userRoleService.conditionDeleteUserRoleService(userRoleDeleteParam);
+        return ApiResult.ok(flag);
+    }
+
+    @PatchMapping
+    @ApiOperation(value = "更新 用户拥有的角色关系表")
+    public ApiResult<Boolean> updateUserRoleController(@Valid @RequestBody UserRoleVo userRoleVo) throws Exception {
+        boolean flag = userRoleService.updateUserRoleService(userRoleVo);
+        return ApiResult.ok(flag);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "获取 用户拥有的角色关系表 对象")
+    public ApiResult<UserRoleVo> getUserRoleController(@PathVariable(value = "id") String id) throws Exception {
+        UserRoleVo userRoleVo = userRoleService.getUserRoleServiceById(id);
         return ApiResult.ok(userRoleVo);
     }
 
-    /**
-     * 获取 用户拥有的角色关系表 分页列表
-     */
-    @PostMapping("/pageList")
-    @ApiOperation(value = "获取 用户拥有的角色关系表 分页列表", notes = "获取 用户拥有的角色关系表 分页列表")
-    public ApiResult<Paging<UserRoleVo>> getSysUserRolePageList(@Valid @RequestBody UserRolePageParam userRolePageParam) throws Exception {
-        Paging<UserRoleVo> paging = userRoleService.getSysUserRolePageList(userRolePageParam);
-        return ApiResult.ok(paging);
+    @GetMapping
+    @ApiOperation(value = "获取 用户拥有的角色关系表 对象全部列表")
+    public ApiResult<List<UserRoleVo>> getUserRoleControllerAllList() throws Exception {
+        List<UserRoleVo> userRoleVoList = userRoleService.getUserRoleServiceList(null);
+        return ApiResult.ok(userRoleVoList);
     }
 
-    /**
-     * 获取 用户拥有的角色关系表 列表
-     */
     @PostMapping("/list")
-    @ApiOperation(value = "获取 用户拥有的角色关系表 列表", notes = "获取 用户拥有的角色关系表 列表")
-    public ApiResult<List<UserRoleVo>> getSysUserRoleList(@Valid @RequestBody UserRoleListParam userRoleListParam) throws Exception {
-        List<UserRoleVo> paging = userRoleService.getSysUserRoleList(userRoleListParam);
-        return ApiResult.ok(paging);
+    @ApiOperation(value = "获取 用户拥有的角色关系表 对象列表")
+    public ApiResult<List<UserRoleVo>> getUserRoleControllerList(@Valid @RequestBody UserRoleListParam userRoleListParam) throws Exception {
+        List<UserRoleVo> userRoleVoList = userRoleService.getUserRoleServiceList(userRoleListParam);
+        return ApiResult.ok(userRoleVoList);
     }
 
-    /**
-     * 计算 用户拥有的角色关系表 总记录数
-     */
+    @PostMapping("/pageList")
+    @ApiOperation(value = "获取 用户拥有的角色关系表 分页对象列表")
+    public ApiResult<Paging<UserRoleVo>> getUserRoleControllerPageList(@Valid @RequestBody UserRolePageParam userRolePageParam) throws Exception {
+        Paging<UserRoleVo> userRoleVoList = userRoleService.getUserRoleServicePageList(userRolePageParam);
+        return ApiResult.ok(userRoleVoList);
+    }
+
     @PostMapping("/count")
-    @ApiOperation(value = "计算 用户拥有的角色关系表 总记录数", notes = "计算 用户拥有的角色关系表 总记录数")
-    public ApiResult<Integer> countSysUserRole(@Valid @RequestBody UserRoleListParam userRoleListParam) throws Exception {
-        int count = userRoleService.countSysUserRole(userRoleListParam);
+    @ApiOperation(value = "求 用户拥有的角色关系表 对象的记录数")
+    public ApiResult<Integer> countUserRoleController(@Valid @RequestBody UserRoleCountParam userRoleCountParam) throws Exception {
+        Integer count = userRoleService.countUserRoleService(userRoleCountParam);
         return ApiResult.ok(count);
     }
 
+
 }
+

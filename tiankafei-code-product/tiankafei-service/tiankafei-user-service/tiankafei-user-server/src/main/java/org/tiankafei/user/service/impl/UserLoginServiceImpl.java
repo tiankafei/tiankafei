@@ -4,139 +4,227 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.tiankafei.login.feign.EncryptionFeign;
-import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.UserLoginEntity;
-import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.mapper.UserLoginMapper;
+import org.tiankafei.user.param.UserLoginCheckParam;
+import org.tiankafei.user.param.UserLoginCountParam;
+import org.tiankafei.user.param.UserLoginDeleteParam;
 import org.tiankafei.user.param.UserLoginListParam;
 import org.tiankafei.user.param.UserLoginPageParam;
 import org.tiankafei.user.service.UserLoginService;
 import org.tiankafei.user.vo.UserLoginVo;
-import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
- * <pre>
+ * <p>
  * 用户登录信息表 服务实现类
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
  */
-@Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class UserLoginServiceImpl extends BaseServiceImpl<UserLoginMapper, UserLoginEntity> implements UserLoginService {
 
     @Autowired
     private UserLoginMapper userLoginMapper;
 
-    @Autowired
-    private CheckExistsClient checkExistsClient;
 
-    @Autowired
-    private EncryptionFeign encryptionFeign;
-
+    /**
+     * 校验 用户登录信息表 是否已经存在
+     *
+     * @param userLoginCheckParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Object addSysUserLogin(UserLoginVo userLoginVo) throws Exception {
-        // 新增时校验用户信息是否存在
-        checkExistsClient.checkAddSysUserExists(UserEnums.USER_NAME.getCode(), userLoginVo.getUsername());
-        checkExistsClient.checkAddSysUserExists(UserEnums.EMAIL.getCode(), userLoginVo.getEmail());
-        checkExistsClient.checkAddSysUserExists(UserEnums.PHONE.getCode(), userLoginVo.getTelephone());
+    public boolean checkUserLoginServiceExists(UserLoginCheckParam userLoginCheckParam) throws Exception {
+        LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (userLoginCheckParam != null) {
 
-        // 保存用户登录表数据
+        }
+        int count = super.count(lambdaQueryWrapper);
+        return count > 0;
+    }
+
+    /**
+     * 保存 用户登录信息表
+     *
+     * @param userLoginVo
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Long addUserLoginService(UserLoginVo userLoginVo) throws Exception {
         UserLoginEntity userLoginEntity = new UserLoginEntity();
         BeanUtils.copyProperties(userLoginVo, userLoginEntity);
-        // 新增时密码加密
-        userLoginEntity.setPassword(encryptionFeign.encryption(userLoginEntity.getPassword()).getData());
-        // id值赋为空，使用自动生成的ID
-        userLoginEntity.setId(null);
         super.save(userLoginEntity);
-
         return userLoginEntity.getId();
     }
 
+    /**
+     * 保存 用户登录信息表 集合
+     *
+     * @param userLoginVoList
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean addSysUserLoginList(List<UserLoginVo> userLoginVoList) throws Exception {
-        if (userLoginVoList != null && !userLoginVoList.isEmpty()) {
-            List<UserLoginEntity> sysUserLoginList = new ArrayList<>();
+    public List<Long> batchAddUserLoginService(List<UserLoginVo> userLoginVoList) throws Exception {
+        if (CollectionUtils.isNotEmpty(userLoginVoList)) {
+            List<UserLoginEntity> userLoginEntityList = Lists.newArrayList();
             for (UserLoginVo userLoginVo : userLoginVoList) {
                 UserLoginEntity userLoginEntity = new UserLoginEntity();
                 BeanUtils.copyProperties(userLoginVo, userLoginEntity);
-                sysUserLoginList.add(userLoginEntity);
+                userLoginEntityList.add(userLoginEntity);
             }
-            super.saveBatch(sysUserLoginList, CommonConstant.BATCH_SAVE_COUNT);
+            super.saveBatch(userLoginEntityList);
+
+            return userLoginEntityList.stream().map(userLoginEntity -> userLoginEntity.getId()).collect(Collectors.toList());
+        }
+        return Lists.newArrayList();
+    }
+
+    /**
+     * 删除 用户登录信息表
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean deleteUserLoginService(String id) throws Exception {
+        if (StringUtils.isNotBlank(id)) {
+            return super.removeById(id);
         }
         return Boolean.TRUE;
     }
 
+    /**
+     * 删除 用户登录信息表
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean updateSysUserLogin(UserLoginVo userLoginVo) throws Exception {
-        UserLoginEntity oldUserEntity = super.getById(userLoginVo.getId());
-        // 修改时，校验用户信息是否存在
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.USER_NAME.getCode(), userLoginVo.getUsername(), oldUserEntity.getUsername());
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.EMAIL.getCode(), userLoginVo.getEmail(), oldUserEntity.getEmail());
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.PHONE.getCode(), userLoginVo.getTelephone(), oldUserEntity.getTelephone());
-
-        // 更新用户登录表数据
-        UserLoginEntity userLoginEntity = new UserLoginEntity();
-        BeanUtils.copyProperties(userLoginVo, userLoginEntity);
-        // TODO 有待测试 编辑时密码加密
-        userLoginEntity.setPassword(encryptionFeign.encryption(userLoginEntity.getPassword()).getData());
-        super.updateById(userLoginEntity);
-
+    public boolean batchDeleteUserLoginService(String ids) throws Exception {
+        if (StringUtils.isNotBlank(ids)) {
+            List<String> idList = Arrays.asList(ids.split(","));
+            return super.removeByIds(idList);
+        }
         return Boolean.TRUE;
     }
 
+    /**
+     * 根据条件删除 用户登录信息表
+     *
+     * @param userLoginDeleteParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean deleteSysUserLogin(String ids) throws Exception {
-        // 删除登录用户表
-        List<String> idList = Arrays.asList(ids.split(","));
-        return super.removeByIds(idList);
+    public boolean conditionDeleteUserLoginService(UserLoginDeleteParam userLoginDeleteParam) throws Exception {
+        LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (userLoginDeleteParam != null) {
+
+        }
+        return super.remove(lambdaQueryWrapper);
     }
 
+    /**
+     * 修改 用户登录信息表
+     *
+     * @param userLoginVo
+     * @return
+     * @throws Exception
+     */
     @Override
-    public UserLoginVo getSysUserLoginById(Serializable id) throws Exception {
-        //SysUserLoginQueryVo sysUserLoginQueryVo = sysUserLoginMapper.getSysUserLoginById(id);
+    public boolean updateUserLoginService(UserLoginVo userLoginVo) throws Exception {
+        UserLoginEntity userLoginEntity = new UserLoginEntity();
+        BeanUtils.copyProperties(userLoginVo, userLoginEntity);
+        return super.updateById(userLoginEntity);
+    }
 
+    /**
+     * 根据ID获取 用户登录信息表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public UserLoginVo getUserLoginServiceById(Serializable id) throws Exception {
         UserLoginEntity userLoginEntity = super.getById(id);
         UserLoginVo userLoginVo = new UserLoginVo();
         BeanUtils.copyProperties(userLoginEntity, userLoginVo);
         return userLoginVo;
     }
 
+    /**
+     * 获取 用户登录信息表 对象列表
+     *
+     * @param userLoginListParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Paging<UserLoginVo> getSysUserLoginPageList(UserLoginPageParam userLoginPageParam) throws Exception {
-        //IPage<SysUserLoginQueryVo> iPage = sysUserLoginMapper.getSysUserLoginPageList(page, sysUserLoginPageQueryParam);
+    public List<UserLoginVo> getUserLoginServiceList(UserLoginListParam userLoginListParam) throws Exception {
+        return userLoginMapper.getUserLoginServiceList(userLoginListParam);
+    }
 
+    /**
+     * 获取 用户登录信息表 分页对象列表
+     *
+     * @param userLoginPageParam
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Paging<UserLoginVo> getUserLoginServicePageList(UserLoginPageParam userLoginPageParam) throws Exception {
         Page page = setPageParam(userLoginPageParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        IPage<UserLoginVo> iPage = super.page(page, lambdaQueryWrapper);
-        return new Paging(iPage);
+        // 分页查询先查询主键id
+        IPage<UserLoginVo> iPage = userLoginMapper.getUserLoginServicePageList(page, userLoginPageParam);
+        List<Long> idList = iPage.getRecords().stream().map(userLoginVo -> userLoginVo.getId()).collect(Collectors.toList());
+
+        // 再根据查到的主键id查询数据
+        Paging<UserLoginVo> paging = new Paging();
+        paging.setTotal(iPage.getTotal());
+        if (CollectionUtils.isNotEmpty(idList)) {
+            UserLoginListParam userLoginListParam = new UserLoginListParam();
+            userLoginListParam.setIdList(idList);
+            List<UserLoginVo> userLoginVoList = this.getUserLoginServiceList(userLoginListParam);
+            paging.setRecords(userLoginVoList);
+        }
+        return paging;
     }
 
+    /**
+     * 计算 用户登录信息表 总记录数
+     *
+     * @param userLoginCountParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public List<UserLoginVo> getSysUserLoginList(UserLoginListParam userLoginListParam) throws Exception {
-        List<UserLoginVo> userLoginVoList = userLoginMapper.getSysUserLoginList(userLoginListParam);
-        return userLoginVoList;
+    public Integer countUserLoginService(UserLoginCountParam userLoginCountParam) throws Exception {
+        LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (userLoginCountParam != null) {
+
+        }
+        return super.count(lambdaQueryWrapper);
     }
 
-    @Override
-    public int countSysUserLogin(UserLoginListParam userLoginListParam) throws Exception {
-        LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        int count = super.count(lambdaQueryWrapper);
-        return count;
-    }
 
 }

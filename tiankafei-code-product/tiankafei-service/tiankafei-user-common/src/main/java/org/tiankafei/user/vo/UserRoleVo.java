@@ -3,81 +3,69 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.tiankafei.web.common.vo.BaseQueryVo;
 
 /**
- * <pre>
- * 用户拥有的角色关系表 查询结果对象
- * </pre>
+ * <p>
+ * 用户拥有的角色关系表
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "用户拥有的角色关系表 对象", description = "用户拥有的角色关系表 查询参数")
+@Accessors(chain = true)
+@ApiModel(value = "UserRoleEntity对象", description = "用户拥有的角色关系表")
 public class UserRoleVo extends BaseQueryVo {
 
-    /**
-     * 主键id
-     */
-    @ApiModelProperty(value = "主键id")
-    private Integer id;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户id
-     */
+    @ApiModelProperty(value = "主键id")
+    private Long id;
+
     @ApiModelProperty(value = "用户id")
-    @NotNull(message = "用户id不能为空")
     private Long userId;
 
-    /**
-     * 角色id
-     */
     @ApiModelProperty(value = "角色id")
-    @NotNull(message = "角色id不能为空")
     private Integer roleId;
 
-    /**
-     * 状态：1在用，0停用
-     */
     @ApiModelProperty(value = "状态：1在用，0停用")
-    @NotNull(message = "状态：1在用，0停用不能为空")
     private Boolean status;
 
-    /**
-     * 创建时间
-     */
     @ApiModelProperty(value = "创建时间")
     private Timestamp createTime;
 
-    /**
-     * 修改时间
-     */
     @ApiModelProperty(value = "修改时间")
     private Timestamp updateTime;
 
-    /**
-     * 创建用户ID
-     */
     @ApiModelProperty(value = "创建用户ID")
     private Long createUserId;
 
-    /**
-     * 修改用户ID
-     */
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
-    /**
-     * 角色信息表 对象
-     */
-    @ApiModelProperty(value = "角色信息表 对象")
-    private RoleInfoVo roleInfoQueryVo;
+    @ApiModelProperty(value = "角色详细信息对象")
+    private RoleInfoVo roleInfoVo;
+
+    public static final String ID = "id";
+
+    public static final String USER_ID = "user_id";
+
+    public static final String ROLE_ID = "role_id";
+
+    public static final String STATUS = "status";
+
+    public static final String CREATE_TIME = "create_time";
+
+    public static final String UPDATE_TIME = "update_time";
+
+    public static final String CREATE_USER_ID = "create_user_id";
+
+    public static final String UPDATE_USER_ID = "update_user_id";
+
 
 }

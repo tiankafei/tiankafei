@@ -4,121 +4,227 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.user.entity.RoleMenuEntity;
 import org.tiankafei.user.mapper.RoleMenuMapper;
+import org.tiankafei.user.param.RoleMenuCheckParam;
+import org.tiankafei.user.param.RoleMenuCountParam;
+import org.tiankafei.user.param.RoleMenuDeleteParam;
 import org.tiankafei.user.param.RoleMenuListParam;
 import org.tiankafei.user.param.RoleMenuPageParam;
 import org.tiankafei.user.service.RoleMenuService;
 import org.tiankafei.user.vo.RoleMenuVo;
-import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
- * <pre>
+ * <p>
  * 系统角色对应的功能配置表 服务实现类
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
  */
-@Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class RoleMenuServiceImpl extends BaseServiceImpl<RoleMenuMapper, RoleMenuEntity> implements RoleMenuService {
 
     @Autowired
     private RoleMenuMapper roleMenuMapper;
 
+
+    /**
+     * 校验 系统角色对应的功能配置表 是否已经存在
+     *
+     * @param roleMenuCheckParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean checkSysRoleMenuExists(RoleMenuListParam roleMenuListParam) throws Exception {
+    public boolean checkRoleMenuServiceExists(RoleMenuCheckParam roleMenuCheckParam) throws Exception {
         LambdaQueryWrapper<RoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (roleMenuCheckParam != null) {
+
+        }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
 
+    /**
+     * 保存 系统角色对应的功能配置表
+     *
+     * @param roleMenuVo
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Object addSysRoleMenu(RoleMenuVo roleMenuVo) throws Exception {
+    public Long addRoleMenuService(RoleMenuVo roleMenuVo) throws Exception {
         RoleMenuEntity roleMenuEntity = new RoleMenuEntity();
         BeanUtils.copyProperties(roleMenuVo, roleMenuEntity);
         super.save(roleMenuEntity);
         return roleMenuEntity.getId();
     }
 
+    /**
+     * 保存 系统角色对应的功能配置表 集合
+     *
+     * @param roleMenuVoList
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean addSysRoleMenuList(List<RoleMenuVo> roleMenuVoList) throws Exception {
-        if (roleMenuVoList != null && !roleMenuVoList.isEmpty()) {
-            List<RoleMenuEntity> sysRoleMenuList = new ArrayList<>();
+    public List<Long> batchAddRoleMenuService(List<RoleMenuVo> roleMenuVoList) throws Exception {
+        if (CollectionUtils.isNotEmpty(roleMenuVoList)) {
+            List<RoleMenuEntity> roleMenuEntityList = Lists.newArrayList();
             for (RoleMenuVo roleMenuVo : roleMenuVoList) {
                 RoleMenuEntity roleMenuEntity = new RoleMenuEntity();
                 BeanUtils.copyProperties(roleMenuVo, roleMenuEntity);
-                sysRoleMenuList.add(roleMenuEntity);
+                roleMenuEntityList.add(roleMenuEntity);
             }
-            super.saveBatch(sysRoleMenuList, CommonConstant.BATCH_SAVE_COUNT);
+            super.saveBatch(roleMenuEntityList);
+
+            return roleMenuEntityList.stream().map(roleMenuEntity -> roleMenuEntity.getId()).collect(Collectors.toList());
+        }
+        return Lists.newArrayList();
+    }
+
+    /**
+     * 删除 系统角色对应的功能配置表
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean deleteRoleMenuService(String id) throws Exception {
+        if (StringUtils.isNotBlank(id)) {
+            return super.removeById(id);
         }
         return Boolean.TRUE;
     }
 
+    /**
+     * 删除 系统角色对应的功能配置表
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean updateSysRoleMenu(RoleMenuVo roleMenuVo) throws Exception {
+    public boolean batchDeleteRoleMenuService(String ids) throws Exception {
+        if (StringUtils.isNotBlank(ids)) {
+            List<String> idList = Arrays.asList(ids.split(","));
+            return super.removeByIds(idList);
+        }
+        return Boolean.TRUE;
+    }
+
+    /**
+     * 根据条件删除 系统角色对应的功能配置表
+     *
+     * @param roleMenuDeleteParam
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean conditionDeleteRoleMenuService(RoleMenuDeleteParam roleMenuDeleteParam) throws Exception {
+        LambdaQueryWrapper<RoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (roleMenuDeleteParam != null) {
+
+        }
+        return super.remove(lambdaQueryWrapper);
+    }
+
+    /**
+     * 修改 系统角色对应的功能配置表
+     *
+     * @param roleMenuVo
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean updateRoleMenuService(RoleMenuVo roleMenuVo) throws Exception {
         RoleMenuEntity roleMenuEntity = new RoleMenuEntity();
         BeanUtils.copyProperties(roleMenuVo, roleMenuEntity);
         return super.updateById(roleMenuEntity);
     }
 
+    /**
+     * 根据ID获取 系统角色对应的功能配置表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean deleteSysRoleMenu(String ids) throws Exception {
-        String[] idArray = ids.split(",");
-        return super.removeByIds(Arrays.asList(idArray));
-    }
-
-    @Override
-    public boolean deleteSysRoleMenu(RoleMenuListParam roleMenuListParam) throws Exception {
-        LambdaQueryWrapper<RoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-
-        return super.remove(lambdaQueryWrapper);
-    }
-
-    @Override
-    public RoleMenuVo getSysRoleMenuById(Serializable id) throws Exception {
-        //SysRoleMenuQueryVo sysRoleMenuQueryVo = sysRoleMenuMapper.getSysRoleMenuById(id);
-
+    public RoleMenuVo getRoleMenuServiceById(Serializable id) throws Exception {
         RoleMenuEntity roleMenuEntity = super.getById(id);
         RoleMenuVo roleMenuVo = new RoleMenuVo();
         BeanUtils.copyProperties(roleMenuEntity, roleMenuVo);
         return roleMenuVo;
     }
 
+    /**
+     * 获取 系统角色对应的功能配置表 对象列表
+     *
+     * @param roleMenuListParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Paging<RoleMenuVo> getSysRoleMenuPageList(RoleMenuPageParam roleMenuPageParam) throws Exception {
-        //IPage<SysRoleMenuQueryVo> iPage = sysRoleMenuMapper.getSysRoleMenuPageList(page, sysRoleMenuPageQueryParam);
+    public List<RoleMenuVo> getRoleMenuServiceList(RoleMenuListParam roleMenuListParam) throws Exception {
+        return roleMenuMapper.getRoleMenuServiceList(roleMenuListParam);
+    }
 
+    /**
+     * 获取 系统角色对应的功能配置表 分页对象列表
+     *
+     * @param roleMenuPageParam
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Paging<RoleMenuVo> getRoleMenuServicePageList(RoleMenuPageParam roleMenuPageParam) throws Exception {
         Page page = setPageParam(roleMenuPageParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper<RoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        IPage<RoleMenuVo> iPage = super.page(page, lambdaQueryWrapper);
-        return new Paging(iPage);
+        // 分页查询先查询主键id
+        IPage<RoleMenuVo> iPage = roleMenuMapper.getRoleMenuServicePageList(page, roleMenuPageParam);
+        List<Long> idList = iPage.getRecords().stream().map(roleMenuVo -> roleMenuVo.getId()).collect(Collectors.toList());
+
+        // 再根据查到的主键id查询数据
+        Paging<RoleMenuVo> paging = new Paging();
+        paging.setTotal(iPage.getTotal());
+        if (CollectionUtils.isNotEmpty(idList)) {
+            RoleMenuListParam roleMenuListParam = new RoleMenuListParam();
+            roleMenuListParam.setIdList(idList);
+            List<RoleMenuVo> roleMenuVoList = this.getRoleMenuServiceList(roleMenuListParam);
+            paging.setRecords(roleMenuVoList);
+        }
+        return paging;
     }
 
+    /**
+     * 计算 系统角色对应的功能配置表 总记录数
+     *
+     * @param roleMenuCountParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public List<RoleMenuVo> getSysRoleMenuList(RoleMenuListParam roleMenuListParam) throws Exception {
-        List<RoleMenuVo> roleMenuVoList = roleMenuMapper.getSysRoleMenuList(roleMenuListParam);
-        return roleMenuVoList;
+    public Integer countRoleMenuService(RoleMenuCountParam roleMenuCountParam) throws Exception {
+        LambdaQueryWrapper<RoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (roleMenuCountParam != null) {
+
+        }
+        return super.count(lambdaQueryWrapper);
     }
 
-    @Override
-    public int countSysRoleMenu(RoleMenuListParam roleMenuListParam) throws Exception {
-        LambdaQueryWrapper<RoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        int count = super.count(lambdaQueryWrapper);
-        return count;
-    }
 
 }

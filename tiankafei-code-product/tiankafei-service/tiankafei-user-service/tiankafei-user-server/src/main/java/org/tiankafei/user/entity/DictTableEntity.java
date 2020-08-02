@@ -4,21 +4,22 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
 import java.sql.Timestamp;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.entity.BaseEntity;
 
 /**
- * <pre>
+ * <p>
  * 系统数据字典的数据表
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
@@ -27,154 +28,143 @@ import org.tiankafei.web.common.entity.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_dict_table")
-@ApiModel(value = " 系统数据字典的数据表 实体对象", description = "系统数据字典的数据表")
-public class DictTableEntity extends BaseEntity {
+@ApiModel(value = "DictTableEntity 对象", description = "系统数据字典的数据表")
+public class DictTableEntity extends Model<DictTableEntity> {
 
-    /**
-     * 主键id
-     */
+    private static final long serialVersionUID = 1L;
+
     @ApiModelProperty(value = "主键id")
-    @Size(max = 20, message = "主键id长度不能超过 20 ！")
-    @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
-    /**
-     * 代码
-     */
     @ApiModelProperty(value = "代码")
-    @Size(max = 100, message = "代码长度不能超过 100 ！")
-    @TableField(value = "code")
-    @NotBlank(message = "代码不能为空")
+    @TableField("code")
     private String code;
 
-    /**
-     * 名称
-     */
     @ApiModelProperty(value = "名称")
-    @Size(max = 500, message = "名称长度不能超过 500 ！")
-    @TableField(value = "name")
-    @NotBlank(message = "名称不能为空")
+    @TableField("name")
     private String name;
 
-    /**
-     * 描述
-     */
     @ApiModelProperty(value = "描述")
-    @TableField(value = "description")
+    @TableField("description")
     private String description;
 
-    /**
-     * 备注
-     */
     @ApiModelProperty(value = "备注")
-    @Size(max = 100, message = "备注长度不能超过 100 ！")
-    @TableField(value = "remarks")
+    @TableField("remarks")
     private String remarks;
 
-    /**
-     * 父id
-     */
     @ApiModelProperty(value = "父id")
-    @Size(max = 20, message = "父id长度不能超过 20 ！")
-    @TableField(value = "parent_id")
+    @TableField("parent_id")
     private String parentId;
 
-    /**
-     * 所有父id，用逗号分隔
-     */
     @ApiModelProperty(value = "所有父id，用逗号分隔")
-    @Size(max = 2100, message = "所有父id，用逗号分隔长度不能超过 2100 ！")
-    @TableField(value = "all_parent_id")
+    @TableField("all_parent_id")
     private String allParentId;
 
-    /**
-     * 顺序
-     */
-    @ApiModelProperty(value = "顺序")
-    @TableField(value = "serial_number")
+    @ApiModelProperty(value = "序号")
+    @TableField("serial_number")
     private Integer serialNumber;
 
-    /**
-     * 所在层级
-     */
     @ApiModelProperty(value = "所在层级")
-    @TableField(value = "level")
+    @TableField("level")
     private Integer level;
 
-    /**
-     * 计量单位1
-     */
     @ApiModelProperty(value = "计量单位1")
-    @Size(max = 10, message = "计量单位1长度不能超过 10 ！")
-    @TableField(value = "unit1")
+    @TableField("unit1")
     private String unit1;
 
-    /**
-     * 计量单位2
-     */
     @ApiModelProperty(value = "计量单位2")
-    @Size(max = 10, message = "计量单位2长度不能超过 10 ！")
-    @TableField(value = "unit2")
+    @TableField("unit2")
     private String unit2;
 
-    /**
-     * 计量单位3
-     */
     @ApiModelProperty(value = "计量单位3")
-    @Size(max = 10, message = "计量单位3长度不能超过 10 ！")
-    @TableField(value = "unit3")
+    @TableField("unit3")
     private String unit3;
 
-    /**
-     * 计量单位4
-     */
     @ApiModelProperty(value = "计量单位4")
-    @Size(max = 10, message = "计量单位4长度不能超过 10 ！")
-    @TableField(value = "unit4")
+    @TableField("unit4")
     private String unit4;
 
-    /**
-     * 计量单位5
-     */
     @ApiModelProperty(value = "计量单位5")
-    @Size(max = 10, message = "计量单位5长度不能超过 10 ！")
-    @TableField(value = "unit5")
+    @TableField("unit5")
     private String unit5;
 
-    /**
-     * 计量单位6
-     */
     @ApiModelProperty(value = "计量单位6")
-    @Size(max = 10, message = "计量单位6长度不能超过 10 ！")
-    @TableField(value = "unit6")
+    @TableField("unit6")
     private String unit6;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "乐观锁版本")
+    @TableField("version")
+    @Version
+    private Integer version;
+
+    @ApiModelProperty(value = "逻辑删除字段")
+    @TableField("delete_mark")
+    @TableLogic
+    private Integer deleteMark;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Timestamp createTime;
 
-    /**
-     * 修改时间
-     */
     @ApiModelProperty(value = "修改时间")
     @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Timestamp updateTime;
 
-    /**
-     * 创建用户ID
-     */
     @ApiModelProperty(value = "创建用户ID")
     @TableField(value = "create_user_id", fill = FieldFill.INSERT)
     private Long createUserId;
 
-    /**
-     * 修改用户ID
-     */
     @ApiModelProperty(value = "修改用户ID")
     @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
     private Long updateUserId;
+
+
+    public static final String ID = "id";
+
+    public static final String CODE = "code";
+
+    public static final String NAME = "name";
+
+    public static final String DESCRIPTION = "description";
+
+    public static final String REMARKS = "remarks";
+
+    public static final String PARENT_ID = "parent_id";
+
+    public static final String ALL_PARENT_ID = "all_parent_id";
+
+    public static final String SERIAL_NUMBER = "serial_number";
+
+    public static final String LEVEL = "level";
+
+    public static final String UNIT1 = "unit1";
+
+    public static final String UNIT2 = "unit2";
+
+    public static final String UNIT3 = "unit3";
+
+    public static final String UNIT4 = "unit4";
+
+    public static final String UNIT5 = "unit5";
+
+    public static final String UNIT6 = "unit6";
+
+    public static final String VERSION = "version";
+
+    public static final String DELETE_MARK = "delete_mark";
+
+    public static final String CREATE_TIME = "create_time";
+
+    public static final String UPDATE_TIME = "update_time";
+
+    public static final String CREATE_USER_ID = "create_user_id";
+
+    public static final String UPDATE_USER_ID = "update_user_id";
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
 }

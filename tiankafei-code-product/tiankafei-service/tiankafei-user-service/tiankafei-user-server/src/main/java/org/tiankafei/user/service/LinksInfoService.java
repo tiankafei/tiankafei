@@ -3,6 +3,9 @@ package org.tiankafei.user.service;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.user.entity.LinksInfoEntity;
+import org.tiankafei.user.param.LinksInfoCheckParam;
+import org.tiankafei.user.param.LinksInfoCountParam;
+import org.tiankafei.user.param.LinksInfoDeleteParam;
 import org.tiankafei.user.param.LinksInfoListParam;
 import org.tiankafei.user.param.LinksInfoPageParam;
 import org.tiankafei.user.vo.LinksInfoVo;
@@ -10,9 +13,9 @@ import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
- * <pre>
+ * <p>
  * 系统的友情链接 服务类
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
@@ -22,11 +25,11 @@ public interface LinksInfoService extends BaseService<LinksInfoEntity> {
     /**
      * 校验 系统的友情链接 是否已经存在
      *
-     * @param linksInfoListParam
+     * @param linksInfoCheckParam
      * @return
      * @throws Exception
      */
-    boolean checkSysLinksExists(LinksInfoListParam linksInfoListParam) throws Exception;
+    boolean checkLinksInfoServiceExists(LinksInfoCheckParam linksInfoCheckParam) throws Exception;
 
     /**
      * 保存 系统的友情链接
@@ -35,25 +38,25 @@ public interface LinksInfoService extends BaseService<LinksInfoEntity> {
      * @return
      * @throws Exception
      */
-    Object addSysLinks(LinksInfoVo linksInfoVo) throws Exception;
+    Long addLinksInfoService(LinksInfoVo linksInfoVo) throws Exception;
 
     /**
-     * 保存 系统的友情链接 集合
+     * 批量保存 系统的友情链接
      *
      * @param linksInfoVoList
      * @return
      * @throws Exception
      */
-    boolean addSysLinksList(List<LinksInfoVo> linksInfoVoList) throws Exception;
+    List<Long> batchAddLinksInfoService(List<LinksInfoVo> linksInfoVoList) throws Exception;
 
     /**
-     * 修改 系统的友情链接
+     * 删除 系统的友情链接
      *
-     * @param linksInfoVo
+     * @param id
      * @return
      * @throws Exception
      */
-    boolean updateSysLinks(LinksInfoVo linksInfoVo) throws Exception;
+    boolean deleteLinksInfoService(String id) throws Exception;
 
     /**
      * 删除 系统的友情链接
@@ -62,16 +65,25 @@ public interface LinksInfoService extends BaseService<LinksInfoEntity> {
      * @return
      * @throws Exception
      */
-    boolean deleteSysLinks(String ids) throws Exception;
+    boolean batchDeleteLinksInfoService(String ids) throws Exception;
 
     /**
      * 根据条件删除 系统的友情链接
      *
-     * @param linksInfoListParam
+     * @param linksInfoDeleteParam
      * @return
      * @throws Exception
      */
-    boolean deleteSysLinks(LinksInfoListParam linksInfoListParam) throws Exception;
+    boolean conditionDeleteLinksInfoService(LinksInfoDeleteParam linksInfoDeleteParam) throws Exception;
+
+    /**
+     * 修改 系统的友情链接
+     *
+     * @param linksInfoVo
+     * @return
+     * @throws Exception
+     */
+    boolean updateLinksInfoService(LinksInfoVo linksInfoVo) throws Exception;
 
     /**
      * 根据ID获取 系统的友情链接 对象
@@ -80,16 +92,7 @@ public interface LinksInfoService extends BaseService<LinksInfoEntity> {
      * @return
      * @throws Exception
      */
-    LinksInfoVo getSysLinksById(Serializable id) throws Exception;
-
-    /**
-     * 获取 系统的友情链接 分页对象列表
-     *
-     * @param linksInfoPageParam
-     * @return
-     * @throws Exception
-     */
-    Paging<LinksInfoVo> getSysLinksPageList(LinksInfoPageParam linksInfoPageParam) throws Exception;
+    LinksInfoVo getLinksInfoServiceById(Serializable id) throws Exception;
 
     /**
      * 获取 系统的友情链接 对象列表
@@ -98,15 +101,24 @@ public interface LinksInfoService extends BaseService<LinksInfoEntity> {
      * @return
      * @throws Exception
      */
-    List<LinksInfoVo> getSysLinksList(LinksInfoListParam linksInfoListParam) throws Exception;
+    List<LinksInfoVo> getLinksInfoServiceList(LinksInfoListParam linksInfoListParam) throws Exception;
+
+    /**
+     * 获取 系统的友情链接 分页对象列表
+     *
+     * @param linksInfoPageParam
+     * @return
+     * @throws Exception
+     */
+    Paging<LinksInfoVo> getLinksInfoServicePageList(LinksInfoPageParam linksInfoPageParam) throws Exception;
 
     /**
      * 计算 系统的友情链接 总记录数
      *
-     * @param linksInfoListParam
+     * @param linksInfoCountParam
      * @return
      * @throws Exception
      */
-    int countSysLinks(LinksInfoListParam linksInfoListParam) throws Exception;
+    Integer countLinksInfoService(LinksInfoCountParam linksInfoCountParam) throws Exception;
 
 }

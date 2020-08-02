@@ -4,146 +4,227 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.user.entity.DictTableEntity;
 import org.tiankafei.user.mapper.DictTableMapper;
+import org.tiankafei.user.param.DictTableCheckParam;
+import org.tiankafei.user.param.DictTableCountParam;
+import org.tiankafei.user.param.DictTableDeleteParam;
 import org.tiankafei.user.param.DictTableListParam;
 import org.tiankafei.user.param.DictTablePageParam;
 import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictTableVo;
-import org.tiankafei.web.common.constants.CommonConstant;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
-import org.tiankafei.web.common.utils.DynamicTableNameUtil;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
- * <pre>
+ * <p>
  * 系统数据字典的数据表 服务实现类
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
  */
-@Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictTableEntity> implements DictTableService {
 
     @Autowired
     private DictTableMapper dictTableMapper;
 
+
+    /**
+     * 校验 系统数据字典的数据表 是否已经存在
+     *
+     * @param dictTableCheckParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean checkSysDictTableExists(DictTableListParam dictTableListParam) throws Exception {
-        setDynamicTableName(dictTableListParam.getDataTable());
+    public boolean checkDictTableServiceExists(DictTableCheckParam dictTableCheckParam) throws Exception {
         LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (dictTableCheckParam != null) {
+
+        }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
     }
 
+    /**
+     * 保存 系统数据字典的数据表
+     *
+     * @param dictTableVo
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Object addSysDictTable(DictTableVo dictTableVo) throws Exception {
-        setDynamicTableName(dictTableVo.getDataTable());
-
+    public Long addDictTableService(DictTableVo dictTableVo) throws Exception {
         DictTableEntity dictTableEntity = new DictTableEntity();
         BeanUtils.copyProperties(dictTableVo, dictTableEntity);
         super.save(dictTableEntity);
         return dictTableEntity.getId();
     }
 
+    /**
+     * 保存 系统数据字典的数据表 集合
+     *
+     * @param dictTableVoList
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean addSysDictTableList(String dataTable, List<DictTableVo> dictTableVoList) throws Exception {
-        setDynamicTableName(dataTable);
-
-        if (dictTableVoList != null && !dictTableVoList.isEmpty()) {
-            List<DictTableEntity> sysDictTableList = new ArrayList<>();
+    public List<Long> batchAddDictTableService(List<DictTableVo> dictTableVoList) throws Exception {
+        if (CollectionUtils.isNotEmpty(dictTableVoList)) {
+            List<DictTableEntity> dictTableEntityList = Lists.newArrayList();
             for (DictTableVo dictTableVo : dictTableVoList) {
                 DictTableEntity dictTableEntity = new DictTableEntity();
                 BeanUtils.copyProperties(dictTableVo, dictTableEntity);
-                sysDictTableList.add(dictTableEntity);
+                dictTableEntityList.add(dictTableEntity);
             }
-            super.saveBatch(sysDictTableList, CommonConstant.BATCH_SAVE_COUNT);
+            super.saveBatch(dictTableEntityList);
+
+            return dictTableEntityList.stream().map(dictTableEntity -> dictTableEntity.getId()).collect(Collectors.toList());
+        }
+        return Lists.newArrayList();
+    }
+
+    /**
+     * 删除 系统数据字典的数据表
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean deleteDictTableService(String id) throws Exception {
+        if (StringUtils.isNotBlank(id)) {
+            return super.removeById(id);
         }
         return Boolean.TRUE;
     }
 
+    /**
+     * 删除 系统数据字典的数据表
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean updateSysDictTable(DictTableVo dictTableVo) throws Exception {
-        setDynamicTableName(dictTableVo.getDataTable());
+    public boolean batchDeleteDictTableService(String ids) throws Exception {
+        if (StringUtils.isNotBlank(ids)) {
+            List<String> idList = Arrays.asList(ids.split(","));
+            return super.removeByIds(idList);
+        }
+        return Boolean.TRUE;
+    }
 
+    /**
+     * 根据条件删除 系统数据字典的数据表
+     *
+     * @param dictTableDeleteParam
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean conditionDeleteDictTableService(DictTableDeleteParam dictTableDeleteParam) throws Exception {
+        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (dictTableDeleteParam != null) {
+
+        }
+        return super.remove(lambdaQueryWrapper);
+    }
+
+    /**
+     * 修改 系统数据字典的数据表
+     *
+     * @param dictTableVo
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean updateDictTableService(DictTableVo dictTableVo) throws Exception {
         DictTableEntity dictTableEntity = new DictTableEntity();
         BeanUtils.copyProperties(dictTableVo, dictTableEntity);
         return super.updateById(dictTableEntity);
     }
 
+    /**
+     * 根据ID获取 系统数据字典的数据表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean deleteSysDictTable(String dataTable, String ids) throws Exception {
-        setDynamicTableName(dataTable);
-
-        String[] idArray = ids.split(",");
-        return super.removeByIds(Arrays.asList(idArray));
-    }
-
-    @Override
-    public boolean deleteSysDictTable(DictTableListParam dictTableListParam) throws Exception {
-        setDynamicTableName(dictTableListParam.getDataTable());
-
-        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-
-        return super.remove(lambdaQueryWrapper);
-    }
-
-    @Override
-    public DictTableVo getSysDictTableById(String dataTable, Serializable id) throws Exception {
-        //SysDictTableQueryVo sysDictTableQueryVo = sysDictTableMapper.getSysDictTableById(id);
-
+    public DictTableVo getDictTableServiceById(Serializable id) throws Exception {
         DictTableEntity dictTableEntity = super.getById(id);
         DictTableVo dictTableVo = new DictTableVo();
         BeanUtils.copyProperties(dictTableEntity, dictTableVo);
         return dictTableVo;
     }
 
+    /**
+     * 获取 系统数据字典的数据表 对象列表
+     *
+     * @param dictTableListParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Paging<DictTableVo> getSysDictTablePageList(DictTablePageParam dictTablePageParam) throws Exception {
-        //IPage<SysDictTableQueryVo> iPage = sysDictTableMapper.getSysDictTablePageList(page, sysDictTablePageQueryParam);
-
-        Page page = setPageParam(dictTablePageParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        IPage<DictTableVo> iPage = super.page(page, lambdaQueryWrapper);
-        return new Paging(iPage);
-    }
-
-    @Override
-    public List<DictTableVo> getSysDictTableList(DictTableListParam dictTableListParam) throws Exception {
-        setDynamicTableName(dictTableListParam.getDataTable());
-
-        List<DictTableVo> dictTableVoList = dictTableMapper.getSysDictTableList(dictTableListParam);
-        return dictTableVoList;
-    }
-
-    @Override
-    public int countSysDictTable(DictTableListParam dictTableListParam) throws Exception {
-        setDynamicTableName(dictTableListParam.getDataTable());
-
-        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        int count = super.count(lambdaQueryWrapper);
-        return count;
+    public List<DictTableVo> getDictTableServiceList(DictTableListParam dictTableListParam) throws Exception {
+        return dictTableMapper.getDictTableServiceList(dictTableListParam);
     }
 
     /**
-     * 设置动态表名
+     * 获取 系统数据字典的数据表 分页对象列表
      *
-     * @param dataTable
+     * @param dictTablePageParam
+     * @return
+     * @throws Exception
      */
-    private void setDynamicTableName(String dataTable) {
-        DynamicTableNameUtil.setDynamicTableName(dataTable);
+    @Override
+    public Paging<DictTableVo> getDictTableServicePageList(DictTablePageParam dictTablePageParam) throws Exception {
+        Page page = setPageParam(dictTablePageParam, OrderItem.desc("create_time"));
+        // 分页查询先查询主键id
+        IPage<DictTableVo> iPage = dictTableMapper.getDictTableServicePageList(page, dictTablePageParam);
+        List<Long> idList = iPage.getRecords().stream().map(dictTableVo -> dictTableVo.getId()).collect(Collectors.toList());
+
+        // 再根据查到的主键id查询数据
+        Paging<DictTableVo> paging = new Paging();
+        paging.setTotal(iPage.getTotal());
+        if (CollectionUtils.isNotEmpty(idList)) {
+            DictTableListParam dictTableListParam = new DictTableListParam();
+            dictTableListParam.setIdList(idList);
+            List<DictTableVo> dictTableVoList = this.getDictTableServiceList(dictTableListParam);
+            paging.setRecords(dictTableVoList);
+        }
+        return paging;
     }
+
+    /**
+     * 计算 系统数据字典的数据表 总记录数
+     *
+     * @param dictTableCountParam
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Integer countDictTableService(DictTableCountParam dictTableCountParam) throws Exception {
+        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (dictTableCountParam != null) {
+
+        }
+        return super.count(lambdaQueryWrapper);
+    }
+
 
 }

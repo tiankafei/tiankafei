@@ -4,161 +4,227 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.UserInfoEntity;
-import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.mapper.UserInfoMapper;
-import org.tiankafei.user.model.UserInfoDto;
+import org.tiankafei.user.param.UserInfoCheckParam;
+import org.tiankafei.user.param.UserInfoCountParam;
+import org.tiankafei.user.param.UserInfoDeleteParam;
 import org.tiankafei.user.param.UserInfoListParam;
 import org.tiankafei.user.param.UserInfoPageParam;
 import org.tiankafei.user.service.UserInfoService;
-import org.tiankafei.user.service.UserLoginService;
-import org.tiankafei.user.service.UserRoleService;
-import org.tiankafei.user.vo.UserLoginVo;
-import org.tiankafei.web.common.constants.CommonConstant;
+import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
- * <pre>
+ * <p>
  * 用户基本信息表 服务实现类
- * </pre>
+ * </p>
  *
  * @author tiankafei
  * @since 1.0
  */
-@Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfoEntity> implements UserInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    @Autowired
-    private UserRoleService userRoleService;
 
-    @Autowired
-    private UserLoginService userLoginService;
-
-    @Autowired
-    private CheckExistsClient checkExistsClient;
-
+    /**
+     * 校验 用户基本信息表 是否已经存在
+     *
+     * @param userInfoCheckParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Object addSysUserInfo(UserInfoDto userInfoDto) throws Exception {
-        // 新增时校验用户信息是否存在
-        checkExistsClient.checkAddSysUserExists(UserEnums.USER_NAME.getCode(), userInfoDto.getUsername());
-        checkExistsClient.checkAddSysUserExists(UserEnums.EMAIL.getCode(), userInfoDto.getEmail());
-        checkExistsClient.checkAddSysUserExists(UserEnums.PHONE.getCode(), userInfoDto.getTelephone());
+    public boolean checkUserInfoServiceExists(UserInfoCheckParam userInfoCheckParam) throws Exception {
+        LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (userInfoCheckParam != null) {
 
-        // 保存用户登录表数据
-        UserLoginVo userLoginVo = new UserLoginVo();
-        BeanUtils.copyProperties(userInfoDto, userLoginVo);
-        Long id = (Long) userLoginService.addSysUserLogin(userLoginVo);
-
-        // 保存用户信息表数据
-        UserInfoEntity userInfoEntity = new UserInfoEntity();
-        BeanUtils.copyProperties(userInfoDto, userInfoEntity);
-        userInfoEntity.setId(id);
-        super.save(userInfoEntity);
-
-        return id;
+        }
+        int count = super.count(lambdaQueryWrapper);
+        return count > 0;
     }
 
+    /**
+     * 保存 用户基本信息表
+     *
+     * @param userInfoVo
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean addSysUserInfoList(List<UserInfoDto> sysUserInfoList) throws Exception {
-        if (CollectionUtils.isNotEmpty(sysUserInfoList)) {
-            // 用户信息实体对象集合
-            List<UserInfoEntity> userInfoEntityList = new ArrayList<>();
-            for (UserInfoDto userInfoDto : sysUserInfoList) {
-                // 对象转换
+    public Long addUserInfoService(UserInfoVo userInfoVo) throws Exception {
+        UserInfoEntity userInfoEntity = new UserInfoEntity();
+        BeanUtils.copyProperties(userInfoVo, userInfoEntity);
+        super.save(userInfoEntity);
+        return userInfoEntity.getId();
+    }
+
+    /**
+     * 保存 用户基本信息表 集合
+     *
+     * @param userInfoVoList
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Long> batchAddUserInfoService(List<UserInfoVo> userInfoVoList) throws Exception {
+        if (CollectionUtils.isNotEmpty(userInfoVoList)) {
+            List<UserInfoEntity> userInfoEntityList = Lists.newArrayList();
+            for (UserInfoVo userInfoVo : userInfoVoList) {
                 UserInfoEntity userInfoEntity = new UserInfoEntity();
-                BeanUtils.copyProperties(userInfoDto, userInfoEntity);
+                BeanUtils.copyProperties(userInfoVo, userInfoEntity);
                 userInfoEntityList.add(userInfoEntity);
             }
-            super.saveBatch(userInfoEntityList, CommonConstant.BATCH_SAVE_COUNT);
+            super.saveBatch(userInfoEntityList);
+
+            return userInfoEntityList.stream().map(userInfoEntity -> userInfoEntity.getId()).collect(Collectors.toList());
+        }
+        return Lists.newArrayList();
+    }
+
+    /**
+     * 删除 用户基本信息表
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean deleteUserInfoService(String id) throws Exception {
+        if (StringUtils.isNotBlank(id)) {
+            return super.removeById(id);
         }
         return Boolean.TRUE;
     }
 
+    /**
+     * 删除 用户基本信息表
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean updateSysUserInfo(UserInfoDto userInfoDto) throws Exception {
-        UserInfoEntity oldUserInfoEntity = super.getById(userInfoDto.getId());
-        // 修改时，校验用户信息是否存在
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.USER_NAME.getCode(), userInfoDto.getUsername(), oldUserInfoEntity.getUsername());
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.EMAIL.getCode(), userInfoDto.getEmail(), oldUserInfoEntity.getEmail());
-        checkExistsClient.checkUpdateSysUserExists(UserEnums.PHONE.getCode(), userInfoDto.getTelephone(), oldUserInfoEntity.getTelephone());
+    public boolean batchDeleteUserInfoService(String ids) throws Exception {
+        if (StringUtils.isNotBlank(ids)) {
+            List<String> idList = Arrays.asList(ids.split(","));
+            return super.removeByIds(idList);
+        }
+        return Boolean.TRUE;
+    }
 
-        // 更新用户登录表数据
-        UserLoginVo userLoginVo = new UserLoginVo();
-        BeanUtils.copyProperties(userInfoDto, userLoginVo);
-        userLoginService.updateSysUserLogin(userLoginVo);
+    /**
+     * 根据条件删除 用户基本信息表
+     *
+     * @param userInfoDeleteParam
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean conditionDeleteUserInfoService(UserInfoDeleteParam userInfoDeleteParam) throws Exception {
+        LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (userInfoDeleteParam != null) {
 
-        // 更新用户信息表数据
+        }
+        return super.remove(lambdaQueryWrapper);
+    }
+
+    /**
+     * 修改 用户基本信息表
+     *
+     * @param userInfoVo
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean updateUserInfoService(UserInfoVo userInfoVo) throws Exception {
         UserInfoEntity userInfoEntity = new UserInfoEntity();
-        BeanUtils.copyProperties(userInfoDto, userInfoEntity);
-        super.updateById(userInfoEntity);
-
-        return Boolean.TRUE;
+        BeanUtils.copyProperties(userInfoVo, userInfoEntity);
+        return super.updateById(userInfoEntity);
     }
 
+    /**
+     * 根据ID获取 用户基本信息表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean deleteSysUserInfo(String ids) throws Exception {
-        String[] idArray = ids.split(",");
-        List<String> idList = Arrays.asList(idArray);
-
-        if (CollectionUtils.isNotEmpty(idList)) {
-            // 删除用户登录表数据
-            userLoginService.deleteSysUserLogin(ids);
-            // 删除用户信息表数据
-            super.removeByIds(idList);
-            // 删除用户和角色的对应关系
-            userRoleService.deleteSysUserRoleFromUserId(ids);
-        }
-        return Boolean.TRUE;
-    }
-
-    @Override
-    public UserInfoDto getSysUserInfoById(Serializable id) throws Exception {
-        //SysUserInfoQueryVo sysUserInfoQueryVo = sysUserInfoMapper.getSysUserInfoById(id);
+    public UserInfoVo getUserInfoServiceById(Serializable id) throws Exception {
         UserInfoEntity userInfoEntity = super.getById(id);
-
-        UserInfoDto userInfoDto = new UserInfoDto();
-        BeanUtils.copyProperties(userInfoEntity, userInfoDto);
-        return userInfoDto;
+        UserInfoVo userInfoVo = new UserInfoVo();
+        BeanUtils.copyProperties(userInfoEntity, userInfoVo);
+        return userInfoVo;
     }
 
+    /**
+     * 获取 用户基本信息表 对象列表
+     *
+     * @param userInfoListParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Paging<UserInfoDto> getSysUserInfoPageList(UserInfoPageParam userInfoPageParam) throws Exception {
-        //IPage<SysUserInfoQueryVo> iPage = sysUserInfoMapper.getSysUserInfoPageList(page, sysUserInfoPageQueryParam);
+    public List<UserInfoVo> getUserInfoServiceList(UserInfoListParam userInfoListParam) throws Exception {
+        return userInfoMapper.getUserInfoServiceList(userInfoListParam);
+    }
 
+    /**
+     * 获取 用户基本信息表 分页对象列表
+     *
+     * @param userInfoPageParam
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Paging<UserInfoVo> getUserInfoServicePageList(UserInfoPageParam userInfoPageParam) throws Exception {
         Page page = setPageParam(userInfoPageParam, OrderItem.desc("create_time"));
-        LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        IPage<UserInfoDto> iPage = super.page(page, lambdaQueryWrapper);
-        return new Paging(iPage);
+        // 分页查询先查询主键id
+        IPage<UserInfoVo> iPage = userInfoMapper.getUserInfoServicePageList(page, userInfoPageParam);
+        List<Long> idList = iPage.getRecords().stream().map(userInfoVo -> userInfoVo.getId()).collect(Collectors.toList());
+
+        // 再根据查到的主键id查询数据
+        Paging<UserInfoVo> paging = new Paging();
+        paging.setTotal(iPage.getTotal());
+        if (CollectionUtils.isNotEmpty(idList)) {
+            UserInfoListParam userInfoListParam = new UserInfoListParam();
+            userInfoListParam.setIdList(idList);
+            List<UserInfoVo> userInfoVoList = this.getUserInfoServiceList(userInfoListParam);
+            paging.setRecords(userInfoVoList);
+        }
+        return paging;
     }
 
+    /**
+     * 计算 用户基本信息表 总记录数
+     *
+     * @param userInfoCountParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public List<UserInfoDto> getSysUserInfoList(UserInfoListParam userInfoListParam) throws Exception {
-        List<UserInfoDto> sysUserInfoQueryVoList = userInfoMapper.getSysUserInfoList(userInfoListParam);
-        return sysUserInfoQueryVoList;
+    public Integer countUserInfoService(UserInfoCountParam userInfoCountParam) throws Exception {
+        LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (userInfoCountParam != null) {
+
+        }
+        return super.count(lambdaQueryWrapper);
     }
 
-    @Override
-    public int countSysUserInfo(UserInfoListParam userInfoListParam) throws Exception {
-        LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-        int count = super.count(lambdaQueryWrapper);
-        return count;
-    }
 
 }

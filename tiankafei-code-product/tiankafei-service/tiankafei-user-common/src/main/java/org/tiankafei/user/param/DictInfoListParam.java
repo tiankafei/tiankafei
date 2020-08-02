@@ -3,14 +3,13 @@ package org.tiankafei.user.param;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
  * <pre>
- * 系统数据字典表 查询参数对象
+ * 系统数据字典表 分页参数对象
  * </pre>
  *
  * @author tiankafei
@@ -18,15 +17,14 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "系统数据字典表 查询参数对象", description = "系统数据字典表查询参数")
+@ApiModel(value = "系统数据字典表 列表参数对象")
 public class DictInfoListParam implements Serializable {
 
-    /**
-     * 字典代码
-     */
-    @ApiModelProperty(value = "字典代码")
-    @Size(max = 20, message = "字典代码长度不能超过 20 ！")
-    @NotBlank(message = "字典代码不能为空")
-    private String dictCode;
+    private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键id集合")
+    private List<Long> idList;
+
+    @ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
+    private Integer deleteMark = 0;
 }

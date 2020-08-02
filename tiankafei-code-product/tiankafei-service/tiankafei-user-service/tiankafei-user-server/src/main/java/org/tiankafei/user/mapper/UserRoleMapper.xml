@@ -3,7 +3,7 @@
 <mapper namespace="org.tiankafei.user.mapper.UserRoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="baseResultMap" type="org.tiankafei.user.vo.UserRoleVo">
+    <resultMap id="baseResultMap" type="org.tiankafei.user.entity.UserRoleEntity">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="role_id" property="roleId"/>
@@ -14,30 +14,98 @@
         <result column="update_user_id" property="updateUserId"/>
     </resultMap>
 
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="voResultMap" type="org.tiankafei.user.vo.UserRoleVo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
         id, user_id, role_id, status, create_time, update_time, create_user_id, update_user_id
     </sql>
 
-    <!-- 根据主键获取 用户拥有的角色关系表 对象 -->
-    <select id="getSysUserRoleById" resultMap="baseResultMap">
-        select
-        <include refid="base_Column_List"/>
-        from sys_user_role where id = #{id}
+    <!-- 校验 用户拥有的角色关系表 是否已经存在 -->
+    <select id="checkUserRoleServiceExists" resultType="java.lang.Boolean">
+
     </select>
 
-    <!-- 分页查询 用户拥有的角色关系表 对象集合 -->
-    <select id="getSysUserRolePageList" resultMap="baseResultMap">
+    <!-- 保存 用户拥有的角色关系表 -->
+    <select id="addUserRoleService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 批量保存 用户拥有的角色关系表 -->
+    <select id="batchAddUserRoleService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 删除 用户拥有的角色关系表 -->
+    <select id="deleteUserRoleService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 批量删除 用户拥有的角色关系表 -->
+    <select id="batchDeleteUserRoleService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据条件删除 用户拥有的角色关系表 -->
+    <select id="conditionDeleteUserRoleService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 修改 用户拥有的角色关系表 -->
+    <select id="updateUserRoleService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据ID获取 用户拥有的角色关系表 对象 -->
+    <select id="getUserRoleServiceById" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 用户拥有的角色关系表 对象列表 -->
+    <select id="getUserRoleServiceList" resultMap="voResultMap">
         select
         <include refid="base_Column_List"/>
         from sys_user_role
+        <where>
+            <if test="param.idList != null and param.idList.size != 0">
+                and id in
+                <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
+            </if>
+        </where>
     </select>
 
-    <!-- 查询 用户拥有的角色关系表 对象集合 -->
-    <select id="getSysUserRoleList" resultMap="baseResultMap">
+    <!-- 获取 用户拥有的角色关系表 分页对象列表 -->
+    <select id="getUserRoleServicePageList" resultMap="voResultMap">
         select
-        <include refid="base_Column_List"/>
+        id
         from sys_user_role
+        <where>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
+            </if>
+        </where>
+    </select>
+
+    <!-- 计算 用户拥有的角色关系表 总记录数 -->
+    <select id="countUserRoleService" resultType="java.lang.Integer">
+
     </select>
 
 </mapper>
