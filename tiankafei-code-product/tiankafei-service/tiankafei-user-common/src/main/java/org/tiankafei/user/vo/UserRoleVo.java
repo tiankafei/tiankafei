@@ -52,6 +52,8 @@ public class UserRoleVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
+    @ApiModelProperty(value = "角色详细信息对象")
+    private RoleInfoVo roleInfoVo;
 
     public static final String ID = "id";
 

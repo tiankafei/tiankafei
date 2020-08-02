@@ -35,6 +35,8 @@ public class RoleMenuVo extends BaseQueryVo {
     @NotNull(message = "菜单id不能为空")
     private Integer menuId;
 
+    @ApiModelProperty(value = "菜单详细信息对象")
+    private MenuInfoVo menuInfoVo;
 
     public static final String ID = "id";
 

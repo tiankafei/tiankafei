@@ -3,6 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -64,6 +65,8 @@ public class RoleInfoVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
+    @ApiModelProperty(value = "角色分配的菜单集合")
+    private List<RoleMenuVo> roleMenuList;
 
     public static final String ID = "id";
 
