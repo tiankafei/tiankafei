@@ -98,12 +98,27 @@
 	
 	<!-- 获取 $!{table.comment} 对象列表 -->
     <select id="get${table.serviceName}List" resultMap="voResultMap">
-        
+        select
+            <include refid="base_Column_List"/>
+        from ${table.name}
+        <where>
+            <if test="param.idList">
+                id in
+                <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
     </select>
 	
 	<!-- 获取 $!{table.comment} 分页对象列表 -->
-    <select id="get${table.serviceName}PageList" resultMap="voResultMap">
-        
+    <select id="get${table.serviceName}PageList" resultType="java.lang.${cfg.keyColumnType}">
+        select
+            id
+        from ${table.name}
+        <where>
+
+        </where>
     </select>
 	
 	<!-- 计算 $!{table.comment} 总记录数 -->

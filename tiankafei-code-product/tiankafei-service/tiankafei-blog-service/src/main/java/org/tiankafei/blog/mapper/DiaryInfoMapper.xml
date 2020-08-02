@@ -81,12 +81,27 @@
 
     <!-- 获取 系统的博客日记 对象列表 -->
     <select id="getDiaryInfoServiceList" resultMap="voResultMap">
-
+        select
+        <include refid="base_Column_List"/>
+        from sys_diary_info
+        <where>
+            <if test="param.idList">
+                id in
+                <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
     </select>
 
     <!-- 获取 系统的博客日记 分页对象列表 -->
-    <select id="getDiaryInfoServicePageList" resultMap="voResultMap">
+    <select id="getDiaryInfoServicePageList" resultType="java.lang.Long">
+        select
+        id
+        from sys_diary_info
+        <where>
 
+        </where>
     </select>
 
     <!-- 计算 系统的博客日记 总记录数 -->

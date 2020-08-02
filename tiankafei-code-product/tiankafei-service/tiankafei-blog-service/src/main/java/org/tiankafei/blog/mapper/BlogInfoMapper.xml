@@ -97,12 +97,27 @@
 
     <!-- 获取 系统的博客数据 对象列表 -->
     <select id="getBlogInfoServiceList" resultMap="voResultMap">
-
+        select
+        <include refid="base_Column_List"/>
+        from sys_blog_info
+        <where>
+            <if test="param.idList">
+                id in
+                <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
     </select>
 
     <!-- 获取 系统的博客数据 分页对象列表 -->
-    <select id="getBlogInfoServicePageList" resultMap="voResultMap">
+    <select id="getBlogInfoServicePageList" resultType="java.lang.Long">
+        select
+        id
+        from sys_blog_info
+        <where>
 
+        </where>
     </select>
 
     <!-- 计算 系统的博客数据 总记录数 -->

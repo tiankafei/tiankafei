@@ -81,12 +81,27 @@
 
     <!-- 获取 系统的博客选项设置 对象列表 -->
     <select id="getGlobalSettingServiceList" resultMap="voResultMap">
-
+        select
+        <include refid="base_Column_List"/>
+        from sys_global_setting
+        <where>
+            <if test="param.idList">
+                id in
+                <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
     </select>
 
     <!-- 获取 系统的博客选项设置 分页对象列表 -->
-    <select id="getGlobalSettingServicePageList" resultMap="voResultMap">
+    <select id="getGlobalSettingServicePageList" resultType="java.lang.Long">
+        select
+        id
+        from sys_global_setting
+        <where>
 
+        </where>
     </select>
 
     <!-- 计算 系统的博客选项设置 总记录数 -->

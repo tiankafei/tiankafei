@@ -109,11 +109,12 @@ public interface GlobalSettingMapper extends BaseMapper<GlobalSettingEntity> {
     /**
      * 获取 系统的博客选项设置 分页对象列表
      *
+     * @param page
      * @param globalSettingPageParam
      * @return
      * @throws Exception
      */
-    List<GlobalSettingVo> getGlobalSettingServicePageList(@Param("page") Page page, @Param("param") GlobalSettingPageParam globalSettingPageParam) throws Exception;
+    List<Long> getGlobalSettingServicePageList(@Param("page") Page page, @Param("param") GlobalSettingPageParam globalSettingPageParam) throws Exception;
 
     /**
      * 计算 系统的博客选项设置 总记录数

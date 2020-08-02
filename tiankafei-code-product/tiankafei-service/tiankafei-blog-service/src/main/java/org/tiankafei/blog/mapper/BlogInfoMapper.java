@@ -109,11 +109,12 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfoEntity> {
     /**
      * 获取 系统的博客数据 分页对象列表
      *
+     * @param page
      * @param blogInfoPageParam
      * @return
      * @throws Exception
      */
-    List<BlogInfoVo> getBlogInfoServicePageList(@Param("page") Page page, @Param("param") BlogInfoPageParam blogInfoPageParam) throws Exception;
+    List<Long> getBlogInfoServicePageList(@Param("page") Page page, @Param("param") BlogInfoPageParam blogInfoPageParam) throws Exception;
 
     /**
      * 计算 系统的博客数据 总记录数

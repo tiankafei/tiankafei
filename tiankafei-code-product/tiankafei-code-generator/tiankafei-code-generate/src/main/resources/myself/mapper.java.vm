@@ -112,11 +112,12 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
     /**
      * 获取 $!{table.comment} 分页对象列表
      *
+     * @param page
      * @param ${cfg.pageParamConstName}
      * @return
      * @throws Exception
      */
-    List<${cfg.voClassName}> get${table.serviceName}PageList(@Param("page") Page page, @Param("param") ${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception;
+    List<${cfg.keyColumnType}> get${table.serviceName}PageList(@Param("page") Page page, @Param("param") ${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception;
 
     /**
      * 计算 $!{table.comment} 总记录数

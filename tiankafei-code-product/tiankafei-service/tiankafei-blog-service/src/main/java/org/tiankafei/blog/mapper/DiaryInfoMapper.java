@@ -109,11 +109,12 @@ public interface DiaryInfoMapper extends BaseMapper<DiaryInfoEntity> {
     /**
      * 获取 系统的博客日记 分页对象列表
      *
+     * @param page
      * @param diaryInfoPageParam
      * @return
      * @throws Exception
      */
-    List<DiaryInfoVo> getDiaryInfoServicePageList(@Param("page") Page page, @Param("param") DiaryInfoPageParam diaryInfoPageParam) throws Exception;
+    List<Long> getDiaryInfoServicePageList(@Param("page") Page page, @Param("param") DiaryInfoPageParam diaryInfoPageParam) throws Exception;
 
     /**
      * 计算 系统的博客日记 总记录数
