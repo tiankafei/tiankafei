@@ -15,7 +15,7 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class CodeGeneratorStrategyConfig {
 
     // 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
-    public static StrategyConfig initStrategyConfig(CodeProperties codeProperties) throws ClassNotFoundException {
+    public static StrategyConfig initStrategyConfig(CodeProperties codeProperties, String tableName) throws ClassNotFoundException {
         StrategyConfig strategyConfig = new StrategyConfig();
 //        strategyConfig.setCapitalMode(false);
 //        strategyConfig.setSkipView(false);
@@ -30,7 +30,7 @@ public class CodeGeneratorStrategyConfig {
         strategyConfig.setSuperServiceImplClass(codeProperties.getSuperServiceImplClassPath());
         strategyConfig.setSuperControllerClass(codeProperties.getSuperControllerClassPath());
 //        strategyConfig.setEnableSqlFilter(true);
-        strategyConfig.setInclude(codeProperties.getTableNameList().toArray(new String[]{}));
+        strategyConfig.setInclude(tableName);
 //        strategyConfig.setLikeTable();
 //        strategyConfig.setExclude();
 //        strategyConfig.setNotLikeTable();

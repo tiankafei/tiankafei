@@ -28,11 +28,20 @@ public class UserCodeGenerator extends BaseCodeGenerator {
     private String pageClassPath = "org.tiankafei.web.common.vo.Paging";
     private String apiResultClassPath = "org.tiankafei.web.common.api.ApiResult";
 
-    private List<String> tableNameList = Arrays.asList("sys_user_login", "sys_user_info", "sys_role_info", "sys_user_role", "sys_menu_info", "sys_role_menu", "sys_department", "sys_dict_info", "sys_dict_table", "sys_links");
-
     public static void main(String[] args) throws Exception {
         UserCodeGenerator tiankafeiCodeGenerator = new UserCodeGenerator();
-        tiankafeiCodeGenerator.execute();
+        List<String> tableNameList = Arrays.asList(
+                "sys_user_login",
+                "sys_user_info",
+                "sys_role_info",
+                "sys_user_role",
+                "sys_menu_info",
+                "sys_role_menu",
+                "sys_dept_info",
+                "sys_dict_info",
+                "sys_dict_table",
+                "sys_links");
+        tiankafeiCodeGenerator.execute(tableNameList);
     }
 
     @Override
@@ -54,7 +63,6 @@ public class UserCodeGenerator extends BaseCodeGenerator {
         codeProperties.setSuperMapperClassPath(baseMapperClassPath);
         codeProperties.setSuperVoClassPath(baseVoClassPath);
         codeProperties.setSuperPageParamClassPath(basePageParamClassPath);
-        codeProperties.setTableNameList(tableNameList);
         codeProperties.setEntity("/myself/entity.java.vm");
         codeProperties.setService("/myself/service.java.vm");
         codeProperties.setServiceImpl("/myself/serviceImpl.java.vm");

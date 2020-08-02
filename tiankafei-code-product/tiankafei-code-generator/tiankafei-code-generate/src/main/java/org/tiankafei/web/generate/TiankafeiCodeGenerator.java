@@ -1,7 +1,6 @@
 package org.tiankafei.web.generate;
 
 import java.util.Arrays;
-import java.util.List;
 import org.tiankafei.web.generate.properties.CodeProperties;
 
 /**
@@ -28,11 +27,9 @@ public class TiankafeiCodeGenerator extends BaseCodeGenerator {
     private String pageClassPath = "org.tiankafei.web.common.vo.Paging";
     private String apiResultClassPath = "org.tiankafei.web.common.api.ApiResult";
 
-    private List<String> tableNameList = Arrays.asList("sys_user_test");
-
     public static void main(String[] args) throws Exception {
         TiankafeiCodeGenerator tiankafeiCodeGenerator = new TiankafeiCodeGenerator();
-        tiankafeiCodeGenerator.execute();
+        tiankafeiCodeGenerator.execute(Arrays.asList("sys_user_test"));
     }
 
     @Override
@@ -54,7 +51,6 @@ public class TiankafeiCodeGenerator extends BaseCodeGenerator {
         codeProperties.setSuperMapperClassPath(baseMapperClassPath);
         codeProperties.setSuperVoClassPath(baseVoClassPath);
         codeProperties.setSuperPageParamClassPath(basePageParamClassPath);
-        codeProperties.setTableNameList(tableNameList);
         codeProperties.setEntity("/myself/entity.java.vm");
         codeProperties.setService("/myself/service.java.vm");
         codeProperties.setServiceImpl("/myself/serviceImpl.java.vm");

@@ -28,11 +28,13 @@ public class BlogCodeGenerator extends BaseCodeGenerator {
     private String pageClassPath = "org.tiankafei.web.common.vo.Paging";
     private String apiResultClassPath = "org.tiankafei.web.common.api.ApiResult";
 
-    private List<String> tableNameList = Arrays.asList("sys_blog_info", "sys_diary_info", "sys_global_setting");
-
     public static void main(String[] args) throws Exception {
         BlogCodeGenerator tiankafeiCodeGenerator = new BlogCodeGenerator();
-        tiankafeiCodeGenerator.execute();
+        List<String> tableNameList = Arrays.asList(
+                "sys_blog_info",
+                "sys_diary_info",
+                "sys_global_setting");
+        tiankafeiCodeGenerator.execute(tableNameList);
     }
 
     @Override
@@ -54,7 +56,6 @@ public class BlogCodeGenerator extends BaseCodeGenerator {
         codeProperties.setSuperMapperClassPath(baseMapperClassPath);
         codeProperties.setSuperVoClassPath(baseVoClassPath);
         codeProperties.setSuperPageParamClassPath(basePageParamClassPath);
-        codeProperties.setTableNameList(tableNameList);
         codeProperties.setEntity("/myself/entity.java.vm");
         codeProperties.setService("/myself/service.java.vm");
         codeProperties.setServiceImpl("/myself/serviceImpl.java.vm");

@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
-import java.util.Arrays;
 import java.util.List;
 import org.tiankafei.web.generate.config.CodeGeneratorDataSourceConfig;
 import org.tiankafei.web.generate.config.CodeGeneratorGlobalConfig;
@@ -23,23 +22,18 @@ import org.tiankafei.web.generate.properties.CodeProperties;
  **/
 public abstract class BaseCodeGenerator {
 
-    public void execute() throws Exception {
+    public void execute(List<String> tableNameList) throws Exception {
         CodeProperties codeProperties = initCodeProperties();
 
-
-        List<String> tableNameList = codeProperties.getTableNameList();
         for (int index = 0; index < tableNameList.size(); index++) {
             String tableName = tableNameList.get(index);
-
-            codeProperties.setTableNameList(Arrays.asList(tableName));
-
             DataSourceConfig dataSourceConfig = CodeGeneratorDataSourceConfig.initDataSourceConfig(codeProperties);
-            StrategyConfig strategyConfig = CodeGeneratorStrategyConfig.initStrategyConfig(codeProperties);
+            StrategyConfig strategyConfig = CodeGeneratorStrategyConfig.initStrategyConfig(codeProperties, tableName);
+
             PackageConfig packageConfig = CodeGeneratorPackageConfig.initPackageConfig(codeProperties);
             TemplateConfig templateConfig = CodeGeneratorTemplateConfig.initTemplateConfig(codeProperties);
             GlobalConfig globalConfig = CodeGeneratorGlobalConfig.initGlobalConfig(codeProperties);
             InjectionConfig cfg = CodeGeneratorInjectionConfig.initInjectionConfig(codeProperties);
-
             AutoGenerator autoGenerator = new AutoGenerator();
             // 数据源配置，通过该配置，指定需要生成代码的具体数据库
             autoGenerator.setDataSource(dataSourceConfig);

@@ -41,7 +41,6 @@ public class CodeProperties implements Serializable {
     private String superServiceClassPath;
     private String superServiceImplClassPath;
     private String superControllerClassPath;
-    private List<String> tableNameList = Lists.newArrayList();
 
 
     private String projectPath;
