@@ -22,8 +22,6 @@ public class JsonConverterConfig {
                 jacksonObjectMapperBuilder.serializerByType(BigInteger.class, ToStringSerializer.instance);
                 jacksonObjectMapperBuilder.serializerByType(Long.class, ToStringSerializer.instance);
                 jacksonObjectMapperBuilder.serializerByType(Long.TYPE, ToStringSerializer.instance);
-                jacksonObjectMapperBuilder.serializerByType(Integer.class, ToStringSerializer.instance);
-                jacksonObjectMapperBuilder.serializerByType(Integer.TYPE, ToStringSerializer.instance);
             }
         };
         return customizer;
