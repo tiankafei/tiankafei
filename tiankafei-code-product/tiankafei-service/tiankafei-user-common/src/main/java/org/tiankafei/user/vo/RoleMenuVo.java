@@ -2,6 +2,7 @@ package org.tiankafei.user.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -27,13 +28,13 @@ public class RoleMenuVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "角色id")
+    @NotNull(message = "角色id不能为空")
     private Integer roleId;
 
     @ApiModelProperty(value = "菜单id")
+    @NotNull(message = "菜单id不能为空")
     private Integer menuId;
 
-    @ApiModelProperty(value = "菜单详细信息对象")
-    private MenuInfoVo menuInfoVo;
 
     public static final String ID = "id";
 

@@ -3,7 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
-import java.util.List;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -29,21 +29,27 @@ public class MenuInfoVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "功能代码")
+    @Size(max = 20, message = "功能代码长度不能超过 20 ！")
     private String menuCode;
 
     @ApiModelProperty(value = "功能名称")
+    @Size(max = 100, message = "功能名称长度不能超过 100 ！")
     private String menuName;
 
     @ApiModelProperty(value = "图标的名称")
+    @Size(max = 20, message = "图标的名称长度不能超过 20 ！")
     private String icon;
 
     @ApiModelProperty(value = "菜单类型：1目录，2菜单，3按钮")
+    @Size(max = 1, message = "菜单类型：1目录，2菜单，3按钮长度不能超过 1 ！")
     private String menuType;
 
     @ApiModelProperty(value = "打开方式：1页签，2新窗口")
+    @Size(max = 1, message = "打开方式：1页签，2新窗口长度不能超过 1 ！")
     private String openType;
 
     @ApiModelProperty(value = "功能的url路径")
+    @Size(max = 50, message = "功能的url路径长度不能超过 50 ！")
     private String path;
 
     @ApiModelProperty(value = "是否外部链接：1是，0否")
@@ -53,6 +59,7 @@ public class MenuInfoVo extends BaseQueryVo {
     private Boolean status;
 
     @ApiModelProperty(value = "权限关键字标识")
+    @Size(max = 60, message = "权限关键字标识长度不能超过 60 ！")
     private String keys;
 
     @ApiModelProperty(value = "父id")
@@ -82,8 +89,6 @@ public class MenuInfoVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
-    @ApiModelProperty(value = "子菜单集合")
-    private List<MenuInfoVo> menuInfoList;
 
     public static final String ID = "id";
 

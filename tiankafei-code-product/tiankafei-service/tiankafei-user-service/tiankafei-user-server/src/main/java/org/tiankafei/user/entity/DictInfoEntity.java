@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,10 +39,12 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
     private Long id;
 
     @ApiModelProperty(value = "字典代码")
+    @Size(max = 20, message = "字典代码长度不能超过 20 ！")
     @TableField("dict_code")
     private String dictCode;
 
     @ApiModelProperty(value = "字典名称")
+    @Size(max = 100, message = "字典名称长度不能超过 100 ！")
     @TableField("dict_name")
     private String dictName;
 
@@ -54,10 +57,12 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
     private String description;
 
     @ApiModelProperty(value = "备注")
+    @Size(max = 60, message = "备注长度不能超过 60 ！")
     @TableField("remarks")
     private String remarks;
 
     @ApiModelProperty(value = "数据表")
+    @Size(max = 30, message = "数据表长度不能超过 30 ！")
     @TableField("data_table")
     private String dataTable;
 

@@ -3,6 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,21 +29,26 @@ public class DictTableVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "代码")
+    @Size(max = 100, message = "代码长度不能超过 100 ！")
     private String code;
 
     @ApiModelProperty(value = "名称")
+    @Size(max = 500, message = "名称长度不能超过 500 ！")
     private String name;
 
     @ApiModelProperty(value = "描述")
     private String description;
 
     @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
     private String remarks;
 
     @ApiModelProperty(value = "父id")
+    @Size(max = 20, message = "父id长度不能超过 20 ！")
     private String parentId;
 
     @ApiModelProperty(value = "所有父id，用逗号分隔")
+    @Size(max = 2100, message = "所有父id，用逗号分隔长度不能超过 2100 ！")
     private String allParentId;
 
     @ApiModelProperty(value = "序号")
@@ -52,21 +58,27 @@ public class DictTableVo extends BaseQueryVo {
     private Integer level;
 
     @ApiModelProperty(value = "计量单位1")
+    @Size(max = 10, message = "计量单位1长度不能超过 10 ！")
     private String unit1;
 
     @ApiModelProperty(value = "计量单位2")
+    @Size(max = 10, message = "计量单位2长度不能超过 10 ！")
     private String unit2;
 
     @ApiModelProperty(value = "计量单位3")
+    @Size(max = 10, message = "计量单位3长度不能超过 10 ！")
     private String unit3;
 
     @ApiModelProperty(value = "计量单位4")
+    @Size(max = 10, message = "计量单位4长度不能超过 10 ！")
     private String unit4;
 
     @ApiModelProperty(value = "计量单位5")
+    @Size(max = 10, message = "计量单位5长度不能超过 10 ！")
     private String unit5;
 
     @ApiModelProperty(value = "计量单位6")
+    @Size(max = 10, message = "计量单位6长度不能超过 10 ！")
     private String unit6;
 
     @ApiModelProperty(value = "乐观锁版本")

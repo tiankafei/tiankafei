@@ -3,6 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,9 +29,11 @@ public class DeptInfoVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "部门代码")
+    @Size(max = 20, message = "部门代码长度不能超过 20 ！")
     private String deptCode;
 
     @ApiModelProperty(value = "部门名称")
+    @Size(max = 100, message = "部门名称长度不能超过 100 ！")
     private String deptName;
 
     @ApiModelProperty(value = "父部门")

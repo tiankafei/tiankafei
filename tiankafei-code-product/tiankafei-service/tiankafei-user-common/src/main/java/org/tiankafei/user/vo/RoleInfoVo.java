@@ -3,7 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
-import java.util.List;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -29,9 +29,11 @@ public class RoleInfoVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "角色代码")
+    @Size(max = 20, message = "角色代码长度不能超过 20 ！")
     private String roleCode;
 
     @ApiModelProperty(value = "角色名称")
+    @Size(max = 100, message = "角色名称长度不能超过 100 ！")
     private String roleName;
 
     @ApiModelProperty(value = "角色状态:1启用，0停用")
@@ -41,6 +43,7 @@ public class RoleInfoVo extends BaseQueryVo {
     private String description;
 
     @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
     private String remark;
 
     @ApiModelProperty(value = "乐观锁版本")
@@ -61,8 +64,6 @@ public class RoleInfoVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
-    @ApiModelProperty(value = "角色分配的菜单集合")
-    private List<RoleMenuVo> roleMenuList;
 
     public static final String ID = "id";
 

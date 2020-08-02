@@ -3,6 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,9 +29,11 @@ public class LinksInfoVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "链接名称")
+    @Size(max = 20, message = "链接名称长度不能超过 20 ！")
     private String name;
 
     @ApiModelProperty(value = "链接地址")
+    @Size(max = 100, message = "链接地址长度不能超过 100 ！")
     private String links;
 
     @ApiModelProperty(value = "状态：是否启用，1启用，2停用")

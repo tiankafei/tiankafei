@@ -3,7 +3,6 @@ package org.tiankafei.user.service;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.user.entity.UserInfoEntity;
-import org.tiankafei.user.model.UserInfoDto;
 import org.tiankafei.user.param.UserInfoCheckParam;
 import org.tiankafei.user.param.UserInfoCountParam;
 import org.tiankafei.user.param.UserInfoDeleteParam;
@@ -35,20 +34,20 @@ public interface UserInfoService extends BaseService<UserInfoEntity> {
     /**
      * 保存 用户基本信息表
      *
-     * @param userInfoDto
+     * @param userInfoVo
      * @return
      * @throws Exception
      */
-    Long addUserInfoService(UserInfoDto userInfoDto) throws Exception;
+    Long addUserInfoService(UserInfoVo userInfoVo) throws Exception;
 
     /**
      * 批量保存 用户基本信息表
      *
-     * @param userInfoDtoList
+     * @param userInfoVoList
      * @return
      * @throws Exception
      */
-    List<Long> batchAddUserInfoService(List<UserInfoDto> userInfoDtoList) throws Exception;
+    List<Long> batchAddUserInfoService(List<UserInfoVo> userInfoVoList) throws Exception;
 
     /**
      * 删除 用户基本信息表
@@ -80,11 +79,11 @@ public interface UserInfoService extends BaseService<UserInfoEntity> {
     /**
      * 修改 用户基本信息表
      *
-     * @param userInfoDto
+     * @param userInfoVo
      * @return
      * @throws Exception
      */
-    boolean updateUserInfoService(UserInfoDto userInfoDto) throws Exception;
+    boolean updateUserInfoService(UserInfoVo userInfoVo) throws Exception;
 
     /**
      * 根据ID获取 用户基本信息表 对象

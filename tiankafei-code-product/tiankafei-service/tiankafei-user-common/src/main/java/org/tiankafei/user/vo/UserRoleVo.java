@@ -3,6 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,12 +29,15 @@ public class UserRoleVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "用户id")
+    @NotNull(message = "用户id不能为空")
     private Long userId;
 
     @ApiModelProperty(value = "角色id")
+    @NotNull(message = "角色id不能为空")
     private Integer roleId;
 
     @ApiModelProperty(value = "状态：1在用，0停用")
+    @NotNull(message = "状态：1在用，0停用不能为空")
     private Boolean status;
 
     @ApiModelProperty(value = "创建时间")
@@ -48,8 +52,6 @@ public class UserRoleVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
-    @ApiModelProperty(value = "角色详细信息对象")
-    private RoleInfoVo roleInfoVo;
 
     public static final String ID = "id";
 

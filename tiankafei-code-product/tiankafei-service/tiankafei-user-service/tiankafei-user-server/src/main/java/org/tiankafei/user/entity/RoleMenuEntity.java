@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -35,10 +36,12 @@ public class RoleMenuEntity extends Model<RoleMenuEntity> {
 
     @ApiModelProperty(value = "角色id")
     @TableField("role_id")
+    @NotNull(message = "角色id不能为空")
     private Integer roleId;
 
     @ApiModelProperty(value = "菜单id")
     @TableField("menu_id")
+    @NotNull(message = "菜单id不能为空")
     private Integer menuId;
 
 

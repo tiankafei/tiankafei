@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,10 +39,12 @@ public class RoleInfoEntity extends Model<RoleInfoEntity> {
     private Long id;
 
     @ApiModelProperty(value = "角色代码")
+    @Size(max = 20, message = "角色代码长度不能超过 20 ！")
     @TableField("role_code")
     private String roleCode;
 
     @ApiModelProperty(value = "角色名称")
+    @Size(max = 100, message = "角色名称长度不能超过 100 ！")
     @TableField("role_name")
     private String roleName;
 
@@ -54,6 +57,7 @@ public class RoleInfoEntity extends Model<RoleInfoEntity> {
     private String description;
 
     @ApiModelProperty(value = "备注")
+    @Size(max = 100, message = "备注长度不能超过 100 ！")
     @TableField("remark")
     private String remark;
 

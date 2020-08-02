@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,10 +39,12 @@ public class LinksInfoEntity extends Model<LinksInfoEntity> {
     private Long id;
 
     @ApiModelProperty(value = "链接名称")
+    @Size(max = 20, message = "链接名称长度不能超过 20 ！")
     @TableField("name")
     private String name;
 
     @ApiModelProperty(value = "链接地址")
+    @Size(max = 100, message = "链接地址长度不能超过 100 ！")
     @TableField("links")
     private String links;
 

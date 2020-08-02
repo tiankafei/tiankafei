@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,26 +39,32 @@ public class MenuInfoEntity extends Model<MenuInfoEntity> {
     private Long id;
 
     @ApiModelProperty(value = "功能代码")
+    @Size(max = 20, message = "功能代码长度不能超过 20 ！")
     @TableField("menu_code")
     private String menuCode;
 
     @ApiModelProperty(value = "功能名称")
+    @Size(max = 100, message = "功能名称长度不能超过 100 ！")
     @TableField("menu_name")
     private String menuName;
 
     @ApiModelProperty(value = "图标的名称")
+    @Size(max = 20, message = "图标的名称长度不能超过 20 ！")
     @TableField("icon")
     private String icon;
 
     @ApiModelProperty(value = "菜单类型：1目录，2菜单，3按钮")
+    @Size(max = 1, message = "菜单类型：1目录，2菜单，3按钮长度不能超过 1 ！")
     @TableField("menu_type")
     private String menuType;
 
     @ApiModelProperty(value = "打开方式：1页签，2新窗口")
+    @Size(max = 1, message = "打开方式：1页签，2新窗口长度不能超过 1 ！")
     @TableField("open_type")
     private String openType;
 
     @ApiModelProperty(value = "功能的url路径")
+    @Size(max = 50, message = "功能的url路径长度不能超过 50 ！")
     @TableField("path")
     private String path;
 
@@ -70,6 +77,7 @@ public class MenuInfoEntity extends Model<MenuInfoEntity> {
     private Boolean status;
 
     @ApiModelProperty(value = "权限关键字标识")
+    @Size(max = 60, message = "权限关键字标识长度不能超过 60 ！")
     @TableField("keys")
     private String keys;
 

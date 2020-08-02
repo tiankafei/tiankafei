@@ -3,6 +3,8 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,18 +30,24 @@ public class UserLoginVo extends BaseQueryVo {
     private Long id;
 
     @ApiModelProperty(value = "用户名")
+    @Size(max = 30, message = "用户名长度不能超过 30 ！")
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     @ApiModelProperty(value = "邮箱")
+    @Size(max = 50, message = "邮箱长度不能超过 50 ！")
     private String email;
 
     @ApiModelProperty(value = "手机号码")
+    @Size(max = 11, message = "手机号码长度不能超过 11 ！")
     private String telephone;
 
     @ApiModelProperty(value = "密码")
+    @Size(max = 64, message = "密码长度不能超过 64 ！")
     private String password;
 
     @ApiModelProperty(value = "状态：1正常，2停用，3指定有效期")
+    @Size(max = 1, message = "状态：1正常，2停用，3指定有效期长度不能超过 1 ！")
     private String status;
 
     @ApiModelProperty(value = "乐观锁版本")
