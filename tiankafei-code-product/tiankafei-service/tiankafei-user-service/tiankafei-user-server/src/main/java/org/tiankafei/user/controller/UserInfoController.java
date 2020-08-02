@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.tiankafei.user.model.UserInfoDto;
 import org.tiankafei.user.param.UserInfoCheckParam;
 import org.tiankafei.user.param.UserInfoCountParam;
 import org.tiankafei.user.param.UserInfoDeleteParam;
@@ -50,14 +51,14 @@ public class UserInfoController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "添加 用户基本信息表")
-    public ApiResult<Long> addUserInfoController(@Valid @RequestBody UserInfoVo userInfoVo) throws Exception {
+    public ApiResult<Long> addUserInfoController(@Valid @RequestBody UserInfoDto userInfoVo) throws Exception {
         Long id = userInfoService.addUserInfoService(userInfoVo);
         return ApiResult.ok(id);
     }
 
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 用户基本信息表")
-    public ApiResult<List<Long>> batchAddUserInfoController(@Valid @RequestBody List<UserInfoVo> userInfoVoList) throws Exception {
+    public ApiResult<List<Long>> batchAddUserInfoController(@Valid @RequestBody List<UserInfoDto> userInfoVoList) throws Exception {
         List<Long> idList = userInfoService.batchAddUserInfoService(userInfoVoList);
         return ApiResult.ok(idList);
     }
@@ -85,7 +86,7 @@ public class UserInfoController extends BaseController {
 
     @PatchMapping
     @ApiOperation(value = "更新 用户基本信息表")
-    public ApiResult<Boolean> updateUserInfoController(@Valid @RequestBody UserInfoVo userInfoVo) throws Exception {
+    public ApiResult<Boolean> updateUserInfoController(@Valid @RequestBody UserInfoDto userInfoVo) throws Exception {
         boolean flag = userInfoService.updateUserInfoService(userInfoVo);
         return ApiResult.ok(flag);
     }
