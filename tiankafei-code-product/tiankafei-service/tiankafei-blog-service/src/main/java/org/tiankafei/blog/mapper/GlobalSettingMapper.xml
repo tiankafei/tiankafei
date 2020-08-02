@@ -85,7 +85,7 @@
         <include refid="base_Column_List"/>
         from sys_global_setting
         <where>
-            <if test="param.idList">
+            <if test="param.idList != null and param.idList.size != 0">
                 id in
                 <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
                     #{id}
