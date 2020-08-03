@@ -23,6 +23,9 @@ public class DictInfoCheckParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键id")
+    private Long id;
+
     @ApiModelProperty(value = "字典代码")
     @Size(max = 20, message = "字典代码长度不能超过 20 ！")
     private String dictCode;

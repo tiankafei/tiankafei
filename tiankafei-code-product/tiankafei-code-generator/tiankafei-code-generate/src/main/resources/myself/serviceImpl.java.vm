@@ -57,7 +57,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     public boolean check${table.serviceName}Exists(${cfg.checkParamClassName} ${cfg.checkParamConstName}) throws Exception {
 		LambdaQueryWrapper<${entity}> lambdaQueryWrapper = new LambdaQueryWrapper();
 		if (${cfg.checkParamConstName} != null) {
-
+			${cfg.keyColumnType} id = ${cfg.checkParamConstName}.getId();
+			if(id != null){
+				lambdaQueryWrapper.ne(${entity}::getId, id);
+			}
 		}
 		int count = super.count(lambdaQueryWrapper);
 		return count > 0;

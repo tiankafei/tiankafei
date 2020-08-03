@@ -52,7 +52,10 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
     public boolean checkBlogInfoServiceExists(BlogInfoCheckParam blogInfoCheckParam) throws Exception {
         LambdaQueryWrapper<BlogInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (blogInfoCheckParam != null) {
-
+            Long id = blogInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(BlogInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

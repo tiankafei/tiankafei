@@ -66,6 +66,10 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             if(CollectionUtils.isNotEmpty(dictCodeList)){
                 lambdaQueryWrapper.in(DictInfoEntity::getDictCode, dictCodeList);
             }
+            Long id = dictInfoCheckParam.getId();
+            if(id != null){
+                lambdaQueryWrapper.ne(DictInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
@@ -106,19 +110,18 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     @Override
     public List<Long> batchAddDictInfoService(List<DictInfoVo> dictInfoVoList) throws Exception {
         if (CollectionUtils.isNotEmpty(dictInfoVoList)) {
-            List<DictInfoEntity> dictInfoEntityList = Lists.newArrayList();
-
-            // 批量新增时的字典代码集合
-            List<String> dictCodeList = Lists.newArrayList();
             // 生成序列号
             Long id = SequenceUtil.generatorLonId();
+            // 批量新增时的字典代码集合
+            List<String> dictCodeList = Lists.newArrayList();
+            // 批量保存数据字典
+            List<DictInfoEntity> dictInfoEntityList = Lists.newArrayList();
             for (int index = 0, length = dictInfoVoList.size(); index < length; index++) {
                 DictInfoVo dictInfoVo = dictInfoVoList.get(index);
                 dictCodeList.add(dictInfoVo.getDictCode());
 
                 DictInfoEntity dictInfoEntity = new DictInfoEntity();
                 BeanUtils.copyProperties(dictInfoVo, dictInfoEntity);
-
                 dictInfoEntity.setId(id + 1);
                 dictInfoEntity.setStatus(Boolean.FALSE);
                 dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + (id + 1));
@@ -128,11 +131,11 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             LambdaQueryWrapper<DictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
             lambdaQueryWrapper.select(DictInfoEntity::getId);
             lambdaQueryWrapper.in(DictInfoEntity::getDictCode, dictCodeList);
-            List<DictInfoEntity> list = super.list(lambdaQueryWrapper);
-            if(CollectionUtils.isNotEmpty(list)){
-                throw new UserException("字典代码：" + dictCodeList + " 已经存在！");
+            List<String> alreadyDictCodeList = super.list(lambdaQueryWrapper).stream().map(dictInfoEntity -> dictInfoEntity.getDictCode()).collect(Collectors.toList());
+            if(CollectionUtils.isNotEmpty(alreadyDictCodeList)){
+                throw new UserException("字典代码：" + alreadyDictCodeList + " 已经存在！");
             }
-
+            // 执行保存
             super.saveBatch(dictInfoEntityList);
             return dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getId()).collect(Collectors.toList());
         }
@@ -230,11 +233,14 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
      */
     @Override
     public boolean updateDictInfoService(DictInfoVo dictInfoVo) throws Exception {
-        DictInfoEntity oldDictInfoEntity = dictInfoMapper.selectById(dictInfoVo.getId());
+        // 根据ID查询原字段代码
+        Long id = dictInfoVo.getId();
+        DictInfoEntity oldDictInfoEntity = dictInfoMapper.selectById(id);
         String oldDictCode = oldDictInfoEntity.getDictCode();
         String newDictCode = dictInfoVo.getDictCode();
+        // 当发现字典代码发生更改时，校验新的字典代码是否存在
         if (!newDictCode.equals(oldDictCode)) {
-            if (checkDictInfoServiceExists(new DictInfoCheckParam().setDictCode(newDictCode))) {
+            if (checkDictInfoServiceExists(new DictInfoCheckParam().setDictCode(newDictCode).setId(id))) {
                 throw new UserException("字典代码：" + newDictCode + " 已经存在！");
             }
         }

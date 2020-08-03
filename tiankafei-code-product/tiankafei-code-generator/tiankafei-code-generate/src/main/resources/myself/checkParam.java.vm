@@ -29,6 +29,13 @@ public class ${cfg.checkParamClassName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
+#if(${swagger2})
+@ApiModelProperty(value = "主键id")
+#else
+/**
+ * 主键id
+ */
+#end
+private ${cfg.keyColumnType} id;
 
 }
