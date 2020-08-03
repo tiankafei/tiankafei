@@ -2,10 +2,9 @@ package org.tiankafei.db.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <pre>

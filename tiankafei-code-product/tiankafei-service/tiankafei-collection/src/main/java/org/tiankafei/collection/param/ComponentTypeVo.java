@@ -1,8 +1,7 @@
 package org.tiankafei.collection.param;
 
-import lombok.Data;
-
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 组件类型对象

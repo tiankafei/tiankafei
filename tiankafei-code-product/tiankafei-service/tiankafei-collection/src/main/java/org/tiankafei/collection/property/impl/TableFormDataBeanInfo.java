@@ -1,11 +1,10 @@
 package org.tiankafei.collection.property.impl;
 
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.collection.property.ComponentProperty;
 import org.tiankafei.collection.property.TableFormDataProperty;
-
-import java.util.List;
 
 /**
  * 表单属性

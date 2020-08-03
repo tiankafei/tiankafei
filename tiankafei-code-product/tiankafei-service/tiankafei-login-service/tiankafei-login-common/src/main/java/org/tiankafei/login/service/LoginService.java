@@ -22,6 +22,7 @@ public interface LoginService {
 
     /**
      * 获取用户信息
+     *
      * @param token
      * @return
      * @throws Exception
@@ -30,6 +31,7 @@ public interface LoginService {
 
     /**
      * 注销
+     *
      * @param userId
      * @throws LoginException
      */

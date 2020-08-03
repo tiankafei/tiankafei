@@ -2,6 +2,8 @@ package org.tiankafei.db.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,6 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.db.entity.TableEntity;
 import org.tiankafei.db.service.DbService;
 import org.tiankafei.db.service.TableService;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author tiankafei

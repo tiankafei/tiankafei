@@ -2,6 +2,12 @@ package org.tiankafei.login.service.impl;
 
 import cn.hutool.core.lang.Validator;
 import cn.hutool.json.JSONUtil;
+import java.sql.Timestamp;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.login.bean.QueryUserClient;
@@ -21,13 +27,6 @@ import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.exception.LoginException;
 import org.tiankafei.web.common.exception.VerificationException;
-
-import java.sql.Timestamp;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author tiankafei
@@ -97,7 +96,7 @@ public class LoginServiceImpl implements LoginService {
         if (userLoginQueryVo != null) {
             // TODO 密码规则修改 验证密码是否正确
             String inputPassword = encryptionService.encryption(loginParamVo.getPassword());
-            if(!userLoginQueryVo.getPassword().equals(inputPassword)){
+            if (!userLoginQueryVo.getPassword().equals(inputPassword)) {
                 throw new LoginException(UserCacheEnums.LOGIN_ERROR.getCode());
             }
 

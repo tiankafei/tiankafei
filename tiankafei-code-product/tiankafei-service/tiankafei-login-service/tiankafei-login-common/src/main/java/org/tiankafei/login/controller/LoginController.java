@@ -3,6 +3,7 @@ package org.tiankafei.login.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +16,6 @@ import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import javax.validation.Valid;
 
 /**
  * @author tiankafei

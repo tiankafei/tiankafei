@@ -2,6 +2,8 @@ package org.tiankafei.db.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +17,6 @@ import org.tiankafei.db.service.TableService;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.vo.Paging;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author tiankafei
