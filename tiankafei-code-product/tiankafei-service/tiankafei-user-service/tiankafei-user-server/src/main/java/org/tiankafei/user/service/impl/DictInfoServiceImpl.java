@@ -7,7 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -207,8 +210,10 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             // 设置查询条件   先把要删的字典的数据查出来，再进行删除，否则删除之后，数据表就查不到了
             lambdaQueryWrapper.select(DictInfoEntity::getDataTable, DictInfoEntity::getId);
             List<DictInfoEntity> dictInfoEntityList = super.list(lambdaQueryWrapper);
-            List<String> dataTableList = dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getDataTable()).collect(Collectors.toList());
-            List<Long> idList = dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getId()).collect(Collectors.toList());
+
+            Map<Long, String> dataMap = dictInfoEntityList.stream().collect(Collectors.toMap(DictInfoEntity::getId, DictInfoEntity::getDataTable));
+            Collection<String> dataTableList = dataMap.values();
+            Set<Long> idList = dataMap.keySet();
             // 删除字典数据
             if(CollectionUtils.isNotEmpty(idList)){
                 flag = super.removeByIds(idList);
