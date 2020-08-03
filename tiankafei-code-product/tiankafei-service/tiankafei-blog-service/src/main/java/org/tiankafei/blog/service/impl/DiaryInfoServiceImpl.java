@@ -52,7 +52,10 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
     public boolean checkDiaryInfoServiceExists(DiaryInfoCheckParam diaryInfoCheckParam) throws Exception {
         LambdaQueryWrapper<DiaryInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (diaryInfoCheckParam != null) {
-
+            Long id = diaryInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(DiaryInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

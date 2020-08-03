@@ -90,6 +90,8 @@ public class CodeGeneratorInjectionConfig {
                 String entityName = tableInfo.getEntityName();
                 String entityConstName = firstToLowerCase(entityName);
                 cfgProperties.setEntityConstName(entityConstName);
+                String requestContext = entityConstName.replace("Entity", "");
+                cfgProperties.setRequestContext(requestContext);
 
                 String voName = entityName.replace("Entity", "Vo");
                 setValue(cfgProperties::setVoClassName, cfgProperties::setVoConstName, voName);

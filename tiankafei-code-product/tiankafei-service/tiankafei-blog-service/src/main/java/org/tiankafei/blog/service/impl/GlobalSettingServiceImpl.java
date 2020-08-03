@@ -52,7 +52,10 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
     public boolean checkGlobalSettingServiceExists(GlobalSettingCheckParam globalSettingCheckParam) throws Exception {
         LambdaQueryWrapper<GlobalSettingEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (globalSettingCheckParam != null) {
-
+            Long id = globalSettingCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(GlobalSettingEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
