@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user/user-role-entity")
+@RequestMapping("/userRole")
 @Api(value = "用户拥有的角色关系表 API", tags = {"用户拥有的角色关系表"})
 public class UserRoleController extends BaseController {
 

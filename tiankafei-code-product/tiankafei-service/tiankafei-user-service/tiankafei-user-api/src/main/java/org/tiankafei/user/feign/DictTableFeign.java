@@ -24,7 +24,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @author tiankafei
  * @since 1.0
  */
-@FeignClient(value = "user-service", contextId = "sysDictTable", path = "/user/dict-table-entity")
+@FeignClient(value = "user-service", contextId = "sysDictTable", path = "/dictTable")
 public interface DictTableFeign {
 
     @PostMapping("/check")

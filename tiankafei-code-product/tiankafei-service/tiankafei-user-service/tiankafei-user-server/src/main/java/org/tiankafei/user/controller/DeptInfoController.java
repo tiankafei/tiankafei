@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user/dept-info-entity")
+@RequestMapping("/deptInfo")
 @Api(value = "系统部门表信息 API", tags = {"系统部门表信息"})
 public class DeptInfoController extends BaseController {
 

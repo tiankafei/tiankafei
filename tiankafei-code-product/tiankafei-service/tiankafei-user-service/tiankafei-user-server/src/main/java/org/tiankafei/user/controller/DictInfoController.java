@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user/dict-info-entity")
+@RequestMapping("/dictInfo")
 @Api(value = "系统数据字典表 API", tags = {"系统数据字典表"})
 public class DictInfoController extends BaseController {
 

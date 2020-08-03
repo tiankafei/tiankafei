@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user/links-info-entity")
+@RequestMapping("/linksInfo")
 @Api(value = "系统的友情链接 API", tags = {"系统的友情链接"})
 public class LinksInfoController extends BaseController {
 

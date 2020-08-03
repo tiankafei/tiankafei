@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/blog/global-setting-entity")
+@RequestMapping("/globalSetting")
 @Api(value = "系统的博客选项设置 API", tags = {"系统的博客选项设置"})
 public class GlobalSettingController extends BaseController {
 
