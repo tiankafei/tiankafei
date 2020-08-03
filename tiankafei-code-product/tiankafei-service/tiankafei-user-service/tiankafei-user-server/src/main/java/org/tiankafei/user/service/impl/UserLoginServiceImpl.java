@@ -89,7 +89,10 @@ public class UserLoginServiceImpl extends BaseServiceImpl<UserLoginMapper, UserL
     public boolean checkUserLoginServiceExists(UserLoginCheckParam userLoginCheckParam) throws Exception {
         LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (userLoginCheckParam != null) {
-
+            Long id = userLoginCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(UserLoginEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

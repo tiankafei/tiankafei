@@ -52,7 +52,10 @@ public class RoleMenuServiceImpl extends BaseServiceImpl<RoleMenuMapper, RoleMen
     public boolean checkRoleMenuServiceExists(RoleMenuCheckParam roleMenuCheckParam) throws Exception {
         LambdaQueryWrapper<RoleMenuEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (roleMenuCheckParam != null) {
-
+            Long id = roleMenuCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(RoleMenuEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

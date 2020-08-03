@@ -89,7 +89,10 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     public boolean checkUserInfoServiceExists(UserInfoCheckParam userInfoCheckParam) throws Exception {
         LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (userInfoCheckParam != null) {
-
+            Long id = userInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(UserInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

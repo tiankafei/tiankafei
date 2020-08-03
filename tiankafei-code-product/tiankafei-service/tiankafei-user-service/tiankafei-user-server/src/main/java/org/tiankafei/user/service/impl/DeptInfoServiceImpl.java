@@ -52,7 +52,10 @@ public class DeptInfoServiceImpl extends BaseServiceImpl<DeptInfoMapper, DeptInf
     public boolean checkDeptInfoServiceExists(DeptInfoCheckParam deptInfoCheckParam) throws Exception {
         LambdaQueryWrapper<DeptInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (deptInfoCheckParam != null) {
-
+            Long id = deptInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(DeptInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

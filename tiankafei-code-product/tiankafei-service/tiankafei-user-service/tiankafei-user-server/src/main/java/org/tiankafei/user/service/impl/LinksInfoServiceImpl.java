@@ -52,7 +52,10 @@ public class LinksInfoServiceImpl extends BaseServiceImpl<LinksInfoMapper, Links
     public boolean checkLinksInfoServiceExists(LinksInfoCheckParam linksInfoCheckParam) throws Exception {
         LambdaQueryWrapper<LinksInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (linksInfoCheckParam != null) {
-
+            Long id = linksInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(LinksInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;
