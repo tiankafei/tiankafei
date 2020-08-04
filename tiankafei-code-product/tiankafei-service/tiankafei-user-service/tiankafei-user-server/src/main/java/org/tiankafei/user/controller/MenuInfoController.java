@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user/menu-info-entity")
+@RequestMapping("/menuInfo")
 @Api(value = "系统功能菜单信息表 API", tags = {"系统功能菜单信息表"})
 public class MenuInfoController extends BaseController {
 

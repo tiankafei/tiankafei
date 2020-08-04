@@ -2,6 +2,7 @@ package org.tiankafei.collection.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +11,6 @@ import org.tiankafei.collection.bean.ComponentClient;
 import org.tiankafei.collection.param.ComponentTypeVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
-
-import java.util.List;
 
 /**
  * 采集相关API

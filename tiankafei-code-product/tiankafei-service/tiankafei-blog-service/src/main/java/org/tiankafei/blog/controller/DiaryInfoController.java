@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/blog/diary-info-entity")
+@RequestMapping("/diaryInfo")
 @Api(value = "系统的博客日记 API", tags = {"系统的博客日记"})
 public class DiaryInfoController extends BaseController {
 

@@ -52,7 +52,10 @@ public class RoleInfoServiceImpl extends BaseServiceImpl<RoleInfoMapper, RoleInf
     public boolean checkRoleInfoServiceExists(RoleInfoCheckParam roleInfoCheckParam) throws Exception {
         LambdaQueryWrapper<RoleInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (roleInfoCheckParam != null) {
-
+            Long id = roleInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(RoleInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

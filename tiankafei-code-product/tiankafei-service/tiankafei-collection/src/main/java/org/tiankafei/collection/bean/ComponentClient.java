@@ -2,6 +2,11 @@ package org.tiankafei.collection.bean;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,12 +14,6 @@ import org.tiankafei.collection.component.CollectionComponent;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.param.ComponentTypeVo;
 import org.tiankafei.web.common.bean.ApplicationContextHelper;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author tiankafei

@@ -24,7 +24,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @author tiankafei
  * @since 1.0
  */
-@FeignClient(value = "user-service", contextId = "sysDictInfo", path = "/user/dict-info-entity")
+@FeignClient(value = "user-service", contextId = "sysDictInfo", path = "/dictInfo")
 public interface DictInfoFeign {
 
     @PostMapping("/check")

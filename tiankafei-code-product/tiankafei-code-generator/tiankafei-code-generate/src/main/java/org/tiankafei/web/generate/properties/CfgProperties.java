@@ -42,7 +42,7 @@ public class CfgProperties implements Serializable {
 
     private List<String> importPackageList;
 
-
+    private String requestContext;
 
 
 

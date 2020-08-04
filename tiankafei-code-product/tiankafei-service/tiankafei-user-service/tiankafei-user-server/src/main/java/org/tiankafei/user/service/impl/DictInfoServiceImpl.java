@@ -7,7 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -59,15 +62,15 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         LambdaQueryWrapper<DictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (dictInfoCheckParam != null) {
             String dictCode = dictInfoCheckParam.getDictCode();
-            if(StringUtils.isNotBlank(dictCode)){
+            if (StringUtils.isNotBlank(dictCode)) {
                 lambdaQueryWrapper.eq(DictInfoEntity::getDictCode, dictCode);
             }
             List<String> dictCodeList = dictInfoCheckParam.getDictCodeList();
-            if(CollectionUtils.isNotEmpty(dictCodeList)){
+            if (CollectionUtils.isNotEmpty(dictCodeList)) {
                 lambdaQueryWrapper.in(DictInfoEntity::getDictCode, dictCodeList);
             }
             Long id = dictInfoCheckParam.getId();
-            if(id != null){
+            if (id != null) {
                 lambdaQueryWrapper.ne(DictInfoEntity::getId, id);
             }
         }
@@ -132,7 +135,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             lambdaQueryWrapper.select(DictInfoEntity::getId);
             lambdaQueryWrapper.in(DictInfoEntity::getDictCode, dictCodeList);
             List<String> alreadyDictCodeList = super.list(lambdaQueryWrapper).stream().map(dictInfoEntity -> dictInfoEntity.getDictCode()).collect(Collectors.toList());
-            if(CollectionUtils.isNotEmpty(alreadyDictCodeList)){
+            if (CollectionUtils.isNotEmpty(alreadyDictCodeList)) {
                 throw new UserException("字典代码：" + alreadyDictCodeList + " 已经存在！");
             }
             // 执行保存
@@ -207,14 +210,16 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             // 设置查询条件   先把要删的字典的数据查出来，再进行删除，否则删除之后，数据表就查不到了
             lambdaQueryWrapper.select(DictInfoEntity::getDataTable, DictInfoEntity::getId);
             List<DictInfoEntity> dictInfoEntityList = super.list(lambdaQueryWrapper);
-            List<String> dataTableList = dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getDataTable()).collect(Collectors.toList());
-            List<Long> idList = dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getId()).collect(Collectors.toList());
+
+            Map<Long, String> dataMap = dictInfoEntityList.stream().collect(Collectors.toMap(DictInfoEntity::getId, DictInfoEntity::getDataTable));
+            Collection<String> dataTableList = dataMap.values();
+            Set<Long> idList = dataMap.keySet();
             // 删除字典数据
-            if(CollectionUtils.isNotEmpty(idList)){
+            if (CollectionUtils.isNotEmpty(idList)) {
                 flag = super.removeByIds(idList);
             }
             // 删除字典数据表
-            if(CollectionUtils.isNotEmpty(dataTableList)){
+            if (CollectionUtils.isNotEmpty(dataTableList)) {
                 for (String dataTable : dataTableList) {
                     dbService.dropTable(dataTable);
                 }
@@ -258,12 +263,12 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         oldDictInfoEntity.setStatus(status);
         boolean flag = super.updateById(oldDictInfoEntity);
 
-        if(Boolean.TRUE.equals(status)){
+        if (Boolean.TRUE.equals(status)) {
             // 要求启用
             Boolean oldStatus = oldDictInfoEntity.getStatus();
-            if(oldStatus){
-               // 已经是启用状态，无需再创建表结构
-            }else{
+            if (oldStatus) {
+                // 已经是启用状态，无需再创建表结构
+            } else {
                 // 创建字段数据表
                 dbService.createTable("sys_dict_table", oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
             }

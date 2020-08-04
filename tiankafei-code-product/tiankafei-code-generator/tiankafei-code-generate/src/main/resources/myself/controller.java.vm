@@ -48,7 +48,7 @@ import ${cfg.pageClassPath};
 #else
 @Controller
 #end
-@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@RequestMapping("/${cfg.requestContext}")
 #if(${swagger2})
 @Api(value = "$!{table.comment} API", tags = {"$!{table.comment}"})
 #end

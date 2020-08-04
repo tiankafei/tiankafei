@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user/role-menu-entity")
+@RequestMapping("/roleMenu")
 @Api(value = "系统角色对应的功能配置表 API", tags = {"系统角色对应的功能配置表"})
 public class RoleMenuController extends BaseController {
 

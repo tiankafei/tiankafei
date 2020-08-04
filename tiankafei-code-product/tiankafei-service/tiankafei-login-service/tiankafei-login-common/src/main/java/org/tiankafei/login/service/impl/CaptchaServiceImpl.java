@@ -2,6 +2,7 @@ package org.tiankafei.login.service.impl;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
+import java.io.ByteArrayOutputStream;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -15,8 +16,6 @@ import org.tiankafei.web.common.enums.CaptchaEnum;
 import org.tiankafei.web.common.exception.VerificationException;
 import org.tiankafei.web.common.param.CaptchaParamVo;
 import org.tiankafei.web.common.service.impl.CommonCaptchaUtil;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  * @author tiankafei

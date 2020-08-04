@@ -1,8 +1,7 @@
 package org.tiankafei.collection.param;
 
-import lombok.Data;
-
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 正则表达式对象

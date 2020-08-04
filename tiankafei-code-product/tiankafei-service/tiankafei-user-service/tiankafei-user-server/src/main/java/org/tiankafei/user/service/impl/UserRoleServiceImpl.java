@@ -52,7 +52,10 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper, UserRol
     public boolean checkUserRoleServiceExists(UserRoleCheckParam userRoleCheckParam) throws Exception {
         LambdaQueryWrapper<UserRoleEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (userRoleCheckParam != null) {
-
+            Long id = userRoleCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(UserRoleEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

@@ -25,7 +25,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @author tiankafei
  * @since 1.0
  */
-@FeignClient(value = "user-service", contextId = "sysUserInfo", path = "/user/user-info-entity")
+@FeignClient(value = "user-service", contextId = "sysUserInfo", path = "/userInfo")
 public interface UserInfoFeign {
 
     @PostMapping("/check")

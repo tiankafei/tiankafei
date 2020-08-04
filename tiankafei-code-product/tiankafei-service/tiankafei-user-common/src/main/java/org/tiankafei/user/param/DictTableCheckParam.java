@@ -23,6 +23,9 @@ public class DictTableCheckParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键id")
+    private Long id;
+
     @ApiModelProperty(value = "数据表名")
     @Size(max = 30, message = "数据表名长度不能超过 30 ！")
     @NotBlank(message = "数据表名不能为空！")

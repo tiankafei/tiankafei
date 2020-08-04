@@ -52,7 +52,10 @@ public class MenuInfoServiceImpl extends BaseServiceImpl<MenuInfoMapper, MenuInf
     public boolean checkMenuInfoServiceExists(MenuInfoCheckParam menuInfoCheckParam) throws Exception {
         LambdaQueryWrapper<MenuInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (menuInfoCheckParam != null) {
-
+            Long id = menuInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(MenuInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

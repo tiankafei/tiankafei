@@ -1,6 +1,7 @@
 package org.tiankafei.login.feign;
 
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.tiankafei.user.param.LoginParamVo;
 import org.tiankafei.web.common.api.ApiResult;
-
-import javax.validation.Valid;
 
 /**
  * @author tiankafei

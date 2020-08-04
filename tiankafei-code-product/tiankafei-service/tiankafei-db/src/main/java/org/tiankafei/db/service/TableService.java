@@ -1,13 +1,12 @@
 package org.tiankafei.db.service;
 
+import java.util.List;
 import org.tiankafei.db.entity.TableEntity;
 import org.tiankafei.db.param.TableNameEntityQueryParam;
 import org.tiankafei.db.param.TableNameListQueryParam;
 import org.tiankafei.db.param.TableNamePageListQueryParam;
 import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
-
-import java.util.List;
 
 /**
  * <pre>

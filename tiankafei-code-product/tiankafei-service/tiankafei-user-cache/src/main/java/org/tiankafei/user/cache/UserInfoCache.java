@@ -2,6 +2,9 @@ package org.tiankafei.user.cache;
 
 import cn.hutool.crypto.SecureUtil;
 import com.google.common.collect.Maps;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,10 +14,6 @@ import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.config.TokenConfig;
 import org.tiankafei.web.common.exception.LoginException;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 1.对于用户登录场景不需要进行数据预热

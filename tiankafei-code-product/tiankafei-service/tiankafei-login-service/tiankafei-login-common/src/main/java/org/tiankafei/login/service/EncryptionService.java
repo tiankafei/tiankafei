@@ -8,6 +8,7 @@ public interface EncryptionService {
 
     /**
      * 加密
+     *
      * @param str
      * @return
      */
@@ -15,6 +16,7 @@ public interface EncryptionService {
 
     /**
      * 生成token
+     *
      * @param str
      * @return
      */

@@ -1,11 +1,10 @@
 package org.tiankafei.collection.property.impl;
 
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.tiankafei.collection.param.RegularExpressionVo;
 import org.tiankafei.collection.property.ComponentProperty;
-
-import java.util.List;
 
 /**
  * 抽象组件属性对象

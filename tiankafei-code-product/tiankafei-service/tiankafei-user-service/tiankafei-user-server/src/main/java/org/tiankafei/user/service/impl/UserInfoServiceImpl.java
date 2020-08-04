@@ -47,6 +47,7 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
 
     /**
      * 校验 用户名 是否已经存在
+     *
      * @param username
      * @return
      * @throws Exception
@@ -58,6 +59,7 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
 
     /**
      * 校验  邮箱 是否已经存在
+     *
      * @param email
      * @return
      * @throws Exception
@@ -69,6 +71,7 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
 
     /**
      * 校验 手机号码 是否已经存在
+     *
      * @param telephone
      * @return
      * @throws Exception
@@ -89,7 +92,10 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     public boolean checkUserInfoServiceExists(UserInfoCheckParam userInfoCheckParam) throws Exception {
         LambdaQueryWrapper<UserInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (userInfoCheckParam != null) {
-
+            Long id = userInfoCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(UserInfoEntity::getId, id);
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

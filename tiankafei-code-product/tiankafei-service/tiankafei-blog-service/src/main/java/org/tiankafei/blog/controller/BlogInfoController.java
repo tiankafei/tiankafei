@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/blog/blog-info-entity")
+@RequestMapping("/blogInfo")
 @Api(value = "系统的博客数据 API", tags = {"系统的博客数据"})
 public class BlogInfoController extends BaseController {
 

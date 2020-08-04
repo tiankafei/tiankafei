@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.tiankafei.web.common.entity.BaseEntity;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
 
 /**
  * @author tiankafei

@@ -34,7 +34,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user/user-info-entity")
+@RequestMapping("/userInfo")
 @Api(value = "用户基本信息表 API", tags = {"用户基本信息表"})
 public class UserInfoController extends BaseController {
 
