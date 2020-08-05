@@ -187,6 +187,9 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         setDynamicTableName(dataTable);
 
         DictTableEntity dictTableEntity = super.getById(id);
+        if (dictTableEntity == null) {
+            return null;
+        }
         DictTableVo dictTableVo = new DictTableVo();
         BeanUtils.copyProperties(dictTableEntity, dictTableVo);
         return dictTableVo;

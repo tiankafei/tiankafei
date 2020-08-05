@@ -170,6 +170,9 @@ public class RoleInfoServiceImpl extends BaseServiceImpl<RoleInfoMapper, RoleInf
     @Override
     public RoleInfoVo getRoleInfoServiceById(Serializable id) throws Exception {
         RoleInfoEntity roleInfoEntity = super.getById(id);
+        if (roleInfoEntity == null) {
+            return null;
+        }
         RoleInfoVo roleInfoVo = new RoleInfoVo();
         BeanUtils.copyProperties(roleInfoEntity, roleInfoVo);
         return roleInfoVo;

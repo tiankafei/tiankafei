@@ -170,6 +170,9 @@ public class DeptInfoServiceImpl extends BaseServiceImpl<DeptInfoMapper, DeptInf
     @Override
     public DeptInfoVo getDeptInfoServiceById(Serializable id) throws Exception {
         DeptInfoEntity deptInfoEntity = super.getById(id);
+        if (deptInfoEntity == null) {
+            return null;
+        }
         DeptInfoVo deptInfoVo = new DeptInfoVo();
         BeanUtils.copyProperties(deptInfoEntity, deptInfoVo);
         return deptInfoVo;

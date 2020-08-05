@@ -210,6 +210,9 @@ public class UserLoginServiceImpl extends BaseServiceImpl<UserLoginMapper, UserL
     @Override
     public UserLoginVo getUserLoginServiceById(Serializable id) throws Exception {
         UserLoginEntity userLoginEntity = super.getById(id);
+        if (userLoginEntity == null) {
+            return null;
+        }
         UserLoginVo userLoginVo = new UserLoginVo();
         BeanUtils.copyProperties(userLoginEntity, userLoginVo);
         return userLoginVo;

@@ -170,6 +170,9 @@ public class MenuInfoServiceImpl extends BaseServiceImpl<MenuInfoMapper, MenuInf
     @Override
     public MenuInfoVo getMenuInfoServiceById(Serializable id) throws Exception {
         MenuInfoEntity menuInfoEntity = super.getById(id);
+        if (menuInfoEntity == null) {
+            return null;
+        }
         MenuInfoVo menuInfoVo = new MenuInfoVo();
         BeanUtils.copyProperties(menuInfoEntity, menuInfoVo);
         return menuInfoVo;

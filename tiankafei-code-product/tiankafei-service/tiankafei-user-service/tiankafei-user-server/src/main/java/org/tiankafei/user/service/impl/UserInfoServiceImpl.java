@@ -210,6 +210,9 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     @Override
     public UserInfoVo getUserInfoServiceById(Serializable id) throws Exception {
         UserInfoEntity userInfoEntity = super.getById(id);
+        if (userInfoEntity == null) {
+            return null;
+        }
         UserInfoVo userInfoVo = new UserInfoVo();
         BeanUtils.copyProperties(userInfoEntity, userInfoVo);
         return userInfoVo;

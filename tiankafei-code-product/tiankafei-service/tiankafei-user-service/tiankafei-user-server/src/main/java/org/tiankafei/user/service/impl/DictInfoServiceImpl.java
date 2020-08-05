@@ -286,6 +286,9 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     @Override
     public DictInfoVo getDictInfoServiceById(Serializable id) throws Exception {
         DictInfoEntity dictInfoEntity = super.getById(id);
+        if (dictInfoEntity == null) {
+            return null;
+        }
         DictInfoVo dictInfoVo = new DictInfoVo();
         BeanUtils.copyProperties(dictInfoEntity, dictInfoVo);
         return dictInfoVo;

@@ -170,6 +170,9 @@ public class RoleMenuServiceImpl extends BaseServiceImpl<RoleMenuMapper, RoleMen
     @Override
     public RoleMenuVo getRoleMenuServiceById(Serializable id) throws Exception {
         RoleMenuEntity roleMenuEntity = super.getById(id);
+        if (roleMenuEntity == null) {
+            return null;
+        }
         RoleMenuVo roleMenuVo = new RoleMenuVo();
         BeanUtils.copyProperties(roleMenuEntity, roleMenuVo);
         return roleMenuVo;

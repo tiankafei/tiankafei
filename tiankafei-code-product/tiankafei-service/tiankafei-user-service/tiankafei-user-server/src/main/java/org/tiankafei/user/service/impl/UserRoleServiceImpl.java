@@ -170,6 +170,9 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper, UserRol
     @Override
     public UserRoleVo getUserRoleServiceById(Serializable id) throws Exception {
         UserRoleEntity userRoleEntity = super.getById(id);
+        if (userRoleEntity == null) {
+            return null;
+        }
         UserRoleVo userRoleVo = new UserRoleVo();
         BeanUtils.copyProperties(userRoleEntity, userRoleVo);
         return userRoleVo;

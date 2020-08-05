@@ -170,6 +170,9 @@ public class LinksInfoServiceImpl extends BaseServiceImpl<LinksInfoMapper, Links
     @Override
     public LinksInfoVo getLinksInfoServiceById(Serializable id) throws Exception {
         LinksInfoEntity linksInfoEntity = super.getById(id);
+        if (linksInfoEntity == null) {
+            return null;
+        }
         LinksInfoVo linksInfoVo = new LinksInfoVo();
         BeanUtils.copyProperties(linksInfoEntity, linksInfoVo);
         return linksInfoVo;
