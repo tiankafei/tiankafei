@@ -170,6 +170,9 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
     @Override
     public BlogInfoVo getBlogInfoServiceById(Serializable id) throws Exception {
         BlogInfoEntity blogInfoEntity = super.getById(id);
+        if (blogInfoEntity == null) {
+            return null;
+        }
         BlogInfoVo blogInfoVo = new BlogInfoVo();
         BeanUtils.copyProperties(blogInfoEntity, blogInfoVo);
         return blogInfoVo;

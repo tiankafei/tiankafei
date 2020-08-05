@@ -170,6 +170,9 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
     @Override
     public GlobalSettingVo getGlobalSettingServiceById(Serializable id) throws Exception {
         GlobalSettingEntity globalSettingEntity = super.getById(id);
+        if (globalSettingEntity == null) {
+            return null;
+        }
         GlobalSettingVo globalSettingVo = new GlobalSettingVo();
         BeanUtils.copyProperties(globalSettingEntity, globalSettingVo);
         return globalSettingVo;

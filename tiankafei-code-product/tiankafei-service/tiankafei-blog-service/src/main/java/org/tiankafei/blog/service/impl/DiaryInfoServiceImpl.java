@@ -170,6 +170,9 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
     @Override
     public DiaryInfoVo getDiaryInfoServiceById(Serializable id) throws Exception {
         DiaryInfoEntity diaryInfoEntity = super.getById(id);
+        if (diaryInfoEntity == null) {
+            return null;
+        }
         DiaryInfoVo diaryInfoVo = new DiaryInfoVo();
         BeanUtils.copyProperties(diaryInfoEntity, diaryInfoVo);
         return diaryInfoVo;
