@@ -175,6 +175,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 	@Override
     public ${cfg.voClassName} get${table.serviceName}ById(Serializable id) throws Exception {
 		${entity} ${cfg.entityConstName} = super.getById(id);
+		if (${cfg.entityConstName} == null) {
+			return null;
+		}
 		${cfg.voClassName} ${cfg.voConstName} = new ${cfg.voClassName}();
 		BeanUtils.copyProperties(${cfg.entityConstName}, ${cfg.voConstName});
 		return ${cfg.voConstName};
