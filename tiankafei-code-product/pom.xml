@@ -54,6 +54,9 @@
         <module>tiankafei-api-gateway</module>
         <module>tiankafei-frame-start</module>
         <module>tiankafei-code-generator</module>
+        <module>tiankafei-distributed-id-center</module>
+        <module>tiankafei-distributed-lock-center</module>
+        <module>tiankafei-distributed-scheduling-center</module>
         <module>tiankafei-service</module>
     </modules>
 
