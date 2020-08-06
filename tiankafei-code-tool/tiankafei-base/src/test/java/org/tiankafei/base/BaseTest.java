@@ -397,6 +397,32 @@ public class BaseTest {
         System.out.println(stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
+    int a = 0;
+
+    @Test
+    public void test12(){
+        testtest12(a);
+        System.out.println(a);
+
+        Thread thread = new Thread(() -> {
+            a = 2;
+            System.out.println(a);
+        });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(a);
+    }
+
+    private void testtest12(int a){
+        a = 1;
+        System.out.println(a);
+    }
+
     private int get(int value) {
         return value - value % 10000;
     }
