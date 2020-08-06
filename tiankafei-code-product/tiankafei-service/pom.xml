@@ -25,6 +25,7 @@
         <module>tiankafei-user-service</module>
         <module>tiankafei-blog-service</module>
         <module>tiankafei-questionnaire-service</module>
+        <module>tiankafei-activit-service</module>
     </modules>
 
 </project>
