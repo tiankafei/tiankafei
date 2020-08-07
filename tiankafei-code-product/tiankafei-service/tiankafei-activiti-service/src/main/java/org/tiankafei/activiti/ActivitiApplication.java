@@ -1,4 +1,4 @@
-package org.tiankafei.activit;
+package org.tiankafei.activiti;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -20,10 +20,10 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"org.tiankafei"})
 @EnableFeignClients(basePackages = {"org.tiankafei"})
 @EnableHystrixDashboard
-public class ActivitApplication {
+public class ActivitiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ActivitApplication.class, args);
+        SpringApplication.run(ActivitiApplication.class, args);
     }
 
 }

@@ -9,11 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>tiankafei-activit-service</artifactId>
+    <artifactId>tiankafei-activiti-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tiankafei-activit-service</name>
+    <name>tiankafei-activiti-service</name>
     <description></description>
 
     <dependencies>

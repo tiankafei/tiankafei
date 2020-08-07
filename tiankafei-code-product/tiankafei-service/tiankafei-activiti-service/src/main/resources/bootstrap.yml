@@ -4,12 +4,12 @@ spring:
   profiles:
     active: dev, eureka
   application:
-    name: activit-service
+    name: activiti-service
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   datasource:
-    url: jdbc:mysql://localhost:3306/db-activit?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/db-activiti?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: tiankafei
     type: com.alibaba.druid.pool.DruidDataSource
@@ -78,10 +78,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: activit-service
+    name: activiti-service
     url: 'https://tiankafei.top'
   description: '工作流服务'
-  title: activit-service
+  title: activiti-service
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### dynamic end ###################################
