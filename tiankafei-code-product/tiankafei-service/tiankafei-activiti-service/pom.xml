@@ -41,6 +41,11 @@
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-db</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic -->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter-basic</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
