@@ -13,6 +13,10 @@ spring:
     database-schema-update: false
     # 自动部署验证设置:true-开启（默认）、false-关闭
     check-process-definitions: false
+    # 保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其他全部流程相关的细节数据，包括一些流程参数等
+    history-level: full
+    # activiti6默认启用 activiti7默认关闭
+    db-history-used: true
   datasource:
     url: jdbc:mysql://localhost:3306/db-activiti?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
