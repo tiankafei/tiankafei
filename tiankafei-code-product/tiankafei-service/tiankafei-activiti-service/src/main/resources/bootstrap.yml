@@ -18,7 +18,7 @@ spring:
     # activiti6默认启用 activiti7默认关闭
     db-history-used: true
   datasource:
-    url: jdbc:mysql://localhost:3306/db-activiti?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/db-activiti?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
     username: root
     password: tiankafei
     type: com.alibaba.druid.pool.DruidDataSource
