@@ -1,5 +1,7 @@
 package org.tiankafei.lock.zk;
 
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.tiankafei.lock.Lock;
 import org.tiankafei.lock.zk.utils.ZooKeeperUtil;
@@ -20,6 +22,9 @@ public class ZooKeeperLock implements Lock {
 
     @Override
     public void lock() {
+        String threadName = Thread.currentThread().getName();
+        zooKeeper.create("/lock", threadName.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL, new WatchCallBack(), "123456");
+
 
     }
 
