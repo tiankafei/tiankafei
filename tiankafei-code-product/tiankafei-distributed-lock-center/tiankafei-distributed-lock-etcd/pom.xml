@@ -16,4 +16,11 @@
     <name>tiankafei-distributed-lock-etcd</name>
     <description></description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-distributed-lock</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

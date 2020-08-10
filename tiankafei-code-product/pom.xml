@@ -379,6 +379,33 @@
                 <artifactId>tiankafei-message-rocketmq</artifactId>
                 <version>${code-produce.version}</version>
             </dependency>
+
+            <!--分布式锁工程-->
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-distributed-lock</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-distributed-lock-etcd</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-distributed-lock-mysql</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-distributed-lock-redis</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei</groupId>
+                <artifactId>tiankafei-distributed-lock-zookeeper</artifactId>
+                <version>${code-produce.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -16,4 +16,16 @@
     <name>tiankafei-distributed-lock-redis</name>
     <description></description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-distributed-lock</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

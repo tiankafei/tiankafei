@@ -16,4 +16,16 @@
     <name>tiankafei-distributed-lock-mysql</name>
     <description></description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-distributed-lock</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

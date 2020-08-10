@@ -16,4 +16,18 @@
     <name>tiankafei-distributed-lock-zookeeper</name>
     <description></description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.tiankafei</groupId>
+            <artifactId>tiankafei-distributed-lock</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.13</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+
 </project>
