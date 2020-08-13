@@ -1,4 +1,4 @@
-package org.tiankafei.blog;
+package org.tiankafei.multidatasource.jpa;
 
 import com.alibaba.fastjson.JSON;
 import java.util.Map;
@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.tiankafei.multidatasource.jpa.MultiDatasourceJpaApplication;
 import org.tiankafei.multidatasource.jpa.primary.entity.BlogInfoEntity;
 import org.tiankafei.multidatasource.jpa.primary.service.BlogInfoService;
 import org.tiankafei.multidatasource.jpa.secondary.entity.UserInfoEntity;
