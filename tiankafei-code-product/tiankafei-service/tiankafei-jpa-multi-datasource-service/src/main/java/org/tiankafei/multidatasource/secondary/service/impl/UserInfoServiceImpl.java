@@ -1,6 +1,5 @@
 package org.tiankafei.multidatasource.secondary.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
-import org.tiankafei.multidatasource.secondary.mapper.UserInfoMapper;
+import org.tiankafei.multidatasource.secondary.jpa.UserInfoJpa;
 import org.tiankafei.multidatasource.secondary.service.UserInfoService;
 
 /**
@@ -22,18 +21,17 @@ import org.tiankafei.multidatasource.secondary.service.UserInfoService;
  * @since 1.0
  */
 @Service
-@DS("second")
 public class UserInfoServiceImpl implements UserInfoService {
-
-    @Autowired
-    private UserInfoMapper userInfoMapper;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private UserInfoJpa<UserInfoEntity> userInfoJpa;
+
     @Override
-    public UserInfoEntity getUserInfoServiceById(Serializable id) throws Exception {
-        return null;
+    public UserInfoEntity getUserInfoServiceByIdForJpa(Serializable id) throws Exception {
+        return userInfoJpa.findById(Long.valueOf("" + id)).get();
     }
 
     @Override
@@ -50,8 +48,4 @@ public class UserInfoServiceImpl implements UserInfoService {
         return null;
     }
 
-    @Override
-    public UserInfoEntity getUserInfoServiceByIdForMapper(Serializable id) throws Exception {
-        return userInfoMapper.getUserInfoServiceById(id);
-    }
 }

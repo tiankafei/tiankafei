@@ -20,7 +20,7 @@ public interface UserInfoService {
      * @return
      * @throws Exception
      */
-    UserInfoEntity getUserInfoServiceById(Serializable id) throws Exception;
+    UserInfoEntity getUserInfoServiceByIdForJpa(Serializable id) throws Exception;
 
     /**
      * 根据ID获取 用户基本信息表 对象
@@ -30,14 +30,5 @@ public interface UserInfoService {
      * @throws Exception
      */
     UserInfoEntity getUserInfoServiceByIdForJdbc(Serializable id) throws Exception;
-
-    /**
-     * 根据ID获取 用户基本信息表 对象
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    UserInfoEntity getUserInfoServiceByIdForMapper(Serializable id) throws Exception;
 
 }

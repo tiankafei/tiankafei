@@ -30,7 +30,9 @@
 
     <!-- 根据ID获取 用户基本信息表 对象 -->
     <select id="getUserInfoServiceById" resultMap="baseResultMap">
-
+        select
+        <include refid="base_Column_List"></include>
+        from sys_user_info where id = #{param}
     </select>
 
 </mapper>

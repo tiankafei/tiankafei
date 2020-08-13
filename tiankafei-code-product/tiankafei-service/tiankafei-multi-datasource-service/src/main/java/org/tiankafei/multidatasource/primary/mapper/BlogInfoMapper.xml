@@ -32,7 +32,9 @@
 
     <!-- 根据ID获取 系统的博客数据 对象 -->
     <select id="getBlogInfoServiceById" resultMap="baseResultMap">
-
+        select
+        <include refid="base_Column_List"></include>
+        from sys_blog_info where id = #{param}
     </select>
 
 </mapper>

@@ -20,7 +20,7 @@ public interface BlogInfoService {
      * @return
      * @throws Exception
      */
-    BlogInfoEntity getBlogInfoServiceById(Serializable id) throws Exception;
+    BlogInfoEntity getBlogInfoServiceByIdForJpa(Serializable id) throws Exception;
 
     /**
      * 根据ID获取 系统的博客数据 对象
@@ -30,14 +30,5 @@ public interface BlogInfoService {
      * @throws Exception
      */
     BlogInfoEntity getBlogInfoServiceByIdForJdbc(Serializable id) throws Exception;
-
-    /**
-     * 根据ID获取 系统的博客数据 对象
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    BlogInfoEntity getBlogInfoServiceByIdForMapper(Serializable id) throws Exception;
 
 }

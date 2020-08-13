@@ -1,6 +1,5 @@
 package org.tiankafei.multidatasource.primary.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
-import org.tiankafei.multidatasource.primary.mapper.BlogInfoMapper;
+import org.tiankafei.multidatasource.primary.jpa.BlogInfoJpa;
 import org.tiankafei.multidatasource.primary.service.BlogInfoService;
 
 /**
@@ -22,18 +21,17 @@ import org.tiankafei.multidatasource.primary.service.BlogInfoService;
  * @since 1.0
  */
 @Service
-@DS("first")
 public class BlogInfoServiceImpl implements BlogInfoService {
-
-    @Autowired
-    private BlogInfoMapper blogInfoMapper;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private BlogInfoJpa<BlogInfoEntity> blogInfoJpa;
+
     @Override
-    public BlogInfoEntity getBlogInfoServiceById(Serializable id) throws Exception {
-        return null;
+    public BlogInfoEntity getBlogInfoServiceByIdForJpa(Serializable id) throws Exception {
+        return blogInfoJpa.findById(Long.valueOf("" + id)).get();
     }
 
     @Override
@@ -48,11 +46,6 @@ public class BlogInfoServiceImpl implements BlogInfoService {
             return blogInfoEntity;
         }
         return null;
-    }
-
-    @Override
-    public BlogInfoEntity getBlogInfoServiceByIdForMapper(Serializable id) throws Exception {
-        return blogInfoMapper.getBlogInfoServiceById(id);
     }
 
 }
