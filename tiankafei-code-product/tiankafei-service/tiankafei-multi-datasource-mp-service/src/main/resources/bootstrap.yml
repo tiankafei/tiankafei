@@ -1,0 +1,115 @@
+server:
+  port: 7300
+spring:
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  profiles:
+    active: dev, eureka
+  application:
+    name: multi-datasource-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin123
+    dynamic:
+      druid:
+        #druid 数据源专有配置
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+
+        #配置监控统计拦截的filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+        #如果允许时报错  java.lang.ClassNotFoundException: org.apache.log4j.Priority
+        #则导入 log4j 依赖即可，Maven 地址： https://mvnrepository.com/artifact/log4j/log4j
+        filters: stat,wall
+        maxPoolPreparedStatementPerConnectionSize: 20
+        useGlobalDataSourceStat: true
+        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      primary: first
+      strict: false
+      datasource:
+        first:
+          url: jdbc:mysql://localhost:3306/db-blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+          username: root
+          password: tiankafei
+        second:
+          url: jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+          username: root
+          password: tiankafei
+    primary:
+      jdbc-url: jdbc:mysql://localhost:3306/db-blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+      username: root
+      password: tiankafei
+    secondary:
+      jdbc-url: jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+      username: root
+      password: tiankafei
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  endpoint:
+    shutdown:
+      #可以远程关闭服务节点
+      enabled: true
+logging:
+  level:
+    ROOT: info
+    # mapper sql日志的包路径
+    org.tiankafei.multidatasource.primary.mapper: debug
+    org.tiankafei.multidatasource.secondary.mapper: debug
+    # db 工程的日志包路径
+    org.tiankafei.db.mapper: debug
+    org.tiankafei.db.service.impl: debug
+    # nacos日志的包路径
+    com.alibaba.nacos.client.naming: WARN
+    # nacos日志的包路径
+    com.alibaba.nacos.client.config.impl: WARN
+    # eureka日志的包路径
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+    # spring自动装配日志的包路径
+    org.springframework.boot.autoconfigure: ERROR
+#################################### Swagger start #################################
+# swagger配置
+swagger:
+  enable: false
+  contact:
+    email: 798971170@qq.com
+    name: blog-service
+    url: 'https://tiankafei.top'
+  description: '博客系统服务'
+  title: blog-service
+  url: 'https://tiankafei.top'
+  version: 1.0
+#################################### Swagger end ###################################
+
+#################################### tiankafei自定义配置 start #################################
+tiankafei:
+  tokenType: 1  # 从请求头中获取token信息
+#  tokenType: 2  # 从cookies中获取token信息
+#  tokenType: 3  # 从请求参数中获取token信息
+#  tokenType: 4  # 从session中获取token信息（需要做session同步）
+#################################### tiankafei自定义配置 end ###################################

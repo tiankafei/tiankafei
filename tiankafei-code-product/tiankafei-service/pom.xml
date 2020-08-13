@@ -27,7 +27,7 @@
         <module>tiankafei-questionnaire-service</module>
         <module>tiankafei-activiti-service</module>
         <module>tiankafei-multi-datasource-service</module>
-        <module>tiankafei-jpa-multi-datasource-service</module>
+        <module>tiankafei-multi-datasource-jpa-service</module>
     </modules>
 
 </project>
