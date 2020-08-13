@@ -60,10 +60,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: blog-service
+    name: jpa-multi-datasource-service-service
     url: 'https://tiankafei.top'
-  description: '博客系统服务'
-  title: blog-service
+  description: 'jpa的多数据源服务'
+  title: jpa-multi-datasource-service-service
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################
