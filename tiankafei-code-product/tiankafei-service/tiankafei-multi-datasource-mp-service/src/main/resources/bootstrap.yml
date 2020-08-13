@@ -45,14 +45,14 @@ spring:
         maxPoolPreparedStatementPerConnectionSize: 20
         useGlobalDataSourceStat: true
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-      primary: first
+      primary: blog
       strict: false
       datasource:
-        first:
+        blog:
           url: jdbc:mysql://localhost:3306/db-blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
           username: root
           password: tiankafei
-        second:
+        user:
           url: jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
           username: root
           password: tiankafei
