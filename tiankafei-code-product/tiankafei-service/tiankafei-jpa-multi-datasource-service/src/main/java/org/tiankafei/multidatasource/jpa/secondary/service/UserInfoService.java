@@ -1,6 +1,7 @@
 package org.tiankafei.multidatasource.jpa.secondary.service;
 
 import java.io.Serializable;
+import java.util.Map;
 import org.tiankafei.multidatasource.jpa.secondary.entity.UserInfoEntity;
 
 /**
@@ -29,6 +30,6 @@ public interface UserInfoService {
      * @return
      * @throws Exception
      */
-    UserInfoEntity getUserInfoServiceByIdForJdbc(Serializable id) throws Exception;
+    Map<String, Object> getUserInfoServiceByIdForJdbc(Serializable id) throws Exception;
 
 }

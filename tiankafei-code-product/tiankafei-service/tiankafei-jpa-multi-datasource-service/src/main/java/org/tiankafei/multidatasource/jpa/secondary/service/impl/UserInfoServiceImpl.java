@@ -3,9 +3,9 @@ package org.tiankafei.multidatasource.jpa.secondary.service.impl;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.jpa.secondary.jpa.UserInfoJpa;
@@ -24,6 +24,7 @@ import org.tiankafei.multidatasource.jpa.secondary.service.UserInfoService;
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
+    @Qualifier("secondaryJdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -35,15 +36,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfoEntity getUserInfoServiceByIdForJdbc(Serializable id) throws Exception {
+    public Map<String, Object> getUserInfoServiceByIdForJdbc(Serializable id) throws Exception {
         String sql = "select * from sys_user_info where id = ?";
         List<Map<String, Object>> dataMapList = jdbcTemplate.queryForList(sql, new Serializable[]{id});
         if(CollectionUtils.isNotEmpty(dataMapList)){
             Map<String, Object> dataMap = dataMapList.get(0);
-
-            UserInfoEntity userInfoEntity = new UserInfoEntity();
-            BeanUtils.populate(userInfoEntity, dataMap);
-            return userInfoEntity;
+            return dataMap;
         }
         return null;
     }

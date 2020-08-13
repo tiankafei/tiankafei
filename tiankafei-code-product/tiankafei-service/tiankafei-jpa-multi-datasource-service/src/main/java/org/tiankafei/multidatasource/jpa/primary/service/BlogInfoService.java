@@ -1,6 +1,7 @@
 package org.tiankafei.multidatasource.jpa.primary.service;
 
 import java.io.Serializable;
+import java.util.Map;
 import org.tiankafei.multidatasource.jpa.primary.entity.BlogInfoEntity;
 
 /**
@@ -29,6 +30,6 @@ public interface BlogInfoService {
      * @return
      * @throws Exception
      */
-    BlogInfoEntity getBlogInfoServiceByIdForJdbc(Serializable id) throws Exception;
+    Map<String, Object> getBlogInfoServiceByIdForJdbc(Serializable id) throws Exception;
 
 }

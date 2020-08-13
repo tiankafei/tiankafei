@@ -1,6 +1,7 @@
 package org.tiankafei.blog;
 
 import com.alibaba.fastjson.JSON;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +33,8 @@ public class MultiDatasourceJpaApplicationTest {
     public void test() throws Exception {
         Long blogId = 1289742331580715010L;
         try {
-            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
+            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -53,8 +54,8 @@ public class MultiDatasourceJpaApplicationTest {
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJdbc(userId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(userInfoEntity));
+            Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
+            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }

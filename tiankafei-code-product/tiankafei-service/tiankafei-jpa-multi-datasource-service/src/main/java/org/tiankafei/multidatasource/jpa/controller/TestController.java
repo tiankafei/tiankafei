@@ -1,6 +1,7 @@
 package org.tiankafei.multidatasource.jpa.controller;
 
 import com.alibaba.fastjson.JSON;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,8 @@ public class TestController {
     public String test() throws Exception {
         Long blogId = 1289742331580715010L;
         try {
-            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
+            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -49,8 +50,8 @@ public class TestController {
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJdbc(userId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(userInfoEntity));
+            Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
+            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
