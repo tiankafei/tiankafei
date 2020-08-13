@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.mp.entity.BlogInfoEntity;
 import org.tiankafei.multidatasource.mp.mapper.BlogInfoMapper;
 import org.tiankafei.multidatasource.mp.service.BlogInfoService;
+import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 
 /**
  * <p>
@@ -22,7 +23,7 @@ import org.tiankafei.multidatasource.mp.service.BlogInfoService;
  */
 @Service
 @DS("blog")
-public class BlogInfoServiceImpl implements BlogInfoService {
+public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInfoEntity> implements BlogInfoService {
 
     @Autowired
     private BlogInfoMapper blogInfoMapper;
@@ -32,6 +33,11 @@ public class BlogInfoServiceImpl implements BlogInfoService {
 
     @Override
     public BlogInfoEntity getBlogInfoServiceByIdForMp(Serializable id) throws Exception {
+        return super.getById(id);
+    }
+
+    @Override
+    public BlogInfoEntity getBlogInfoServiceByIdForMapper(Serializable id) throws Exception {
         return blogInfoMapper.getBlogInfoServiceById(id);
     }
 

@@ -35,6 +35,12 @@ public class TestController {
             e.printStackTrace();
         }
         try {
+            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMapper(blogId);
+            log.info("mybatis-mapper多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
             BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMp(blogId);
             log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
         }catch (Exception e){
@@ -50,7 +56,13 @@ public class TestController {
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJMp(userId);
+            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMapper(userId);
+            log.info("mybatis-mapper多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMp(userId);
             log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
         }catch (Exception e){
             e.printStackTrace();

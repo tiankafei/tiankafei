@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.mp.entity.UserInfoEntity;
 import org.tiankafei.multidatasource.mp.mapper.UserInfoMapper;
 import org.tiankafei.multidatasource.mp.service.UserInfoService;
+import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 
 /**
  * <p>
@@ -22,7 +23,7 @@ import org.tiankafei.multidatasource.mp.service.UserInfoService;
  */
 @Service
 @DS("user")
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfoEntity> implements UserInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
@@ -31,7 +32,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public UserInfoEntity getUserInfoServiceByIdForJMp(Serializable id) throws Exception {
+    public UserInfoEntity getUserInfoServiceByIdForMp(Serializable id) throws Exception {
+        return super.getById(id);
+    }
+
+    @Override
+    public UserInfoEntity getUserInfoServiceByIdForMapper(Serializable id) throws Exception {
         return userInfoMapper.getUserInfoServiceById(id);
     }
 
