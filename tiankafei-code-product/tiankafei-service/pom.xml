@@ -28,6 +28,7 @@
         <module>tiankafei-activiti-service</module>
         <module>tiankafei-multi-datasource-service</module>
         <module>tiankafei-multi-datasource-jpa-service</module>
+        <module>tiankafei-multi-datasource-mp-service</module>
     </modules>
 
 </project>
