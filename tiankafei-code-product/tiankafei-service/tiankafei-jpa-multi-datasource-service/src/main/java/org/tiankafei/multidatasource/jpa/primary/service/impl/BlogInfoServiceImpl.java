@@ -1,4 +1,4 @@
-package org.tiankafei.multidatasource.primary.service.impl;
+package org.tiankafei.multidatasource.jpa.primary.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,9 +8,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
-import org.tiankafei.multidatasource.primary.jpa.BlogInfoJpa;
-import org.tiankafei.multidatasource.primary.service.BlogInfoService;
+import org.tiankafei.multidatasource.jpa.primary.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.jpa.primary.jpa.BlogInfoJpa;
+import org.tiankafei.multidatasource.jpa.primary.service.BlogInfoService;
 
 /**
  * <p>

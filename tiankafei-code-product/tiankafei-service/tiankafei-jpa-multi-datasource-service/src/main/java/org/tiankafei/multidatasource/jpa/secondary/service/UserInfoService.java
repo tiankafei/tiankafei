@@ -1,7 +1,7 @@
-package org.tiankafei.multidatasource.secondary.service;
+package org.tiankafei.multidatasource.jpa.secondary.service;
 
 import java.io.Serializable;
-import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
+import org.tiankafei.multidatasource.jpa.secondary.entity.UserInfoEntity;
 
 /**
  * <p>

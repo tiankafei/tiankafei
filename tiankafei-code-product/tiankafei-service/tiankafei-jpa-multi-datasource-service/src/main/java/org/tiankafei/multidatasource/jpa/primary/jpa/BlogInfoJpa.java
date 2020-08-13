@@ -1,7 +1,7 @@
-package org.tiankafei.multidatasource.primary.jpa;
+package org.tiankafei.multidatasource.jpa.primary.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.jpa.primary.entity.BlogInfoEntity;
 
 /**
  * @author 魏双双

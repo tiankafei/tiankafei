@@ -1,4 +1,4 @@
-package org.tiankafei.multidatasource.primary.config;
+package org.tiankafei.multidatasource.jpa.secondary.config;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,41 +20,38 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactoryPrimary",
-        transactionManagerRef = "transactionManagerPrimary",
+        entityManagerFactoryRef = "entityManagerFactorySecondary",
+        transactionManagerRef = "transactionManagerSecondary",
         //设置Repository所在位置
-        basePackages = {"org.tiankafei.multidatasource.primary.jpa"})
-public class FirstDataSourceConfig {
+        basePackages = {"org.tiankafei.multidatasource.jpa.secondary"})
+public class SecondDataSourceConfig {
 
     @Autowired
-    @Qualifier("primaryDataSource")
-    private DataSource primaryDataSource;
+    @Qualifier("secondaryDataSource")
+    private DataSource secondaryDataSource;
 
     @Autowired
     private JpaProperties jpaProperties;
 
-    @Primary
-    @Bean(name = "entityManagerPrimary")
+    @Bean(name = "entityManagerSecondary")
     public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
-        return entityManagerFactoryPrimary(builder).getObject().createEntityManager();
+        return entityManagerFactorySecondary(builder).getObject().createEntityManager();
     }
 
-    @Primary
-    @Bean(name = "entityManagerFactoryPrimary")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryPrimary(EntityManagerFactoryBuilder builder) {
+    @Bean(name = "entityManagerFactorySecondary")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary(EntityManagerFactoryBuilder builder) {
         return builder
-                .dataSource(primaryDataSource)
+                .dataSource(secondaryDataSource)
                 .properties(jpaProperties.getProperties())
                 //设置实体类所在位置
-                .packages("org.tiankafei.multidatasource.primary.entity")
-                .persistenceUnit("primaryPersistenceUnit")
+                .packages("org.tiankafei.multidatasource.jpa.secondary.entity")
+                .persistenceUnit("secondaryPersistenceUnit")
                 .build();
     }
 
-    @Primary
-    @Bean(name = "transactionManagerPrimary")
-    public PlatformTransactionManager transactionManagerPrimary(EntityManagerFactoryBuilder builder) {
-        return new JpaTransactionManager(entityManagerFactoryPrimary(builder).getObject());
+    @Bean(name = "transactionManagerSecondary")
+    PlatformTransactionManager transactionManagerSecondary(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(entityManagerFactorySecondary(builder).getObject());
     }
 
 }

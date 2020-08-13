@@ -1,4 +1,4 @@
-package org.tiankafei.multidatasource.config;
+package org.tiankafei.multidatasource.jpa.config;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;

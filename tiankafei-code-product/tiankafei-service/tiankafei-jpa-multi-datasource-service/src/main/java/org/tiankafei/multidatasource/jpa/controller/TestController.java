@@ -1,14 +1,14 @@
-package org.tiankafei.multidatasource.controller;
+package org.tiankafei.multidatasource.jpa.controller;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
-import org.tiankafei.multidatasource.primary.service.BlogInfoService;
-import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
-import org.tiankafei.multidatasource.secondary.service.UserInfoService;
+import org.tiankafei.multidatasource.jpa.primary.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.jpa.primary.service.BlogInfoService;
+import org.tiankafei.multidatasource.jpa.secondary.entity.UserInfoEntity;
+import org.tiankafei.multidatasource.jpa.secondary.service.UserInfoService;
 
 /**
  * @author 魏双双

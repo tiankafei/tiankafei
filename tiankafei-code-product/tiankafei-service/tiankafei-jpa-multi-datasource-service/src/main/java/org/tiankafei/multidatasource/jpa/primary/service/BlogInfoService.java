@@ -1,7 +1,7 @@
-package org.tiankafei.multidatasource.primary.service;
+package org.tiankafei.multidatasource.jpa.primary.service;
 
 import java.io.Serializable;
-import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.jpa.primary.entity.BlogInfoEntity;
 
 /**
  * <p>

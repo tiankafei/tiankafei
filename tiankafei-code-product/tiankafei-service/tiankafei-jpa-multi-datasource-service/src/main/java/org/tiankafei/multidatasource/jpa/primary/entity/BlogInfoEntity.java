@@ -1,4 +1,4 @@
-package org.tiankafei.multidatasource.primary.entity;
+package org.tiankafei.multidatasource.jpa.primary.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

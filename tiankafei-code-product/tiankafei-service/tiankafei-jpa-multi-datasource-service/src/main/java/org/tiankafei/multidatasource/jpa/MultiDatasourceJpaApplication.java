@@ -1,4 +1,4 @@
-package org.tiankafei.multidatasource;
+package org.tiankafei.multidatasource.jpa;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -16,10 +16,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
 @EnableFeignClients(basePackages = {"org.tiankafei"})
 @EnableHystrixDashboard
-public class MultiDatasourceApplication {
+public class MultiDatasourceJpaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MultiDatasourceApplication.class, args);
+        SpringApplication.run(MultiDatasourceJpaApplication.class, args);
     }
 
 }
