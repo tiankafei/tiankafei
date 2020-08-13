@@ -51,11 +51,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!--<dependency>
-            <groupId>org.tiankafei</groupId>
-            <artifactId>tiankafei-user-cache</artifactId>
-        </dependency>-->
     </dependencies>
 
     <build>
