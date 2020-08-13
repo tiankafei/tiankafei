@@ -9,22 +9,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.tiankafei.multidatasource.MultiDatasourceApplication;
-import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
-import org.tiankafei.multidatasource.primary.jpa.BlogInfoJpa;
-import org.tiankafei.multidatasource.primary.service.BlogInfoService;
-import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
-import org.tiankafei.multidatasource.secondary.jpa.UserInfoJpa;
-import org.tiankafei.multidatasource.secondary.service.UserInfoService;
+import org.tiankafei.multidatasource.mp.MultiDatasourceMpApplication;
+import org.tiankafei.multidatasource.mp.primary.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.mp.primary.jpa.BlogInfoJpa;
+import org.tiankafei.multidatasource.mp.primary.service.BlogInfoService;
+import org.tiankafei.multidatasource.mp.secondary.entity.UserInfoEntity;
+import org.tiankafei.multidatasource.mp.secondary.jpa.UserInfoJpa;
+import org.tiankafei.multidatasource.mp.secondary.service.UserInfoService;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MultiDatasourceApplication.class)
+@SpringBootTest(classes = MultiDatasourceMpApplication.class)
 @Slf4j
-public class MultiDatasourceApplicationTest {
+public class MultiDatasourceMpApplicationTest {
 
     @Autowired
     private BlogInfoService blogInfoService;

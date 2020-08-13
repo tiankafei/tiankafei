@@ -6,7 +6,7 @@ spring:
   profiles:
     active: dev, eureka
   application:
-    name: multi-datasource-service
+    name: multi-datasource-mp-service
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -56,14 +56,6 @@ spring:
           url: jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
           username: root
           password: tiankafei
-    primary:
-      jdbc-url: jdbc:mysql://localhost:3306/db-blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
-      username: root
-      password: tiankafei
-    secondary:
-      jdbc-url: jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
-      username: root
-      password: tiankafei
 management:
   endpoints:
     web:
@@ -79,8 +71,7 @@ logging:
   level:
     ROOT: info
     # mapper sql日志的包路径
-    org.tiankafei.multidatasource.primary.mapper: debug
-    org.tiankafei.multidatasource.secondary.mapper: debug
+    org.tiankafei.multidatasource.mp.mapper: debug
     # db 工程的日志包路径
     org.tiankafei.db.mapper: debug
     org.tiankafei.db.service.impl: debug
@@ -98,10 +89,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: blog-service
+    name: multi-datasource-mp-service
     url: 'https://tiankafei.top'
-  description: '博客系统服务'
-  title: blog-service
+  description: 'mybatis-plus的多数据源服务'
+  title: multi-datasource-mp-service
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################
