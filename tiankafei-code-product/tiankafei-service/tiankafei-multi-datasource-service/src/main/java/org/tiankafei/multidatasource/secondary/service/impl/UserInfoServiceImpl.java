@@ -1,5 +1,6 @@
 package org.tiankafei.multidatasource.secondary.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import java.io.Serializable;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
@@ -16,6 +17,7 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  * @since 1.0
  */
 @Service
+@DS("second")
 public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfoEntity> implements UserInfoService {
 
     @Override

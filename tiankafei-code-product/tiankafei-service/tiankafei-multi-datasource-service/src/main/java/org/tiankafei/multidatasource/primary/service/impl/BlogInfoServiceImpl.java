@@ -1,5 +1,6 @@
 package org.tiankafei.multidatasource.primary.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import java.io.Serializable;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
@@ -16,6 +17,7 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  * @since 1.0
  */
 @Service
+@DS("first")
 public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInfoEntity> implements BlogInfoService {
 
     @Override
