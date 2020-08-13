@@ -1,9 +1,9 @@
 package org.tiankafei.multidatasource.jpa.config;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -21,14 +21,16 @@ public class DataSourceConfig {
     @ConfigurationProperties("spring.datasource.primary")
     @Primary
     public DataSource primaryDataSource() {
-        return DataSourceBuilder.create().build();
+//        return DataSourceBuilder.create().build();
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "secondaryDataSource")
     @Qualifier("secondaryDataSource")
     @ConfigurationProperties("spring.datasource.secondary")
     public DataSource secondaryDataSource() {
-        return DataSourceBuilder.create().build();
+//        return DataSourceBuilder.create().build();
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "primaryJdbcTemplate")
