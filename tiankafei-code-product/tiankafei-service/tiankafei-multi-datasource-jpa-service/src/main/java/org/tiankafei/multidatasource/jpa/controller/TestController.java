@@ -36,26 +36,25 @@ public class TestController {
         }
         try {
             BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForJpa(blogId);
-            log.info("jpa多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        System.out.println("=================================================================");
 
         Long userId = 1285547947985457153L;
-        try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJpa(userId);
-            log.info("jpa多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         try {
             Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
             log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        try {
+            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJpa(userId);
+            log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "成功了";
     }
 

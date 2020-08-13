@@ -40,6 +40,7 @@ public class TestController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println("=================================================================");
 
         Long userId = 1285547947985457153L;
         try {
