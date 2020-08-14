@@ -1,6 +1,7 @@
 package org.tiankafei.multidatasource.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,9 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 public class BlogInfoMpServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInfoMpEntity> implements BlogInfoMpService {
 
     @Autowired
+    private DynamicDataSourceAutoConfiguration dynamicDataSourceAutoConfiguration;
+
+    @Autowired
     private BlogInfoMapper blogInfoMapper;
 
     @Autowired
@@ -33,18 +37,21 @@ public class BlogInfoMpServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogI
     @Override
     @DS("blog")
     public BlogInfoMpEntity getBlogInfoServiceByIdForMp(Serializable id) throws Exception {
+        System.out.println(dynamicDataSourceAutoConfiguration);
         return super.getById(id);
     }
 
     @Override
     @DS("blog")
     public BlogInfoMpEntity getBlogInfoServiceByIdForMapper(Serializable id) throws Exception {
+        System.out.println(dynamicDataSourceAutoConfiguration);
         return blogInfoMapper.getBlogInfoServiceById(id);
     }
 
     @Override
     @DS("blog")
     public Map<String, Object> getBlogInfoServiceByIdForJdbc(Serializable id) throws Exception {
+        System.out.println(dynamicDataSourceAutoConfiguration);
         String sql = "select * from sys_blog_info where id = ?";
         List<Map<String, Object>> dataMapList = jdbcTemplate.queryForList(sql, new Serializable[]{id});
         if(CollectionUtils.isNotEmpty(dataMapList)){

@@ -1,6 +1,7 @@
 package org.tiankafei.multidatasource.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,9 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 public class UserInfoMpServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfoEntity> implements UserInfoMpService {
 
     @Autowired
+    private DynamicDataSourceAutoConfiguration dynamicDataSourceAutoConfiguration;
+
+    @Autowired
     private UserInfoMapper userInfoMapper;
 
     @Autowired
@@ -33,18 +37,21 @@ public class UserInfoMpServiceImpl extends BaseServiceImpl<UserInfoMapper, UserI
     @Override
     @DS("user")
     public UserInfoEntity getUserInfoServiceByIdForMp(Serializable id) throws Exception {
+        System.out.println(dynamicDataSourceAutoConfiguration);
         return super.getById(id);
     }
 
     @Override
     @DS("user")
     public UserInfoEntity getUserInfoServiceByIdForMapper(Serializable id) throws Exception {
+        System.out.println(dynamicDataSourceAutoConfiguration);
         return userInfoMapper.getUserInfoServiceById(id);
     }
 
     @Override
     @DS("user")
     public Map<String, Object> getUserInfoServiceByIdForJdbc(Serializable id) throws Exception {
+        System.out.println(dynamicDataSourceAutoConfiguration);
         String sql = "select * from sys_user_info where id = ?";
         List<Map<String, Object>> dataMapList = jdbcTemplate.queryForList(sql, new Serializable[]{id});
         if(CollectionUtils.isNotEmpty(dataMapList)){

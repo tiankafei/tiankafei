@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @since 1.0
  **/
 @Configuration
-public class DataSourceConfig {
+public class DataSourceJpaConfig {
 
     @Bean(name = "primaryDataSource")
     @Qualifier("primaryDataSource")
