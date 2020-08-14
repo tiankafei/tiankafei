@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.multidatasource.mp.mapper.BlogInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="org.tiankafei.multidatasource.mp.entity.BlogInfoEntity">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="label" property="label"/>
+        <result column="is_top" property="isTop"/>
+        <result column="custom_name" property="customName"/>
+        <result column="access_permission" property="accessPermission"/>
+        <result column="password" property="password"/>
+        <result column="is_discuss" property="isDiscuss"/>
+        <result column="is_subscription" property="isSubscription"/>
+        <result column="release_status" property="releaseStatus"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="release_time" property="releaseTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_Column_List">
+        id, title, content, type, label, is_top, custom_name, access_permission, password, is_discuss, is_subscription, release_status, version, delete_mark, create_time, release_time, update_time, create_user_id, update_user_id
+    </sql>
+
+    <!-- 根据ID获取 系统的博客数据 对象 -->
+    <select id="getBlogInfoServiceById" resultMap="baseResultMap">
+        select
+        <include refid="base_Column_List"></include>
+        from sys_blog_info where id = #{param}
+    </select>
+
+</mapper>

@@ -1,20 +1,17 @@
 package org.tiankafei.blog;
 
 import com.alibaba.fastjson.JSON;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.tiankafei.multidatasource.MultiDatasourceApplication;
 import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
-import org.tiankafei.multidatasource.primary.jpa.BlogInfoJpa;
 import org.tiankafei.multidatasource.primary.service.BlogInfoService;
 import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
-import org.tiankafei.multidatasource.secondary.jpa.UserInfoJpa;
 import org.tiankafei.multidatasource.secondary.service.UserInfoService;
 
 /**
@@ -24,7 +21,7 @@ import org.tiankafei.multidatasource.secondary.service.UserInfoService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MultiDatasourceApplication.class)
 @Slf4j
-public class MultiDatasourceApplicationTest {
+public class MultiDatasourceJpaApplicationTest {
 
     @Autowired
     private BlogInfoService blogInfoService;
@@ -32,46 +29,33 @@ public class MultiDatasourceApplicationTest {
     @Autowired
     private UserInfoService userInfoService;
 
-    @Autowired
-    private BlogInfoJpa<BlogInfoEntity> blogInfoJpa;
-
-    @Autowired
-    private UserInfoJpa<UserInfoEntity> userInfoJpa;
-
-    @Autowired
-    @Qualifier("primaryJdbcTemplate")
-    protected JdbcTemplate jdbcTemplate1;
-
-    @Autowired
-    @Qualifier("secondaryJdbcTemplate")
-    protected JdbcTemplate jdbcTemplate2;
-
     @Test
     public void test() throws Exception {
         Long blogId = 1289742331580715010L;
         try {
-            BlogInfoEntity blogInfoEntity = blogInfoJpa.findById(blogId).get();
-            log.info("jpa多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
+            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
-
         try {
-            System.out.println(blogInfoService.getBlogInfoServiceById(blogId));
+            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForJpa(blogId);
+            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        System.out.println("=================================================================");
 
         Long userId = 1285547947985457153L;
         try {
-            UserInfoEntity userInfoEntity = userInfoJpa.findById(userId).get();
-            log.info("jpa多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
+            Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
+            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            System.out.println(userInfoService.getUserInfoServiceById(userId));
+            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJpa(userId);
+            log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
