@@ -1,9 +1,9 @@
 package org.tiankafei.multidatasource.secondary.config;
 
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SecondDataSourceConfig {
 
     @Autowired
-    @Qualifier("secondaryDataSource")
-    private DataSource secondaryDataSource;
+    private DynamicRoutingDataSource dynamicRoutingDataSource;
 
     @Autowired
     private JpaProperties jpaProperties;
@@ -40,8 +39,9 @@ public class SecondDataSourceConfig {
 
     @Bean(name = "entityManagerFactorySecondary")
     public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary(EntityManagerFactoryBuilder builder) {
+        DataSource dataSource = dynamicRoutingDataSource.getDataSource("user");
         return builder
-                .dataSource(secondaryDataSource)
+                .dataSource(dataSource)
                 .properties(jpaProperties.getProperties())
                 //设置实体类所在位置
                 .packages("org.tiankafei.multidatasource.secondary.entity")

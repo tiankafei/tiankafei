@@ -1,9 +1,8 @@
 package org.tiankafei.multidatasource.config;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -16,33 +15,19 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class DataSourceJpaConfig {
 
-    @Bean(name = "primaryDataSource")
-    @Qualifier("primaryDataSource")
-    @ConfigurationProperties("spring.datasource.primary")
-    @Primary
-    public DataSource primaryDataSource() {
-//        return DataSourceBuilder.create().build();
-        return DruidDataSourceBuilder.create().build();
-    }
-
-    @Bean(name = "secondaryDataSource")
-    @Qualifier("secondaryDataSource")
-    @ConfigurationProperties("spring.datasource.secondary")
-    public DataSource secondaryDataSource() {
-//        return DataSourceBuilder.create().build();
-        return DruidDataSourceBuilder.create().build();
-    }
+    @Autowired
+    private DynamicRoutingDataSource dynamicRoutingDataSource;
 
     @Bean(name = "primaryJdbcTemplate")
     @Primary
-    public JdbcTemplate primaryJdbcTemplate(
-            @Qualifier("primaryDataSource") DataSource dataSource) {
+    public JdbcTemplate primaryJdbcTemplate() {
+        DataSource dataSource = dynamicRoutingDataSource.getDataSource("blog");
         return new JdbcTemplate(dataSource);
     }
 
     @Bean(name = "secondaryJdbcTemplate")
-    public JdbcTemplate secondaryJdbcTemplate(
-            @Qualifier("secondaryDataSource") DataSource dataSource) {
+    public JdbcTemplate secondaryJdbcTemplate() {
+        DataSource dataSource = dynamicRoutingDataSource.getDataSource("user");
         return new JdbcTemplate(dataSource);
     }
 
