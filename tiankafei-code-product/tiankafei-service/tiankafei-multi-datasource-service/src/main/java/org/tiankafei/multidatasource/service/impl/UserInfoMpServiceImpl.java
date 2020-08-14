@@ -22,6 +22,7 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  * @since 1.0
  */
 @Service
+@DS("user")
 public class UserInfoMpServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfoEntity> implements UserInfoMpService {
 
     @Autowired
@@ -31,19 +32,16 @@ public class UserInfoMpServiceImpl extends BaseServiceImpl<UserInfoMapper, UserI
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    @DS("user")
     public UserInfoEntity getUserInfoServiceByIdForMp(Serializable id) throws Exception {
         return super.getById(id);
     }
 
     @Override
-    @DS("user")
     public UserInfoEntity getUserInfoServiceByIdForMapper(Serializable id) throws Exception {
         return userInfoMapper.getUserInfoServiceById(id);
     }
 
     @Override
-    @DS("user")
     public Map<String, Object> getUserInfoServiceByIdForJdbc(Serializable id) throws Exception {
         String sql = "select * from sys_user_info where id = ?";
         List<Map<String, Object>> dataMapList = jdbcTemplate.queryForList(sql, new Serializable[]{id});

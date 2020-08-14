@@ -3,9 +3,10 @@ package org.tiankafei.multidatasource.primary.service.impl;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.primary.entity.BlogInfoJpaEntity;
@@ -21,10 +22,10 @@ import org.tiankafei.multidatasource.primary.service.BlogInfoJpaService;
  * @since 1.0
  */
 @Service
+@DS("blog")
 public class BlogInfoJpaServiceImpl implements BlogInfoJpaService {
 
     @Autowired
-    @Qualifier("primaryJdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
