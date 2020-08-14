@@ -36,7 +36,7 @@ import lombok.experimental.Accessors;
 @TableName("sys_blog_info")
 @Table(name = "sys_blog_info")
 @ApiModel(value = "BlogInfoEntity 对象", description = "系统的博客数据")
-public class BlogInfoEntity extends Model<BlogInfoEntity> {
+public class BlogInfoJpaEntity extends Model<BlogInfoJpaEntity> {
 
     private static final long serialVersionUID = 1L;
 

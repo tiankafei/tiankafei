@@ -2,7 +2,7 @@ package org.tiankafei.multidatasource.primary.service;
 
 import java.io.Serializable;
 import java.util.Map;
-import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.primary.entity.BlogInfoJpaEntity;
 
 /**
  * <p>
@@ -12,7 +12,7 @@ import org.tiankafei.multidatasource.primary.entity.BlogInfoEntity;
  * @author tiankafei
  * @since 1.0
  */
-public interface BlogInfoService {
+public interface BlogInfoJpaService {
 
     /**
      * 根据ID获取 系统的博客数据 对象
@@ -21,7 +21,7 @@ public interface BlogInfoService {
      * @return
      * @throws Exception
      */
-    BlogInfoEntity getBlogInfoServiceByIdForJpa(Serializable id) throws Exception;
+    BlogInfoJpaEntity getBlogInfoServiceByIdForJpa(Serializable id) throws Exception;
 
     /**
      * 根据ID获取 系统的博客数据 对象

@@ -2,7 +2,7 @@ package org.tiankafei.multidatasource.secondary.service;
 
 import java.io.Serializable;
 import java.util.Map;
-import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
+import org.tiankafei.multidatasource.secondary.entity.UserInfoJpaEntity;
 
 /**
  * <p>
@@ -12,7 +12,7 @@ import org.tiankafei.multidatasource.secondary.entity.UserInfoEntity;
  * @author tiankafei
  * @since 1.0
  */
-public interface UserInfoService {
+public interface UserInfoJpaService {
 
     /**
      * 根据ID获取 用户基本信息表 对象
@@ -21,7 +21,7 @@ public interface UserInfoService {
      * @return
      * @throws Exception
      */
-    UserInfoEntity getUserInfoServiceByIdForJpa(Serializable id) throws Exception;
+    UserInfoJpaEntity getUserInfoServiceByIdForJpa(Serializable id) throws Exception;
 
     /**
      * 根据ID获取 用户基本信息表 对象

@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.multidatasource.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.entity.BlogInfoMpEntity;
 import org.tiankafei.multidatasource.entity.UserInfoEntity;
-import org.tiankafei.multidatasource.service.BlogInfoService;
-import org.tiankafei.multidatasource.service.UserInfoService;
+import org.tiankafei.multidatasource.service.BlogInfoMpService;
+import org.tiankafei.multidatasource.service.UserInfoMpService;
 
 /**
  * @author 魏双双
@@ -20,29 +20,29 @@ import org.tiankafei.multidatasource.service.UserInfoService;
 public class TestMybatisPlusController {
 
     @Autowired
-    private BlogInfoService blogInfoService;
+    private BlogInfoMpService blogInfoMpService;
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoMpService userInfoMpService;
 
     @GetMapping("/mp")
     public String test() throws Exception {
         Long blogId = 1289742331580715010L;
         try {
-            Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
+            Map<String, Object> dataMap = blogInfoMpService.getBlogInfoServiceByIdForJdbc(blogId);
             log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMapper(blogId);
-            log.info("mybatis-mapper多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            BlogInfoMpEntity blogInfoMpEntity = blogInfoMpService.getBlogInfoServiceByIdForMapper(blogId);
+            log.info("mybatis-mapper多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoMpEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMp(blogId);
-            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            BlogInfoMpEntity blogInfoMpEntity = blogInfoMpService.getBlogInfoServiceByIdForMp(blogId);
+            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoMpEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -50,19 +50,19 @@ public class TestMybatisPlusController {
 
         Long userId = 1285547947985457153L;
         try {
-            Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
+            Map<String, Object> dataMap = userInfoMpService.getUserInfoServiceByIdForJdbc(userId);
             log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMapper(userId);
+            UserInfoEntity userInfoEntity = userInfoMpService.getUserInfoServiceByIdForMapper(userId);
             log.info("mybatis-mapper多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMp(userId);
+            UserInfoEntity userInfoEntity = userInfoMpService.getUserInfoServiceByIdForMp(userId);
             log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
         }catch (Exception e){
             e.printStackTrace();

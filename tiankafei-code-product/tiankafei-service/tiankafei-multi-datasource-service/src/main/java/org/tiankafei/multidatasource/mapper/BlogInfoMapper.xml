@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.tiankafei.multidatasource.mp.mapper.BlogInfoMapper">
+<mapper namespace="org.tiankafei.multidatasource.mapper.BlogInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="baseResultMap" type="org.tiankafei.multidatasource.mp.entity.BlogInfoEntity">
+    <resultMap id="baseResultMap" type="org.tiankafei.multidatasource.entity.BlogInfoMpEntity">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>

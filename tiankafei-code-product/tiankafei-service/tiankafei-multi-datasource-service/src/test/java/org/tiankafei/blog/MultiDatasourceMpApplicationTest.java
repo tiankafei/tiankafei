@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.tiankafei.multidatasource.MultiDatasourceApplication;
-import org.tiankafei.multidatasource.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.entity.BlogInfoMpEntity;
 import org.tiankafei.multidatasource.entity.UserInfoEntity;
-import org.tiankafei.multidatasource.service.BlogInfoService;
-import org.tiankafei.multidatasource.service.UserInfoService;
+import org.tiankafei.multidatasource.service.BlogInfoMpService;
+import org.tiankafei.multidatasource.service.UserInfoMpService;
 
 /**
  * @author tiankafei
@@ -24,29 +24,29 @@ import org.tiankafei.multidatasource.service.UserInfoService;
 public class MultiDatasourceMpApplicationTest {
 
     @Autowired
-    private BlogInfoService blogInfoService;
+    private BlogInfoMpService blogInfoMpService;
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoMpService userInfoMpService;
 
     @Test
     public void test() throws Exception {
         Long blogId = 1289742331580715010L;
         try {
-            Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
+            Map<String, Object> dataMap = blogInfoMpService.getBlogInfoServiceByIdForJdbc(blogId);
             log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            org.tiankafei.multidatasource.entity.BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMapper(blogId);
-            log.info("mybatis-mapper多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            BlogInfoMpEntity blogInfoMpEntity = blogInfoMpService.getBlogInfoServiceByIdForMapper(blogId);
+            log.info("mybatis-mapper多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoMpEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMp(blogId);
-            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            BlogInfoMpEntity blogInfoMpEntity = blogInfoMpService.getBlogInfoServiceByIdForMp(blogId);
+            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoMpEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -54,19 +54,19 @@ public class MultiDatasourceMpApplicationTest {
 
         Long userId = 1285547947985457153L;
         try {
-            Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
+            Map<String, Object> dataMap = userInfoMpService.getUserInfoServiceByIdForJdbc(userId);
             log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            org.tiankafei.multidatasource.entity.UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMapper(userId);
+            org.tiankafei.multidatasource.entity.UserInfoEntity userInfoEntity = userInfoMpService.getUserInfoServiceByIdForMapper(userId);
             log.info("mybatis-mapper多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
         }catch (Exception e){
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMp(userId);
+            UserInfoEntity userInfoEntity = userInfoMpService.getUserInfoServiceByIdForMp(userId);
             log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
         }catch (Exception e){
             e.printStackTrace();

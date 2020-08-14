@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.entity.UserInfoEntity;
 import org.tiankafei.multidatasource.mapper.UserInfoMapper;
-import org.tiankafei.multidatasource.service.UserInfoService;
+import org.tiankafei.multidatasource.service.UserInfoMpService;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 
 /**
@@ -23,7 +23,7 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  */
 @Service
 @DS("user")
-public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfoEntity> implements UserInfoService {
+public class UserInfoMpServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfoEntity> implements UserInfoMpService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.io.Serializable;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.tiankafei.multidatasource.entity.BlogInfoEntity;
+import org.tiankafei.multidatasource.entity.BlogInfoMpEntity;
 
 /**
  * <p>
@@ -15,7 +15,7 @@ import org.tiankafei.multidatasource.entity.BlogInfoEntity;
  * @since 1.0
  */
 @Repository
-public interface BlogInfoMapper extends BaseMapper<BlogInfoEntity> {
+public interface BlogInfoMapper extends BaseMapper<BlogInfoMpEntity> {
 
     /**
      * 根据ID获取 系统的博客数据 对象
@@ -24,6 +24,6 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfoEntity> {
      * @return
      * @throws Exception
      */
-    BlogInfoEntity getBlogInfoServiceById(@Param("param") Serializable id) throws Exception;
+    BlogInfoMpEntity getBlogInfoServiceById(@Param("param") Serializable id) throws Exception;
 
 }

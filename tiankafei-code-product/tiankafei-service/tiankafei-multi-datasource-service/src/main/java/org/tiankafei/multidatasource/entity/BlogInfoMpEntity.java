@@ -30,7 +30,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("sys_blog_info")
 @ApiModel(value = "BlogInfoEntity 对象", description = "系统的博客数据")
-public class BlogInfoEntity extends Model<BlogInfoEntity> {
+public class BlogInfoMpEntity extends Model<BlogInfoMpEntity> {
 
     private static final long serialVersionUID = 1L;
 

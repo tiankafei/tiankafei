@@ -1,17 +1,16 @@
-package org.tiankafei.multidatasource.service.impl;
+package org.tiankafei.multidatasource.primary.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.tiankafei.multidatasource.entity.BlogInfoEntity;
-import org.tiankafei.multidatasource.mapper.BlogInfoMapper;
-import org.tiankafei.multidatasource.service.BlogInfoService;
-import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.multidatasource.primary.entity.BlogInfoJpaEntity;
+import org.tiankafei.multidatasource.primary.jpa.BlogInfoJpa;
+import org.tiankafei.multidatasource.primary.service.BlogInfoJpaService;
 
 /**
  * <p>
@@ -22,23 +21,18 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  * @since 1.0
  */
 @Service
-@DS("blog")
-public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInfoEntity> implements BlogInfoService {
+public class BlogInfoJpaServiceImpl implements BlogInfoJpaService {
 
     @Autowired
-    private BlogInfoMapper blogInfoMapper;
-
-    @Autowired
+    @Qualifier("primaryJdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
-    @Override
-    public BlogInfoEntity getBlogInfoServiceByIdForMp(Serializable id) throws Exception {
-        return super.getById(id);
-    }
+    @Autowired
+    private BlogInfoJpa<BlogInfoJpaEntity> blogInfoJpa;
 
     @Override
-    public BlogInfoEntity getBlogInfoServiceByIdForMapper(Serializable id) throws Exception {
-        return blogInfoMapper.getBlogInfoServiceById(id);
+    public BlogInfoJpaEntity getBlogInfoServiceByIdForJpa(Serializable id) throws Exception {
+        return blogInfoJpa.findById(Long.valueOf("" + id)).get();
     }
 
     @Override

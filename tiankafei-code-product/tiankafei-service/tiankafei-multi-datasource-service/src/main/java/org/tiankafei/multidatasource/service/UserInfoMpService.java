@@ -13,7 +13,7 @@ import org.tiankafei.web.common.service.BaseService;
  * @author tiankafei
  * @since 1.0
  */
-public interface UserInfoService extends BaseService<UserInfoEntity> {
+public interface UserInfoMpService extends BaseService<UserInfoEntity> {
 
     /**
      * 根据ID获取 用户基本信息表 对象
