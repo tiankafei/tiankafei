@@ -1,7 +1,6 @@
 package org.tiankafei.multidatasource.service;
 
 import java.io.Serializable;
-import java.util.Map;
 import org.tiankafei.multidatasource.entity.UserInfoEntity;
 import org.tiankafei.web.common.service.BaseService;
 
@@ -32,14 +31,5 @@ public interface UserInfoMpService extends BaseService<UserInfoEntity> {
      * @throws Exception
      */
     UserInfoEntity getUserInfoServiceByIdForMapper(Serializable id) throws Exception;
-
-    /**
-     * 根据ID获取 用户基本信息表 对象
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    Map<String, Object> getUserInfoServiceByIdForJdbc(Serializable id) throws Exception;
 
 }

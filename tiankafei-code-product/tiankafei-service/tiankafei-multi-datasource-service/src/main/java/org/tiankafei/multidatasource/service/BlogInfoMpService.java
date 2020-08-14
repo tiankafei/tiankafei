@@ -1,7 +1,6 @@
 package org.tiankafei.multidatasource.service;
 
 import java.io.Serializable;
-import java.util.Map;
 import org.tiankafei.multidatasource.entity.BlogInfoMpEntity;
 import org.tiankafei.web.common.service.BaseService;
 
@@ -32,14 +31,5 @@ public interface BlogInfoMpService extends BaseService<BlogInfoMpEntity> {
      * @throws Exception
      */
     BlogInfoMpEntity getBlogInfoServiceByIdForMapper(Serializable id) throws Exception;
-
-    /**
-     * 根据ID获取 系统的博客数据 对象
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    Map<String, Object> getBlogInfoServiceByIdForJdbc(Serializable id) throws Exception;
 
 }

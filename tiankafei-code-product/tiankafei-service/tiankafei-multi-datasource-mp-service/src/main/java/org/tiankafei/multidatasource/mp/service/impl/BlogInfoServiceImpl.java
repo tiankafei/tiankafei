@@ -45,7 +45,7 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
     public Map<String, Object> getBlogInfoServiceByIdForJdbc(Serializable id) throws Exception {
         String sql = "select * from sys_blog_info where id = ?";
         List<Map<String, Object>> dataMapList = jdbcTemplate.queryForList(sql, new Serializable[]{id});
-        if(CollectionUtils.isNotEmpty(dataMapList)){
+        if (CollectionUtils.isNotEmpty(dataMapList)) {
             Map<String, Object> dataMap = dataMapList.get(0);
             return dataMap;
         }

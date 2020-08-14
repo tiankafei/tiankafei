@@ -31,19 +31,19 @@ public class TestMybatisPlusController {
         try {
             Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
             log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMapper(blogId);
             log.info("mybatis-mapper多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMp(blogId);
             log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("=================================================================");
@@ -52,19 +52,19 @@ public class TestMybatisPlusController {
         try {
             Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
             log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMapper(userId);
             log.info("mybatis-mapper多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMp(userId);
             log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "成功了";
