@@ -1,8 +1,9 @@
 package org.tiankafei.multidatasource.secondary.config;
 
-import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -27,7 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SecondDataSourceConfig {
 
     @Autowired
-    private DynamicRoutingDataSource dynamicRoutingDataSource;
+    private DynamicDataSourceAutoConfiguration dynamicDataSourceAutoConfiguration;
 
     @Autowired
     private JpaProperties jpaProperties;
@@ -39,7 +40,7 @@ public class SecondDataSourceConfig {
 
     @Bean(name = "entityManagerFactorySecondary")
     public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary(EntityManagerFactoryBuilder builder) {
-        DataSource dataSource = dynamicRoutingDataSource.getDataSource("user");
+        DataSource dataSource = dynamicDataSourceAutoConfiguration.dynamicDataSourceProvider().loadDataSources().get("user");
         return builder
                 .dataSource(dataSource)
                 .properties(jpaProperties.getProperties())
