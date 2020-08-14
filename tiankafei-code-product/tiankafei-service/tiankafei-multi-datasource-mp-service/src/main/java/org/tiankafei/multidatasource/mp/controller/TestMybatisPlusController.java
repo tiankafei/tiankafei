@@ -17,7 +17,7 @@ import org.tiankafei.multidatasource.mp.service.UserInfoService;
  **/
 @RestController
 @Slf4j
-public class TestController {
+public class TestMybatisPlusController {
 
     @Autowired
     private BlogInfoService blogInfoService;
@@ -25,7 +25,7 @@ public class TestController {
     @Autowired
     private UserInfoService userInfoService;
 
-    @GetMapping
+    @GetMapping("/mp")
     public String test() throws Exception {
         Long blogId = 1289742331580715010L;
         try {
