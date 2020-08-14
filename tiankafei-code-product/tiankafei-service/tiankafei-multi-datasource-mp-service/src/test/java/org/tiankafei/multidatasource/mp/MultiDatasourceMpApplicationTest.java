@@ -1,6 +1,6 @@
 package org.tiankafei.multidatasource.mp;
 
-import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -30,22 +30,23 @@ public class MultiDatasourceMpApplicationTest {
 
     @Test
     public void test() throws Exception {
+        Map<String, Object> resultMap = Maps.newLinkedHashMap();
         Long blogId = 1289742331580715010L;
         try {
             Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
+            resultMap.put("JdbcTemplate 多数据源：第一个数据源", dataMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMapper(blogId);
-            log.info("mybatis-mapper多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            resultMap.put("Mybatis-Mapper 多数据源：第一个数据源", blogInfoEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForMp(blogId);
-            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            resultMap.put("Mybatis-Plus 多数据源：第一个数据源", blogInfoEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,22 +55,23 @@ public class MultiDatasourceMpApplicationTest {
         Long userId = 1285547947985457153L;
         try {
             Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
+            resultMap.put("JdbcTemplate 多数据源：第二个数据源", dataMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMapper(userId);
-            log.info("mybatis-mapper多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
+            resultMap.put("Mybatis-Mapper 多数据源：第二个数据源", userInfoEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForMp(userId);
-            log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
+            resultMap.put("Mybatis-Plus 多数据源：第二个数据源", userInfoEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(resultMap);
     }
 
 }

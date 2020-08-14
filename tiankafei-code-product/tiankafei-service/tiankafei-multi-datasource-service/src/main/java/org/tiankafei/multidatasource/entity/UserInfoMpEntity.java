@@ -31,7 +31,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("sys_user_info")
 @ApiModel(value = "UserInfoEntity 对象", description = "用户基本信息表")
-public class UserInfoEntity extends Model<UserInfoEntity> {
+public class UserInfoMpEntity extends Model<UserInfoMpEntity> {
 
     private static final long serialVersionUID = 1L;
 

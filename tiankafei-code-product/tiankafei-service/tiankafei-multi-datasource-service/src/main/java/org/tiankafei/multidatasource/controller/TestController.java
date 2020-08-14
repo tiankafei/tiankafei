@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.multidatasource.entity.BlogInfoMpEntity;
-import org.tiankafei.multidatasource.entity.UserInfoEntity;
+import org.tiankafei.multidatasource.entity.UserInfoMpEntity;
 import org.tiankafei.multidatasource.primary.entity.BlogInfoJpaEntity;
 import org.tiankafei.multidatasource.secondary.entity.UserInfoJpaEntity;
 import org.tiankafei.multidatasource.service.BlogInfoJpaService;
@@ -45,7 +45,7 @@ public class TestController {
 
     @GetMapping
     public Map<String, Object> test() throws Exception {
-        Map<String, Object> resultMap = Maps.newHashMap();
+        Map<String, Object> resultMap = Maps.newLinkedHashMap();
         Long blogId = 1289742331580715010L;
         try {
             BlogInfoJpaEntity blogInfoJpaEntity = blogInfoJpaService.getBlogInfoServiceByIdForJpa(blogId);
@@ -87,14 +87,14 @@ public class TestController {
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoMpService.getUserInfoServiceByIdForMapper(userId);
-            resultMap.put("Mybatis-Mapper 多数据源：第二个数据源", userInfoEntity);
+            UserInfoMpEntity userInfoMpEntity = userInfoMpService.getUserInfoServiceByIdForMapper(userId);
+            resultMap.put("Mybatis-Mapper 多数据源：第二个数据源", userInfoMpEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoMpService.getUserInfoServiceByIdForMp(userId);
-            resultMap.put("Mybatis-Plus 多数据源：第二个数据源", userInfoEntity);
+            UserInfoMpEntity userInfoMpEntity = userInfoMpService.getUserInfoServiceByIdForMp(userId);
+            resultMap.put("Mybatis-Plus 多数据源：第二个数据源", userInfoMpEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }

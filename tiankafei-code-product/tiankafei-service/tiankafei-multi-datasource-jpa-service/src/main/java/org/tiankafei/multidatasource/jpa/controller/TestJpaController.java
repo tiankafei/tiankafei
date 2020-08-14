@@ -1,6 +1,6 @@
 package org.tiankafei.multidatasource.jpa.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +25,19 @@ public class TestJpaController {
     @Autowired
     private UserInfoService userInfoService;
 
-    @GetMapping("/jpa")
-    public String test() throws Exception {
+    @GetMapping
+    public Map<String, Object> test() throws Exception {
+        Map<String, Object> resultMap = Maps.newLinkedHashMap();
         Long blogId = 1289742331580715010L;
         try {
-            Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
+            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForJpa(blogId);
+            resultMap.put("jpa 多数据源：第一个数据源", blogInfoEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            BlogInfoEntity blogInfoEntity = blogInfoService.getBlogInfoServiceByIdForJpa(blogId);
-            log.info("mybatis-plus多数据源：第一个数据源：{}", JSON.toJSONString(blogInfoEntity));
+            Map<String, Object> dataMap = blogInfoService.getBlogInfoServiceByIdForJdbc(blogId);
+            resultMap.put("JdbcTemplate 多数据源：第一个数据源", dataMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,18 +45,18 @@ public class TestJpaController {
 
         Long userId = 1285547947985457153L;
         try {
-            Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
-            log.info("JdbcTemplate多数据源：第一个数据源：{}", JSON.toJSONString(dataMap));
+            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJpa(userId);
+            resultMap.put("jpa 多数据源：第二个数据源", userInfoEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            UserInfoEntity userInfoEntity = userInfoService.getUserInfoServiceByIdForJpa(userId);
-            log.info("mybatis-plus多数据源：第二个数据源：{}", JSON.toJSONString(userInfoEntity));
+            Map<String, Object> dataMap = userInfoService.getUserInfoServiceByIdForJdbc(userId);
+            resultMap.put("JdbcTemplate 多数据源：第二个数据源", dataMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "成功了";
+        return resultMap;
     }
 
 }

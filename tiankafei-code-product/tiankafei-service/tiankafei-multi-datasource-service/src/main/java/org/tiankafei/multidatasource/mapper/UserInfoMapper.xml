@@ -3,7 +3,7 @@
 <mapper namespace="org.tiankafei.multidatasource.mapper.UserInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="baseResultMap" type="org.tiankafei.multidatasource.entity.UserInfoEntity">
+    <resultMap id="baseResultMap" type="org.tiankafei.multidatasource.entity.UserInfoMpEntity">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="nickname" property="nickname"/>
