@@ -22,7 +22,6 @@ import org.tiankafei.web.common.service.impl.BaseServiceImpl;
  * @since 1.0
  */
 @Service
-@DS("blog")
 public class BlogInfoMpServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInfoMpEntity> implements BlogInfoMpService {
 
     @Autowired
@@ -32,16 +31,19 @@ public class BlogInfoMpServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogI
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    @DS("blog")
     public BlogInfoMpEntity getBlogInfoServiceByIdForMp(Serializable id) throws Exception {
         return super.getById(id);
     }
 
     @Override
+    @DS("blog")
     public BlogInfoMpEntity getBlogInfoServiceByIdForMapper(Serializable id) throws Exception {
         return blogInfoMapper.getBlogInfoServiceById(id);
     }
 
     @Override
+    @DS("blog")
     public Map<String, Object> getBlogInfoServiceByIdForJdbc(Serializable id) throws Exception {
         String sql = "select * from sys_blog_info where id = ?";
         List<Map<String, Object>> dataMapList = jdbcTemplate.queryForList(sql, new Serializable[]{id});

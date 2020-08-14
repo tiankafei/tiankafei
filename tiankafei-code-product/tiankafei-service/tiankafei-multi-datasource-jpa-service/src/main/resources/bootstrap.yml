@@ -85,8 +85,8 @@ logging:
   level:
     ROOT: info
     # mapper sql日志的包路径
-    org.tiankafei.jpa.multidatasource.primary.mapper: debug
-    org.tiankafei.jpa.multidatasource.secondary.mapper: debug
+    org.tiankafei.multidatasource.jpa.primary.mapper: debug
+    org.tiankafei.multidatasource.jpa.secondary.mapper: debug
     # db 工程的日志包路径
     org.tiankafei.db.mapper: debug
     org.tiankafei.db.service.impl: debug

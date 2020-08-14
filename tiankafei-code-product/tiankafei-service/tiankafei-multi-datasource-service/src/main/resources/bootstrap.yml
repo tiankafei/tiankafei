@@ -123,6 +123,7 @@ logging:
   level:
     ROOT: info
     # mapper sql日志的包路径
+    org.tiankafei.multidatasource.mapper: debug
     org.tiankafei.multidatasource.primary.mapper: debug
     org.tiankafei.multidatasource.secondary.mapper: debug
     # db 工程的日志包路径
