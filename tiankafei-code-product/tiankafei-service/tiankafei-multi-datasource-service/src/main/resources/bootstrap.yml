@@ -1,5 +1,5 @@
 server:
-  port: 7300
+  port: 7600
 spring:
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
