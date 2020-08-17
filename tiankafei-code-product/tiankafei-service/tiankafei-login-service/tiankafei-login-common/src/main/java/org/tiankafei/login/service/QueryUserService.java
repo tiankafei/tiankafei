@@ -3,6 +3,12 @@ package org.tiankafei.login.service;
 import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.exception.LoginException;
 
+/**
+ *
+ *
+ * @author tiankafei
+ * @since 1.0
+ */
 public interface QueryUserService {
 
     /**

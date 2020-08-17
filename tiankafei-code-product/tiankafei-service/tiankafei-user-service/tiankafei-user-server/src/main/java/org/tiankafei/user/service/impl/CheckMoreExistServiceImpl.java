@@ -7,6 +7,12 @@ import org.tiankafei.user.service.CheckExistService;
 import org.tiankafei.user.service.UserLoginService;
 import org.tiankafei.web.common.exception.UserException;
 
+/**
+ *
+ *
+ * @author tiankafei
+ * @since 1.0
+ */
 @Service
 public class CheckMoreExistServiceImpl implements CheckExistService {
 

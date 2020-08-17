@@ -10,6 +10,12 @@ import org.tiankafei.user.service.CheckExistService;
 import org.tiankafei.web.common.bean.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.UserException;
 
+/**
+ *
+ *
+ * @author tiankafei
+ * @since 1.0
+ */
 @Component
 public class CheckExistsClient implements InitializingBean {
 

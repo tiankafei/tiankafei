@@ -1,5 +1,11 @@
 package org.tiankafei.collection.property;
 
+/**
+ *
+ *
+ * @author tiankafei
+ * @since 1.0
+ */
 public interface ComponentProperty {
 
     /**

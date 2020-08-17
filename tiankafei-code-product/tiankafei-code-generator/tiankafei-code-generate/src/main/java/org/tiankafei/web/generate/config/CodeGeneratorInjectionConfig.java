@@ -64,7 +64,6 @@ public class CodeGeneratorInjectionConfig {
 
                 TableInfo tableInfo = config.getTableInfoList().get(0);
                 CfgProperties cfgProperties = new CfgProperties();
-                String name = tableInfo.getName();
 
                 String keyColumnType = "Long";
                 List<TableField> fields = tableInfo.getFields();
@@ -91,57 +90,64 @@ public class CodeGeneratorInjectionConfig {
                 }).collect(Collectors.toList());
                 cfgProperties.setImportPackageList(importPackageList);
 
-                String entityName = tableInfo.getEntityName();
-                String entityConstName = firstToLowerCase(entityName);
-                cfgProperties.setEntityConstName(entityConstName);
-                String requestContext = entityConstName.replace("Entity", "");
-                cfgProperties.setRequestContext(requestContext);
-
-                String voName = entityName.replace("Entity", "Vo");
-                setValue(cfgProperties::setVoClassName, cfgProperties::setVoConstName, voName);
-
-                String listParamName = entityName.replace("Entity", "ListParam");
-                setValue(cfgProperties::setListParamClassName, cfgProperties::setListParamConstName, listParamName);
-
-                String countParamName = entityName.replace("Entity", "CountParam");
-                setValue(cfgProperties::setCountParamClassName, cfgProperties::setCountParamConstName, countParamName);
-
-                String deleteParamName = entityName.replace("Entity", "DeleteParam");
-                setValue(cfgProperties::setDeleteParamClassName, cfgProperties::setDeleteParamConstName, deleteParamName);
-
-                String checkParamName = entityName.replace("Entity", "CheckParam");
-                setValue(cfgProperties::setCheckParamClassName, cfgProperties::setCheckParamConstName, checkParamName);
-
-                String pageParamName = entityName.replace("Entity", "PageParam");
-                setValue(cfgProperties::setPageParamClassName, cfgProperties::setPageParamConstName, pageParamName);
-
-                String permission = underlineToColon(name);
-                cfgProperties.setAuthority(permission);
-
-                String serviceName = tableInfo.getServiceName();
-                setValue(cfgProperties::setServiceConstName, serviceName);
-
-                String mapperName = tableInfo.getMapperName();
-                setValue(cfgProperties::setMapperConstName, mapperName);
-
-                String controllerName = tableInfo.getControllerName();
-                setValue(cfgProperties::setControllerConstName, controllerName);
-
-                BeanMap beanMap = BeanMap.create(cfgProperties);
+                Map beanMap = initOtherParam(tableInfo, cfgProperties, codeProperties, fileOutConfigList);
                 map.putAll(beanMap);
 
-                fileOutConfigList.add(getFileOutConfig("/myself/vo.java.vm", cfgProperties::getVoClassName, "vo", codeProperties));
-                fileOutConfigList.add(getFileOutConfig("/myself/listParam.java.vm", cfgProperties::getListParamClassName, "param", codeProperties));
-                fileOutConfigList.add(getFileOutConfig("/myself/countParam.java.vm", cfgProperties::getCountParamClassName, "param", codeProperties));
-                fileOutConfigList.add(getFileOutConfig("/myself/deleteParam.java.vm", cfgProperties::getDeleteParamClassName, "param", codeProperties));
-                fileOutConfigList.add(getFileOutConfig("/myself/checkParam.java.vm", cfgProperties::getCheckParamClassName, "param", codeProperties));
-                fileOutConfigList.add(getFileOutConfig("/myself/pageParam.java.vm", cfgProperties::getPageParamClassName, "param", codeProperties));
                 setMap(map);
             }
         };
 
         injectionConfig.setFileOutConfigList(fileOutConfigList);
         return injectionConfig;
+    }
+
+    private static Map initOtherParam(TableInfo tableInfo, CfgProperties cfgProperties, CodeProperties codeProperties, List<FileOutConfig> fileOutConfigList){
+        String name = tableInfo.getName();
+
+        String entityName = tableInfo.getEntityName();
+        String entityConstName = firstToLowerCase(entityName);
+        cfgProperties.setEntityConstName(entityConstName);
+        String requestContext = entityConstName.replace("Entity", "");
+        cfgProperties.setRequestContext(requestContext);
+
+        String voName = entityName.replace("Entity", "Vo");
+        setValue(cfgProperties::setVoClassName, cfgProperties::setVoConstName, voName);
+
+        String listParamName = entityName.replace("Entity", "ListParam");
+        setValue(cfgProperties::setListParamClassName, cfgProperties::setListParamConstName, listParamName);
+
+        String countParamName = entityName.replace("Entity", "CountParam");
+        setValue(cfgProperties::setCountParamClassName, cfgProperties::setCountParamConstName, countParamName);
+
+        String deleteParamName = entityName.replace("Entity", "DeleteParam");
+        setValue(cfgProperties::setDeleteParamClassName, cfgProperties::setDeleteParamConstName, deleteParamName);
+
+        String checkParamName = entityName.replace("Entity", "CheckParam");
+        setValue(cfgProperties::setCheckParamClassName, cfgProperties::setCheckParamConstName, checkParamName);
+
+        String pageParamName = entityName.replace("Entity", "PageParam");
+        setValue(cfgProperties::setPageParamClassName, cfgProperties::setPageParamConstName, pageParamName);
+
+        String permission = underlineToColon(name);
+        cfgProperties.setAuthority(permission);
+
+        String serviceName = tableInfo.getServiceName();
+        setValue(cfgProperties::setServiceConstName, serviceName);
+
+        String mapperName = tableInfo.getMapperName();
+        setValue(cfgProperties::setMapperConstName, mapperName);
+
+        String controllerName = tableInfo.getControllerName();
+        setValue(cfgProperties::setControllerConstName, controllerName);
+
+        fileOutConfigList.add(getFileOutConfig("/myself/vo.java.vm", cfgProperties::getVoClassName, "vo", codeProperties));
+        fileOutConfigList.add(getFileOutConfig("/myself/listParam.java.vm", cfgProperties::getListParamClassName, "param", codeProperties));
+        fileOutConfigList.add(getFileOutConfig("/myself/countParam.java.vm", cfgProperties::getCountParamClassName, "param", codeProperties));
+        fileOutConfigList.add(getFileOutConfig("/myself/deleteParam.java.vm", cfgProperties::getDeleteParamClassName, "param", codeProperties));
+        fileOutConfigList.add(getFileOutConfig("/myself/checkParam.java.vm", cfgProperties::getCheckParamClassName, "param", codeProperties));
+        fileOutConfigList.add(getFileOutConfig("/myself/pageParam.java.vm", cfgProperties::getPageParamClassName, "param", codeProperties));
+
+        return BeanMap.create(cfgProperties);
     }
 
     /**
