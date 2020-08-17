@@ -155,7 +155,7 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     }
 
     /**
-     * 删除 用户基本信息表
+     * 批量删除 用户基本信息表
      *
      * @param ids
      * @return

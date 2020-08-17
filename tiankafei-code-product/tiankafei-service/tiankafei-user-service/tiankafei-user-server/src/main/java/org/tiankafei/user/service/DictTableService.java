@@ -60,7 +60,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
     boolean deleteDictTableService(String dataTable, String id) throws Exception;
 
     /**
-     * 删除 系统数据字典的数据表
+     * 批量删除 系统数据字典的数据表
      *
      * @param dataTable
      * @param ids

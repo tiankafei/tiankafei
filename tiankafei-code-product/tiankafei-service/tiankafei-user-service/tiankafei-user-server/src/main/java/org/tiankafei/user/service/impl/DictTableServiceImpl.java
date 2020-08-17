@@ -122,7 +122,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     }
 
     /**
-     * 删除 系统数据字典的数据表
+     * 批量删除 系统数据字典的数据表
      *
      * @param dataTable
      * @param ids

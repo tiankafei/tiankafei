@@ -155,7 +155,7 @@ public class UserLoginServiceImpl extends BaseServiceImpl<UserLoginMapper, UserL
     }
 
     /**
-     * 删除 用户登录信息表
+     * 批量删除 用户登录信息表
      *
      * @param ids
      * @return

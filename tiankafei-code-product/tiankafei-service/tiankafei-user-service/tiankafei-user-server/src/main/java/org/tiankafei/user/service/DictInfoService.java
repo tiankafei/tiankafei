@@ -59,7 +59,7 @@ public interface DictInfoService extends BaseService<DictInfoEntity> {
     boolean deleteDictInfoService(String id) throws Exception;
 
     /**
-     * 删除 系统数据字典表
+     * 批量删除 系统数据字典表
      *
      * @param ids
      * @return

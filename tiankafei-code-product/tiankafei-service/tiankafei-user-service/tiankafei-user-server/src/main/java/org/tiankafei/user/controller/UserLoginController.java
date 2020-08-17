@@ -41,6 +41,13 @@ public class UserLoginController extends BaseController {
     @Autowired
     private UserLoginService userLoginService;
 
+    /**
+     * 校验 用户名 是否已经存在
+     *
+     * @param username
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "校验 用户名 是否已经存在", notes = "校验 用户名 是否已经存在")
     public ApiResult<Boolean> checkUsernameExists(@PathVariable String username) throws Exception {
@@ -48,6 +55,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 校验  邮箱 是否已经存在
+     *
+     * @param email
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/checkEmail/{email}")
     @ApiOperation(value = "校验  邮箱 是否已经存在", notes = "校验  邮箱 是否已经存在")
     public ApiResult<Boolean> checkEmailExists(@PathVariable String email) throws Exception {
@@ -55,6 +69,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 校验 手机号码 是否已经存在
+     *
+     * @param telephone
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/checkTelephone/{telephone}")
     @ApiOperation(value = "校验 手机号码 是否已经存在", notes = "校验 手机号码 是否已经存在")
     public ApiResult<Boolean> checkTelephoneExists(@PathVariable String telephone) throws Exception {
@@ -62,6 +83,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 校验 用户登录信息表 是否已经存在
+     *
+     * @param userLoginCheckParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/check")
     @ApiOperation(value = "校验 用户登录信息表 对象是否存在")
     public ApiResult<Boolean> checkUserLoginControllerExists(@Valid @RequestBody UserLoginCheckParam userLoginCheckParam) throws Exception {
@@ -69,6 +97,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 保存 用户登录信息表
+     *
+     * @param userLoginVo
+     * @return
+     * @throws Exception
+     */
     @PostMapping
     @ApiOperation(value = "添加 用户登录信息表")
     public ApiResult<Long> addUserLoginController(@Valid @RequestBody UserLoginVo userLoginVo) throws Exception {
@@ -76,6 +111,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(id);
     }
 
+    /**
+     * 批量保存 用户登录信息表
+     *
+     * @param userLoginVoList
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 用户登录信息表")
     public ApiResult<List<Long>> batchAddUserLoginController(@Valid @RequestBody List<UserLoginVo> userLoginVoList) throws Exception {
@@ -83,6 +125,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(idList);
     }
 
+    /**
+     * 删除 用户登录信息表
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 用户登录信息表")
     public ApiResult<Boolean> deleteUserLoginController(@PathVariable(value = "id") String id) throws Exception {
@@ -90,6 +139,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 批量删除 用户登录信息表
+     *
+     * @param idsParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 用户登录信息表")
     public ApiResult<Boolean> batchDeleteUserLoginController(@Valid @RequestBody IdsParam idsParam) throws Exception {
@@ -97,6 +153,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据条件删除 用户登录信息表
+     *
+     * @param userLoginDeleteParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 用户登录信息表")
     public ApiResult<Boolean> conditionDeleteUserLoginController(@Valid @RequestBody UserLoginDeleteParam userLoginDeleteParam) throws Exception {
@@ -104,20 +167,40 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 修改 用户登录信息表
+     *
+     * @param userLoginVo
+     * @return
+     * @throws Exception
+     */
     @PatchMapping
-    @ApiOperation(value = "更新 用户登录信息表")
+    @ApiOperation(value = "修改 用户登录信息表")
     public ApiResult<Boolean> updateUserLoginController(@Valid @RequestBody UserLoginVo userLoginVo) throws Exception {
         boolean flag = userLoginService.updateUserLoginService(userLoginVo);
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据ID获取 用户登录信息表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取 用户登录信息表 对象")
+    @ApiOperation(value = "根据ID获取 用户登录信息表 对象")
     public ApiResult<UserLoginVo> getUserLoginController(@PathVariable(value = "id") String id) throws Exception {
         UserLoginVo userLoginVo = userLoginService.getUserLoginServiceById(id);
         return ApiResult.ok(userLoginVo);
     }
 
+    /**
+     * 获取 用户登录信息表 对象列表
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping
     @ApiOperation(value = "获取 用户登录信息表 对象全部列表")
     public ApiResult<List<UserLoginVo>> getUserLoginControllerAllList() throws Exception {
@@ -125,6 +208,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(userLoginVoList);
     }
 
+    /**
+     * 获取 用户登录信息表 对象列表
+     *
+     * @param userLoginListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 用户登录信息表 对象列表")
     public ApiResult<List<UserLoginVo>> getUserLoginControllerList(@Valid @RequestBody UserLoginListParam userLoginListParam) throws Exception {
@@ -132,6 +222,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(userLoginVoList);
     }
 
+    /**
+     * 获取 用户登录信息表 分页对象列表
+     *
+     * @param userLoginPageParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户登录信息表 分页对象列表")
     public ApiResult<Paging<UserLoginVo>> getUserLoginControllerPageList(@Valid @RequestBody UserLoginPageParam userLoginPageParam) throws Exception {
@@ -139,6 +236,13 @@ public class UserLoginController extends BaseController {
         return ApiResult.ok(userLoginVoList);
     }
 
+    /**
+     * 计算 用户登录信息表 总记录数
+     *
+     * @param userLoginCountParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/count")
     @ApiOperation(value = "求 用户登录信息表 对象的记录数")
     public ApiResult<Integer> countUserLoginController(@Valid @RequestBody UserLoginCountParam userLoginCountParam) throws Exception {

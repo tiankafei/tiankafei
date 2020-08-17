@@ -86,7 +86,7 @@ public interface UserInfoService extends BaseService<UserInfoEntity> {
     boolean deleteUserInfoService(String id) throws Exception;
 
     /**
-     * 删除 用户基本信息表
+     * 批量删除 用户基本信息表
      *
      * @param ids
      * @return

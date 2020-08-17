@@ -86,7 +86,7 @@ public interface UserLoginService extends BaseService<UserLoginEntity> {
     boolean deleteUserLoginService(String id) throws Exception;
 
     /**
-     * 删除 用户登录信息表
+     * 批量删除 用户登录信息表
      *
      * @param ids
      * @return

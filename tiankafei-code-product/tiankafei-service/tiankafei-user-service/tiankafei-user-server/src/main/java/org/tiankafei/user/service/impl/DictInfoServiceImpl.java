@@ -167,7 +167,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     }
 
     /**
-     * 删除 系统数据字典表
+     * 批量删除 系统数据字典表
      *
      * @param ids
      * @return
