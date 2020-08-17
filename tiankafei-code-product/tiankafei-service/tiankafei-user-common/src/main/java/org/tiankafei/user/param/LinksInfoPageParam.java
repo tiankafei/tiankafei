@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.param.OrderQueryParam;
+import org.tiankafei.web.common.param.BaseOrderQueryParam;
 
 /**
  * <pre>
@@ -19,7 +19,7 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "系统的友情链接 分页列表参数对象")
-public class LinksInfoPageParam extends OrderQueryParam {
+public class LinksInfoPageParam extends BaseOrderQueryParam {
 
     private static final long serialVersionUID = 1L;
 

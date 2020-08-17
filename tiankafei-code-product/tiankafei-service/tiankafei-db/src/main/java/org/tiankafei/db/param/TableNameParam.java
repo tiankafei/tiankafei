@@ -17,14 +17,14 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "数据库表的字段 查询参数对象", description = "数据库表的字段 查询参数对象")
-public class FieldNameEntityQueryParam implements Serializable {
+@ApiModel(value = "数据库表 查询参数对象", description = "数据库表 查询参数对象")
+public class TableNameParam implements Serializable {
 
     /**
      * 表名称
      */
-    @ApiModelProperty(value = "表名")
-    @NotBlank(message = "查询单个数据表字段时，表名不能为空！")
+    @ApiModelProperty(value = "表名称")
+    @NotBlank(message = "查询单个数据表时，表名称不能为空！")
     private String tableName;
 
     /**
@@ -32,12 +32,5 @@ public class FieldNameEntityQueryParam implements Serializable {
      */
     @ApiModelProperty(value = "数据表所属的数据库名")
     private String tableSchema;
-
-    /**
-     * 字段名
-     */
-    @ApiModelProperty(value = "字段名")
-    @NotBlank(message = "查询单个数据表字段时，字段名不能为空！")
-    private String fieldName;
 
 }

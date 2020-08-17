@@ -18,7 +18,7 @@ import org.apache.commons.collections4.CollectionUtils;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel("可排序查询参数对象")
-public abstract class OrderQueryParam extends QueryParam {
+public abstract class BaseOrderQueryParam extends BaseQueryParam {
 
     @ApiModelProperty(value = "排序")
     private List<OrderItem> orders;

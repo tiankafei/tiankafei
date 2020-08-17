@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.param.OrderQueryParam;
+import org.tiankafei.web.common.param.BaseOrderQueryParam;
 
 /**
  * <pre>
@@ -21,7 +21,7 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "系统数据字典的数据表 分页列表参数对象")
-public class DictTablePageParam extends OrderQueryParam {
+public class DictTablePageParam extends BaseOrderQueryParam {
 
     private static final long serialVersionUID = 1L;
 

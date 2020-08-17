@@ -23,7 +23,7 @@ public class UserCodeGenerator extends BaseCodeGenerator {
     private String baseServiceImplClassPath = "org.tiankafei.web.common.service.impl.BaseServiceImpl";
     private String baseControllerClassPath = "org.tiankafei.web.common.controller.BaseController";
     private String baseVoClassPath = "org.tiankafei.web.common.vo.BaseQueryVo";
-    private String basePageParamClassPath = "org.tiankafei.web.common.param.OrderQueryParam";
+    private String basePageParamClassPath = "org.tiankafei.web.common.param.BaseOrderQueryParam";
     private String idsParamClassPath = "org.tiankafei.web.common.param.IdsParam";
     private String pageClassPath = "org.tiankafei.web.common.vo.Paging";
     private String apiResultClassPath = "org.tiankafei.web.common.api.ApiResult";

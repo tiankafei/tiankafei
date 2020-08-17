@@ -14,7 +14,7 @@ import org.tiankafei.web.common.constants.CommonConstant;
 @Data
 @Accessors(chain = true)
 @ApiModel("查询参数对象")
-public abstract class QueryParam implements Serializable {
+public abstract class BaseQueryParam implements Serializable {
 
     @ApiModelProperty(value = "页码,默认为1", example = "1")
     private Integer current = CommonConstant.DEFAULT_PAGE_INDEX;

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.db.entity.TableEntity;
-import org.tiankafei.db.param.TableNameEntityQueryParam;
-import org.tiankafei.db.param.TableNameListQueryParam;
-import org.tiankafei.db.param.TableNamePageListQueryParam;
+import org.tiankafei.db.param.TableNameParam;
+import org.tiankafei.db.param.TableNameListParam;
+import org.tiankafei.db.param.TableNamePageParam;
 import org.tiankafei.db.service.TableService;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;
@@ -33,42 +33,42 @@ public class TableController extends BaseController {
     /**
      * 获取 数据库表
      *
-     * @param tableNameEntityQueryParam
+     * @param tableNameParam
      * @return
      * @throws Exception
      */
     @PostMapping("/tableEntity")
     @ApiOperation(value = "获取 数据库表 对象", notes = "获取 数据库表")
-    public ApiResult<TableEntity> getTableEntity(@Valid @RequestBody TableNameEntityQueryParam tableNameEntityQueryParam) throws Exception {
-        TableEntity tableEntity = tableService.getTableEntity(tableNameEntityQueryParam);
+    public ApiResult<TableEntity> getTableEntity(@Valid @RequestBody TableNameParam tableNameParam) throws Exception {
+        TableEntity tableEntity = tableService.getTableEntity(tableNameParam);
         return ApiResult.ok(tableEntity);
     }
 
     /**
      * 获取 数据库表 分页对象列表
      *
-     * @param tableNamePageListQueryParam
+     * @param tableNamePageParam
      * @return
      * @throws Exception
      */
     @PostMapping("/pageTableList")
     @ApiOperation(value = "获取 数据库表 分页对象列表", notes = "获取 数据库表 分页对象列表")
-    public ApiResult<Paging<TableEntity>> getTableEntityPageList(@Valid @RequestBody TableNamePageListQueryParam tableNamePageListQueryParam) throws Exception {
-        Paging<TableEntity> sysUserLoginPageList = tableService.getTableEntityPageList(tableNamePageListQueryParam);
+    public ApiResult<Paging<TableEntity>> getTableEntityPageList(@Valid @RequestBody TableNamePageParam tableNamePageParam) throws Exception {
+        Paging<TableEntity> sysUserLoginPageList = tableService.getTableEntityPageList(tableNamePageParam);
         return ApiResult.ok(sysUserLoginPageList);
     }
 
     /**
      * 获取 数据库表 对象列表
      *
-     * @param tableNameListQueryParam
+     * @param tableNameListParam
      * @return
      * @throws Exception
      */
     @PostMapping("/tableList")
     @ApiOperation(value = "取 数据库表 对象列表", notes = "取 数据库表 对象列表")
-    public ApiResult<List<TableEntity>> getTableEntityList(@Valid @RequestBody TableNameListQueryParam tableNameListQueryParam) throws Exception {
-        List<TableEntity> sysUserLoginList = tableService.getTableEntityList(tableNameListQueryParam);
+    public ApiResult<List<TableEntity>> getTableEntityList(@Valid @RequestBody TableNameListParam tableNameListParam) throws Exception {
+        List<TableEntity> sysUserLoginList = tableService.getTableEntityList(tableNameListParam);
         return ApiResult.ok(sysUserLoginList);
     }
 

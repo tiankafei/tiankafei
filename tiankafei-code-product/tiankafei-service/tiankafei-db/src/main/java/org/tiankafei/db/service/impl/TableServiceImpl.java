@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.entity.TableEntity;
 import org.tiankafei.db.mapper.TableMapper;
-import org.tiankafei.db.param.TableNameEntityQueryParam;
-import org.tiankafei.db.param.TableNameListQueryParam;
-import org.tiankafei.db.param.TableNamePageListQueryParam;
+import org.tiankafei.db.param.TableNameParam;
+import org.tiankafei.db.param.TableNameListParam;
+import org.tiankafei.db.param.TableNamePageParam;
 import org.tiankafei.db.service.DbService;
 import org.tiankafei.db.service.TableService;
 import org.tiankafei.web.common.exception.DaoException;
@@ -32,10 +32,10 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
     private DbService dbService;
 
     @Override
-    public TableEntity getTableEntity(TableNameEntityQueryParam tableNameEntityQueryParam) throws Exception {
+    public TableEntity getTableEntity(TableNameParam tableNameParam) throws Exception {
         LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(TableEntity::getTableName, tableNameEntityQueryParam.getTableName());
-        String tableSchema = tableNameEntityQueryParam.getTableSchema();
+        lambdaQueryWrapper.eq(TableEntity::getTableName, tableNameParam.getTableName());
+        String tableSchema = tableNameParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
         }
@@ -50,14 +50,14 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
     }
 
     @Override
-    public Paging<TableEntity> getTableEntityPageList(TableNamePageListQueryParam tableNamePageListQueryParam) throws Exception {
-        Page page = setPageParam(tableNamePageListQueryParam, OrderItem.desc("create_time"));
+    public Paging<TableEntity> getTableEntityPageList(TableNamePageParam tableNamePageParam) throws Exception {
+        Page page = setPageParam(tableNamePageParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        String tableName = tableNamePageListQueryParam.getTableName();
+        String tableName = tableNamePageParam.getTableName();
         if (StringUtils.isNotBlank(tableName)) {
             lambdaQueryWrapper.eq(TableEntity::getTableName, tableName);
         }
-        String tableSchema = tableNamePageListQueryParam.getTableSchema();
+        String tableSchema = tableNamePageParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
@@ -68,13 +68,13 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
     }
 
     @Override
-    public List<TableEntity> getTableEntityList(TableNameListQueryParam tableNameListQueryParam) throws Exception {
+    public List<TableEntity> getTableEntityList(TableNameListParam tableNameListParam) throws Exception {
         LambdaQueryWrapper<TableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        String tableName = tableNameListQueryParam.getTableName();
+        String tableName = tableNameListParam.getTableName();
         if (StringUtils.isNotBlank(tableName)) {
             lambdaQueryWrapper.eq(TableEntity::getTableName, tableName);
         }
-        String tableSchema = tableNameListQueryParam.getTableSchema();
+        String tableSchema = tableNameListParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);

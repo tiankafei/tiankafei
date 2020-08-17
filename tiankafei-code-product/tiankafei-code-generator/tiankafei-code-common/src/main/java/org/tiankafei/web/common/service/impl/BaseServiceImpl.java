@@ -7,8 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
-import org.tiankafei.web.common.param.OrderQueryParam;
-import org.tiankafei.web.common.param.QueryParam;
+import org.tiankafei.web.common.param.BaseOrderQueryParam;
+import org.tiankafei.web.common.param.BaseQueryParam;
 import org.tiankafei.web.common.service.BaseService;
 
 /**
@@ -17,23 +17,23 @@ import org.tiankafei.web.common.service.BaseService;
  **/
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {
 
-    protected Page setPageParam(QueryParam queryParam) {
-        return setPageParam(queryParam, null);
+    protected Page setPageParam(BaseQueryParam baseQueryParam) {
+        return setPageParam(baseQueryParam, null);
     }
 
-    protected Page setPageParam(QueryParam queryParam, OrderItem defaultOrder) {
+    protected Page setPageParam(BaseQueryParam baseQueryParam, OrderItem defaultOrder) {
         Page page = new Page();
         // 设置当前页码
-        page.setCurrent(queryParam.getCurrent());
+        page.setCurrent(baseQueryParam.getCurrent());
         // 设置页大小
-        page.setSize(queryParam.getSize());
+        page.setSize(baseQueryParam.getSize());
         /**
          * 如果是queryParam是OrderQueryParam，并且不为空，则使用前端排序
          * 否则使用默认排序
          */
-        if (queryParam instanceof OrderQueryParam) {
-            OrderQueryParam orderQueryParam = (OrderQueryParam) queryParam;
-            List<OrderItem> orderItems = orderQueryParam.getOrders();
+        if (baseQueryParam instanceof BaseOrderQueryParam) {
+            BaseOrderQueryParam baseOrderQueryParam = (BaseOrderQueryParam) baseQueryParam;
+            List<OrderItem> orderItems = baseOrderQueryParam.getOrders();
             if (CollectionUtils.isEmpty(orderItems)) {
                 page.setOrders(Arrays.asList(defaultOrder));
             } else {

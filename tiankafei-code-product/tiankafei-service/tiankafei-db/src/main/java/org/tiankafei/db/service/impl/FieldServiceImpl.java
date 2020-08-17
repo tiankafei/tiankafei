@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.entity.FieldEntity;
 import org.tiankafei.db.mapper.FieldMapper;
-import org.tiankafei.db.param.FieldNameEntityQueryParam;
-import org.tiankafei.db.param.FieldNameListQueryParam;
-import org.tiankafei.db.param.FieldNamePageListQueryParam;
+import org.tiankafei.db.param.FieldNameParam;
+import org.tiankafei.db.param.FieldNameListParam;
+import org.tiankafei.db.param.FieldNamePageParam;
 import org.tiankafei.db.service.DbService;
 import org.tiankafei.db.service.FieldService;
 import org.tiankafei.web.common.exception.DaoException;
@@ -32,11 +32,11 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
     private DbService dbService;
 
     @Override
-    public FieldEntity getFieldEntity(FieldNameEntityQueryParam fieldNameEntityQueryParam) throws Exception {
+    public FieldEntity getFieldEntity(FieldNameParam fieldNameParam) throws Exception {
         LambdaQueryWrapper<FieldEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNameEntityQueryParam.getTableName());
-        lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldNameEntityQueryParam.getFieldName());
-        String tableSchema = fieldNameEntityQueryParam.getTableSchema();
+        lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNameParam.getTableName());
+        lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldNameParam.getFieldName());
+        String tableSchema = fieldNameParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
         }
@@ -51,15 +51,15 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
     }
 
     @Override
-    public Paging<FieldEntity> getFieldEntityPageList(FieldNamePageListQueryParam fieldNamePageListQueryParam) throws Exception {
-        Page page = setPageParam(fieldNamePageListQueryParam, OrderItem.desc("ORDINAL_POSITION"));
+    public Paging<FieldEntity> getFieldEntityPageList(FieldNamePageParam fieldNamePageParam) throws Exception {
+        Page page = setPageParam(fieldNamePageParam, OrderItem.desc("ORDINAL_POSITION"));
         LambdaQueryWrapper<FieldEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNamePageListQueryParam.getTableName());
-        String fieldName = fieldNamePageListQueryParam.getFieldName();
+        lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNamePageParam.getTableName());
+        String fieldName = fieldNamePageParam.getFieldName();
         if (StringUtils.isNotBlank(fieldName)) {
             lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldName);
         }
-        String tableSchema = fieldNamePageListQueryParam.getTableSchema();
+        String tableSchema = fieldNamePageParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
@@ -69,14 +69,14 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
     }
 
     @Override
-    public List<FieldEntity> getFieldEntityList(FieldNameListQueryParam fieldNameListQueryParam) throws Exception {
+    public List<FieldEntity> getFieldEntityList(FieldNameListParam fieldNameListParam) throws Exception {
         LambdaQueryWrapper<FieldEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNameListQueryParam.getTableName());
-        String fieldName = fieldNameListQueryParam.getFieldName();
+        lambdaQueryWrapper.eq(FieldEntity::getTableName, fieldNameListParam.getTableName());
+        String fieldName = fieldNameListParam.getFieldName();
         if (StringUtils.isNotBlank(fieldName)) {
             lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldName);
         }
-        String tableSchema = fieldNameListQueryParam.getTableSchema();
+        String tableSchema = fieldNameListParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);

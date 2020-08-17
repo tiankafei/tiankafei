@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.param.OrderQueryParam;
+import org.tiankafei.web.common.param.BaseOrderQueryParam;
 
 /**
  * <pre>
@@ -19,7 +19,7 @@ import org.tiankafei.web.common.param.OrderQueryParam;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "角色信息表 分页列表参数对象")
-public class RoleInfoPageParam extends OrderQueryParam {
+public class RoleInfoPageParam extends BaseOrderQueryParam {
 
     private static final long serialVersionUID = 1L;
 
