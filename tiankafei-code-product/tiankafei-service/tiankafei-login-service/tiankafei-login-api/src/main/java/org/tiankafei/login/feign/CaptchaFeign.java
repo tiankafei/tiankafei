@@ -16,6 +16,9 @@ public interface CaptchaFeign {
 
     /**
      * 生成验证码
+     * @param uuid
+     * @return
+     * @throws Exception
      */
     @GetMapping("/captcha")
     @ApiOperation(value = "生成验证码", notes = "生成验证码")

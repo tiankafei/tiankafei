@@ -11,12 +11,12 @@ public interface CollectionComponent {
 
     /**
      * 创建组件属性
+     * @return
      */
     ComponentProperty createComponentProperty();
 
     /**
      * 获取组件类型
-     *
      * @return
      */
     ComponentTypeEnum getComponentType();

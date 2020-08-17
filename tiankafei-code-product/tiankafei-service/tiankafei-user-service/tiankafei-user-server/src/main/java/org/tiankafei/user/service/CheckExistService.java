@@ -7,9 +7,9 @@ public interface CheckExistService {
 
     /**
      * 新增时验证系统用户是否存在
-     *
      * @param keywords
      * @return
+     * @throws UserException
      */
     Boolean checkAddSysUserExists(String keywords) throws UserException;
 

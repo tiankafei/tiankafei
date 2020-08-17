@@ -80,6 +80,10 @@ public abstract class BaseZuulFilter extends ZuulFilter {
         return null;
     }
 
+    /**
+     * 执行过滤器
+     * @return
+     */
     public abstract Object execFilter();
 
 }

@@ -52,6 +52,10 @@ public abstract class BaseCodeGenerator {
 
     }
 
+    /**
+     * 初始化生成代码的相关配置
+     * @return
+     */
     protected abstract CodeProperties initCodeProperties() ;
 
 }

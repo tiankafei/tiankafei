@@ -59,8 +59,8 @@ public interface CacheQueryRepository extends CacheRepository {
 
     /**
      * 获取缓存数据对象
-     *
      * @param key
+     * @param mapKey
      * @param <T>
      * @return
      */

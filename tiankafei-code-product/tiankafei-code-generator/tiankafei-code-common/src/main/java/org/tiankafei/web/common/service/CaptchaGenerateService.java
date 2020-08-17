@@ -31,11 +31,11 @@ public interface CaptchaGenerateService {
 
     /**
      * 生成验证码及图片
-     *
      * @param outputStream
      * @param width
      * @param height
      * @param length
+     * @param captchaTypeEnum
      * @return
      * @throws VerificationException
      */
