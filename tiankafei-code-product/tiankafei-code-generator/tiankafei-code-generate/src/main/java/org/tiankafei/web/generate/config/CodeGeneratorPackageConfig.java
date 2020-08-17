@@ -24,7 +24,6 @@ public class CodeGeneratorPackageConfig {
         packageConfig.setMapper("mapper");
         packageConfig.setXml("mapper");
         packageConfig.setController("controller");
-//        packageConfig.setPathInfo();
 
         return packageConfig;
     }

@@ -30,7 +30,6 @@ public class GenerateKaptchaCaptchaServiceImpl implements CaptchaGenerateService
     public String buildImage(OutputStream outputStream, int width, int height, int length, CaptchaTypeEnum captchaTypeEnum) throws VerificationException {
         try {
             DefaultKaptcha defaultKaptcha = getDefaultKaptcha(width, height, length, 28);
-//            String captcha = defaultKaptcha.createText();
             CaptchaVo captcha = CommonCaptchaUtil.getCaptcha(captchaTypeEnum);
 
             BufferedImage bufferedImage = defaultKaptcha.createImage(captcha.getExpression());

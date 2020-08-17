@@ -8,6 +8,10 @@ import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.exception.LoginException;
 
+/**
+ * @author tiankafei
+ * @since 1.0
+ */
 @Service
 public class QueryMoreServiceImpl implements QueryUserService {
 

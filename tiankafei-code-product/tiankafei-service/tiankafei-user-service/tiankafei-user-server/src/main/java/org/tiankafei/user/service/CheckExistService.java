@@ -3,6 +3,10 @@ package org.tiankafei.user.service;
 import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.web.common.exception.UserException;
 
+/**
+ * @author tiankafei
+ * @since 1.0
+ */
 public interface CheckExistService {
 
     /**

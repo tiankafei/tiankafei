@@ -21,7 +21,6 @@ public class DataSourceConfig {
     @ConfigurationProperties("spring.datasource.primary")
     @Primary
     public DataSource primaryDataSource() {
-//        return DataSourceBuilder.create().build();
         return DruidDataSourceBuilder.create().build();
     }
 
@@ -29,7 +28,6 @@ public class DataSourceConfig {
     @Qualifier("secondaryDataSource")
     @ConfigurationProperties("spring.datasource.secondary")
     public DataSource secondaryDataSource() {
-//        return DataSourceBuilder.create().build();
         return DruidDataSourceBuilder.create().build();
     }
 
