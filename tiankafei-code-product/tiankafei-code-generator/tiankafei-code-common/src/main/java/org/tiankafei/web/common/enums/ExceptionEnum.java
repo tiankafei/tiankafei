@@ -6,14 +6,26 @@ package org.tiankafei.web.common.enums;
  **/
 public enum ExceptionEnum implements BaseEnums {
 
+    // 请求参数校验异常
     REQUEST_PARAM_EXCEPTION(null, "请求参数校验异常!"),
+
+    // 系统异常!
     EXCEPTION(null, "系统异常!"),
+
+    // 数据库处理异常!
     DAO_EXCEPTION(null, "数据库处理异常!"),
+
+    // 你请求的资源不存在!
     NOT_FOUND(null, "你请求的资源不存在!"),
 
+    // 登陆授权异常
     LOGIN_AUTHENTICATION_EXCEPTION(5001, "登陆授权异常"),
+
+    // 登录人数过多，请稍后再试
     LOGIN_LIMITED_EXCEPTION(5002, "登录人数过多，请稍后再试"),
+    // 请求中没有携带tonken信息
     LOGIN_TOKEN_EXCEPTION(5003, "请求中没有携带tonken信息"),
+    // 请求路径错误
     REQUEST_URL_TOKEN_EXCEPTION(5004, "请求路径错误"),
     ;
 

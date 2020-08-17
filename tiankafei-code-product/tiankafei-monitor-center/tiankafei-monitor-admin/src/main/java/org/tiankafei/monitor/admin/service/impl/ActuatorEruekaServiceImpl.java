@@ -11,7 +11,7 @@ import org.tiankafei.monitor.admin.service.ActuatorService;
  */
 @Slf4j
 @Service
-public class ActuatorEruekaService implements ActuatorService {
+public class ActuatorEruekaServiceImpl implements ActuatorService {
 
     private Boolean status = Boolean.TRUE;
 

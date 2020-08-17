@@ -11,13 +11,13 @@ import org.tiankafei.user.service.UserLoginService;
 import org.tiankafei.web.common.exception.UserException;
 
 @Service
-public class CheckPhoneExistService implements CheckExistService {
+public class CheckUsernameExistServiceImpl implements CheckExistService {
 
     @Autowired
     private UserLoginService userLoginService;
 
     /**
-     * 验证新增时手机号码是否存在
+     * 验证新增时用户名是否存在
      *
      * @param keywords
      * @return
@@ -29,17 +29,17 @@ public class CheckPhoneExistService implements CheckExistService {
             return Boolean.FALSE;
         }
         LambdaQueryWrapper<UserLoginEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(UserLoginEntity::getTelephone, keywords);
+        lambdaQueryWrapper.eq(UserLoginEntity::getUsername, keywords);
 
         boolean exists = userLoginService.count(lambdaQueryWrapper) > 0;
         if (exists) {
-            throw new UserException("手机号码已经存在，请重新输入！");
+            throw new UserException("用户名已经存在，请重新输入！");
         }
         return Boolean.FALSE;
     }
 
     @Override
     public Integer getUserFlag() {
-        return UserEnums.PHONE.getCode();
+        return UserEnums.USER_NAME.getCode();
     }
 }

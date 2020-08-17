@@ -31,7 +31,7 @@ import org.tiankafei.web.common.service.CaptchaGenerateService;
  * @since 1.0
  */
 @Service
-public class GenerateHappyCaptchaService implements CaptchaGenerateService {
+public class GenerateHappyCaptchaServiceImpl implements CaptchaGenerateService {
 
     @Override
     public CaptchaEnum getCaptchaType() {
@@ -138,6 +138,7 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
             return CommonCaptchaUtil.getColor();
         }
 
+        @Override
         public void drawImage(char[] chars, OutputStream output) {
             BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
             Graphics2D g = (Graphics2D) img.getGraphics();
@@ -196,6 +197,7 @@ public class GenerateHappyCaptchaService implements CaptchaGenerateService {
             return CommonCaptchaUtil.getColor();
         }
 
+        @Override
         public BufferedImage drawImage(Color[] colors, char[] chars, int index, int[][] bezier) {
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
             Graphics2D g = (Graphics2D) image.getGraphics();

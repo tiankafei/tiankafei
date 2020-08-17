@@ -32,9 +32,9 @@ public class CodeGeneratorDataSourceConfig {
         dataSourceConfig.setTypeConvert(new ITypeConvert() {
             @Override
             public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
-                if (fieldType.equalsIgnoreCase("timestamp")
-                        || fieldType.equalsIgnoreCase("datetime")
-                        || fieldType.equalsIgnoreCase("date")) {
+                if ("timestamp".equalsIgnoreCase(fieldType)
+                        || "datetime".equalsIgnoreCase(fieldType)
+                        || "date".equalsIgnoreCase(fieldType)) {
                     return DbColumnType.TIMESTAMP;
                 }
                 //其它字段采用默认转换（非mysql数据库可以使用其它默认的数据库转换器）

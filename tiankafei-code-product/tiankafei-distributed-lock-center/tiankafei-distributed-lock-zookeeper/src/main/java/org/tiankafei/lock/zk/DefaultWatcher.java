@@ -36,6 +36,7 @@ public class DefaultWatcher implements Watcher {
                 break;
             case Expired:
                 break;
+            default: break;
         }
     }
 

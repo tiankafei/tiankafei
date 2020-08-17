@@ -24,7 +24,7 @@ public class BrowserUtil {
      */
     public static String getCurrent(HttpServletRequest request) {
         String userAgent = request.getHeader("USER-AGENT").toLowerCase();
-        if (userAgent != null && !userAgent.trim().equals("")) {
+        if (userAgent != null && !"".equals(userAgent.trim())) {
             if (userAgent.indexOf(CHROME) >= 0) {
                 return CHROME;
             } else if (userAgent.indexOf(FIREFOX) >= 0) {
@@ -42,7 +42,7 @@ public class BrowserUtil {
      * @param request
      * @return
      */
-    public static boolean isIE(HttpServletRequest request) {
+    public static boolean isIe(HttpServletRequest request) {
         return IE.equals(getCurrent(request));
     }
 

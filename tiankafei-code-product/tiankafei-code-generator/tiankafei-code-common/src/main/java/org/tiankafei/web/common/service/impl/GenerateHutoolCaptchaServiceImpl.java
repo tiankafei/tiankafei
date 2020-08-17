@@ -14,7 +14,7 @@ import org.tiankafei.web.common.service.CaptchaGenerateService;
  * @since 1.0
  **/
 @Service
-public class GenerateHutoolCaptchaService implements CaptchaGenerateService {
+public class GenerateHutoolCaptchaServiceImpl implements CaptchaGenerateService {
 
     @Override
     public CaptchaEnum getCaptchaType() {

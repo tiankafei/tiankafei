@@ -12,7 +12,7 @@ import org.tiankafei.web.common.service.QueryTokenService;
  * @since 1.0
  **/
 @Service
-public class QueryTokenFromRequestParamService implements QueryTokenService {
+public class QueryTokenFromRequestParamServiceImpl implements QueryTokenService {
 
     @Override
     public String getToken() {

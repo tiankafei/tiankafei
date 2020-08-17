@@ -19,7 +19,7 @@ import org.tiankafei.web.common.service.CaptchaGenerateService;
  * @since 1.0
  */
 @Service
-public class GenerateKaptchaCaptchaService implements CaptchaGenerateService {
+public class GenerateKaptchaCaptchaServiceImpl implements CaptchaGenerateService {
 
     @Override
     public CaptchaEnum getCaptchaType() {

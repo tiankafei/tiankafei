@@ -21,6 +21,7 @@ public class TableFormDataBeanInfo implements TableFormDataProperty {
      */
     protected String tableFormName;
 
+    @Override
     public void setTableFormName(String tableFormName) {
         this.tableFormName = tableFormName;
     }

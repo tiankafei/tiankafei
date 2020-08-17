@@ -129,8 +129,8 @@ public abstract class GatewayUtil {
             predicates.stream().forEach(predicateDefinition -> {
                 if ("Path".equalsIgnoreCase(predicateDefinition.getName())) {
                     int number = gatewayRouteVo.getStripPrefix() + 1;
-                    String genkey_0 = predicateDefinition.getArgs().get("_genkey_0");
-                    String pathPrefix = splitPrefixPath(genkey_0, number);
+                    String genkey = predicateDefinition.getArgs().get("_genkey_0");
+                    String pathPrefix = splitPrefixPath(genkey, number);
                     gatewayRouteVo.setPathPrefix(pathPrefix);
                 }
             });

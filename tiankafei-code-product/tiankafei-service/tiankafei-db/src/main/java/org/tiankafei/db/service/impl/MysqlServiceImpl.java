@@ -82,18 +82,18 @@ public class MysqlServiceImpl implements DbService {
 
         for (int index = 0, length = dataMapList.size(); index < length; index++) {
             Map<String, Object> dataMap = dataMapList.get(index);
-            Object key_name = dataMap.get("Key_name");
-            Object column_name = dataMap.get("Column_name");
-            Integer non_unique = (Integer) dataMap.get("Non_unique");
-            String index_comment = (String) dataMap.get("Index_comment");
+            Object keyName = dataMap.get("Key_name");
+            Object columnName = dataMap.get("Column_name");
+            Integer nonUnique = (Integer) dataMap.get("Non_unique");
+            String indexComment = (String) dataMap.get("Index_comment");
 
-            if (!"PRIMARY".equals(key_name)) {
+            if (!"PRIMARY".equals(keyName)) {
                 // 3. 创建索引语句
                 StringBuilder createIndexSql = new StringBuilder();
                 createIndexSql.append("ALTER TABLE `")
                         .append(getTableSchema()).append("`.`").append(tableName)
-                        .append("` ADD ").append(non_unique == 0 ? "UNIQUE" : "").append(" INDEX `")
-                        .append(key_name).append("`(`").append(column_name).append("`) COMMENT '").append(index_comment).append("'");
+                        .append("` ADD ").append(nonUnique == 0 ? "UNIQUE" : "").append(" INDEX `")
+                        .append(keyName).append("`(`").append(columnName).append("`) COMMENT '").append(indexComment).append("'");
                 log.debug("create index sql : {}", createIndexSql.toString());
                 sqlList.add(createIndexSql.toString());
             }

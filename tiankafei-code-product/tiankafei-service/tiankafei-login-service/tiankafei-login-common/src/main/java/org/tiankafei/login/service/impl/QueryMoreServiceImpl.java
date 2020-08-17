@@ -9,19 +9,19 @@ import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.exception.LoginException;
 
 @Service
-public class QueryUsernameService implements QueryUserService {
+public class QueryMoreServiceImpl implements QueryUserService {
 
     @Autowired
     private LoginMapper loginMapper;
 
     @Override
     public UserLoginVo login(String keywords) throws LoginException {
-        UserLoginVo userLoginVo = loginMapper.queryUserLoginFromUsername(keywords);
+        UserLoginVo userLoginVo = loginMapper.queryUserLoginFromMore(keywords);
         return userLoginVo;
     }
 
     @Override
     public Integer getUserFlag() {
-        return UserEnums.USER_NAME.getCode();
+        return UserEnums.MORE.getCode();
     }
 }

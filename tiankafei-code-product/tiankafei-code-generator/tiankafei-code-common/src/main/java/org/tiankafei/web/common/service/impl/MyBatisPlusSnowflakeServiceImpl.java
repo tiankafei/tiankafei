@@ -11,7 +11,7 @@ import org.tiankafei.web.common.service.DistributedIdService;
  * @since 1.0
  **/
 @Service
-public class MyBatisPlusSnowflakeService implements DistributedIdService {
+public class MyBatisPlusSnowflakeServiceImpl implements DistributedIdService {
 
     /**
      * mybatis-plus的雪花算法生成类

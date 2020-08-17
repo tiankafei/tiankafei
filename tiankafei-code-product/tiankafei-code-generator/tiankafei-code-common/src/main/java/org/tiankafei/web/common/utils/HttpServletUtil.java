@@ -30,7 +30,7 @@ public class HttpServletUtil {
         return request;
     }
 
-    public static void printJSON(HttpServletResponse response, Object object) throws Exception {
+    public static void printJson(HttpServletResponse response, Object object) throws Exception {
         response.setCharacterEncoding(UTF8);
         response.setContentType(CONTENT_TYPE);
         PrintWriter printWriter = response.getWriter();

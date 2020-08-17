@@ -11,7 +11,7 @@ import org.tiankafei.user.service.UserLoginService;
 import org.tiankafei.web.common.exception.UserException;
 
 @Service
-public class CheckEmailExistService implements CheckExistService {
+public class CheckEmailExistServiceImpl implements CheckExistService {
 
     @Autowired
     private UserLoginService userLoginService;
