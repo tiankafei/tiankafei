@@ -115,7 +115,7 @@ public class BlogInfoServiceImpl extends BaseServiceImpl<BlogInfoMapper, BlogInf
     }
 
     /**
-     * 删除 系统的博客数据
+     * 批量删除 系统的博客数据
      *
      * @param ids
      * @return

@@ -59,7 +59,7 @@ public interface DiaryInfoService extends BaseService<DiaryInfoEntity> {
     boolean deleteDiaryInfoService(String id) throws Exception;
 
     /**
-     * 删除 系统的博客日记
+     * 批量删除 系统的博客日记
      *
      * @param ids
      * @return

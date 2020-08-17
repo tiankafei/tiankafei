@@ -59,7 +59,7 @@ public interface GlobalSettingService extends BaseService<GlobalSettingEntity> {
     boolean deleteGlobalSettingService(String id) throws Exception;
 
     /**
-     * 删除 系统的博客选项设置
+     * 批量删除 系统的博客选项设置
      *
      * @param ids
      * @return

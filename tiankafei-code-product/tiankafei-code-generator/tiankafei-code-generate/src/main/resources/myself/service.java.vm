@@ -62,7 +62,7 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}>
     boolean delete$!{table.serviceName}(String id) throws Exception;
 	
     /**
-     * 删除 $!{table.comment}
+     * 批量删除 $!{table.comment}
      *
      * @param ids
      * @return

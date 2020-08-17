@@ -59,7 +59,7 @@ public interface BlogInfoService extends BaseService<BlogInfoEntity> {
     boolean deleteBlogInfoService(String id) throws Exception;
 
     /**
-     * 删除 系统的博客数据
+     * 批量删除 系统的博客数据
      *
      * @param ids
      * @return

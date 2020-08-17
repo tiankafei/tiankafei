@@ -41,6 +41,13 @@ public class GlobalSettingController extends BaseController {
     @Autowired
     private GlobalSettingService globalSettingService;
 
+    /**
+     * 校验 系统的博客选项设置 是否已经存在
+     *
+     * @param globalSettingCheckParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/check")
     @ApiOperation(value = "校验 系统的博客选项设置 对象是否存在")
     public ApiResult<Boolean> checkGlobalSettingControllerExists(@Valid @RequestBody GlobalSettingCheckParam globalSettingCheckParam) throws Exception {
@@ -48,6 +55,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 保存 系统的博客选项设置
+     *
+     * @param globalSettingVo
+     * @return
+     * @throws Exception
+     */
     @PostMapping
     @ApiOperation(value = "添加 系统的博客选项设置")
     public ApiResult<Long> addGlobalSettingController(@Valid @RequestBody GlobalSettingVo globalSettingVo) throws Exception {
@@ -55,6 +69,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(id);
     }
 
+    /**
+     * 批量保存 系统的博客选项设置
+     *
+     * @param globalSettingVoList
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的博客选项设置")
     public ApiResult<List<Long>> batchAddGlobalSettingController(@Valid @RequestBody List<GlobalSettingVo> globalSettingVoList) throws Exception {
@@ -62,6 +83,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(idList);
     }
 
+    /**
+     * 删除 系统的博客选项设置
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 系统的博客选项设置")
     public ApiResult<Boolean> deleteGlobalSettingController(@PathVariable(value = "id") String id) throws Exception {
@@ -69,6 +97,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 批量删除 系统的博客选项设置
+     *
+     * @param idsParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统的博客选项设置")
     public ApiResult<Boolean> batchDeleteGlobalSettingController(@Valid @RequestBody IdsParam idsParam) throws Exception {
@@ -76,6 +111,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据条件删除 系统的博客选项设置
+     *
+     * @param globalSettingDeleteParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 系统的博客选项设置")
     public ApiResult<Boolean> conditionDeleteGlobalSettingController(@Valid @RequestBody GlobalSettingDeleteParam globalSettingDeleteParam) throws Exception {
@@ -83,20 +125,40 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 修改 系统的博客选项设置
+     *
+     * @param globalSettingVo
+     * @return
+     * @throws Exception
+     */
     @PatchMapping
-    @ApiOperation(value = "更新 系统的博客选项设置")
+    @ApiOperation(value = "修改 系统的博客选项设置")
     public ApiResult<Boolean> updateGlobalSettingController(@Valid @RequestBody GlobalSettingVo globalSettingVo) throws Exception {
         boolean flag = globalSettingService.updateGlobalSettingService(globalSettingVo);
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据ID获取 系统的博客选项设置 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取 系统的博客选项设置 对象")
+    @ApiOperation(value = "根据ID获取 系统的博客选项设置 对象")
     public ApiResult<GlobalSettingVo> getGlobalSettingController(@PathVariable(value = "id") String id) throws Exception {
         GlobalSettingVo globalSettingVo = globalSettingService.getGlobalSettingServiceById(id);
         return ApiResult.ok(globalSettingVo);
     }
 
+    /**
+     * 获取 系统的博客选项设置 对象列表
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping
     @ApiOperation(value = "获取 系统的博客选项设置 对象全部列表")
     public ApiResult<List<GlobalSettingVo>> getGlobalSettingControllerAllList() throws Exception {
@@ -111,6 +173,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(globalSettingVoList);
     }
 
+    /**
+     * 获取 系统的博客选项设置 分页对象列表
+     *
+     * @param globalSettingPageParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客选项设置 分页对象列表")
     public ApiResult<Paging<GlobalSettingVo>> getGlobalSettingControllerPageList(@Valid @RequestBody GlobalSettingPageParam globalSettingPageParam) throws Exception {
@@ -118,6 +187,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(globalSettingVoList);
     }
 
+    /**
+     * 计算 系统的博客选项设置 总记录数
+     *
+     * @param globalSettingCountParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/count")
     @ApiOperation(value = "求 系统的博客选项设置 对象的记录数")
     public ApiResult<Integer> countGlobalSettingController(@Valid @RequestBody GlobalSettingCountParam globalSettingCountParam) throws Exception {

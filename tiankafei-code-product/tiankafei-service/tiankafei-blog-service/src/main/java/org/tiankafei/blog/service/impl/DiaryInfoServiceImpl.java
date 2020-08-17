@@ -115,7 +115,7 @@ public class DiaryInfoServiceImpl extends BaseServiceImpl<DiaryInfoMapper, Diary
     }
 
     /**
-     * 删除 系统的博客日记
+     * 批量删除 系统的博客日记
      *
      * @param ids
      * @return

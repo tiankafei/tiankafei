@@ -41,6 +41,13 @@ public class DiaryInfoController extends BaseController {
     @Autowired
     private DiaryInfoService diaryInfoService;
 
+    /**
+     * 校验 系统的博客日记 是否已经存在
+     *
+     * @param diaryInfoCheckParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/check")
     @ApiOperation(value = "校验 系统的博客日记 对象是否存在")
     public ApiResult<Boolean> checkDiaryInfoControllerExists(@Valid @RequestBody DiaryInfoCheckParam diaryInfoCheckParam) throws Exception {
@@ -48,6 +55,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 保存 系统的博客日记
+     *
+     * @param diaryInfoVo
+     * @return
+     * @throws Exception
+     */
     @PostMapping
     @ApiOperation(value = "添加 系统的博客日记")
     public ApiResult<Long> addDiaryInfoController(@Valid @RequestBody DiaryInfoVo diaryInfoVo) throws Exception {
@@ -55,6 +69,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(id);
     }
 
+    /**
+     * 批量保存 系统的博客日记
+     *
+     * @param diaryInfoVoList
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的博客日记")
     public ApiResult<List<Long>> batchAddDiaryInfoController(@Valid @RequestBody List<DiaryInfoVo> diaryInfoVoList) throws Exception {
@@ -62,6 +83,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(idList);
     }
 
+    /**
+     * 删除 系统的博客日记
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 系统的博客日记")
     public ApiResult<Boolean> deleteDiaryInfoController(@PathVariable(value = "id") String id) throws Exception {
@@ -69,6 +97,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 批量删除 系统的博客日记
+     *
+     * @param idsParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统的博客日记")
     public ApiResult<Boolean> batchDeleteDiaryInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception {
@@ -76,6 +111,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据条件删除 系统的博客日记
+     *
+     * @param diaryInfoDeleteParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 系统的博客日记")
     public ApiResult<Boolean> conditionDeleteDiaryInfoController(@Valid @RequestBody DiaryInfoDeleteParam diaryInfoDeleteParam) throws Exception {
@@ -83,20 +125,40 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 修改 系统的博客日记
+     *
+     * @param diaryInfoVo
+     * @return
+     * @throws Exception
+     */
     @PatchMapping
-    @ApiOperation(value = "更新 系统的博客日记")
+    @ApiOperation(value = "修改 系统的博客日记")
     public ApiResult<Boolean> updateDiaryInfoController(@Valid @RequestBody DiaryInfoVo diaryInfoVo) throws Exception {
         boolean flag = diaryInfoService.updateDiaryInfoService(diaryInfoVo);
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据ID获取 系统的博客日记 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取 系统的博客日记 对象")
+    @ApiOperation(value = "根据ID获取 系统的博客日记 对象")
     public ApiResult<DiaryInfoVo> getDiaryInfoController(@PathVariable(value = "id") String id) throws Exception {
         DiaryInfoVo diaryInfoVo = diaryInfoService.getDiaryInfoServiceById(id);
         return ApiResult.ok(diaryInfoVo);
     }
 
+    /**
+     * 获取 系统的博客日记 对象列表
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping
     @ApiOperation(value = "获取 系统的博客日记 对象全部列表")
     public ApiResult<List<DiaryInfoVo>> getDiaryInfoControllerAllList() throws Exception {
@@ -111,6 +173,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(diaryInfoVoList);
     }
 
+    /**
+     * 获取 系统的博客日记 分页对象列表
+     *
+     * @param diaryInfoPageParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客日记 分页对象列表")
     public ApiResult<Paging<DiaryInfoVo>> getDiaryInfoControllerPageList(@Valid @RequestBody DiaryInfoPageParam diaryInfoPageParam) throws Exception {
@@ -118,6 +187,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(diaryInfoVoList);
     }
 
+    /**
+     * 计算 系统的博客日记 总记录数
+     *
+     * @param diaryInfoCountParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/count")
     @ApiOperation(value = "求 系统的博客日记 对象的记录数")
     public ApiResult<Integer> countDiaryInfoController(@Valid @RequestBody DiaryInfoCountParam diaryInfoCountParam) throws Exception {

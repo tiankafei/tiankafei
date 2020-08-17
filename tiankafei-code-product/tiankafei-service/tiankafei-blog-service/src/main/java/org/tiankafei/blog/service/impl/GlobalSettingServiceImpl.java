@@ -115,7 +115,7 @@ public class GlobalSettingServiceImpl extends BaseServiceImpl<GlobalSettingMappe
     }
 
     /**
-     * 删除 系统的博客选项设置
+     * 批量删除 系统的博客选项设置
      *
      * @param ids
      * @return

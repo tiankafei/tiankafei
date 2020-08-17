@@ -120,7 +120,7 @@ public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{tabl
 	}
 	
     /**
-     * 删除 $!{table.comment}
+     * 批量删除 $!{table.comment}
      *
      * @param ids
      * @return
