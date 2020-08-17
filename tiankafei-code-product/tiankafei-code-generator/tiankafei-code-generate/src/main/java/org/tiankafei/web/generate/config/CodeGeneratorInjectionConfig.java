@@ -81,10 +81,10 @@ public class CodeGeneratorInjectionConfig {
                             || importPackage.endsWith(StringConstants.ID_TYPE)
                             || importPackage.endsWith(StringConstants.MODEL)
                             || importPackage.endsWith(StringConstants.VERSION)
-                            || importPackage.endsWith(StringConstants.tableId)
-                            || importPackage.endsWith(StringConstants.fieldFill)
-                            || importPackage.endsWith(StringConstants.tableLogic)
-                            || importPackage.endsWith(StringConstants.tableField)) {
+                            || importPackage.endsWith(StringConstants.TABLE_ID)
+                            || importPackage.endsWith(StringConstants.FIELD_FILL)
+                            || importPackage.endsWith(StringConstants.TABLE_LOGIC)
+                            || importPackage.endsWith(StringConstants.TABLE_FIELD)) {
                         return false;
                     }
                     return true;

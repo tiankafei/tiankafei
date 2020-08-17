@@ -22,24 +22,34 @@ public interface StringConstants {
 
     String VERSION = "Version";
 
-    String tableId = "TableId";
+    String TABLE_ID = "TableId";
 
-    String fieldFill = "FieldFill";
+    String FIELD_FILL = "FieldFill";
 
-    String tableLogic = "TableLogic";
+    String TABLE_LOGIC = "TableLogic";
 
-    String tableField = "TableField";
+    String TABLE_FIELD = "TableField";
 
-    String localhost = "localhost";
+    String LOCALHOST = "localhost";
 
-    String api = "/api";
+    String API = "/api";
 
-    String stripPrefix = "StripPrefix";
+    String STRIP_PREFIX = "StripPrefix";
 
-    String path = "Path";
+    String PATH = "Path";
 
-    String macAddress = "0:0:0:0:0:0:0:1";
+    String MAC_ADDRESS = "0:0:0:0:0:0:0:1";
 
-    Integer number3 = 3;
+    Integer NUMBER3 = 3;
+
+    Integer NUMBER20 = 20;
+
+    Integer NUMBER255 = 255;
+
+    String COLON = ":";
+
+    String DOUBLE_POINT = "..";
+
+    String DOUBLE_POINT_SLASH = "../";
 
 }

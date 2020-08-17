@@ -44,7 +44,7 @@ public final class IpUtil {
             ip = request.getRemoteAddr();
         }
 
-        if (StringConstants.macAddress.equals(ip)) {
+        if (StringConstants.MAC_ADDRESS.equals(ip)) {
             ip = getLocalhostIp();
         }
         return ip;

@@ -150,7 +150,7 @@ public final class CookieUtils {
             if (null != request) {
                 String domainName = getDomainName(request);
                 System.out.println(domainName);
-                if (!StringConstants.localhost.equals(domainName)) {
+                if (!StringConstants.LOCALHOST.equals(domainName)) {
                     cookie.setDomain(domainName);
                 }
             }
@@ -182,7 +182,7 @@ public final class CookieUtils {
             if (null != request) {
                 String domainName = getDomainName(request);
                 System.out.println(domainName);
-                if (!StringConstants.localhost.equals(domainName)) {
+                if (!StringConstants.LOCALHOST.equals(domainName)) {
                     cookie.setDomain(domainName);
                 }
             }
@@ -209,10 +209,10 @@ public final class CookieUtils {
             serverName = serverName.substring(0, end);
             final String[] domains = serverName.split("\\.");
             int len = domains.length;
-            if (len > StringConstants.number3) {
+            if (len > StringConstants.NUMBER3) {
                 // www.xxx.com.cn
                 domainName = "." + domains[len - 3] + "." + domains[len - 2] + "." + domains[len - 1];
-            } else if (len <= StringConstants.number3 && len > 1) {
+            } else if (len <= StringConstants.NUMBER3 && len > 1) {
                 // xxx.com or xxx.cn
                 domainName = "." + domains[len - 2] + "." + domains[len - 1];
             } else {
@@ -220,7 +220,7 @@ public final class CookieUtils {
             }
         }
 
-        if (domainName != null && domainName.indexOf(":") > 0) {
+        if (domainName != null && domainName.indexOf(StringConstants.COLON) > 0) {
             String[] ary = domainName.split("\\:");
             domainName = ary[0];
         }

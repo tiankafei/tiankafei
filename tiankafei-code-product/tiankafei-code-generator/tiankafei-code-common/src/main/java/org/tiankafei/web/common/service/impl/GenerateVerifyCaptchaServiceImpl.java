@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import org.springframework.stereotype.Service;
+import org.tiankafei.web.common.constants.StringConstants;
 import org.tiankafei.web.common.enums.CaptchaEnum;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
@@ -121,7 +122,7 @@ public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService 
         Random random = new Random();
         // 设置线条的颜色
         g2.setColor(getRandColor(160, 200));
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < StringConstants.NUMBER20; i++) {
             int x = random.nextInt(w - 1);
             int y = random.nextInt(h - 1);
             int xl = random.nextInt(6) + 1;
@@ -160,11 +161,11 @@ public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService 
     }
 
     private static Color getRandColor(int fc, int bc) {
-        if (fc > 255) {
-            fc = 255;
+        if (fc > StringConstants.NUMBER255) {
+            fc = StringConstants.NUMBER255;
         }
-        if (bc > 255) {
-            bc = 255;
+        if (bc > StringConstants.NUMBER255) {
+            bc = StringConstants.NUMBER255;
         }
         int r = fc + random.nextInt(bc - fc);
         int g = fc + random.nextInt(bc - fc);
@@ -184,7 +185,7 @@ public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService 
 
     private static int[] getRandomRgb() {
         int[] rgb = new int[3];
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < StringConstants.NUMBER3; i++) {
             rgb[i] = random.nextInt(255);
         }
         return rgb;

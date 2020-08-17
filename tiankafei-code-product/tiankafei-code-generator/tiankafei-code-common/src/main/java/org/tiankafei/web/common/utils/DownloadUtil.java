@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
+import org.tiankafei.web.common.constants.StringConstants;
 
 /**
  * @author tiankafei
@@ -54,7 +55,7 @@ public final class DownloadUtil {
             throw new IOException("文件名称不能为空");
         }
         // 安全判断，防止../情况,防止出现类似非法文件名称：../../hello/123.txt
-        if (downloadFileName.contains("..") || downloadFileName.contains("../")) {
+        if (downloadFileName.contains(StringConstants.DOUBLE_POINT) || downloadFileName.contains(StringConstants.DOUBLE_POINT_SLASH)) {
             throw new IOException("非法的文件名称");
         }
         // 允许下载的文件后缀判断
@@ -117,6 +118,17 @@ public final class DownloadUtil {
     }
 
     public static interface DownloadHandler {
+        /**
+         * 处理下载
+         * @param dir
+         * @param fileName
+         * @param file
+         * @param fileExtension
+         * @param contentType
+         * @param length
+         * @return
+         * @throws Exception
+         */
         boolean handle(String dir, String fileName, File file, String fileExtension, String contentType, long length) throws Exception;
     }
 
