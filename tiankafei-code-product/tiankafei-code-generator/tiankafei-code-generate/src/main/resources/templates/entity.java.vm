@@ -1,7 +1,7 @@
-package ${package.Entity};
+package $!{package.Entity};
 
-#foreach($pkg in ${table.importPackages})
-import ${pkg};
+#foreach($pkg in $!{table.importPackages})
+import $!{pkg};
 #end
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -21,51 +21,51 @@ import javax.validation.constraints.NotNull;
  * $!{table.comment}
  * </pre>
  *
- * @author ${author}
+ * @author $!{author}
  * @since 1.0
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("${table.name}")
+@TableName("$!{table.name}")
 @ApiModel(value = " $!{table.comment} 实体对象", description = "$!{table.comment}")
-public class ${cfg.entityClassName} extends ${superEntityClass} {
+public class $!{cfg.entityClassName} extends $!{superEntityClass} {
 
 ## ----------  BEGIN 字段循环遍历  ----------
-#foreach($field in ${table.fields})
+#foreach($field in $!{table.fields})
 ## 设置swagger注解以及长度校验注解
 #if($!field.comment != "")
     /**
-     * ${field.comment}
+     * $!{field.comment}
      */
-    @ApiModelProperty(value = "${field.comment}")
-#if(${field.type.indexOf("(")}!=-1)
-#set($start=${field.type.indexOf("(")} + 1)
-#set($end=${field.type.length()} - 1)
-#set($length=${field.type.substring($start, $end)})
-#if($length == 1 && ${field.columnType} == 'BOOLEAN')
+    @ApiModelProperty(value = "$!{field.comment}")
+#if($!{field.type.indexOf("(")}!=-1)
+#set($start=$!{field.type.indexOf("(")} + 1)
+#set($end=$!{field.type.length()} - 1)
+#set($length=$!{field.type.substring($start, $end)})
+#if($length == 1 && $!{field.columnType} == 'BOOLEAN')
 #else
-    @Size(max = ${length}, message = "${field.comment}长度不能超过 ${length} ！")
+    @Size(max = $!{length}, message = "$!{field.comment}长度不能超过 $!{length} ！")
 #end
 #end
 #end
-#if(${field.keyFlag})
+#if($!{field.keyFlag})
 ## 设置主键注解
-    @TableId(value = "${field.name}", type = IdType.${idType})
+    @TableId(value = "$!{field.name}", type = IdType.$!{idType})
 #else
 ## 普通字段
-    @TableField(value = "${field.name}"#if(${field.columnName} == 'create_time' || ${field.columnName} == 'create_user_id'), fill = FieldFill.INSERT#elseif(${field.columnName} == 'update_time' || ${field.columnName} == 'update_user_id'), fill = FieldFill.UPDATE#end)
+    @TableField(value = "$!{field.name}"#if($!{field.columnName} == 'create_time' || $!{field.columnName} == 'create_user_id'), fill = FieldFill.INSERT#elseif($!{field.columnName} == 'update_time' || $!{field.columnName} == 'update_user_id'), fill = FieldFill.UPDATE#end)
 #end
 ## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
-#if(${field.customMap.null} == 'NO' && !${field.keyFlag})
-#if(${field.propertyType} == 'String')
-    @NotBlank(message = "${field.comment}不能为空")
+#if($!{field.customMap.null} == 'NO' && !$!{field.keyFlag})
+#if($!{field.propertyType} == 'String')
+    @NotBlank(message = "$!{field.comment}不能为空")
 #else
-    @NotNull(message = "${field.comment}不能为空")
+    @NotNull(message = "$!{field.comment}不能为空")
 #end
-    private ${field.propertyType} ${field.propertyName};
+    private $!{field.propertyType} $!{field.propertyName};
 #else
-    private ${field.propertyType} ${field.propertyName};
+    private $!{field.propertyType} $!{field.propertyName};
 #end
 
 #end

@@ -1,4 +1,4 @@
-package ${cfg.queryParamPackage};
+package $!{cfg.queryParamPackage};
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -11,13 +11,13 @@ import java.io.Serializable;
  * $!{table.comment} 查询参数对象
  * </pre>
  *
- * @author ${author}
+ * @author $!{author}
  * @since 1.0
  */
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "$!{table.comment} 查询参数对象", description = "$!{table.comment}查询参数")
-public class ${cfg.TableName}QueryParam implements Serializable {
+public class $!{cfg.TableName}QueryParam implements Serializable {
 
 
 
