@@ -166,6 +166,13 @@ public class DiaryInfoController extends BaseController {
         return ApiResult.ok(diaryInfoVoList);
     }
 
+    /**
+     * 获取 系统的博客日记 对象列表
+     *
+     * @param diaryInfoListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客日记 对象列表")
     public ApiResult<List<DiaryInfoVo>> getDiaryInfoControllerList(@Valid @RequestBody DiaryInfoListParam diaryInfoListParam) throws Exception {

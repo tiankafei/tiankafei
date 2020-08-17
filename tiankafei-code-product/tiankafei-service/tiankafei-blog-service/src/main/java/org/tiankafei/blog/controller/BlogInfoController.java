@@ -166,6 +166,13 @@ public class BlogInfoController extends BaseController {
         return ApiResult.ok(blogInfoVoList);
     }
 
+    /**
+     * 获取 系统的博客数据 对象列表
+     *
+     * @param blogInfoListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客数据 对象列表")
     public ApiResult<List<BlogInfoVo>> getBlogInfoControllerList(@Valid @RequestBody BlogInfoListParam blogInfoListParam) throws Exception {

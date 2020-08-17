@@ -208,6 +208,13 @@ public class $!{table.controllerName} {
 		return ApiResult.ok($!{cfg.voConstName}List);
 	}
 
+/**
+ * 获取 $!{table.comment} 对象列表
+ *
+ * @param $!{cfg.listParamConstName}
+ * @return
+ * @throws Exception
+ */
 	@PostMapping("/list")
 #if($!{swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 对象列表")

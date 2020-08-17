@@ -166,6 +166,13 @@ public class GlobalSettingController extends BaseController {
         return ApiResult.ok(globalSettingVoList);
     }
 
+    /**
+     * 获取 系统的博客选项设置 对象列表
+     *
+     * @param globalSettingListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客选项设置 对象列表")
     public ApiResult<List<GlobalSettingVo>> getGlobalSettingControllerList(@Valid @RequestBody GlobalSettingListParam globalSettingListParam) throws Exception {
