@@ -18,7 +18,7 @@ import org.tiankafei.web.common.service.BaseService;
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {
 
     protected Page setPageParam(BaseQueryParam baseQueryParam) {
-        return setPageParam(baseQueryParam, null);
+        return setPageParam(baseQueryParam, Arrays.asList());
     }
 
     protected Page setPageParam(BaseQueryParam baseQueryParam, OrderItem defaultOrder) {
@@ -31,16 +31,45 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends Servic
          * 如果是queryParam是OrderQueryParam，并且不为空，则使用前端排序
          * 否则使用默认排序
          */
-        if (baseQueryParam instanceof BaseOrderQueryParam) {
-            BaseOrderQueryParam baseOrderQueryParam = (BaseOrderQueryParam) baseQueryParam;
-            List<OrderItem> orderItems = baseOrderQueryParam.getOrders();
-            if (CollectionUtils.isEmpty(orderItems)) {
-                page.setOrders(Arrays.asList(defaultOrder));
+        if (defaultOrder != null) {
+            if (baseQueryParam instanceof BaseOrderQueryParam) {
+                BaseOrderQueryParam baseOrderQueryParam = (BaseOrderQueryParam) baseQueryParam;
+                List<OrderItem> orderItems = baseOrderQueryParam.getOrders();
+                if (CollectionUtils.isEmpty(orderItems)) {
+                    page.setOrders(Arrays.asList(defaultOrder));
+                } else {
+                    page.setOrders(orderItems);
+                }
             } else {
-                page.setOrders(orderItems);
+                page.setOrders(Arrays.asList(defaultOrder));
             }
-        } else {
-            page.setOrders(Arrays.asList(defaultOrder));
+        }
+
+        return page;
+    }
+
+    protected Page setPageParam(BaseQueryParam baseQueryParam, List<OrderItem> defaultOrderList) {
+        Page page = new Page();
+        // 设置当前页码
+        page.setCurrent(baseQueryParam.getCurrent());
+        // 设置页大小
+        page.setSize(baseQueryParam.getSize());
+        /**
+         * 如果是queryParam是OrderQueryParam，并且不为空，则使用前端排序
+         * 否则使用默认排序
+         */
+        if (CollectionUtils.isNotEmpty(defaultOrderList)) {
+            if (baseQueryParam instanceof BaseOrderQueryParam) {
+                BaseOrderQueryParam baseOrderQueryParam = (BaseOrderQueryParam) baseQueryParam;
+                List<OrderItem> orderItems = baseOrderQueryParam.getOrders();
+                if (CollectionUtils.isEmpty(orderItems)) {
+                    page.setOrders(defaultOrderList);
+                } else {
+                    page.setOrders(orderItems);
+                }
+            } else {
+                page.setOrders(defaultOrderList);
+            }
         }
 
         return page;
