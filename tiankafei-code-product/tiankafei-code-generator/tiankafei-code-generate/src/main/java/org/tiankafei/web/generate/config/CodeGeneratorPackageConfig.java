@@ -9,7 +9,11 @@ import org.tiankafei.web.generate.properties.CodeProperties;
  **/
 public class CodeGeneratorPackageConfig {
 
-    // 包名配置，通过该配置，指定生成代码的包路径
+    /**
+     * 包名配置，通过该配置，指定生成代码的包路径
+     * @param codeProperties
+     * @return
+     */
     public static PackageConfig initPackageConfig(CodeProperties codeProperties){
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setParent(codeProperties.getProjectPath());

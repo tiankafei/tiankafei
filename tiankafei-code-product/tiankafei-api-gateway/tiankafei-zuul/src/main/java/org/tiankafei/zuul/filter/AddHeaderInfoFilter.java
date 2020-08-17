@@ -9,6 +9,12 @@ import org.tiankafei.web.common.utils.SequenceUtil;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *
+ *
+ * @author tiankafei
+ * @since 1.0
+ */
 @Slf4j
 @Component
 public class AddHeaderInfoFilter extends BaseZuulFilter {

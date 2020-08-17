@@ -9,7 +9,11 @@ import org.tiankafei.web.generate.properties.CodeProperties;
  **/
 public class CodeGeneratorTemplateConfig {
 
-    // 模板配置，可自定义代码生成的模板，实现个性化操作
+    /**
+     * 模板配置，可自定义代码生成的模板，实现个性化操作
+     * @param codeProperties
+     * @return
+     */
     public static TemplateConfig initTemplateConfig(CodeProperties codeProperties){
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setEntity(codeProperties.getEntity());

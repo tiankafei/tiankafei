@@ -27,7 +27,9 @@ import org.tiankafei.web.common.service.CaptchaGenerateService;
 @Service
 public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService {
 
-    // 使用到Algerian字体，系统里没有的话需要安装字体，字体只显示大写，去掉了1,0,i,o几个容易混淆的字符
+    /**
+     * 使用到Algerian字体，系统里没有的话需要安装字体，字体只显示大写，去掉了1,0,i,o几个容易混淆的字符
+     */
     private static final String VERIFY_CODES = "123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
     private static Random random = new SecureRandom();
@@ -106,16 +108,19 @@ public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService 
         }
         Arrays.sort(fractions);
 
-        g2.setColor(Color.GRAY);// 设置边框色
+        // 设置边框色
+        g2.setColor(Color.GRAY);
         g2.fillRect(0, 0, w, h);
 
         Color c = getRandColor(200, 250);
-        g2.setColor(c);// 设置背景色
+        // 设置背景色
+        g2.setColor(c);
         g2.fillRect(0, 2, w, h - 4);
 
         // 绘制干扰线
         Random random = new Random();
-        g2.setColor(getRandColor(160, 200));// 设置线条的颜色
+        // 设置线条的颜色
+        g2.setColor(getRandColor(160, 200));
         for (int i = 0; i < 20; i++) {
             int x = random.nextInt(w - 1);
             int y = random.nextInt(h - 1);
@@ -124,8 +129,8 @@ public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService 
             g2.drawLine(x, y, x + xl + 40, y + yl + 20);
         }
 
-        // 添加噪点
-        float yawpRate = 0.05f;// 噪声率
+        // 添加噪点（噪声率）
+        float yawpRate = 0.05f;
         int area = (int) (yawpRate * w * h);
         for (int i = 0; i < area; i++) {
             int x = random.nextInt(w);
@@ -134,7 +139,8 @@ public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService 
             image.setRGB(x, y, rgb);
         }
 
-        shear(g2, w, h, c);// 使图片扭曲
+        // 使图片扭曲
+        shear(g2, w, h, c);
 
         g2.setColor(getRandColor(100, 160));
         int fontSize = h - 4;
@@ -212,7 +218,7 @@ public class GenerateVerifyCaptchaServiceImpl implements CaptchaGenerateService 
 
     private static void shearY(Graphics g, int w1, int h1, Color color) {
 
-        int period = random.nextInt(40) + 10; // 50;
+        int period = random.nextInt(40) + 10;
 
         boolean borderGap = true;
         int frames = 20;

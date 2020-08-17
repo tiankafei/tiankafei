@@ -14,7 +14,13 @@ import org.tiankafei.web.generate.properties.CodeProperties;
  **/
 public class CodeGeneratorStrategyConfig {
 
-    // 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
+    /**
+     * 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
+     * @param codeProperties
+     * @param tableName
+     * @return
+     * @throws ClassNotFoundException
+     */
     public static StrategyConfig initStrategyConfig(CodeProperties codeProperties, String tableName) throws ClassNotFoundException {
         StrategyConfig strategyConfig = new StrategyConfig();
 //        strategyConfig.setCapitalMode(false);

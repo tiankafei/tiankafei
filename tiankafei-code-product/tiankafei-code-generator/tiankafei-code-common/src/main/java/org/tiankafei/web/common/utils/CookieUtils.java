@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Cookie 工具类
+ * @author tiankafei
  */
 public final class CookieUtils {
 
@@ -144,7 +145,8 @@ public final class CookieUtils {
             if (cookieMaxage > 0) {
                 cookie.setMaxAge(cookieMaxage);
             }
-            if (null != request) {// 设置域名的cookie
+            // 设置域名的cookie
+            if (null != request) {
                 String domainName = getDomainName(request);
                 System.out.println(domainName);
                 if (!"localhost".equals(domainName)) {
@@ -175,7 +177,8 @@ public final class CookieUtils {
             if (cookieMaxage > 0) {
                 cookie.setMaxAge(cookieMaxage);
             }
-            if (null != request) {// 设置域名的cookie
+            // 设置域名的cookie
+            if (null != request) {
                 String domainName = getDomainName(request);
                 System.out.println(domainName);
                 if (!"localhost".equals(domainName)) {

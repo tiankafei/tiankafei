@@ -5,6 +5,7 @@ import lombok.Data;
 
 /**
  * 组件类型对象
+ * @author tiankafei
  */
 @Data
 public class ComponentTypeVo implements Serializable {

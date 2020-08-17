@@ -15,7 +15,11 @@ import org.tiankafei.web.generate.properties.CodeProperties;
  **/
 public class CodeGeneratorDataSourceConfig {
 
-    // 数据源配置，通过该配置，指定需要生成代码的具体数据库
+    /**
+     * 数据源配置，通过该配置，指定需要生成代码的具体数据库
+     * @param codeProperties
+     * @return
+     */
     public static DataSourceConfig initDataSourceConfig(CodeProperties codeProperties){
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setUrl(codeProperties.getUrl());

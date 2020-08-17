@@ -29,7 +29,11 @@ import org.tiankafei.web.generate.properties.CodeProperties;
  **/
 public class CodeGeneratorInjectionConfig {
 
-    // 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
+    /**
+     * 注入配置，通过该配置，可注入自定义参数等操作以实现个性化操作
+     * @param codeProperties
+     * @return
+     */
     public static InjectionConfig initInjectionConfig(CodeProperties codeProperties) {
         List<FileOutConfig> fileOutConfigList = Lists.newArrayList();
 

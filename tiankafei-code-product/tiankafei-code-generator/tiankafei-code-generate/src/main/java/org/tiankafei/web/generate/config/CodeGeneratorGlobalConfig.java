@@ -11,7 +11,11 @@ import org.tiankafei.web.generate.properties.CodeProperties;
  **/
 public class CodeGeneratorGlobalConfig {
 
-    // 全局策略配置
+    /**
+     * 全局策略配置
+     * @param codeProperties
+     * @return
+     */
     public static GlobalConfig initGlobalConfig(CodeProperties codeProperties){
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setOutputDir(codeProperties.getOutputDir());
