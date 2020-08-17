@@ -9,7 +9,9 @@ import org.tiankafei.lock.zk.DefaultWatcher;
  * @author tiankafei
  * @since 1.0
  **/
-public abstract class ZooKeeperUtil {
+public class ZooKeeperUtil {
+
+    private ZooKeeperUtil(){}
 
     /**
      * 获取 ZooKeeper 对象

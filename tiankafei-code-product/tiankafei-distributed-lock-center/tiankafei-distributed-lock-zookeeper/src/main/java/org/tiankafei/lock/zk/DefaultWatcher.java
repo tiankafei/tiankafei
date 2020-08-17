@@ -19,11 +19,7 @@ public class DefaultWatcher implements Watcher {
     @Override
     public void process(WatchedEvent watchedEvent) {
         switch (watchedEvent.getState()) {
-            case Unknown:
-                break;
             case Disconnected:
-                break;
-            case NoSyncConnected:
                 break;
             case SyncConnected:
                 countDownLatch.countDown();

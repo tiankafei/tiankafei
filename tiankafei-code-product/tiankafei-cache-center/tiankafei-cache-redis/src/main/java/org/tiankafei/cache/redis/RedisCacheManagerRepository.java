@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0
  **/
 @Repository
-public class RedisCacheManagerRepository extends RedisCacheRepository implements CacheManagerRepository {
+public class RedisCacheManagerRepository extends BaseRedisCacheRepository implements CacheManagerRepository {
 
     @Override
     public <T> void setCacheObject(String key, T value) {

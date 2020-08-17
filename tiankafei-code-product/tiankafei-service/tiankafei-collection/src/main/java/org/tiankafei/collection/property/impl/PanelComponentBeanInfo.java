@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.PanelComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class PanelComponentBeanInfo extends LayoutComponentProperty implements PanelComponentProperty {
+public class PanelComponentBeanInfo extends BaseLayoutComponentProperty implements PanelComponentProperty {
 
     /**
      * 面板模式

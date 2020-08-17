@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.TimeRangeComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class TimeRangeComponentBeanInfo extends InputComponentProperty implements TimeRangeComponentProperty {
+public class TimeRangeComponentBeanInfo extends BaseInputComponentProperty implements TimeRangeComponentProperty {
 
     /**
      * 结束占位提示

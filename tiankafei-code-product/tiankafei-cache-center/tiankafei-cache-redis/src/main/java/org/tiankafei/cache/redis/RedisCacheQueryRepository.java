@@ -17,7 +17,7 @@ import java.util.Set;
  * @since 1.0
  **/
 @Repository
-public class RedisCacheQueryRepository extends RedisCacheRepository implements CacheQueryRepository {
+public class RedisCacheQueryRepository extends BaseRedisCacheRepository implements CacheQueryRepository {
 
     @Override
     public <T> T getCacheObject(String key) {

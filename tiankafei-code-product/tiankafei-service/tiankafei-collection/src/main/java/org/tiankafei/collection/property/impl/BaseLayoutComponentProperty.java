@@ -12,5 +12,5 @@ import org.tiankafei.collection.property.ComponentProperty;
  */
 @Data
 @Accessors(chain = true)
-public abstract class LayoutComponentProperty implements ComponentProperty {
+public abstract class BaseLayoutComponentProperty implements ComponentProperty {
 }

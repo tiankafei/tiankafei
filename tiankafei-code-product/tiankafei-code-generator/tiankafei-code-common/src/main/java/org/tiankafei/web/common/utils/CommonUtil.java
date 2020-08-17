@@ -7,7 +7,9 @@ import org.apache.commons.collections4.CollectionUtils;
  * @author tiankafei
  * @since 1.0
  **/
-public abstract class CommonUtil {
+public class CommonUtil {
+
+    private CommonUtil(){}
 
     /**
      * 验证该path是否已制定的url开始

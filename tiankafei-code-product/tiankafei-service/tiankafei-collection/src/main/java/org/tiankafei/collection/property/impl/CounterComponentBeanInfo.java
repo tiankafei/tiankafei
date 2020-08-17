@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.CounterComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class CounterComponentBeanInfo extends InputComponentProperty implements CounterComponentProperty {
+public class CounterComponentBeanInfo extends BaseInputComponentProperty implements CounterComponentProperty {
 
     /**
      * 最小值

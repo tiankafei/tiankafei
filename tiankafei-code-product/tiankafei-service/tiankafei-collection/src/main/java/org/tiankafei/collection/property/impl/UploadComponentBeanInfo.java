@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.UploadComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class UploadComponentBeanInfo extends ChooseComponentProperty implements UploadComponentProperty {
+public class UploadComponentBeanInfo extends BaseChooseComponentProperty implements UploadComponentProperty {
 
     /**
      * 文件字段名

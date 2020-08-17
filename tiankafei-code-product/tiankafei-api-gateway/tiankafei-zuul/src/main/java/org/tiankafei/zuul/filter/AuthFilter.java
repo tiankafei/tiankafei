@@ -19,7 +19,7 @@ import java.util.List;
  **/
 @Slf4j
 @Component
-public class AuthFilter extends ZuulFilter {
+public class AuthFilter extends BaseZuulFilter {
 
     @Override
     public int filterOrder() {

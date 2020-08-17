@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Component
-public class AddHeaderInfoFilter extends ZuulFilter {
+public class AddHeaderInfoFilter extends BaseZuulFilter {
 
     @Override
     public int filterOrder() {

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0
  **/
 @Repository
-public class MemoryCacheManagerRepository extends MemoryCacheRepository implements CacheManagerRepository {
+public class MemoryCacheManagerRepository extends BaseMemoryCacheRepository implements CacheManagerRepository {
 
     @Override
     public <T> void setCacheObject(String key, T value) {

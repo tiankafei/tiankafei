@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.CascadeSelectionComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class CascadeSelectionComponentBeanInfo extends InputComponentProperty implements CascadeSelectionComponentProperty {
+public class CascadeSelectionComponentBeanInfo extends BaseInputComponentProperty implements CascadeSelectionComponentProperty {
 
     /**
      * 选项分隔符

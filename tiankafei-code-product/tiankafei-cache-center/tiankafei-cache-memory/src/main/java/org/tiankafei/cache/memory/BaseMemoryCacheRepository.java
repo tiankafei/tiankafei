@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * @author tiankafei
  * @since 1.0
  **/
-public abstract class MemoryCacheRepository implements CacheRepository {
+public abstract class BaseMemoryCacheRepository implements CacheRepository {
 
     @Override
     public void batchExpireKey(Collection<String> keys, Integer timeout, TimeUnit timeUnit) {

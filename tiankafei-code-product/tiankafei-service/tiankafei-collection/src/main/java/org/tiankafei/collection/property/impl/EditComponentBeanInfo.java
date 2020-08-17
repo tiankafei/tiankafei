@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.EditComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class EditComponentBeanInfo extends InputComponentProperty implements EditComponentProperty {
+public class EditComponentBeanInfo extends BaseInputComponentProperty implements EditComponentProperty {
 
     /**
      * 组件高度

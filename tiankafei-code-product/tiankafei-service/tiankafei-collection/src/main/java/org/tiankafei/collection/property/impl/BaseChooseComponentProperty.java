@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public abstract class ChooseComponentProperty extends BaseComponentProperty {
+public abstract class BaseChooseComponentProperty extends BaseComponentProperty {
 
     /**
      * 能否清空

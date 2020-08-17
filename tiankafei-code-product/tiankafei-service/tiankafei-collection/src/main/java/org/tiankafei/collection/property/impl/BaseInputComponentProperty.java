@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public abstract class InputComponentProperty extends BaseComponentProperty {
+public abstract class BaseInputComponentProperty extends BaseComponentProperty {
 
     /**
      * 占位提示

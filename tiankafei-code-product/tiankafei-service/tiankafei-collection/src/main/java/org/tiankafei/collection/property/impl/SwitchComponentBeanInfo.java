@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.SwitchComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class SwitchComponentBeanInfo extends ChooseComponentProperty implements SwitchComponentProperty {
+public class SwitchComponentBeanInfo extends BaseChooseComponentProperty implements SwitchComponentProperty {
 
     /**
      * 开启提示消息

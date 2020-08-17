@@ -13,7 +13,7 @@ import java.util.Set;
  * @since 1.0
  **/
 @Repository
-public class MemoryCacheQueryRepository extends MemoryCacheRepository implements CacheQueryRepository {
+public class MemoryCacheQueryRepository extends BaseMemoryCacheRepository implements CacheQueryRepository {
 
     @Override
     public <T> T getCacheObject(String key) {

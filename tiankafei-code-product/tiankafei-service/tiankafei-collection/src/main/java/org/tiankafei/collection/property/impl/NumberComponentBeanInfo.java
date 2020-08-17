@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.NumberComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class NumberComponentBeanInfo extends InputComponentProperty implements NumberComponentProperty {
+public class NumberComponentBeanInfo extends BaseInputComponentProperty implements NumberComponentProperty {
     @Override
     public Integer getComponentType() {
         return ComponentTypeEnum.NUMBER.getCode();

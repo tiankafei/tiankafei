@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.ColorComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class ColorComponentBeanInfo extends ChooseComponentProperty implements ColorComponentProperty {
+public class ColorComponentBeanInfo extends BaseChooseComponentProperty implements ColorComponentProperty {
 
     /**
      * 颜色格式

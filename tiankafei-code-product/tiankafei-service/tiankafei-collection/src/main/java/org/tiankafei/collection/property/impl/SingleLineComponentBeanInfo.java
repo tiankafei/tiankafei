@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.SingleLineComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class SingleLineComponentBeanInfo extends InputComponentProperty implements SingleLineComponentProperty {
+public class SingleLineComponentBeanInfo extends BaseInputComponentProperty implements SingleLineComponentProperty {
 
     /**
      * 前缀

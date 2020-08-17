@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.DateRangeComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class DateRangeComponentBeanInfo extends InputComponentProperty implements DateRangeComponentProperty {
+public class DateRangeComponentBeanInfo extends BaseInputComponentProperty implements DateRangeComponentProperty {
 
     /**
      * 结束占位提示

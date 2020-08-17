@@ -14,7 +14,7 @@ import org.tiankafei.zuul.utils.ZuulUtil;
  **/
 @Slf4j
 @Component
-public class LimitedFilter extends ZuulFilter {
+public class LimitedFilter extends BaseZuulFilter {
 
     @Override
     public int filterOrder() {

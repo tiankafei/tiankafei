@@ -1,5 +1,6 @@
 package org.tiankafei.zuul.filter;
 
+import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * zuul pre filter base class, other filter extend this, if have special logic, need Rewrite {@link org.tiankafei.zuul.filter.ZuulFilter#shouldFilter} method,
+ * zuul pre filter base class, other filter extend this, if have special logic, need Rewrite {@link BaseZuulFilter#shouldFilter} method,
  * for example:
  * {@link org.tiankafei.zuul.filter}
  *
@@ -23,7 +24,7 @@ import java.util.List;
  * @since 1.0
  **/
 @Slf4j
-public abstract class ZuulFilter extends com.netflix.zuul.ZuulFilter {
+public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Autowired
     protected ExclusionsUrlsProperties exclusionsUrlsProperties;

@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.RateComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class RateComponentBeanInfo extends ChooseComponentProperty implements RateComponentProperty {
+public class RateComponentBeanInfo extends BaseChooseComponentProperty implements RateComponentProperty {
 
     /**
      * 最大值

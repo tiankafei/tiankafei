@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author tiankafei
  * @since 1.0
  **/
-public abstract class RedisCacheRepository implements CacheRepository {
+public abstract class BaseRedisCacheRepository implements CacheRepository {
 
     @Autowired
     protected RedisTemplate redisTemplate;

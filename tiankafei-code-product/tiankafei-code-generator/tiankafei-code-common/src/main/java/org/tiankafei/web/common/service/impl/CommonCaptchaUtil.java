@@ -14,7 +14,9 @@ import org.tiankafei.web.common.param.CaptchaVo;
  * @author tiankafei
  * @since 1.0
  */
-public abstract class CommonCaptchaUtil {
+public class CommonCaptchaUtil {
+
+    private CommonCaptchaUtil(){}
 
     public static final SecureRandom RANDOM = new SecureRandom();
 

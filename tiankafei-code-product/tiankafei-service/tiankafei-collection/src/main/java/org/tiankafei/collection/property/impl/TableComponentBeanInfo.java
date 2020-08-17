@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.TableComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class TableComponentBeanInfo extends LayoutComponentProperty implements TableComponentProperty {
+public class TableComponentBeanInfo extends BaseLayoutComponentProperty implements TableComponentProperty {
     @Override
     public Integer getComponentType() {
         return ComponentTypeEnum.TABLE.getCode();

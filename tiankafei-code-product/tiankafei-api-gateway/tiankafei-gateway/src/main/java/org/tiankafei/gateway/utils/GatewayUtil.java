@@ -24,7 +24,9 @@ import java.util.List;
  * @author tiankafei
  * @since 1.0
  **/
-public abstract class GatewayUtil {
+public class GatewayUtil {
+
+    private GatewayUtil(){}
 
     /**
      * 路径转换，主要是为了个配置文件中自定义的过滤进行匹配，

@@ -17,7 +17,7 @@ import org.tiankafei.collection.property.SelectionComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class SelectionComponentBeanInfo extends InputComponentProperty implements SelectionComponentProperty {
+public class SelectionComponentBeanInfo extends BaseInputComponentProperty implements SelectionComponentProperty {
 
     /**
      * 是否可以搜索

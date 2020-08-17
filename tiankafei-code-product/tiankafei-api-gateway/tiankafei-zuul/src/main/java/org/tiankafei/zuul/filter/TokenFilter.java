@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Component
-public class TokenFilter extends ZuulFilter {
+public class TokenFilter extends BaseZuulFilter {
 
     @Override
     public Object execFilter() {

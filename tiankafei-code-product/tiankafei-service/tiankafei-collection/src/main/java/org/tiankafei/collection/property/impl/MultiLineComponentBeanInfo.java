@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.MultiLineComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class MultiLineComponentBeanInfo extends InputComponentProperty implements MultiLineComponentProperty {
+public class MultiLineComponentBeanInfo extends BaseInputComponentProperty implements MultiLineComponentProperty {
 
     /**
      * 最小行数

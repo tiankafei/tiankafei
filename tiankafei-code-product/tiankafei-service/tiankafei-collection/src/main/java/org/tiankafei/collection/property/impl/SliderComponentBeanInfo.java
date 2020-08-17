@@ -15,7 +15,7 @@ import org.tiankafei.collection.property.SliderComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class SliderComponentBeanInfo extends ChooseComponentProperty implements SliderComponentProperty {
+public class SliderComponentBeanInfo extends BaseChooseComponentProperty implements SliderComponentProperty {
 
     /**
      * 最小值

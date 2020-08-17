@@ -17,7 +17,7 @@ import org.tiankafei.collection.property.RadioComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class RadioComponentBeanInfo extends ChooseComponentProperty implements RadioComponentProperty {
+public class RadioComponentBeanInfo extends BaseChooseComponentProperty implements RadioComponentProperty {
 
     /**
      * 选项列表

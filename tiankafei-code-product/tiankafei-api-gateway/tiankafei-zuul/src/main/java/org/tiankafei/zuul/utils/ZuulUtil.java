@@ -13,7 +13,9 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author tiankafei
  */
-public abstract class ZuulUtil {
+public class ZuulUtil {
+
+    private ZuulUtil(){}
 
     /**
      * 验证是否需要执行后面的过滤器

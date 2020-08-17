@@ -17,7 +17,7 @@ import org.tiankafei.collection.property.CheckBoxComponentProperty;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class CheckBoxComponentBeanInfo extends ChooseComponentProperty implements CheckBoxComponentProperty {
+public class CheckBoxComponentBeanInfo extends BaseChooseComponentProperty implements CheckBoxComponentProperty {
 
     /**
      * 最少选择
