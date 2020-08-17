@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.tiankafei.web.common.constants.StringConstants;
 
 /**
  * Cookie 工具类
@@ -149,7 +150,7 @@ public final class CookieUtils {
             if (null != request) {
                 String domainName = getDomainName(request);
                 System.out.println(domainName);
-                if (!"localhost".equals(domainName)) {
+                if (!StringConstants.localhost.equals(domainName)) {
                     cookie.setDomain(domainName);
                 }
             }
@@ -181,7 +182,7 @@ public final class CookieUtils {
             if (null != request) {
                 String domainName = getDomainName(request);
                 System.out.println(domainName);
-                if (!"localhost".equals(domainName)) {
+                if (!StringConstants.localhost.equals(domainName)) {
                     cookie.setDomain(domainName);
                 }
             }
@@ -208,10 +209,10 @@ public final class CookieUtils {
             serverName = serverName.substring(0, end);
             final String[] domains = serverName.split("\\.");
             int len = domains.length;
-            if (len > 3) {
+            if (len > StringConstants.number3) {
                 // www.xxx.com.cn
                 domainName = "." + domains[len - 3] + "." + domains[len - 2] + "." + domains[len - 1];
-            } else if (len <= 3 && len > 1) {
+            } else if (len <= StringConstants.number3 && len > 1) {
                 // xxx.com or xxx.cn
                 domainName = "." + domains[len - 2] + "." + domains[len - 1];
             } else {

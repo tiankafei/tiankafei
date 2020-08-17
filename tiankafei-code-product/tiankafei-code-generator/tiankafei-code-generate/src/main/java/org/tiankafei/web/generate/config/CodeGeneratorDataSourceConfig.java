@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
+import org.tiankafei.web.common.constants.StringConstants;
 import org.tiankafei.web.generate.properties.CodeProperties;
 
 /**
@@ -36,9 +37,9 @@ public class CodeGeneratorDataSourceConfig {
         dataSourceConfig.setTypeConvert(new ITypeConvert() {
             @Override
             public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
-                if ("timestamp".equalsIgnoreCase(fieldType)
-                        || "datetime".equalsIgnoreCase(fieldType)
-                        || "date".equalsIgnoreCase(fieldType)) {
+                if (StringConstants.TIMESTAMP.equalsIgnoreCase(fieldType)
+                        || StringConstants.DATETIME.equalsIgnoreCase(fieldType)
+                        || StringConstants.DATE.equalsIgnoreCase(fieldType)) {
                     return DbColumnType.TIMESTAMP;
                 }
                 //其它字段采用默认转换（非mysql数据库可以使用其它默认的数据库转换器）

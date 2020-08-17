@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.beans.BeanMap;
+import org.tiankafei.web.common.constants.StringConstants;
 import org.tiankafei.web.generate.properties.CfgProperties;
 import org.tiankafei.web.generate.properties.CodeProperties;
 
@@ -76,14 +77,14 @@ public class CodeGeneratorInjectionConfig {
 
                 Set<String> importPackages = tableInfo.getImportPackages();
                 List<String> importPackageList = importPackages.stream().filter(importPackage -> {
-                    if (importPackage.endsWith("TableName")
-                            || importPackage.endsWith("IdType")
-                            || importPackage.endsWith("Model")
-                            || importPackage.endsWith("Version")
-                            || importPackage.endsWith("TableId")
-                            || importPackage.endsWith("FieldFill")
-                            || importPackage.endsWith("TableLogic")
-                            || importPackage.endsWith("TableField")) {
+                    if (importPackage.endsWith(StringConstants.TABLE_NAME)
+                            || importPackage.endsWith(StringConstants.ID_TYPE)
+                            || importPackage.endsWith(StringConstants.MODEL)
+                            || importPackage.endsWith(StringConstants.VERSION)
+                            || importPackage.endsWith(StringConstants.tableId)
+                            || importPackage.endsWith(StringConstants.fieldFill)
+                            || importPackage.endsWith(StringConstants.tableLogic)
+                            || importPackage.endsWith(StringConstants.tableField)) {
                         return false;
                     }
                     return true;

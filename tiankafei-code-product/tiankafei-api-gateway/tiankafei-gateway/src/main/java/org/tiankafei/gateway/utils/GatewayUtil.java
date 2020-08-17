@@ -14,6 +14,7 @@ import org.springframework.web.server.ServerWebExchange;
 import org.tiankafei.gateway.vo.GatewayRouteVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.constants.GatewayConstants;
+import org.tiankafei.web.common.constants.StringConstants;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.Charset;
@@ -39,7 +40,7 @@ public class GatewayUtil {
      */
     public static String pathConvert(GatewayProperties gatewayProperties, ServerWebExchange exchange) throws Exception {
         String path = exchange.getRequest().getPath().toString();
-        if (path.startsWith("/api")) {
+        if (path.startsWith(StringConstants.api)) {
             GatewayRouteVo gatewayRouteVo = null;
             List<GatewayRouteVo> gatewayRouteVoList = joinGatewayRouteVoList(gatewayProperties);
             for (int index = 0, length = gatewayRouteVoList.size(); index < length; index++) {
@@ -81,7 +82,7 @@ public class GatewayUtil {
      * @throws Exception
      */
     public static String pathJoinServiceName(GatewayProperties gatewayProperties, String path, String serviceName) throws Exception {
-        if (path.startsWith("/api")) {
+        if (path.startsWith(StringConstants.api)) {
             return path;
         } else {
             GatewayRouteVo gatewayRouteVo = null;
@@ -120,7 +121,7 @@ public class GatewayUtil {
             // 设置前缀截取路径的位数
             List<FilterDefinition> filters = routeDefinition.getFilters();
             filters.stream().forEach(filterDefinition -> {
-                if ("StripPrefix".equalsIgnoreCase(filterDefinition.getName())) {
+                if (StringConstants.stripPrefix.equalsIgnoreCase(filterDefinition.getName())) {
                     String stripPrefix = filterDefinition.getArgs().get("_genkey_0");
                     gatewayRouteVo.setStripPrefix(Integer.valueOf(stripPrefix));
                 }
@@ -129,7 +130,7 @@ public class GatewayUtil {
             // 设置前置的url path
             List<PredicateDefinition> predicates = routeDefinition.getPredicates();
             predicates.stream().forEach(predicateDefinition -> {
-                if ("Path".equalsIgnoreCase(predicateDefinition.getName())) {
+                if (StringConstants.path.equalsIgnoreCase(predicateDefinition.getName())) {
                     int number = gatewayRouteVo.getStripPrefix() + 1;
                     String genkey = predicateDefinition.getArgs().get("_genkey_0");
                     String pathPrefix = splitPrefixPath(genkey, number);
