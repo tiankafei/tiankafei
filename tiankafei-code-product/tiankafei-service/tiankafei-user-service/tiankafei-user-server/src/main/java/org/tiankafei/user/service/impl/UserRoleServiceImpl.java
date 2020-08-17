@@ -115,7 +115,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper, UserRol
     }
 
     /**
-     * 删除 用户拥有的角色关系表
+     * 批量删除 用户拥有的角色关系表
      *
      * @param ids
      * @return

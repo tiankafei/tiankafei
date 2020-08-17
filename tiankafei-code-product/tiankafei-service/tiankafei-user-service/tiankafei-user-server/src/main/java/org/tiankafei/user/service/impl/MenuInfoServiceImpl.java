@@ -115,7 +115,7 @@ public class MenuInfoServiceImpl extends BaseServiceImpl<MenuInfoMapper, MenuInf
     }
 
     /**
-     * 删除 系统功能菜单信息表
+     * 批量删除 系统功能菜单信息表
      *
      * @param ids
      * @return

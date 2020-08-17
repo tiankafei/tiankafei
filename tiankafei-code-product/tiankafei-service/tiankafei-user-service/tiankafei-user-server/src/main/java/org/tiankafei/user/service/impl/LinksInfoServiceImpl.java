@@ -115,7 +115,7 @@ public class LinksInfoServiceImpl extends BaseServiceImpl<LinksInfoMapper, Links
     }
 
     /**
-     * 删除 系统的友情链接
+     * 批量删除 系统的友情链接
      *
      * @param ids
      * @return

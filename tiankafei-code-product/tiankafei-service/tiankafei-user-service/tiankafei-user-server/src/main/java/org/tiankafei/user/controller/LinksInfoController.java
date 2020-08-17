@@ -41,6 +41,13 @@ public class LinksInfoController extends BaseController {
     @Autowired
     private LinksInfoService linksInfoService;
 
+    /**
+     * 校验 系统的友情链接 是否已经存在
+     *
+     * @param linksInfoCheckParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/check")
     @ApiOperation(value = "校验 系统的友情链接 对象是否存在")
     public ApiResult<Boolean> checkLinksInfoControllerExists(@Valid @RequestBody LinksInfoCheckParam linksInfoCheckParam) throws Exception {
@@ -48,6 +55,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 保存 系统的友情链接
+     *
+     * @param linksInfoVo
+     * @return
+     * @throws Exception
+     */
     @PostMapping
     @ApiOperation(value = "添加 系统的友情链接")
     public ApiResult<Long> addLinksInfoController(@Valid @RequestBody LinksInfoVo linksInfoVo) throws Exception {
@@ -55,6 +69,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(id);
     }
 
+    /**
+     * 批量保存 系统的友情链接
+     *
+     * @param linksInfoVoList
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的友情链接")
     public ApiResult<List<Long>> batchAddLinksInfoController(@Valid @RequestBody List<LinksInfoVo> linksInfoVoList) throws Exception {
@@ -62,6 +83,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(idList);
     }
 
+    /**
+     * 删除 系统的友情链接
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 系统的友情链接")
     public ApiResult<Boolean> deleteLinksInfoController(@PathVariable(value = "id") String id) throws Exception {
@@ -69,6 +97,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 批量删除 系统的友情链接
+     *
+     * @param idsParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统的友情链接")
     public ApiResult<Boolean> batchDeleteLinksInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception {
@@ -76,6 +111,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据条件删除 系统的友情链接
+     *
+     * @param linksInfoDeleteParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 系统的友情链接")
     public ApiResult<Boolean> conditionDeleteLinksInfoController(@Valid @RequestBody LinksInfoDeleteParam linksInfoDeleteParam) throws Exception {
@@ -83,20 +125,40 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 修改 系统的友情链接
+     *
+     * @param linksInfoVo
+     * @return
+     * @throws Exception
+     */
     @PatchMapping
-    @ApiOperation(value = "更新 系统的友情链接")
+    @ApiOperation(value = "修改 系统的友情链接")
     public ApiResult<Boolean> updateLinksInfoController(@Valid @RequestBody LinksInfoVo linksInfoVo) throws Exception {
         boolean flag = linksInfoService.updateLinksInfoService(linksInfoVo);
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据ID获取 系统的友情链接 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取 系统的友情链接 对象")
+    @ApiOperation(value = "根据ID获取 系统的友情链接 对象")
     public ApiResult<LinksInfoVo> getLinksInfoController(@PathVariable(value = "id") String id) throws Exception {
         LinksInfoVo linksInfoVo = linksInfoService.getLinksInfoServiceById(id);
         return ApiResult.ok(linksInfoVo);
     }
 
+    /**
+     * 获取 系统的友情链接 对象列表
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping
     @ApiOperation(value = "获取 系统的友情链接 对象全部列表")
     public ApiResult<List<LinksInfoVo>> getLinksInfoControllerAllList() throws Exception {
@@ -104,6 +166,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(linksInfoVoList);
     }
 
+    /**
+     * 获取 系统的友情链接 对象列表
+     *
+     * @param linksInfoListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的友情链接 对象列表")
     public ApiResult<List<LinksInfoVo>> getLinksInfoControllerList(@Valid @RequestBody LinksInfoListParam linksInfoListParam) throws Exception {
@@ -111,6 +180,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(linksInfoVoList);
     }
 
+    /**
+     * 获取 系统的友情链接 分页对象列表
+     *
+     * @param linksInfoPageParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的友情链接 分页对象列表")
     public ApiResult<Paging<LinksInfoVo>> getLinksInfoControllerPageList(@Valid @RequestBody LinksInfoPageParam linksInfoPageParam) throws Exception {
@@ -118,6 +194,13 @@ public class LinksInfoController extends BaseController {
         return ApiResult.ok(linksInfoVoList);
     }
 
+    /**
+     * 计算 系统的友情链接 总记录数
+     *
+     * @param linksInfoCountParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/count")
     @ApiOperation(value = "求 系统的友情链接 对象的记录数")
     public ApiResult<Integer> countLinksInfoController(@Valid @RequestBody LinksInfoCountParam linksInfoCountParam) throws Exception {

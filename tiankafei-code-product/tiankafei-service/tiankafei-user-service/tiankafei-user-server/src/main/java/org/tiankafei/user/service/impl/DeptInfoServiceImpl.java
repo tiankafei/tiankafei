@@ -115,7 +115,7 @@ public class DeptInfoServiceImpl extends BaseServiceImpl<DeptInfoMapper, DeptInf
     }
 
     /**
-     * 删除 系统部门表信息
+     * 批量删除 系统部门表信息
      *
      * @param ids
      * @return

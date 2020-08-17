@@ -115,7 +115,7 @@ public class RoleInfoServiceImpl extends BaseServiceImpl<RoleInfoMapper, RoleInf
     }
 
     /**
-     * 删除 角色信息表
+     * 批量删除 角色信息表
      *
      * @param ids
      * @return

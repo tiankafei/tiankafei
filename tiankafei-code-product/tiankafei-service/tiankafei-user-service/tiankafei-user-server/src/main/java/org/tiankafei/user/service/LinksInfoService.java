@@ -59,7 +59,7 @@ public interface LinksInfoService extends BaseService<LinksInfoEntity> {
     boolean deleteLinksInfoService(String id) throws Exception;
 
     /**
-     * 删除 系统的友情链接
+     * 批量删除 系统的友情链接
      *
      * @param ids
      * @return

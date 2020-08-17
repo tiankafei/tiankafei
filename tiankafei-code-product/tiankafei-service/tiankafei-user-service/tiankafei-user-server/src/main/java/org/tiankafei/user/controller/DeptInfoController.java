@@ -41,6 +41,13 @@ public class DeptInfoController extends BaseController {
     @Autowired
     private DeptInfoService deptInfoService;
 
+    /**
+     * 校验 系统部门表信息 是否已经存在
+     *
+     * @param deptInfoCheckParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/check")
     @ApiOperation(value = "校验 系统部门表信息 对象是否存在")
     public ApiResult<Boolean> checkDeptInfoControllerExists(@Valid @RequestBody DeptInfoCheckParam deptInfoCheckParam) throws Exception {
@@ -48,6 +55,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 保存 系统部门表信息
+     *
+     * @param deptInfoVo
+     * @return
+     * @throws Exception
+     */
     @PostMapping
     @ApiOperation(value = "添加 系统部门表信息")
     public ApiResult<Long> addDeptInfoController(@Valid @RequestBody DeptInfoVo deptInfoVo) throws Exception {
@@ -55,6 +69,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(id);
     }
 
+    /**
+     * 批量保存 系统部门表信息
+     *
+     * @param deptInfoVoList
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统部门表信息")
     public ApiResult<List<Long>> batchAddDeptInfoController(@Valid @RequestBody List<DeptInfoVo> deptInfoVoList) throws Exception {
@@ -62,6 +83,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(idList);
     }
 
+    /**
+     * 删除 系统部门表信息
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 系统部门表信息")
     public ApiResult<Boolean> deleteDeptInfoController(@PathVariable(value = "id") String id) throws Exception {
@@ -69,6 +97,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 批量删除 系统部门表信息
+     *
+     * @param idsParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统部门表信息")
     public ApiResult<Boolean> batchDeleteDeptInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception {
@@ -76,6 +111,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据条件删除 系统部门表信息
+     *
+     * @param deptInfoDeleteParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 系统部门表信息")
     public ApiResult<Boolean> conditionDeleteDeptInfoController(@Valid @RequestBody DeptInfoDeleteParam deptInfoDeleteParam) throws Exception {
@@ -83,20 +125,40 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 修改 系统部门表信息
+     *
+     * @param deptInfoVo
+     * @return
+     * @throws Exception
+     */
     @PatchMapping
-    @ApiOperation(value = "更新 系统部门表信息")
+    @ApiOperation(value = "修改 系统部门表信息")
     public ApiResult<Boolean> updateDeptInfoController(@Valid @RequestBody DeptInfoVo deptInfoVo) throws Exception {
         boolean flag = deptInfoService.updateDeptInfoService(deptInfoVo);
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据ID获取 系统部门表信息 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取 系统部门表信息 对象")
+    @ApiOperation(value = "根据ID获取 系统部门表信息 对象")
     public ApiResult<DeptInfoVo> getDeptInfoController(@PathVariable(value = "id") String id) throws Exception {
         DeptInfoVo deptInfoVo = deptInfoService.getDeptInfoServiceById(id);
         return ApiResult.ok(deptInfoVo);
     }
 
+    /**
+     * 获取 系统部门表信息 对象列表
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping
     @ApiOperation(value = "获取 系统部门表信息 对象全部列表")
     public ApiResult<List<DeptInfoVo>> getDeptInfoControllerAllList() throws Exception {
@@ -104,6 +166,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(deptInfoVoList);
     }
 
+    /**
+     * 获取 系统部门表信息 对象列表
+     *
+     * @param deptInfoListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统部门表信息 对象列表")
     public ApiResult<List<DeptInfoVo>> getDeptInfoControllerList(@Valid @RequestBody DeptInfoListParam deptInfoListParam) throws Exception {
@@ -111,6 +180,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(deptInfoVoList);
     }
 
+    /**
+     * 获取 系统部门表信息 分页对象列表
+     *
+     * @param deptInfoPageParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统部门表信息 分页对象列表")
     public ApiResult<Paging<DeptInfoVo>> getDeptInfoControllerPageList(@Valid @RequestBody DeptInfoPageParam deptInfoPageParam) throws Exception {
@@ -118,6 +194,13 @@ public class DeptInfoController extends BaseController {
         return ApiResult.ok(deptInfoVoList);
     }
 
+    /**
+     * 计算 系统部门表信息 总记录数
+     *
+     * @param deptInfoCountParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/count")
     @ApiOperation(value = "求 系统部门表信息 对象的记录数")
     public ApiResult<Integer> countDeptInfoController(@Valid @RequestBody DeptInfoCountParam deptInfoCountParam) throws Exception {

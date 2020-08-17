@@ -59,7 +59,7 @@ public interface MenuInfoService extends BaseService<MenuInfoEntity> {
     boolean deleteMenuInfoService(String id) throws Exception;
 
     /**
-     * 删除 系统功能菜单信息表
+     * 批量删除 系统功能菜单信息表
      *
      * @param ids
      * @return

@@ -41,6 +41,13 @@ public class RoleMenuController extends BaseController {
     @Autowired
     private RoleMenuService roleMenuService;
 
+    /**
+     * 校验 系统角色对应的功能配置表 是否已经存在
+     *
+     * @param roleMenuCheckParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/check")
     @ApiOperation(value = "校验 系统角色对应的功能配置表 对象是否存在")
     public ApiResult<Boolean> checkRoleMenuControllerExists(@Valid @RequestBody RoleMenuCheckParam roleMenuCheckParam) throws Exception {
@@ -48,6 +55,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 保存 系统角色对应的功能配置表
+     *
+     * @param roleMenuVo
+     * @return
+     * @throws Exception
+     */
     @PostMapping
     @ApiOperation(value = "添加 系统角色对应的功能配置表")
     public ApiResult<Long> addRoleMenuController(@Valid @RequestBody RoleMenuVo roleMenuVo) throws Exception {
@@ -55,6 +69,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(id);
     }
 
+    /**
+     * 批量保存 系统角色对应的功能配置表
+     *
+     * @param roleMenuVoList
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统角色对应的功能配置表")
     public ApiResult<List<Long>> batchAddRoleMenuController(@Valid @RequestBody List<RoleMenuVo> roleMenuVoList) throws Exception {
@@ -62,6 +83,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(idList);
     }
 
+    /**
+     * 删除 系统角色对应的功能配置表
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 系统角色对应的功能配置表")
     public ApiResult<Boolean> deleteRoleMenuController(@PathVariable(value = "id") String id) throws Exception {
@@ -69,6 +97,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 批量删除 系统角色对应的功能配置表
+     *
+     * @param idsParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统角色对应的功能配置表")
     public ApiResult<Boolean> batchDeleteRoleMenuController(@Valid @RequestBody IdsParam idsParam) throws Exception {
@@ -76,6 +111,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据条件删除 系统角色对应的功能配置表
+     *
+     * @param roleMenuDeleteParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 系统角色对应的功能配置表")
     public ApiResult<Boolean> conditionDeleteRoleMenuController(@Valid @RequestBody RoleMenuDeleteParam roleMenuDeleteParam) throws Exception {
@@ -83,20 +125,40 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 修改 系统角色对应的功能配置表
+     *
+     * @param roleMenuVo
+     * @return
+     * @throws Exception
+     */
     @PatchMapping
-    @ApiOperation(value = "更新 系统角色对应的功能配置表")
+    @ApiOperation(value = "修改 系统角色对应的功能配置表")
     public ApiResult<Boolean> updateRoleMenuController(@Valid @RequestBody RoleMenuVo roleMenuVo) throws Exception {
         boolean flag = roleMenuService.updateRoleMenuService(roleMenuVo);
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据ID获取 系统角色对应的功能配置表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取 系统角色对应的功能配置表 对象")
+    @ApiOperation(value = "根据ID获取 系统角色对应的功能配置表 对象")
     public ApiResult<RoleMenuVo> getRoleMenuController(@PathVariable(value = "id") String id) throws Exception {
         RoleMenuVo roleMenuVo = roleMenuService.getRoleMenuServiceById(id);
         return ApiResult.ok(roleMenuVo);
     }
 
+    /**
+     * 获取 系统角色对应的功能配置表 对象列表
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping
     @ApiOperation(value = "获取 系统角色对应的功能配置表 对象全部列表")
     public ApiResult<List<RoleMenuVo>> getRoleMenuControllerAllList() throws Exception {
@@ -104,6 +166,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(roleMenuVoList);
     }
 
+    /**
+     * 获取 系统角色对应的功能配置表 对象列表
+     *
+     * @param roleMenuListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统角色对应的功能配置表 对象列表")
     public ApiResult<List<RoleMenuVo>> getRoleMenuControllerList(@Valid @RequestBody RoleMenuListParam roleMenuListParam) throws Exception {
@@ -111,6 +180,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(roleMenuVoList);
     }
 
+    /**
+     * 获取 系统角色对应的功能配置表 分页对象列表
+     *
+     * @param roleMenuPageParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统角色对应的功能配置表 分页对象列表")
     public ApiResult<Paging<RoleMenuVo>> getRoleMenuControllerPageList(@Valid @RequestBody RoleMenuPageParam roleMenuPageParam) throws Exception {
@@ -118,6 +194,13 @@ public class RoleMenuController extends BaseController {
         return ApiResult.ok(roleMenuVoList);
     }
 
+    /**
+     * 计算 系统角色对应的功能配置表 总记录数
+     *
+     * @param roleMenuCountParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/count")
     @ApiOperation(value = "求 系统角色对应的功能配置表 对象的记录数")
     public ApiResult<Integer> countRoleMenuController(@Valid @RequestBody RoleMenuCountParam roleMenuCountParam) throws Exception {

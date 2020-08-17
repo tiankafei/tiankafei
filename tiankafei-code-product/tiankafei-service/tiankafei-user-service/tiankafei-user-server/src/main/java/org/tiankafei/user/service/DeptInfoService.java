@@ -59,7 +59,7 @@ public interface DeptInfoService extends BaseService<DeptInfoEntity> {
     boolean deleteDeptInfoService(String id) throws Exception;
 
     /**
-     * 删除 系统部门表信息
+     * 批量删除 系统部门表信息
      *
      * @param ids
      * @return

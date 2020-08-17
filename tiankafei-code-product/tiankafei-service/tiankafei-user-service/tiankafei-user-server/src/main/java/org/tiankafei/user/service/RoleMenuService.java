@@ -59,7 +59,7 @@ public interface RoleMenuService extends BaseService<RoleMenuEntity> {
     boolean deleteRoleMenuService(String id) throws Exception;
 
     /**
-     * 删除 系统角色对应的功能配置表
+     * 批量删除 系统角色对应的功能配置表
      *
      * @param ids
      * @return

@@ -59,7 +59,7 @@ public interface RoleInfoService extends BaseService<RoleInfoEntity> {
     boolean deleteRoleInfoService(String id) throws Exception;
 
     /**
-     * 删除 角色信息表
+     * 批量删除 角色信息表
      *
      * @param ids
      * @return

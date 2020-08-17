@@ -41,6 +41,13 @@ public class UserRoleController extends BaseController {
     @Autowired
     private UserRoleService userRoleService;
 
+    /**
+     * 校验 用户拥有的角色关系表 是否已经存在
+     *
+     * @param userRoleCheckParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/check")
     @ApiOperation(value = "校验 用户拥有的角色关系表 对象是否存在")
     public ApiResult<Boolean> checkUserRoleControllerExists(@Valid @RequestBody UserRoleCheckParam userRoleCheckParam) throws Exception {
@@ -48,6 +55,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 保存 用户拥有的角色关系表
+     *
+     * @param userRoleVo
+     * @return
+     * @throws Exception
+     */
     @PostMapping
     @ApiOperation(value = "添加 用户拥有的角色关系表")
     public ApiResult<Long> addUserRoleController(@Valid @RequestBody UserRoleVo userRoleVo) throws Exception {
@@ -55,6 +69,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(id);
     }
 
+    /**
+     * 批量保存 用户拥有的角色关系表
+     *
+     * @param userRoleVoList
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 用户拥有的角色关系表")
     public ApiResult<List<Long>> batchAddUserRoleController(@Valid @RequestBody List<UserRoleVo> userRoleVoList) throws Exception {
@@ -62,6 +83,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(idList);
     }
 
+    /**
+     * 删除 用户拥有的角色关系表
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 用户拥有的角色关系表")
     public ApiResult<Boolean> deleteUserRoleController(@PathVariable(value = "id") String id) throws Exception {
@@ -69,6 +97,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 批量删除 用户拥有的角色关系表
+     *
+     * @param idsParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 用户拥有的角色关系表")
     public ApiResult<Boolean> batchDeleteUserRoleController(@Valid @RequestBody IdsParam idsParam) throws Exception {
@@ -76,6 +111,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据条件删除 用户拥有的角色关系表
+     *
+     * @param userRoleDeleteParam
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 用户拥有的角色关系表")
     public ApiResult<Boolean> conditionDeleteUserRoleController(@Valid @RequestBody UserRoleDeleteParam userRoleDeleteParam) throws Exception {
@@ -83,20 +125,40 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 修改 用户拥有的角色关系表
+     *
+     * @param userRoleVo
+     * @return
+     * @throws Exception
+     */
     @PatchMapping
-    @ApiOperation(value = "更新 用户拥有的角色关系表")
+    @ApiOperation(value = "修改 用户拥有的角色关系表")
     public ApiResult<Boolean> updateUserRoleController(@Valid @RequestBody UserRoleVo userRoleVo) throws Exception {
         boolean flag = userRoleService.updateUserRoleService(userRoleVo);
         return ApiResult.ok(flag);
     }
 
+    /**
+     * 根据ID获取 用户拥有的角色关系表 对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取 用户拥有的角色关系表 对象")
+    @ApiOperation(value = "根据ID获取 用户拥有的角色关系表 对象")
     public ApiResult<UserRoleVo> getUserRoleController(@PathVariable(value = "id") String id) throws Exception {
         UserRoleVo userRoleVo = userRoleService.getUserRoleServiceById(id);
         return ApiResult.ok(userRoleVo);
     }
 
+    /**
+     * 获取 用户拥有的角色关系表 对象列表
+     *
+     * @return
+     * @throws Exception
+     */
     @GetMapping
     @ApiOperation(value = "获取 用户拥有的角色关系表 对象全部列表")
     public ApiResult<List<UserRoleVo>> getUserRoleControllerAllList() throws Exception {
@@ -104,6 +166,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(userRoleVoList);
     }
 
+    /**
+     * 获取 用户拥有的角色关系表 对象列表
+     *
+     * @param userRoleListParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/list")
     @ApiOperation(value = "获取 用户拥有的角色关系表 对象列表")
     public ApiResult<List<UserRoleVo>> getUserRoleControllerList(@Valid @RequestBody UserRoleListParam userRoleListParam) throws Exception {
@@ -111,6 +180,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(userRoleVoList);
     }
 
+    /**
+     * 获取 用户拥有的角色关系表 分页对象列表
+     *
+     * @param userRolePageParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 用户拥有的角色关系表 分页对象列表")
     public ApiResult<Paging<UserRoleVo>> getUserRoleControllerPageList(@Valid @RequestBody UserRolePageParam userRolePageParam) throws Exception {
@@ -118,6 +194,13 @@ public class UserRoleController extends BaseController {
         return ApiResult.ok(userRoleVoList);
     }
 
+    /**
+     * 计算 用户拥有的角色关系表 总记录数
+     *
+     * @param userRoleCountParam
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/count")
     @ApiOperation(value = "求 用户拥有的角色关系表 对象的记录数")
     public ApiResult<Integer> countUserRoleController(@Valid @RequestBody UserRoleCountParam userRoleCountParam) throws Exception {

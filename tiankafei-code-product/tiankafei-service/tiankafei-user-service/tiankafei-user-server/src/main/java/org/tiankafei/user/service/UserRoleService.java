@@ -59,7 +59,7 @@ public interface UserRoleService extends BaseService<UserRoleEntity> {
     boolean deleteUserRoleService(String id) throws Exception;
 
     /**
-     * 删除 用户拥有的角色关系表
+     * 批量删除 用户拥有的角色关系表
      *
      * @param ids
      * @return
