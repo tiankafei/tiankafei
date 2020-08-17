@@ -1,37 +1,37 @@
-package ${cfg.paramPackage};
+package $!{cfg.paramPackage};
 
-#if(${swagger2})
+#if($!{swagger2})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
-###if(${entityLombokModel})
+###if($!{entityLombokModel})
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 ###end
-import ${cfg.superParamPackage}.${cfg.superPageParamClassName};
+import $!{cfg.superParamPackage}.$!{cfg.superPageParamClassName};
 
 /**
  * <pre>
  * $!{table.comment} 分页参数对象
  * </pre>
  *
- * @author ${author}
+ * @author $!{author}
  * @since 1.0
  */
-###if(${entityLombokModel})
+###if($!{entityLombokModel})
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 ###end
-#if(${swagger2})
+#if($!{swagger2})
 @ApiModel(value = "$!{table.comment} 分页列表参数对象")
 #end
-public class ${cfg.pageParamClassName} extends ${cfg.superPageParamClassName} {
+public class $!{cfg.pageParamClassName} extends $!{cfg.superPageParamClassName} {
 
     private static final long serialVersionUID = 1L;
 
-#if(${swagger2})
+#if($!{swagger2})
 @ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
 #else
 /**

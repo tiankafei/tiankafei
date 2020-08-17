@@ -1,11 +1,11 @@
-package ${cfg.paramPackage};
+package $!{cfg.paramPackage};
 
-#if(${swagger2})
+#if($!{swagger2})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 import java.io.Serializable;
-###if(${entityLombokModel})
+###if($!{entityLombokModel})
 import lombok.Data;
 import lombok.experimental.Accessors;
 ###end
@@ -15,17 +15,17 @@ import lombok.experimental.Accessors;
  * $!{table.comment} 分页参数对象
  * </pre>
  *
- * @author ${author}
+ * @author $!{author}
  * @since 1.0
  */
-###if(${entityLombokModel})
+###if($!{entityLombokModel})
 @Data
 @Accessors(chain = true)
 ###end
-#if(${swagger2})
+#if($!{swagger2})
 @ApiModel(value = "$!{table.comment} 求记录数参数对象")
 #end
-public class ${cfg.countParamClassName} implements Serializable {
+public class $!{cfg.countParamClassName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

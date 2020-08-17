@@ -1,131 +1,131 @@
-package ${cfg.voPackage};
+package $!{cfg.voPackage};
 
-###foreach($pkg in ${cfg.packages})
-#foreach($pkg in ${cfg.importPackageList})
-import ${pkg};
+###foreach($pkg in $!{cfg.packages})
+#foreach($pkg in $!{cfg.importPackageList})
+import $!{pkg};
 #end
-#if(${swagger2})
+#if($!{swagger2})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-#if(${entityLombokModel})
+#if($!{entityLombokModel})
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-#if(${chainModel})
+#if($!{chainModel})
 import lombok.experimental.Accessors;
 #end
 #end
-import ${cfg.superVoPackage}.${cfg.superVoClassName};
+import $!{cfg.superVoPackage}.$!{cfg.superVoClassName};
 
 /**
  * <p>
  * $!{table.comment}
  * </p>
  *
- * @author ${author}
+ * @author $!{author}
  * @since 1.0
  */
-#if(${entityLombokModel})
+#if($!{entityLombokModel})
 @Data
-  #if(${superEntityClass})
+  #if($!{superEntityClass})
 @EqualsAndHashCode(callSuper = true)
   #else
 @EqualsAndHashCode(callSuper = false)
   #end
-  #if(${chainModel})
+  #if($!{chainModel})
 @Accessors(chain = true)
   #end
 #end
-#if(${swagger2})
-@ApiModel(value="${entity}对象", description="$!{table.comment}")
+#if($!{swagger2})
+@ApiModel(value="$!{entity}对象", description="$!{table.comment}")
 #end
-public class ${cfg.voClassName} extends ${cfg.superVoClassName} {
+public class $!{cfg.voClassName} extends $!{cfg.superVoClassName} {
 
-#if(${entitySerialVersionUID})
+#if($!{entitySerialVersionUID})
     private static final long serialVersionUID=1L;
 #end
 ## ----------  BEGIN 字段循环遍历  ----------
-#foreach($field in ${table.fields})
+#foreach($field in $!{table.fields})
 
-#if(${field.keyFlag})
-#set($keyPropertyName=${field.propertyName})
+#if($!{field.keyFlag})
+#set($keyPropertyName=$!{field.propertyName})
 #end
 #if("$!field.comment" != "")
-  #if(${swagger2})
-    @ApiModelProperty(value = "${field.comment}")
+  #if($!{swagger2})
+    @ApiModelProperty(value = "$!{field.comment}")
   #else
     /**
-     * ${field.comment}
+     * $!{field.comment}
      */
   #end
-#if(${field.type.indexOf("(")}!=-1)
-#set($start=${field.type.indexOf("(")} + 1)
-#set($end=${field.type.length()} - 1)
-#set($length=${field.type.substring($start, $end)})
-#if($length == 1 && ${field.columnType} == 'BOOLEAN')
+#if($!{field.type.indexOf("(")}!=-1)
+#set($start=$!{field.type.indexOf("(")} + 1)
+#set($end=$!{field.type.length()} - 1)
+#set($length=$!{field.type.substring($start, $end)})
+#if($length == 1 && $!{field.columnType} == 'BOOLEAN')
 #else
-    @Size(max = ${length}, message = "${field.comment}长度不能超过 ${length} ！")
+    @Size(max = $!{length}, message = "$!{field.comment}长度不能超过 $!{length} ！")
 #end
 #end
 #end
 ## 如果默认值为空，且值不允许为空，同时不是主键，则设置非空校验
-#if(${field.customMap.null} == 'NO' && !${field.keyFlag})
-#if(${field.propertyType} == 'String')
-    @NotBlank(message = "${field.comment}不能为空")
+#if($!{field.customMap.null} == 'NO' && !$!{field.keyFlag})
+#if($!{field.propertyType} == 'String')
+    @NotBlank(message = "$!{field.comment}不能为空")
 #else
-    @NotNull(message = "${field.comment}不能为空")
+    @NotNull(message = "$!{field.comment}不能为空")
 #end
 #end
-    private ${field.propertyType} ${field.propertyName};
+    private $!{field.propertyType} $!{field.propertyName};
 #end
 ## ----------  END 字段循环遍历  ----------
 
-#if(!${entityLombokModel})
-#foreach($field in ${table.fields})
-  #if(${field.propertyType.equals("boolean")})
+#if(!$!{entityLombokModel})
+#foreach($field in $!{table.fields})
+  #if($!{field.propertyType.equals("boolean")})
     #set($getprefix="is")
   #else
     #set($getprefix="get")
   #end
 
-    public ${field.propertyType} ${getprefix}${field.capitalName}() {
-        return ${field.propertyName};
+    public $!{field.propertyType} $!{getprefix}$!{field.capitalName}() {
+        return $!{field.propertyName};
     }
 
-  #if(${chainModel})
-    public ${cfg.name.voName} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+  #if($!{chainModel})
+    public $!{cfg.name.voName} set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}) {
   #else
-    public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public void set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}) {
   #end
-        this.${field.propertyName} = ${field.propertyName};
-  #if(${chainModel})
+        this.$!{field.propertyName} = $!{field.propertyName};
+  #if($!{chainModel})
         return this;
   #end
     }
 #end
 ## --foreach end---
 #end
-## --end of #if(!${entityLombokModel})--
+## --end of #if(!$!{entityLombokModel})--
 
-#if(${entityColumnConstant})
-  #foreach($field in ${table.fields})
-    public static final String ${field.name.toUpperCase()} = "${field.name}";
+#if($!{entityColumnConstant})
+  #foreach($field in $!{table.fields})
+    public static final String $!{field.name.toUpperCase()} = "$!{field.name}";
 
   #end
 #end
 
-#if(!${entityLombokModel})
+#if(!$!{entityLombokModel})
     @Override
     public String toString() {
-        return "${entity}{" +
-  #foreach($field in ${table.fields})
+        return "$!{entity}{" +
+  #foreach($field in $!{table.fields})
     #if($!{foreach.index}==0)
-        "${field.propertyName}=" + ${field.propertyName} +
+        "$!{field.propertyName}=" + $!{field.propertyName} +
     #else
-        ", ${field.propertyName}=" + ${field.propertyName} +
+        ", $!{field.propertyName}=" + $!{field.propertyName} +
     #end
   #end
         "}";

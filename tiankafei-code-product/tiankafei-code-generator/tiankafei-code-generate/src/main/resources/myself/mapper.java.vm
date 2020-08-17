@@ -1,4 +1,4 @@
-package ${package.Mapper};
+package $!{package.Mapper};
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -7,54 +7,54 @@ import java.io.Serializable;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import ${package.Entity}.${entity};
-import ${cfg.paramPackage}.${cfg.checkParamClassName};
-import ${cfg.paramPackage}.${cfg.countParamClassName};
-import ${cfg.paramPackage}.${cfg.deleteParamClassName};
-import ${cfg.paramPackage}.${cfg.pageParamClassName};
-import ${cfg.paramPackage}.${cfg.listParamClassName};
-import ${cfg.voPackage}.${cfg.voClassName};
+import $!{package.Entity}.$!{entity};
+import $!{cfg.paramPackage}.$!{cfg.checkParamClassName};
+import $!{cfg.paramPackage}.$!{cfg.countParamClassName};
+import $!{cfg.paramPackage}.$!{cfg.deleteParamClassName};
+import $!{cfg.paramPackage}.$!{cfg.pageParamClassName};
+import $!{cfg.paramPackage}.$!{cfg.listParamClassName};
+import $!{cfg.voPackage}.$!{cfg.voClassName};
 
 /**
  * <p>
  * $!{table.comment} Mapper 接口
  * </p>
  *
- * @author ${author}
+ * @author $!{author}
  * @since 1.0
  */
-#if(${kotlin})
-interface ${table.mapperName} : ${superMapperClass}<${entity}>
+#if($!{kotlin})
+interface $!{table.mapperName} : $!{superMapperClass}<$!{entity}>
 #else
 @Repository
-public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
 
     /**
      * 校验 $!{table.comment} 是否已经存在
      *
-     * @param ${cfg.checkParamConstName}
+     * @param $!{cfg.checkParamConstName}
      * @return
      * @throws Exception
      */
-    boolean check${table.serviceName}Exists(@Param("param") ${cfg.checkParamClassName} ${cfg.checkParamConstName}) throws Exception;
+    boolean check$!{table.serviceName}Exists(@Param("param") $!{cfg.checkParamClassName} $!{cfg.checkParamConstName}) throws Exception;
 
     /**
      * 保存 $!{table.comment}
      *
-     * @param ${cfg.voConstName}
+     * @param $!{cfg.voConstName}
      * @return
      * @throws Exception
      */
-    Object add${table.serviceName}(@Param("param") ${cfg.voClassName} ${cfg.voConstName}) throws Exception;
+    Object add$!{table.serviceName}(@Param("param") $!{cfg.voClassName} $!{cfg.voConstName}) throws Exception;
 
     /**
      * 批量保存 $!{table.comment}
      *
-     * @param ${cfg.voConstName}List
+     * @param $!{cfg.voConstName}List
      * @return
      * @throws Exception
      */
-    List<Object> batchAdd${table.serviceName}(@Param("param") List<${cfg.voClassName}> ${cfg.voConstName}List) throws Exception;
+    List<Object> batchAdd$!{table.serviceName}(@Param("param") List<$!{cfg.voClassName}> $!{cfg.voConstName}List) throws Exception;
 
     /**
      * 删除 $!{table.comment}
@@ -63,7 +63,7 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean delete${table.serviceName}(@Param("param") String id) throws Exception;
+    boolean delete$!{table.serviceName}(@Param("param") String id) throws Exception;
 	
     /**
      * 批量删除 $!{table.comment}
@@ -72,25 +72,25 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean batchDelete${table.serviceName}(@Param("param") String ids) throws Exception;
+    boolean batchDelete$!{table.serviceName}(@Param("param") String ids) throws Exception;
 
     /**
      * 根据条件删除 $!{table.comment}
      *
-     * @param ${cfg.deleteParamConstName}
+     * @param $!{cfg.deleteParamConstName}
      * @return
      * @throws Exception
      */
-    boolean conditionDelete${table.serviceName}(@Param("param") ${cfg.deleteParamClassName} ${cfg.deleteParamConstName}) throws Exception;
+    boolean conditionDelete$!{table.serviceName}(@Param("param") $!{cfg.deleteParamClassName} $!{cfg.deleteParamConstName}) throws Exception;
 
     /**
      * 修改 $!{table.comment}
      *
-     * @param ${cfg.voConstName}
+     * @param $!{cfg.voConstName}
      * @return
      * @throws Exception
      */
-    boolean update${table.serviceName}(@Param("param") ${cfg.voClassName} ${cfg.voConstName}) throws Exception;
+    boolean update$!{table.serviceName}(@Param("param") $!{cfg.voClassName} $!{cfg.voConstName}) throws Exception;
 
     /**
      * 根据ID获取 $!{table.comment} 对象
@@ -99,35 +99,35 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    ${cfg.voClassName} get${table.serviceName}ById(@Param("param") Serializable id) throws Exception;
+    $!{cfg.voClassName} get$!{table.serviceName}ById(@Param("param") Serializable id) throws Exception;
 
     /**
      * 获取 $!{table.comment} 对象列表
      *
-     * @param ${cfg.listParamConstName}
+     * @param $!{cfg.listParamConstName}
      * @return
      * @throws Exception
      */
-    List<${cfg.voClassName}> get${table.serviceName}List(@Param("param") ${cfg.listParamClassName} ${cfg.listParamConstName}) throws Exception;
+    List<$!{cfg.voClassName}> get$!{table.serviceName}List(@Param("param") $!{cfg.listParamClassName} $!{cfg.listParamConstName}) throws Exception;
 
     /**
      * 获取 $!{table.comment} 分页对象列表
      *
      * @param page
-     * @param ${cfg.pageParamConstName}
+     * @param $!{cfg.pageParamConstName}
      * @return
      * @throws Exception
      */
-    IPage<${cfg.voClassName}> get${table.serviceName}PageList(@Param("page") Page page, @Param("param") ${cfg.pageParamClassName} ${cfg.pageParamConstName}) throws Exception;
+    IPage<$!{cfg.voClassName}> get$!{table.serviceName}PageList(@Param("page") Page page, @Param("param") $!{cfg.pageParamClassName} $!{cfg.pageParamConstName}) throws Exception;
 
     /**
      * 计算 $!{table.comment} 总记录数
      *
-     * @param ${cfg.countParamConstName}
+     * @param $!{cfg.countParamConstName}
      * @return
      * @throws Exception
      */
-    Integer count${table.serviceName}(@Param("param") ${cfg.countParamClassName} ${cfg.countParamConstName}) throws Exception;
+    Integer count$!{table.serviceName}(@Param("param") $!{cfg.countParamClassName} $!{cfg.countParamConstName}) throws Exception;
 
 }
 #end
