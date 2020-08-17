@@ -15,6 +15,10 @@ public interface EncryptionFeign {
 
     /**
      * 加密
+     *
+     * @param str
+     * @return
+     * @throws Exception
      */
     @GetMapping("/encryption")
     @ApiOperation(value = "加密", notes = "加密")
@@ -22,6 +26,10 @@ public interface EncryptionFeign {
 
     /**
      * 生成token
+     *
+     * @param str
+     * @return
+     * @throws Exception
      */
     @GetMapping("/token")
     @ApiOperation(value = "生成token", notes = "生成token")

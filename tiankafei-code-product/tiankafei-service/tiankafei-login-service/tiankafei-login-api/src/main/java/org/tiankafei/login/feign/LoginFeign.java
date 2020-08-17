@@ -19,16 +19,24 @@ public interface LoginFeign {
 
     /**
      * 用户登录
+     *
+     * @param loginParamVo
+     * @return
+     * @throws Exception
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    public ApiResult<String> login(@Valid @RequestBody LoginParamVo loginParamVo) throws Exception;
+    ApiResult<String> login(@Valid @RequestBody LoginParamVo loginParamVo) throws Exception;
 
     /**
      * 用户注销
+     *
+     * @param userId
+     * @return
+     * @throws Exception
      */
     @GetMapping("/logout/{userId}")
     @ApiOperation(value = "用户注销", notes = "用户注销")
-    public ApiResult<Boolean> logout(@PathVariable String userId) throws Exception;
+    ApiResult<Boolean> logout(@PathVariable String userId) throws Exception;
 
 }

@@ -16,6 +16,7 @@ public interface CaptchaFeign {
 
     /**
      * 生成验证码
+     *
      * @param uuid
      * @return
      * @throws Exception

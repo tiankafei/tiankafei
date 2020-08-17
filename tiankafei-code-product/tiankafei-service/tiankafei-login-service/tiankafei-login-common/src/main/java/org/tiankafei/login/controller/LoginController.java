@@ -31,6 +31,10 @@ public class LoginController extends BaseController {
 
     /**
      * 用户登录
+     *
+     * @param loginParamVo
+     * @return
+     * @throws Exception
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "用户登录")
@@ -41,6 +45,9 @@ public class LoginController extends BaseController {
 
     /**
      * 获取用户详细信息，以及角色和权限
+     *
+     * @return
+     * @throws Exception
      */
     @GetMapping("/getUserInfo")
     @ApiOperation(value = "获取用户详细信息，以及角色和权限", notes = "获取用户详细信息，以及角色和权限")
@@ -51,6 +58,10 @@ public class LoginController extends BaseController {
 
     /**
      * 用户注销
+     *
+     * @param userId
+     * @return
+     * @throws Exception
      */
     @GetMapping("/logout/{userId}")
     @ApiOperation(value = "用户注销", notes = "用户注销")
