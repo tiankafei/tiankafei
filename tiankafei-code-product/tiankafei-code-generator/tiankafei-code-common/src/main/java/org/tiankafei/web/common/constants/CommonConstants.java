@@ -4,7 +4,7 @@ package org.tiankafei.web.common.constants;
  * @author tiankafei
  * @since 1.0
  **/
-public interface CommonConstant {
+public interface CommonConstants {
 
     String ACTIVE_PROFILE_DEV = "dev";
 
