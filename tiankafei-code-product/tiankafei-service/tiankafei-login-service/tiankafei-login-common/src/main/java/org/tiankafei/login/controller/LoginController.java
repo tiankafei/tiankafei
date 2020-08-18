@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.login.model.LoginResultDto;
 import org.tiankafei.login.service.LoginService;
-import org.tiankafei.user.param.LoginParamVo;
+import org.tiankafei.user.vo.LoginParamVo;
 import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.controller.BaseController;

@@ -20,7 +20,7 @@ import org.tiankafei.user.cache.UserInfoCache;
 import org.tiankafei.user.cache.enums.UserCacheEnums;
 import org.tiankafei.user.enums.UserEnums;
 import org.tiankafei.user.enums.UserStatusEnums;
-import org.tiankafei.user.param.LoginParamVo;
+import org.tiankafei.user.vo.LoginParamVo;
 import org.tiankafei.user.vo.MenuInfoVo;
 import org.tiankafei.user.vo.RoleInfoVo;
 import org.tiankafei.user.vo.UserInfoVo;

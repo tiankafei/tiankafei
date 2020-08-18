@@ -1,7 +1,7 @@
 package org.tiankafei.login.service;
 
 import org.tiankafei.login.model.LoginResultDto;
-import org.tiankafei.user.param.LoginParamVo;
+import org.tiankafei.user.vo.LoginParamVo;
 import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.exception.LoginException;
 

@@ -1,4 +1,4 @@
-package org.tiankafei.user.param;
+package org.tiankafei.user.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -3,7 +3,7 @@ package org.tiankafei.login.feign;
 import feign.hystrix.FallbackFactory;
 import javax.validation.Valid;
 import org.springframework.stereotype.Component;
-import org.tiankafei.user.param.LoginParamVo;
+import org.tiankafei.user.vo.LoginParamVo;
 import org.tiankafei.web.common.api.ApiResult;
 
 /**
