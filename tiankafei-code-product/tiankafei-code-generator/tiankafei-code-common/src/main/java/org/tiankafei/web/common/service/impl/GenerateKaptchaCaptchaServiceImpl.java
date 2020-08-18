@@ -86,6 +86,7 @@ public class GenerateKaptchaCaptchaServiceImpl implements CaptchaGenerateService
         // 边框颜色 默认为Color.BLACK
         properties.setProperty("kaptcha.border.color", "105,179,90");
         // 验证码文本字符颜色 默认为Color.BLACK
+        ///
 //        properties.setProperty("kaptcha.textproducer.font.color", "blue");
         properties.setProperty("kaptcha.textproducer.font.color", CommonCaptchaUtil.getColorStr());
         // 验证码图片宽度 默认为200
@@ -97,6 +98,7 @@ public class GenerateKaptchaCaptchaServiceImpl implements CaptchaGenerateService
         // KAPTCHA_SESSION_KEY
         properties.setProperty("kaptcha.session.key", "kaptchaCodeMath");
         // 验证码文本生成器
+        ///
 //        properties.setProperty("kaptcha.textproducer.impl", "com.ruoyi.gateway.config.KaptchaTextCreator");
         properties.setProperty("kaptcha.textproducer.impl", "com.google.code.kaptcha.text.impl.DefaultTextCreator");
         // 验证码文本字符间距 默认为2

@@ -21,6 +21,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    ///
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {
 //        return NoOpPasswordEncoder.getInstance();
@@ -42,6 +43,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        ///
 //        可以忽略静态请求，可以忽略动态请求
 //        web.ignoring().antMatchers("/img/**");
         web.ignoring().antMatchers("/encryption/**");

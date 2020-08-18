@@ -23,20 +23,25 @@ public class CodeGeneratorStrategyConfig {
      */
     public static StrategyConfig initStrategyConfig(CodeProperties codeProperties, String tableName) throws ClassNotFoundException {
         StrategyConfig strategyConfig = new StrategyConfig();
+        ///
 //        strategyConfig.setCapitalMode(false);
 //        strategyConfig.setSkipView(false);
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setTablePrefix("sys_");
+        ///
 //        strategyConfig.setFieldPrefix("");
         strategyConfig.setSuperEntityClass(Class.forName(codeProperties.getSuperEntityClassPath()));
+        ///
 //        strategyConfig.setSuperEntityColumns("create_user_id", "create_time", "update_user_id", "update_time");
         strategyConfig.setSuperMapperClass(codeProperties.getSuperMapperClassPath());
         strategyConfig.setSuperServiceClass(codeProperties.getSuperServiceClassPath());
         strategyConfig.setSuperServiceImplClass(codeProperties.getSuperServiceImplClassPath());
         strategyConfig.setSuperControllerClass(codeProperties.getSuperControllerClassPath());
+        ///
 //        strategyConfig.setEnableSqlFilter(true);
         strategyConfig.setInclude(tableName);
+        ///
 //        strategyConfig.setLikeTable();
 //        strategyConfig.setExclude();
 //        strategyConfig.setNotLikeTable();

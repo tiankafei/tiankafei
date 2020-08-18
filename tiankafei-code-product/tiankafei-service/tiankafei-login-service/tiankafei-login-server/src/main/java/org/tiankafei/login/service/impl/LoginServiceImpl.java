@@ -86,6 +86,7 @@ public class LoginServiceImpl implements LoginService {
 
         // 不存在的用户名，会放进缓存中，仅允许查询一次数据库，避免缓存穿透的问题
         UserInfoVo userInfo = userInfoCache.getUserInfo(keywords, password);
+        ///
 //        if (userInfo != null) {
 //            String token = SecureUtil.md5(JSONUtil.toJsonStr(userInfo));
 //            return token;
