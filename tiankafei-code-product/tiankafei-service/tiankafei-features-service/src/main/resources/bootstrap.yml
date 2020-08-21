@@ -1,5 +1,5 @@
 server:
-  port: 7300
+  port: 7700
 spring:
   profiles:
     active: dev, eureka
