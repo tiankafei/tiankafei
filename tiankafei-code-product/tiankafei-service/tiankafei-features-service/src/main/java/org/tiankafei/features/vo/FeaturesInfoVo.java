@@ -40,6 +40,9 @@ public class FeaturesInfoVo extends BaseQueryVo {
     @Size(max = 30, message = "功能的数据表长度不能超过 30 ！")
     private String featuresTableName;
 
+    @ApiModelProperty(value = "序号")
+    private Integer serialNumber;
+
     @ApiModelProperty(value = "功能描述")
     private String description;
 
@@ -69,6 +72,8 @@ public class FeaturesInfoVo extends BaseQueryVo {
     public static final String FEATURES_NAME = "features_name";
 
     public static final String FEATURES_TABLE_NAME = "features_table_name";
+
+    public static final String SERIAL_NUMBER = "serial_number";
 
     public static final String DESCRIPTION = "description";
 

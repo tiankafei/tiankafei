@@ -53,6 +53,10 @@ public class FeaturesInfoEntity extends Model<FeaturesInfoEntity> {
     @TableField("features_table_name")
     private String featuresTableName;
 
+    @ApiModelProperty(value = "序号")
+    @TableField("serial_number")
+    private Integer serialNumber;
+
     @ApiModelProperty(value = "功能描述")
     @TableField("description")
     private String description;
@@ -91,6 +95,8 @@ public class FeaturesInfoEntity extends Model<FeaturesInfoEntity> {
     public static final String FEATURES_NAME = "features_name";
 
     public static final String FEATURES_TABLE_NAME = "features_table_name";
+
+    public static final String SERIAL_NUMBER = "serial_number";
 
     public static final String DESCRIPTION = "description";
 
