@@ -40,12 +40,6 @@ spring:
             - Path=/api/questionnaire/**
           filters:
             - StripPrefix=2
-        - id: features-service
-          uri: lb://features-service
-          predicates:
-            - Path=/api/features/**
-          filters:
-            - StripPrefix=2
         - id: activiti-service
           uri: lb://activiti-service
           predicates:

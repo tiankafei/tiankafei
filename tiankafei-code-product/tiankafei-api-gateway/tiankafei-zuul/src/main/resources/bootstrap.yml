@@ -31,9 +31,6 @@ zuul:
     activiti:
       path: /activiti/**
       serviceId: activiti-service
-    features:
-      path: /features/**
-      serviceId: features-service
     # 忽略的url
     # ignored-patterns:
     # - /*/dataList.tkf
