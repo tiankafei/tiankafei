@@ -40,6 +40,18 @@ spring:
             - Path=/api/questionnaire/**
           filters:
             - StripPrefix=2
+        - id: features-service
+          uri: lb://features-service
+          predicates:
+            - Path=/api/features/**
+          filters:
+            - StripPrefix=2
+        - id: activiti-service
+          uri: lb://activiti-service
+          predicates:
+            - Path=/api/activiti/**
+          filters:
+            - StripPrefix=2
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
