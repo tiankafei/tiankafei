@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author tiankafei
@@ -14,6 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringCloudApplication
 @EntityScan(basePackages = "org.tiankafei")
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
+@ComponentScan(basePackages = {"org.tiankafei"})
 @EnableFeignClients(basePackages = {"org.tiankafei"})
 @EnableHystrixDashboard
 public class MultiDatasourceCustomApplication {

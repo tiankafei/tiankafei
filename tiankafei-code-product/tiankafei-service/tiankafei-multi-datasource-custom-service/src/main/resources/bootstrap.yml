@@ -1,8 +1,6 @@
 server:
   port: 7603
 spring:
-  autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   profiles:
     active: dev, eureka
   application:

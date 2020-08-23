@@ -37,10 +37,10 @@
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-code-common</artifactId>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.tiankafei</groupId>
             <artifactId>tiankafei-db</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

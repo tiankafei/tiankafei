@@ -1,5 +1,6 @@
 package org.tiankafei.multidatasource.custom.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.google.common.collect.Maps;
 import java.util.Map;
@@ -18,15 +19,17 @@ import org.tiankafei.multidatasource.custom.enums.DataSourceTypeEnums;
 public class DataSourceConfig {
 
     @Bean
-    @ConfigurationProperties("spring.datasource.primary")
+    @ConfigurationProperties(prefix = "spring.datasource.primary")
     public DataSource primaryDataSource() {
-        return DruidDataSourceBuilder.create().build();
+        DruidDataSource druidDataSource = DruidDataSourceBuilder.create().build();
+        return druidDataSource;
     }
 
     @Bean
-    @ConfigurationProperties("spring.datasource.secondary")
+    @ConfigurationProperties(prefix = "spring.datasource.secondary")
     public DataSource secondaryDataSource() {
-        return DruidDataSourceBuilder.create().build();
+        DruidDataSource druidDataSource = DruidDataSourceBuilder.create().build();
+        return druidDataSource;
     }
 
     @Bean
