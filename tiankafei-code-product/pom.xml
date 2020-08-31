@@ -28,7 +28,7 @@
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
 
-        <code-tool.version>1.1-SNAPSHOT</code-tool.version>
+        <code-tool.version>1.1-RELEASE</code-tool.version>
         <code-produce.version>1.0-SNAPSHOT</code-produce.version>
         <junit.version>4.12</junit.version>
         <swagger.version>2.9.2</swagger.version>
