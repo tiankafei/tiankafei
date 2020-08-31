@@ -6,7 +6,7 @@
 
     <groupId>org.tiankafei</groupId>
     <artifactId>code-tool-parent</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>code-tool-parent</name>
@@ -29,7 +29,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <code-tool.version>1.1-SNAPSHOT</code-tool.version>
+        <code-tool.version>1.1-RELEASE</code-tool.version>
         <junit.version>4.12</junit.version>
         <lombok.version>1.18.12</lombok.version>
         <commons-lang3.version>3.9</commons-lang3.version>
