@@ -6,7 +6,7 @@
 
     <groupId>org.tiankafei.tool</groupId>
     <artifactId>tiankafei-code-tool</artifactId>
-    <version>1.1.2-RELEASE</version>
+    <version>1.2.1-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-code-tool</name>
@@ -27,6 +27,10 @@
         <module>tiankafei-ui-control</module>
         <module>tiankafei-ui-chart</module>
         <module>tiankafei-ui-report</module>
+
+        <module>tiankafei-tio-2</module>
+        <module>tiankafei-tio-3</module>
+        <module>tiankafei-netty</module>
     </modules>
 
     <!-- 配置远程发布到私服，mvn deploy -->
