@@ -4,17 +4,28 @@
     <parent>
         <groupId>org.tiankafei.tool</groupId>
         <artifactId>tiankafei-parent</artifactId>
-        <version>1.2.1-RELEASE</version>
+        <version>1.3.1-RELEASE</version>
         <relativePath>../tiankafei-parent</relativePath>
     </parent>
 
     <artifactId>tiankafei-tio-3</artifactId>
-    <version>1.2.1-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-tio-3</name>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.tiankafei.tool</groupId>
             <artifactId>tiankafei-ui-design</artifactId>
