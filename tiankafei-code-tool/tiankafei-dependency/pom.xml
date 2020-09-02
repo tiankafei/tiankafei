@@ -20,49 +20,79 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <org.tiankafei.tool.version>1.0.0-RELEASE</org.tiankafei.tool.version>
-        <junit.version>4.12</junit.version>
+
+        <spring.version>5.2.8.RELEASE</spring.version>
+        <junit.version>4.13</junit.version>
         <lombok.version>1.18.12</lombok.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <antlr-runtime.version>3.5.2</antlr-runtime.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-io.version>2.7</commons-io.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <cglib.version>3.3.0</cglib.version>
+        <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.26</slf4j.version>
-        <antlr4.version>4.8</antlr4.version>
-        <asm.version>8.0.1</asm.version>
+        <guava.version>29.0-jre</guava.version>
+        <fastjson.version>1.2.73</fastjson.version>
+        <jackson.version>2.11.2</jackson.version>
+        <hutool.version>5.4.1</hutool.version>
+        <disruptor.version>3.4.2</disruptor.version>
+        <aviator.version>5.1.4</aviator.version>
+        <kilim.version>2.0.2</kilim.version>
+        <quasar.version>0.8.0</quasar.version>
         <poi.version>4.1.2</poi.version>
-        <quasar.version>0.7.10</quasar.version>
+        <vavr.version>0.10.3</vavr.version>
+        <asm.version>3.3.1</asm.version>
+
+        <antlr-runtime.version>3.5.2</antlr-runtime.version>
+        <antlr4.version>4.8-1</antlr4.version>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/junit/junit -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
             </dependency>
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>${commons-beanutils.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr-runtime</artifactId>
-                <version>${antlr-runtime.version}</version>
-            </dependency>
-            <!--commons-lang工具类-->
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/cglib/cglib -->
             <dependency>
@@ -70,107 +100,105 @@
                 <artifactId>cglib</artifactId>
                 <version>${cglib.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>5.2.4.RELEASE</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-
-            <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
+            <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
             <dependency>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-runtime</artifactId>
-                <version>${antlr4.version}</version>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <!--<scope>test</scope>-->
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+            <!--第三方各种工具包-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+            <!--第三方类库：高性能消息队列框架-->
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.googlecode.aviator/aviator -->
+            <!--基于表达式的规则引擎-->
+            <dependency>
+                <groupId>com.googlecode.aviator</groupId>
+                <artifactId>aviator</artifactId>
+                <version>${aviator.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.db4j/kilim -->
+            <!--第三方类库：基于kilim的协程工具包-->
+            <dependency>
+                <groupId>org.db4j</groupId>
+                <artifactId>kilim</artifactId>
+                <version>${kilim.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/co.paralleluniverse/quasar-core -->
+            <!--第三方类库：基于quasar的协程工具包-->
+            <dependency>
+                <groupId>co.paralleluniverse</groupId>
+                <artifactId>quasar-core</artifactId>
+                <version>${quasar.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.vavr/vavr -->
+            <!--第三方类库：vavr（支持元组）：让你像写Scala一样写Java-->
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>${vavr.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/asm/asm-all -->
+            <dependency>
+                <groupId>asm</groupId>
+                <artifactId>asm-all</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
             <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4</artifactId>
                 <version>${antlr4.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+            <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>29.0-jre</version>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-runtime</artifactId>
+                <version>${antlr4.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+            <!-- https://mvnrepository.com/artifact/org.antlr/antlr-runtime -->
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>4.4</version>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr-runtime</artifactId>
+                <version>${antlr-runtime.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.6</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.11.0</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.73</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
-            <dependency>
-                <groupId>com.lmax</groupId>
-                <artifactId>disruptor</artifactId>
-                <version>3.4.2</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm -->
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.googlecode.aviator/aviator -->
-            <dependency>
-                <groupId>com.googlecode.aviator</groupId>
-                <artifactId>aviator</artifactId>
-                <version>5.0.0</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/co.paralleluniverse/quasar-core -->
-            <dependency>
-                <groupId>co.paralleluniverse</groupId>
-                <artifactId>quasar-core</artifactId>
-                <version>${quasar.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.db4j/kilim -->
-            <dependency>
-                <groupId>org.db4j</groupId>
-                <artifactId>kilim</artifactId>
-                <version>2.0.2</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/io.vavr/vavr -->
-            <dependency>
-                <groupId>io.vavr</groupId>
-                <artifactId>vavr</artifactId>
-                <version>0.10.3</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>5.4.1</version>
-            </dependency>
+
 
             <!--poi依赖jar包-->
             <dependency>
@@ -194,6 +222,7 @@
                 <version>${poi.version}</version>
             </dependency>
 
+
             <!--自己的依赖管理-->
             <dependency>
                 <groupId>org.tiankafei.tool</groupId>
@@ -205,6 +234,7 @@
                 <artifactId>tiankafei-base</artifactId>
                 <version>${org.tiankafei.tool.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

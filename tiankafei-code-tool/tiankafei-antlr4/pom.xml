@@ -14,24 +14,36 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!--junit单元测试依赖-->
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
+
+        <!--自己的依赖管理-->
         <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4</artifactId>
+            <groupId>org.tiankafei.tool</groupId>
+            <artifactId>tiankafei-base</artifactId>
         </dependency>
 
     </dependencies>
-
 
 </project>
