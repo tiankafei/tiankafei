@@ -23,7 +23,7 @@
         <junit.version>4.12</junit.version>
         <lombok.version>1.18.12</lombok.version>
         <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <antlr-runtime.version>3.5.2</antlr-runtime.version>
         <cglib.version>3.3.0</cglib.version>
         <logback.version>1.2.3</logback.version>
