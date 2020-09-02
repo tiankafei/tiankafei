@@ -1,4 +1,4 @@
-package org.tiankafei.base.model;
+package org.tiankafei.base.dto;
 
 import org.tiankafei.base.enums.ViewTypeEnum;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.io.Serializable;
  **/
 @Data
 @Accessors(chain = true)
-public class CodeNameVo implements Serializable {
+public class CodeNameDTO implements Serializable {
 
     private static final long serialVersionUID = 1881024252185440694L;
 
@@ -41,12 +41,12 @@ public class CodeNameVo implements Serializable {
     /**
      * 构造代码名称值对象类
      */
-    public CodeNameVo() {
+    public CodeNameDTO() {
         viewType = ViewTypeEnum.VIEW_NAME.getCode();
         separator = "    ";
     }
 
-    public CodeNameVo(String name) {
+    public CodeNameDTO(String name) {
         this();
         this.name = name;
     }

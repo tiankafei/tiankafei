@@ -3,7 +3,7 @@ package org.tiankafei.base.datetime;
 import org.tiankafei.base.constants.DateTimeConstants;
 import org.tiankafei.base.enums.DateTimeEnum;
 import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.model.CodeNameVo;
+import org.tiankafei.base.dto.CodeNameDTO;
 import org.tiankafei.base.util.SystemTimeUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -1670,7 +1670,7 @@ public class DateTimeUtil {
      *
      * @return 时间格式列表
      */
-    public static List<CodeNameVo> getDateTimeFormatList() {
+    public static List<CodeNameDTO> getDateTimeFormatList() {
         List<String> formatList = new ArrayList<String>();
         formatList.add(DateTimeEnum.YYYY_MM_DDHH_MM_SS.getCode());
         formatList.add(DateTimeEnum.YYYY_MM_DDHH_MM.getCode());
@@ -1696,12 +1696,12 @@ public class DateTimeUtil {
         formatList.add(DateTimeEnum.YYYYMM.getCode());
 
         int length = formatList.size();
-        List<CodeNameVo> dateTimeFormatList = new ArrayList<>(length);
+        List<CodeNameDTO> dateTimeFormatList = new ArrayList<>(length);
         for (int index = 0; index < length; index++) {
             String format = formatList.get(index);
-            CodeNameVo codeNameVo = new CodeNameVo();
-            codeNameVo.setCode(format).setName(format);
-            dateTimeFormatList.add(codeNameVo);
+            CodeNameDTO codeNameDTO = new CodeNameDTO();
+            codeNameDTO.setCode(format).setName(format);
+            dateTimeFormatList.add(codeNameDTO);
         }
         return dateTimeFormatList;
     }

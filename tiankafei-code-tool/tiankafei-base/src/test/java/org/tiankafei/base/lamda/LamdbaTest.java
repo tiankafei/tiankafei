@@ -1,6 +1,6 @@
 package org.tiankafei.base.lamda;
 
-import org.tiankafei.base.model.CodeNameVo;
+import org.tiankafei.base.dto.CodeNameDTO;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -206,19 +206,19 @@ public class LamdbaTest {
     }
 
     public static void test9() throws InterruptedException {
-        Supplier<CodeNameVo> supplier = CodeNameVo::new;
-        CodeNameVo codeNameVo = supplier.get();
+        Supplier<CodeNameDTO> supplier = CodeNameDTO::new;
+        CodeNameDTO codeNameDTO = supplier.get();
 
-        Consumer<String> consumer = CodeNameVo::new;
+        Consumer<String> consumer = CodeNameDTO::new;
         consumer.accept("发送到发");
 
-        Consumer<String> consumer1 = codeNameVo::setCode;
-        Consumer<String> consumer2 = codeNameVo::setName;
+        Consumer<String> consumer1 = codeNameDTO::setCode;
+        Consumer<String> consumer2 = codeNameDTO::setName;
         consumer1.accept("123");
         consumer2.accept("阿发放到");
 
-        Supplier supplier1 = codeNameVo::getCode;
-        Supplier supplier2 = codeNameVo::getName;
+        Supplier supplier1 = codeNameDTO::getCode;
+        Supplier supplier2 = codeNameDTO::getName;
         System.out.println(supplier1.get());
         System.out.println(supplier2.get());
 
@@ -227,14 +227,14 @@ public class LamdbaTest {
         consumer10.accept(supplier10);
         System.out.println(supplier10.get());
 
-        Consumer<CodeNameVo> codeNameVoConsumer = (codeNameVo1) -> {
-            String name = codeNameVo1.getName();
+        Consumer<CodeNameDTO> codeNameVoConsumer = (codeNameDTO1) -> {
+            String name = codeNameDTO1.getName();
             System.out.println(name);
         };
-        codeNameVoConsumer.accept(new CodeNameVo("十分大师傅的"));
+        codeNameVoConsumer.accept(new CodeNameDTO("十分大师傅的"));
 
         Thread thread = new Thread(() -> {
-            System.out.println(codeNameVo.getName());
+            System.out.println(codeNameDTO.getName());
             System.out.println("123456");
         });
         thread.start();
