@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.tiankafei.tool</groupId>
         <artifactId>tiankafei-parent</artifactId>
-        <version>1.1.1-RELEASE</version>
+        <version>1.1.2-RELEASE</version>
         <relativePath>../tiankafei-parent</relativePath>
     </parent>
 
