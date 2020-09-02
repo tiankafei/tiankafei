@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei.tool</groupId>
         <artifactId>tiankafei-code-tool</artifactId>
-        <version>1.0.1-RELEASE</version>
+        <version>1.1.1-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tiankafei-dependency</artifactId>
     <packaging>pom</packaging>
@@ -19,7 +19,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <org.tiankafei.tool.version>1.0.1-RELEASE</org.tiankafei.tool.version>
+        <org.tiankafei.tool.version>1.1.1-RELEASE</org.tiankafei.tool.version>
 
         <spring.version>5.2.8.RELEASE</spring.version>
         <junit.version>4.13</junit.version>
@@ -42,10 +42,9 @@
         <poi.version>4.1.2</poi.version>
         <vavr.version>0.10.3</vavr.version>
         <asm.version>3.3.1</asm.version>
-
         <antlr-runtime.version>3.5.2</antlr-runtime.version>
         <antlr4.version>4.8-1</antlr4.version>
-
+        <jfreechart.version>1.0.13</jfreechart.version>
     </properties>
 
     <dependencyManagement>
@@ -198,6 +197,12 @@
                 <artifactId>antlr-runtime</artifactId>
                 <version>${antlr-runtime.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/jfree/jfreechart -->
+            <dependency>
+                <groupId>jfree</groupId>
+                <artifactId>jfreechart</artifactId>
+                <version>${jfreechart.version}</version>
+            </dependency>
 
 
             <!--poi依赖jar包-->
@@ -232,6 +237,21 @@
             <dependency>
                 <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-base</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-ui-design</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-ui-control</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-ui-chart</artifactId>
                 <version>${org.tiankafei.tool.version}</version>
             </dependency>
 
