@@ -48,6 +48,7 @@
         <antlr-runtime.version>3.5.2</antlr-runtime.version>
         <antlr4.version>4.8-1</antlr4.version>
         <jfreechart.version>1.0.13</jfreechart.version>
+        <jface.version>3.3.0-I20070606-0010</jface.version>
         <rocksdb.version>6.11.4</rocksdb.version>
         <mail.version>1.6.2</mail.version>
         <jsoup.version>1.13.1</jsoup.version>
@@ -264,6 +265,13 @@
                 <artifactId>jfreechart</artifactId>
                 <version>${jfreechart.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse/jface -->
+            <dependency>
+                <groupId>org.eclipse</groupId>
+                <artifactId>jface</artifactId>
+                <version>${jface.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.rocksdb/rocksdbjni -->
             <dependency>
                 <groupId>org.rocksdb</groupId>

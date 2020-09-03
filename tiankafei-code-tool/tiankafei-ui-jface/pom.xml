@@ -26,6 +26,11 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse/jface -->
+        <dependency>
+            <groupId>org.eclipse</groupId>
+            <artifactId>jface</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.tiankafei.tool</groupId>
             <artifactId>tiankafei-ui-design</artifactId>
