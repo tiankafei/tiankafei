@@ -5,9 +5,10 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @Author tiankafei
- * @Date 2019/10/22
- * @Version V1.0
+ * 校验工具类
+ *
+ * @author tiankafei
+ * @since 1.0
  **/
 public class ValidatorUtil {
 
