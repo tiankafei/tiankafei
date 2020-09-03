@@ -27,7 +27,7 @@
         <module>tiankafei-ui-design</module>
         <module>tiankafei-ui-control</module>
         <module>tiankafei-ui-chart</module>
-        <!--<module>tiankafei-ui-report</module>-->
+        <module>tiankafei-ui-report</module>
         <module>tiankafei-ui-jface</module>
 
         <module>tiankafei-tio-2</module>
