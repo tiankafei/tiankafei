@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.tiankafei.tool</groupId>
         <artifactId>tiankafei-code-tool</artifactId>
-        <version>1.3.1-RELEASE</version>
+        <version>1.4.1-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -19,7 +19,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <org.tiankafei.tool.version>1.3.1-RELEASE</org.tiankafei.tool.version>
+        <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
 
         <spring.version>5.2.8.RELEASE</spring.version>
         <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
