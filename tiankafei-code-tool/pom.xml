@@ -22,6 +22,7 @@
         <module>tiankafei-base</module>
         <module>tiankafei-antlr4</module>
         <module>tiankafei-poi</module>
+        <module>tiankafei-email</module>
 
         <module>tiankafei-ui-design</module>
         <module>tiankafei-ui-control</module>

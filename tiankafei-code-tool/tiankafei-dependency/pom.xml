@@ -47,6 +47,7 @@
         <antlr4.version>4.8-1</antlr4.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <rocksdb.version>6.11.4</rocksdb.version>
+        <mail.version>1.6.2</mail.version>
 
         <mybatis.version>3.5.5</mybatis.version>
         <mybatis-spring.version>2.0.5</mybatis-spring.version>
@@ -292,7 +293,12 @@
                 <artifactId>spring-jdbc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${mail.version}</version>
+            </dependency>
 
 
 
