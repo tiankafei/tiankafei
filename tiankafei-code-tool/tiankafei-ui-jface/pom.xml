@@ -31,66 +31,28 @@
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.core.commands</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.runtime -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.core.runtime</artifactId>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.equinox.common -->
         <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.common</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.jface</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface.databinding -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.jface.databinding</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface.text -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.jface.text</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.osgi -->
         <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.osgi</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt -->
+        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface -->
         <dependency>
             <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.swt</artifactId>
+            <artifactId>org.eclipse.jface</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui -->
+        <!-- https://mvnrepository.com/artifact/org.eclipse.swt/org.eclipse.swt.win32.win32.x86 -->
         <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.ui</artifactId>
+            <groupId>org.eclipse.swt</groupId>
+            <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.ide -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.ui.ide</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.filesystem -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.core.filesystem</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.views -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.ui.views</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.help -->
-        <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.help</artifactId>
-        </dependency>
+
+
 
 
         <dependency>

@@ -271,35 +271,11 @@
                 <artifactId>org.eclipse.core.commands</artifactId>
                 <version>3.9.700</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.runtime -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.core.runtime</artifactId>
-                <version>3.18.0</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.equinox.common -->
             <dependency>
                 <groupId>org.eclipse.platform</groupId>
                 <artifactId>org.eclipse.equinox.common</artifactId>
                 <version>3.12.0</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.jface</artifactId>
-                <version>3.20.0</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface.databinding -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.jface.databinding</artifactId>
-                <version>1.11.100</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface.text -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.jface.text</artifactId>
-                <version>3.16.300</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.osgi -->
             <dependency>
@@ -307,42 +283,25 @@
                 <artifactId>org.eclipse.osgi</artifactId>
                 <version>3.15.300</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt -->
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.jface -->
             <dependency>
                 <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.swt</artifactId>
-                <version>3.114.100</version>
+                <artifactId>org.eclipse.jface</artifactId>
+                <version>3.20.0</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui -->
+            <!-- https://mvnrepository.com/artifact/org.eclipse.swt/org.eclipse.swt.win32.win32.x86 -->
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
+                <version>4.3</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.workbench -->
             <dependency>
                 <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.ui</artifactId>
-                <version>3.117.0</version>
+                <artifactId>org.eclipse.ui.workbench</artifactId>
+                <version>3.119.0</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.ide -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.ui.ide</artifactId>
-                <version>3.17.100</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.filesystem -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.core.filesystem</artifactId>
-                <version>1.7.700</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.views -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.ui.views</artifactId>
-                <version>3.10.300</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.help -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.help</artifactId>
-                <version>3.8.800</version>
-            </dependency>
+
 
 
             <!-- https://mvnrepository.com/artifact/org.rocksdb/rocksdbjni -->
