@@ -29,6 +29,8 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.7</commons-io.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <commons-compress.version>1.20</commons-compress.version>
+        <commons-codec.version>1.15</commons-codec.version>
         <cglib.version>3.3.0</cglib.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
@@ -49,6 +51,9 @@
         <rocksdb.version>6.11.4</rocksdb.version>
         <mail.version>1.6.2</mail.version>
         <jsoup.version>1.13.1</jsoup.version>
+        <snappy.version>1.1.7.7</snappy.version>
+        <kryo.version>4.0.2</kryo.version>
+        <sigar.version>1.6.4</sigar.version>
 
         <mybatis.version>3.5.5</mybatis.version>
         <mybatis-spring.version>2.0.5</mybatis-spring.version>
@@ -107,6 +112,18 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons-beanutils.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/cglib/cglib -->
             <dependency>
@@ -193,7 +210,36 @@
                 <artifactId>asm-all</artifactId>
                 <version>${asm.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${mail.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.xerial.snappy/snappy-java -->
+            <dependency>
+                <groupId>org.xerial.snappy</groupId>
+                <artifactId>snappy-java</artifactId>
+                <version>${snappy.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.esotericsoftware/kryo -->
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>kryo</artifactId>
+                <version>${kryo.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.fusesource/sigar -->
+            <dependency>
+                <groupId>org.fusesource</groupId>
+                <artifactId>sigar</artifactId>
+                <version>${sigar.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
             <dependency>
                 <groupId>org.antlr</groupId>
@@ -294,18 +340,7 @@
                 <artifactId>spring-jdbc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
-            <dependency>
-                <groupId>com.sun.mail</groupId>
-                <artifactId>javax.mail</artifactId>
-                <version>${mail.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-            <dependency>
-                <groupId>org.jsoup</groupId>
-                <artifactId>jsoup</artifactId>
-                <version>${jsoup.version}</version>
-            </dependency>
+
 
 
 
