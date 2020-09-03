@@ -8,10 +8,10 @@
         <relativePath>../tiankafei-parent</relativePath>
     </parent>
 
-    <artifactId>tiankafei-ui-control</artifactId>
+    <artifactId>tiankafei-jdbc-mybatis</artifactId>
     <packaging>jar</packaging>
 
-    <name>tiankafei-ui-control</name>
+    <name>tiankafei-jdbc-mybatis</name>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -28,7 +28,19 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei.tool</groupId>
-            <artifactId>tiankafei-ui-design</artifactId>
+            <artifactId>tiankafei-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
         </dependency>
     </dependencies>
 

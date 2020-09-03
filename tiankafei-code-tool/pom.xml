@@ -26,7 +26,7 @@
         <module>tiankafei-ui-design</module>
         <module>tiankafei-ui-control</module>
         <module>tiankafei-ui-chart</module>
-        <module>tiankafei-ui-report</module>
+        <!--<module>tiankafei-ui-report</module>-->
 
         <module>tiankafei-tio-2</module>
         <module>tiankafei-tio-3</module>
@@ -34,6 +34,9 @@
 
         <module>tiankafei-redis</module>
         <module>tiankafei-rocksdb</module>
+
+        <module>tiankafei-jdbc</module>
+        <module>tiankafei-jdbc-mybatis</module>
     </modules>
 
     <!-- 配置远程发布到私服，mvn deploy -->

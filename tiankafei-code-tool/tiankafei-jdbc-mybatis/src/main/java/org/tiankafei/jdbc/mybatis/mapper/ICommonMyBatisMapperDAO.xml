@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tiankafei.jdbc.mybatis.mapper.ICommonMyBatisMapperDAO">
+
+    <resultMap type="physicalStorageTableDTO" id="physicalStorageTableList">
+        <result column="TABLE_NAME" property="tableName"/>
+    </resultMap>
+
+    <!--获取分页SQL-->
+    <select id="getPaginationSql" parameterType="Map" resultType="String" databaseId="oracle">
+		SELECT 'SELECT * FROM  ( SELECT T.*,ROWNUM RN FROM ( ${sql} ) T  WHERE ROWNUM <![CDATA[ <= ]]> ${currentPage} * ${pageSize})  WHERE RN > (${currentPage} - 1) * ${pageSize}' AS SQL FROM DUAL
+	</select>
+    <select id="getPaginationSql" parameterType="Map" resultType="String" databaseId="mysql">
+		SELECT 'SELECT A.* FROM ( ${sql} ) A LIMIT (${currentPage} - 1) * ${pageSize}, ${pageSize}' AS SQL1 FROM DUAL
+	</select>
+    <select id="getPaginationSql" parameterType="Map" resultType="String" databaseId="sqlite">
+		SELECT 'SELECT A.* FROM ( ${sql} ) A LIMIT (${currentPage} - 1) * ${pageSize}, ${pageSize}' AS SQL1
+	</select>
+
+    <!-- 获取当前时间 -->
+    <select id="getCurrentTimestamp" resultType="java.sql.Timestamp" databaseId="oracle">
+		SELECT SYSDATE AS TIME FROM DUAL
+	</select>
+    <select id="getCurrentTimestamp" resultType="java.sql.Timestamp" databaseId="mysql">
+		SELECT NOW() AS TIME FROM DUAL
+	</select>
+    <select id="getCurrentTimestampSqlite" resultType="String" databaseId="sqlite">
+		SELECT DATETIME(CURRENT_TIMESTAMP,'LOCALTIME')
+	</select>
+
+    <!-- 验证物理表名是否存在 -->
+    <select id="checkTableExists" parameterType="physicalStorageTableDTO" resultMap="physicalStorageTableList"
+            databaseId="oracle">
+		SELECT * FROM USER_TABLES T WHERE T.TABLE_NAME='${tableName}'
+	</select>
+    <select id="checkTableExists" parameterType="physicalStorageTableDTO" resultMap="physicalStorageTableList"
+            databaseId="mysql">
+		SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='${dbName}' AND TABLE_NAME='${tableName}'
+	</select>
+    <select id="checkTableExists" parameterType="physicalStorageTableDTO" resultMap="physicalStorageTableList"
+            databaseId="sqlite">
+		SELECT NAME FROM SQLITE_MASTER WHERE TYPE='table' AND NAME='${tableName}'
+	</select>
+
+    <!--执行原生sql-->
+    <select id="queryDataMapList" parameterType="Map" resultType="Map">
+		${sql}
+	</select>
+
+    <!-- 创建物理表 -->
+    <update id="createTable" parameterType="physicalStorageTableDTO">
+        CREATE TABLE ${tableName}
+        (
+        <foreach collection="physicalStorageColumnList" item="physicalStorageColumnDTO" index="index">
+            <include refid="packageColumnTypeSql"></include>,
+        </foreach>
+        PRIMARY KEY (${primaryKey})
+        )
+    </update>
+
+    <!-- 删除物理表 -->
+    <update id="dropTable" parameterType="physicalStorageTableDTO" databaseId="oracle">
+		DROP TABLE ${tableName}
+	</update>
+    <!-- 删除物理表 -->
+    <update id="dropTable" parameterType="physicalStorageTableDTO" databaseId="mysql">
+		DROP TABLE IF EXISTS ${tableName}
+	</update>
+    <!-- 删除物理表 -->
+    <update id="dropTable" parameterType="physicalStorageTableDTO" databaseId="sqlite">
+		DROP TABLE IF EXISTS ${tableName}
+	</update>
+
+    <!--执行原生sql-->
+    <update id="update" parameterType="Map">
+		${sql}
+	</update>
+
+
+    <!--组装字段类型sql-->
+    <sql id="packageColumnTypeSql">
+        ${physicalStorageColumnDTO.columnName}
+        <if test="10 == physicalStorageColumnDTO.columnType">
+            CHAR(${physicalStorageColumnDTO.columnMaxLength})
+            <if test="physicalStorageColumnDTO.defaultValue != null">
+                DEFAULT ${physicalStorageColumnDTO.defaultValue}
+            </if>
+        </if>
+        <if test="20 == physicalStorageColumnDTO.columnType">
+            <if test="_databaseId == 'oracle'">
+                VARCHAR2(${physicalStorageColumnDTO.columnMaxLength})
+            </if>
+            <if test="_databaseId == 'mysql' or _databaseId == 'sqlite'">
+                VARCHAR(${physicalStorageColumnDTO.columnMaxLength})
+            </if>
+            <if test="physicalStorageColumnDTO.defaultValue != null">
+                DEFAULT ${physicalStorageColumnDTO.defaultValue}
+            </if>
+        </if>
+        <if test="30 == physicalStorageColumnDTO.columnType">
+            <if test="_databaseId == 'oracle'">
+                INTEGER
+            </if>
+            <if test="_databaseId == 'mysql' or _databaseId == 'sqlite'">
+                INTEGER(${physicalStorageColumnDTO.columnMaxLength})
+            </if>
+            <if test="physicalStorageColumnDTO.defaultValue != null">
+                DEFAULT ${physicalStorageColumnDTO.defaultValue}
+            </if>
+        </if>
+        <if test="40 == physicalStorageColumnDTO.columnType">
+            <if test="_databaseId == 'oracle'">
+                NUMBER(${physicalStorageColumnDTO.columnMaxLength}, ${physicalStorageColumnDTO.dataAccuracy})
+            </if>
+            <if test="_databaseId == 'mysql' or _databaseId == 'sqlite'">
+                NUMERIC(${physicalStorageColumnDTO.columnMaxLength}, ${physicalStorageColumnDTO.dataAccuracy})
+            </if>
+            <if test="physicalStorageColumnDTO.defaultValue != null">
+                DEFAULT ${physicalStorageColumnDTO.defaultValue}
+            </if>
+        </if>
+        <if test="50 == physicalStorageColumnDTO.columnType">
+            TIMESTAMP
+            <if test="_databaseId == 'mysql' or _databaseId == 'sqlite'">
+                NULL
+            </if>
+        </if>
+        <if test="60 == physicalStorageColumnDTO.columnType">
+            <if test="_databaseId == 'oracle'">
+                CLOB
+            </if>
+            <if test="_databaseId == 'mysql' or _databaseId == 'sqlite'">
+                TEXT
+            </if>
+            <if test="physicalStorageColumnDTO.defaultValue != null">
+                DEFAULT ${physicalStorageColumnDTO.defaultValue}
+            </if>
+        </if>
+        <if test="70 == physicalStorageColumnDTO.columnType">
+            BLOB
+        </if>
+    </sql>
+
+</mapper>

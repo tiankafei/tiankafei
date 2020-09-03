@@ -28,7 +28,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.tiankafei.tool</groupId>
             <artifactId>tiankafei-base</artifactId>
