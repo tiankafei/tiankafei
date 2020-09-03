@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.base.model.CodeNameVo;
+import org.tiankafei.base.dto.CodeNameDTO;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.property.CheckBoxComponentProperty;
 
@@ -33,7 +33,7 @@ public class CheckBoxComponentBeanInfo extends BaseChooseComponentProperty imple
     /**
      * 选项列表
      */
-    protected List<CodeNameVo> codeNameList;
+    protected List<CodeNameDTO> codeNameList;
 
     @Override
     public Integer getComponentType() {

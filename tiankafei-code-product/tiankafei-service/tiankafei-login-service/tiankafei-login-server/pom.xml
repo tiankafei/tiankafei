@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.tiankafei</groupId>
+        <groupId>org.tiankafei.product</groupId>
         <artifactId>tiankafei-login-service</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tiankafei-login-server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-login-server</name>
@@ -30,23 +30,23 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-micro-depends</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-user-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-login-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-user-cache</artifactId>
         </dependency>
     </dependencies>

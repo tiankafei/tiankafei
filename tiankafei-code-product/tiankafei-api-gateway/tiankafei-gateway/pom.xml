@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.tiankafei</groupId>
+        <groupId>org.tiankafei.product</groupId>
         <artifactId>tiankafei-api-gateway</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tiankafei-gateway</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-gateway</name>
@@ -19,7 +19,7 @@
     <dependencies>
         <!--网关的注册中心依赖-->
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-register-depends</artifactId>
             <exclusions>
                 <exclusion>
@@ -40,7 +40,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
             <exclusions>
                 <exclusion>
@@ -58,7 +58,7 @@
             </exclusions>
         </dependency>
         <!--<dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-user-cache</artifactId>
             <exclusions>
                 <exclusion>

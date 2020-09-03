@@ -10,9 +10,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.tiankafei</groupId>
-    <artifactId>code-produce-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.tiankafei.product</groupId>
+    <artifactId>tiankafei-code-product</artifactId>
+    <version>1.0-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>code-produce-parent</name>
@@ -21,15 +21,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>11</jdk.version>
-        <maven.compiler.source>${jdk.version}</maven.compiler.source>
-        <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
 
-        <code-tool.version>1.1-RELEASE</code-tool.version>
-        <code-produce.version>1.0-SNAPSHOT</code-produce.version>
+        <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
+        <org.tiankafei.produce.version>1.0-RELEASE</org.tiankafei.produce.version>
+
         <junit.version>4.12</junit.version>
         <swagger.version>2.9.2</swagger.version>
         <knife4j.version>2.0.4</knife4j.version>
@@ -265,154 +266,154 @@
 
             <!--自己的工具包-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-base</artifactId>
-                <version>${code-tool.version}</version>
+                <version>${org.tiankafei.tool.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-aviator-extend</artifactId>
-                <version>${code-tool.version}</version>
+                <version>${org.tiankafei.tool.version}</version>
             </dependency>
 
 
             <!--产品自己的工具包-->
             <!--微服务依赖的工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-micro-depends</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <!--注册中心依赖的工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-register-depends</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <!--公共代码工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-code-common</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <!--用户公共属性工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-user-common</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <!--用户缓存工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-user-cache</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <!--通用的数据库查询工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-db</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <!--公共采集控件工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-collection</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
 
             <!--feign调用客户端工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-user-api</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-login-api</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
 
             <!--用户登录相关工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-login-common</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
 
             <!--缓存工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-cache</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-cache-redis</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-cache-memory</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
 
             <!--消息MQ工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-message</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-message-disruptor</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-message-kafka</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-message-rabbitmq</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-message-redis</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-message-rocketmq</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
 
             <!--分布式锁工程-->
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-distributed-lock</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-distributed-lock-etcd</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-distributed-lock-mysql</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-distributed-lock-redis</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.tiankafei</groupId>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-distributed-lock-zookeeper</artifactId>
-                <version>${code-produce.version}</version>
+                <version>${org.tiankafei.produce.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

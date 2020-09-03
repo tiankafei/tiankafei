@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.tiankafei</groupId>
+        <groupId>org.tiankafei.product</groupId>
         <artifactId>tiankafei-monitor-center</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tiankafei-monitor-admin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-monitor-admin</name>
@@ -22,7 +22,7 @@
             <artifactId>spring-boot-admin-starter-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei</groupId>
+            <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-micro-depends</artifactId>
             <exclusions>
                 <!--排除springboot-admin客户端依赖，因为自己无法给自己汇报健康状态-->
