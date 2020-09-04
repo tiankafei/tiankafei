@@ -335,6 +335,46 @@
                 <version>2.3.2</version>
             </dependency>
 
+            <!--org.eclipse.ui组件-->
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.workbench -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.ui.workbench</artifactId>
+                <version>3.119.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.ide -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.ui.ide</artifactId>
+                <version>3.17.100</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.views -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.ui.views</artifactId>
+                <version>3.10.300</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.editors -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.ui.editors</artifactId>
+                <version>3.13.200</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.forms -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.ui.forms</artifactId>
+                <version>3.9.100</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.console -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.ui.console</artifactId>
+                <version>3.9.200</version>
+            </dependency>
+
+
+
 
 
             <!-- https://mvnrepository.com/artifact/org.rocksdb/rocksdbjni -->

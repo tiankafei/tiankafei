@@ -13,19 +13,14 @@
  */
 package org.tiankafei.ui.jface;
 
-import java.util.*;
-
-/*
- * example snippet: DateTime with localization support.
- *
- * For a list of all SWT example snippets see
- * http://www.eclipse.org/swt/snippets/
- *
- * @since 3.107
- */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import java.util.Locale;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet370 {
 

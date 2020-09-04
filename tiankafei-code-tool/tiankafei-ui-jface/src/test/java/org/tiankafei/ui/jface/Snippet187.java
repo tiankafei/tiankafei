@@ -13,10 +13,18 @@
  *******************************************************************************/
 package org.tiankafei.ui.jface;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.ole.win32.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.ole.win32.OLE;
+import org.eclipse.swt.ole.win32.OleAutomation;
+import org.eclipse.swt.ole.win32.OleControlSite;
+import org.eclipse.swt.ole.win32.OleEvent;
+import org.eclipse.swt.ole.win32.OleFrame;
+import org.eclipse.swt.ole.win32.OleListener;
+import org.eclipse.swt.ole.win32.Variant;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /*
  * Running a script within IE. (win32 only)
