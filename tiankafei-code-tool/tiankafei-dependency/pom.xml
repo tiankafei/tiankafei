@@ -289,17 +289,50 @@
                 <artifactId>org.eclipse.jface</artifactId>
                 <version>3.20.0</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.swt/org.eclipse.swt.win32.win32.x86 -->
-            <dependency>
-                <groupId>org.eclipse.swt</groupId>
-                <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
-                <version>4.3</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.workbench -->
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt.tools -->
             <dependency>
                 <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.ui.workbench</artifactId>
-                <version>3.119.0</version>
+                <artifactId>org.eclipse.swt.tools</artifactId>
+                <version>3.108.300</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt.tools.base -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.swt.tools.base</artifactId>
+                <version>3.107.300</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt.win32.win32.x86 -->
+            <!--windows x32位UI依赖-->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
+                <version>3.108.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt -->
+            <!--windows UI依赖-->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.swt</artifactId>
+                <version>3.114.100</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt.win32.win32.x86_64 -->
+            <!--windows x64位UI依赖-->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+                <version>3.114.100</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.lwjgl/lwjgl-opengl -->
+            <dependency>
+                <groupId>org.lwjgl</groupId>
+                <artifactId>lwjgl-opengl</artifactId>
+                <version>3.2.3</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jogamp.jogl/jogl-all -->
+            <dependency>
+                <groupId>org.jogamp.jogl</groupId>
+                <artifactId>jogl-all</artifactId>
+                <version>2.3.2</version>
             </dependency>
 
 
