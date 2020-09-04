@@ -323,7 +323,7 @@ public class BrowserExample {
 				if (images == null) {
 					images = new Image[imageLocations.length];
 					for (int i = 0; i < imageLocations.length; ++i) {
-						try (InputStream sourceStream = clazz.getResourceAsStream(imageLocations[i])) {
+						try (InputStream sourceStream = clazz.getClassLoader().getResourceAsStream(imageLocations[i])) {
 						ImageData source = new ImageData(sourceStream);
 						ImageData mask = source.getTransparencyMask();
 						images[i] = new Image(null, source, mask);
@@ -344,7 +344,8 @@ public class BrowserExample {
 		Shell shell = new Shell(display);
 		shell.setLayout(new FillLayout());
 		shell.setText(getResourceString("window.title"));
-		InputStream stream = BrowserExample.class.getResourceAsStream(iconLocation);
+		InputStream stream = BrowserExample.class.getClassLoader().getResourceAsStream(iconLocation);
+		System.out.println(stream);
 		Image icon = new Image(display, stream);
 		shell.setImage(icon);
 		try {
