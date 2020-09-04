@@ -21,39 +21,43 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.6
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet339 {
 
-public static void main(String[] args) {
-	Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 339");
-	FillLayout fillLayout = new FillLayout ();
-	fillLayout.marginWidth = 20;
-	fillLayout.marginHeight = 20;
-	shell.setLayout(fillLayout);
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 339");
+        FillLayout fillLayout = new FillLayout();
+        fillLayout.marginWidth = 20;
+        fillLayout.marginHeight = 20;
+        shell.setLayout(fillLayout);
 
-	CTabFolder folder = new CTabFolder(shell, SWT.BORDER);
-	folder.setBackground(new Color[]{display.getSystemColor(SWT.COLOR_YELLOW), display.getSystemColor(SWT.COLOR_RED)}, new int[]{100}, true);
+        CTabFolder folder = new CTabFolder(shell, SWT.BORDER);
+        folder.setBackground(new Color[]{display.getSystemColor(SWT.COLOR_YELLOW), display.getSystemColor(SWT.COLOR_RED)}, new int[]{100}, true);
 
-	for (int i = 0; i < 6; i++) {
-		CTabItem item = new CTabItem(folder, SWT.CLOSE);
-		item.setText("Item "+i);
-		Text text = new Text(folder, SWT.MULTI);
-		text.setText("Content for Item "+i +"\n\n\n\n");
-		item.setControl(text);
-	}
+        for (int i = 0; i < 6; i++) {
+            CTabItem item = new CTabItem(folder, SWT.CLOSE);
+            item.setText("Item " + i);
+            Text text = new Text(folder, SWT.MULTI);
+            text.setText("Content for Item " + i + "\n\n\n\n");
+            item.setControl(text);
+        }
 
-	shell.pack();
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch())
-			display.sleep();
-	}
-}
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+    }
 }

@@ -21,36 +21,40 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.2
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
 public class Snippet202 {
 
-public static void main(String[] args) {
-	Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 202");
-	shell.setLayout (new FillLayout());
-	final Tree tree = new Tree(shell, SWT.VIRTUAL | SWT.BORDER);
-	tree.addListener(SWT.SetData, event -> {
-		TreeItem item = (TreeItem)event.item;
-		TreeItem parentItem = item.getParentItem();
-		String text = null;
-		if (parentItem == null) {
-			text = "node "+tree.indexOf(item);
-		} else {
-			text = parentItem.getText()+" - "+parentItem.indexOf(item);
-		}
-		item.setText(text);
-		item.setItemCount(10);
-	});
-	tree.setItemCount(20);
-	shell.setSize(400, 300);
-	shell.open();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 202");
+        shell.setLayout(new FillLayout());
+        final Tree tree = new Tree(shell, SWT.VIRTUAL | SWT.BORDER);
+        tree.addListener(SWT.SetData, event -> {
+            TreeItem item = (TreeItem) event.item;
+            TreeItem parentItem = item.getParentItem();
+            String text = null;
+            if (parentItem == null) {
+                text = "node " + tree.indexOf(item);
+            } else {
+                text = parentItem.getText() + " - " + parentItem.indexOf(item);
+            }
+            item.setText(text);
+            item.setItemCount(10);
+        });
+        tree.setItemCount(20);
+        shell.setSize(400, 300);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

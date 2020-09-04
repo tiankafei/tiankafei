@@ -14,113 +14,125 @@
 package org.eclipse.swt.examples.paint;
 
 
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.resource.*;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.part.*;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.part.ViewPart;
 
 /**
  * The view for the paint application.
  * All rendering happens inside the area created by createPartControl().
- * 
+ *
  * @see ViewPart
  */
 public class PaintView extends ViewPart {
-	PaintExample instance = null;
+    PaintExample instance = null;
 
-	/**
-	 * Constructs a Paint view.
-	 */
-	public PaintView() {
-	}
+    /**
+     * Constructs a Paint view.
+     */
+    public PaintView() {
+    }
 
-	/**
-	 * Creates the example.
-	 * 
-	 * @see ViewPart#createPartControl
-	 */
-	@Override
-	public void createPartControl(Composite parent) {
-		instance = new PaintExample(parent);
-		instance.createGUI(parent);
+    /**
+     * Creates the example.
+     *
+     * @see ViewPart#createPartControl
+     */
+    @Override
+    public void createPartControl(Composite parent) {
+        instance = new PaintExample(parent);
+        instance.createGUI(parent);
 
-		/*** Add toolbar contributions ***/
-		final IActionBars actionBars = getViewSite().getActionBars();
-		IToolBarManager toolbarManager = actionBars.getToolBarManager();
-		Tool tools[] = PaintExample.tools;
-		String group = tools[0].group;
-		toolbarManager.add(new GroupMarker(group));
-		for (int i = 0; i < tools.length; i++) {
-			Tool tool = tools[i];
-			if (!tool.group.equals(group)) {
-				toolbarManager.add(new Separator());
-				toolbarManager.add(new GroupMarker(tool.group));
-			}
-			group = tool.group;
-			PaintAction action = new PaintAction(tool);
-			toolbarManager.appendToGroup(group, action);
-			if (i == PaintExample.Default_tool || i == PaintExample.Default_fill || i == PaintExample.Default_linestyle) {
-				action.setChecked(true);
-			}
-		}
-		actionBars.updateActionBars();
+        /*** Add toolbar contributions ***/
+        final IActionBars actionBars = getViewSite().getActionBars();
+        IToolBarManager toolbarManager = actionBars.getToolBarManager();
+        Tool tools[] = PaintExample.tools;
+        String group = tools[0].group;
+        toolbarManager.add(new GroupMarker(group));
+        for (int i = 0; i < tools.length; i++) {
+            Tool tool = tools[i];
+            if (!tool.group.equals(group)) {
+                toolbarManager.add(new Separator());
+                toolbarManager.add(new GroupMarker(tool.group));
+            }
+            group = tool.group;
+            PaintAction action = new PaintAction(tool);
+            toolbarManager.appendToGroup(group, action);
+            if (i == PaintExample.Default_tool || i == PaintExample.Default_fill || i == PaintExample.Default_linestyle) {
+                action.setChecked(true);
+            }
+        }
+        actionBars.updateActionBars();
 
-		instance.setDefaults();
-	}
+        instance.setDefaults();
+    }
 
-	/**
-	 * Called when the View is to be disposed
-	 */	
-	@Override
-	public void dispose() {
-		instance.dispose();
-		instance = null;
-		super.dispose();
-	}
-	
-	/**
-	 * Returns the Display.
-	 * 
-	 * @return the display we're using
-	 */
-	public Display getDisplay() {
-		return instance.getDisplay();
-	}
-	
-	/**
-	 * Called when we must grab focus.
-	 * 
-	 * @see ViewPart#setFocus
-	 */
-	@Override
-	public void setFocus() {
-		instance.setFocus();
-	}
+    /**
+     * Called when the View is to be disposed
+     */
+    @Override
+    public void dispose() {
+        instance.dispose();
+        instance = null;
+        super.dispose();
+    }
 
-	/**
-	 * Action set glue.
-	 */
-	class PaintAction extends Action {
-		private int style;
-		private Runnable action;
-		public PaintAction(Tool tool) {
-			super();
-			String id = tool.group + '.' + tool.name;
-			setId(id);
-			style = tool.type == SWT.RADIO ? IAction.AS_RADIO_BUTTON : IAction.AS_PUSH_BUTTON;
-			action = tool.action;
-			setText(PaintExample.getResourceString(id + ".label"));
-			setToolTipText(PaintExample.getResourceString(id + ".tooltip"));
-			setDescription(PaintExample.getResourceString(id + ".description"));
-			setImageDescriptor(ImageDescriptor.createFromFile(
-					PaintExample.class,
-					PaintExample.getResourceString(id + ".image")));
-		}
-		@Override
-		public int getStyle() { return style; }
-		@Override
-		public void run() { action.run(); }
-	}
+    /**
+     * Returns the Display.
+     *
+     * @return the display we're using
+     */
+    public Display getDisplay() {
+        return instance.getDisplay();
+    }
+
+    /**
+     * Called when we must grab focus.
+     *
+     * @see ViewPart#setFocus
+     */
+    @Override
+    public void setFocus() {
+        instance.setFocus();
+    }
+
+    /**
+     * Action set glue.
+     */
+    class PaintAction extends Action {
+        private int style;
+        private Runnable action;
+
+        public PaintAction(Tool tool) {
+            super();
+            String id = tool.group + '.' + tool.name;
+            setId(id);
+            style = tool.type == SWT.RADIO ? IAction.AS_RADIO_BUTTON : IAction.AS_PUSH_BUTTON;
+            action = tool.action;
+            setText(PaintExample.getResourceString(id + ".label"));
+            setToolTipText(PaintExample.getResourceString(id + ".tooltip"));
+            setDescription(PaintExample.getResourceString(id + ".description"));
+            setImageDescriptor(ImageDescriptor.createFromFile(
+                    PaintExample.class,
+                    PaintExample.getResourceString(id + ".image")));
+        }
+
+        @Override
+        public int getStyle() {
+            return style;
+        }
+
+        @Override
+        public void run() {
+            action.run();
+        }
+    }
 }

@@ -20,55 +20,63 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.browser.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.BrowserFunction;
+import org.eclipse.swt.browser.LocationAdapter;
+import org.eclipse.swt.browser.LocationEvent;
+import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet362 {
 
-public static void main(String [] args) {
-	final String SCRIPT = "document.onmousedown = function(e) {if (!e) {e = window.event;} if (e) {mouseDownHappened(e.clientX, e.clientY);}}";
-	Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 362");
-	shell.setLayout(new FillLayout());
-	final Browser browser;
-	try {
-		browser = new Browser(shell, SWT.NONE);
-	} catch (SWTError e) {
-		System.out.println("Could not instantiate Browser: " + e.getMessage());
-		display.dispose();
-		return;
-	}
-	browser.addProgressListener(ProgressListener.completedAdapter(event -> {
-		final BrowserFunction function = new CustomFunction(browser, "mouseDownHappened");
-		browser.execute(SCRIPT);
-		browser.addLocationListener(new LocationAdapter() {
-			@Override
-			public void changed(LocationEvent event) {
-				browser.removeLocationListener(this);
-				function.dispose();
-			}
-		});
-	}));
+    public static void main(String[] args) {
+        final String SCRIPT = "document.onmousedown = function(e) {if (!e) {e = window.event;} if (e) {mouseDownHappened(e.clientX, e.clientY);}}";
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 362");
+        shell.setLayout(new FillLayout());
+        final Browser browser;
+        try {
+            browser = new Browser(shell, SWT.NONE);
+        } catch (SWTError e) {
+            System.out.println("Could not instantiate Browser: " + e.getMessage());
+            display.dispose();
+            return;
+        }
+        browser.addProgressListener(ProgressListener.completedAdapter(event -> {
+            final BrowserFunction function = new CustomFunction(browser, "mouseDownHappened");
+            browser.execute(SCRIPT);
+            browser.addLocationListener(new LocationAdapter() {
+                @Override
+                public void changed(LocationEvent event) {
+                    browser.removeLocationListener(this);
+                    function.dispose();
+                }
+            });
+        }));
 
-	browser.setUrl("eclipse.org");
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+        browser.setUrl("eclipse.org");
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
-static class CustomFunction extends BrowserFunction {
-	CustomFunction (Browser browser, String name) {
-		super (browser, name);
-	}
-	@Override
-	public Object function (Object[] arguments) {
-		System.out.println ("mouseDown: " + ((Number)arguments[0]).intValue() + "," + ((Number)arguments[1]).intValue());
-		return null;
-	}
-}
+    static class CustomFunction extends BrowserFunction {
+        CustomFunction(Browser browser, String name) {
+            super(browser, name);
+        }
+
+        @Override
+        public Object function(Object[] arguments) {
+            System.out.println("mouseDown: " + ((Number) arguments[0]).intValue() + "," + ((Number) arguments[1]).intValue());
+            return null;
+        }
+    }
 }

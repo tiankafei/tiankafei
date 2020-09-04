@@ -21,38 +21,41 @@ package org.eclipse.swt.snippets;
  * http://www.eclipse.org/swt/snippets/
  */
 
-import static org.eclipse.swt.events.SelectionListener.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
 public class Snippet247 {
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 247");
-	shell.setLayout(new RowLayout());
-	Text text = new Text(shell, SWT.MULTI | SWT.BORDER);
-	String modifier = SWT.MOD1 == SWT.CTRL ? "Ctrl" : "Command";
-	text.setText("Hit " + modifier + "+Return\nto see\nthe default button\nrun");
-	text.addTraverseListener(e -> {
-		switch (e.detail) {
-			case SWT.TRAVERSE_RETURN:
-				if ((e.stateMask & SWT.MOD1) != 0) e.doit = true;
-		}
-	});
-	Button button = new Button (shell, SWT.PUSH);
-	button.pack();
-	button.setText("OK");
-	button.addSelectionListener(widgetSelectedAdapter(e->System.out.println("OK selected")));
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 247");
+        shell.setLayout(new RowLayout());
+        Text text = new Text(shell, SWT.MULTI | SWT.BORDER);
+        String modifier = SWT.MOD1 == SWT.CTRL ? "Ctrl" : "Command";
+        text.setText("Hit " + modifier + "+Return\nto see\nthe default button\nrun");
+        text.addTraverseListener(e -> {
+            switch (e.detail) {
+                case SWT.TRAVERSE_RETURN:
+                    if ((e.stateMask & SWT.MOD1) != 0) e.doit = true;
+            }
+        });
+        Button button = new Button(shell, SWT.PUSH);
+        button.pack();
+        button.setText("OK");
+        button.addSelectionListener(widgetSelectedAdapter(e -> System.out.println("OK selected")));
 
-	shell.setDefaultButton(button);
-	shell.pack ();
-	shell.open();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+        shell.setDefaultButton(button);
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

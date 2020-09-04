@@ -19,50 +19,56 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet115 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 115");
-	shell.setLayout (new RowLayout (SWT.VERTICAL));
-	Composite c1 = new Composite (shell, SWT.BORDER | SWT.NO_RADIO_GROUP);
-	c1.setLayout (new RowLayout ());
-	Composite c2 = new Composite (shell, SWT.BORDER | SWT.NO_RADIO_GROUP);
-	c2.setLayout (new RowLayout ());
-	final Composite [] composites = new Composite [] {c1, c2};
-	Listener radioGroup = event -> {
-		for (Composite composite : composites) {
-			Control [] children = composite.getChildren ();
-			for (Control child : children) {
-				if (child instanceof Button) {
-					Button button1 = (Button) child;
-					if ((button1.getStyle () & SWT.RADIO) != 0) button1.setSelection (false);
-				}
-			}
-		}
-		Button button2 = (Button) event.widget;
-		button2.setSelection (true);
-	};
-	for (int i=0; i<4; i++) {
-		Button button = new Button (c1, SWT.RADIO);
-		button.setText ("Button " + i);
-		button.addListener (SWT.Selection, radioGroup);
-	}
-	for (int i=0; i<4; i++) {
-		Button button = new Button (c2, SWT.RADIO);
-		button.setText ("Button " + (i + 4));
-		button.addListener (SWT.Selection, radioGroup);
-	}
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 115");
+        shell.setLayout(new RowLayout(SWT.VERTICAL));
+        Composite c1 = new Composite(shell, SWT.BORDER | SWT.NO_RADIO_GROUP);
+        c1.setLayout(new RowLayout());
+        Composite c2 = new Composite(shell, SWT.BORDER | SWT.NO_RADIO_GROUP);
+        c2.setLayout(new RowLayout());
+        final Composite[] composites = new Composite[]{c1, c2};
+        Listener radioGroup = event -> {
+            for (Composite composite : composites) {
+                Control[] children = composite.getChildren();
+                for (Control child : children) {
+                    if (child instanceof Button) {
+                        Button button1 = (Button) child;
+                        if ((button1.getStyle() & SWT.RADIO) != 0) button1.setSelection(false);
+                    }
+                }
+            }
+            Button button2 = (Button) event.widget;
+            button2.setSelection(true);
+        };
+        for (int i = 0; i < 4; i++) {
+            Button button = new Button(c1, SWT.RADIO);
+            button.setText("Button " + i);
+            button.addListener(SWT.Selection, radioGroup);
+        }
+        for (int i = 0; i < 4; i++) {
+            Button button = new Button(c2, SWT.RADIO);
+            button.setText("Button " + (i + 4));
+            button.addListener(SWT.Selection, radioGroup);
+        }
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

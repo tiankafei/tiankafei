@@ -19,27 +19,30 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet99 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	final Shell shell = new Shell (display);
-	shell.setText("Snippet 99");
-	shell.addListener (SWT.Close, event -> {
-		int style = SWT.APPLICATION_MODAL | SWT.YES | SWT.NO;
-		MessageBox messageBox = new MessageBox (shell, style);
-		messageBox.setText ("Information");
-		messageBox.setMessage ("Close the shell?");
-		event.doit = messageBox.open () == SWT.YES;
-	});
-	shell.pack ();
-	shell.open();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 99");
+        shell.addListener(SWT.Close, event -> {
+            int style = SWT.APPLICATION_MODAL | SWT.YES | SWT.NO;
+            MessageBox messageBox = new MessageBox(shell, style);
+            messageBox.setText("Information");
+            messageBox.setMessage("Close the shell?");
+            event.doit = messageBox.open() == SWT.YES;
+        });
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

@@ -21,42 +21,49 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.2
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolTip;
+import org.eclipse.swt.widgets.Tray;
+import org.eclipse.swt.widgets.TrayItem;
 
 public class Snippet225 {
 
-public static void main(String[] args) {
-	Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 225");
-	Image image = null;
-	final ToolTip tip = new ToolTip(shell, SWT.BALLOON | SWT.ICON_INFORMATION);
-	tip.setMessage("Here is a message for the user. When the message is too long it wraps. I should say something cool but nothing comes to my mind.");
-	Tray tray = display.getSystemTray();
-	if (tray != null) {
-		TrayItem item = new TrayItem(tray, SWT.NONE);
-		image = display.getSystemImage(SWT.ICON_INFORMATION);
-		item.setImage(image);
-		tip.setText("Notification from a tray item");
-		item.setToolTip(tip);
-	} else {
-		tip.setText("Notification from anywhere");
-		tip.setLocation(400, 400);
-	}
-	Button button = new Button (shell, SWT.PUSH);
-	button.setText("Press for balloon tip");
-	button.addListener(SWT.Selection, event -> tip.setVisible(true));
-	Rectangle clientArea = shell.getClientArea();
-	button.setLocation(clientArea.x, clientArea.y);
-	button.pack();
-	shell.setBounds(50, 50, 300, 200);
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	if (image != null) image.dispose();
-	display.dispose();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 225");
+        Image image = null;
+        final ToolTip tip = new ToolTip(shell, SWT.BALLOON | SWT.ICON_INFORMATION);
+        tip.setMessage("Here is a message for the user. When the message is too long it wraps. I should say something cool but nothing comes to my mind.");
+        Tray tray = display.getSystemTray();
+        if (tray != null) {
+            TrayItem item = new TrayItem(tray, SWT.NONE);
+            image = display.getSystemImage(SWT.ICON_INFORMATION);
+            item.setImage(image);
+            tip.setText("Notification from a tray item");
+            item.setToolTip(tip);
+        } else {
+            tip.setText("Notification from anywhere");
+            tip.setLocation(400, 400);
+        }
+        Button button = new Button(shell, SWT.PUSH);
+        button.setText("Press for balloon tip");
+        button.addListener(SWT.Selection, event -> tip.setVisible(true));
+        Rectangle clientArea = shell.getClientArea();
+        button.setLocation(clientArea.x, clientArea.y);
+        button.pack();
+        shell.setBounds(50, 50, 300, 200);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        if (image != null) image.dispose();
+        display.dispose();
+    }
 }

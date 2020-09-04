@@ -13,15 +13,22 @@
  *******************************************************************************/
 package org.eclipse.swt.snippets;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.GlyphMetrics;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * StyledText snippet: embed images
- *
+ * <p>
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  *
@@ -29,91 +36,91 @@ import org.eclipse.swt.widgets.*;
  */
 public class Snippet212 {
 
-	static StyledText styledText;
-	static String text =
-		"This snippet shows how to embed images in a StyledText.\n"+
-		"Here is one: \uFFFC, and here is another: \uFFFC."+
-		"Use the add button to add an image from your filesystem to the StyledText at the current caret offset.";
+    static StyledText styledText;
+    static String text =
+            "This snippet shows how to embed images in a StyledText.\n" +
+                    "Here is one: \uFFFC, and here is another: \uFFFC." +
+                    "Use the add button to add an image from your filesystem to the StyledText at the current caret offset.";
 
-	static void addImage(Image image, int offset) {
-		StyleRange style = new StyleRange ();
-		style.start = offset;
-		style.length = 1;
-		style.data = image;
-		Rectangle rect = image.getBounds();
-		style.metrics = new GlyphMetrics(rect.height, 0, rect.width);
-		styledText.setStyleRange(style);
-	}
+    static void addImage(Image image, int offset) {
+        StyleRange style = new StyleRange();
+        style.start = offset;
+        style.length = 1;
+        style.data = image;
+        Rectangle rect = image.getBounds();
+        style.metrics = new GlyphMetrics(rect.height, 0, rect.width);
+        styledText.setStyleRange(style);
+    }
 
-	public static void main(String [] args) {
-		final Display display = new Display();
-		final Shell shell = new Shell(display);
-		shell.setText("Snippet 212");
-		shell.setLayout(new GridLayout());
-		styledText = new StyledText(shell, SWT.WRAP | SWT.BORDER);
-		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		styledText.setText(text);
-		int offset = text.indexOf("\uFFFC", 0);
-		addImage(display.getSystemImage(SWT.ICON_QUESTION), offset);
-		offset = text.indexOf("\uFFFC", offset + 1);
-		addImage(display.getSystemImage(SWT.ICON_INFORMATION), offset);
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 212");
+        shell.setLayout(new GridLayout());
+        styledText = new StyledText(shell, SWT.WRAP | SWT.BORDER);
+        styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        styledText.setText(text);
+        int offset = text.indexOf("\uFFFC", 0);
+        addImage(display.getSystemImage(SWT.ICON_QUESTION), offset);
+        offset = text.indexOf("\uFFFC", offset + 1);
+        addImage(display.getSystemImage(SWT.ICON_INFORMATION), offset);
 
-		// use a verify listener to dispose the images
-		styledText.addVerifyListener(event -> {
-			if (event.start == event.end) return;
-			String text = styledText.getText(event.start, event.end - 1);
-			int index = text.indexOf('\uFFFC');
-			while (index != -1) {
-				StyleRange style = styledText.getStyleRangeAtOffset(event.start + index);
-				if (style != null) {
-					Image image = (Image)style.data;
-					if (image != null) image.dispose();
-				}
-				index = text.indexOf('\uFFFC', index + 1);
-			}
-		});
-		// draw images on paint event
-		styledText.addPaintObjectListener(event -> {
-			StyleRange style = event.style;
-			Image image = (Image)style.data;
-			if (!image.isDisposed()) {
-				int x = event.x;
-				int y = event.y + event.ascent - style.metrics.ascent;
-				event.gc.drawImage(image, x, y);
-			}
-		});
-		styledText.addListener(SWT.Dispose, event -> {
-			StyleRange[] styles = styledText.getStyleRanges();
-			for (StyleRange style : styles) {
-				if (style.data != null) {
-					Image image = (Image)style.data;
-					if (image != null) image.dispose();
-				}
-			}
-		});
-		Button button = new Button (shell, SWT.PUSH);
-		button.setText("Add Image");
-		button.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
-		button.addListener(SWT.Selection, event -> {
-			FileDialog dialog = new FileDialog(shell);
-			String filename = dialog.open();
-			if (filename != null) {
-				try {
-					Image image = new Image(display, filename);
-					int offset1 = styledText.getCaretOffset();
-					styledText.replaceTextRange(offset1, 0, "\uFFFC");
-					addImage(image, offset1);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		shell.setSize(400, 400);
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+        // use a verify listener to dispose the images
+        styledText.addVerifyListener(event -> {
+            if (event.start == event.end) return;
+            String text = styledText.getText(event.start, event.end - 1);
+            int index = text.indexOf('\uFFFC');
+            while (index != -1) {
+                StyleRange style = styledText.getStyleRangeAtOffset(event.start + index);
+                if (style != null) {
+                    Image image = (Image) style.data;
+                    if (image != null) image.dispose();
+                }
+                index = text.indexOf('\uFFFC', index + 1);
+            }
+        });
+        // draw images on paint event
+        styledText.addPaintObjectListener(event -> {
+            StyleRange style = event.style;
+            Image image = (Image) style.data;
+            if (!image.isDisposed()) {
+                int x = event.x;
+                int y = event.y + event.ascent - style.metrics.ascent;
+                event.gc.drawImage(image, x, y);
+            }
+        });
+        styledText.addListener(SWT.Dispose, event -> {
+            StyleRange[] styles = styledText.getStyleRanges();
+            for (StyleRange style : styles) {
+                if (style.data != null) {
+                    Image image = (Image) style.data;
+                    if (image != null) image.dispose();
+                }
+            }
+        });
+        Button button = new Button(shell, SWT.PUSH);
+        button.setText("Add Image");
+        button.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+        button.addListener(SWT.Selection, event -> {
+            FileDialog dialog = new FileDialog(shell);
+            String filename = dialog.open();
+            if (filename != null) {
+                try {
+                    Image image = new Image(display, filename);
+                    int offset1 = styledText.getCaretOffset();
+                    styledText.replaceTextRange(offset1, 0, "\uFFFC");
+                    addImage(image, offset1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        shell.setSize(400, 400);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

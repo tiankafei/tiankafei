@@ -13,49 +13,49 @@
  *******************************************************************************/
 package org.eclipse.swt.examples.layouts;
 
- 
-import org.eclipse.swt.examples.layoutexample.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.part.*;
+
+import org.eclipse.swt.examples.layoutexample.LayoutExample;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
 
 /**
  * <code>Layouts</code> is a simple demonstration
  * of the layouts defined by SWT.  It consists of a workbench
  * view and tab folder where each tab in the folder allows the
  * user to interact with a layout.
- * 
+ *
  * @see ViewPart
  */
 public class LayoutView extends ViewPart {
-	LayoutExample instance = null;
-	
-	/**
-	 * Create the example
-	 * 
-	 * @see ViewPart#createPartControl
-	 */
-	@Override
-	public void createPartControl(Composite frame) {
-		instance = new LayoutExample(frame);
-	}
+    LayoutExample instance = null;
 
-	/**
-	 * Called when we must grab focus.
-	 * 
-	 * @see ViewPart#setFocus
-	 */
-	@Override
-	public void setFocus() {
-		instance.setFocus();
-	}
+    /**
+     * Create the example
+     *
+     * @see ViewPart#createPartControl
+     */
+    @Override
+    public void createPartControl(Composite frame) {
+        instance = new LayoutExample(frame);
+    }
 
-	/**
-	 * Called when the View is to be disposed
-	 */	
-	@Override
-	public void dispose() {
-		instance.dispose();
-		instance = null;
-		super.dispose();
-	}
+    /**
+     * Called when we must grab focus.
+     *
+     * @see ViewPart#setFocus
+     */
+    @Override
+    public void setFocus() {
+        instance.setFocus();
+    }
+
+    /**
+     * Called when the View is to be disposed
+     */
+    @Override
+    public void dispose() {
+        instance.dispose();
+        instance = null;
+        super.dispose();
+    }
 }

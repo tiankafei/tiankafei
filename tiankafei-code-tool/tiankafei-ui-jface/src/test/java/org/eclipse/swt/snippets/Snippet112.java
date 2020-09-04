@@ -19,38 +19,44 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet112 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	final Image image = new Image (display, 20, 20);
-	Color color = display.getSystemColor (SWT.COLOR_RED);
-	GC gc = new GC (image);
-	gc.setBackground (color);
-	gc.fillRectangle (image.getBounds ());
-	gc.dispose ();
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Image image = new Image(display, 20, 20);
+        Color color = display.getSystemColor(SWT.COLOR_RED);
+        GC gc = new GC(image);
+        gc.setBackground(color);
+        gc.fillRectangle(image.getBounds());
+        gc.dispose();
 
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 112");
-	shell.setLayout (new FillLayout ());
-	Group group = new Group (shell, SWT.NONE);
-	group.setLayout (new FillLayout ());
-	group.setText ("a square");
-	Canvas canvas = new Canvas (group, SWT.NONE);
-	canvas.addPaintListener (e -> e.gc.drawImage (image, 0, 0));
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 112");
+        shell.setLayout(new FillLayout());
+        Group group = new Group(shell, SWT.NONE);
+        group.setLayout(new FillLayout());
+        group.setText("a square");
+        Canvas canvas = new Canvas(group, SWT.NONE);
+        canvas.addPaintListener(e -> e.gc.drawImage(image, 0, 0));
 
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ())
-			display.sleep ();
-	}
-	image.dispose ();
-	display.dispose ();
-}
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        image.dispose();
+        display.dispose();
+    }
 }

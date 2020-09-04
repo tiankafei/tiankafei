@@ -13,9 +13,12 @@
  *******************************************************************************/
 package org.eclipse.swt.snippets;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /*
  * Exclude a widget from a GridLayout
@@ -28,47 +31,47 @@ import org.eclipse.swt.widgets.*;
 
 public class Snippet175 {
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
-	Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 175");
-	shell.setLayout(new GridLayout(3, false));
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 175");
+        shell.setLayout(new GridLayout(3, false));
 
-	Button b = new Button(shell, SWT.PUSH);
-	b.setText("Button 0");
+        Button b = new Button(shell, SWT.PUSH);
+        b.setText("Button 0");
 
-	final Button bHidden = new Button(shell, SWT.PUSH);
-	bHidden.setText("Button 1");
-	GridData data = new GridData();
-	data.exclude = true;
-	data.horizontalSpan = 2;
-	data.horizontalAlignment = SWT.FILL;
-	bHidden.setLayoutData(data);
+        final Button bHidden = new Button(shell, SWT.PUSH);
+        bHidden.setText("Button 1");
+        GridData data = new GridData();
+        data.exclude = true;
+        data.horizontalSpan = 2;
+        data.horizontalAlignment = SWT.FILL;
+        bHidden.setLayoutData(data);
 
-	b = new Button(shell, SWT.PUSH);
-	b.setText("Button 2");
-	b = new Button(shell, SWT.PUSH);
-	b.setText("Button 3");
-	b = new Button(shell, SWT.PUSH);
-	b.setText("Button 4");
+        b = new Button(shell, SWT.PUSH);
+        b.setText("Button 2");
+        b = new Button(shell, SWT.PUSH);
+        b.setText("Button 3");
+        b = new Button(shell, SWT.PUSH);
+        b.setText("Button 4");
 
-	b = new Button(shell, SWT.CHECK);
-	b.setText("hide");
-	b.setSelection(true);
-	b.addListener(SWT.Selection, e -> {
-		Button b1 = (Button) e.widget;
-		GridData data1 = (GridData) bHidden.getLayoutData();
-		data1.exclude = b1.getSelection();
-		bHidden.setVisible(!data1.exclude);
-		shell.layout(false);
-	});
-	shell.setSize(400, 400);
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch())
-			display.sleep();
-	}
-	display.dispose();
-}
+        b = new Button(shell, SWT.CHECK);
+        b.setText("hide");
+        b.setSelection(true);
+        b.addListener(SWT.Selection, e -> {
+            Button b1 = (Button) e.widget;
+            GridData data1 = (GridData) bHidden.getLayoutData();
+            data1.exclude = b1.getSelection();
+            bHidden.setVisible(!data1.exclude);
+            shell.layout(false);
+        });
+        shell.setSize(400, 400);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

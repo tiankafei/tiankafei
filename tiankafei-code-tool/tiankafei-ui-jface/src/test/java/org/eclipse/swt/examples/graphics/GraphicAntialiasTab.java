@@ -34,104 +34,104 @@ import org.eclipse.swt.widgets.Menu;
  */
 public class GraphicAntialiasTab extends GraphicsTab {
 
-	Combo aliasCombo;
-	int[] aliasValues = { SWT.OFF, SWT.DEFAULT, SWT.ON };
+    Combo aliasCombo;
+    int[] aliasValues = {SWT.OFF, SWT.DEFAULT, SWT.ON};
 
-	Button colorButton;
-	Menu menu;
-	GraphicsBackground ovalColorGB;
+    Button colorButton;
+    Menu menu;
+    GraphicsBackground ovalColorGB;
 
 
-public GraphicAntialiasTab(GraphicsExample example) {
-	super(example);
-}
+    public GraphicAntialiasTab(GraphicsExample example) {
+        super(example);
+    }
 
-@Override
-public String getCategory() {
-	return GraphicsExample.getResourceString("Antialiasing"); //$NON-NLS-1$
-}
+    @Override
+    public String getCategory() {
+        return GraphicsExample.getResourceString("Antialiasing"); //$NON-NLS-1$
+    }
 
-@Override
-public String getText() {
-	return GraphicsExample.getResourceString("Graphics"); //$NON-NLS-1$
-}
+    @Override
+    public String getText() {
+        return GraphicsExample.getResourceString("Graphics"); //$NON-NLS-1$
+    }
 
-@Override
-public String getDescription() {
-	return GraphicsExample.getResourceString("AntialiasingGraphicsDesc"); //$NON-NLS-1$
-}
+    @Override
+    public String getDescription() {
+        return GraphicsExample.getResourceString("AntialiasingGraphicsDesc"); //$NON-NLS-1$
+    }
 
-@Override
-public void dispose() {
-	if (menu != null) {
-		menu.dispose();
-		menu = null;
-	}
-}
+    @Override
+    public void dispose() {
+        if (menu != null) {
+            menu.dispose();
+            menu = null;
+        }
+    }
 
-@Override
-public void createControlPanel(Composite parent) {
+    @Override
+    public void createControlPanel(Composite parent) {
 
-	Composite comp;
+        Composite comp;
 
-	// create drop down combo for antialiasing
-	comp = new Composite(parent, SWT.NONE);
-	comp.setLayout(new GridLayout(2, false));
-	new Label(comp, SWT.CENTER).setText(GraphicsExample
-			.getResourceString("Antialiasing")); //$NON-NLS-1$
-	aliasCombo = new Combo(comp, SWT.DROP_DOWN);
-	aliasCombo.add("OFF");
-	aliasCombo.add("DEFAULT");
-	aliasCombo.add("ON");
-	aliasCombo.select(0);
-	aliasCombo.addListener(SWT.Selection, event -> example.redraw());
+        // create drop down combo for antialiasing
+        comp = new Composite(parent, SWT.NONE);
+        comp.setLayout(new GridLayout(2, false));
+        new Label(comp, SWT.CENTER).setText(GraphicsExample
+                .getResourceString("Antialiasing")); //$NON-NLS-1$
+        aliasCombo = new Combo(comp, SWT.DROP_DOWN);
+        aliasCombo.add("OFF");
+        aliasCombo.add("DEFAULT");
+        aliasCombo.add("ON");
+        aliasCombo.select(0);
+        aliasCombo.addListener(SWT.Selection, event -> example.redraw());
 
-	ColorMenu cm = new ColorMenu();
-	cm.setColorItems(true);
-	menu = cm.createMenu(parent.getParent(), gb -> {
-		ovalColorGB = gb;
-		colorButton.setImage(gb.getThumbNail());
-		example.redraw();
-	});
+        ColorMenu cm = new ColorMenu();
+        cm.setColorItems(true);
+        menu = cm.createMenu(parent.getParent(), gb -> {
+            ovalColorGB = gb;
+            colorButton.setImage(gb.getThumbNail());
+            example.redraw();
+        });
 
-	// create color button
-	comp = new Composite(parent, SWT.NONE);
-	comp.setLayout(new GridLayout());
+        // create color button
+        comp = new Composite(parent, SWT.NONE);
+        comp.setLayout(new GridLayout());
 
-	// initialize the background to the 5th item in the menu (blue)
-	ovalColorGB = (GraphicsBackground)menu.getItem(4).getData();
+        // initialize the background to the 5th item in the menu (blue)
+        ovalColorGB = (GraphicsBackground) menu.getItem(4).getData();
 
-	// color button
-	colorButton = new Button(comp, SWT.PUSH);
-	colorButton.setText(GraphicsExample.getResourceString("Color")); //$NON-NLS-1$
-	colorButton.setImage(ovalColorGB.getThumbNail());
-	colorButton.addListener(SWT.Selection, event -> {
-		final Button button = (Button) event.widget;
-		final Composite parent1 = button.getParent();
-		Rectangle bounds = button.getBounds();
-		Point point = parent1.toDisplay(new Point(bounds.x, bounds.y));
-		menu.setLocation(point.x, point.y + bounds.height);
-		menu.setVisible(true);
-	});
-}
+        // color button
+        colorButton = new Button(comp, SWT.PUSH);
+        colorButton.setText(GraphicsExample.getResourceString("Color")); //$NON-NLS-1$
+        colorButton.setImage(ovalColorGB.getThumbNail());
+        colorButton.addListener(SWT.Selection, event -> {
+            final Button button = (Button) event.widget;
+            final Composite parent1 = button.getParent();
+            Rectangle bounds = button.getBounds();
+            Point point = parent1.toDisplay(new Point(bounds.x, bounds.y));
+            menu.setLocation(point.x, point.y + bounds.height);
+            menu.setVisible(true);
+        });
+    }
 
-@Override
-public void paint(GC gc, int width, int height) {
-	if (!example.checkAdvancedGraphics()) return;
-	Device device = gc.getDevice();
+    @Override
+    public void paint(GC gc, int width, int height) {
+        if (!example.checkAdvancedGraphics()) return;
+        Device device = gc.getDevice();
 
-	if (ovalColorGB != null && ovalColorGB.getBgColor1() != null)
-		gc.setBackground(ovalColorGB.getBgColor1());
+        if (ovalColorGB != null && ovalColorGB.getBgColor1() != null)
+            gc.setBackground(ovalColorGB.getBgColor1());
 
-	gc.setAntialias(aliasValues[aliasCombo.getSelectionIndex()]);
+        gc.setAntialias(aliasValues[aliasCombo.getSelectionIndex()]);
 
-	Path path = new Path(device);
-	float offsetX = 2*width/3f, offsetY = height/3f;
-	for(int i=0; i < 25; i++) {
-		path.addArc(offsetX-(50*i), offsetY-(25*i), 50+(100*i), 25+(50*i), 0, 360);
-	}
-	gc.fillPath(path);
-	path.dispose();
-}
+        Path path = new Path(device);
+        float offsetX = 2 * width / 3f, offsetY = height / 3f;
+        for (int i = 0; i < 25; i++) {
+            path.addArc(offsetX - (50 * i), offsetY - (25 * i), 50 + (100 * i), 25 + (50 * i), 0, 360);
+        }
+        gc.fillPath(path);
+        path.dispose();
+    }
 }
 

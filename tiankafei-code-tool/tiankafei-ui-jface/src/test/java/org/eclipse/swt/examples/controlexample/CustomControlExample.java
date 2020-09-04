@@ -13,50 +13,52 @@
  *******************************************************************************/
 package org.eclipse.swt.examples.controlexample;
 
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 
 public class CustomControlExample extends ControlExample {
 
-	/**
-	 * Creates an instance of a CustomControlExample embedded
-	 * inside the supplied parent Composite.
-	 *
-	 * @param parent the container of the example
-	 */
-	public CustomControlExample(Composite parent) {
-		super (parent);
-	}
+    /**
+     * Creates an instance of a CustomControlExample embedded
+     * inside the supplied parent Composite.
+     *
+     * @param parent the container of the example
+     */
+    public CustomControlExample(Composite parent) {
+        super(parent);
+    }
 
-	/**
-	 * Answers the set of example Tabs
-	 */
-	@Override
-	Tab[] createTabs() {
-		return new Tab [] {
-			new CComboTab (this),
-			new CLabelTab (this),
-			new CTabFolderTab (this),
-			new SashFormTab (this),
-			new StyledTextTab (this),
-		};
-	}
+    /**
+     * Answers the set of example Tabs
+     */
+    @Override
+    Tab[] createTabs() {
+        return new Tab[]{
+                new CComboTab(this),
+                new CLabelTab(this),
+                new CTabFolderTab(this),
+                new SashFormTab(this),
+                new StyledTextTab(this),
+        };
+    }
 
-	/**
-	 * Invokes as a standalone program.
-	 */
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setLayout(new FillLayout());
-		CustomControlExample instance = new CustomControlExample(shell);
-		shell.setText(getResourceString("custom.window.title"));
-		setShellSize(instance, shell);
-		shell.open();
-		while (! shell.isDisposed()) {
-			if (! display.readAndDispatch()) display.sleep();
-		}
-		instance.dispose();
-	}
+    /**
+     * Invokes as a standalone program.
+     */
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setLayout(new FillLayout());
+        CustomControlExample instance = new CustomControlExample(shell);
+        shell.setText(getResourceString("custom.window.title"));
+        setShellSize(instance, shell);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        instance.dispose();
+    }
 }

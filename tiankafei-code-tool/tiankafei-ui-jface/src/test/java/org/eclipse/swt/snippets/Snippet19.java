@@ -20,32 +20,35 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet19 {
 
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 19");
-		Text text = new Text(shell, SWT.BORDER | SWT.V_SCROLL);
-		Rectangle clientArea = shell.getClientArea();
-		text.setBounds(clientArea.x + 10, clientArea.y + 10, 200, 200);
-		text.addVerifyListener(Snippet19::ensureTextContainsOnlyDigits);
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 19");
+        Text text = new Text(shell, SWT.BORDER | SWT.V_SCROLL);
+        Rectangle clientArea = shell.getClientArea();
+        text.setBounds(clientArea.x + 10, clientArea.y + 10, 200, 200);
+        text.addVerifyListener(Snippet19::ensureTextContainsOnlyDigits);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 
-	private static void ensureTextContainsOnlyDigits(VerifyEvent e) {
-		String string = e.text;
-		e.doit = string.matches("\\d*");
-		return;
-	}
+    private static void ensureTextContainsOnlyDigits(VerifyEvent e) {
+        String string = e.text;
+        e.doit = string.matches("\\d*");
+        return;
+    }
 }

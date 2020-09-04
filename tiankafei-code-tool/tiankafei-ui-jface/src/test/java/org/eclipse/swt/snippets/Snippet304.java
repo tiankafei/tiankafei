@@ -20,68 +20,74 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet304 {
-	static Display display = null;
+    static Display display = null;
 
-	public static void main(String[] args) {
-		display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 304");
+    public static void main(String[] args) {
+        display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 304");
 
-		shell.setLayout(new GridLayout());
-		Text text = new Text(shell, SWT.MULTI | SWT.BORDER);
-		text.setText("< cursor was there\na\nmulti\nline\ntext\nnow it's here >");
+        shell.setLayout(new GridLayout());
+        Text text = new Text(shell, SWT.MULTI | SWT.BORDER);
+        text.setText("< cursor was there\na\nmulti\nline\ntext\nnow it's here >");
 
-		text.addKeyListener(new KeyListener() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				System.out.println("KeyDown " + e);
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-				System.out.println("KeyUp   " + e);
-			}
-		});
+        text.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println("KeyDown " + e);
+            }
 
-		shell.pack();
-		shell.open();
+            @Override
+            public void keyReleased(KeyEvent e) {
+                System.out.println("KeyUp   " + e);
+            }
+        });
 
-		/*
-		* Simulate the (platform specific) key sequence
-		* to move the I-beam to the end of a text control.
-		*/
-		new Thread(){
-			@Override
-			public void run(){
-				int key = SWT.END;
-				String platform = SWT.getPlatform();
-				if (platform.equals("cocoa") ) {
-					key = SWT.ARROW_DOWN;
-				}
-				postEvent(SWT.MOD1, SWT.KeyDown);
-				postEvent(key, SWT.KeyDown);
-				postEvent(key, SWT.KeyUp);
-				postEvent(SWT.MOD1, SWT.KeyUp);
-			}
-		}.start();
+        shell.pack();
+        shell.open();
 
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
-	}
+        /*
+         * Simulate the (platform specific) key sequence
+         * to move the I-beam to the end of a text control.
+         */
+        new Thread() {
+            @Override
+            public void run() {
+                int key = SWT.END;
+                String platform = SWT.getPlatform();
+                if (platform.equals("cocoa")) {
+                    key = SWT.ARROW_DOWN;
+                }
+                postEvent(SWT.MOD1, SWT.KeyDown);
+                postEvent(key, SWT.KeyDown);
+                postEvent(key, SWT.KeyUp);
+                postEvent(SWT.MOD1, SWT.KeyUp);
+            }
+        }.start();
 
-	public static void postEvent(int keyCode, int type) {
-		Event event = new Event();
-		event.type = type;
-		event.keyCode = keyCode;
-		display.post(event);
-	}
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+        display.dispose();
+    }
+
+    public static void postEvent(int keyCode, int type) {
+        Event event = new Event();
+        event.type = type;
+        event.keyCode = keyCode;
+        display.post(event);
+    }
 }

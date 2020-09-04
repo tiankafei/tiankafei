@@ -22,87 +22,90 @@ package org.eclipse.swt.snippets;
  *    String source = String.valueOf(buffer);
  * in order to run all of the Table and Tree Snippets.
  */
-import java.io.*;
-import java.lang.reflect.*;
 
-import org.eclipse.swt.*;
+import java.io.File;
+import java.io.FileReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import org.eclipse.swt.SWT;
 
 public class SnippetLauncher {
 
-	public static void main (String [] args) {
-		File sourceDir = SnippetsConfig.SNIPPETS_SOURCE_DIR;
-		boolean hasSource = sourceDir.exists();
-		int count = 500;
-		if (hasSource) {
-			File [] files = sourceDir.listFiles();
-			if (files.length > 0) count = files.length;
-		}
-		for (int i = 1; i < count; i++) {
-			if (SnippetsConfig.isPrintingSnippet(i)) continue; // avoid printing to printer
-			String className = "Snippet" + i;
-			Class<?> clazz = null;
-			try {
-				clazz = Class.forName(SnippetsConfig.SNIPPETS_PACKAGE + "." + className);
-			} catch (ClassNotFoundException e) {}
-			if (clazz != null) {
-				System.out.println("\n" + clazz.getName());
-				if (hasSource) {
-					File sourceFile = new File(sourceDir, className + ".java");
-					try (FileReader reader = new FileReader(sourceFile);){
-						char [] buffer = new char [(int)sourceFile.length()];
-						reader.read(buffer);
-						String source = String.valueOf(buffer);
-						int start = source.indexOf("package");
-						start = source.indexOf("/*", start);
-						int end = source.indexOf("* For a list of all");
-						System.out.println(source.substring(start, end-3));
-						boolean skip = false;
-						String platform = SWT.getPlatform();
-						if (source.contains("PocketPC")) {
-							platform = "PocketPC";
-							skip = true;
-						} else if (source.contains("OpenGL")) {
-							platform = "OpenGL";
-							skip = true;
-						} else if (source.contains("JavaXPCOM")) {
-							platform = "JavaXPCOM";
-							skip = true;
-						} else {
-							String [] platforms = {"win32", "gtk"};
-							for (String platformId : platforms) {
-								if (!platformId.equals(platform) && source.contains("." + platformId)) {
-									platform = platformId;
-									skip = true;
-									break;
-								}
-							}
-						}
-						if (skip) {
-							System.out.println("...skipping " + platform + " example...");
-							continue;
-						}
-					} catch (Exception e) {
-					}
-				}
-				Method method = null;
-				String [] param = SnippetsConfig.getSnippetArguments(i);
-				try {
-					method = clazz.getMethod("main", param.getClass());
-				} catch (NoSuchMethodException e) {
-					System.out.println("   Did not find main(String [])");
-				}
-				if (method != null) {
-					try {
-						method.invoke(clazz, new Object [] {param});
-					} catch (IllegalAccessException e) {
-						System.out.println("   Failed to launch (illegal access)");
-					} catch (IllegalArgumentException e) {
-						System.out.println("   Failed to launch (illegal argument to main)");
-					} catch (InvocationTargetException e) {
-						System.out.println("   Exception in Snippet: " + e.getTargetException());
-					}
-				}
-			}
-		}
-	}
+    public static void main(String[] args) {
+        File sourceDir = SnippetsConfig.SNIPPETS_SOURCE_DIR;
+        boolean hasSource = sourceDir.exists();
+        int count = 500;
+        if (hasSource) {
+            File[] files = sourceDir.listFiles();
+            if (files.length > 0) count = files.length;
+        }
+        for (int i = 1; i < count; i++) {
+            if (SnippetsConfig.isPrintingSnippet(i)) continue; // avoid printing to printer
+            String className = "Snippet" + i;
+            Class<?> clazz = null;
+            try {
+                clazz = Class.forName(SnippetsConfig.SNIPPETS_PACKAGE + "." + className);
+            } catch (ClassNotFoundException e) {
+            }
+            if (clazz != null) {
+                System.out.println("\n" + clazz.getName());
+                if (hasSource) {
+                    File sourceFile = new File(sourceDir, className + ".java");
+                    try (FileReader reader = new FileReader(sourceFile);) {
+                        char[] buffer = new char[(int) sourceFile.length()];
+                        reader.read(buffer);
+                        String source = String.valueOf(buffer);
+                        int start = source.indexOf("package");
+                        start = source.indexOf("/*", start);
+                        int end = source.indexOf("* For a list of all");
+                        System.out.println(source.substring(start, end - 3));
+                        boolean skip = false;
+                        String platform = SWT.getPlatform();
+                        if (source.contains("PocketPC")) {
+                            platform = "PocketPC";
+                            skip = true;
+                        } else if (source.contains("OpenGL")) {
+                            platform = "OpenGL";
+                            skip = true;
+                        } else if (source.contains("JavaXPCOM")) {
+                            platform = "JavaXPCOM";
+                            skip = true;
+                        } else {
+                            String[] platforms = {"win32", "gtk"};
+                            for (String platformId : platforms) {
+                                if (!platformId.equals(platform) && source.contains("." + platformId)) {
+                                    platform = platformId;
+                                    skip = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (skip) {
+                            System.out.println("...skipping " + platform + " example...");
+                            continue;
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+                Method method = null;
+                String[] param = SnippetsConfig.getSnippetArguments(i);
+                try {
+                    method = clazz.getMethod("main", param.getClass());
+                } catch (NoSuchMethodException e) {
+                    System.out.println("   Did not find main(String [])");
+                }
+                if (method != null) {
+                    try {
+                        method.invoke(clazz, new Object[]{param});
+                    } catch (IllegalAccessException e) {
+                        System.out.println("   Failed to launch (illegal access)");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("   Failed to launch (illegal argument to main)");
+                    } catch (InvocationTargetException e) {
+                        System.out.println("   Exception in Snippet: " + e.getTargetException());
+                    }
+                }
+            }
+        }
+    }
 }

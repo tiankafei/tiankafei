@@ -19,57 +19,65 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tracker;
 
 public class Snippet31 {
 
-	static Tracker tracker = null;
-public static void main (String [] args) {
-	final Display display = new Display ();
-	final Shell shell = new Shell (display);
-	shell.setText("Snippet 31");
-	shell.setSize (200, 200);
-	shell.open ();
-	Listener listener = new Listener () {
-		Point point = null;
-		static final int JITTER = 8;
-		@Override
-		public void handleEvent (Event event) {
-			switch (event.type) {
-				case SWT.MouseDown:
-					point = new Point (event.x, event.y);
-					break;
-				case SWT.MouseMove:
-					if (point == null) return;
-					int deltaX = point.x - event.x, deltaY = point.y - event.y;
-					if (Math.abs (deltaX) < JITTER && Math.abs (deltaY) < JITTER) {
-						return;
-					}
-					tracker = new Tracker (display, SWT.NONE);
-					Rectangle rect = display.map (shell, null, shell.getClientArea ());
-					rect.x -= deltaX;
-					rect.y -= deltaY;
-					tracker.setRectangles (new Rectangle [] {rect});
-					tracker.open ();
-					//FALL THROUGH
-				case SWT.MouseUp:
-					point = null;
-					if (tracker != null) {
-						tracker.dispose ();
-						tracker = null;
-					}
-					break;
-			}
-		}
-	};
-	shell.addListener (SWT.MouseDown, listener);
-	shell.addListener (SWT.MouseMove, listener);
-	shell.addListener (SWT.MouseUp, listener);
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    static Tracker tracker = null;
+
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 31");
+        shell.setSize(200, 200);
+        shell.open();
+        Listener listener = new Listener() {
+            Point point = null;
+            static final int JITTER = 8;
+
+            @Override
+            public void handleEvent(Event event) {
+                switch (event.type) {
+                    case SWT.MouseDown:
+                        point = new Point(event.x, event.y);
+                        break;
+                    case SWT.MouseMove:
+                        if (point == null) return;
+                        int deltaX = point.x - event.x, deltaY = point.y - event.y;
+                        if (Math.abs(deltaX) < JITTER && Math.abs(deltaY) < JITTER) {
+                            return;
+                        }
+                        tracker = new Tracker(display, SWT.NONE);
+                        Rectangle rect = display.map(shell, null, shell.getClientArea());
+                        rect.x -= deltaX;
+                        rect.y -= deltaY;
+                        tracker.setRectangles(new Rectangle[]{rect});
+                        tracker.open();
+                        //FALL THROUGH
+                    case SWT.MouseUp:
+                        point = null;
+                        if (tracker != null) {
+                            tracker.dispose();
+                            tracker = null;
+                        }
+                        break;
+                }
+            }
+        };
+        shell.addListener(SWT.MouseDown, listener);
+        shell.addListener(SWT.MouseMove, listener);
+        shell.addListener(SWT.MouseUp, listener);
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

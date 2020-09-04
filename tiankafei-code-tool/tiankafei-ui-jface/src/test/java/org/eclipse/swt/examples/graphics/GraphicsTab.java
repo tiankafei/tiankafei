@@ -13,8 +13,8 @@
  *******************************************************************************/
 package org.eclipse.swt.examples.graphics;
 
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Composite;
 
 /**
  * This class is the one used for creating a graphic. Override the paint()
@@ -23,54 +23,54 @@ import org.eclipse.swt.widgets.*;
  */
 public abstract class GraphicsTab {
 
-GraphicsExample example;
+    GraphicsExample example;
 
-public GraphicsTab(GraphicsExample example) {
-	this.example = example;
-}
+    public GraphicsTab(GraphicsExample example) {
+        this.example = example;
+    }
 
-/**
- * Creates the widgets used to control the drawing.
- */
-public void createControlPanel(Composite parent) {
-}
+    /**
+     * Creates the widgets used to control the drawing.
+     */
+    public void createControlPanel(Composite parent) {
+    }
 
-/**
- * Disposes resources created by the receiver.
- */
-public void dispose() {
-}
+    /**
+     * Disposes resources created by the receiver.
+     */
+    public void dispose() {
+    }
 
-/**
- * Answer the receiver's name.
- */
-public abstract String getText();
+    /**
+     * Answer the receiver's name.
+     */
+    public abstract String getText();
 
-/**
- * Answer the receiver's category.
- */
-public String getCategory() {
-	return GraphicsExample.getResourceString("Misc"); //$NON-NLS-1$
-}
+    /**
+     * Answer the receiver's category.
+     */
+    public String getCategory() {
+        return GraphicsExample.getResourceString("Misc"); //$NON-NLS-1$
+    }
 
-/**
- *  Answer the receiver's description.
- * */
-public String getDescription() {
-	return "";
-}
+    /**
+     * Answer the receiver's description.
+     */
+    public String getDescription() {
+        return "";
+    }
 
-/**
- *  Answer whether the receiver's drawing should be double bufferer.
- */
-public boolean getDoubleBuffered() {
-	return false;
-}
+    /**
+     * Answer whether the receiver's drawing should be double bufferer.
+     */
+    public boolean getDoubleBuffered() {
+        return false;
+    }
 
-/**
- * Paint the receiver into the specified GC.
- */
-public void paint(GC gc, int width, int height) {
-}
+    /**
+     * Paint the receiver into the specified GC.
+     */
+    public void paint(GC gc, int width, int height) {
+    }
 
 }

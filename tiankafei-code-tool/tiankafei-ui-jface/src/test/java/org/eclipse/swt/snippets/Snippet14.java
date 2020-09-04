@@ -19,23 +19,25 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet14 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 14");
-	shell.setSize (100, 100);
-	shell.addListener (SWT.MouseEnter, e -> System.out.println ("ENTER"));
-	shell.addListener (SWT.MouseExit, e -> System.out.println ("EXIT"));
-	shell.addListener (SWT.MouseHover, e -> System.out.println ("HOVER"));
-	shell.open ();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 14");
+        shell.setSize(100, 100);
+        shell.addListener(SWT.MouseEnter, e -> System.out.println("ENTER"));
+        shell.addListener(SWT.MouseExit, e -> System.out.println("EXIT"));
+        shell.addListener(SWT.MouseHover, e -> System.out.println("HOVER"));
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

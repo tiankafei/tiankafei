@@ -19,39 +19,42 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet59 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 59");
-	final List list = new List (shell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-	for (int i=0; i<128; i++) list.add ("Item " + i);
-	Rectangle clientArea = shell.getClientArea ();
-	list.setBounds (clientArea.x, clientArea.y, 100, 100);
-	list.addListener (SWT.Selection, e -> {
-		String string = "";
-		int [] selection = list.getSelectionIndices ();
-		for (int element : selection)
-			string += element + " ";
-		System.out.println ("Selection={" + string + "}");
-	});
-	list.addListener (SWT.DefaultSelection, e -> {
-		String string = "";
-		int [] selection = list.getSelectionIndices ();
-		for (int element : selection)
-			string += element + " ";
-		System.out.println ("DefaultSelection={" + string + "}");
-	});
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 59");
+        final List list = new List(shell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+        for (int i = 0; i < 128; i++) list.add("Item " + i);
+        Rectangle clientArea = shell.getClientArea();
+        list.setBounds(clientArea.x, clientArea.y, 100, 100);
+        list.addListener(SWT.Selection, e -> {
+            String string = "";
+            int[] selection = list.getSelectionIndices();
+            for (int element : selection)
+                string += element + " ";
+            System.out.println("Selection={" + string + "}");
+        });
+        list.addListener(SWT.DefaultSelection, e -> {
+            String string = "";
+            int[] selection = list.getSelectionIndices();
+            for (int element : selection)
+                string += element + " ";
+            System.out.println("DefaultSelection={" + string + "}");
+        });
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

@@ -14,9 +14,7 @@
 package org.eclipse.swt.examples.helloworld;
 
 
-
 import java.util.ResourceBundle;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
@@ -28,29 +26,29 @@ import org.eclipse.swt.widgets.Shell;
  * on an SWT Control.
  */
 public class HelloWorld5 {
-	private static ResourceBundle resHello = ResourceBundle.getBundle("examples_helloworld");
+    private static ResourceBundle resHello = ResourceBundle.getBundle("examples_helloworld");
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new HelloWorld5 ().open (display);
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new HelloWorld5().open(display);
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
-public Shell open (Display display) {
-	final Color red = new Color(display, 0xFF, 0, 0);
-	final Shell shell = new Shell (display);
-	shell.addPaintListener(event -> {
-		GC gc = event.gc;
-		gc.setForeground(red);
-		Rectangle rect = shell.getClientArea();
-		gc.drawRectangle(rect.x + 10, rect.y + 10, rect.width - 20, rect.height - 20);
-		gc.drawString(resHello.getString("Hello_world"), rect.x + 20, rect.y + 20);
-	});
-	shell.addDisposeListener (e -> red.dispose());
-	shell.open ();
-	return shell;
-}
+    public Shell open(Display display) {
+        final Color red = new Color(display, 0xFF, 0, 0);
+        final Shell shell = new Shell(display);
+        shell.addPaintListener(event -> {
+            GC gc = event.gc;
+            gc.setForeground(red);
+            Rectangle rect = shell.getClientArea();
+            gc.drawRectangle(rect.x + 10, rect.y + 10, rect.width - 20, rect.height - 20);
+            gc.drawString(resHello.getString("Hello_world"), rect.x + 20, rect.y + 20);
+        });
+        shell.addDisposeListener(e -> red.dispose());
+        shell.open();
+        return shell;
+    }
 }

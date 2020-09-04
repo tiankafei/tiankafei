@@ -25,71 +25,81 @@ package org.eclipse.swt.snippets;
  * @since 3.2
  */
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 public class Snippet228 {
 
-public static void main(String [] args) {
-	final Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setLayout(new FillLayout());
-	shell.setText("Show results as a bar chart in Table");
-	final Table table = new Table(shell, SWT.BORDER);
-	table.setHeaderVisible(true);
-	table.setLinesVisible(true);
-	TableColumn column1 = new TableColumn(table, SWT.NONE);
-	column1.setText("Bug Status");
-	column1.setWidth(100);
-	final TableColumn column2 = new TableColumn(table, SWT.NONE);
-	column2.setText("Percent");
-	column2.setWidth(200);
-	String[] labels = new String[]{"Resolved", "New", "Won't Fix", "Invalid"};
-	for (String label : labels) {
-		TableItem item = new TableItem(table, SWT.NONE);
-		item.setText(label);
-	}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setLayout(new FillLayout());
+        shell.setText("Show results as a bar chart in Table");
+        final Table table = new Table(shell, SWT.BORDER);
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+        TableColumn column1 = new TableColumn(table, SWT.NONE);
+        column1.setText("Bug Status");
+        column1.setWidth(100);
+        final TableColumn column2 = new TableColumn(table, SWT.NONE);
+        column2.setText("Percent");
+        column2.setWidth(200);
+        String[] labels = new String[]{"Resolved", "New", "Won't Fix", "Invalid"};
+        for (String label : labels) {
+            TableItem item = new TableItem(table, SWT.NONE);
+            item.setText(label);
+        }
 
-	/*
-	 * NOTE: MeasureItem, PaintItem and EraseItem are called repeatedly.
-	 * Therefore, it is critical for performance that these methods be
-	 * as efficient as possible.
-	 */
-	table.addListener(SWT.PaintItem, new Listener() {
-		int[] percents = new int[] {50, 30, 5, 15};
-		@Override
-		public void handleEvent(Event event) {
-			if (event.index == 1) {
-				GC gc = event.gc;
-				TableItem item = (TableItem)event.item;
-				int index = table.indexOf(item);
-				int percent = percents[index];
-				Color foreground = gc.getForeground();
-				Color background = gc.getBackground();
-				gc.setForeground(display.getSystemColor(SWT.COLOR_RED));
-				gc.setBackground(display.getSystemColor(SWT.COLOR_YELLOW));
-				int width = (column2.getWidth() - 1) * percent / 100;
-				gc.fillGradientRectangle(event.x, event.y, width, event.height, true);
-				Rectangle rect2 = new Rectangle(event.x, event.y, width-1, event.height-1);
-				gc.drawRectangle(rect2);
-				gc.setForeground(display.getSystemColor(SWT.COLOR_LIST_FOREGROUND));
-				String text = percent+"%";
-				Point size = event.gc.textExtent(text);
-				int offset = Math.max(0, (event.height - size.y) / 2);
-				gc.drawText(text, event.x+2, event.y+offset, true);
-				gc.setForeground(background);
-				gc.setBackground(foreground);
-			}
-		}
-	});
+        /*
+         * NOTE: MeasureItem, PaintItem and EraseItem are called repeatedly.
+         * Therefore, it is critical for performance that these methods be
+         * as efficient as possible.
+         */
+        table.addListener(SWT.PaintItem, new Listener() {
+            int[] percents = new int[]{50, 30, 5, 15};
 
-	shell.pack();
-	shell.open();
-	while(!shell.isDisposed()) {
-		if(!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+            @Override
+            public void handleEvent(Event event) {
+                if (event.index == 1) {
+                    GC gc = event.gc;
+                    TableItem item = (TableItem) event.item;
+                    int index = table.indexOf(item);
+                    int percent = percents[index];
+                    Color foreground = gc.getForeground();
+                    Color background = gc.getBackground();
+                    gc.setForeground(display.getSystemColor(SWT.COLOR_RED));
+                    gc.setBackground(display.getSystemColor(SWT.COLOR_YELLOW));
+                    int width = (column2.getWidth() - 1) * percent / 100;
+                    gc.fillGradientRectangle(event.x, event.y, width, event.height, true);
+                    Rectangle rect2 = new Rectangle(event.x, event.y, width - 1, event.height - 1);
+                    gc.drawRectangle(rect2);
+                    gc.setForeground(display.getSystemColor(SWT.COLOR_LIST_FOREGROUND));
+                    String text = percent + "%";
+                    Point size = event.gc.textExtent(text);
+                    int offset = Math.max(0, (event.height - size.y) / 2);
+                    gc.drawText(text, event.x + 2, event.y + offset, true);
+                    gc.setForeground(background);
+                    gc.setBackground(foreground);
+                }
+            }
+        });
+
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

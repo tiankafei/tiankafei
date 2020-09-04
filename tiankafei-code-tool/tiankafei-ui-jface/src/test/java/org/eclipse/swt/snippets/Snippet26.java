@@ -19,26 +19,29 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet26 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 26");
-	Combo combo = new Combo (shell, SWT.READ_ONLY);
-	combo.setItems ("Alpha", "Bravo", "Charlie");
-	Rectangle clientArea = shell.getClientArea ();
-	combo.setBounds (clientArea.x, clientArea.y, 200, 200);
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 26");
+        Combo combo = new Combo(shell, SWT.READ_ONLY);
+        combo.setItems("Alpha", "Bravo", "Charlie");
+        Rectangle clientArea = shell.getClientArea();
+        combo.setBounds(clientArea.x, clientArea.y, 200, 200);
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
 }

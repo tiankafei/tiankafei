@@ -19,47 +19,52 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet215 {
 
-public static void main(String[] args) {
-	final Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 215");
-	shell.setLayout(new FillLayout());
-	Button button = new Button(shell, SWT.PUSH);
-	button.setText("Capture");
-	button.addListener(SWT.Selection, event -> {
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 215");
+        shell.setLayout(new FillLayout());
+        Button button = new Button(shell, SWT.PUSH);
+        button.setText("Capture");
+        button.addListener(SWT.Selection, event -> {
 
-		/* Take the screen shot */
-		GC gc = new GC(display);
-		final Image image = new Image(display, display.getBounds());
-		gc.copyArea(image, 0, 0);
-		gc.dispose();
+            /* Take the screen shot */
+            GC gc = new GC(display);
+            final Image image = new Image(display, display.getBounds());
+            gc.copyArea(image, 0, 0);
+            gc.dispose();
 
-		Shell popup = new Shell(shell, SWT.SHELL_TRIM);
-		popup.setLayout(new FillLayout());
-		popup.setText("Image");
-		popup.setBounds(50, 50, 200, 200);
-		popup.addListener(SWT.Close, e -> image.dispose());
+            Shell popup = new Shell(shell, SWT.SHELL_TRIM);
+            popup.setLayout(new FillLayout());
+            popup.setText("Image");
+            popup.setBounds(50, 50, 200, 200);
+            popup.addListener(SWT.Close, e -> image.dispose());
 
-		ScrolledComposite sc = new ScrolledComposite (popup, SWT.V_SCROLL | SWT.H_SCROLL);
-		Canvas canvas = new Canvas(sc, SWT.NONE);
-		sc.setContent(canvas);
-		canvas.setBounds(display.getBounds ());
-		canvas.addPaintListener(e -> e.gc.drawImage(image, 0, 0));
-		popup.open();
-	});
-	shell.pack();
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+            ScrolledComposite sc = new ScrolledComposite(popup, SWT.V_SCROLL | SWT.H_SCROLL);
+            Canvas canvas = new Canvas(sc, SWT.NONE);
+            sc.setContent(canvas);
+            canvas.setBounds(display.getBounds());
+            canvas.addPaintListener(e -> e.gc.drawImage(image, 0, 0));
+            popup.open();
+        });
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

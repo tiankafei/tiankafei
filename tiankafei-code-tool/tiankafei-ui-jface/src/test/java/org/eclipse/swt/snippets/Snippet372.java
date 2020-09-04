@@ -21,54 +21,59 @@ package org.eclipse.swt.snippets;
  *
  * @since 4.8
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.browser.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet372 {
-	static Double width = null;
-	public static void main(String [] args) {
-		int maximumWidth = 200;
-		int maximumHeight= 2000;
+    static Double width = null;
 
-		String html = "<HTML><HEAD><TITLE>HTML Test</TITLE></HEAD><BODY>";
-		for (int i = 0; i < 15; i++) html += "<P>This is line "+i+"</P>";
-		html += "</BODY></HTML>";
+    public static void main(String[] args) {
+        int maximumWidth = 200;
+        int maximumHeight = 2000;
 
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 372");
-		shell.setLayout(new FillLayout());
-		Browser browser;
-		try {
-			browser = new Browser(shell, SWT.NONE);
-		} catch (SWTError e) {
-			System.out.println("Could not instantiate Browser: " + e.getMessage());
-			display.dispose();
-			return;
-		}
-		browser.setText(html);
-		browser.addProgressListener(ProgressListener.completedAdapter(event -> {
-			// Set the display to something known to be smaller than the content
-			shell.setSize(50, 50);
-			browser.execute("document.getElementsByTagName(\"html\")[0].style.whiteSpace = \"nowrap\""); //$NON-NLS-1$
-			// Save the width to either be a decided maximum or the browser's content width plus the margin
-			Double width = Math.min(maximumWidth, 10 + (Double) browser.evaluate("return document.body.scrollWidth;")); //$NON-NLS-1$
-			shell.setSize(width.intValue(), 0);
-			browser.execute("document.getElementsByTagName(\"html\")[0].style.whiteSpace = \"normal\""); //$NON-NLS-1$
-			shell.layout();
-			// Set the height to either be a decided maximum or the browser's content height plus the margin
-			Double height = Math.min(maximumHeight, 5 + (Double) browser.evaluate("return document.body.scrollHeight;")); //$NON-NLS-1$
-			shell.setSize(width.intValue(), height.intValue());
-		}));
+        String html = "<HTML><HEAD><TITLE>HTML Test</TITLE></HEAD><BODY>";
+        for (int i = 0; i < 15; i++) html += "<P>This is line " + i + "</P>";
+        html += "</BODY></HTML>";
 
-		shell.open();
-		while (!shell.isDisposed()) {
-			shell.layout();
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 372");
+        shell.setLayout(new FillLayout());
+        Browser browser;
+        try {
+            browser = new Browser(shell, SWT.NONE);
+        } catch (SWTError e) {
+            System.out.println("Could not instantiate Browser: " + e.getMessage());
+            display.dispose();
+            return;
+        }
+        browser.setText(html);
+        browser.addProgressListener(ProgressListener.completedAdapter(event -> {
+            // Set the display to something known to be smaller than the content
+            shell.setSize(50, 50);
+            browser.execute("document.getElementsByTagName(\"html\")[0].style.whiteSpace = \"nowrap\""); //$NON-NLS-1$
+            // Save the width to either be a decided maximum or the browser's content width plus the margin
+            Double width = Math.min(maximumWidth, 10 + (Double) browser.evaluate("return document.body.scrollWidth;")); //$NON-NLS-1$
+            shell.setSize(width.intValue(), 0);
+            browser.execute("document.getElementsByTagName(\"html\")[0].style.whiteSpace = \"normal\""); //$NON-NLS-1$
+            shell.layout();
+            // Set the height to either be a decided maximum or the browser's content height plus the margin
+            Double height = Math.min(maximumHeight, 5 + (Double) browser.evaluate("return document.body.scrollHeight;")); //$NON-NLS-1$
+            shell.setSize(width.intValue(), height.intValue());
+        }));
+
+        shell.open();
+        while (!shell.isDisposed()) {
+            shell.layout();
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

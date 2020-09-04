@@ -19,41 +19,45 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import static org.eclipse.swt.events.SelectionListener.*;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
 public class Snippet344 {
-	public static void main(String[] args) {
-		Display display = new Display();
-		final Shell shell = new Shell(display);
-		shell.setText("Snippet 344");
-		shell.setLayout(new GridLayout(1, false));
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 344");
+        shell.setLayout(new GridLayout(1, false));
 
-		Button button = new Button(shell, SWT.PUSH);
-		button.setText("Click me");
-		button.addSelectionListener(widgetSelectedAdapter(e -> {
-			Shell shell2 = new Shell(SWT.TOOL | SWT.RESIZE | SWT.CLOSE | SWT.MAX);
-			shell2.setLayout(new GridLayout(1, false));
-			shell2.setText("Palette");
-			Label l = new Label(shell2, SWT.LEFT);
-			l.setText("This is a SWT.TOOL Shell");
-			Point origin = shell.getLocation();
-			origin.x += 100;
-			origin.y += 100;
-			shell2.pack();
-			shell2.open();
-		}));
+        Button button = new Button(shell, SWT.PUSH);
+        button.setText("Click me");
+        button.addSelectionListener(widgetSelectedAdapter(e -> {
+            Shell shell2 = new Shell(SWT.TOOL | SWT.RESIZE | SWT.CLOSE | SWT.MAX);
+            shell2.setLayout(new GridLayout(1, false));
+            shell2.setText("Palette");
+            Label l = new Label(shell2, SWT.LEFT);
+            l.setText("This is a SWT.TOOL Shell");
+            Point origin = shell.getLocation();
+            origin.x += 100;
+            origin.y += 100;
+            shell2.pack();
+            shell2.open();
+        }));
 
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

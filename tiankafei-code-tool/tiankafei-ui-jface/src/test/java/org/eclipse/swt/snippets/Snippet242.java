@@ -19,35 +19,41 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet242 {
 
-public static void main(String [] args) {
-	Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 242");
-	shell.setBounds(10, 10, 200, 200);
-	Canvas canvas = new Canvas(shell, SWT.BORDER);
-	canvas.setBounds(10,50,150,100);
-	canvas.addPaintListener(e -> e.gc.drawString("hide Cursor here", 10, 10));
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 242");
+        shell.setBounds(10, 10, 200, 200);
+        Canvas canvas = new Canvas(shell, SWT.BORDER);
+        canvas.setBounds(10, 50, 150, 100);
+        canvas.addPaintListener(e -> e.gc.drawString("hide Cursor here", 10, 10));
 
-	// create a cursor with a transparent image
-	Color white = display.getSystemColor (SWT.COLOR_WHITE);
-	Color black = display.getSystemColor (SWT.COLOR_BLACK);
-	PaletteData palette = new PaletteData (white.getRGB(), black.getRGB());
-	ImageData sourceData = new ImageData (16, 16, 1, palette);
-	sourceData.transparentPixel = 0;
-	Cursor cursor = new Cursor(display, sourceData, 0, 0);
+        // create a cursor with a transparent image
+        Color white = display.getSystemColor(SWT.COLOR_WHITE);
+        Color black = display.getSystemColor(SWT.COLOR_BLACK);
+        PaletteData palette = new PaletteData(white.getRGB(), black.getRGB());
+        ImageData sourceData = new ImageData(16, 16, 1, palette);
+        sourceData.transparentPixel = 0;
+        Cursor cursor = new Cursor(display, sourceData, 0, 0);
 
-	shell.open();
-	canvas.setCursor(cursor);
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	cursor.dispose();
-	display.dispose();
-}
+        shell.open();
+        canvas.setCursor(cursor);
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        cursor.dispose();
+        display.dispose();
+    }
 }

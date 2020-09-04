@@ -19,39 +19,46 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet69 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 69");
-	Label label = new Label (shell, SWT.NONE | SWT.BORDER);
-	label.setText ("Name");
-	Text text = new Text (shell, SWT.NONE);
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 69");
+        Label label = new Label(shell, SWT.NONE | SWT.BORDER);
+        label.setText("Name");
+        Text text = new Text(shell, SWT.NONE);
 
-	FormLayout layout = new FormLayout ();
-	layout.marginWidth = layout.marginHeight = 5;
-	shell.setLayout (layout);
+        FormLayout layout = new FormLayout();
+        layout.marginWidth = layout.marginHeight = 5;
+        shell.setLayout(layout);
 
-	GC gc = new GC (text);
-	FontMetrics fm = gc.getFontMetrics ();
-	double charWidth = fm.getAverageCharacterWidth ();
-	int width = text.computeSize ((int) (charWidth * 8), SWT.DEFAULT).x;
-	gc.dispose ();
-	FormData data = new FormData (width, SWT.DEFAULT);
-	text.setLayoutData (data);
-	data.left = new FormAttachment (label, 5);
-	data.top = new FormAttachment (label, 0, SWT.CENTER);
+        GC gc = new GC(text);
+        FontMetrics fm = gc.getFontMetrics();
+        double charWidth = fm.getAverageCharacterWidth();
+        int width = text.computeSize((int) (charWidth * 8), SWT.DEFAULT).x;
+        gc.dispose();
+        FormData data = new FormData(width, SWT.DEFAULT);
+        text.setLayoutData(data);
+        data.left = new FormAttachment(label, 5);
+        data.top = new FormAttachment(label, 0, SWT.CENTER);
 
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

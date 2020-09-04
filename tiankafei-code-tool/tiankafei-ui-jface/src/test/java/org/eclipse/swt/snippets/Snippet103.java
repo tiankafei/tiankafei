@@ -19,58 +19,65 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 public class Snippet103 {
 
-static char content = 'a';
-public static void main(String[] args) {
-	final Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 103");
-	shell.setBounds(10, 10, 200, 240);
-	Table table = new Table(shell, SWT.NONE);
-	Rectangle clientArea = shell.getClientArea ();
-	table.setBounds (clientArea.x + 10, clientArea.y + 10, 160, 160);
+    static char content = 'a';
 
-	final TableItem[] items = new TableItem[4];
-	for (int i = 0; i < 4; i++) {
-		new TableColumn(table, SWT.NONE).setWidth(40);
-	}
-	for (int i = 0; i < 4; i++) {
-		items[i] = new TableItem(table, SWT.NONE);
-		populateItem(items[i]);
-	}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 103");
+        shell.setBounds(10, 10, 200, 240);
+        Table table = new Table(shell, SWT.NONE);
+        Rectangle clientArea = shell.getClientArea();
+        table.setBounds(clientArea.x + 10, clientArea.y + 10, 160, 160);
 
-	Button button = new Button(shell, SWT.PUSH);
-	button.setText("Change");
-	button.pack();
-	button.setLocation(10, 180);
-	button.addListener(SWT.Selection, event -> {
-		for (int i = 0; i < 4; i++) {
-			populateItem(items[i]);
-		}
-	});
+        final TableItem[] items = new TableItem[4];
+        for (int i = 0; i < 4; i++) {
+            new TableColumn(table, SWT.NONE).setWidth(40);
+        }
+        for (int i = 0; i < 4; i++) {
+            items[i] = new TableItem(table, SWT.NONE);
+            populateItem(items[i]);
+        }
 
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+        Button button = new Button(shell, SWT.PUSH);
+        button.setText("Change");
+        button.pack();
+        button.setLocation(10, 180);
+        button.addListener(SWT.Selection, event -> {
+            for (int i = 0; i < 4; i++) {
+                populateItem(items[i]);
+            }
+        });
 
-static void populateItem(TableItem item) {
-	String stringContent = String.valueOf(content);
-	item.setText(
-		new String[] {
-			stringContent,
-			stringContent,
-			stringContent,
-			stringContent });
-	content++;
-	if (content > 'z') content = 'a';
-}
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
+
+    static void populateItem(TableItem item) {
+        String stringContent = String.valueOf(content);
+        item.setText(
+                new String[]{
+                        stringContent,
+                        stringContent,
+                        stringContent,
+                        stringContent});
+        content++;
+        if (content > 'z') content = 'a';
+    }
 
 }

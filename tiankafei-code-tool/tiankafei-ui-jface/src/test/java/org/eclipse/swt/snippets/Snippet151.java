@@ -21,58 +21,65 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.0
  */
-import java.util.*;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import java.util.Arrays;
+import java.util.Random;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 public class Snippet151 {
 
-static int[] data = new int[0];
+    static int[] data = new int[0];
 
-public static void main (String [] args) {
-	final Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 151");
-	shell.setLayout(new FillLayout());
-	final Table table = new Table(shell, SWT.BORDER | SWT.VIRTUAL);
-	table.addListener(SWT.SetData, e -> {
-		TableItem item = (TableItem)e.item;
-		int index = table.indexOf(item);
-		item.setText("Item "+data[index]);
-	});
-	Thread thread = new Thread() {
-		@Override
-		public void run() {
-			int count = 0;
-			Random random = new Random();
-			while (count++ < 500) {
-				if (table.isDisposed()) return;
-				// add 10 random numbers to array and sort
-				int grow = 10;
-				int[] newData = new int[data.length + grow];
-				System.arraycopy(data, 0, newData, 0, data.length);
-				int index = data.length;
-				data = newData;
-				for (int j = 0; j < grow; j++) {
-					data[index++] = random.nextInt();
-				}
-				Arrays.sort(data);
-				display.syncExec(() -> {
-					if (table.isDisposed()) return;
-					table.setItemCount(data.length);
-					table.clearAll();
-				});
-				try {Thread.sleep(500);} catch (Throwable t) {}
-			}
-		}
-	};
-	thread.start();
-	shell.open ();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 151");
+        shell.setLayout(new FillLayout());
+        final Table table = new Table(shell, SWT.BORDER | SWT.VIRTUAL);
+        table.addListener(SWT.SetData, e -> {
+            TableItem item = (TableItem) e.item;
+            int index = table.indexOf(item);
+            item.setText("Item " + data[index]);
+        });
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                int count = 0;
+                Random random = new Random();
+                while (count++ < 500) {
+                    if (table.isDisposed()) return;
+                    // add 10 random numbers to array and sort
+                    int grow = 10;
+                    int[] newData = new int[data.length + grow];
+                    System.arraycopy(data, 0, newData, 0, data.length);
+                    int index = data.length;
+                    data = newData;
+                    for (int j = 0; j < grow; j++) {
+                        data[index++] = random.nextInt();
+                    }
+                    Arrays.sort(data);
+                    display.syncExec(() -> {
+                        if (table.isDisposed()) return;
+                        table.setItemCount(data.length);
+                        table.clearAll();
+                    });
+                    try {
+                        Thread.sleep(500);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        };
+        thread.start();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

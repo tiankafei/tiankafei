@@ -21,44 +21,51 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.1
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Path;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet198 {
-public static void main(String[] args) {
-	Display display = new Display();
-	FontData data = display.getSystemFont().getFontData()[0];
-	Font font = new Font(display, data.getName(), 96, SWT.BOLD | SWT.ITALIC);
-	final Color green = display.getSystemColor(SWT.COLOR_GREEN);
-	final Color blue = display.getSystemColor(SWT.COLOR_BLUE);
-	final Path path;
-	try {
-		path = new Path(display);
-		path.addString("SWT", 0, 0, font);
-	} catch (SWTException e) {
-		//Advanced Graphics not supported.
-		//This new API requires the Cairo Vector engine on GTK and GDI+ on Windows.
-		System.out.println(e.getMessage());
-		display.dispose();
-		return;
-	}
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 198");
-	shell.addListener(SWT.Paint, e -> {
-		GC gc = e.gc;
-		gc.setBackground(green);
-		gc.setForeground(blue);
-		gc.fillPath(path);
-		gc.drawPath(path);
-	});
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch())
-			display.sleep();
-	}
-	path.dispose();
-	font.dispose();
-	display.dispose();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        FontData data = display.getSystemFont().getFontData()[0];
+        Font font = new Font(display, data.getName(), 96, SWT.BOLD | SWT.ITALIC);
+        final Color green = display.getSystemColor(SWT.COLOR_GREEN);
+        final Color blue = display.getSystemColor(SWT.COLOR_BLUE);
+        final Path path;
+        try {
+            path = new Path(display);
+            path.addString("SWT", 0, 0, font);
+        } catch (SWTException e) {
+            //Advanced Graphics not supported.
+            //This new API requires the Cairo Vector engine on GTK and GDI+ on Windows.
+            System.out.println(e.getMessage());
+            display.dispose();
+            return;
+        }
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 198");
+        shell.addListener(SWT.Paint, e -> {
+            GC gc = e.gc;
+            gc.setBackground(green);
+            gc.setForeground(blue);
+            gc.fillPath(path);
+            gc.drawPath(path);
+        });
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        path.dispose();
+        font.dispose();
+        display.dispose();
+    }
 }

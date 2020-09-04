@@ -19,44 +19,50 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.accessibility.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.accessibility.ACC;
+import org.eclipse.swt.accessibility.AccessibleAdapter;
+import org.eclipse.swt.accessibility.AccessibleEvent;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
 public class Snippet291 {
-	public static void main(String[] args) {
-		final Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 291");
-		shell.setLayout(new FillLayout());
-		final Tree tree = new Tree(shell, SWT.BORDER);
-		for (int i = 0; i < 5; i++) {
-			TreeItem treeItem = new TreeItem (tree, SWT.NONE);
-			treeItem.setText ("item" + i);
-			for (int j = 0; j < 3; j++) {
-				TreeItem subItem = new TreeItem(treeItem, SWT.NONE);
-				subItem.setText("item" + i + j);
-			}
-		}
-		tree.getAccessible().addAccessibleListener(new AccessibleAdapter() {
-			@Override
-			public void getName(AccessibleEvent e) {
-				if (e.childID == ACC.CHILDID_SELF) {
-					e.result = "This is the Accessible Name for the Tree";
-				} else {
-					TreeItem item = (TreeItem)display.findWidget(tree, e.childID);
-					if (item != null) {
-						e.result = "This is the Accessible Name for the TreeItem: " + item.getText();
-					}
-				}
-			}
-		});
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) display.sleep();
-		}
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 291");
+        shell.setLayout(new FillLayout());
+        final Tree tree = new Tree(shell, SWT.BORDER);
+        for (int i = 0; i < 5; i++) {
+            TreeItem treeItem = new TreeItem(tree, SWT.NONE);
+            treeItem.setText("item" + i);
+            for (int j = 0; j < 3; j++) {
+                TreeItem subItem = new TreeItem(treeItem, SWT.NONE);
+                subItem.setText("item" + i + j);
+            }
+        }
+        tree.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+            @Override
+            public void getName(AccessibleEvent e) {
+                if (e.childID == ACC.CHILDID_SELF) {
+                    e.result = "This is the Accessible Name for the Tree";
+                } else {
+                    TreeItem item = (TreeItem) display.findWidget(tree, e.childID);
+                    if (item != null) {
+                        e.result = "This is the Accessible Name for the TreeItem: " + item.getText();
+                    }
+                }
+            }
+        });
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

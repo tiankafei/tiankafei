@@ -13,49 +13,49 @@
  *******************************************************************************/
 package org.eclipse.swt.examples.controls;
 
- 
-import org.eclipse.swt.examples.controlexample.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.part.*;
+
+import org.eclipse.swt.examples.controlexample.ControlExample;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
 
 /**
  * <code>Controls</code> is a simple demonstration
  * of the native controls defined by SWT.  It consists of a workbench
  * view and tab folder where each tab in the folder allows the
  * user to interact with a control.
- * 
+ *
  * @see ViewPart
  */
 public class ControlView extends ViewPart {
-	ControlExample instance = null;
-	
-	/**
-	 * Create the example
-	 * 
-	 * @see ViewPart#createPartControl
-	 */
-	@Override
-	public void createPartControl(Composite frame) {
-		instance = new ControlExample(frame);
-	}
+    ControlExample instance = null;
 
-	/**
-	 * Called when we must grab focus.
-	 * 
-	 * @see ViewPart#setFocus
-	 */
-	@Override
-	public void setFocus() {
-		instance.setFocus();
-	}
+    /**
+     * Create the example
+     *
+     * @see ViewPart#createPartControl
+     */
+    @Override
+    public void createPartControl(Composite frame) {
+        instance = new ControlExample(frame);
+    }
 
-	/**
-	 * Called when the View is to be disposed
-	 */	
-	@Override
-	public void dispose() {
-		instance.dispose();
-		instance = null;
-		super.dispose();
-	}
+    /**
+     * Called when we must grab focus.
+     *
+     * @see ViewPart#setFocus
+     */
+    @Override
+    public void setFocus() {
+        instance.setFocus();
+    }
+
+    /**
+     * Called when the View is to be disposed
+     */
+    @Override
+    public void dispose() {
+        instance.dispose();
+        instance = null;
+        super.dispose();
+    }
 }

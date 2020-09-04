@@ -26,51 +26,55 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.6
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet332 {
 
-	public static void main(String [] args) {
-		final Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 332");
-		GridLayout layout = new GridLayout();
-		layout.marginHeight = layout.marginWidth = 10;
-		shell.setLayout(layout);
-		StyledText text = new StyledText(shell, SWT.MULTI | SWT.BORDER);
-		final String segment = "Eclipse";
-		String string = "Force RTL direction on this segment \""+segment+"\".";
-		text.setText(string);
-		int[] segments = {string.indexOf(segment), segment.length()};
-		StyleRange[] ranges = {new StyleRange(0, 0, display.getSystemColor(SWT.COLOR_RED), null)};
-		text.setStyleRanges(segments, ranges);
-		Font font = new Font(display, "Tahoma", 16, 0);
-		text.setFont(font);
-		text.addBidiSegmentListener(event -> {
-			String string1 = event.lineText;
-			int start = string1.indexOf(segment);
-			event.segments = new int []{start, start + segment.length()};
-			event.segmentsChars = new char[] {'\u202e', '\u202C'};
-		});
-		Combo combo = new Combo(shell, SWT.SIMPLE);
-		combo.setFont(font);
-		combo.setBackground(display.getSystemColor(SWT.COLOR_YELLOW));
-		combo.setItems("Option 1...", "Option 2...", "Option 3...", "Option 4...");
-		combo.select(1);
-		combo.addSegmentListener(event -> {
-			event.segments = new int [] {0, event.lineText.length()};
-			event.segmentsChars = new char [] {'\u202e', '\u202c'};
-		});
-		shell.setSize(500, 250);
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) display.sleep();
-		}
-		font.dispose();
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 332");
+        GridLayout layout = new GridLayout();
+        layout.marginHeight = layout.marginWidth = 10;
+        shell.setLayout(layout);
+        StyledText text = new StyledText(shell, SWT.MULTI | SWT.BORDER);
+        final String segment = "Eclipse";
+        String string = "Force RTL direction on this segment \"" + segment + "\".";
+        text.setText(string);
+        int[] segments = {string.indexOf(segment), segment.length()};
+        StyleRange[] ranges = {new StyleRange(0, 0, display.getSystemColor(SWT.COLOR_RED), null)};
+        text.setStyleRanges(segments, ranges);
+        Font font = new Font(display, "Tahoma", 16, 0);
+        text.setFont(font);
+        text.addBidiSegmentListener(event -> {
+            String string1 = event.lineText;
+            int start = string1.indexOf(segment);
+            event.segments = new int[]{start, start + segment.length()};
+            event.segmentsChars = new char[]{'\u202e', '\u202C'};
+        });
+        Combo combo = new Combo(shell, SWT.SIMPLE);
+        combo.setFont(font);
+        combo.setBackground(display.getSystemColor(SWT.COLOR_YELLOW));
+        combo.setItems("Option 1...", "Option 2...", "Option 3...", "Option 4...");
+        combo.select(1);
+        combo.addSegmentListener(event -> {
+            event.segments = new int[]{0, event.lineText.length()};
+            event.segmentsChars = new char[]{'\u202e', '\u202c'};
+        });
+        shell.setSize(500, 250);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        font.dispose();
+        display.dispose();
+    }
 }

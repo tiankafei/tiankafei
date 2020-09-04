@@ -23,50 +23,55 @@ package org.eclipse.swt.snippets;
  * @since 3.3
  */
 
-import static org.eclipse.swt.events.SelectionListener.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
 public class Snippet258 {
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 258");
-		shell.setLayout(new GridLayout(2, false));
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 258");
+        shell.setLayout(new GridLayout(2, false));
 
-		final Text text = new Text(shell, SWT.SEARCH | SWT.ICON_CANCEL);
-		Image image = null;
-		if ((text.getStyle() & SWT.ICON_CANCEL) == 0) {
-			image = display.getSystemImage(SWT.ICON_ERROR);
-			ToolBar toolBar = new ToolBar (shell, SWT.FLAT);
-			ToolItem item = new ToolItem (toolBar, SWT.PUSH);
-			item.setImage (image);
-			item.addSelectionListener(widgetSelectedAdapter(e ->  {
-					text.setText("");
-					System.out.println("Search cancelled");
-				}
-			));
-		}
-		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.setText("Search text");
-		text.addSelectionListener(widgetSelectedAdapter(e ->  {
-				if (e.detail == SWT.CANCEL) {
-					System.out.println("Search cancelled");
-				} else {
-					System.out.println("Searching for: " + text.getText() + "...");
-				}
-			}
-		));
+        final Text text = new Text(shell, SWT.SEARCH | SWT.ICON_CANCEL);
+        Image image = null;
+        if ((text.getStyle() & SWT.ICON_CANCEL) == 0) {
+            image = display.getSystemImage(SWT.ICON_ERROR);
+            ToolBar toolBar = new ToolBar(shell, SWT.FLAT);
+            ToolItem item = new ToolItem(toolBar, SWT.PUSH);
+            item.setImage(image);
+            item.addSelectionListener(widgetSelectedAdapter(e -> {
+                        text.setText("");
+                        System.out.println("Search cancelled");
+                    }
+            ));
+        }
+        text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        text.setText("Search text");
+        text.addSelectionListener(widgetSelectedAdapter(e -> {
+                    if (e.detail == SWT.CANCEL) {
+                        System.out.println("Search cancelled");
+                    } else {
+                        System.out.println("Searching for: " + text.getText() + "...");
+                    }
+                }
+        ));
 
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) display.sleep();
-		}
-		if (image != null) image.dispose();
-		display.dispose();
-	}
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        if (image != null) image.dispose();
+        display.dispose();
+    }
 }

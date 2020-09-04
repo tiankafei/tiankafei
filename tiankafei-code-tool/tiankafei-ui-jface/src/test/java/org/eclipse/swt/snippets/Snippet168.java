@@ -22,38 +22,39 @@ package org.eclipse.swt.snippets;
  * @since 3.1
  */
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet168 {
 
-public static void main(String[] args) {
-	final Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 168");
-	shell.addListener(SWT.Paint, event -> {
-		int x = 20, y = 20, w = 120, h = 60;
-		GC gc = event.gc;
-		gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
-		gc.setLineWidth(10);
-		int[] caps = {SWT.CAP_FLAT, SWT.CAP_ROUND, SWT.CAP_SQUARE};
-		for (int cap : caps) {
-			gc.setLineCap(cap);
-			gc.drawLine(x, y, x + w, y);
-			y += 20;
-		}
-		int[] joins = {SWT.JOIN_BEVEL, SWT.JOIN_MITER, SWT.JOIN_ROUND};
-		for (int join : joins) {
-			gc.setLineJoin(join);
-			gc.drawPolygon(new int[] {x, y, x + w/2, y + h, x + w, y});
-			y += h + 20;
-		}
-	});
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 168");
+        shell.addListener(SWT.Paint, event -> {
+            int x = 20, y = 20, w = 120, h = 60;
+            GC gc = event.gc;
+            gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
+            gc.setLineWidth(10);
+            int[] caps = {SWT.CAP_FLAT, SWT.CAP_ROUND, SWT.CAP_SQUARE};
+            for (int cap : caps) {
+                gc.setLineCap(cap);
+                gc.drawLine(x, y, x + w, y);
+                y += 20;
+            }
+            int[] joins = {SWT.JOIN_BEVEL, SWT.JOIN_MITER, SWT.JOIN_ROUND};
+            for (int join : joins) {
+                gc.setLineJoin(join);
+                gc.drawPolygon(new int[]{x, y, x + w / 2, y + h, x + w, y});
+                y += h + 20;
+            }
+        });
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

@@ -21,39 +21,43 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.5
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.browser.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet308 {
-	public static void main(String [] args) {
-		final String html = "<html><title>Snippet</title><body><p id='myid'>Best Friends</p><p id='myid2'>Cat and Dog</p></body></html>";
-		Display display = new Display();
-		final Shell shell = new Shell(display);
-		shell.setText("Snippet 308");
-		shell.setLayout(new FillLayout());
-		final Browser browser;
-		try {
-			browser = new Browser(shell, SWT.NONE);
-		} catch (SWTError e) {
-			System.out.println("Could not instantiate Browser: " + e.getMessage());
-			display.dispose();
-			return;
-		}
-		browser.addProgressListener(ProgressListener.completedAdapter(event -> {
-			String value = (String) browser.evaluate("return document.getElementById('myid').childNodes[0].nodeValue;");
-			System.out.println("Node value: " + value);
-		}));
-		/* Load an HTML document */
-		browser.setText(html);
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        final String html = "<html><title>Snippet</title><body><p id='myid'>Best Friends</p><p id='myid2'>Cat and Dog</p></body></html>";
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 308");
+        shell.setLayout(new FillLayout());
+        final Browser browser;
+        try {
+            browser = new Browser(shell, SWT.NONE);
+        } catch (SWTError e) {
+            System.out.println("Could not instantiate Browser: " + e.getMessage());
+            display.dispose();
+            return;
+        }
+        browser.addProgressListener(ProgressListener.completedAdapter(event -> {
+            String value = (String) browser.evaluate("return document.getElementById('myid').childNodes[0].nodeValue;");
+            System.out.println("Node value: " + value);
+        }));
+        /* Load an HTML document */
+        browser.setText(html);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }
 
 

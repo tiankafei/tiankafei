@@ -21,41 +21,45 @@ package org.eclipse.swt.snippets;
  *
  * @since 4.8
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet371 {
 
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 371");
-		shell.setLayout(new FillLayout());
-		CTabFolder folder = new CTabFolder(shell, SWT.BORDER);
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 371");
+        shell.setLayout(new FillLayout());
+        CTabFolder folder = new CTabFolder(shell, SWT.BORDER);
 
-		CTabItem item1 = new CTabItem(folder, SWT.CLOSE);
-		item1.setText("Item on one line");
-		Text text1 = new Text(folder, SWT.MULTI);
-		text1.setText("Content for Item 1");
-		item1.setControl(text1);
+        CTabItem item1 = new CTabItem(folder, SWT.CLOSE);
+        item1.setText("Item on one line");
+        Text text1 = new Text(folder, SWT.MULTI);
+        text1.setText("Content for Item 1");
+        item1.setControl(text1);
 
-		CTabItem item2 = new CTabItem(folder, SWT.CLOSE);
-		item2.setText("Item on \ntwo lines");
-		Text text2 = new Text(folder, SWT.MULTI);
-		text2.setText("Content for Item 2");
-		item2.setControl(text2);
+        CTabItem item2 = new CTabItem(folder, SWT.CLOSE);
+        item2.setText("Item on \ntwo lines");
+        Text text2 = new Text(folder, SWT.MULTI);
+        text2.setText("Content for Item 2");
+        item2.setControl(text2);
 
 
-		shell.setSize(new Point(300, 200));
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+        shell.setSize(new Point(300, 200));
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }
 

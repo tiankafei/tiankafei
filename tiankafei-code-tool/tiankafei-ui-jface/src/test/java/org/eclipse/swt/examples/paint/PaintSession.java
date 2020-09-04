@@ -14,7 +14,8 @@
 package org.eclipse.swt.examples.paint;
 
 
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
 
 /**
  * Manages an interactive paint session.
@@ -22,40 +23,40 @@ import org.eclipse.swt.events.*;
  * relative to the painting surface.
  */
 public interface PaintSession extends MouseListener, MouseMoveListener {
-	/**
-	 * Returns the paint surface associated with this paint session
-	 *
-	 * @return the associated PaintSurface
-	 */
-	public PaintSurface getPaintSurface();
+    /**
+     * Returns the paint surface associated with this paint session
+     *
+     * @return the associated PaintSurface
+     */
+    public PaintSurface getPaintSurface();
 
-	/**
-	 * Activates the session.
-	 *
-	 * Note: When overriding this method, call super.beginSession() at method start.
-	 */
-	public abstract void beginSession();
+    /**
+     * Activates the session.
+     * <p>
+     * Note: When overriding this method, call super.beginSession() at method start.
+     */
+    public abstract void beginSession();
 
-	/**
-	 * Deactivates the session.
-	 *
-	 * Note: When overriding this method, call super.endSession() at method exit.
-	 */
-	public abstract void endSession();
+    /**
+     * Deactivates the session.
+     * <p>
+     * Note: When overriding this method, call super.endSession() at method exit.
+     */
+    public abstract void endSession();
 
-	/**
-	 * Resets the session.
-	 * Aborts any operation in progress.
-	 *
-	 * Note: When overriding this method, call super.resetSession() at method exit.
-	 */
-	public abstract void resetSession();
+    /**
+     * Resets the session.
+     * Aborts any operation in progress.
+     * <p>
+     * Note: When overriding this method, call super.resetSession() at method exit.
+     */
+    public abstract void resetSession();
 
 
-	/**
-	 * Returns the name associated with this tool.
-	 *
-	 * @return the localized name of this tool
-	 */
-	public String getDisplayName();
+    /**
+     * Returns the name associated with this tool.
+     *
+     * @return the localized name of this tool
+     */
+    public String getDisplayName();
 }

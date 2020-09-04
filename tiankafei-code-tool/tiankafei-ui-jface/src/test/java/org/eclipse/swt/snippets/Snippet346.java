@@ -21,25 +21,28 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.7
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet346 {
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setLayout(new FillLayout());
-		shell.setText("Snippet 346");
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setLayout(new FillLayout());
+        shell.setText("Snippet 346");
 
-		Text text = new Text(shell, SWT.PASSWORD | SWT.BORDER);
-		text.setTextChars(new char[]{'p','a','s','s'});
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+        Text text = new Text(shell, SWT.PASSWORD | SWT.BORDER);
+        text.setTextChars(new char[]{'p', 'a', 's', 's'});
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

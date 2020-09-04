@@ -24,89 +24,100 @@ package org.eclipse.swt.snippets;
  * @since 3.3
  */
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.ScrollBar;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 public class Snippet234 {
-public static void main (String [] args) {
-	int rowCount = 40;
-	int columnCount = 15;
-	final Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 234");
-	shell.setLayout(new FillLayout());
+    public static void main(String[] args) {
+        int rowCount = 40;
+        int columnCount = 15;
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 234");
+        shell.setLayout(new FillLayout());
 
-	Composite parent = new Composite(shell, SWT.BORDER);
-	GridLayout layout = new GridLayout(2, false);
-	layout.marginWidth = layout.marginHeight = layout.horizontalSpacing = 0;
-	parent.setLayout(layout);
-	final Table leftTable = new Table(parent, SWT.MULTI | SWT.FULL_SELECTION);
-	leftTable.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
-	leftTable.setHeaderVisible(true);
-	final Table rightTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
-	rightTable.setHeaderVisible(true);
-	GridData table2Data = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2);
-	rightTable.setLayoutData(table2Data);
-	// Create columns
-	TableColumn column1 = new TableColumn(leftTable, SWT.NONE);
-	column1.setText("Name");
-	column1.setWidth(150);
-	for (int i = 0; i < columnCount; i++) {
-		TableColumn column = new TableColumn(rightTable, SWT.NONE);
-		column.setText("Value "+i);
-		column.setWidth(200);
-	}
-	// Create rows
-	for (int i = 0; i < rowCount; i++) {
-		TableItem item = new TableItem(leftTable, SWT.NONE);
-		item.setText("item "+i);
-		item = new TableItem(rightTable, SWT.NONE);
-		for (int j = 0; j < columnCount; j++) {
-			item.setText(j, "Item "+i+" value @ "+j);
-		}
-	}
-	// Make selection the same in both tables
-	leftTable.addListener(SWT.Selection, event -> rightTable.setSelection(leftTable.getSelectionIndices()));
-	rightTable.addListener(SWT.Selection, event -> leftTable.setSelection(rightTable.getSelectionIndices()));
-	// On Windows, the selection is gray if the table does not have focus.
-	// To make both tables appear in focus, draw the selection background here.
-	// This part only works on version 3.2 or later.
-	Listener eraseListener = event -> {
-		event.detail &= ~SWT.HOT;
-		if((event.detail & SWT.SELECTED) != 0) {
-			GC gc = event.gc;
-			Rectangle rect = event.getBounds();
-			gc.setForeground(display.getSystemColor(SWT.COLOR_LIST_SELECTION_TEXT));
-			gc.setBackground(display.getSystemColor(SWT.COLOR_LIST_SELECTION));
-			gc.fillRectangle(rect);
-			event.detail &= ~SWT.SELECTED;
-		}
-	};
+        Composite parent = new Composite(shell, SWT.BORDER);
+        GridLayout layout = new GridLayout(2, false);
+        layout.marginWidth = layout.marginHeight = layout.horizontalSpacing = 0;
+        parent.setLayout(layout);
+        final Table leftTable = new Table(parent, SWT.MULTI | SWT.FULL_SELECTION);
+        leftTable.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
+        leftTable.setHeaderVisible(true);
+        final Table rightTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
+        rightTable.setHeaderVisible(true);
+        GridData table2Data = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2);
+        rightTable.setLayoutData(table2Data);
+        // Create columns
+        TableColumn column1 = new TableColumn(leftTable, SWT.NONE);
+        column1.setText("Name");
+        column1.setWidth(150);
+        for (int i = 0; i < columnCount; i++) {
+            TableColumn column = new TableColumn(rightTable, SWT.NONE);
+            column.setText("Value " + i);
+            column.setWidth(200);
+        }
+        // Create rows
+        for (int i = 0; i < rowCount; i++) {
+            TableItem item = new TableItem(leftTable, SWT.NONE);
+            item.setText("item " + i);
+            item = new TableItem(rightTable, SWT.NONE);
+            for (int j = 0; j < columnCount; j++) {
+                item.setText(j, "Item " + i + " value @ " + j);
+            }
+        }
+        // Make selection the same in both tables
+        leftTable.addListener(SWT.Selection, event -> rightTable.setSelection(leftTable.getSelectionIndices()));
+        rightTable.addListener(SWT.Selection, event -> leftTable.setSelection(rightTable.getSelectionIndices()));
+        // On Windows, the selection is gray if the table does not have focus.
+        // To make both tables appear in focus, draw the selection background here.
+        // This part only works on version 3.2 or later.
+        Listener eraseListener = event -> {
+            event.detail &= ~SWT.HOT;
+            if ((event.detail & SWT.SELECTED) != 0) {
+                GC gc = event.gc;
+                Rectangle rect = event.getBounds();
+                gc.setForeground(display.getSystemColor(SWT.COLOR_LIST_SELECTION_TEXT));
+                gc.setBackground(display.getSystemColor(SWT.COLOR_LIST_SELECTION));
+                gc.fillRectangle(rect);
+                event.detail &= ~SWT.SELECTED;
+            }
+        };
 
-	leftTable.addListener(SWT.EraseItem, eraseListener);
-	rightTable.addListener(SWT.EraseItem, eraseListener);
-	// Make vertical scrollbars scroll together
-	ScrollBar vBarLeft = leftTable.getVerticalBar();
-	vBarLeft.addListener(SWT.Selection, event -> rightTable.setTopIndex(leftTable.getTopIndex()));
-	ScrollBar vBarRight = rightTable.getVerticalBar();
-	vBarRight.addListener(SWT.Selection, event -> leftTable.setTopIndex(rightTable.getTopIndex()));
-	// Horizontal bar on second table takes up a little extra space.
-	// To keep vertical scroll bars in sink, force table1 to end above
-	// horizontal scrollbar
-	ScrollBar hBarRight = rightTable.getHorizontalBar();
-	Label spacer = new Label(parent, SWT.NONE);
-	GridData spacerData = new GridData();
-	spacerData.heightHint = hBarRight.getSize().y;
-	spacer.setVisible(false);
-	parent.setBackground(leftTable.getBackground());
+        leftTable.addListener(SWT.EraseItem, eraseListener);
+        rightTable.addListener(SWT.EraseItem, eraseListener);
+        // Make vertical scrollbars scroll together
+        ScrollBar vBarLeft = leftTable.getVerticalBar();
+        vBarLeft.addListener(SWT.Selection, event -> rightTable.setTopIndex(leftTable.getTopIndex()));
+        ScrollBar vBarRight = rightTable.getVerticalBar();
+        vBarRight.addListener(SWT.Selection, event -> leftTable.setTopIndex(rightTable.getTopIndex()));
+        // Horizontal bar on second table takes up a little extra space.
+        // To keep vertical scroll bars in sink, force table1 to end above
+        // horizontal scrollbar
+        ScrollBar hBarRight = rightTable.getHorizontalBar();
+        Label spacer = new Label(parent, SWT.NONE);
+        GridData spacerData = new GridData();
+        spacerData.heightHint = hBarRight.getSize().y;
+        spacer.setVisible(false);
+        parent.setBackground(leftTable.getBackground());
 
-	shell.setSize(600, 400);
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+        shell.setSize(600, 400);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

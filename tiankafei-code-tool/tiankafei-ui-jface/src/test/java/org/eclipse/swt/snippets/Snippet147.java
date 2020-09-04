@@ -21,38 +21,43 @@ package org.eclipse.swt.snippets;
  * http://www.eclipse.org/swt/snippets/
  */
 
-import static org.eclipse.swt.events.SelectionListener.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import static org.eclipse.swt.events.SelectionListener.widgetDefaultSelectedAdapter;
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
-public class Snippet147  {
-public static void main(String[] args) {
-	Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 147");
-	shell.setLayout(new GridLayout());
-	Combo combo = new Combo(shell, SWT.NONE);
-	combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-	combo.setText("Here is some text");
-	combo.addSelectionListener(widgetDefaultSelectedAdapter(e -> System.out.println("Combo default selected (overrides default button)")));
-	combo.addTraverseListener(e -> {
-		if (e.detail == SWT.TRAVERSE_RETURN) {
-			e.doit = false;
-			e.detail = SWT.TRAVERSE_NONE;
-		}
-	});
-	Button button = new Button(shell, SWT.PUSH);
-	button.setText("Ok");
-	button.addSelectionListener(widgetSelectedAdapter(e -> System.out.println("Button selected")));
-	shell.setDefaultButton(button);
-	shell.pack();
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch())
-			display.sleep();
-	}
-	display.dispose();
-}
+public class Snippet147 {
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 147");
+        shell.setLayout(new GridLayout());
+        Combo combo = new Combo(shell, SWT.NONE);
+        combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        combo.setText("Here is some text");
+        combo.addSelectionListener(widgetDefaultSelectedAdapter(e -> System.out.println("Combo default selected (overrides default button)")));
+        combo.addTraverseListener(e -> {
+            if (e.detail == SWT.TRAVERSE_RETURN) {
+                e.doit = false;
+                e.detail = SWT.TRAVERSE_NONE;
+            }
+        });
+        Button button = new Button(shell, SWT.PUSH);
+        button.setText("Ok");
+        button.addSelectionListener(widgetSelectedAdapter(e -> System.out.println("Button selected")));
+        shell.setDefaultButton(button);
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

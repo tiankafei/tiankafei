@@ -22,82 +22,89 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.7
  */
-import java.util.*;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import java.util.HashMap;
+import java.util.Map;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.TouchListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Touch;
 
 public class Snippet352 {
 
-	private static class CircleInfo {
+    private static class CircleInfo {
 
-		public CircleInfo(Point inCenter, Color inColor) {
-			this.center = inCenter;
-			this.color = inColor;
-		}
+        public CircleInfo(Point inCenter, Color inColor) {
+            this.center = inCenter;
+            this.color = inColor;
+        }
 
-		Point center;
-		Color color;
-	}
+        Point center;
+        Color color;
+    }
 
-	static Map<Long, CircleInfo> touchLocations = new HashMap<>();
-	static int colorIndex = 0;
-	static final int PAINTABLE_COLORS = 15;
-	static final int CIRCLE_RADIUS = 40;
+    static Map<Long, CircleInfo> touchLocations = new HashMap<>();
+    static int colorIndex = 0;
+    static final int PAINTABLE_COLORS = 15;
+    static final int CIRCLE_RADIUS = 40;
 
-	public static void main (String [] args) {
-		final Display display = new Display ();
-		final Shell shell = new Shell (display);
-		shell.setText("Snippet 352");
-		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
-		shell.setText ("Touch demonstration");
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 352");
+        shell.setLayout(new FillLayout(SWT.HORIZONTAL));
+        shell.setText("Touch demonstration");
 
-		TouchListener tl = e -> {
+        TouchListener tl = e -> {
 
-			Touch touches[] = e.touches;
+            Touch touches[] = e.touches;
 
-			for (Touch currTouch : touches) {
-				if ((currTouch.state & (SWT.TOUCHSTATE_UP)) != 0) {
-					touchLocations.remove(currTouch.id);
-				} else {
-					CircleInfo info = touchLocations.get(currTouch.id);
-					Point newPoint = Display.getCurrent().map(null, (Control)e.widget, new Point(currTouch.x, currTouch.y));
+            for (Touch currTouch : touches) {
+                if ((currTouch.state & (SWT.TOUCHSTATE_UP)) != 0) {
+                    touchLocations.remove(currTouch.id);
+                } else {
+                    CircleInfo info = touchLocations.get(currTouch.id);
+                    Point newPoint = Display.getCurrent().map(null, (Control) e.widget, new Point(currTouch.x, currTouch.y));
 
-					if (info == null) {
-						info = new CircleInfo(newPoint, display.getSystemColor((colorIndex + 2) % PAINTABLE_COLORS));
-						colorIndex++;
-					}
+                    if (info == null) {
+                        info = new CircleInfo(newPoint, display.getSystemColor((colorIndex + 2) % PAINTABLE_COLORS));
+                        colorIndex++;
+                    }
 
-					info.center = newPoint;
-					touchLocations.put(currTouch.id, info);
-				}
-			}
+                    info.center = newPoint;
+                    touchLocations.put(currTouch.id, info);
+                }
+            }
 
-			Control c = (Control)e.widget;
-			c.redraw();
-		};
+            Control c = (Control) e.widget;
+            c.redraw();
+        };
 
-		PaintListener pl = e -> {
-			for (CircleInfo ci : touchLocations.values()) {
-				e.gc.setBackground(ci.color);
-				e.gc.fillOval(ci.center.x - CIRCLE_RADIUS, ci.center.y - CIRCLE_RADIUS, CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2);
-			}
-		};
+        PaintListener pl = e -> {
+            for (CircleInfo ci : touchLocations.values()) {
+                e.gc.setBackground(ci.color);
+                e.gc.fillOval(ci.center.x - CIRCLE_RADIUS, ci.center.y - CIRCLE_RADIUS, CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2);
+            }
+        };
 
-		Canvas c = new Canvas(shell, SWT.NONE);
-		c.setTouchEnabled(true);
-		c.setSize(800, 800);
-		c.addTouchListener(tl);
-		c.addPaintListener(pl);
+        Canvas c = new Canvas(shell, SWT.NONE);
+        c.setTouchEnabled(true);
+        c.setSize(800, 800);
+        c.addTouchListener(tl);
+        c.addPaintListener(pl);
 
-		shell.setSize (800, 800);
-		shell.open ();
-		while (!shell.isDisposed ()) {
-			if (!display.readAndDispatch ()) display.sleep ();
-		}
-		display.dispose ();
-	}
+        shell.setSize(800, 800);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

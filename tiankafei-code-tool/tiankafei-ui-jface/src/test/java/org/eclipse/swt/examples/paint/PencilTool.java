@@ -20,45 +20,45 @@ import org.eclipse.swt.graphics.Point;
  * A pencil tool.
  */
 public class PencilTool extends ContinuousPaintSession implements PaintTool {
-	private ToolSettings settings;
+    private ToolSettings settings;
 
-	/**
-	 * Constructs a pencil tool.
-	 *
-	 * @param toolSettings the new tool settings
-	 * @param getPaintSurface() the PaintSurface we will render on.
-	 */
-	public PencilTool(ToolSettings toolSettings, PaintSurface paintSurface) {
-		super(paintSurface);
-		set(toolSettings);
-	}
+    /**
+     * Constructs a pencil tool.
+     *
+     * @param toolSettings      the new tool settings
+     * @param getPaintSurface() the PaintSurface we will render on.
+     */
+    public PencilTool(ToolSettings toolSettings, PaintSurface paintSurface) {
+        super(paintSurface);
+        set(toolSettings);
+    }
 
-	/**
-	 * Sets the tool's settings.
-	 *
-	 * @param toolSettings the new tool settings
-	 */
-	@Override
-	public void set(ToolSettings toolSettings) {
-		settings = toolSettings;
-	}
+    /**
+     * Sets the tool's settings.
+     *
+     * @param toolSettings the new tool settings
+     */
+    @Override
+    public void set(ToolSettings toolSettings) {
+        settings = toolSettings;
+    }
 
-	/**
-	 * Returns the name associated with this tool.
-	 *
-	 * @return the localized name of this tool
-	 */
-	@Override
-	public String getDisplayName() {
-		return PaintExample.getResourceString("tool.Pencil.label");
-	}
+    /**
+     * Returns the name associated with this tool.
+     *
+     * @return the localized name of this tool
+     */
+    @Override
+    public String getDisplayName() {
+        return PaintExample.getResourceString("tool.Pencil.label");
+    }
 
-	/*
-	 * Template method for drawing
-	 */
-	@Override
-	public void render(final Point point) {
-		final PaintSurface ps = getPaintSurface();
-		ps.drawFigure(new PointFigure(settings.commonForegroundColor, point.x, point.y));
-	}
+    /*
+     * Template method for drawing
+     */
+    @Override
+    public void render(final Point point) {
+        final PaintSurface ps = getPaintSurface();
+        ps.drawFigure(new PointFigure(settings.commonForegroundColor, point.x, point.y));
+    }
 }

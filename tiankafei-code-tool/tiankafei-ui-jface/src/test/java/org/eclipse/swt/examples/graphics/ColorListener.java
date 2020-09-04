@@ -22,6 +22,6 @@ package org.eclipse.swt.examples.graphics;
  */
 public interface ColorListener {
 
-	public void setColor(GraphicsBackground gb);
+    public void setColor(GraphicsBackground gb);
 
 }

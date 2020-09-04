@@ -13,7 +13,7 @@
  *******************************************************************************/
 package org.eclipse.swt.snippets;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * Used to store some metadata, argument or configuration stuff for snippets.
@@ -21,21 +21,21 @@ import java.io.*;
  */
 public class SnippetsConfig {
 
-	public static final File SNIPPETS_SOURCE_DIR = new File("src/org/eclipse/swt/snippets");
+    public static final File SNIPPETS_SOURCE_DIR = new File("src/org/eclipse/swt/snippets");
 
-	public static final String SNIPPETS_PACKAGE = "org.eclipse.swt.snippets";
+    public static final String SNIPPETS_PACKAGE = "org.eclipse.swt.snippets";
 
-	public static boolean isPrintingSnippet(int snippetNumber) {
-		return snippetNumber == 132 || snippetNumber == 133 || snippetNumber == 318;
-	}
+    public static boolean isPrintingSnippet(int snippetNumber) {
+        return snippetNumber == 132 || snippetNumber == 133 || snippetNumber == 318;
+    }
 
-	public static String[] getSnippetArguments(int snippetNumber) {
-		switch (snippetNumber) {
-		case 81:
-			return new String[] { "Shell.Explorer" };
+    public static String[] getSnippetArguments(int snippetNumber) {
+        switch (snippetNumber) {
+            case 81:
+                return new String[]{"Shell.Explorer"};
 
-		default:
-			return new String[0];
-		}
-	}
+            default:
+                return new String[0];
+        }
+    }
 }

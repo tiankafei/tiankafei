@@ -14,42 +14,45 @@
 
 package org.eclipse.swt.examples.graphics;
 
-import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 
 /**
  * This tab demonstrates how an image can be scaled.
  */
 public class ImageScaleTab extends GraphicsTab {
 
-public ImageScaleTab(GraphicsExample example) {
-	super(example);
-}
+    public ImageScaleTab(GraphicsExample example) {
+        super(example);
+    }
 
-@Override
-public String getCategory() {
-	return GraphicsExample.getResourceString("Image"); //$NON-NLS-1$
-}
+    @Override
+    public String getCategory() {
+        return GraphicsExample.getResourceString("Image"); //$NON-NLS-1$
+    }
 
-@Override
-public String getText() {
-	return GraphicsExample.getResourceString("Scale"); //$NON-NLS-1$
-}
+    @Override
+    public String getText() {
+        return GraphicsExample.getResourceString("Scale"); //$NON-NLS-1$
+    }
 
-@Override
-public String getDescription() {
-	return GraphicsExample.getResourceString("ScaleDescription"); //$NON-NLS-1$
-}
+    @Override
+    public String getDescription() {
+        return GraphicsExample.getResourceString("ScaleDescription"); //$NON-NLS-1$
+    }
 
-@Override
-public void paint(GC gc, int width, int height) {
-	Device device = gc.getDevice();
-	Image image = GraphicsExample.loadImage(device, GraphicsExample.class, "houses.png");
+    @Override
+    public void paint(GC gc, int width, int height) {
+        Device device = gc.getDevice();
+        Image image = GraphicsExample.loadImage(device, GraphicsExample.class, "houses.png");
 
-	Rectangle bounds = image.getBounds();
-	Rectangle canvasBounds = example.canvas.getBounds();
-	gc.drawImage(image, 0, 0, bounds.width, bounds.height, 0, 0, canvasBounds.width, canvasBounds.height);
+        Rectangle bounds = image.getBounds();
+        Rectangle canvasBounds = example.canvas.getBounds();
+        gc.drawImage(image, 0, 0, bounds.width, bounds.height, 0, 0, canvasBounds.width, canvasBounds.height);
 
-	image.dispose();
-}
+        image.dispose();
+    }
 }
 

@@ -19,11 +19,11 @@ import org.osgi.framework.BundleContext;
 
 public class BrowserDemoPlugin extends AbstractUIPlugin {
 
-	public static String PLUGIN_PATH = null;
-	
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		PLUGIN_PATH = FileLocator.toFileURL(context.getBundle().getEntry(".")).toString();
-	}
+    public static String PLUGIN_PATH = null;
+
+    @Override
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        PLUGIN_PATH = FileLocator.toFileURL(context.getBundle().getEntry(".")).toString();
+    }
 }

@@ -22,38 +22,40 @@ package org.eclipse.swt.snippets;
  * http://www.eclipse.org/swt/snippets/
  */
 
-import static org.eclipse.swt.events.SelectionListener.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
 public class Snippet4 {
 
-	public static void main(String[] args) {
-		Display display = new Display();
-		final Shell shell = new Shell(display);
-		shell.setText("Snippet 4");
-		Button b = new Button(shell, SWT.PUSH);
-		b.setText("Open Dialog ...");
-		b.pack();
-		Rectangle clientArea = shell.getClientArea();
-		b.setLocation(clientArea.x + 10, clientArea.y + 10);
-		b.addSelectionListener(widgetSelectedAdapter(e -> {
-			Shell dialog = new Shell(shell, SWT.DIALOG_TRIM);
-			dialog.addListener(SWT.Traverse, t -> {
-				if (t.detail == SWT.TRAVERSE_ESCAPE) {
-					t.doit = false;
-				}
-			});
-			dialog.open();
-		}));
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 4");
+        Button b = new Button(shell, SWT.PUSH);
+        b.setText("Open Dialog ...");
+        b.pack();
+        Rectangle clientArea = shell.getClientArea();
+        b.setLocation(clientArea.x + 10, clientArea.y + 10);
+        b.addSelectionListener(widgetSelectedAdapter(e -> {
+            Shell dialog = new Shell(shell, SWT.DIALOG_TRIM);
+            dialog.addListener(SWT.Traverse, t -> {
+                if (t.detail == SWT.TRAVERSE_ESCAPE) {
+                    t.doit = false;
+                }
+            });
+            dialog.open();
+        }));
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 
 }

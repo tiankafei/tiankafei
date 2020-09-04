@@ -19,28 +19,32 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 public class Snippet18 {
 
-public static void main (String [] args) {
-	Display display = new Display();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 18");
-	ToolBar bar = new ToolBar (shell, SWT.BORDER);
-	for (int i=0; i<8; i++) {
-		ToolItem item = new ToolItem (bar, SWT.PUSH);
-		item.setText ("Item " + i);
-	}
-	Rectangle clientArea = shell.getClientArea ();
-	bar.setLocation (clientArea.x, clientArea.y);
-	bar.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 18");
+        ToolBar bar = new ToolBar(shell, SWT.BORDER);
+        for (int i = 0; i < 8; i++) {
+            ToolItem item = new ToolItem(bar, SWT.PUSH);
+            item.setText("Item " + i);
+        }
+        Rectangle clientArea = shell.getClientArea();
+        bar.setLocation(clientArea.x, clientArea.y);
+        bar.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

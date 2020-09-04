@@ -19,33 +19,36 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet345 {
-	public static void main (String[] args) {
-		final Display  display = new Display ();
-		final Shell shell = new Shell ();
-		shell.setText("Snippet 345");
-		shell.setLayout(new FillLayout(SWT.VERTICAL));
-		String string = "The quick brown fox jumps over the lazy dog";
-		Button button;
-		button = new Button(shell, SWT.PUSH | SWT.WRAP);
-		button.setText(string);
-		button = new Button(shell, SWT.RADIO | SWT.WRAP);
-		button.setText(string);
-		button = new Button(shell, SWT.TOGGLE | SWT.WRAP);
-		button.setText(string);
-		button = new Button(shell, SWT.CHECK | SWT.WRAP);
-		button.setText(string);
-		shell.setSize(shell.computeSize(200, SWT.DEFAULT));
-		shell.open ();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep ();
-			}
-		}
-		display.dispose ();
-	}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell();
+        shell.setText("Snippet 345");
+        shell.setLayout(new FillLayout(SWT.VERTICAL));
+        String string = "The quick brown fox jumps over the lazy dog";
+        Button button;
+        button = new Button(shell, SWT.PUSH | SWT.WRAP);
+        button.setText(string);
+        button = new Button(shell, SWT.RADIO | SWT.WRAP);
+        button.setText(string);
+        button = new Button(shell, SWT.TOGGLE | SWT.WRAP);
+        button.setText(string);
+        button = new Button(shell, SWT.CHECK | SWT.WRAP);
+        button.setText(string);
+        shell.setSize(shell.computeSize(200, SWT.DEFAULT));
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+        display.dispose();
+    }
 }

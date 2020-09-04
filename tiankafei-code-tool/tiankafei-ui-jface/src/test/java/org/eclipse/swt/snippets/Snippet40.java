@@ -19,32 +19,38 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet40 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 40");
-	shell.setLayout(new GridLayout(2, false));
-	Composite c1 = new Composite (shell, SWT.BORDER);
-	c1.setLayoutData(new GridData(100, 100));
-	Composite c2 = new Composite (shell, SWT.BORDER);
-	c2.setLayoutData(new GridData(100, 100));
-	Menu menu = new Menu (shell, SWT.POP_UP);
-	MenuItem item = new MenuItem (menu, SWT.PUSH);
-	item.setText ("Popup");
-	c1.setMenu (menu);
-	c2.setMenu (menu);
-	shell.setMenu (menu);
-	shell.setSize (300, 300);
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 40");
+        shell.setLayout(new GridLayout(2, false));
+        Composite c1 = new Composite(shell, SWT.BORDER);
+        c1.setLayoutData(new GridData(100, 100));
+        Composite c2 = new Composite(shell, SWT.BORDER);
+        c2.setLayoutData(new GridData(100, 100));
+        Menu menu = new Menu(shell, SWT.POP_UP);
+        MenuItem item = new MenuItem(menu, SWT.PUSH);
+        item.setText("Popup");
+        c1.setMenu(menu);
+        c2.setMenu(menu);
+        shell.setMenu(menu);
+        shell.setSize(300, 300);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

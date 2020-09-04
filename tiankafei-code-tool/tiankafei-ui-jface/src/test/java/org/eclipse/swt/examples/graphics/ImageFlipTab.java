@@ -14,101 +14,105 @@
 
 package org.eclipse.swt.examples.graphics;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.graphics.Transform;
 
 /**
  * This tab demonstrates how an image can be flipped in various fashions.
  */
 public class ImageFlipTab extends GraphicsTab {
 
-public ImageFlipTab(GraphicsExample example) {
-	super(example);
-}
+    public ImageFlipTab(GraphicsExample example) {
+        super(example);
+    }
 
-@Override
-public String getCategory() {
-	return GraphicsExample.getResourceString("Image"); //$NON-NLS-1$
-}
+    @Override
+    public String getCategory() {
+        return GraphicsExample.getResourceString("Image"); //$NON-NLS-1$
+    }
 
-@Override
-public String getText() {
-	return GraphicsExample.getResourceString("Flip"); //$NON-NLS-1$
-}
+    @Override
+    public String getText() {
+        return GraphicsExample.getResourceString("Flip"); //$NON-NLS-1$
+    }
 
-@Override
-public String getDescription() {
-	return GraphicsExample.getResourceString("FlipDescription"); //$NON-NLS-1$
-}
+    @Override
+    public String getDescription() {
+        return GraphicsExample.getResourceString("FlipDescription"); //$NON-NLS-1$
+    }
 
-@Override
-public void paint(GC gc, int width, int height) {
-	if (!example.checkAdvancedGraphics()) return;
-	Device device = gc.getDevice();
+    @Override
+    public void paint(GC gc, int width, int height) {
+        if (!example.checkAdvancedGraphics()) return;
+        Device device = gc.getDevice();
 
-	Image image = GraphicsExample.loadImage(device, GraphicsExample.class, "houses.png");
-	Rectangle bounds = image.getBounds();
+        Image image = GraphicsExample.loadImage(device, GraphicsExample.class, "houses.png");
+        Rectangle bounds = image.getBounds();
 
-	// top
-	Transform transform = new Transform(device);
-	transform.translate((width-bounds.width)/2, (height-bounds.height)/2);
-	transform.scale(1, -1);
-	gc.setTransform(transform);
+        // top
+        Transform transform = new Transform(device);
+        transform.translate((width - bounds.width) / 2, (height - bounds.height) / 2);
+        transform.scale(1, -1);
+        gc.setTransform(transform);
 
-	// draw the original image
-	gc.drawImage(image, 0, 0);
+        // draw the original image
+        gc.drawImage(image, 0, 0);
 
-	transform.dispose();
+        transform.dispose();
 
-	// bottom
-	transform = new Transform(device);
-	transform.translate((width-bounds.width)/2, 2*bounds.height + (height-bounds.height)/2);
-	transform.scale(1, -1);
-	gc.setTransform(transform);
+        // bottom
+        transform = new Transform(device);
+        transform.translate((width - bounds.width) / 2, 2 * bounds.height + (height - bounds.height) / 2);
+        transform.scale(1, -1);
+        gc.setTransform(transform);
 
-	// draw the original image
-	gc.drawImage(image, 0, 0);
+        // draw the original image
+        gc.drawImage(image, 0, 0);
 
-	transform.dispose();
+        transform.dispose();
 
-	// left
-	transform = new Transform(device);
-	transform.translate((width-bounds.width)/2, (height-bounds.height)/2);
-	transform.scale(-1, 1);
-	gc.setTransform(transform);
+        // left
+        transform = new Transform(device);
+        transform.translate((width - bounds.width) / 2, (height - bounds.height) / 2);
+        transform.scale(-1, 1);
+        gc.setTransform(transform);
 
-	// draw the original image
-	gc.drawImage(image, 0, 0);
+        // draw the original image
+        gc.drawImage(image, 0, 0);
 
-	transform.dispose();
+        transform.dispose();
 
-	// right
-	transform = new Transform(device);
-	transform.translate(2*bounds.width + (width-bounds.width)/2, (height-bounds.height)/2);
-	transform.scale(-1, 1);
-	gc.setTransform(transform);
+        // right
+        transform = new Transform(device);
+        transform.translate(2 * bounds.width + (width - bounds.width) / 2, (height - bounds.height) / 2);
+        transform.scale(-1, 1);
+        gc.setTransform(transform);
 
-	// draw the original image
-	gc.drawImage(image, 0, 0);
+        // draw the original image
+        gc.drawImage(image, 0, 0);
 
-	transform.dispose();
+        transform.dispose();
 
-	gc.setTransform(null);
-	gc.drawImage(image, (width-bounds.width)/2, (height-bounds.height)/2);
-	image.dispose();
-}
+        gc.setTransform(null);
+        gc.drawImage(image, (width - bounds.width) / 2, (height - bounds.height) / 2);
+        image.dispose();
+    }
 
-/**
- * Returns the name of a valid font for the host platform.
- */
-static String getPlatformFont() {
-	if(SWT.getPlatform() == "win32") {
-		return "Arial";
-	} else if (SWT.getPlatform() == "gtk") {
-		return "Baekmuk Batang";
-	} else {
-		return "Verdana";
-	}
-}
+    /**
+     * Returns the name of a valid font for the host platform.
+     */
+    static String getPlatformFont() {
+        if (SWT.getPlatform() == "win32") {
+            return "Arial";
+        } else if (SWT.getPlatform() == "gtk") {
+            return "Baekmuk Batang";
+        } else {
+            return "Verdana";
+        }
+    }
 }
 

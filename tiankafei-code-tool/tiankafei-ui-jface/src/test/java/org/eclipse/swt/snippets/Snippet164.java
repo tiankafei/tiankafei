@@ -19,39 +19,43 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.accessibility.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.accessibility.AccessibleAdapter;
+import org.eclipse.swt.accessibility.AccessibleEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet164 {
 
-public static void main (String[] args) {
-	Display display = new Display( );
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 164");
-	shell.setLayout (new GridLayout ());
-	Image image = new Image (display, Snippet164.class.getResourceAsStream ("eclipse.png"));
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 164");
+        shell.setLayout(new GridLayout());
+        Image image = new Image(display, Snippet164.class.getResourceAsStream("eclipse.png"));
 
-	Button button1 = new Button (shell, SWT.PUSH);
-	button1.setText ("&Typical button");
+        Button button1 = new Button(shell, SWT.PUSH);
+        button1.setText("&Typical button");
 
-	Button button2 = new Button (shell, SWT.PUSH);
-	button2.setImage (image);
-	button2.getAccessible ().addAccessibleListener (new AccessibleAdapter() {
-		@Override
-		public void getName (AccessibleEvent e) {
-			e.result = "Eclipse logo";
-		}
-	});
+        Button button2 = new Button(shell, SWT.PUSH);
+        button2.setImage(image);
+        button2.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+            @Override
+            public void getName(AccessibleEvent e) {
+                e.result = "Eclipse logo";
+            }
+        });
 
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	image.dispose ();
-	display.dispose ();
-}
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        image.dispose();
+        display.dispose();
+    }
 }

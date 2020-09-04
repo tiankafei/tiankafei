@@ -19,38 +19,42 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Transform;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet298 {
 
-public static void main (String [] args) {
-	final Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 298");
-	shell.addListener(SWT.Paint, event -> {
-		int[] icons = new int[]{SWT.ICON_ERROR, SWT.ICON_WARNING, SWT.ICON_INFORMATION, SWT.ICON_QUESTION, SWT.ICON_WORKING};
-		int x = 10;
-		for (int icon : icons) {
-			Image image = display.getSystemImage(icon);
-			if (image != null) {
-				Transform t = new Transform(display);
-				t.translate(x, 10);
-				t.shear(1, 0);
-				GC gc = event.gc;
-				gc.setTransform(t);
-				t.dispose();
-				gc.drawImage(image, 0, 0);
-				x += image.getBounds().width + 10;
-			}
-		}
-	});
-	shell.setSize(260, 100);
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 298");
+        shell.addListener(SWT.Paint, event -> {
+            int[] icons = new int[]{SWT.ICON_ERROR, SWT.ICON_WARNING, SWT.ICON_INFORMATION, SWT.ICON_QUESTION, SWT.ICON_WORKING};
+            int x = 10;
+            for (int icon : icons) {
+                Image image = display.getSystemImage(icon);
+                if (image != null) {
+                    Transform t = new Transform(display);
+                    t.translate(x, 10);
+                    t.shear(1, 0);
+                    GC gc = event.gc;
+                    gc.setTransform(t);
+                    t.dispose();
+                    gc.drawImage(image, 0, 0);
+                    x += image.getBounds().width + 10;
+                }
+            }
+        });
+        shell.setSize(260, 100);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

@@ -20,36 +20,40 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet342 {
 
-public static void main(String[] args) {
-	final int TEXT_WIDTH = 100;
+    public static void main(String[] args) {
+        final int TEXT_WIDTH = 100;
 
-	Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 342");
-	shell.setLayout(new GridLayout());
-	final Text text = new Text(shell, SWT.MULTI | SWT.WRAP | SWT.BORDER);
-	text.setLayoutData(new GridData(TEXT_WIDTH, SWT.DEFAULT));
-	text.addListener(SWT.Modify, event -> {
-		int currentHeight = text.getSize().y;
-		int preferredHeight = text.computeSize(TEXT_WIDTH, SWT.DEFAULT).y;
-		if (currentHeight != preferredHeight) {
-			GridData data = (GridData)text.getLayoutData();
-			data.heightHint = preferredHeight;
-			shell.pack();
-		}
-	});
-	shell.pack();
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 342");
+        shell.setLayout(new GridLayout());
+        final Text text = new Text(shell, SWT.MULTI | SWT.WRAP | SWT.BORDER);
+        text.setLayoutData(new GridData(TEXT_WIDTH, SWT.DEFAULT));
+        text.addListener(SWT.Modify, event -> {
+            int currentHeight = text.getSize().y;
+            int preferredHeight = text.computeSize(TEXT_WIDTH, SWT.DEFAULT).y;
+            if (currentHeight != preferredHeight) {
+                GridData data = (GridData) text.getLayoutData();
+                data.heightHint = preferredHeight;
+                shell.pack();
+            }
+        });
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
 }

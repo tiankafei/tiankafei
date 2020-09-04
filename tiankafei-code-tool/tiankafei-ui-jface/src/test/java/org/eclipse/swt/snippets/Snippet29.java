@@ -19,31 +19,35 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet29 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 29");
-	Menu bar = new Menu (shell, SWT.BAR);
-	shell.setMenuBar (bar);
-	MenuItem fileItem = new MenuItem (bar, SWT.CASCADE);
-	fileItem.setText ("&File");
-	Menu submenu = new Menu (shell, SWT.DROP_DOWN);
-	fileItem.setMenu (submenu);
-	MenuItem item = new MenuItem (submenu, SWT.PUSH);
-	item.addListener (SWT.Selection, e -> System.out.println ("Select All"));
-	item.setText ("Select &All\tCtrl+A");
-	item.setAccelerator (SWT.MOD1 + 'A');
-	shell.setSize (200, 200);
-	shell.open ();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 29");
+        Menu bar = new Menu(shell, SWT.BAR);
+        shell.setMenuBar(bar);
+        MenuItem fileItem = new MenuItem(bar, SWT.CASCADE);
+        fileItem.setText("&File");
+        Menu submenu = new Menu(shell, SWT.DROP_DOWN);
+        fileItem.setMenu(submenu);
+        MenuItem item = new MenuItem(submenu, SWT.PUSH);
+        item.addListener(SWT.Selection, e -> System.out.println("Select All"));
+        item.setText("Select &All\tCtrl+A");
+        item.setAccelerator(SWT.MOD1 + 'A');
+        shell.setSize(200, 200);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
 }

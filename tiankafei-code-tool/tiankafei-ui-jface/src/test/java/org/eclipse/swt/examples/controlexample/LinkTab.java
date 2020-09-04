@@ -27,143 +27,143 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 
 class LinkTab extends Tab {
-	/* Example widgets and groups that contain them */
-	Link link1;
-	Group linkGroup;
+    /* Example widgets and groups that contain them */
+    Link link1;
+    Group linkGroup;
 
-	/* Controls and resources added to the "Fonts" group */
-	static final int LINK_FOREGROUND_COLOR = 3;
-	Color linkForegroundColor;
-	
-	/**
-	 * Creates the Tab within a given instance of ControlExample.
-	 */
-	LinkTab(ControlExample instance) {
-		super(instance);
-	}
+    /* Controls and resources added to the "Fonts" group */
+    static final int LINK_FOREGROUND_COLOR = 3;
+    Color linkForegroundColor;
 
-	/**
-	 * Creates the "Example" group.
-	 */
-	@Override
-	void createExampleGroup () {
-		super.createExampleGroup ();
+    /**
+     * Creates the Tab within a given instance of ControlExample.
+     */
+    LinkTab(ControlExample instance) {
+        super(instance);
+    }
 
-		/* Create a group for the list */
-		linkGroup = new Group (exampleGroup, SWT.NONE);
-		linkGroup.setLayout (new GridLayout ());
-		linkGroup.setLayoutData (new GridData (SWT.FILL, SWT.FILL, true, true));
-		linkGroup.setText ("Link");
-	}
+    /**
+     * Creates the "Example" group.
+     */
+    @Override
+    void createExampleGroup() {
+        super.createExampleGroup();
 
-	/**
-	 * Creates the "Example" widgets.
-	 */
-	@Override
-	void createExampleWidgets () {
+        /* Create a group for the list */
+        linkGroup = new Group(exampleGroup, SWT.NONE);
+        linkGroup.setLayout(new GridLayout());
+        linkGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        linkGroup.setText("Link");
+    }
 
-		/* Compute the widget style */
-		int style = getDefaultStyle();
-		if (borderButton.getSelection ()) style |= SWT.BORDER;
+    /**
+     * Creates the "Example" widgets.
+     */
+    @Override
+    void createExampleWidgets() {
 
-		/* Create the example widgets */
-		link1 = new Link (linkGroup, style);
-		link1.setText (ControlExample.getResourceString("LinkText"));
-	}
+        /* Compute the widget style */
+        int style = getDefaultStyle();
+        if (borderButton.getSelection()) style |= SWT.BORDER;
 
-	/**
-	 * Creates the "Style" group.
-	 */
-	@Override
-	void createStyleGroup() {
-		super.createStyleGroup ();
+        /* Create the example widgets */
+        link1 = new Link(linkGroup, style);
+        link1.setText(ControlExample.getResourceString("LinkText"));
+    }
 
-		/* Create the extra widgets */
-		borderButton = new Button(styleGroup, SWT.CHECK);
-		borderButton.setText("SWT.BORDER");
-	}
+    /**
+     * Creates the "Style" group.
+     */
+    @Override
+    void createStyleGroup() {
+        super.createStyleGroup();
 
-	@Override
-	void createColorAndFontGroup () {
-		super.createColorAndFontGroup();
+        /* Create the extra widgets */
+        borderButton = new Button(styleGroup, SWT.CHECK);
+        borderButton.setText("SWT.BORDER");
+    }
 
-		TableItem item = new TableItem(colorAndFontTable, SWT.None);
-		item.setText(ControlExample.getResourceString ("Link_Foreground_Color"));
+    @Override
+    void createColorAndFontGroup() {
+        super.createColorAndFontGroup();
 
-		shell.addDisposeListener(event -> {
-			if (linkForegroundColor != null) linkForegroundColor.dispose();
-			linkForegroundColor = null;
-		});
-	}
-	
-	@Override
-	void changeFontOrColor(int index) {
-		switch (index) {
-			case LINK_FOREGROUND_COLOR: {
-				Color oldColor = linkForegroundColor;
-				if (oldColor == null) oldColor = link1.getLinkForeground();
-				colorDialog.setRGB(oldColor.getRGB());
-				RGB rgb = colorDialog.open();
-				if (rgb == null) return;
-				linkForegroundColor = new Color (display, rgb);
-				setLinkForeground ();
-			}
-			break;
-			default:
-				super.changeFontOrColor(index);
-		}
-	}
+        TableItem item = new TableItem(colorAndFontTable, SWT.None);
+        item.setText(ControlExample.getResourceString("Link_Foreground_Color"));
 
-	void setLinkForeground () {
-		if (!instance.startup) {
-			link1.setLinkForeground(linkForegroundColor);
-		}
-		Color color = linkForegroundColor;
-		if (color == null) color = link1.getLinkForeground ();
-		TableItem item = colorAndFontTable.getItem(LINK_FOREGROUND_COLOR);
-		Image oldImage = item.getImage();
-		if (oldImage != null) oldImage.dispose();
-		item.setImage (colorImage(color));
-	}
-	
-	@Override
-	void resetColorsAndFonts () {
-		super.resetColorsAndFonts ();
-		Color oldColor = linkForegroundColor;
-		linkForegroundColor = null;
-		setLinkForeground ();
-		if (oldColor != null) oldColor.dispose();
-	}
+        shell.addDisposeListener(event -> {
+            if (linkForegroundColor != null) linkForegroundColor.dispose();
+            linkForegroundColor = null;
+        });
+    }
 
-	@Override
-	void setExampleWidgetState () {
-		super.setExampleWidgetState();
-		setLinkForeground ();
-	}
-	
-	/**
-	 * Gets the "Example" widget children.
-	 */
-	@Override
-	Widget [] getExampleWidgets () {
-		return new Widget [] {link1};
-	}
+    @Override
+    void changeFontOrColor(int index) {
+        switch (index) {
+            case LINK_FOREGROUND_COLOR: {
+                Color oldColor = linkForegroundColor;
+                if (oldColor == null) oldColor = link1.getLinkForeground();
+                colorDialog.setRGB(oldColor.getRGB());
+                RGB rgb = colorDialog.open();
+                if (rgb == null) return;
+                linkForegroundColor = new Color(display, rgb);
+                setLinkForeground();
+            }
+            break;
+            default:
+                super.changeFontOrColor(index);
+        }
+    }
 
-	/**
-	 * Returns a list of set/get API method names (without the set/get prefix)
-	 * that can be used to set/get values in the example control(s).
-	 */
-	@Override
-	String[] getMethodNames() {
-		return new String[] {"Text", "ToolTipText"};
-	}
+    void setLinkForeground() {
+        if (!instance.startup) {
+            link1.setLinkForeground(linkForegroundColor);
+        }
+        Color color = linkForegroundColor;
+        if (color == null) color = link1.getLinkForeground();
+        TableItem item = colorAndFontTable.getItem(LINK_FOREGROUND_COLOR);
+        Image oldImage = item.getImage();
+        if (oldImage != null) oldImage.dispose();
+        item.setImage(colorImage(color));
+    }
 
-	/**
-	 * Gets the text for the tab folder item.
-	 */
-	@Override
-	String getTabText () {
-		return "Link";
-	}
+    @Override
+    void resetColorsAndFonts() {
+        super.resetColorsAndFonts();
+        Color oldColor = linkForegroundColor;
+        linkForegroundColor = null;
+        setLinkForeground();
+        if (oldColor != null) oldColor.dispose();
+    }
+
+    @Override
+    void setExampleWidgetState() {
+        super.setExampleWidgetState();
+        setLinkForeground();
+    }
+
+    /**
+     * Gets the "Example" widget children.
+     */
+    @Override
+    Widget[] getExampleWidgets() {
+        return new Widget[]{link1};
+    }
+
+    /**
+     * Returns a list of set/get API method names (without the set/get prefix)
+     * that can be used to set/get values in the example control(s).
+     */
+    @Override
+    String[] getMethodNames() {
+        return new String[]{"Text", "ToolTipText"};
+    }
+
+    /**
+     * Gets the text for the tab folder item.
+     */
+    @Override
+    String getTabText() {
+        return "Link";
+    }
 
 }

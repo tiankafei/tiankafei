@@ -20,29 +20,31 @@ package org.eclipse.swt.snippets;
  * http://www.eclipse.org/swt/snippets/
  */
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet243 {
 
-public static void main(String [] args) {
-	final Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 243");
-	shell.setLayout(new FillLayout ());
-	final Text text0 = new Text (shell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-	final Text text1 = new Text (shell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-	text0.addVerifyListener (event -> {
-		text1.setTopIndex (text0.getTopIndex ());
-		text1.setSelection (event.start, event.end);
-		text1.insert (event.text);
-	});
-	shell.setBounds(10, 10, 200, 200);
-	shell.open ();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 243");
+        shell.setLayout(new FillLayout());
+        final Text text0 = new Text(shell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+        final Text text1 = new Text(shell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+        text0.addVerifyListener(event -> {
+            text1.setTopIndex(text0.getTopIndex());
+            text1.setSelection(event.start, event.end);
+            text1.insert(event.text);
+        });
+        shell.setBounds(10, 10, 200, 200);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

@@ -21,32 +21,37 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.0
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet131 {
-public static void main (String [] args) {
-	final Display display = new Display ();
-	final Shell shell = new Shell (display);
-	shell.setText("Snippet 131");
-	shell.addListener (SWT.MenuDetect, event -> {
-		Menu menu = new Menu (shell, SWT.POP_UP);
-		MenuItem item = new MenuItem (menu, SWT.PUSH);
-		item.setText ("Menu Item");
-		item.addListener (SWT.Selection, e -> System.out.println ("Item Selected"));
-		menu.setLocation (event.x, event.y);
-		menu.setVisible (true);
-		while (!menu.isDisposed () && menu.isVisible ()) {
-			if (!display.readAndDispatch ()) display.sleep ();
-		}
-		while (display.readAndDispatch()); // needed, to get the selection event, which is fired AFTER the menu is hidden
-		menu.dispose ();
-	});
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 131");
+        shell.addListener(SWT.MenuDetect, event -> {
+            Menu menu = new Menu(shell, SWT.POP_UP);
+            MenuItem item = new MenuItem(menu, SWT.PUSH);
+            item.setText("Menu Item");
+            item.addListener(SWT.Selection, e -> System.out.println("Item Selected"));
+            menu.setLocation(event.x, event.y);
+            menu.setVisible(true);
+            while (!menu.isDisposed() && menu.isVisible()) {
+                if (!display.readAndDispatch()) display.sleep();
+            }
+            while (display.readAndDispatch())
+                ; // needed, to get the selection event, which is fired AFTER the menu is hidden
+            menu.dispose();
+        });
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

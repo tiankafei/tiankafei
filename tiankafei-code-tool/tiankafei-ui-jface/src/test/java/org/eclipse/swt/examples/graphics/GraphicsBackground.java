@@ -22,47 +22,47 @@ import org.eclipse.swt.graphics.Image;
  */
 public class GraphicsBackground {
 
-	private Image bgImage;
-	private Image thumbNail;
-	private Color bgColor1;
-	private Color bgColor2;
+    private Image bgImage;
+    private Image thumbNail;
+    private Color bgColor1;
+    private Color bgColor2;
 
-	public GraphicsBackground() {
-		bgImage = null;
-		thumbNail = null;
-		bgColor1 = null;
-		bgColor2 = null;
-	}
+    public GraphicsBackground() {
+        bgImage = null;
+        thumbNail = null;
+        bgColor1 = null;
+        bgColor2 = null;
+    }
 
-	public Image getBgImage() {
-		return bgImage;
-	}
+    public Image getBgImage() {
+        return bgImage;
+    }
 
-	public void setBgImage(Image bgImage) {
-		this.bgImage = bgImage;
-	}
+    public void setBgImage(Image bgImage) {
+        this.bgImage = bgImage;
+    }
 
-	public Color getBgColor1() {
-		return bgColor1;
-	}
+    public Color getBgColor1() {
+        return bgColor1;
+    }
 
-	public void setBgColor1(Color bgColor1) {
-		this.bgColor1 = bgColor1;
-	}
+    public void setBgColor1(Color bgColor1) {
+        this.bgColor1 = bgColor1;
+    }
 
-	public Color getBgColor2() {
-		return bgColor2;
-	}
+    public Color getBgColor2() {
+        return bgColor2;
+    }
 
-	public void setBgColor2(Color bgColor2) {
-		this.bgColor2 = bgColor2;
-	}
+    public void setBgColor2(Color bgColor2) {
+        this.bgColor2 = bgColor2;
+    }
 
-	public Image getThumbNail() {
-		return thumbNail;
-	}
+    public Image getThumbNail() {
+        return thumbNail;
+    }
 
-	public void setThumbNail(Image thumbNail) {
-		this.thumbNail = thumbNail;
-	}
+    public void setThumbNail(Image thumbNail) {
+        this.thumbNail = thumbNail;
+    }
 }

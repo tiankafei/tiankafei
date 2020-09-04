@@ -22,53 +22,56 @@ package org.eclipse.swt.snippets;
  * http://www.eclipse.org/swt/snippets/
  */
 
-import static org.eclipse.swt.events.SelectionListener.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
 public class Snippet80 {
 
-public static void main(String[] args) {
-	final Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 80");
-	shell.setLayout(new FillLayout());
-	final Tree tree = new Tree(shell, SWT.BORDER | SWT.MULTI);
-	for (int i = 0; i < 2; i++) {
-		TreeItem item = new TreeItem(tree, SWT.NONE);
-		item.setText("item " + i);
-		for (int j = 0; j < 2; j++) {
-			TreeItem subItem = new TreeItem(item, SWT.NONE);
-			subItem.setText("item " + j);
-			for (int k = 0; k < 2; k++) {
-				TreeItem subsubItem = new TreeItem(subItem, SWT.NONE);
-				subsubItem.setText("item " + k);
-			}
-		}
-	}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 80");
+        shell.setLayout(new FillLayout());
+        final Tree tree = new Tree(shell, SWT.BORDER | SWT.MULTI);
+        for (int i = 0; i < 2; i++) {
+            TreeItem item = new TreeItem(tree, SWT.NONE);
+            item.setText("item " + i);
+            for (int j = 0; j < 2; j++) {
+                TreeItem subItem = new TreeItem(item, SWT.NONE);
+                subItem.setText("item " + j);
+                for (int k = 0; k < 2; k++) {
+                    TreeItem subsubItem = new TreeItem(subItem, SWT.NONE);
+                    subsubItem.setText("item " + k);
+                }
+            }
+        }
 
-	tree.addSelectionListener(widgetSelectedAdapter(e -> {
-			TreeItem[] revisedSelection = new TreeItem[0];
-			for (TreeItem item : tree.getSelection()) {
-				String text = item.getText();
-				if (text.indexOf('1') > 0) {
-					TreeItem[] newSelection = new TreeItem[revisedSelection.length + 1];
-					System.arraycopy(revisedSelection, 0, newSelection, 0, revisedSelection.length);
-					newSelection[revisedSelection.length] = item;
-					revisedSelection = newSelection;
-				}
-			}
-			tree.setSelection(revisedSelection);
-		}));
+        tree.addSelectionListener(widgetSelectedAdapter(e -> {
+            TreeItem[] revisedSelection = new TreeItem[0];
+            for (TreeItem item : tree.getSelection()) {
+                String text = item.getText();
+                if (text.indexOf('1') > 0) {
+                    TreeItem[] newSelection = new TreeItem[revisedSelection.length + 1];
+                    System.arraycopy(revisedSelection, 0, newSelection, 0, revisedSelection.length);
+                    newSelection[revisedSelection.length] = item;
+                    revisedSelection = newSelection;
+                }
+            }
+            tree.setSelection(revisedSelection);
+        }));
 
-	shell.setSize(300, 300);
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch())
-			display.sleep();
-	}
-	display.dispose();
-}
+        shell.setSize(300, 300);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

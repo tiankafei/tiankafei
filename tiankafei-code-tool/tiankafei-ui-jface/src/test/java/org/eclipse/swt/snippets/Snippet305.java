@@ -20,63 +20,71 @@ package org.eclipse.swt.snippets;
  * http://www.eclipse.org/swt/snippets/
  */
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.ole.win32.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.ole.win32.OLE;
+import org.eclipse.swt.ole.win32.OleAutomation;
+import org.eclipse.swt.ole.win32.OleControlSite;
+import org.eclipse.swt.ole.win32.OleEvent;
+import org.eclipse.swt.ole.win32.OleFrame;
+import org.eclipse.swt.ole.win32.OleListener;
+import org.eclipse.swt.ole.win32.Variant;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet305 {
-	static int SheetSelectionChange = 0x00000616;
-	static String IID_AppEvents = "{00024413-0000-0000-C000-000000000046}";
+    static int SheetSelectionChange = 0x00000616;
+    static String IID_AppEvents = "{00024413-0000-0000-C000-000000000046}";
 
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Excel Sheet Selection Example");
-		shell.setLayout(new FillLayout());
-		OleAutomation application;
-		try {
-			OleFrame frame = new OleFrame(shell, SWT.NONE);
-			OleControlSite controlSite = new OleControlSite(frame, SWT.NONE, "Excel.Sheet");
-			controlSite.doVerb(OLE.OLEIVERB_INPLACEACTIVATE);
-			
-			OleAutomation excelSheet = new OleAutomation(controlSite);
-			int[] dispIDs = excelSheet.getIDsOfNames(new String[] { "Application" });
-			Variant pVarResult = excelSheet.getProperty(dispIDs[0]);
-			application = pVarResult.getAutomation();
-			pVarResult.dispose();
-			excelSheet.dispose();
-			
-			OleListener listener = new OleListener() {
-				@Override
-				public void handleEvent(OleEvent e) {
-					// SheetSelectionChange(ByVal Sh As Object, ByVal Target As Excel.Range)
-					Variant[] args = e.arguments;
-					// OleAutomation sheet = args[1].getAutomation(); // Excel.Sheet
-					OleAutomation range = args[0].getAutomation(); // Excel.Range
-					int[] dispIDs = range.getIDsOfNames(new String[] { "Row" });
-					Variant pVarResult = range.getProperty(dispIDs[0]);
-					int row = pVarResult.getInt();
-					dispIDs = range.getIDsOfNames(new String[] { "Column" });
-					pVarResult = range.getProperty(dispIDs[0]);
-					int column = pVarResult.getInt();
-					range.dispose();
-					System.out.println("row=" + row + " column=" + column);
-				}
-			};
-			controlSite.addEventListener(application, IID_AppEvents, SheetSelectionChange, listener);
-		} catch (SWTError e) {
-			System.out.println("Unable to open activeX control");
-			display.dispose();
-			return;
-		}
-		shell.setSize(800, 600);
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		if (application != null) application.dispose();
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Excel Sheet Selection Example");
+        shell.setLayout(new FillLayout());
+        OleAutomation application;
+        try {
+            OleFrame frame = new OleFrame(shell, SWT.NONE);
+            OleControlSite controlSite = new OleControlSite(frame, SWT.NONE, "Excel.Sheet");
+            controlSite.doVerb(OLE.OLEIVERB_INPLACEACTIVATE);
+
+            OleAutomation excelSheet = new OleAutomation(controlSite);
+            int[] dispIDs = excelSheet.getIDsOfNames(new String[]{"Application"});
+            Variant pVarResult = excelSheet.getProperty(dispIDs[0]);
+            application = pVarResult.getAutomation();
+            pVarResult.dispose();
+            excelSheet.dispose();
+
+            OleListener listener = new OleListener() {
+                @Override
+                public void handleEvent(OleEvent e) {
+                    // SheetSelectionChange(ByVal Sh As Object, ByVal Target As Excel.Range)
+                    Variant[] args = e.arguments;
+                    // OleAutomation sheet = args[1].getAutomation(); // Excel.Sheet
+                    OleAutomation range = args[0].getAutomation(); // Excel.Range
+                    int[] dispIDs = range.getIDsOfNames(new String[]{"Row"});
+                    Variant pVarResult = range.getProperty(dispIDs[0]);
+                    int row = pVarResult.getInt();
+                    dispIDs = range.getIDsOfNames(new String[]{"Column"});
+                    pVarResult = range.getProperty(dispIDs[0]);
+                    int column = pVarResult.getInt();
+                    range.dispose();
+                    System.out.println("row=" + row + " column=" + column);
+                }
+            };
+            controlSite.addEventListener(application, IID_AppEvents, SheetSelectionChange, listener);
+        } catch (SWTError e) {
+            System.out.println("Unable to open activeX control");
+            display.dispose();
+            return;
+        }
+        shell.setSize(800, 600);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        if (application != null) application.dispose();
+        display.dispose();
+    }
 }

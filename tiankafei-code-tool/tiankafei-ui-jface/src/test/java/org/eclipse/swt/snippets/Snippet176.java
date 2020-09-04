@@ -21,56 +21,60 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.1
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet176 {
 
-	public static void main(String[] args) {
-	Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 176");
-	RowLayout layout = new RowLayout(SWT.HORIZONTAL);
-	layout.wrap = true;
-	layout.fill = false;
-	layout.justify = true;
-	shell.setLayout(layout);
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 176");
+        RowLayout layout = new RowLayout(SWT.HORIZONTAL);
+        layout.wrap = true;
+        layout.fill = false;
+        layout.justify = true;
+        shell.setLayout(layout);
 
-	Button b = new Button(shell, SWT.PUSH);
-	b.setText("Button 1");
-	b = new Button(shell, SWT.PUSH);
+        Button b = new Button(shell, SWT.PUSH);
+        b.setText("Button 1");
+        b = new Button(shell, SWT.PUSH);
 
-	b.setText("Button 2");
+        b.setText("Button 2");
 
-	b = new Button(shell, SWT.PUSH);
-	b.setText("Button 3");
+        b = new Button(shell, SWT.PUSH);
+        b.setText("Button 3");
 
-	b = new Button(shell, SWT.PUSH);
-	b.setText("Not shown");
-	b.setVisible(false);
-	RowData data = new RowData();
-	data.exclude = true;
-	b.setLayoutData(data);
+        b = new Button(shell, SWT.PUSH);
+        b.setText("Not shown");
+        b.setVisible(false);
+        RowData data = new RowData();
+        data.exclude = true;
+        b.setLayoutData(data);
 
-	b = new Button(shell, SWT.PUSH);
-	b.setText("Button 200 high");
-	data = new RowData();
-	data.height = 200;
-	b.setLayoutData(data);
+        b = new Button(shell, SWT.PUSH);
+        b.setText("Button 200 high");
+        data = new RowData();
+        data.height = 200;
+        b.setLayoutData(data);
 
-	b = new Button(shell, SWT.PUSH);
-	b.setText("Button 200 wide");
-	data = new RowData();
-	data.width = 200;
-	b.setLayoutData(data);
+        b = new Button(shell, SWT.PUSH);
+        b.setText("Button 200 wide");
+        data = new RowData();
+        data.width = 200;
+        b.setLayoutData(data);
 
-	shell.pack();
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch())
-			display.sleep();
-	}
-	display.dispose();
-}
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

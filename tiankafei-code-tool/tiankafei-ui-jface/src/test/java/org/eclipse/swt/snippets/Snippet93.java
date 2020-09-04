@@ -19,28 +19,32 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet93 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 93");
-	shell.setLayout (new RowLayout ());
-	Label label = new Label (shell, SWT.NONE);
-	GC gc = new GC (label);
-	Point size = gc.textExtent ("Hello");
-	gc.dispose ();
-	label.setText ("Hello -> " + size);
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 93");
+        shell.setLayout(new RowLayout());
+        Label label = new Label(shell, SWT.NONE);
+        GC gc = new GC(label);
+        Point size = gc.textExtent("Hello");
+        gc.dispose();
+        label.setText("Hello -> " + size);
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

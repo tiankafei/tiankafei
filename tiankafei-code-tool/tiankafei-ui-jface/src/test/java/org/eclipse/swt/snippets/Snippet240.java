@@ -25,80 +25,87 @@ package org.eclipse.swt.snippets;
  * @since 3.2
  */
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TreeItem;
 
 public class Snippet240 {
 
-public static void main(String [] args) {
-	final Display display = new Display();
-	Shell shell = new Shell (display);
-	shell.setText("Text spans two columns in a TreeItem");
-	shell.setLayout (new FillLayout());
-	final Tree tree = new Tree(shell, SWT.MULTI | SWT.FULL_SELECTION);
-	tree.setHeaderVisible(true);
-	int columnCount = 4;
-	for (int i=0; i<columnCount; i++) {
-		TreeColumn column = new TreeColumn(tree, SWT.NONE);
-		column.setText("Column " + i);
-	}
-	int itemCount = 8;
-	for (int i = 0; i < itemCount; i++) {
-		TreeItem item = new TreeItem(tree, SWT.NONE);
-		item.setText(0, "item "+i+" a");
-		item.setText(3, "item "+i+" d");
-		for (int j = 0; j < 3; j++) {
-			TreeItem subItem = new TreeItem(item, SWT.NONE);
-			subItem.setText(0, "subItem "+i+"-"+j+" a");
-			subItem.setText(3, "subItem "+i+"-"+j+" d");
-		}
-	}
-	/*
-	 * NOTE: MeasureItem, PaintItem and EraseItem are called repeatedly.
-	 * Therefore, it is critical for performance that these methods be
-	 * as efficient as possible.
-	 */
-	final String string = "text that spans two columns";
-	GC gc = new GC(tree);
-	final Point extent = gc.stringExtent(string);
-	gc.dispose();
-	final Color red = display.getSystemColor(SWT.COLOR_RED);
-	Listener paintListener = event -> {
-		switch(event.type) {
-			case SWT.MeasureItem: {
-				if (event.index == 1 || event.index == 2) {
-					event.width = extent.x/2;
-					event.height = Math.max(event.height, extent.y + 2);
-				}
-				break;
-			}
-			case SWT.PaintItem: {
-				if (event.index == 1 || event.index == 2) {
-					int offset = 0;
-					if (event.index == 2) {
-						TreeColumn column1 = tree.getColumn(1);
-						offset = column1.getWidth();
-					}
-					event.gc.setForeground(red);
-					int y = event.y + (event.height - extent.y)/2;
-					event.gc.drawString(string, event.x - offset, y, true);
-				}
-				break;
-			}
-		}
-	};
-	tree.addListener(SWT.MeasureItem, paintListener);
-	tree.addListener(SWT.PaintItem, paintListener);
-	for (int i = 0; i < columnCount; i++) {
-		tree.getColumn(i).pack();
-	}
-	shell.pack();
-	shell.open();
-	while(!shell.isDisposed()) {
-		if(!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Text spans two columns in a TreeItem");
+        shell.setLayout(new FillLayout());
+        final Tree tree = new Tree(shell, SWT.MULTI | SWT.FULL_SELECTION);
+        tree.setHeaderVisible(true);
+        int columnCount = 4;
+        for (int i = 0; i < columnCount; i++) {
+            TreeColumn column = new TreeColumn(tree, SWT.NONE);
+            column.setText("Column " + i);
+        }
+        int itemCount = 8;
+        for (int i = 0; i < itemCount; i++) {
+            TreeItem item = new TreeItem(tree, SWT.NONE);
+            item.setText(0, "item " + i + " a");
+            item.setText(3, "item " + i + " d");
+            for (int j = 0; j < 3; j++) {
+                TreeItem subItem = new TreeItem(item, SWT.NONE);
+                subItem.setText(0, "subItem " + i + "-" + j + " a");
+                subItem.setText(3, "subItem " + i + "-" + j + " d");
+            }
+        }
+        /*
+         * NOTE: MeasureItem, PaintItem and EraseItem are called repeatedly.
+         * Therefore, it is critical for performance that these methods be
+         * as efficient as possible.
+         */
+        final String string = "text that spans two columns";
+        GC gc = new GC(tree);
+        final Point extent = gc.stringExtent(string);
+        gc.dispose();
+        final Color red = display.getSystemColor(SWT.COLOR_RED);
+        Listener paintListener = event -> {
+            switch (event.type) {
+                case SWT.MeasureItem: {
+                    if (event.index == 1 || event.index == 2) {
+                        event.width = extent.x / 2;
+                        event.height = Math.max(event.height, extent.y + 2);
+                    }
+                    break;
+                }
+                case SWT.PaintItem: {
+                    if (event.index == 1 || event.index == 2) {
+                        int offset = 0;
+                        if (event.index == 2) {
+                            TreeColumn column1 = tree.getColumn(1);
+                            offset = column1.getWidth();
+                        }
+                        event.gc.setForeground(red);
+                        int y = event.y + (event.height - extent.y) / 2;
+                        event.gc.drawString(string, event.x - offset, y, true);
+                    }
+                    break;
+                }
+            }
+        };
+        tree.addListener(SWT.MeasureItem, paintListener);
+        tree.addListener(SWT.PaintItem, paintListener);
+        for (int i = 0; i < columnCount; i++) {
+            tree.getColumn(i).pack();
+        }
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

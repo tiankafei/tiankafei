@@ -21,47 +21,51 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.1
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.browser.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet159 {
-	public static void main(String [] args) {
-		final String newTitle = "New Value for Title";
-		Display display = new Display();
-		final Shell shell = new Shell(display);
-		shell.setText("Snippet 159");
-		shell.setLayout(new FillLayout());
-		final Browser browser;
-		try {
-			browser = new Browser(shell, SWT.NONE);
-		} catch (SWTError e) {
-			System.out.println("Could not instantiate Browser: " + e.getMessage());
-			display.dispose();
-			return;
-		}
-		browser.addTitleListener(event -> {
-			System.out.println("TitleEvent: "+event.title);
-			shell.setText(event.title);
-		});
-		browser.addProgressListener(ProgressListener.completedAdapter(event -> {
-			/* Set HTML title tag using JavaScript and DOM when page has been loaded */
-			boolean result = browser.execute("document.title='" + newTitle + "'");
-			if (!result) {
-				/* Script may fail or may not be supported on certain platforms. */
-				System.out.println("Script was not executed.");
-			}
-		}));
-		/* Load an HTML document */
-		browser.setUrl("http://www.eclipse.org");
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        final String newTitle = "New Value for Title";
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 159");
+        shell.setLayout(new FillLayout());
+        final Browser browser;
+        try {
+            browser = new Browser(shell, SWT.NONE);
+        } catch (SWTError e) {
+            System.out.println("Could not instantiate Browser: " + e.getMessage());
+            display.dispose();
+            return;
+        }
+        browser.addTitleListener(event -> {
+            System.out.println("TitleEvent: " + event.title);
+            shell.setText(event.title);
+        });
+        browser.addProgressListener(ProgressListener.completedAdapter(event -> {
+            /* Set HTML title tag using JavaScript and DOM when page has been loaded */
+            boolean result = browser.execute("document.title='" + newTitle + "'");
+            if (!result) {
+                /* Script may fail or may not be supported on certain platforms. */
+                System.out.println("Script was not executed.");
+            }
+        }));
+        /* Load an HTML document */
+        browser.setUrl("http://www.eclipse.org");
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }
 
 

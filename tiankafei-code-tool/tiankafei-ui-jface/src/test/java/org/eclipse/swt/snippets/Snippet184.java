@@ -21,31 +21,34 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.1
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Spinner;
 
 public class Snippet184 {
 
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("Snippet 184");
-		Spinner spinner = new Spinner (shell, SWT.BORDER);
-		spinner.setMinimum(0);
-		spinner.setMaximum(1000);
-		spinner.setSelection(500);
-		spinner.setIncrement(1);
-		spinner.setPageIncrement(100);
-		Rectangle clientArea = shell.getClientArea();
-		spinner.setLocation(clientArea.x, clientArea.y);
-		spinner.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 184");
+        Spinner spinner = new Spinner(shell, SWT.BORDER);
+        spinner.setMinimum(0);
+        spinner.setMaximum(1000);
+        spinner.setSelection(500);
+        spinner.setIncrement(1);
+        spinner.setPageIncrement(100);
+        Rectangle clientArea = shell.getClientArea();
+        spinner.setLocation(clientArea.x, clientArea.y);
+        spinner.pack();
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

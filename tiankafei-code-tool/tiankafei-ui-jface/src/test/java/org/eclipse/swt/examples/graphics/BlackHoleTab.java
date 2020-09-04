@@ -13,37 +13,38 @@
  *******************************************************************************/
 package org.eclipse.swt.examples.graphics;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.GC;
 
 public class BlackHoleTab extends AnimatedGraphicsTab {
 
-	int size = 1;
+    int size = 1;
 
-public BlackHoleTab(GraphicsExample example) {
-	super(example);
-}
+    public BlackHoleTab(GraphicsExample example) {
+        super(example);
+    }
 
-@Override
-public String getText() {
-	return GraphicsExample.getResourceString("BlackHole"); //$NON-NLS-1$
-}
+    @Override
+    public String getText() {
+        return GraphicsExample.getResourceString("BlackHole"); //$NON-NLS-1$
+    }
 
-@Override
-public String getDescription() {
-	return GraphicsExample.getResourceString("BlackHoleDescription"); //$NON-NLS-1$
-}
+    @Override
+    public String getDescription() {
+        return GraphicsExample.getResourceString("BlackHoleDescription"); //$NON-NLS-1$
+    }
 
-@Override
-public void next(int width, int height) {
-	if (size > width * 3 / 2) size = 0;
-	else size += 10;
-}
+    @Override
+    public void next(int width, int height) {
+        if (size > width * 3 / 2) size = 0;
+        else size += 10;
+    }
 
-@Override
-public void paint(GC gc, int width, int height) {
-	Device device = gc.getDevice();
-	gc.setBackground(device.getSystemColor(SWT.COLOR_BLACK));
-	gc.fillOval((width - size) / 2, (height - size) / 2, size, size);
-}
+    @Override
+    public void paint(GC gc, int width, int height) {
+        Device device = gc.getDevice();
+        gc.setBackground(device.getSystemColor(SWT.COLOR_BLACK));
+        gc.fillOval((width - size) / 2, (height - size) / 2, size, size);
+    }
 }

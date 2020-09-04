@@ -23,67 +23,74 @@ package org.eclipse.swt.snippets;
  * @since 3.0
  */
 
-import static org.eclipse.swt.events.SelectionListener.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
+import org.eclipse.swt.events.MenuListener;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.dnd.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
 public class Snippet122 {
 
-public static void main(String[] args) {
-	Display display = new Display();
-	final Clipboard cb = new Clipboard(display);
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 122");
-	shell.setLayout(new FillLayout());
-	final Text text = new Text(shell, SWT.BORDER | SWT.MULTI | SWT.WRAP);
-	Menu menu = new Menu(shell, SWT.POP_UP);
-	final MenuItem copyItem = new MenuItem(menu, SWT.PUSH);
-	copyItem.setText("Copy");
-	copyItem.addSelectionListener(widgetSelectedAdapter(e -> {
-			String selection = text.getSelectionText();
-			if (selection.length() == 0) {
-				return;
-			}
-			Object[] data = new Object[] { selection };
-			Transfer[] types = new Transfer[] { TextTransfer.getInstance() };
-			cb.setContents(data, types);
-		}));
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Clipboard cb = new Clipboard(display);
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 122");
+        shell.setLayout(new FillLayout());
+        final Text text = new Text(shell, SWT.BORDER | SWT.MULTI | SWT.WRAP);
+        Menu menu = new Menu(shell, SWT.POP_UP);
+        final MenuItem copyItem = new MenuItem(menu, SWT.PUSH);
+        copyItem.setText("Copy");
+        copyItem.addSelectionListener(widgetSelectedAdapter(e -> {
+            String selection = text.getSelectionText();
+            if (selection.length() == 0) {
+                return;
+            }
+            Object[] data = new Object[]{selection};
+            Transfer[] types = new Transfer[]{TextTransfer.getInstance()};
+            cb.setContents(data, types);
+        }));
 
-	final MenuItem pasteItem = new MenuItem(menu, SWT.PUSH);
-	pasteItem.setText ("Paste");
-	pasteItem.addSelectionListener(widgetSelectedAdapter(e -> {
-			String string = (String) (cb.getContents(TextTransfer.getInstance()));
-			if (string != null) {
-				text.insert(string);
-			}
-		}));
-	menu.addMenuListener(MenuListener.menuShownAdapter(e -> {
-		// is copy valid?
-		String selection = text.getSelectionText();
-		copyItem.setEnabled(selection.length() > 0);
-		// is paste valid?
-		boolean enabled = false;
-		for (TransferData transfer : cb.getAvailableTypes()) {
-			if (TextTransfer.getInstance().isSupportedType(transfer)) {
-				enabled = true;
-				break;
-			}
-		}
-		pasteItem.setEnabled(enabled);
-	}));
-	text.setMenu (menu);
+        final MenuItem pasteItem = new MenuItem(menu, SWT.PUSH);
+        pasteItem.setText("Paste");
+        pasteItem.addSelectionListener(widgetSelectedAdapter(e -> {
+            String string = (String) (cb.getContents(TextTransfer.getInstance()));
+            if (string != null) {
+                text.insert(string);
+            }
+        }));
+        menu.addMenuListener(MenuListener.menuShownAdapter(e -> {
+            // is copy valid?
+            String selection = text.getSelectionText();
+            copyItem.setEnabled(selection.length() > 0);
+            // is paste valid?
+            boolean enabled = false;
+            for (TransferData transfer : cb.getAvailableTypes()) {
+                if (TextTransfer.getInstance().isSupportedType(transfer)) {
+                    enabled = true;
+                    break;
+                }
+            }
+            pasteItem.setEnabled(enabled);
+        }));
+        text.setMenu(menu);
 
-	shell.setSize(200, 200);
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch())
-			display.sleep();
-	}
-	cb.dispose();
-	display.dispose();
-}
+        shell.setSize(200, 200);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        cb.dispose();
+        display.dispose();
+    }
 }

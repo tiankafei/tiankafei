@@ -19,29 +19,33 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 public class Snippet52 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 52");
-	Table table = new Table (shell, SWT.BORDER | SWT.MULTI);
-	Rectangle clientArea = shell.getClientArea ();
-	table.setBounds (clientArea.x, clientArea.y, 200, 200);
-	for (int i=0; i<128; i++) {
-		TableItem item = new TableItem (table, SWT.NONE);
-		item.setText ("Item " + i);
-	}
-	table.setSelection (95);
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 52");
+        Table table = new Table(shell, SWT.BORDER | SWT.MULTI);
+        Rectangle clientArea = shell.getClientArea();
+        table.setBounds(clientArea.x, clientArea.y, 200, 200);
+        for (int i = 0; i < 128; i++) {
+            TableItem item = new TableItem(table, SWT.NONE);
+            item.setText("Item " + i);
+        }
+        table.setSelection(95);
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

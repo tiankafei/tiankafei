@@ -34,64 +34,67 @@ import org.eclipse.swt.widgets.Shell;
  * additional information to an AT.
  */
 public class AccessibleValueExample {
-	private static int value = 40;
-	private static int min = 0;
-	private static int max = 100;
+    private static int value = 40;
+    private static int min = 0;
+    private static int max = 100;
 
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setLayout(new FillLayout());
-		shell.setText("Accessible Value Example");
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setLayout(new FillLayout());
+        shell.setText("Accessible Value Example");
 
-		final Canvas canvas = new Canvas(shell, SWT.DOUBLE_BUFFERED);
-		canvas.addPaintListener(e -> {
-			Rectangle rect = canvas.getClientArea();
-			String val = String.valueOf(value);
-			Point size = e.gc.stringExtent(val);
-			e.gc.setBackground(e.display.getSystemColor(SWT.COLOR_LIST_SELECTION));
-			e.gc.fillRectangle(0, 0, rect.width * value / (max - min), rect.height);
-			e.gc.drawString(val, rect.x + (rect.width - size.x) / 2, rect.y + (rect.height - size.y) / 2, true);
-		});
+        final Canvas canvas = new Canvas(shell, SWT.DOUBLE_BUFFERED);
+        canvas.addPaintListener(e -> {
+            Rectangle rect = canvas.getClientArea();
+            String val = String.valueOf(value);
+            Point size = e.gc.stringExtent(val);
+            e.gc.setBackground(e.display.getSystemColor(SWT.COLOR_LIST_SELECTION));
+            e.gc.fillRectangle(0, 0, rect.width * value / (max - min), rect.height);
+            e.gc.drawString(val, rect.x + (rect.width - size.x) / 2, rect.y + (rect.height - size.y) / 2, true);
+        });
 
-		Accessible accessible = canvas.getAccessible();
-		accessible.addAccessibleListener(new AccessibleAdapter() {
-			@Override
-			public void getName(AccessibleEvent e) {
-				e.result = "The value of this canvas is " + value;
-			}
-		});
-		accessible.addAccessibleControlListener(new AccessibleControlAdapter() {
-			@Override
-			public void getRole(AccessibleControlEvent e) {
-				e.detail = ACC.ROLE_PROGRESSBAR;
-			}
-		});
-		accessible.addAccessibleValueListener(new AccessibleValueAdapter() {
-			@Override
-			public void setCurrentValue(AccessibleValueEvent e) {
-				value = e.value.intValue();
-				canvas.redraw();
-			}
-			@Override
-			public void getMinimumValue(AccessibleValueEvent e) {
-				e.value = Integer.valueOf(min);
-			}
-			@Override
-			public void getMaximumValue(AccessibleValueEvent e) {
-				e.value = Integer.valueOf(max);
-			}
-			@Override
-			public void getCurrentValue(AccessibleValueEvent e) {
-				e.value = Integer.valueOf(value);
-			}
-		});
+        Accessible accessible = canvas.getAccessible();
+        accessible.addAccessibleListener(new AccessibleAdapter() {
+            @Override
+            public void getName(AccessibleEvent e) {
+                e.result = "The value of this canvas is " + value;
+            }
+        });
+        accessible.addAccessibleControlListener(new AccessibleControlAdapter() {
+            @Override
+            public void getRole(AccessibleControlEvent e) {
+                e.detail = ACC.ROLE_PROGRESSBAR;
+            }
+        });
+        accessible.addAccessibleValueListener(new AccessibleValueAdapter() {
+            @Override
+            public void setCurrentValue(AccessibleValueEvent e) {
+                value = e.value.intValue();
+                canvas.redraw();
+            }
 
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) display.sleep();
-		}
-		display.dispose();
-	}
+            @Override
+            public void getMinimumValue(AccessibleValueEvent e) {
+                e.value = Integer.valueOf(min);
+            }
+
+            @Override
+            public void getMaximumValue(AccessibleValueEvent e) {
+                e.value = Integer.valueOf(max);
+            }
+
+            @Override
+            public void getCurrentValue(AccessibleValueEvent e) {
+                e.value = Integer.valueOf(value);
+            }
+        });
+
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

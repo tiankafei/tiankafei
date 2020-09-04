@@ -19,31 +19,35 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 public class Snippet301 {
-	public static void main (String [] args) {
-		Display display = new Display ();
-		Shell shell = new Shell (display);
-		shell.setText("Snippet 301");
-		FillLayout layout = new FillLayout();
-		layout.marginHeight = 10;
-		layout.marginWidth = 10;
-		shell.setLayout(layout);
-		Table table = new Table (shell, SWT.BORDER | SWT.NO_SCROLL);
-		for (int i=0; i<10; i++) {
-			TableItem item = new TableItem (table, SWT.NONE);
-			item.setText ("Item " + i);
-		}
-		shell.pack ();
-		shell.open ();
-		while (!shell.isDisposed ()) {
-			if (!display.readAndDispatch ()) display.sleep ();
-		}
-		display.dispose ();
-	}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 301");
+        FillLayout layout = new FillLayout();
+        layout.marginHeight = 10;
+        layout.marginWidth = 10;
+        shell.setLayout(layout);
+        Table table = new Table(shell, SWT.BORDER | SWT.NO_SCROLL);
+        for (int i = 0; i < 10; i++) {
+            TableItem item = new TableItem(table, SWT.NONE);
+            item.setText("Item " + i);
+        }
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
 
 }

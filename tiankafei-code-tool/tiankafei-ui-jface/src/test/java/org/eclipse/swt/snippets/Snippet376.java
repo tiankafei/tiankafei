@@ -13,14 +13,15 @@
  *******************************************************************************/
 package org.eclipse.swt.snippets;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * Example snippet: Styled Text Widget with 50000 lines of text and line wrap.
- *
+ * <p>
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  *
@@ -28,33 +29,33 @@ import org.eclipse.swt.widgets.*;
  */
 public class Snippet376 {
 
-	private static final int LINES = 500000;
-	private static final int WORDS_PER_LINE = 10;
-	private static final String WORD = "123456789 ";
+    private static final int LINES = 500000;
+    private static final int WORDS_PER_LINE = 10;
+    private static final String WORD = "123456789 ";
 
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setBounds(10, 10, 300, 300);
-		shell.setLayout(new FillLayout());
-		final StyledText text = new StyledText(shell, SWT.MULTI | SWT.V_SCROLL | SWT.WRAP);
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setBounds(10, 10, 300, 300);
+        shell.setLayout(new FillLayout());
+        final StyledText text = new StyledText(shell, SWT.MULTI | SWT.V_SCROLL | SWT.WRAP);
 
-		StringBuilder buffer = new StringBuilder(LINES * WORDS_PER_LINE * WORD.length() * 2);
-		for (int i = 0; i < LINES ; i++) {
-			buffer.append("Line " + i + ": ");
-			for (int j = 0; j < WORDS_PER_LINE; j++) {
-				buffer.append(WORD);
-			}
-			buffer.append("\n");
-		}
+        StringBuilder buffer = new StringBuilder(LINES * WORDS_PER_LINE * WORD.length() * 2);
+        for (int i = 0; i < LINES; i++) {
+            buffer.append("Line " + i + ": ");
+            for (int j = 0; j < WORDS_PER_LINE; j++) {
+                buffer.append(WORD);
+            }
+            buffer.append("\n");
+        }
 
-		shell.open();
-		text.setText(buffer.toString());
+        shell.open();
+        text.setText(buffer.toString());
 
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
+        }
+        display.dispose();
+    }
 }

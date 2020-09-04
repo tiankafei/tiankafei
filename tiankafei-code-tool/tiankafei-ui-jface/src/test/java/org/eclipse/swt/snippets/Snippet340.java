@@ -22,60 +22,76 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.6
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.accessibility.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.accessibility.ACC;
+import org.eclipse.swt.accessibility.AccessibleAdapter;
+import org.eclipse.swt.accessibility.AccessibleEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet340 {
 
-public static void main(String[] args) {
-	Display display = new Display();
-	Shell shell = new Shell(display);
-	shell.setText("Snippet 340");
-	shell.setLayout(new GridLayout());
-	shell.setText("Description Relation Example");
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 340");
+        shell.setLayout(new GridLayout());
+        shell.setText("Description Relation Example");
 
-	// (works with either a Label or a READ_ONLY Text)
-	final Label liveLabel = new Label(shell, SWT.BORDER | SWT.READ_ONLY);
+        // (works with either a Label or a READ_ONLY Text)
+        final Label liveLabel = new Label(shell, SWT.BORDER | SWT.READ_ONLY);
 //	final Text liveLabel = new Text(shell, SWT.BORDER | SWT.READ_ONLY);
-	liveLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-	liveLabel.setText("Live region messages go here");
+        liveLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        liveLabel.setText("Live region messages go here");
 
-	new Label(shell, SWT.NONE).setText("Type an integer from 1 to 4:");
+        new Label(shell, SWT.NONE).setText("Type an integer from 1 to 4:");
 
-	final Text textField = new Text(shell, SWT.SINGLE | SWT.BORDER);
-	textField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-	textField.addModifyListener(e -> {
-		String textValue = textField.getText();
-		String message = textValue + " is not valid input.";
-		try {
-			int value = Integer.parseInt(textValue);
-			switch (value) {
-				case 1: message = "One for the money,"; break;
-				case 2: message = "Two for the show,"; break;
-				case 3: message = "Three to get ready,"; break;
-				case 4: message = "And four to go!"; break;
-			}
-		} catch (NumberFormatException ex) {}
-		liveLabel.setText(message);
-		textField.getAccessible().sendEvent(ACC.EVENT_DESCRIPTION_CHANGED, null);
-		textField.setSelection(0, textField.getCharCount());
-	});
-	textField.getAccessible().addRelation(ACC.RELATION_DESCRIBED_BY, liveLabel.getAccessible());
-	liveLabel.getAccessible().addRelation(ACC.RELATION_DESCRIPTION_FOR, textField.getAccessible());
-	textField.getAccessible().addAccessibleListener(new AccessibleAdapter() {
-		@Override
-		public void getDescription(AccessibleEvent event) {
-			event.result = liveLabel.getText();
-		}
-	});
+        final Text textField = new Text(shell, SWT.SINGLE | SWT.BORDER);
+        textField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        textField.addModifyListener(e -> {
+            String textValue = textField.getText();
+            String message = textValue + " is not valid input.";
+            try {
+                int value = Integer.parseInt(textValue);
+                switch (value) {
+                    case 1:
+                        message = "One for the money,";
+                        break;
+                    case 2:
+                        message = "Two for the show,";
+                        break;
+                    case 3:
+                        message = "Three to get ready,";
+                        break;
+                    case 4:
+                        message = "And four to go!";
+                        break;
+                }
+            } catch (NumberFormatException ex) {
+            }
+            liveLabel.setText(message);
+            textField.getAccessible().sendEvent(ACC.EVENT_DESCRIPTION_CHANGED, null);
+            textField.setSelection(0, textField.getCharCount());
+        });
+        textField.getAccessible().addRelation(ACC.RELATION_DESCRIBED_BY, liveLabel.getAccessible());
+        liveLabel.getAccessible().addRelation(ACC.RELATION_DESCRIPTION_FOR, textField.getAccessible());
+        textField.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+            @Override
+            public void getDescription(AccessibleEvent event) {
+                event.result = liveLabel.getText();
+            }
+        });
 
-	shell.pack();
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

@@ -19,42 +19,47 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
+
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 public class Snippet58 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 58");
-	ToolBar bar = new ToolBar (shell, SWT.BORDER);
-	Rectangle clientArea = shell.getClientArea ();
-	bar.setLocation (clientArea.x, clientArea.y);
-	for (int i=0; i<4; i++) {
-		ToolItem item = new ToolItem (bar, 0);
-		item.setText ("Item " + i);
-	}
-	ToolItem sep = new ToolItem (bar, SWT.SEPARATOR);
-	int start = bar.getItemCount ();
-	for (int i=start; i<start+4; i++) {
-		ToolItem item = new ToolItem (bar, 0);
-		item.setText ("Item " + i);
-	}
-	Combo combo = new Combo (bar, SWT.READ_ONLY);
-	for (int i=0; i<4; i++) {
-		combo.add ("Item " + i);
-	}
-	combo.pack ();
-	sep.setWidth (combo.getSize ().x);
-	sep.setControl (combo);
-	bar.pack ();
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 58");
+        ToolBar bar = new ToolBar(shell, SWT.BORDER);
+        Rectangle clientArea = shell.getClientArea();
+        bar.setLocation(clientArea.x, clientArea.y);
+        for (int i = 0; i < 4; i++) {
+            ToolItem item = new ToolItem(bar, 0);
+            item.setText("Item " + i);
+        }
+        ToolItem sep = new ToolItem(bar, SWT.SEPARATOR);
+        int start = bar.getItemCount();
+        for (int i = start; i < start + 4; i++) {
+            ToolItem item = new ToolItem(bar, 0);
+            item.setText("Item " + i);
+        }
+        Combo combo = new Combo(bar, SWT.READ_ONLY);
+        for (int i = 0; i < 4; i++) {
+            combo.add("Item " + i);
+        }
+        combo.pack();
+        sep.setWidth(combo.getSize().x);
+        sep.setControl(combo);
+        bar.pack();
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

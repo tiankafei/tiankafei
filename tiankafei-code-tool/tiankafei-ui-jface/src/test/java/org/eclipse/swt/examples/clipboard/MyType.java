@@ -14,6 +14,6 @@
 package org.eclipse.swt.examples.clipboard;
 
 public class MyType {
-	String firstName;
-	String lastName;
+    String firstName;
+    String lastName;
 }

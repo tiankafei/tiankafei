@@ -20,32 +20,35 @@ package org.eclipse.swt.snippets;
  * http://www.eclipse.org/swt/snippets/
  */
 
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet290 {
 
-public static void main(String [] args) {
-	final Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 290");
-	shell.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseUp(MouseEvent e) {
-			if (e.count == 1) {
-				System.out.println("Mouse up");
-			}
-		}
-		@Override
-		public void mouseDoubleClick(MouseEvent e) {
-			System.out.println("Double-click");
-		}
-	});
-	shell.setBounds(10, 10, 200, 200);
-	shell.open ();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+    public static void main(String[] args) {
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 290");
+        shell.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                if (e.count == 1) {
+                    System.out.println("Mouse up");
+                }
+            }
+
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+                System.out.println("Double-click");
+            }
+        });
+        shell.setBounds(10, 10, 200, 200);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

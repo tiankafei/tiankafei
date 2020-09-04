@@ -13,47 +13,47 @@
  *******************************************************************************/
 package org.eclipse.swt.examples.browserexample;
 
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.part.*;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
 
 /**
  * <code>BrowserView</code> is a simple demonstration
  * of the SWT Browser widget.  It consists of a workbench
  * view and tab folder where each tab in the folder allows the
  * user to interact with a control.
- * 
+ *
  * @see ViewPart
  */
 public class BrowserView extends ViewPart {
-	BrowserExample instance = null;
-	
-	/**
-	 * Create the example
-	 * 
-	 * @see ViewPart#createPartControl
-	 */
-	@Override
-	public void createPartControl(Composite frame) {
-		instance = new BrowserExample(frame, true);
-	}
+    BrowserExample instance = null;
 
-	/**
-	 * Called when we must grab focus.
-	 * 
-	 * @see ViewPart#setFocus
-	 */
-	@Override
-	public void setFocus() {
-		instance.focus();
-	}
+    /**
+     * Create the example
+     *
+     * @see ViewPart#createPartControl
+     */
+    @Override
+    public void createPartControl(Composite frame) {
+        instance = new BrowserExample(frame, true);
+    }
 
-	/**
-	 * Called when the View is to be disposed
-	 */	
-	@Override
-	public void dispose() {
-		instance.dispose();
-		instance = null;
-		super.dispose();
-	}
+    /**
+     * Called when we must grab focus.
+     *
+     * @see ViewPart#setFocus
+     */
+    @Override
+    public void setFocus() {
+        instance.focus();
+    }
+
+    /**
+     * Called when the View is to be disposed
+     */
+    @Override
+    public void dispose() {
+        instance.dispose();
+        instance = null;
+        super.dispose();
+    }
 }

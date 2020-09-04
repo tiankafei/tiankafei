@@ -19,40 +19,44 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 public class Snippet64 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 64");
-	final Table table = new Table (shell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-	for (int i=0; i<16; i++) {
-		TableItem item = new TableItem (table, 0);
-		item.setText ("Item " + i);
-	}
-	Rectangle clientArea = shell.getClientArea ();
-	table.setBounds (clientArea.x, clientArea.y, 100, 100);
-	table.addListener (SWT.Selection, e -> {
-		String string = "";
-		for (TableItem item : table.getSelection ())
-			string += item + " ";
-		System.out.println ("Selection={" + string + "}");
-	});
-	table.addListener (SWT.DefaultSelection, e -> {
-		String string = "";
-		for (TableItem item : table.getSelection ())
-			string += item + " ";
-		System.out.println ("DefaultSelection={" + string + "}");
-	});
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 64");
+        final Table table = new Table(shell, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+        for (int i = 0; i < 16; i++) {
+            TableItem item = new TableItem(table, 0);
+            item.setText("Item " + i);
+        }
+        Rectangle clientArea = shell.getClientArea();
+        table.setBounds(clientArea.x, clientArea.y, 100, 100);
+        table.addListener(SWT.Selection, e -> {
+            String string = "";
+            for (TableItem item : table.getSelection())
+                string += item + " ";
+            System.out.println("Selection={" + string + "}");
+        });
+        table.addListener(SWT.DefaultSelection, e -> {
+            String string = "";
+            for (TableItem item : table.getSelection())
+                string += item + " ";
+            System.out.println("DefaultSelection={" + string + "}");
+        });
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

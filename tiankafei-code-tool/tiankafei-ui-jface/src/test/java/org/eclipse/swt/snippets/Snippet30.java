@@ -19,16 +19,17 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.program.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.program.Program;
+import org.eclipse.swt.widgets.Display;
 
 public class Snippet30 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Program p = Program.findProgram (".txt");
-	if (p != null) p.execute ("newfile");
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Program p = Program.findProgram(".txt");
+        if (p != null) p.execute("newfile");
+        display.dispose();
+    }
 
 }

@@ -14,7 +14,8 @@
 package org.eclipse.swt.examples.helloworld;
 
 
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /*
  * This example demonstrates the minimum amount of code required
@@ -22,18 +23,18 @@ import org.eclipse.swt.widgets.*;
  */
 public class HelloWorld1 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new HelloWorld1 ().open (display);
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new HelloWorld1().open(display);
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
-public Shell open (Display display) {
-	Shell shell = new Shell (display);
-	shell.open ();
-	return shell;
-}
+    public Shell open(Display display) {
+        Shell shell = new Shell(display);
+        shell.open();
+        return shell;
+    }
 }

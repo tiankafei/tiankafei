@@ -24,79 +24,88 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.5
  */
-import java.net.*;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.browser.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.LocationAdapter;
+import org.eclipse.swt.browser.LocationEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class Snippet317 {
 
-static String KNOWN_HOST = "www.eclipse.org";
-static String KNOWN_USER = "anonymous";
-static String KNOWN_PASSWORD = "anonymousPassword";
+    static String KNOWN_HOST = "www.eclipse.org";
+    static String KNOWN_USER = "anonymous";
+    static String KNOWN_PASSWORD = "anonymousPassword";
 
-public static void main(String [] args) {
-	Display display = new Display();
-	final Shell shell = new Shell(display);
-	shell.setText("Snippet 317");
-	GridLayout gridLayout = new GridLayout();
-	gridLayout.numColumns = 2;
-	shell.setLayout(gridLayout);
-	final Text location = new Text(shell, SWT.BORDER);
-	GridData data = new GridData();
-	data.horizontalAlignment = GridData.FILL;
-	data.grabExcessHorizontalSpace = true;
-	location.setLayoutData(data);
-	Button go = new Button(shell, SWT.PUSH);
-	go.setText("Go");
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 317");
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 2;
+        shell.setLayout(gridLayout);
+        final Text location = new Text(shell, SWT.BORDER);
+        GridData data = new GridData();
+        data.horizontalAlignment = GridData.FILL;
+        data.grabExcessHorizontalSpace = true;
+        location.setLayoutData(data);
+        Button go = new Button(shell, SWT.PUSH);
+        go.setText("Go");
 
-	final Browser browser;
-	try {
-		browser = new Browser(shell, SWT.NONE);
-	} catch (SWTError e) {
-		System.out.println("Could not instantiate Browser: " + e.getMessage());
-		display.dispose();
-		return;
-	}
-	data = new GridData();
-	data.horizontalAlignment = data.verticalAlignment = GridData.FILL;
-	data.grabExcessHorizontalSpace = data.grabExcessVerticalSpace = true;
-	data.horizontalSpan = 2;
-	browser.setLayoutData(data);
-	browser.setUrl ("eclipse.org");
-	browser.addLocationListener(new LocationAdapter() {
-		@Override
-		public void changed(LocationEvent event) {
-			location.setText(event.location);
-		}
-	});
+        final Browser browser;
+        try {
+            browser = new Browser(shell, SWT.NONE);
+        } catch (SWTError e) {
+            System.out.println("Could not instantiate Browser: " + e.getMessage());
+            display.dispose();
+            return;
+        }
+        data = new GridData();
+        data.horizontalAlignment = data.verticalAlignment = GridData.FILL;
+        data.grabExcessHorizontalSpace = data.grabExcessVerticalSpace = true;
+        data.horizontalSpan = 2;
+        browser.setLayoutData(data);
+        browser.setUrl("eclipse.org");
+        browser.addLocationListener(new LocationAdapter() {
+            @Override
+            public void changed(LocationEvent event) {
+                location.setText(event.location);
+            }
+        });
 
-	Listener navigateListener = event -> browser.setUrl(location.getText());
-	go.addListener(SWT.Selection, navigateListener);
-	location.addListener(SWT.DefaultSelection, navigateListener);
+        Listener navigateListener = event -> browser.setUrl(location.getText());
+        go.addListener(SWT.Selection, navigateListener);
+        location.addListener(SWT.DefaultSelection, navigateListener);
 
-	browser.addAuthenticationListener(event -> {
-		try {
-			URL url = new URL(event.location);
-			if (url.getHost().equals(KNOWN_HOST)) {
-				event.user = KNOWN_USER;
-				event.password = KNOWN_PASSWORD;
-			} else {
-				/* do nothing, let default prompter run */
-			}
-		} catch (MalformedURLException e) {
-			/* should not happen, let default prompter run */
-		}
-	});
+        browser.addAuthenticationListener(event -> {
+            try {
+                URL url = new URL(event.location);
+                if (url.getHost().equals(KNOWN_HOST)) {
+                    event.user = KNOWN_USER;
+                    event.password = KNOWN_PASSWORD;
+                } else {
+                    /* do nothing, let default prompter run */
+                }
+            } catch (MalformedURLException e) {
+                /* should not happen, let default prompter run */
+            }
+        });
 
-	shell.setBounds(10,10,500,500);
-	shell.open();
-	while (!shell.isDisposed()) {
-		if (!display.readAndDispatch()) display.sleep();
-	}
-	display.dispose();
-}
+        shell.setBounds(10, 10, 500, 500);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 
 }

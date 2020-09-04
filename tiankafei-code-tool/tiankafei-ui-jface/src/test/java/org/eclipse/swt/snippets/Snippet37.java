@@ -19,24 +19,27 @@ package org.eclipse.swt.snippets;
  * For a list of all SWT example snippets see
  * http://www.eclipse.org/swt/snippets/
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet37 {
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	Shell shell = new Shell (display);
-	shell.setText("Snippet 37");
-	shell.setLayout (new FillLayout ());
-	new Label (shell, SWT.SEPARATOR | SWT.HORIZONTAL);
-	new Label (shell, SWT.SEPARATOR | SWT.VERTICAL);
-	shell.setSize (200, 200);
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setText("Snippet 37");
+        shell.setLayout(new FillLayout());
+        new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
+        new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
+        shell.setSize(200, 200);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

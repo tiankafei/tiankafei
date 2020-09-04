@@ -21,48 +21,57 @@ package org.eclipse.swt.snippets;
  *
  * @since 3.1
  */
-import org.eclipse.swt.*;
-import org.eclipse.swt.widgets.*;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 
 public class Snippet62 {
 
-static String stateMask (int stateMask) {
-	String string = "";
-	if ((stateMask & SWT.CTRL) != 0) string += " CTRL";
-	if ((stateMask & SWT.ALT) != 0) string += " ALT";
-	if ((stateMask & SWT.SHIFT) != 0) string += " SHIFT";
-	if ((stateMask & SWT.COMMAND) != 0) string += " COMMAND";
-	return string;
-}
+    static String stateMask(int stateMask) {
+        String string = "";
+        if ((stateMask & SWT.CTRL) != 0) string += " CTRL";
+        if ((stateMask & SWT.ALT) != 0) string += " ALT";
+        if ((stateMask & SWT.SHIFT) != 0) string += " SHIFT";
+        if ((stateMask & SWT.COMMAND) != 0) string += " COMMAND";
+        return string;
+    }
 
-public static void main (String [] args) {
-	Display display = new Display ();
-	final Shell shell = new Shell (display);
-	shell.setText("Snippet 62");
-	Listener listener = e -> {
-		String string = "Unknown";
-		switch (e.type) {
-			case SWT.MouseDown: string = "DOWN"; break;
-			case SWT.MouseMove: string = "MOVE"; break;
-			case SWT.MouseUp: string = "UP"; break;
-		}
-		string +=": button: " + e.button + ", ";
-		string += "stateMask=0x" + Integer.toHexString (e.stateMask) + stateMask (e.stateMask) + ", x=" + e.x + ", y=" + e.y;
-		if ((e.stateMask & SWT.BUTTON1) != 0) string += " BUTTON1";
-		if ((e.stateMask & SWT.BUTTON2) != 0) string += " BUTTON2";
-		if ((e.stateMask & SWT.BUTTON3) != 0) string += " BUTTON3";
-		if ((e.stateMask & SWT.BUTTON4) != 0) string += " BUTTON4";
-		if ((e.stateMask & SWT.BUTTON5) != 0) string += " BUTTON5";
-		System.out.println (string);
-	};
-	shell.addListener (SWT.MouseDown, listener);
-	shell.addListener (SWT.MouseMove, listener);
-	shell.addListener (SWT.MouseUp, listener);
-	shell.pack ();
-	shell.open ();
-	while (!shell.isDisposed ()) {
-		if (!display.readAndDispatch ()) display.sleep ();
-	}
-	display.dispose ();
-}
+    public static void main(String[] args) {
+        Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setText("Snippet 62");
+        Listener listener = e -> {
+            String string = "Unknown";
+            switch (e.type) {
+                case SWT.MouseDown:
+                    string = "DOWN";
+                    break;
+                case SWT.MouseMove:
+                    string = "MOVE";
+                    break;
+                case SWT.MouseUp:
+                    string = "UP";
+                    break;
+            }
+            string += ": button: " + e.button + ", ";
+            string += "stateMask=0x" + Integer.toHexString(e.stateMask) + stateMask(e.stateMask) + ", x=" + e.x + ", y=" + e.y;
+            if ((e.stateMask & SWT.BUTTON1) != 0) string += " BUTTON1";
+            if ((e.stateMask & SWT.BUTTON2) != 0) string += " BUTTON2";
+            if ((e.stateMask & SWT.BUTTON3) != 0) string += " BUTTON3";
+            if ((e.stateMask & SWT.BUTTON4) != 0) string += " BUTTON4";
+            if ((e.stateMask & SWT.BUTTON5) != 0) string += " BUTTON5";
+            System.out.println(string);
+        };
+        shell.addListener(SWT.MouseDown, listener);
+        shell.addListener(SWT.MouseMove, listener);
+        shell.addListener(SWT.MouseUp, listener);
+        shell.pack();
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
+        display.dispose();
+    }
 }

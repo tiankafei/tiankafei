@@ -25,36 +25,37 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
 public class BrowserDemoView extends ViewPart {
-	Action pawnAction;
-	Action editAction;
-	Composite parent;
-	
-	public BrowserDemoView() {
-	}
-	@Override
-	public void createPartControl(Composite parent) {
-		this.parent = parent;
-		parent.setLayout(new FillLayout());
-		try {
-			Browser browser = new Browser(parent, SWT.NONE);
-			browser.dispose();
-		} catch (SWTError e) {
-			Text text = new Text(parent, SWT.MULTI | SWT.READ_ONLY);
-			text.setText("Browser widget cannot be instantiated. The exact error is:\r\n"+e);
-			text.requestLayout();
-			return;
-		}
-		TabFolder folder = new TabFolder(parent, SWT.NONE);
-		TabItem item = new TabItem(folder, SWT.NONE);
-		new PawnTab(item);
-		
-		item = new TabItem(folder, SWT.NONE);
-		new EditorTab(item);
-	}
-	
-	@Override
-	public void setFocus() {
-	}
-	
+    Action pawnAction;
+    Action editAction;
+    Composite parent;
+
+    public BrowserDemoView() {
+    }
+
+    @Override
+    public void createPartControl(Composite parent) {
+        this.parent = parent;
+        parent.setLayout(new FillLayout());
+        try {
+            Browser browser = new Browser(parent, SWT.NONE);
+            browser.dispose();
+        } catch (SWTError e) {
+            Text text = new Text(parent, SWT.MULTI | SWT.READ_ONLY);
+            text.setText("Browser widget cannot be instantiated. The exact error is:\r\n" + e);
+            text.requestLayout();
+            return;
+        }
+        TabFolder folder = new TabFolder(parent, SWT.NONE);
+        TabItem item = new TabItem(folder, SWT.NONE);
+        new PawnTab(item);
+
+        item = new TabItem(folder, SWT.NONE);
+        new EditorTab(item);
+    }
+
+    @Override
+    public void setFocus() {
+    }
+
 
 }
