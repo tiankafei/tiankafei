@@ -15,6 +15,7 @@
     <modules>
         <module>tiankafei-dependency</module>
         <module>tiankafei-parent</module>
+        <module>tiankafei-agent</module>
         <module>tiankafei-expression-fastel</module>
         <module>tiankafei-proxy</module>
         <module>tiankafei-asm</module>

@@ -494,6 +494,11 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-agent</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-base</artifactId>
                 <version>${org.tiankafei.tool.version}</version>
             </dependency>
