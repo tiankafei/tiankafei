@@ -26,6 +26,11 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.runtime -->
+        <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.core.runtime</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.commands -->
         <dependency>
             <groupId>org.eclipse.platform</groupId>

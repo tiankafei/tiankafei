@@ -265,6 +265,12 @@
                 <artifactId>jfreechart</artifactId>
                 <version>${jfreechart.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.runtime -->
+            <dependency>
+                <groupId>org.eclipse.platform</groupId>
+                <artifactId>org.eclipse.core.runtime</artifactId>
+                <version>3.18.0</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.core.commands -->
             <dependency>
                 <groupId>org.eclipse.platform</groupId>
