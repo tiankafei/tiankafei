@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.tiankafei</groupId>
-    <artifactId>code-learn-parent</artifactId>
+    <groupId>org.tiankafei.learn</groupId>
+    <artifactId>tiankafei-code-learn</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>code-learn-parent</name>
@@ -18,7 +18,8 @@
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
 
-        <code-tool.version>1.1-SNAPSHOT</code-tool.version>
+        <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
+
         <junit.version>4.12</junit.version>
     </properties>
 

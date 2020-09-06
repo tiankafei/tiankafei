@@ -8,7 +8,7 @@
         <version>2.2.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.tiankafei</groupId>
+    <groupId>org.tiankafei.learn</groupId>
     <artifactId>springboot-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
