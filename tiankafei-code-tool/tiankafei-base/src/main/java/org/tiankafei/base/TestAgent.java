@@ -14,9 +14,14 @@ public class TestAgent {
         System.out.println(TiankafeiAgent.sizeOf(new P()));
     }
 
+    ///
+    // 一个 Object 占多少个字节
+    // -XX:+UseCompressedClassPointers -XX:+UseCompressedOops
+    // Oops = ordinary object pointers
+
     private static class P {
-        //8 _markword
-        //4 _oop指针
+                        //8 _markword
+                        //4 _oop指针
         int id;         //4
         String name;    //4
         int age;        //4
