@@ -119,6 +119,17 @@
             <groupId>co.paralleluniverse</groupId>
             <artifactId>quasar-core</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.errorprone/error_prone_annotations -->
+        <dependency>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_annotations</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.objenesis/objenesis -->
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <scope>compile</scope>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/io.vavr/vavr -->
         <!--第三方类库：vavr（支持元组）：让你像写Scala一样写Java-->
         <dependency>
@@ -130,6 +141,10 @@
         <dependency>
             <groupId>org.tiankafei.tool</groupId>
             <artifactId>tiankafei-proxy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.tiankafei.tool</groupId>
+            <artifactId>tiankafei-agent</artifactId>
         </dependency>
     </dependencies>
 
