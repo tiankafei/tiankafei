@@ -101,6 +101,24 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/org.eclipse.ui.workbench-3.120.0.jar</systemPath>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui -->
+        <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.ui</artifactId>
+            <version>3.118.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/org.eclipse.ui-3.118.0.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.ide -->
+        <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.ui.ide</artifactId>
+            <version>3.17.200</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/org.eclipse.ui.ide-3.17.200.jar</systemPath>
+        </dependency>
+
+
 
     </dependencies>
 
