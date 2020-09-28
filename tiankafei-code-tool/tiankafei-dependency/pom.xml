@@ -359,12 +359,6 @@
                 <artifactId>jogl-all</artifactId>
                 <version>2.3.2</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.workbench -->
-            <dependency>
-                <groupId>org.eclipse.platform</groupId>
-                <artifactId>org.eclipse.ui.workbench</artifactId>
-                <version>3.120.0</version>
-            </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.rocksdb/rocksdbjni -->
             <dependency>

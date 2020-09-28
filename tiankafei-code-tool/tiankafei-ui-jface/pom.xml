@@ -97,8 +97,10 @@
         <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.ui.workbench</artifactId>
+            <version>3.120.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/org.eclipse.ui.workbench-3.120.0.jar</systemPath>
         </dependency>
-
 
     </dependencies>
 
