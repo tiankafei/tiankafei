@@ -91,6 +91,15 @@
             <groupId>org.tiankafei.tool</groupId>
             <artifactId>tiankafei-ui-design</artifactId>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.ui.workbench -->
+        <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.ui.workbench</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 </project>
