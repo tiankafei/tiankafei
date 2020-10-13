@@ -31,7 +31,7 @@
         <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
         <org.tiankafei.produce.version>1.0-RELEASE</org.tiankafei.produce.version>
 
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <swagger.version>2.9.2</swagger.version>
         <knife4j.version>2.0.4</knife4j.version>
         <fastjson.version>1.2.72</fastjson.version>
