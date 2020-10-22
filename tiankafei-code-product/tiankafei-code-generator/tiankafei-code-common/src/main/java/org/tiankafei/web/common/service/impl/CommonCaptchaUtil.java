@@ -16,7 +16,8 @@ import org.tiankafei.web.common.param.CaptchaVo;
  */
 public class CommonCaptchaUtil {
 
-    private CommonCaptchaUtil(){}
+    private CommonCaptchaUtil() {
+    }
 
     public static final SecureRandom RANDOM = new SecureRandom();
 

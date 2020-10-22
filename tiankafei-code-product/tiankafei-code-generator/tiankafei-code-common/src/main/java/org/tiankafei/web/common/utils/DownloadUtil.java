@@ -120,6 +120,7 @@ public final class DownloadUtil {
     public static interface DownloadHandler {
         /**
          * 处理下载
+         *
          * @param dir
          * @param fileName
          * @param file

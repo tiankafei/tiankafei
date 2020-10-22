@@ -7,8 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- *
- *
  * @author tiankafei
  * @since 1.0
  */

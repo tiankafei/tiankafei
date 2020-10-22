@@ -9,7 +9,8 @@ import org.apache.commons.collections4.CollectionUtils;
  **/
 public class CommonUtil {
 
-    private CommonUtil(){}
+    private CommonUtil() {
+    }
 
     /**
      * 验证该path是否已制定的url开始
