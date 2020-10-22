@@ -1,6 +1,7 @@
 package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,7 +31,6 @@ import org.tiankafei.user.service.DictInfoService;
 import org.tiankafei.user.vo.DictInfoVo;
 import org.tiankafei.web.common.exception.UserException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
-import org.tiankafei.web.common.utils.SequenceUtil;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
@@ -49,6 +49,9 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
     @Autowired
     private DbService dbService;
+
+    @Autowired
+    private DefaultIdentifierGenerator defaultIdentifierGenerator;
 
     /**
      * 校验 系统数据字典表 是否已经存在
@@ -92,7 +95,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             throw new UserException("字典代码：" + dictCode + " 已经存在！");
         }
         // 生成序列号
-        Long id = SequenceUtil.generatorLonId();
+        Long id = defaultIdentifierGenerator.nextId(null);
 
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
         BeanUtils.copyProperties(dictInfoVo, dictInfoEntity);
@@ -114,7 +117,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     public List<Long> batchAddDictInfoService(List<DictInfoVo> dictInfoVoList) throws Exception {
         if (CollectionUtils.isNotEmpty(dictInfoVoList)) {
             // 生成序列号
-            Long id = SequenceUtil.generatorLonId();
+            Long id = defaultIdentifierGenerator.nextId(null);
             // 批量新增时的字典代码集合
             List<String> dictCodeList = Lists.newArrayList();
             // 批量保存数据字典

@@ -1,7 +1,7 @@
 package org.tiankafei.web.common.service.impl;
 
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
-import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.web.common.enums.DistributedIdEnum;
 import org.tiankafei.web.common.service.DistributedIdService;
@@ -16,12 +16,8 @@ public class MyBatisPlusSnowflakeServiceImpl implements DistributedIdService {
     /**
      * mybatis-plus的雪花算法生成类
      */
+    @Autowired
     private DefaultIdentifierGenerator defaultIdentifierGenerator;
-
-    @PostConstruct
-    public void init() {
-        defaultIdentifierGenerator = new DefaultIdentifierGenerator();
-    }
 
     @Override
     public DistributedIdEnum getDistributedIdType() {

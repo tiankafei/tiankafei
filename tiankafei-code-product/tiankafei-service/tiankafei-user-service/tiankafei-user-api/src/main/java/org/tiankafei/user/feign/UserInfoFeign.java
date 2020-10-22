@@ -40,6 +40,7 @@ public interface UserInfoFeign {
 
     /**
      * 校验  邮箱 是否已经存在
+     *
      * @param email
      * @return
      * @throws Exception

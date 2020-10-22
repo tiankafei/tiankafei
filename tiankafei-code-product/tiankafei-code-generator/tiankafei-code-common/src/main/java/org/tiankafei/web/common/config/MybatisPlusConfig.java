@@ -1,5 +1,6 @@
 package org.tiankafei.web.common.config;
 
+import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.extension.parsers.DynamicTableNameParser;
 import com.baomidou.mybatisplus.extension.parsers.ITableNameHandler;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
@@ -42,6 +43,15 @@ public class MybatisPlusConfig {
 
         paginationInterceptor.setSqlParserList(Collections.singletonList(dynamicTableNameParser));
         return paginationInterceptor;
+    }
+
+    /**
+     * 雪花算法生成ID的对象
+     * @return
+     */
+    @Bean
+    public DefaultIdentifierGenerator defaultIdentifierGenerator(){
+        return new DefaultIdentifierGenerator();
     }
 
     /**

@@ -15,8 +15,4 @@ public class SequenceUtil {
         return generator.nextId(null).toString();
     }
 
-    public static Long generatorLonId() {
-        return (Long) generator.nextId(null);
-    }
-
 }
