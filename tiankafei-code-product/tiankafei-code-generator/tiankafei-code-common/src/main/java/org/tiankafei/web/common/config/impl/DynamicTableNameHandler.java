@@ -1,28 +1,20 @@
 package org.tiankafei.web.common.config.impl;
 
-import com.baomidou.mybatisplus.extension.parsers.ITableNameHandler;
-import org.apache.ibatis.reflection.MetaObject;
+import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
 import org.tiankafei.web.common.utils.DynamicTableNameUtil;
 
 /**
  * @author tiankafei
  * @since 1.0
  **/
-public class DynamicTableNameHandler implements ITableNameHandler {
+public class DynamicTableNameHandler implements TableNameHandler {
 
     @Override
-    public String process(MetaObject metaObject, String sql, String tableName) {
-        String dynamicTableName = dynamicTableName(metaObject, sql, tableName);
-        if (null != dynamicTableName && !dynamicTableName.equalsIgnoreCase(tableName)) {
-            String newSql = sql.replaceAll(tableName, dynamicTableName);
-            return newSql;
-        }
+    public String dynamicTableName(String sql, String tableName) {
+        // 获取当前动态表名
+        String dynamicTableName = DynamicTableNameUtil.getDynamicTableName();
+        sql = sql.replaceAll(tableName, dynamicTableName);
         return sql;
-    }
-
-    @Override
-    public String dynamicTableName(MetaObject metaObject, String sql, String tableName) {
-        return DynamicTableNameUtil.getDynamicTableName();
     }
 
 }

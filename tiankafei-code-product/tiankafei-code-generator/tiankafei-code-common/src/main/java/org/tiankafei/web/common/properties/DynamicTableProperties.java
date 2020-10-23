@@ -15,6 +15,19 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("dynamic")
 public class DynamicTableProperties {
 
+    /**
+     * 租户
+     */
+    private String tenantId = "default";
+
+    /**
+     * 数据库类型
+     */
+    private String dbType;
+
+    /**
+     * 动态表名列表
+     */
     private List<String> tableNames = Lists.newArrayList();
 
 }
