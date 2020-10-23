@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : root
+ Source Server         : localhost
  Source Server Type    : MySQL
  Source Server Version : 80020
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 05/08/2020 20:42:22
+ Date: 23/10/2020 15:36:04
 */
 
 SET NAMES utf8mb4;
@@ -35,6 +35,7 @@ CREATE TABLE `sys_dept_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '部门创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '部门修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_dept_code`(`dept_code`) USING BTREE COMMENT '按照部门代码查询部门信息'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统部门表信息' ROW_FORMAT = Dynamic;
@@ -61,6 +62,7 @@ CREATE TABLE `sys_dict_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_dict_code`(`dict_code`) USING BTREE COMMENT '根据字典代码查询字典详细信息'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统数据字典表' ROW_FORMAT = Dynamic;
@@ -95,6 +97,7 @@ CREATE TABLE `sys_dict_table`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_code`(`code`) USING BTREE COMMENT '按照代码查询详细信息'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统数据字典的数据表' ROW_FORMAT = Dynamic;
@@ -119,6 +122,7 @@ CREATE TABLE `sys_links_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统的友情链接' ROW_FORMAT = Dynamic;
 
@@ -150,19 +154,20 @@ CREATE TABLE `sys_menu_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_feature_code`(`menu_code`) USING BTREE COMMENT '按照功能代码进行查询'
-) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统功能菜单信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统功能菜单信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu_info
 -- ----------------------------
-INSERT INTO `sys_menu_info` VALUES (1, 'system-manager', '系统管理', 'system', '1', '1', NULL, 0, 1, NULL, NULL, 1, NULL, NULL, NULL, '2020-07-26 10:57:56', '2020-07-26 10:57:56', NULL, NULL);
-INSERT INTO `sys_menu_info` VALUES (100, 'user-manager', '用户管理', 'user', '2', '1', NULL, 0, 1, NULL, 1, 1, NULL, NULL, NULL, '2020-07-26 10:58:01', '2020-07-26 10:58:01', NULL, NULL);
-INSERT INTO `sys_menu_info` VALUES (101, 'role-manager', '角色管理', 'peoples', '2', '1', NULL, 0, 1, NULL, 1, 2, NULL, NULL, NULL, '2020-07-26 10:58:02', '2020-07-26 10:58:02', NULL, NULL);
-INSERT INTO `sys_menu_info` VALUES (102, 'menu-manager', '菜单管理', 'tree-table', '2', '1', NULL, 0, 1, NULL, 1, 3, NULL, NULL, NULL, '2020-07-26 10:58:10', '2020-07-26 10:58:10', NULL, NULL);
-INSERT INTO `sys_menu_info` VALUES (103, 'department-manager', '部门管理', 'tree', '2', '1', NULL, 0, 1, NULL, 1, 4, NULL, NULL, NULL, '2020-07-26 10:58:15', '2020-07-26 10:58:15', NULL, NULL);
-INSERT INTO `sys_menu_info` VALUES (104, 'dict-manager', '字典管理', 'dict', '2', '1', NULL, 0, 1, NULL, 1, 5, NULL, NULL, NULL, '2020-07-26 10:58:21', '2020-07-26 10:58:21', NULL, NULL);
+INSERT INTO `sys_menu_info` VALUES (1, 'system-manager', '系统管理', 'system', '1', '1', NULL, 0, 1, NULL, NULL, 1, NULL, NULL, NULL, '2020-07-26 10:57:56', '2020-07-26 10:57:56', NULL, NULL, NULL);
+INSERT INTO `sys_menu_info` VALUES (100, 'user-manager', '用户管理', 'user', '2', '1', NULL, 0, 1, NULL, 1, 1, NULL, NULL, NULL, '2020-07-26 10:58:01', '2020-07-26 10:58:01', NULL, NULL, NULL);
+INSERT INTO `sys_menu_info` VALUES (101, 'role-manager', '角色管理', 'peoples', '2', '1', NULL, 0, 1, NULL, 1, 2, NULL, NULL, NULL, '2020-07-26 10:58:02', '2020-07-26 10:58:02', NULL, NULL, NULL);
+INSERT INTO `sys_menu_info` VALUES (102, 'menu-manager', '菜单管理', 'tree-table', '2', '1', NULL, 0, 1, NULL, 1, 3, NULL, NULL, NULL, '2020-07-26 10:58:10', '2020-07-26 10:58:10', NULL, NULL, NULL);
+INSERT INTO `sys_menu_info` VALUES (103, 'department-manager', '部门管理', 'tree', '2', '1', NULL, 0, 1, NULL, 1, 4, NULL, NULL, NULL, '2020-07-26 10:58:15', '2020-07-26 10:58:15', NULL, NULL, NULL);
+INSERT INTO `sys_menu_info` VALUES (104, 'dict-manager', '字典管理', 'dict', '2', '1', NULL, 0, 1, NULL, 1, 5, NULL, NULL, NULL, '2020-07-26 10:58:21', '2020-07-26 10:58:21', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_role_info
@@ -181,6 +186,7 @@ CREATE TABLE `sys_role_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_role_code`(`role_code`) USING BTREE COMMENT '按照索引代码进行查询'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
@@ -188,8 +194,8 @@ CREATE TABLE `sys_role_info`  (
 -- ----------------------------
 -- Records of sys_role_info
 -- ----------------------------
-INSERT INTO `sys_role_info` VALUES (1, 'admin', '管理员角色', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role_info` VALUES (2, 'common', '普通角色', 1, NULL, NULL, NULL, NULL, '2020-07-26 10:09:15', '2020-07-26 10:09:15', NULL, NULL);
+INSERT INTO `sys_role_info` VALUES (1, 'admin', '管理员角色', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_role_info` VALUES (2, 'common', '普通角色', 1, NULL, NULL, NULL, NULL, '2020-07-26 10:09:15', '2020-07-26 10:09:15', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -199,25 +205,26 @@ CREATE TABLE `sys_role_menu`  (
   `id` bigint(0) UNSIGNED NOT NULL COMMENT '主键id',
   `role_id` int(0) NOT NULL COMMENT '角色id',
   `menu_id` int(0) NOT NULL COMMENT '菜单id',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_role_id`(`role_id`) USING BTREE COMMENT '根据角色id查询其配置的功能菜单'
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统角色对应的功能配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统角色对应的功能配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES (1, 1, 1);
-INSERT INTO `sys_role_menu` VALUES (2, 1, 100);
-INSERT INTO `sys_role_menu` VALUES (3, 1, 101);
-INSERT INTO `sys_role_menu` VALUES (4, 1, 102);
-INSERT INTO `sys_role_menu` VALUES (5, 1, 103);
-INSERT INTO `sys_role_menu` VALUES (6, 1, 104);
-INSERT INTO `sys_role_menu` VALUES (7, 2, 1);
-INSERT INTO `sys_role_menu` VALUES (8, 2, 100);
-INSERT INTO `sys_role_menu` VALUES (9, 2, 101);
-INSERT INTO `sys_role_menu` VALUES (10, 2, 102);
-INSERT INTO `sys_role_menu` VALUES (11, 2, 103);
-INSERT INTO `sys_role_menu` VALUES (12, 2, 104);
+INSERT INTO `sys_role_menu` VALUES (1, 1, 1, NULL);
+INSERT INTO `sys_role_menu` VALUES (2, 1, 100, NULL);
+INSERT INTO `sys_role_menu` VALUES (3, 1, 101, NULL);
+INSERT INTO `sys_role_menu` VALUES (4, 1, 102, NULL);
+INSERT INTO `sys_role_menu` VALUES (5, 1, 103, NULL);
+INSERT INTO `sys_role_menu` VALUES (6, 1, 104, NULL);
+INSERT INTO `sys_role_menu` VALUES (7, 2, 1, NULL);
+INSERT INTO `sys_role_menu` VALUES (8, 2, 100, NULL);
+INSERT INTO `sys_role_menu` VALUES (9, 2, 101, NULL);
+INSERT INTO `sys_role_menu` VALUES (10, 2, 102, NULL);
+INSERT INTO `sys_role_menu` VALUES (11, 2, 103, NULL);
+INSERT INTO `sys_role_menu` VALUES (12, 2, 104, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_info
@@ -241,6 +248,7 @@ CREATE TABLE `sys_user_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_username`(`username`) USING BTREE COMMENT '按用户名查询或登录',
   UNIQUE INDEX `idx_email`(`email`) USING BTREE COMMENT '按电子邮件查询或登录',
@@ -250,8 +258,8 @@ CREATE TABLE `sys_user_info`  (
 -- ----------------------------
 -- Records of sys_user_info
 -- ----------------------------
-INSERT INTO `sys_user_info` VALUES (1285547947985457153, 'tiankafei', '甜咖啡', '798971170@qq.com', '18500195219', '1', NULL, '', '1', '1', 0, NULL, NULL, NULL, NULL, 0, 0);
-INSERT INTO `sys_user_info` VALUES (1286986461696372738, 'admin', '', '614470410@qq.com', '18519346836', '1', NULL, '', '', '1', 0, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `sys_user_info` VALUES (1285547947985457153, 'tiankafei', '甜咖啡', '798971170@qq.com', '18500195219', '1', NULL, '', '1', '1', 0, NULL, 0, '2020-08-14 08:57:28', '2020-08-14 08:57:28', 0, 0, NULL);
+INSERT INTO `sys_user_info` VALUES (1286986461696372738, 'admin', '', '614470410@qq.com', '18519346836', '1', NULL, '', '', '1', 0, NULL, 0, '2020-08-14 08:57:29', '2020-08-14 08:57:29', 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_login
@@ -267,6 +275,7 @@ CREATE TABLE `sys_user_login`  (
   `version` int(0) NULL DEFAULT NULL COMMENT '乐观锁版本',
   `delete_mark` int(0) NULL DEFAULT 0 COMMENT '逻辑删除字段',
   `expiration_date` timestamp(0) NULL DEFAULT NULL COMMENT '有效期截至时间',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_username`(`username`) USING BTREE COMMENT '按用户名查询或登录',
   UNIQUE INDEX `idx_email`(`email`) USING BTREE COMMENT '按电子邮件查询或登录',
@@ -276,8 +285,8 @@ CREATE TABLE `sys_user_login`  (
 -- ----------------------------
 -- Records of sys_user_login
 -- ----------------------------
-INSERT INTO `sys_user_login` VALUES (1285547947985457153, 'tiankafei', '798971170@qq.com', '18500195219', '796b0ef943abedf4943e656d435c144c', '1', NULL, NULL, NULL);
-INSERT INTO `sys_user_login` VALUES (1286986461696372738, 'admin', '614470410@qq.com', '18519346836', '0192023a7bbd73250516f069df18b500', '1', NULL, NULL, NULL);
+INSERT INTO `sys_user_login` VALUES (1285547947985457153, 'tiankafei', '798971170@qq.com', '18500195219', '796b0ef943abedf4943e656d435c144c', '1', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user_login` VALUES (1286986461696372738, 'admin', '614470410@qq.com', '18519346836', '0192023a7bbd73250516f069df18b500', '1', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -295,7 +304,7 @@ CREATE TABLE `sys_user_role`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_user_id`(`user_id`) USING BTREE COMMENT '根据用户id查询所拥有的所有角色',
   INDEX `idx_role_id`(`role_id`) USING BTREE COMMENT '根据角色id查询所有拥有该角色的用户'
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户拥有的角色关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户拥有的角色关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -325,6 +334,7 @@ CREATE TABLE `sys_user_test`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_username`(`username`) USING BTREE COMMENT '按用户名查询或登录',
   UNIQUE INDEX `idx_email`(`email`) USING BTREE COMMENT '按电子邮件查询或登录',
