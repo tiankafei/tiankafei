@@ -38,11 +38,16 @@ public class RoleMenuVo extends BaseQueryVo {
     @ApiModelProperty(value = "菜单详细信息对象")
     private MenuInfoVo menuInfoVo;
 
+    @ApiModelProperty(value = "租户ID")
+    private Long tenantId;
+
     public static final String ID = "id";
 
     public static final String ROLE_ID = "role_id";
 
     public static final String MENU_ID = "menu_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
 
 }

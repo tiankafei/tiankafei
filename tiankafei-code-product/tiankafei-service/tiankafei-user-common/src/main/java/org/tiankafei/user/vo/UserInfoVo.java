@@ -87,6 +87,9 @@ public class UserInfoVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
+    @ApiModelProperty(value = "租户ID")
+    private Long tenantId;
+
     @ApiModelProperty(value = "用户登录对象")
     private UserLoginVo userLoginVo;
 
@@ -132,6 +135,8 @@ public class UserInfoVo extends BaseQueryVo {
     public static final String CREATE_USER_ID = "create_user_id";
 
     public static final String UPDATE_USER_ID = "update_user_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
 
 }

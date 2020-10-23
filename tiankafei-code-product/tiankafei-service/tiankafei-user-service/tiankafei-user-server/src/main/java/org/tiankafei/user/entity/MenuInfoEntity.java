@@ -119,6 +119,10 @@ public class MenuInfoEntity extends Model<MenuInfoEntity> {
     @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
     private Long updateUserId;
 
+    @ApiModelProperty(value = "租户ID")
+    @TableField("tenant_id")
+    private Long tenantId;
+
 
     public static final String ID = "id";
 
@@ -157,6 +161,8 @@ public class MenuInfoEntity extends Model<MenuInfoEntity> {
     public static final String CREATE_USER_ID = "create_user_id";
 
     public static final String UPDATE_USER_ID = "update_user_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
     @Override
     protected Serializable pkVal() {

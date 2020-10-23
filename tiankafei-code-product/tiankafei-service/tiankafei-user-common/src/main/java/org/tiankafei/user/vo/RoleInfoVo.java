@@ -68,6 +68,9 @@ public class RoleInfoVo extends BaseQueryVo {
     @ApiModelProperty(value = "角色分配的菜单集合")
     private List<RoleMenuVo> roleMenuList;
 
+    @ApiModelProperty(value = "租户ID")
+    private Long tenantId;
+
     public static final String ID = "id";
 
     public static final String ROLE_CODE = "role_code";
@@ -91,6 +94,8 @@ public class RoleInfoVo extends BaseQueryVo {
     public static final String CREATE_USER_ID = "create_user_id";
 
     public static final String UPDATE_USER_ID = "update_user_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
 
 }

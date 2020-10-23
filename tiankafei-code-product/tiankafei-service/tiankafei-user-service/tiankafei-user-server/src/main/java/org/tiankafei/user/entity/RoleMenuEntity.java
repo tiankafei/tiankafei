@@ -44,12 +44,18 @@ public class RoleMenuEntity extends Model<RoleMenuEntity> {
     @NotNull(message = "菜单id不能为空")
     private Integer menuId;
 
+    @ApiModelProperty(value = "租户ID")
+    @TableField("tenant_id")
+    private Long tenantId;
+
 
     public static final String ID = "id";
 
     public static final String ROLE_ID = "role_id";
 
     public static final String MENU_ID = "menu_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
     @Override
     protected Serializable pkVal() {

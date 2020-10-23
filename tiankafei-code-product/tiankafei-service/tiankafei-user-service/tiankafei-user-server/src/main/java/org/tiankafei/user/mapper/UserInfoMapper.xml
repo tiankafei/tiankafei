@@ -21,6 +21,7 @@
         <result column="update_time" property="updateTime"/>
         <result column="create_user_id" property="createUserId"/>
         <result column="update_user_id" property="updateUserId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
@@ -43,12 +44,13 @@
         <result column="update_time" property="updateTime"/>
         <result column="create_user_id" property="createUserId"/>
         <result column="update_user_id" property="updateUserId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, username, nickname, email, telephone, gender, born_time, avatar, remark, user_type, dept_id, version, delete_mark, create_time, update_time, create_user_id, update_user_id
+        id, username, nickname, email, telephone, gender, born_time, avatar, remark, user_type, dept_id, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id
     </sql>
 
     <!-- 校验 用户基本信息表 是否已经存在 -->

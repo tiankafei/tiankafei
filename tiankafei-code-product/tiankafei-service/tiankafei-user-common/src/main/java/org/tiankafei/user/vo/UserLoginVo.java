@@ -59,6 +59,9 @@ public class UserLoginVo extends BaseQueryVo {
     @ApiModelProperty(value = "有效期截至时间")
     private Timestamp expirationDate;
 
+    @ApiModelProperty(value = "租户ID")
+    private Long tenantId;
+
 
     public static final String ID = "id";
 
@@ -77,6 +80,8 @@ public class UserLoginVo extends BaseQueryVo {
     public static final String DELETE_MARK = "delete_mark";
 
     public static final String EXPIRATION_DATE = "expiration_date";
+
+    public static final String TENANT_ID = "tenant_id";
 
 
 }

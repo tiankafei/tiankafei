@@ -105,6 +105,9 @@ public class DictTableVo extends BaseQueryVo {
     @ApiModelProperty(value = "修改用户ID")
     private Long updateUserId;
 
+    @ApiModelProperty(value = "租户ID")
+    private Long tenantId;
+
 
     public static final String ID = "id";
 
@@ -147,6 +150,8 @@ public class DictTableVo extends BaseQueryVo {
     public static final String CREATE_USER_ID = "create_user_id";
 
     public static final String UPDATE_USER_ID = "update_user_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
 
 }

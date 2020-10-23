@@ -78,6 +78,10 @@ public class UserLoginEntity extends Model<UserLoginEntity> {
     @TableField("expiration_date")
     private Timestamp expirationDate;
 
+    @ApiModelProperty(value = "租户ID")
+    @TableField("tenant_id")
+    private Long tenantId;
+
 
     public static final String ID = "id";
 
@@ -96,6 +100,8 @@ public class UserLoginEntity extends Model<UserLoginEntity> {
     public static final String DELETE_MARK = "delete_mark";
 
     public static final String EXPIRATION_DATE = "expiration_date";
+
+    public static final String TENANT_ID = "tenant_id";
 
     @Override
     protected Serializable pkVal() {

@@ -7,6 +7,7 @@
         <id column="id" property="id"/>
         <result column="role_id" property="roleId"/>
         <result column="menu_id" property="menuId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
@@ -15,12 +16,13 @@
         <id column="id" property="id"/>
         <result column="role_id" property="roleId"/>
         <result column="menu_id" property="menuId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, role_id, menu_id
+        id, role_id, menu_id, tenant_id
     </sql>
 
     <!-- 校验 系统角色对应的功能配置表 是否已经存在 -->
