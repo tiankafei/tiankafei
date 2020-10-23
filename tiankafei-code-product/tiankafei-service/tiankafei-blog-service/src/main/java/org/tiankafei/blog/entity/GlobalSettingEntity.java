@@ -83,6 +83,10 @@ public class GlobalSettingEntity extends Model<GlobalSettingEntity> {
     @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
     private Long updateUserId;
 
+    @ApiModelProperty(value = "租户ID")
+    @TableField("tenant_id")
+    private Long tenantId;
+
 
     public static final String ID = "id";
 
@@ -105,6 +109,8 @@ public class GlobalSettingEntity extends Model<GlobalSettingEntity> {
     public static final String UPDATE_TIME = "update_time";
 
     public static final String UPDATE_USER_ID = "update_user_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
     @Override
     protected Serializable pkVal() {

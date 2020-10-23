@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : root
+ Source Server         : localhost
  Source Server Type    : MySQL
  Source Server Version : 80020
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 05/08/2020 20:42:36
+ Date: 23/10/2020 14:53:26
 */
 
 SET NAMES utf8mb4;
@@ -41,6 +41,7 @@ CREATE TABLE `sys_blog_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_title`(`title`) USING BTREE COMMENT '按照标题查询博客',
   INDEX `idx_type`(`type`) USING BTREE COMMENT '按照分类查找博客'
@@ -49,13 +50,13 @@ CREATE TABLE `sys_blog_info`  (
 -- ----------------------------
 -- Records of sys_blog_info
 -- ----------------------------
-INSERT INTO `sys_blog_info` VALUES (1289742331580715010, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 1, NULL, NULL, NULL, 0, 0);
-INSERT INTO `sys_blog_info` VALUES (1289744459229499393, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 1, NULL, NULL, NULL, 0, 0);
-INSERT INTO `sys_blog_info` VALUES (1289744699152076802, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 1, NULL, NULL, NULL, 0, 0);
-INSERT INTO `sys_blog_info` VALUES (1289744702356525058, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 1, NULL, NULL, NULL, 0, 0);
-INSERT INTO `sys_blog_info` VALUES (1289744704793415682, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 1, NULL, NULL, NULL, 0, 0);
-INSERT INTO `sys_blog_info` VALUES (1289745878972010498, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 1, NULL, NULL, NULL, 0, 0);
-INSERT INTO `sys_blog_info` VALUES (1289745996555128834, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0);
+INSERT INTO `sys_blog_info` VALUES (1289742331580715010, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0, NULL);
+INSERT INTO `sys_blog_info` VALUES (1289744459229499393, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0, NULL);
+INSERT INTO `sys_blog_info` VALUES (1289744699152076802, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0, NULL);
+INSERT INTO `sys_blog_info` VALUES (1289744702356525058, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0, NULL);
+INSERT INTO `sys_blog_info` VALUES (1289744704793415682, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0, NULL);
+INSERT INTO `sys_blog_info` VALUES (1289745878972010498, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0, NULL);
+INSERT INTO `sys_blog_info` VALUES (1289745996555128834, '1111111', '', '', '', 1, '', '', '', 1, 1, '', NULL, 0, NULL, NULL, NULL, 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for sys_diary_info
@@ -73,6 +74,7 @@ CREATE TABLE `sys_diary_info`  (
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_title`(`title`) USING BTREE COMMENT '按照日记标题查询日记'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统的博客日记' ROW_FORMAT = Dynamic;
@@ -97,6 +99,7 @@ CREATE TABLE `sys_global_setting`  (
   `create_user_id` bigint(0) NULL DEFAULT NULL COMMENT '创建用户ID',
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '修改时间',
   `update_user_id` bigint(0) NULL DEFAULT NULL COMMENT '修改用户ID',
+  `tenant_id` bigint(0) UNSIGNED NULL DEFAULT NULL COMMENT '租户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_create_user_id`(`create_user_id`) USING BTREE COMMENT '按照用户id查询当前用户的设置'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统的博客选项设置' ROW_FORMAT = Dynamic;

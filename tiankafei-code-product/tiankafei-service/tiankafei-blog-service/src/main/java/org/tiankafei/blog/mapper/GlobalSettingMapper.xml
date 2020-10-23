@@ -15,6 +15,7 @@
         <result column="create_user_id" property="createUserId"/>
         <result column="update_time" property="updateTime"/>
         <result column="update_user_id" property="updateUserId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
@@ -31,12 +32,13 @@
         <result column="create_user_id" property="createUserId"/>
         <result column="update_time" property="updateTime"/>
         <result column="update_user_id" property="updateUserId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, set_name, set_value, remark, description, version, delete_mark, create_time, create_user_id, update_time, update_user_id
+        id, set_name, set_value, remark, description, version, delete_mark, create_time, create_user_id, update_time, update_user_id, tenant_id
     </sql>
 
     <!-- 校验 系统的博客选项设置 是否已经存在 -->
