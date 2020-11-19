@@ -11,11 +11,11 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class FeaturesCodeGenerator extends BaseCodeGenerator {
 
     private String author = "tiankafei";
-    private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-features-service\\src\\main\\java";
+    private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-db\\src\\main\\java";
 
     private boolean shiroAuthority = false;
     private String baseParentPath = "org.tiankafei";
-    private String moduleName = "features";
+    private String moduleName = "db";
 
     private String baseEntityClassPath = "com.baomidou.mybatisplus.extension.activerecord.Model";
     private String baseMapperClassPath = "com.baomidou.mybatisplus.core.mapper.BaseMapper";
@@ -39,7 +39,7 @@ public class FeaturesCodeGenerator extends BaseCodeGenerator {
     @Override
     protected CodeProperties initCodeProperties() {
         CodeProperties codeProperties = new CodeProperties();
-        codeProperties.setUrl("jdbc:mysql://localhost:3306/db-features?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
+        codeProperties.setUrl("jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true");
         codeProperties.setDriverName("com.mysql.cj.jdbc.Driver");
         codeProperties.setUsername("root");
         codeProperties.setPassword("tiankafei");
