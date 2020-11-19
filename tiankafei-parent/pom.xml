@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.7.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>org.tiankafei.product</groupId>
+    <artifactId>tiankafei-parent</artifactId>
+    <version>1.0-RELEASE</version>
+    <packaging>pom</packaging>
+
+    <name>tiankafei-parent</name>
+    <url>https://github.com/tiankafei/tiankafei</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+
+        <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
+        <org.tiankafei.produce.version>1.0-RELEASE</org.tiankafei.produce.version>
+
+        <junit.version>4.12</junit.version>
+        <swagger.version>2.9.2</swagger.version>
+        <knife4j.version>2.0.4</knife4j.version>
+        <fastjson.version>1.2.72</fastjson.version>
+        <mybatis-plus.version>3.4.0</mybatis-plus.version>
+        <ini4j.version>0.5.4</ini4j.version>
+        <hutool.version>5.3.8</hutool.version>
+        <druid.version>1.1.23</druid.version>
+        <mysql.version>8.0.20</mysql.version>
+        <velocity.version>1.7</velocity.version>
+        <shiro-spring.version>1.5.3</shiro-spring.version>
+        <springboot-admin.version>2.2.3</springboot-admin.version>
+        <poi.version>4.1.2</poi.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--web依赖包-->
+            <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!--mybatis-plus-->
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${springboot-admin.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-server-ui -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui</artifactId>
+                <version>${springboot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${springboot-admin.version}</version>
+            </dependency>
+
+            <!--依赖的工具包-->
+            <!--lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!-- swagger-ui -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- ini格式处理 -->
+            <dependency>
+                <groupId>org.ini4j</groupId>
+                <artifactId>ini4j</artifactId>
+                <version>${ini4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ramostear</groupId>
+                <artifactId>Happy-Captcha</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>2.3.2</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring-boot-starter-basic</artifactId>
+                <version>6.0.0</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>mybatis</artifactId>
+                        <groupId>org.mybatis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!--poi依赖包-->
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/cn.smallbun.screw/screw-core -->
+            <dependency>
+                <groupId>cn.smallbun.screw</groupId>
+                <artifactId>screw-core</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+
+            <!--自己的工具包-->
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-base</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-aviator-extend</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+
+
+            <!--产品自己的工具包-->
+            <!--微服务依赖的工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-micro-depends</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <!--注册中心依赖的工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-register-depends</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <!--公共代码工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-code-common</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <!--用户公共属性工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-user-common</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <!--用户缓存工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-user-cache</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <!--通用的数据库查询工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-db</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <!--公共采集控件工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-collection</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <!--feign调用客户端工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-user-api</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-login-api</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <!--用户登录相关工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-login-common</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <!--缓存工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-cache</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-cache-redis</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-cache-memory</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <!--消息MQ工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-message</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-message-disruptor</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-message-kafka</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-message-rabbitmq</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-message-redis</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-message-rocketmq</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <!--分布式锁工程-->
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-distributed-lock</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-distributed-lock-etcd</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-distributed-lock-mysql</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-distributed-lock-redis</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-distributed-lock-zookeeper</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.1</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+            </plugin>
+            <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+        </plugins>
+
+        <!--没有该配置，则src下的xml不会打进jar包中-->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.*</include>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+</project>
