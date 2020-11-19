@@ -418,6 +418,29 @@ public class BaseTest {
         System.out.println(a);
     }
 
+    @Test
+    public void test13(){
+        String filePath = "E:\\tjcp\\code\\dt\\mdgv\\lib";
+        File file = new File(filePath);
+        File[] files = file.listFiles();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int index = 0; index < files.length; index++) {
+            String name = files[index].getName();
+            String artifactId = name.substring(0, name.lastIndexOf("."));
+            String version = "1.0.0-RELEASE";
+
+            stringBuilder.append("<dependency>").append("\n");
+            stringBuilder.append("\t").append("<groupId>com.thtf.dt</groupId>").append("\n");
+            stringBuilder.append("\t").append("<artifactId>").append(artifactId).append("</artifactId>").append("\n");
+            stringBuilder.append("\t").append("<version>").append(version).append("</version>").append("\n");
+            stringBuilder.append("\t").append("<scope>system</scope>").append("\n");
+            stringBuilder.append("\t").append("<systemPath>${basedir}/lib/").append(name).append("</systemPath>").append("\n");
+            stringBuilder.append("</dependency>").append("\n");
+        }
+
+        System.out.println(stringBuilder.toString());
+    }
+
     private void testtest12(int a){
         a = 1;
         System.out.println(a);
