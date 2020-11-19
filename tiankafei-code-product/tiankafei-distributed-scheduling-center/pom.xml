@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-distributed-scheduling-center</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-distributed-scheduling-center</name>

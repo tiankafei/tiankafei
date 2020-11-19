@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-message-rabbitmq</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-message-rabbitmq</name>

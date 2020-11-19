@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-login-service</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-login-service</name>

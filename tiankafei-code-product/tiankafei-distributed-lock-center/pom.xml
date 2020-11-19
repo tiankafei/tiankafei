@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-distributed-lock-center</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-distributed-lock-center</name>

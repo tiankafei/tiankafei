@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-multi-datasource-service</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-multi-datasource-service</name>

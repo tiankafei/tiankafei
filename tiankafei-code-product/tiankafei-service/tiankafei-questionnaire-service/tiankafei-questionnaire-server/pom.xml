@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-questionnaire-server</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-questionnaire-server</name>

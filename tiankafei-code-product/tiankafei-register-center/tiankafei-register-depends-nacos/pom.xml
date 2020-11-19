@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-register-depends-nacos</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-register-depends-nacos</name>

@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-gateway</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>tiankafei-gateway</name>

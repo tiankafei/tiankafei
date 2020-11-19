@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-micro-depends-center</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-micro-depends-center</name>

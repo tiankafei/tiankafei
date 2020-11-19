@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tiankafei-monitor-center</artifactId>
-    <version>1.0-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-monitor-center</name>
