@@ -302,6 +302,19 @@
                     <include>**/*.*</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/test/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>*.*</include>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 </project>
