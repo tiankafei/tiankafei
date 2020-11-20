@@ -18,6 +18,22 @@
     <name>tiankafei-parent</name>
     <url>https://github.com/tiankafei/tiankafei</url>
 
+    <!-- 配置远程发布到私服，mvn deploy -->
+    <distributionManagement>
+        <!-- 发布版私服仓库 默认的-->
+        <repository>
+            <id>releases</id>
+            <name>releases</name>
+            <url>http://localhost:8081/repository/maven-releases/</url>
+        </repository>
+        <!-- 快照版私服仓库 默认的-->
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>snapshots</name>
+            <url>http://localhost:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
