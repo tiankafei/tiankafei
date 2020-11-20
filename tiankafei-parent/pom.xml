@@ -35,14 +35,19 @@
         <knife4j.version>2.0.4</knife4j.version>
         <fastjson.version>1.2.72</fastjson.version>
         <mybatis-plus.version>3.4.0</mybatis-plus.version>
+        <dynamic-datasource.version>3.2.1</dynamic-datasource.version>
         <ini4j.version>0.5.4</ini4j.version>
         <hutool.version>5.3.8</hutool.version>
         <druid.version>1.1.23</druid.version>
         <mysql.version>8.0.20</mysql.version>
         <velocity.version>1.7</velocity.version>
         <shiro-spring.version>1.5.3</shiro-spring.version>
+        <activiti.version>6.0.0</activiti.version>
         <springboot-admin.version>2.2.3</springboot-admin.version>
         <poi.version>4.1.2</poi.version>
+        <Happy-Captcha.version>1.0.1</Happy-Captcha.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <screw.version>1.0.4</screw.version>
     </properties>
 
     <dependencyManagement>
@@ -93,7 +98,7 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>3.2.1</version>
+                <version>${dynamic-datasource.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
             <dependency>
@@ -195,18 +200,18 @@
             <dependency>
                 <groupId>com.ramostear</groupId>
                 <artifactId>Happy-Captcha</artifactId>
-                <version>1.0.1</version>
+                <version>${Happy-Captcha.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.penggle</groupId>
                 <artifactId>kaptcha</artifactId>
-                <version>2.3.2</version>
+                <version>${kaptcha.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic -->
             <dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-spring-boot-starter-basic</artifactId>
-                <version>6.0.0</version>
+                <version>${activiti.version}</version>
                 <exclusions>
                     <exclusion>
                         <artifactId>mybatis</artifactId>
@@ -243,7 +248,7 @@
             <dependency>
                 <groupId>cn.smallbun.screw</groupId>
                 <artifactId>screw-core</artifactId>
-                <version>1.0.4</version>
+                <version>${screw.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
