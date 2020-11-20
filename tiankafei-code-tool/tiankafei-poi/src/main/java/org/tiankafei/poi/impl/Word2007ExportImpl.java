@@ -1,6 +1,6 @@
 package org.tiankafei.poi.impl;
 
-import org.tiankafei.poi.enums.PoiEnum;
+import org.tiankafei.poi.enums.ExcelSuffixEnum;
 
 /**
  * @author tiankafei
@@ -9,6 +9,6 @@ import org.tiankafei.poi.enums.PoiEnum;
 public class Word2007ExportImpl extends BaseWordExportImpl {
     @Override
     public String getFileSuffix() {
-        return PoiEnum.WORD_2007_SUFFIX.getCode();
+        return ExcelSuffixEnum.WORD_2007_SUFFIX.getCode();
     }
 }

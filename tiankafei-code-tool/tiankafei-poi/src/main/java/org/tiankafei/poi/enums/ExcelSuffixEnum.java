@@ -1,6 +1,6 @@
 package org.tiankafei.poi.enums;
 
-public enum PoiEnum {
+public enum ExcelSuffixEnum {
 
     EXCEL_2003_SUFFIX(".xls"),
     EXCEL_2007_SUFFIX(".xlsx"),
@@ -12,7 +12,7 @@ public enum PoiEnum {
 
     private String code;
 
-    PoiEnum(String code) {
+    ExcelSuffixEnum(String code) {
         this.code = code;
     }
 
