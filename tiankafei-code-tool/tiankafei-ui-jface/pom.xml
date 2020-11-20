@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.tiankafei.tool</groupId>
-        <artifactId>tiankafei-parent</artifactId>
+        <artifactId>tiankafei-code-tool</artifactId>
         <version>1.4.1-RELEASE</version>
-        <relativePath>../tiankafei-parent</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tiankafei-ui-jface</artifactId>

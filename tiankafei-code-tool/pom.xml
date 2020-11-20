@@ -3,18 +3,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.tiankafei</groupId>
+        <artifactId>tiankafei-parent</artifactId>
+        <version>1.0-RELEASE</version>
+    </parent>
 
     <groupId>org.tiankafei.tool</groupId>
     <artifactId>tiankafei-code-tool</artifactId>
     <version>1.4.1-RELEASE</version>
     <packaging>pom</packaging>
 
-    <name>tiankafei-code-tool</name>
     <description>此工程是tiankafei的工具包集合</description>
 
     <modules>
-        <module>tiankafei-dependency</module>
-        <module>tiankafei-parent</module>
         <module>tiankafei-agent</module>
         <module>tiankafei-expression-fastel</module>
         <module>tiankafei-proxy</module>
@@ -42,20 +44,33 @@
         <module>tiankafei-jdbc-mybatis</module>
     </modules>
 
-    <!-- 配置远程发布到私服，mvn deploy -->
-    <distributionManagement>
-        <!-- 发布版私服仓库 默认的-->
-        <repository>
-            <id>releases</id>
-            <name>releases</name>
-            <url>http://localhost:8081/repository/maven-releases/</url>
-        </repository>
-        <!-- 快照版私服仓库 默认的-->
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>snapshots</name>
-            <url>http://localhost:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <properties>
+        <mybatis.version>3.5.5</mybatis.version>
+        <mybatis-spring.version>2.0.5</mybatis-spring.version>
+        <mybatis-generator.version>1.3.5</mybatis-generator.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis-generator.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
