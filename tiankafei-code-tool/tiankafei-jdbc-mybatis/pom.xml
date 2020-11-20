@@ -30,13 +30,11 @@
             <groupId>org.tiankafei.tool</groupId>
             <artifactId>tiankafei-jdbc</artifactId>
         </dependency>
+        <!--mybatis-plus-->
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mybatis.generator</groupId>
