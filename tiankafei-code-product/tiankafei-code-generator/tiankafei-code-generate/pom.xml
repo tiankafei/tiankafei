@@ -41,7 +41,6 @@
         <dependency>
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
-            <version>${org.tiankafei.produce.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/cn.smallbun.screw/screw-core -->
         <dependency>
