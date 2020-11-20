@@ -73,6 +73,7 @@
         <velocity.version>1.7</velocity.version>
 
         <!--数据库 相关版本依赖-->
+        <commons-dbcp.version>1.4</commons-dbcp.version>
         <rocksdb.version>6.11.4</rocksdb.version>
         <sqlite.version>3.32.3.2</sqlite.version>
         <c3p0.version>0.9.5.5</c3p0.version>
@@ -86,6 +87,11 @@
 
         <!--监控 相关版本依赖-->
         <springboot-admin.version>2.2.3</springboot-admin.version>
+
+        <!--网络tcp-rpc 相关版本依赖-->
+        <tio-2.version>2.4.0.v20180508-RELEASE</tio-2.version>
+        <tio-3.version>3.7.0.v20201010-RELEASE</tio-3.version>
+        <netty4.version>4.1.54.Final</netty4.version>
 
         <!--自己的包版本依赖-->
         <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
@@ -525,6 +531,12 @@
                 <version>${spring-boot.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>${commons-dbcp.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.rocksdb/rocksdbjni -->
             <dependency>
                 <groupId>org.rocksdb</groupId>
@@ -601,6 +613,24 @@
             </dependency>
 
 
+            <!--网络tcp-rpc 相关版本依赖-->
+            <dependency>
+                <groupId>org.t-io</groupId>
+                <artifactId>tio-core</artifactId>
+                <version>${tio-2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.t-io</groupId>
+                <artifactId>tio-core</artifactId>
+                <version>${tio-3.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty4.version}</version>
+            </dependency>
+
 
             <!--自己的包版本依赖-->
             <!--工具包版本依赖-->
@@ -612,6 +642,11 @@
             <dependency>
                 <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-agent</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-aviator-extend</artifactId>
                 <version>${org.tiankafei.tool.version}</version>
             </dependency>
             <dependency>
