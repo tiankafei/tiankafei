@@ -29,6 +29,9 @@ management:
       exposure:
         include: "*"
   endpoint:
+    health:
+      show-details: always
+      enabled: true
     shutdown:
       #可以远程关闭服务节点
       enabled: true
