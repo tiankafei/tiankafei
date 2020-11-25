@@ -17,13 +17,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!--网关的注册中心依赖-->
-        <dependency>
             <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-register-depends</artifactId>
+            <artifactId>tiankafei-micro-depends-center</artifactId>
+            <exclusions>
+                <!-- zuul 网关不需要链路追踪-->
+                <exclusion>
+                    <artifactId>spring-cloud-starter-sleuth</artifactId>
+                    <groupId>org.springframework.cloud</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-cloud-starter-zipkin</artifactId>
+                    <groupId>org.springframework.cloud</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -51,26 +57,12 @@
                     <groupId>mysql</groupId>
                     <artifactId>mysql-connector-java</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                    <groupId>com.baomidou</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
-        <!--<dependency>
-            <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-user-cache</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>druid-spring-boot-starter</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-jdbc</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
     </dependencies>
 
     <build>

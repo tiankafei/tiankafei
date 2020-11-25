@@ -23,13 +23,19 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!--注册中心依赖-->
-        <dependency>
             <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-register-depends</artifactId>
+            <artifactId>tiankafei-micro-depends-center</artifactId>
+            <exclusions>
+                <!-- spring cloud config 网关不需要链路追踪-->
+                <exclusion>
+                    <artifactId>spring-cloud-starter-sleuth</artifactId>
+                    <groupId>org.springframework.cloud</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-cloud-starter-zipkin</artifactId>
+                    <groupId>org.springframework.cloud</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--spring-cloud-config-->
         <dependency>

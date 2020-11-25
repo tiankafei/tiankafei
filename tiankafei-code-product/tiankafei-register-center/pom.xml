@@ -17,10 +17,6 @@
 
     <modules>
         <module>tiankafei-eureka-server</module>
-        <module>tiankafei-register-depends</module>
-        <module>tiankafei-register-depends-eureka</module>
-        <module>tiankafei-register-depends-nacos</module>
-        <module>tiankafei-register-depends-consul</module>
     </modules>
 
 </project>

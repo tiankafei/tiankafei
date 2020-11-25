@@ -16,14 +16,22 @@
     <description></description>
 
     <dependencies>
-        <!--网关的注册中心依赖-->
         <dependency>
             <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-register-depends</artifactId>
+            <artifactId>tiankafei-micro-depends-center</artifactId>
             <exclusions>
                 <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+                <!-- gateway 网关不需要链路追踪-->
+                <exclusion>
+                    <artifactId>spring-cloud-starter-sleuth</artifactId>
                     <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-cloud-starter-zipkin</artifactId>
+                    <groupId>org.springframework.cloud</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -53,6 +61,10 @@
                 <exclusion>
                     <groupId>mysql</groupId>
                     <artifactId>mysql-connector-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                    <groupId>com.baomidou</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

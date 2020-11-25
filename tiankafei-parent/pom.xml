@@ -687,13 +687,7 @@
             <!--微服务依赖的工程-->
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-micro-depends</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-            <!--注册中心依赖的工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-register-depends</artifactId>
+                <artifactId>tiankafei-micro-depends-center</artifactId>
                 <version>${org.tiankafei.produce.version}</version>
             </dependency>
             <!--公共代码工程-->

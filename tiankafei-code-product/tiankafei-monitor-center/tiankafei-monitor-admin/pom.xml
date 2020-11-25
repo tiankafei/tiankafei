@@ -22,18 +22,14 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-micro-depends</artifactId>
+            <artifactId>tiankafei-micro-depends-center</artifactId>
             <exclusions>
-                <!--排除springboot-admin客户端依赖，因为自己无法给自己汇报健康状态-->
-                <exclusion>
-                    <groupId>de.codecentric</groupId>
-                    <artifactId>spring-boot-admin-starter-client</artifactId>
-                </exclusion>
-                <!--监控中心不需要进行动态配置更新-->
+                <!--不需要进行动态配置更新-->
                 <exclusion>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-config-client</artifactId>
                 </exclusion>
+                <!--监控中心不需要企业级消息总线-->
                 <exclusion>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-starter-bus-amqp</artifactId>
@@ -49,10 +45,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server-ui</artifactId>
