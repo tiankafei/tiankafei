@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>tiankafei-micro-depends-center</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>tiankafei-micro-depends-center</name>
     <description></description>

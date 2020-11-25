@@ -165,12 +165,6 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
             <dependency>
                 <groupId>com.lmax</groupId>
@@ -621,16 +615,6 @@
 
 
             <!--网络tcp-rpc 相关版本依赖-->
-            <dependency>
-                <groupId>org.t-io</groupId>
-                <artifactId>tio-core</artifactId>
-                <version>${tio-2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.t-io</groupId>
-                <artifactId>tio-core</artifactId>
-                <version>${tio-3.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
             <dependency>
                 <groupId>io.netty</groupId>
