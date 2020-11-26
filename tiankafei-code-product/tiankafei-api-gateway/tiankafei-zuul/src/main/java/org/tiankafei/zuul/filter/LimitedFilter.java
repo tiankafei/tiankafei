@@ -10,6 +10,7 @@ import org.tiankafei.web.common.enums.ExceptionEnum;
 import org.tiankafei.zuul.utils.ZuulUtil;
 
 /**
+ * 限流过滤器
  * @author tiankafei
  * @since 1.0
  **/
@@ -22,14 +23,6 @@ public class LimitedFilter extends BaseZuulFilter {
         return FilterConstants.SERVLET_DETECTION_FILTER_ORDER - 1;
     }
 
-    /**
-     * 1.从请求参数中拿到用户id
-     * 2.根据用户id去缓存中获取用户信息
-     * 3.如果为空，则返回失败的数据
-     * 4.如果不为空，则继续下一个过滤
-     *
-     * @return
-     */
     @Override
     public Object execFilter() {
         boolean flag = RandomUtils.nextBoolean();
