@@ -11,8 +11,6 @@ import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.properties.ExclusionsUrlsProperties;
 import org.tiankafei.zuul.utils.ZuulUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -32,10 +30,6 @@ public abstract class BaseZuulFilter extends ZuulFilter {
     @Autowired
     protected HttpProperties httpProperties;
 
-    protected RequestContext currentContext;
-    protected HttpServletRequest request;
-    protected HttpServletResponse response;
-
     /**
      * 当前url路径
      */
@@ -49,17 +43,14 @@ public abstract class BaseZuulFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         List<String> urls = exclusionsUrlsProperties.getUrls();
+        // 获取当前请求路径
+        this.currentPath = RequestContext.getCurrentContext().getRequest().getRequestURI();
 
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-        String path = request.getServletPath();
-        this.currentPath = path;
-
-        boolean flag = CommonUtil.checkUrlStartsWith(urls, path);
+        boolean flag = CommonUtil.checkUrlStartsWith(urls, this.currentPath);
         if (flag) {
             // 其他filter继承这个filter，如果没有特殊要求，则走父类这个方法，能够保证，全局都不需要过滤的url
             //
-            log.info("不需要过滤的url：{}", path);
+            log.info("不需要过滤的url：{}", this.currentPath);
             return false;
         }
 
@@ -68,10 +59,7 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        this.currentContext = RequestContext.getCurrentContext();
-        this.request = currentContext.getRequest();
-        this.response = currentContext.getResponse();
-        boolean executeFilterFlag = ZuulUtil.checkIsExecuteFilter(request);
+        boolean executeFilterFlag = ZuulUtil.checkIsExecuteFilter(RequestContext.getCurrentContext());
         if (!executeFilterFlag) {
             return null;
         }

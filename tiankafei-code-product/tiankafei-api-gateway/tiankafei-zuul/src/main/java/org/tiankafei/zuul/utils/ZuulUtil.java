@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.constants.GatewayConstants;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -20,20 +19,20 @@ public class ZuulUtil {
     /**
      * 验证是否需要执行后面的过滤器
      *
-     * @param request
+     * @param currentContext
      * @return
      */
-    public static boolean checkIsExecuteFilter(HttpServletRequest request) {
+    public static boolean checkIsExecuteFilter(RequestContext currentContext) {
         boolean flag = Boolean.TRUE;
-        Object object = request.getAttribute(GatewayConstants.FILTER_FLAG);
+        Object object = currentContext.get(GatewayConstants.FILTER_FLAG);
         if (object instanceof Boolean) {
             flag = Boolean.valueOf(object.toString());
         }
         return flag;
     }
 
-    public static void setFilterFail(HttpServletRequest request) {
-        request.setAttribute(GatewayConstants.FILTER_FLAG, false);
+    public static void setFilterFail(RequestContext currentContext) {
+        currentContext.set(GatewayConstants.FILTER_FLAG, false);
     }
 
     /**

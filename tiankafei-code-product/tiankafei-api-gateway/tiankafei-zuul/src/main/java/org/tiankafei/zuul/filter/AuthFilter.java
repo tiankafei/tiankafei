@@ -10,7 +10,6 @@ import org.tiankafei.web.common.enums.ExceptionEnum;
 import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.utils.ZuulUtil;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,11 +34,6 @@ public class AuthFilter extends BaseZuulFilter {
         }
 
         List<String> authUrls = exclusionsUrlsProperties.getAuthUrls();
-
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-        this.currentPath = request.getServletPath();
-
         boolean needAuthFlag = CommonUtil.checkUrlStartsWith(authUrls, currentPath);
         if (needAuthFlag) {
             log.info("不需要鉴权的url：{}", currentPath);
@@ -63,12 +57,13 @@ public class AuthFilter extends BaseZuulFilter {
             // 鉴权通过
             log.info("正在执行鉴权，鉴权通过的url：{}", currentPath);
         } else {
-            ZuulUtil.setFilterFail(request);
+            RequestContext requestContext = RequestContext.getCurrentContext();
+            ZuulUtil.setFilterFail(requestContext);
             // 鉴权失败
             log.error("正在执行鉴权，鉴权没有通过的url：{}", currentPath);
             //返回错误提示内容
             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_AUTHENTICATION_EXCEPTION);
-            ZuulUtil.returnValue(currentContext, error, httpProperties.getEncoding().getCharset());
+            ZuulUtil.returnValue(requestContext, error, httpProperties.getEncoding().getCharset());
         }
         return null;
     }

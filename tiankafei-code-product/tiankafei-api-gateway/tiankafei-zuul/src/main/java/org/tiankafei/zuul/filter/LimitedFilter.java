@@ -1,5 +1,6 @@
 package org.tiankafei.zuul.filter;
 
+import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
@@ -36,12 +37,13 @@ public class LimitedFilter extends BaseZuulFilter {
             // 通过
             log.info("正在执行限流，限流通过的url：{}", currentPath);
         } else {
-            ZuulUtil.setFilterFail(request);
+            RequestContext requestContext = RequestContext.getCurrentContext();
+            ZuulUtil.setFilterFail(requestContext);
             // 不失败
             log.error("正在执行限流，限流没有通过的url：{}", currentPath);
             //返回错误提示内容
             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_LIMITED_EXCEPTION);
-            ZuulUtil.returnValue(currentContext, error, httpProperties.getEncoding().getCharset());
+            ZuulUtil.returnValue(requestContext, error, httpProperties.getEncoding().getCharset());
         }
         return null;
     }
