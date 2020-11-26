@@ -42,6 +42,7 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
+        // 不需要执行过滤的url集合
         List<String> urls = exclusionsUrlsProperties.getUrls();
         // 获取当前请求路径
         this.currentPath = RequestContext.getCurrentContext().getRequest().getRequestURI();

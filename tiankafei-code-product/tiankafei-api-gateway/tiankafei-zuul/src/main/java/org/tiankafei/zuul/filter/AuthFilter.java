@@ -32,7 +32,7 @@ public class AuthFilter extends BaseZuulFilter {
         if (!needFilterFlag) {
             return Boolean.FALSE;
         }
-
+        // 不需要进行鉴权的url集合
         List<String> authUrls = exclusionsUrlsProperties.getAuthUrls();
         boolean needAuthFlag = CommonUtil.checkUrlStartsWith(authUrls, currentPath);
         if (needAuthFlag) {
