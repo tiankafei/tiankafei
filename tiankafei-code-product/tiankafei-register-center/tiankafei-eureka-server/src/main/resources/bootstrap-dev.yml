@@ -1,0 +1,10 @@
+eureka:
+  instance:
+    # 默认90秒
+    lease-expiration-duration-in-seconds: 10
+    # 默认30秒
+    lease-renewal-interval-in-seconds: 3
+  server:
+    # 自我保护机制是否开启的配置
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 3000
