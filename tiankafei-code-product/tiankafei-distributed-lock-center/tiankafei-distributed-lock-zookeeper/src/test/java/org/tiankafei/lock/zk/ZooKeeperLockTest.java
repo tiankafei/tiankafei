@@ -1,7 +1,7 @@
 package org.tiankafei.lock.zk;
 
+import java.util.concurrent.locks.Lock;
 import org.junit.Test;
-import org.tiankafei.lock.Lock;
 
 /**
  * @author tiankafei

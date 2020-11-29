@@ -3,6 +3,7 @@ package org.tiankafei.lock.zk;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
+import org.tiankafei.lock.AbstractLock;
 import org.tiankafei.lock.Lock;
 import org.tiankafei.lock.zk.utils.ZooKeeperUtil;
 
@@ -12,7 +13,7 @@ import org.tiankafei.lock.zk.utils.ZooKeeperUtil;
  * @author tiankafei
  * @since 1.0
  **/
-public class ZooKeeperLock implements Lock {
+public class ZooKeeperLock extends AbstractLock {
 
     private ZooKeeper zooKeeper;
 

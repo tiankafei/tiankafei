@@ -1,6 +1,6 @@
 package org.tiankafei.lock.mysql;
 
-import org.tiankafei.lock.Lock;
+import org.tiankafei.lock.AbstractLock;
 
 /**
  * 分布式锁的接口
@@ -8,16 +8,6 @@ import org.tiankafei.lock.Lock;
  * @author tiankafei
  * @since 1.0
  **/
-public class MysqlLock implements Lock {
-
-    @Override
-    public void lock() {
-
-    }
-
-    @Override
-    public void unlock() {
-
-    }
+public class MysqlLock extends AbstractLock {
 
 }

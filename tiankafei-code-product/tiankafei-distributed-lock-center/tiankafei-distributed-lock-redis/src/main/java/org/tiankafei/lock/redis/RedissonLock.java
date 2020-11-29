@@ -8,6 +8,6 @@ import org.tiankafei.lock.AbstractLock;
  * @author tiankafei
  * @since 1.0
  **/
-public class RedisLock extends AbstractLock {
+public class RedissonLock extends AbstractLock {
 
 }
