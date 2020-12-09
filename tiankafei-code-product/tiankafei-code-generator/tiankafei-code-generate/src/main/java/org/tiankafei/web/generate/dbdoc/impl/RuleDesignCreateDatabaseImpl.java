@@ -27,6 +27,8 @@ public class RuleDesignCreateDatabaseImpl extends BaseCreateDatabaseDoc {
 
     @Override
     public List<String> ignoreTableNameList() {
-        return Lists.newArrayList("undo_log", "gh_gz_gz");
+        List<String> ignoreTableNameList = super.ignoreTableNameList();
+        ignoreTableNameList.add("gh_gz_gz");
+        return ignoreTableNameList;
     }
 }

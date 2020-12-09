@@ -54,7 +54,7 @@ public abstract class BaseCreateDatabaseDoc implements ICreateDatabaseDoc {
 
     @Override
     public List<String> ignoreTableNameList() {
-        return Lists.newArrayList("undo_log", "PDMAN_DB_VERSION");
+        return Lists.newArrayList("undo_log", "PDMAN_DB_VERSION", "test", "testtab");
     }
 
     @Override
