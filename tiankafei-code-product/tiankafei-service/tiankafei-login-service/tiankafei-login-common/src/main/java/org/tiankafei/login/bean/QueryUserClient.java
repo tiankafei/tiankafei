@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.tiankafei.login.service.QueryUserService;
 import org.tiankafei.user.vo.UserLoginVo;
-import org.tiankafei.web.common.bean.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.LoginException;
 
 /**
@@ -23,11 +23,11 @@ public class QueryUserClient implements InitializingBean {
     private Map<Integer, QueryUserService> userExistsServiceMap = Maps.newHashMap();
 
     @Autowired
-    private ApplicationContextHelper applicationContextHelper;
+    private ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, QueryUserService> beansOfType = applicationContextHelper.getBeansOfType(QueryUserService.class);
+        Map<String, QueryUserService> beansOfType = applicationContext.getBeansOfType(QueryUserService.class);
         Set<Map.Entry<String, QueryUserService>> entries = beansOfType.entrySet();
         for (Map.Entry<String, QueryUserService> entry : entries) {
             QueryUserService queryUserService = entry.getValue();

@@ -9,11 +9,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.tiankafei.collection.component.CollectionComponent;
 import org.tiankafei.collection.enums.ComponentTypeEnum;
 import org.tiankafei.collection.param.ComponentTypeVo;
-import org.tiankafei.web.common.bean.ApplicationContextHelper;
 
 /**
  * @author tiankafei
@@ -33,11 +33,11 @@ public class ComponentClient implements InitializingBean {
     private List<ComponentTypeVo> componentTypeList = Lists.newArrayList();
 
     @Autowired
-    private ApplicationContextHelper applicationContextHelper;
+    private ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, CollectionComponent> beansOfType = applicationContextHelper.getBeansOfType(CollectionComponent.class);
+        Map<String, CollectionComponent> beansOfType = applicationContext.getBeansOfType(CollectionComponent.class);
         Set<Map.Entry<String, CollectionComponent>> entries = beansOfType.entrySet();
         for (Map.Entry<String, CollectionComponent> entry : entries) {
             CollectionComponent collectionComponent = entry.getValue();

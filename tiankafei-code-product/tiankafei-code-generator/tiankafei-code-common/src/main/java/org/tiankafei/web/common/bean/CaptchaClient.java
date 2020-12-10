@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;
@@ -21,11 +22,11 @@ public class CaptchaClient implements InitializingBean {
     private Map<String, CaptchaGenerateService> tokenServiceMap = Maps.newHashMap();
 
     @Autowired
-    private ApplicationContextHelper applicationContextHelper;
+    private ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, CaptchaGenerateService> beansOfType = applicationContextHelper.getBeansOfType(CaptchaGenerateService.class);
+        Map<String, CaptchaGenerateService> beansOfType = applicationContext.getBeansOfType(CaptchaGenerateService.class);
         Set<Map.Entry<String, CaptchaGenerateService>> entries = beansOfType.entrySet();
         for (Map.Entry<String, CaptchaGenerateService> entry : entries) {
             CaptchaGenerateService captchaGenerateService = entry.getValue();

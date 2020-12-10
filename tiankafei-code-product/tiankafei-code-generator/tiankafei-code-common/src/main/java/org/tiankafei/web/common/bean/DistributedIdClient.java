@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.tiankafei.web.common.enums.DistributedIdEnum;
 import org.tiankafei.web.common.service.DistributedIdService;
@@ -24,11 +25,11 @@ public class DistributedIdClient implements InitializingBean {
     private Map<Integer, DistributedIdService> distributedIdServiceMap = Maps.newHashMap();
 
     @Autowired
-    private ApplicationContextHelper applicationContextHelper;
+    private ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, DistributedIdService> beansOfType = applicationContextHelper.getBeansOfType(DistributedIdService.class);
+        Map<String, DistributedIdService> beansOfType = applicationContext.getBeansOfType(DistributedIdService.class);
         Set<Map.Entry<String, DistributedIdService>> entries = beansOfType.entrySet();
         for (Map.Entry<String, DistributedIdService> entry : entries) {
             DistributedIdService distributedIdService = entry.getValue();

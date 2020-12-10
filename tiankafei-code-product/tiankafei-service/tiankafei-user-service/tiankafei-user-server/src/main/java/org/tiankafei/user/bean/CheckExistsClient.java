@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.tiankafei.user.service.CheckExistService;
-import org.tiankafei.web.common.bean.ApplicationContextHelper;
 import org.tiankafei.web.common.exception.UserException;
 
 /**
@@ -20,11 +20,11 @@ public class CheckExistsClient implements InitializingBean {
     private Map<Integer, CheckExistService> userExistsServiceMap = Maps.newHashMap();
 
     @Autowired
-    private ApplicationContextHelper applicationContextHelper;
+    private ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, CheckExistService> beansOfType = applicationContextHelper.getBeansOfType(CheckExistService.class);
+        Map<String, CheckExistService> beansOfType = applicationContext.getBeansOfType(CheckExistService.class);
         Set<Map.Entry<String, CheckExistService>> entries = beansOfType.entrySet();
         for (Map.Entry<String, CheckExistService> entry : entries) {
             CheckExistService userExistsService = entry.getValue();
