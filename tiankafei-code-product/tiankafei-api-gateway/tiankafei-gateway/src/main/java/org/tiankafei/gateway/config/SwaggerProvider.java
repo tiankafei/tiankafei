@@ -12,6 +12,7 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @introduce: SwaggerProvider
@@ -46,8 +47,11 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
 
         String location = "/" + routeDefinition.getId() + API_URI;
         List<PredicateDefinition> predicates = routeDefinition.getPredicates();
-        System.out.println(predicates);
-        System.out.println(routeDefinition.getUri().toString());
+        PredicateDefinition predicateDefinition = predicates.get(0);
+        String name = predicateDefinition.getName();
+        Map<String, String> args = predicateDefinition.getArgs();
+        System.out.println(name);
+        System.out.println(args);
 
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(routeDefinition.getId());
