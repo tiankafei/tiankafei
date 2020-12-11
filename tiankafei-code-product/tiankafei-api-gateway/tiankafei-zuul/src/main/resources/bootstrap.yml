@@ -2,12 +2,13 @@ server:
   port: 7010
 spring:
   profiles:
-    active: eureka
+    active: dev, eureka
   application:
     name: zuul-service
 exclusions:
   urls:
     - /api/user-login/logout
+    - /api/*/v2/api-docs
   auth-urls:
     - /api/user-login/login
     - /api/user-login/verificationCode
@@ -63,3 +64,8 @@ logging:
     com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
     # spring自动装配日志的包路径
     org.springframework.boot.autoconfigure: ERROR
+#################################### Swagger start #################################
+# swagger配置
+swagger:
+  enable: false
+#################################### Swagger end ###################################

@@ -3,11 +3,12 @@ server:
 exclusions:
   urls:
     - /api/signin/logout
+    - /api/*/v2/api-docs
   auth-urls:
     - /api/signin/login
 spring:
   profiles:
-    active: eureka
+    active: dev, eureka
   application:
     name: gateway-service
   cloud:
@@ -72,3 +73,8 @@ management:
     shutdown:
       #可以远程关闭服务节点
       enabled: true
+#################################### Swagger start #################################
+# swagger配置
+swagger:
+  enable: false
+#################################### Swagger end ###################################

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.http.HttpProperties;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.properties.ExclusionsUrlsProperties;
+import org.tiankafei.zuul.properties.SwaggerProperties;
 import org.tiankafei.zuul.utils.ZuulUtil;
 
 import java.util.List;
@@ -30,6 +31,9 @@ public abstract class BaseZuulFilter extends ZuulFilter {
     @Autowired
     protected HttpProperties httpProperties;
 
+    @Autowired
+    private SwaggerProperties swaggerProperties;
+
     /**
      * 当前url路径
      */
@@ -42,6 +46,10 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
+        if(swaggerProperties.getEnable()){
+            // swagger开启的时候，不需要走网关的过滤器
+            return false;
+        }
         // 不需要执行过滤的url集合
         List<String> urls = exclusionsUrlsProperties.getUrls();
         // 获取当前请求路径
