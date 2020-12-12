@@ -7,6 +7,9 @@ exclusions:
   auth-urls:
     - /api/signin/login
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   profiles:
     active: dev, eureka
   application:

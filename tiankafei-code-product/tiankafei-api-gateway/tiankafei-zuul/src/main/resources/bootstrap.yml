@@ -7,11 +7,11 @@ spring:
     name: zuul-service
 exclusions:
   urls:
-    - /api/user-login/logout
+    - /api/login/logout
     - /api/*/v2/api-docs
   auth-urls:
-    - /api/user-login/login
-    - /api/user-login/verificationCode
+    - /api/login/login
+    - /api/login/verificationCode
 zuul:
   #全部服务忽略敏感头（全部服务可传递cookie）
   sensitiveHeaders:
@@ -20,9 +20,9 @@ zuul:
     user:
       path: /user/**
       serviceId: user-service
-    user-login:
-      path: /user-login/**
-      serviceId: user-login-service
+    login:
+      path: /login/**
+      serviceId: login-service
     blog:
       path: /blog/**
       serviceId: blog-service

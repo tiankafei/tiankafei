@@ -2,6 +2,7 @@ package org.tiankafei.gateway.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.gateway.config.GatewayProperties;
+import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -44,18 +45,24 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
     }
 
     private SwaggerResource swaggerResource(RouteDefinition routeDefinition) {
+        FilterDefinition filterDefinition = routeDefinition.getFilters().get(0);
+        Map<String, String> filterDefinitionArgs = filterDefinition.getArgs();
+        String stripPrefix = filterDefinitionArgs.get("_genkey_0");
 
-        String location = "/" + routeDefinition.getId() + API_URI;
-        List<PredicateDefinition> predicates = routeDefinition.getPredicates();
-        PredicateDefinition predicateDefinition = predicates.get(0);
-        String name = predicateDefinition.getName();
-        Map<String, String> args = predicateDefinition.getArgs();
-        System.out.println(name);
-        System.out.println(args);
+        PredicateDefinition predicateDefinition = routeDefinition.getPredicates().get(0);
+        Map<String, String> predicateDefinitionArgs = predicateDefinition.getArgs();
+        String url = predicateDefinitionArgs.get("_genkey_0");
+
+        StringBuffer urlPrefix = new StringBuffer();
+        String[] split = url.split("/");
+        for (int i = 1; i <= Integer.valueOf(stripPrefix); i++) {
+            urlPrefix.append("/").append(split[i]);
+        }
+        urlPrefix.append("/v2/api-docs");
 
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(routeDefinition.getId());
-        swaggerResource.setLocation(location);
+        swaggerResource.setLocation(urlPrefix.toString());
         swaggerResource.setSwaggerVersion("2.0");
         return swaggerResource;
 

@@ -76,10 +76,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: user-login-service
+    name: login-service
     url: 'https://tiankafei.top'
   description: '用户登录服务'
-  title: user-login-service
+  title: login-service
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################
