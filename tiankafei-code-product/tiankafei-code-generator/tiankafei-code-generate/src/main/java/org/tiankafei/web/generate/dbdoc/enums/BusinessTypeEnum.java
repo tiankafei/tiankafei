@@ -10,6 +10,7 @@ public enum BusinessTypeEnum {
     MLBD("mlbd"),
     RUOYI_CLOUD("ruoyi_cloud"),
     RUOYI_ACTIVITI("ruoyi_activiti"),
+    DATA_TABLE("data_table"),
     ;
 
     private String businessType;

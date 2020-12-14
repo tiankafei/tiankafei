@@ -51,11 +51,15 @@ public class CreateDatabaseDocService implements InitializingBean {
         }
     }
 
-    public void execCreateDatabaseDocument(String businessType) throws Exception {
-        execCreateDatabaseDocument(businessType, defaultFileType);
+    public void execCreateDatabaseDocument(BusinessTypeEnum typeEnum) throws Exception {
+        execCreateDatabaseDocument(typeEnum, defaultFileType);
     }
 
-    public void execCreateDatabaseDocument(String businessType, EngineFileType fileType) throws Exception {
+    public void execCreateDatabaseDocument(BusinessTypeEnum typeEnum, EngineFileType fileType) throws Exception {
+        execCreateDatabaseDocument(typeEnum.getBusinessType(), fileType);
+    }
+
+    private void execCreateDatabaseDocument(String businessType, EngineFileType fileType) throws Exception {
         if(createDatabaseDocMap.containsKey(businessType)){
             ICreateDatabaseDoc value = createDatabaseDocMap.get(businessType);
             execCreateDatabaseDocument(value, fileType);
@@ -64,11 +68,10 @@ public class CreateDatabaseDocService implements InitializingBean {
         }
     }
 
-    public void execCreateDatabaseDocument(EngineFileType fileType) throws Exception {
-        Set<Map.Entry<String, ICreateDatabaseDoc>> entries = createDatabaseDocMap.entrySet();
-        for (Map.Entry<String, ICreateDatabaseDoc> entry : entries) {
-            ICreateDatabaseDoc value = entry.getValue();
-            execCreateDatabaseDocument(value, fileType);
+    public void execCreateDatabaseAllDocument(BusinessTypeEnum typeEnum) throws Exception {
+        for (int index = 0; index < fileTypeList.size(); index++) {
+            EngineFileType fileType = fileTypeList.get(index);
+            execCreateDatabaseDocument(typeEnum, fileType);
         }
     }
 
@@ -83,7 +86,7 @@ public class CreateDatabaseDocService implements InitializingBean {
         }
     }
 
-    public void execCreateDatabaseDocument(ICreateDatabaseDoc value, EngineFileType fileType) throws Exception {
+    private void execCreateDatabaseDocument(ICreateDatabaseDoc value, EngineFileType fileType) throws Exception {
         //数据源
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName(value.getDriverClassName());
