@@ -300,11 +300,7 @@ public class DataOperateUtil {
      * @return 0的个数的字符串
      */
     public static String getZeroCount(int number) {
-        StringBuffer buffer = new StringBuffer();
-        for (int index = 0; index < number; index++) {
-            buffer.append("0");
-        }
-        return buffer.toString();
+        return StringUtils.rightPad("", number, "0");
     }
 
     /**
@@ -314,11 +310,7 @@ public class DataOperateUtil {
      * @return 0的个数的字符串
      */
     public static String getNullCount(int number) {
-        StringBuffer buffer = new StringBuffer();
-        for (int index = 0; index < number; index++) {
-            buffer.append(" ");
-        }
-        return buffer.toString();
+        return StringUtils.rightPad("", number, " ");
     }
 
 }
