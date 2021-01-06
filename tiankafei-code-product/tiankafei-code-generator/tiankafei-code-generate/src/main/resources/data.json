@@ -1,0 +1,25 @@
+{
+  "parent": {
+    "driverClassName": "com.mysql.cj.jdbc.Driver",
+    "jdbcUrl": "",
+    "username": "tjcp",
+    "password": "tjcp",
+    "fileDirectory": "C:\\Users\\Administrator\\Desktop\\统计产品",
+    "version": "1.0.0",
+    "description": "数据库设计文档生成",
+    "fileName": "",
+    "ignoreTableNameList": ["undo_log", "PDMAN_DB_VERSION", "test", "testtab"],
+    "ignoreTablePrefixList": ["tjcp_wd", "GY_ML", "GYX_ML"],
+    "ignoreTableSuffixList": [],
+    "designatedTableNameList": [],
+    "designatedTablePrefixList": [],
+    "designatedTableSuffixList": []
+  },
+  "data": [
+    {
+      "jdbcUrl": "jdbc:mysql://10.10.50.83:3306/jl-metadata?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8",
+      "fileName": "元数据系统",
+      "ignoreTableNameList": ["sys_test", "test_ytb_zbzcb"]
+    }
+  ]
+}
