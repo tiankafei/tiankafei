@@ -104,10 +104,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: multi-datasource-custom-service
+    name: ${spring.application.name}
     url: 'https://tiankafei.top'
   description: '自定义数据源系统服务'
-  title: multi-datasource-custom-service
+  title: ${spring.application.name}
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################

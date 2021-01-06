@@ -68,10 +68,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: blog-service
+    name: ${spring.application.name}
     url: 'https://tiankafei.top'
   description: '博客系统服务'
-  title: blog-service
+  title: ${spring.application.name}
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################

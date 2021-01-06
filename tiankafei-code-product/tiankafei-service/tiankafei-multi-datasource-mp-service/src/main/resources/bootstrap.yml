@@ -90,10 +90,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: multi-datasource-mp-service
+    name: ${spring.application.name}
     url: 'https://tiankafei.top'
   description: 'mybatis-plus的多数据源服务'
-  title: multi-datasource-mp-service
+  title: ${spring.application.name}
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################

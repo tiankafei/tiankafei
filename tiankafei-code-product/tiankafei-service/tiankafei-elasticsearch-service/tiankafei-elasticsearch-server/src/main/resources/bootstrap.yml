@@ -68,10 +68,10 @@ swagger:
   enable: false
   contact:
     email: 798971170@qq.com
-    name: questionnaire-service
+    name: ${spring.application.name}
     url: 'https://tiankafei.top'
-  description: '调查问卷服务'
-  title: questionnaire-service
+  description: 'elasticsearch 数据查询服务'
+  title: ${spring.application.name}
   url: 'https://tiankafei.top'
   version: 1.0
 #################################### Swagger end ###################################
