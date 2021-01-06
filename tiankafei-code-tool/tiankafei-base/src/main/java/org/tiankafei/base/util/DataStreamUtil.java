@@ -5,16 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.channels.Channel;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -221,7 +212,7 @@ public class DataStreamUtil {
             e.printStackTrace();
             throw new BaseException(e.getMessage());
         } finally {
-            FileUtil.closeReader(bufferedReader);
+            closeReader(bufferedReader);
         }
     }
 
@@ -272,6 +263,40 @@ public class DataStreamUtil {
             throw new BaseException(e.getMessage());
         } finally {
             closeInputStream(objectInputStream);
+        }
+    }
+
+    /**
+     * 关闭输入流
+     *
+     * @param reader 要关闭输入流
+     * @throws BaseException 自定义异常
+     */
+    public static void closeReader(Reader reader) throws BaseException {
+        try {
+            if (reader != null) {
+                reader.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BaseException(e.getMessage());
+        }
+    }
+
+    /**
+     * 关闭输出流
+     *
+     * @param writer 需要关闭的输出流
+     * @throws BaseException 自定义异常
+     */
+    public static void closeWriter(Writer writer) throws BaseException {
+        try {
+            if (writer != null) {
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BaseException(e.getMessage());
         }
     }
 

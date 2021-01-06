@@ -17,7 +17,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,10 +60,10 @@ public class FileUtil {
             throw new BaseException(e.getMessage());
         } finally {
             try {
-                DataStreamUtil.closeInputStream(fi);
-                DataStreamUtil.closeOutputStream(fo);
                 DataStreamUtil.closeChannel(in);
                 DataStreamUtil.closeChannel(out);
+                DataStreamUtil.closeOutputStream(fo);
+                DataStreamUtil.closeInputStream(fi);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new BaseException(e.getMessage());
@@ -81,20 +80,20 @@ public class FileUtil {
      */
     public static void writerFile(String filePath, List<String> list) throws BaseException {
         OutputStreamWriter fs = null;
+        FileOutputStream out = null;
         try {
-            fs = new OutputStreamWriter(new FileOutputStream(filePath, true), "UTF-8");
+            out = new FileOutputStream(filePath, true);
+            fs = new OutputStreamWriter(out, "UTF-8");
             for (int i = 0; i < list.size(); i++) {
                 fs.write(list.get(i) + "\n");
             }
+            fs.flush();
         } catch (Exception e) {
             e.printStackTrace();
             throw new BaseException(e.getMessage());
         } finally {
-            try {
-                closeWriter(fs);
-            } catch (Exception e) {
-                throw new BaseException(e.getMessage());
-            }
+            DataStreamUtil.closeWriter(fs);
+            DataStreamUtil.closeOutputStream(out);
         }
     }
 
@@ -187,6 +186,7 @@ public class FileUtil {
      * @throws BaseException 自定义异常
      */
     public static List<String> readFileTxtAndCsv(String filePath) throws BaseException {
+        FileInputStream in = null;
         InputStreamReader reader = null;
         BufferedReader bufferedReader = null;
         try {
@@ -196,7 +196,8 @@ public class FileUtil {
                 String fileName = file.getName().toLowerCase();
                 //是txt或者csv格式的文件
                 if (fileName.endsWith(BaseEnum.FILE_SUFFIX_TXT.getValue()) || fileName.endsWith(BaseEnum.FILE_SUFFIX_CSV.getValue())) {
-                    reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+                    in = new FileInputStream(file);
+                    reader = new InputStreamReader(in, "UTF-8");
                     bufferedReader = new BufferedReader(reader);
                     String lineTxt = null;
                     while ((lineTxt = bufferedReader.readLine()) != null) {
@@ -210,8 +211,9 @@ public class FileUtil {
             throw new BaseException(e.getMessage());
         } finally {
             try {
-                closeReader(bufferedReader);
-                closeReader(reader);
+                DataStreamUtil.closeReader(bufferedReader);
+                DataStreamUtil.closeReader(reader);
+                DataStreamUtil.closeInputStream(in);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new BaseException(e.getMessage());
@@ -231,6 +233,7 @@ public class FileUtil {
         try {
             fileOutputStream = new FileOutputStream(new File(filePath));
             fileOutputStream.write(byteArray);
+            fileOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
             throw new BaseException(e.getMessage());
@@ -281,11 +284,14 @@ public class FileUtil {
      */
     public static void writeTextFile(String filePath, List<String> textList, boolean clearFlag) throws BaseException {
         OutputStreamWriter outputStreamWriter = null;
+        FileOutputStream fileOutputStream = null;
         try {
-            outputStreamWriter = new OutputStreamWriter(new FileOutputStream(filePath, clearFlag), "UTF-8");
+            fileOutputStream = new FileOutputStream(filePath, clearFlag);
+            outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
             for (int i = 0, lem = textList.size(); i < lem; i++) {
                 outputStreamWriter.write(textList.get(i) + "\n");
             }
+            outputStreamWriter.flush();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new BaseException(e.getMessage());
@@ -296,7 +302,8 @@ public class FileUtil {
             e.printStackTrace();
             throw new BaseException(e.getMessage());
         } finally {
-            closeWriter(outputStreamWriter);
+            DataStreamUtil.closeWriter(outputStreamWriter);
+            DataStreamUtil.closeOutputStream(fileOutputStream);
         }
     }
 
@@ -321,9 +328,12 @@ public class FileUtil {
      */
     public static void writeTextFile(String filePath, String text, boolean clearFlag) throws BaseException {
         OutputStreamWriter outputStreamWriter = null;
+        FileOutputStream fileOutputStream = null;
         try {
-            outputStreamWriter = new OutputStreamWriter(new FileOutputStream(filePath, clearFlag), "UTF-8");
+            fileOutputStream = new FileOutputStream(filePath, clearFlag);
+            outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
             outputStreamWriter.write(text + "\n");
+            outputStreamWriter.flush();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new BaseException(e.getMessage());
@@ -334,42 +344,13 @@ public class FileUtil {
             e.printStackTrace();
             throw new BaseException(e.getMessage());
         } finally {
-            closeWriter(outputStreamWriter);
+            DataStreamUtil.closeWriter(outputStreamWriter);
+            DataStreamUtil.closeOutputStream(fileOutputStream);
         }
     }
 
-    /**
-     * 关闭输入流
-     *
-     * @param reader 要关闭输入流
-     * @throws BaseException 自定义异常
-     */
-    public static void closeReader(Reader reader) throws BaseException {
-        try {
-            if (reader != null) {
-                reader.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
-    }
-
-    /**
-     * 关闭输出流
-     *
-     * @param writer 需要关闭的输出流
-     * @throws BaseException 自定义异常
-     */
-    public static void closeWriter(Writer writer) throws BaseException {
-        try {
-            if (writer != null) {
-                writer.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+    public static Image readImage(String imageIconPath) throws BaseException {
+        return readImage(FileUtil.class.getClassLoader(), imageIconPath);
     }
 
     /**
@@ -379,15 +360,64 @@ public class FileUtil {
      * @return 图片对象
      * @throws BaseException 自定义异常
      */
-    public static Image readImage(String imageIconPath) throws BaseException {
+    public static Image readImage(ClassLoader classLoader, String imageIconPath) throws BaseException {
         try {
-            InputStream inputStream = FileUtil.class.getResourceAsStream(imageIconPath);
+            InputStream inputStream = classLoader.getResourceAsStream(imageIconPath);
             Image image = ImageIO.read(inputStream);
 
             return image;
         } catch (IOException e) {
             e.printStackTrace();
             throw new BaseException(e.getMessage() + "读取图片发生异常！");
+        }
+    }
+
+    public static String readJsonFile(String fileName) throws BaseException {
+        return readJsonFile(FileUtil.class.getClassLoader(), fileName);
+    }
+
+    /**
+     * 读取json文件
+     *
+     * @param fileName
+     * @return
+     * @throws Exception
+     */
+    public static String readJsonFile(ClassLoader classLoader, String fileName) throws BaseException {
+        InputStream in = null;
+        try {
+            in = classLoader.getResourceAsStream(fileName);
+            return readJsonFile(in);
+        } catch (BaseException e) {
+            e.printStackTrace();
+            throw new BaseException("读取" + fileName + "文件出错！" + e.getMessage());
+        } finally {
+            DataStreamUtil.closeInputStream(in);
+        }
+    }
+
+    /**
+     * 读取json文件
+     *
+     * @param in
+     * @return
+     * @throws Exception
+     */
+    public static String readJsonFile(InputStream in) throws BaseException {
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(in);
+            StringBuffer stringBuffer = new StringBuffer();
+            int ch = 0;
+            while ((ch = reader.read()) != -1) {
+                stringBuffer.append((char) ch);
+            }
+            return stringBuffer.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BaseException(e.getMessage());
+        } finally {
+            DataStreamUtil.closeReader(reader);
         }
     }
 
