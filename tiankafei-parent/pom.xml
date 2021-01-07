@@ -50,6 +50,7 @@
         <antlr-runtime.version>3.5.2</antlr-runtime.version>
         <poi.version>4.1.2</poi.version>
         <screw.version>1.0.4</screw.version>
+        <orai18n.version>12.1.0.2.0</orai18n.version>
         <ini4j.version>0.5.4</ini4j.version>
         <hutool.version>5.3.8</hutool.version>
         <Happy-Captcha.version>1.0.1</Happy-Captcha.version>
@@ -286,6 +287,16 @@
                 <groupId>cn.smallbun.screw</groupId>
                 <artifactId>screw-core</artifactId>
                 <version>${screw.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.ojdbc</groupId>
+                <artifactId>ojdbc8</artifactId>
+                <version>${ojdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.easyproject</groupId>
+                <artifactId>orai18n</artifactId>
+                <version>${orai18n.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.ini4j</groupId>
