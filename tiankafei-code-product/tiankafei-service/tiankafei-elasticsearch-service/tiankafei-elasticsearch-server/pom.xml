@@ -36,15 +36,25 @@
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
         </dependency>
-        <!-- ES transport client -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
+        <!--<dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>-->
+        <!-- ES transport client-->
+        <!--<dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>transport</artifactId>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
