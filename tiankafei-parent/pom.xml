@@ -80,8 +80,8 @@
         <sqlite.version>3.32.3.2</sqlite.version>
         <c3p0.version>0.9.5.5</c3p0.version>
         <druid.version>1.1.23</druid.version>
-        <elasticsearch.version>7.6.2</elasticsearch.version>
-        <spring.data.elasticsearch.version>3.2.12.RELEASE</spring.data.elasticsearch.version>
+        <!--<elasticsearch.version>7.6.2</elasticsearch.version>-->
+        <!--<spring.data.elasticsearch.version>3.2.12.RELEASE</spring.data.elasticsearch.version>-->
         <!--用户安全认证 相关版本依赖-->
         <shiro-spring.version>1.5.3</shiro-spring.version>
 
@@ -550,13 +550,13 @@
                 <version>${spring-boot.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-elasticsearch</artifactId>
                 <version>${spring.data.elasticsearch.version}</version>
-            </dependency>
+            </dependency>-->
             <!-- ES transport client-->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>transport</artifactId>
                 <version>${elasticsearch.version}</version>
@@ -565,7 +565,7 @@
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${elasticsearch.version}</version>
-            </dependency>
+            </dependency>-->
 
             <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
             <dependency>
