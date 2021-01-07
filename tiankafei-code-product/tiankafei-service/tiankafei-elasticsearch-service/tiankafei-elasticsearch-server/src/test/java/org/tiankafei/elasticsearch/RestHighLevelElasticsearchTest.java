@@ -3,9 +3,13 @@ package org.tiankafei.elasticsearch;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.client.indices.GetIndexResponse;
 import org.elasticsearch.common.settings.Settings;
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -73,11 +78,60 @@ public class RestHighLevelElasticsearchTest {
 
     @Test
     public void getIndex() {
-
+        try {
+            GetIndexRequest getIndexRequest = new GetIndexRequest("test_index_*");
+            GetIndexResponse getIndexResponse = client.indices().get(getIndexRequest, RequestOptions.DEFAULT);
+            List<String> indexList = Arrays.asList(getIndexResponse.getIndices());
+            for (String indexName : indexList) {
+                System.out.println(indexName);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void deleteIndex() {
+        try {
+            DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
+            AcknowledgedResponse delete = client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
+            if(delete.isAcknowledged()){
+                System.out.println("删除" + indexName + "索引成功！");
+            } else {
+                System.out.println("删除" + indexName + "索引失败！");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void insertData(){
+
+    }
+
+    @Test
+    public void batchInsertData(){
+
+    }
+
+    @Test
+    public void getById(){
+
+    }
+
+    @Test
+    public void multiGetById(){
+
+    }
+
+    @Test
+    public void updateByQuery(){
+
+    }
+
+    @Test
+    public void delById(){
 
     }
 

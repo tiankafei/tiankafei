@@ -1,6 +1,5 @@
 package org.tiankafei.elasticsearch;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
@@ -40,14 +39,6 @@ public class TransportElasticsearchTest {
 
     @Test
     public void createIndex(){
-
-        CreateIndexRequest createIndexRequest = new CreateIndexRequest(indexName);
-        createIndexRequest.settings(Settings.builder()
-                .put("index.number_of_shards", 3)
-                .put("index.number_of_replicas", 2)
-        );
-
-
 
     }
 
