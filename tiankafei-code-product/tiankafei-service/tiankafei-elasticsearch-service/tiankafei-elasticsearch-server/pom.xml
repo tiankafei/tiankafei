@@ -36,6 +36,15 @@
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
         </dependency>
+        <!-- ES transport client -->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
