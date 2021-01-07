@@ -421,4 +421,21 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 更改文件名
+     * @param filePath
+     * @param sourceName
+     * @param targetName
+     */
+    public static void updateFileName(String filePath, String sourceName, String targetName){
+        File file = new File(filePath);
+        File[] files = file.listFiles();
+        for (File subFile : files) {
+            String path = subFile.getParent();
+            String name = subFile.getName();
+            name = name.replaceAll(sourceName, targetName);
+            subFile.renameTo(new File(path + File.separator + name));
+        }
+    }
+
 }
