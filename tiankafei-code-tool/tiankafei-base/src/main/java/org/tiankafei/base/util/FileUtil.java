@@ -433,7 +433,10 @@ public class FileUtil {
         for (File subFile : files) {
             String path = subFile.getParent();
             String name = subFile.getName();
-            name = name.replace(sourceName, targetName);
+
+            while(name.contains(sourceName)){
+                name = name.replace(sourceName, targetName);
+            }
             subFile.renameTo(new File(path + File.separator + name));
         }
     }
