@@ -34,6 +34,14 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  elasticsearch:
+    rest:
+      uris: 192.168.21.123:9200
+      connection-timeout: 30s
+  data:
+    elasticsearch:
+      cluster-name: my-application
+      cluster-nodes: 192.168.21.123:9300
 management:
   endpoints:
     web:
