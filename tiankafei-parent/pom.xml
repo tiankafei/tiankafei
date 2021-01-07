@@ -81,7 +81,7 @@
         <c3p0.version>0.9.5.5</c3p0.version>
         <druid.version>1.1.23</druid.version>
         <elasticsearch.version>7.6.2</elasticsearch.version>
-
+        <spring.data.elasticsearch.version>4.0.6.RELEASE</spring.data.elasticsearch.version>
         <!--用户安全认证 相关版本依赖-->
         <shiro-spring.version>1.5.3</shiro-spring.version>
 
@@ -542,6 +542,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>${spring.data.elasticsearch.version}</version>
             </dependency>
             <!-- ES transport client-->
             <dependency>
