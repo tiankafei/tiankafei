@@ -6,13 +6,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.7.RELEASE</version>
+        <version>2.3.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>org.tiankafei</groupId>
     <artifactId>tiankafei-parent</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.1-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-parent</name>
@@ -25,9 +25,9 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!--spring boot 版本依赖-->
-        <spring-boot.version>2.2.7.RELEASE</spring-boot.version>
+        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <!--spring cloud 版本依赖-->
-        <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <!--spring cloud alibaba版本依赖-->
         <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
 
@@ -61,7 +61,7 @@
         <commons-compress.version>1.20</commons-compress.version>
         <cglib.version>3.3.0</cglib.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
-
+        <jackson.version>2.10.4</jackson.version>
 
         <!--java图形化界面 相关版本依赖-->
         <jfreechart.version>1.0.13</jfreechart.version>
