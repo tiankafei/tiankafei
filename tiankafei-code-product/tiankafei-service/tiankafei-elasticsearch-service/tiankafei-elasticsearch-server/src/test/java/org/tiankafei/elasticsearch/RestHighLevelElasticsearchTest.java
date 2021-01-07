@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
@@ -38,6 +39,9 @@ public class RestHighLevelElasticsearchTest {
     private RestHighLevelClient client;
 
     private String indexName = "test_index_rest_high_level";
+
+    @Autowired
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     @Before
     public void before() {
@@ -66,7 +70,15 @@ public class RestHighLevelElasticsearchTest {
         );
         try {
             CreateIndexResponse createIndexResponse = client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
-            if(createIndexResponse.isAcknowledged()){
+            boolean flag = createIndexResponse.isAcknowledged();
+            if(flag){
+                System.out.println("创建" + indexName + "成功!");
+            }else{
+                System.out.println("创建" + indexName + "失败!");
+            }
+
+            flag = elasticsearchRestTemplate.createIndex(indexName);
+            if(flag){
                 System.out.println("创建" + indexName + "成功!");
             }else{
                 System.out.println("创建" + indexName + "失败!");
@@ -95,7 +107,15 @@ public class RestHighLevelElasticsearchTest {
         try {
             DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
             AcknowledgedResponse delete = client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
-            if(delete.isAcknowledged()){
+            boolean flag = delete.isAcknowledged();
+            if(flag){
+                System.out.println("删除" + indexName + "索引成功！");
+            } else {
+                System.out.println("删除" + indexName + "索引失败！");
+            }
+
+            flag = elasticsearchRestTemplate.deleteIndex(indexName);
+            if(flag){
                 System.out.println("删除" + indexName + "索引成功！");
             } else {
                 System.out.println("删除" + indexName + "索引失败！");
