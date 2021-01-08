@@ -63,7 +63,7 @@ public class AuthFilter extends BaseZuulFilter {
             log.error("正在执行鉴权，鉴权没有通过的url：{}", currentPath);
             //返回错误提示内容
             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_AUTHENTICATION_EXCEPTION);
-            ZuulUtil.returnValue(requestContext, error, httpProperties.getEncoding().getCharset());
+            ZuulUtil.returnValue(requestContext, error, serverProperties.getServlet().getEncoding().getCharset());
         }
         return null;
     }

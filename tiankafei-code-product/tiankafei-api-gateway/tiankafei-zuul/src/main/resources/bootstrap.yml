@@ -1,5 +1,10 @@
 server:
   port: 7010
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
 spring:
   profiles:
     active: dev, eureka

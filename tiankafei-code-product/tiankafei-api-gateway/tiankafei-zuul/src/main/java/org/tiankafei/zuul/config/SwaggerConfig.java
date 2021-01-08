@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 网关配置swagger服务
+ *
  * @author 甜咖啡
  */
 @EnableSwagger2

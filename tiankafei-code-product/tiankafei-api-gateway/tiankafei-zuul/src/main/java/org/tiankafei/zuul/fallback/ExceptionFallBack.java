@@ -15,6 +15,7 @@ import java.io.InputStream;
 
 /**
  * 网关异常回调，返回统一格式
+ *
  * @author 甜咖啡
  */
 @Component
@@ -28,7 +29,7 @@ public class ExceptionFallBack implements FallbackProvider {
 
     @Override
     public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
-        return new ClientHttpResponse(){
+        return new ClientHttpResponse() {
 
             @Override
             public HttpHeaders getHeaders() {

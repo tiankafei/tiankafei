@@ -11,6 +11,7 @@ import org.tiankafei.zuul.utils.ZuulUtil;
 
 /**
  * 限流过滤器
+ *
  * @author tiankafei
  * @since 1.0
  **/
@@ -36,7 +37,7 @@ public class LimitedFilter extends BaseZuulFilter {
             log.error("正在执行限流，限流没有通过的url：{}", currentPath);
             //返回错误提示内容
             ApiResult error = ApiResult.error(ExceptionEnum.LOGIN_LIMITED_EXCEPTION);
-            ZuulUtil.returnValue(requestContext, error, httpProperties.getEncoding().getCharset());
+            ZuulUtil.returnValue(requestContext, error, serverProperties.getServlet().getEncoding().getCharset());
         }
         return null;
     }

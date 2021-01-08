@@ -1,5 +1,10 @@
 server:
   port: 7000
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
 exclusions:
   urls:
     - /api/signin/logout

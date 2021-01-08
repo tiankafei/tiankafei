@@ -5,7 +5,7 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.http.HttpProperties;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.properties.ExclusionsUrlsProperties;
@@ -29,7 +29,7 @@ public abstract class BaseZuulFilter extends ZuulFilter {
     protected ExclusionsUrlsProperties exclusionsUrlsProperties;
 
     @Autowired
-    protected HttpProperties httpProperties;
+    protected ServerProperties serverProperties;
 
     @Autowired
     private SwaggerProperties swaggerProperties;
@@ -46,7 +46,7 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        if(swaggerProperties.getEnable()){
+        if (swaggerProperties.getEnable()) {
             // swagger开启的时候，不需要走网关的过滤器
             return false;
         }
@@ -79,6 +79,7 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     /**
      * 执行过滤器
+     *
      * @return
      */
     public abstract Object execFilter();

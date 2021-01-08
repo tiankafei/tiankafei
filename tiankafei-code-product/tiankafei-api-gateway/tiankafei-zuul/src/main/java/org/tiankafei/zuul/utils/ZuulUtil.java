@@ -14,7 +14,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class ZuulUtil {
 
-    private ZuulUtil(){}
+    private ZuulUtil() {
+    }
 
     /**
      * 验证是否需要执行后面的过滤器
