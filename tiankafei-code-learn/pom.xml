@@ -20,7 +20,7 @@
 
         <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
 
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <modules>
