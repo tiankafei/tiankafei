@@ -20,13 +20,6 @@ public class ElasticsearchRestHighLevelRepositoryImpl implements IElasticsearchR
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
-    /**
-     * 校验 索引 是否已经存在
-     *
-     * @param indexName
-     * @return
-     * @throws Exception
-     */
     @Override
     public Boolean checkIndexNameExists(String indexName) throws Exception {
         IndexCoordinates of = IndexCoordinates.of(indexName);
