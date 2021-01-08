@@ -24,4 +24,9 @@ public class ElasticsearchTransportServiceImpl implements IElasticsearchService 
     public Boolean createIndex(IndexParam indexParam) throws Exception {
         return elasticsearchTransportRepositoryImpl.createIndex(indexParam);
     }
+
+    @Override
+    public Boolean deleteIndex(String indexName) throws Exception {
+        return elasticsearchTransportRepositoryImpl.deleteIndex(indexName);
+    }
 }

@@ -24,4 +24,9 @@ public class ElasticsearchRestHighLevelServiceImpl implements IElasticsearchServ
     public Boolean createIndex(IndexParam indexParam) throws Exception {
         return elasticsearchRestHighLevelRepositoryImpl.createIndex(indexParam);
     }
+
+    @Override
+    public Boolean deleteIndex(String indexName) throws Exception {
+        return elasticsearchRestHighLevelRepositoryImpl.deleteIndex(indexName);
+    }
 }

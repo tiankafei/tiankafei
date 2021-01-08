@@ -71,16 +71,16 @@ public class RestHighLevelElasticsearchTest {
         try {
             CreateIndexResponse createIndexResponse = client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
             boolean flag = createIndexResponse.isAcknowledged();
-            if(flag){
+            if (flag) {
                 System.out.println("创建" + indexName + "成功!");
-            }else{
+            } else {
                 System.out.println("创建" + indexName + "失败!");
             }
 
             flag = elasticsearchRestTemplate.createIndex(indexName);
-            if(flag){
+            if (flag) {
                 System.out.println("创建" + indexName + "成功!");
-            }else{
+            } else {
                 System.out.println("创建" + indexName + "失败!");
             }
         } catch (IOException e) {
@@ -108,14 +108,14 @@ public class RestHighLevelElasticsearchTest {
             DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
             AcknowledgedResponse delete = client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
             boolean flag = delete.isAcknowledged();
-            if(flag){
+            if (flag) {
                 System.out.println("删除" + indexName + "索引成功！");
             } else {
                 System.out.println("删除" + indexName + "索引失败！");
             }
 
             flag = elasticsearchRestTemplate.deleteIndex(indexName);
-            if(flag){
+            if (flag) {
                 System.out.println("删除" + indexName + "索引成功！");
             } else {
                 System.out.println("删除" + indexName + "索引失败！");
@@ -126,32 +126,32 @@ public class RestHighLevelElasticsearchTest {
     }
 
     @Test
-    public void insertData(){
+    public void insertData() {
 
     }
 
     @Test
-    public void batchInsertData(){
+    public void batchInsertData() {
 
     }
 
     @Test
-    public void getById(){
+    public void getById() {
 
     }
 
     @Test
-    public void multiGetById(){
+    public void multiGetById() {
 
     }
 
     @Test
-    public void updateByQuery(){
+    public void updateByQuery() {
 
     }
 
     @Test
-    public void delById(){
+    public void delById() {
 
     }
 

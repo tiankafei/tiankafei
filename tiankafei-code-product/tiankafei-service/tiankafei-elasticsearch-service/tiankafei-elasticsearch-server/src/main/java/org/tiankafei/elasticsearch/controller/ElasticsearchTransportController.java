@@ -47,4 +47,17 @@ public class ElasticsearchTransportController {
         return ApiResult.ok(elasticsearchTransportServiceImpl.createIndex(indexParam));
     }
 
+    /**
+     * 删除 索引
+     *
+     * @param indexName
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/deleteIndex/{indexName}")
+    @ApiOperation(value = "删除 索引")
+    public ApiResult<Boolean> deleteIndex(@PathVariable String indexName) throws Exception {
+        return ApiResult.ok(elasticsearchTransportServiceImpl.deleteIndex(indexName));
+    }
+
 }

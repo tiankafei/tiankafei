@@ -27,7 +27,7 @@ public class TransportElasticsearchTest {
     private String indexName = "test_index_transport";
 
     @Before
-    public void before(){
+    public void before() {
         try {
             Settings setting = Settings.builder().put("cluster.name", "my-application").build();
             client = new PreBuiltTransportClient(setting)
@@ -38,23 +38,23 @@ public class TransportElasticsearchTest {
     }
 
     @Test
-    public void createIndex(){
+    public void createIndex() {
 
     }
 
     @Test
-    public void getIndex(){
+    public void getIndex() {
 
     }
 
     @Test
-    public void deleteIndex(){
+    public void deleteIndex() {
 
     }
 
     @After
-    public void after(){
-        if(client != null){
+    public void after() {
+        if (client != null) {
             client.close();
         }
     }
