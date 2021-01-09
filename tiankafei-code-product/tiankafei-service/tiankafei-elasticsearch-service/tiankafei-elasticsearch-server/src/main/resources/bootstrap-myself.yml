@@ -27,5 +27,5 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   elasticsearch:
     rest:
-      uris: 192.168.21.123:9200
+      uris: 192.168.0.120:9200
       connection-timeout: 30s
