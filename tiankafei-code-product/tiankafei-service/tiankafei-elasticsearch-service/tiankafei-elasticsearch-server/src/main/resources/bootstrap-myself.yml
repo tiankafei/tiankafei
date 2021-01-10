@@ -29,3 +29,6 @@ spring:
     rest:
       uris: 192.168.0.120:9200
       connection-timeout: 30s
+elasticsearch:
+  cluster-name: my-application
+  cluster-nodes: 192.168.0.120:9300

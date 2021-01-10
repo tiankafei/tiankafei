@@ -5,8 +5,10 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSON;
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.Test;
+import org.tiankafei.base.util.FileUtil;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.service.impl.CommonCaptchaUtil;
@@ -59,5 +61,38 @@ public class ApiTest {
         Color color = CommonCaptchaUtil.getColor();
         System.out.println(color.getColorSpace().toString());
     }
+
+    @Test
+    public void test05(){
+        FileUtil.updateFileName("D:\\downloads\\琅琊榜之风起长林", "[琅Y榜之风QC林]第", "琅琊榜之风起长林");
+        FileUtil.updateFileName("D:\\downloads\\琅琊榜之风起长林", "集_bd", "");
+
+    }
+
+    @Test
+    public void test06(){
+        double initAmount = 14000;
+
+        double amount = 0;
+        for (int index = 1; index <= 40; index++) {
+            if (index == 1) {
+                amount = initAmount * (1 + 0.05);
+            } else if (index == 2) {
+                amount = (amount + 3000) * (1 + 0.05);
+            } else if (index <= 5) {
+                amount = (amount + 3800) * (1 + 0.05);
+            } else if (index == 6) {
+                amount = (amount + 4500) * (1 + 0.05);
+            } else {
+                amount = (amount + 4500) * (1 + 0.05);
+            }
+
+            BigDecimal bigDecimal = new BigDecimal(amount);
+            double result = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+            System.out.println("第" + index + "年：" + result);
+        }
+    }
+
 
 }
