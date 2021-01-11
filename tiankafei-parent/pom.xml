@@ -98,7 +98,7 @@
 
         <!--自己的包版本依赖-->
         <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
-        <org.tiankafei.produce.version>1.0-RELEASE</org.tiankafei.produce.version>
+        <org.tiankafei.produce.version>1.1-RELEASE</org.tiankafei.produce.version>
     </properties>
 
     <dependencyManagement>
