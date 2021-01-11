@@ -89,10 +89,10 @@
         SELECT t1.*,t1.id as user_info_id,t2.*,t2.id as user_login_id,t3.*,t3.id as user_role_id,t4.*,t4.id as role_info_id,t5.*,t5.id as role_menu_id,t6.*,t6.id as menu_info_id
                  FROM sys_user_info t1
                  JOIN sys_user_login t2 ON t1.id = t2.id and t1.id=#{param} and t1.delete_mark = 0 and t1.delete_mark = 0
-                 LEFT JOIN sys_user_role t3 ON t2.id = t3.user_id and t3.`status`='1'
-                 LEFT JOIN sys_role_info t4 ON t3.role_id = t4.id and t4.`status`='1' and t4.delete_mark = 0
+                 LEFT JOIN sys_user_role t3 ON t2.id = t3.user_id and t3.`status` = 1
+                 LEFT JOIN sys_role_info t4 ON t3.role_id = t4.id and t4.`status` = 1 and t4.delete_mark = 0
                  LEFT JOIN sys_role_menu t5 ON t4.id = t5.role_id
-                 LEFT JOIN sys_menu_info t6 ON t5.menu_id = t6.id and t6.`status`='1' and t6.delete_mark = 0
+                 LEFT JOIN sys_menu_info t6 ON t5.menu_id = t6.id and t6.`status` = 1 and t6.delete_mark = 0
     </select>
 
     <select id="queryUserLoginFromUsername" resultMap="userLoginMap">

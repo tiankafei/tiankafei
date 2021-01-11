@@ -35,4 +35,10 @@ public interface IElasticsearch {
      */
     public Boolean deleteIndex(String indexName) throws Exception;
 
+    /**
+     * 插入数据
+     * @throws Exception
+     */
+    public Boolean insertData(String indexName) throws Exception;
+
 }

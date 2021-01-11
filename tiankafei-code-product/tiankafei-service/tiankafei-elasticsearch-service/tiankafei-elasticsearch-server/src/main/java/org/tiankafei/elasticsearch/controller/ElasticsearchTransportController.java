@@ -60,4 +60,17 @@ public class ElasticsearchTransportController {
         return ApiResult.ok(elasticsearchTransportServiceImpl.deleteIndex(indexName));
     }
 
+    /**
+     * 插入数据
+     *
+     * @param indexName
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/insertData/{indexName}")
+    @ApiOperation(value = "插入 索引数据")
+    public ApiResult<Boolean> insertData(@PathVariable String indexName) throws Exception {
+        return ApiResult.ok(elasticsearchTransportServiceImpl.insertData(indexName));
+    }
+
 }
