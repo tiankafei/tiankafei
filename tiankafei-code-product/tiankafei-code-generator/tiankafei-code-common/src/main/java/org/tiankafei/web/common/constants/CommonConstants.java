@@ -28,4 +28,9 @@ public interface CommonConstants {
      */
     Integer BATCH_SAVE_COUNT = 100;
 
+    /**
+     * swagger前缀url
+     */
+    String SWAGGER_PREFIX_URL_V2 = "/v2/api-docs";
+
 }

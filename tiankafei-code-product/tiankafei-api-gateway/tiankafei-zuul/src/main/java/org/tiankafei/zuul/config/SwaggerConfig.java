@@ -5,6 +5,7 @@ import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.tiankafei.web.common.constants.CommonConstants;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -39,7 +40,7 @@ public class SwaggerConfig {
     private SwaggerResource createResource(String name, String location, String version) {
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
-        swaggerResource.setLocation("/api/" + location + "/v2/api-docs");
+        swaggerResource.setLocation("/api/" + location + CommonConstants.SWAGGER_PREFIX_URL_V2);
         swaggerResource.setSwaggerVersion(version);
         return swaggerResource;
     }
