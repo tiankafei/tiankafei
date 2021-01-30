@@ -1,5 +1,6 @@
 package org.tiankafei.aviator.extend.function;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import org.tiankafei.aviator.extend.exception.AviatorException;
 import com.googlecode.aviator.lexer.token.OperatorType;
@@ -8,7 +9,6 @@ import com.googlecode.aviator.runtime.type.AviatorJavaType;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorString;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

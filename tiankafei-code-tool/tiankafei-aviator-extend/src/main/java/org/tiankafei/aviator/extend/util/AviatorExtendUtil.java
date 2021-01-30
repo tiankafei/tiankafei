@@ -1,5 +1,6 @@
 package org.tiankafei.aviator.extend.util;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.tiankafei.aviator.extend.InitFunction;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import org.tiankafei.aviator.extend.exception.AviatorException;
@@ -24,7 +25,6 @@ import com.googlecode.aviator.Options;
 import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.base.util.JdkSpiUtil;
 
