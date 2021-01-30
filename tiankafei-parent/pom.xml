@@ -35,7 +35,7 @@
         <guava.version>29.0-jre</guava.version>
         <fastjson.version>1.2.72</fastjson.version>
         <disruptor.version>3.4.2</disruptor.version>
-        <aviator.version>5.1.4</aviator.version>
+        <aviator.version>5.2.3</aviator.version>
         <kilim.version>2.0.2</kilim.version>
         <quasar.version>0.8.0</quasar.version>
         <objenesis.version>3.1</objenesis.version>
