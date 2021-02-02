@@ -60,7 +60,8 @@ public class CodeProperties implements Serializable {
     private String outputDir;
 
 
-    private boolean shiroAuthority = false;
+    private boolean shiroAuthority = Boolean.FALSE;
+    private boolean logFlag = Boolean.FALSE;
     private String superVoClassPath;
     private String superPageParamClassPath;
 

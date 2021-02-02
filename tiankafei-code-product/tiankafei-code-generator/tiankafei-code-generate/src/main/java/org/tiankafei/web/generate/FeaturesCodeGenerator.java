@@ -13,7 +13,8 @@ public class FeaturesCodeGenerator extends BaseCodeGenerator {
     private String author = "tiankafei";
     private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-db\\src\\main\\java";
 
-    private boolean shiroAuthority = false;
+    private boolean shiroAuthority = Boolean.FALSE;
+    private boolean logFlag = Boolean.FALSE;
     private String baseParentPath = "org.tiankafei";
     private String moduleName = "db";
 
@@ -44,6 +45,7 @@ public class FeaturesCodeGenerator extends BaseCodeGenerator {
         codeProperties.setUsername("root");
         codeProperties.setPassword("tiankafei");
         codeProperties.setShiroAuthority(shiroAuthority);
+        codeProperties.setLogFlag(logFlag);
         codeProperties.setAuthor(author);
         codeProperties.setOutputDir(outputDir);
         codeProperties.setProjectPath(baseParentPath);

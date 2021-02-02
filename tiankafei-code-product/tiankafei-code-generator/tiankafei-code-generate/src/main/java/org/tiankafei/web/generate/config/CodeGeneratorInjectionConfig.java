@@ -44,7 +44,6 @@ public class CodeGeneratorInjectionConfig {
                 ConfigBuilder config = getConfig();
 
                 Map<String, Object> map = Maps.newHashMap();
-                map.put("shiroAuthority", codeProperties.isShiroAuthority());
                 map.put("voPackage", codeProperties.getProjectPath() + "." + codeProperties.getModuleName() + ".vo");
                 map.put("paramPackage", codeProperties.getProjectPath() + "." + codeProperties.getModuleName() + ".param");
                 map.put("idsParamClassPath", codeProperties.getIdsParamClassPath());
@@ -65,6 +64,8 @@ public class CodeGeneratorInjectionConfig {
 
                 TableInfo tableInfo = config.getTableInfoList().get(0);
                 CfgProperties cfgProperties = new CfgProperties();
+                cfgProperties.setShiroAuthority(codeProperties.isShiroAuthority());
+                cfgProperties.setLogFlag(codeProperties.isLogFlag());
 
                 String keyColumnType = "Long";
                 List<TableField> fields = tableInfo.getFields();

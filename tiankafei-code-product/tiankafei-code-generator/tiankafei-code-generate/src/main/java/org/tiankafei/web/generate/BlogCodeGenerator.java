@@ -13,7 +13,8 @@ public class BlogCodeGenerator extends BaseCodeGenerator {
     private String author = "tiankafei";
     private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-blog-service\\src\\main\\java";
 
-    private boolean shiroAuthority = false;
+    private boolean shiroAuthority = Boolean.TRUE;
+    private boolean logFlag = Boolean.TRUE;
     private String baseParentPath = "org.tiankafei";
     private String moduleName = "blog";
 
@@ -45,6 +46,7 @@ public class BlogCodeGenerator extends BaseCodeGenerator {
         codeProperties.setUsername("root");
         codeProperties.setPassword("tiankafei");
         codeProperties.setShiroAuthority(shiroAuthority);
+        codeProperties.setLogFlag(logFlag);
         codeProperties.setAuthor(author);
         codeProperties.setOutputDir(outputDir);
         codeProperties.setProjectPath(baseParentPath);

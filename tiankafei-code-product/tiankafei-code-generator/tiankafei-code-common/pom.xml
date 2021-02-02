@@ -15,6 +15,10 @@
     <name>tiankafei-code-common</name>
     <description></description>
 
+    <properties>
+        <ruoyi.version>2.4.0-SNAPSHOT</ruoyi.version>
+    </properties>
+
     <dependencies>
         <!--web依赖包-->
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
@@ -103,6 +107,19 @@
         <dependency>
             <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
+        </dependency>
+
+        <!-- RuoYi Common Log -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-log</artifactId>
+            <version>${ruoyi.version}</version>
+        </dependency>
+        <!-- RuoYi Common Security -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-security</artifactId>
+            <version>${ruoyi.version}</version>
         </dependency>
 
         <!--自己的工具包-->
