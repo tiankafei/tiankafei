@@ -67,7 +67,8 @@
         <jfreechart.version>1.0.13</jfreechart.version>
 
         <!--web 相关版本依赖-->
-        <swagger.version>2.9.2</swagger.version>
+        <swagger.fox.version>2.9.2</swagger.fox.version>
+        <swagger.core.version>1.5.24</swagger.core.version>
         <knife4j.version>2.0.4</knife4j.version>
         <mybatis-plus.version>3.4.0</mybatis-plus.version>
         <dynamic-datasource.version>3.2.1</dynamic-datasource.version>
@@ -465,14 +466,24 @@
             </dependency>
 
             <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.core.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger.fox.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger.fox.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
             <dependency>
