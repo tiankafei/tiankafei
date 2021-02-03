@@ -1,11 +1,11 @@
 package org.tiankafei.gateway.config;
 
+import com.ruoyi.common.swagger.constants.SwaggerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.support.NameUtils;
 import org.springframework.stereotype.Component;
-import org.tiankafei.web.common.constants.CommonConstants;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
@@ -40,7 +40,7 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
                         .filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
                         .forEach(predicateDefinition -> resourceList
                                 .add(swaggerResource(routeDefinition.getId(), predicateDefinition.getArgs()
-                                        .get(NameUtils.GENERATED_NAME_PREFIX + "0").replace("/**", CommonConstants.SWAGGER_PREFIX_URL_V2)))));
+                                        .get(NameUtils.GENERATED_NAME_PREFIX + "0").replace("/**", SwaggerConstants.SWAGGER_PREFIX_URL_V2)))));
         return resourceList;
     }
 
