@@ -1,5 +1,8 @@
 package org.tiankafei.blog.controller;
 
+import com.ruoyi.common.log.annotation.Log;
+import com.ruoyi.common.log.enums.BusinessType;
+import com.ruoyi.common.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -50,6 +53,8 @@ public class BlogInfoController extends BaseController {
      */
     @PostMapping("/check")
     @ApiOperation(value = "校验 系统的博客数据 对象是否存在")
+    @PreAuthorize(hasPermi = "sys:blog:info:check")
+    @Log(title = "系统的博客数据", businessType = BusinessType.CHECK)
     public ApiResult<Boolean> checkBlogInfoControllerExists(@Valid @RequestBody BlogInfoCheckParam blogInfoCheckParam) throws Exception {
         Boolean flag = blogInfoService.checkBlogInfoServiceExists(blogInfoCheckParam);
         return ApiResult.ok(flag);
@@ -64,6 +69,8 @@ public class BlogInfoController extends BaseController {
      */
     @PostMapping
     @ApiOperation(value = "添加 系统的博客数据")
+    @PreAuthorize(hasPermi = "sys:blog:info:add")
+    @Log(title = "系统的博客数据", businessType = BusinessType.INSERT)
     public ApiResult<Long> addBlogInfoController(@Valid @RequestBody BlogInfoVo blogInfoVo) throws Exception {
         Long id = blogInfoService.addBlogInfoService(blogInfoVo);
         return ApiResult.ok(id);
@@ -78,6 +85,8 @@ public class BlogInfoController extends BaseController {
      */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的博客数据")
+    @PreAuthorize(hasPermi = "sys:blog:info:batchAdd")
+    @Log(title = "系统的博客数据", businessType = BusinessType.BATCH_INSERT)
     public ApiResult<List<Long>> batchAddBlogInfoController(@Valid @RequestBody List<BlogInfoVo> blogInfoVoList) throws Exception {
         List<Long> idList = blogInfoService.batchAddBlogInfoService(blogInfoVoList);
         return ApiResult.ok(idList);
@@ -92,6 +101,8 @@ public class BlogInfoController extends BaseController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 系统的博客数据")
+    @PreAuthorize(hasPermi = "sys:blog:info:delete")
+    @Log(title = "系统的博客数据", businessType = BusinessType.DELETE)
     public ApiResult<Boolean> deleteBlogInfoController(@PathVariable(value = "id") String id) throws Exception {
         boolean flag = blogInfoService.deleteBlogInfoService(id);
         return ApiResult.ok(flag);
@@ -106,6 +117,8 @@ public class BlogInfoController extends BaseController {
      */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统的博客数据")
+    @PreAuthorize(hasPermi = "sys:blog:info:batchDelete")
+    @Log(title = "系统的博客数据", businessType = BusinessType.BATCH_DELETE)
     public ApiResult<Boolean> batchDeleteBlogInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = blogInfoService.batchDeleteBlogInfoService(idsParam.getIds());
         return ApiResult.ok(flag);
@@ -120,6 +133,8 @@ public class BlogInfoController extends BaseController {
      */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 系统的博客数据")
+    @PreAuthorize(hasPermi = "sys:blog:info:conditionDelete")
+    @Log(title = "系统的博客数据", businessType = BusinessType.CONDITION_DELETE)
     public ApiResult<Boolean> conditionDeleteBlogInfoController(@Valid @RequestBody BlogInfoDeleteParam blogInfoDeleteParam) throws Exception {
         boolean flag = blogInfoService.conditionDeleteBlogInfoService(blogInfoDeleteParam);
         return ApiResult.ok(flag);
@@ -134,6 +149,8 @@ public class BlogInfoController extends BaseController {
      */
     @PatchMapping
     @ApiOperation(value = "修改 系统的博客数据")
+    @PreAuthorize(hasPermi = "sys:blog:info:update")
+    @Log(title = "系统的博客数据", businessType = BusinessType.UPDATE)
     public ApiResult<Boolean> updateBlogInfoController(@Valid @RequestBody BlogInfoVo blogInfoVo) throws Exception {
         boolean flag = blogInfoService.updateBlogInfoService(blogInfoVo);
         return ApiResult.ok(flag);
@@ -148,6 +165,8 @@ public class BlogInfoController extends BaseController {
      */
     @GetMapping("/{id}")
     @ApiOperation(value = "根据ID获取 系统的博客数据 对象")
+    @PreAuthorize(hasPermi = "sys:blog:info:info")
+    @Log(title = "系统的博客数据", businessType = BusinessType.INFO)
     public ApiResult<BlogInfoVo> getBlogInfoController(@PathVariable(value = "id") String id) throws Exception {
         BlogInfoVo blogInfoVo = blogInfoService.getBlogInfoServiceById(id);
         return ApiResult.ok(blogInfoVo);
@@ -161,6 +180,8 @@ public class BlogInfoController extends BaseController {
      */
     @GetMapping
     @ApiOperation(value = "获取 系统的博客数据 对象全部列表")
+    @PreAuthorize(hasPermi = "sys:blog:info:AllList")
+    @Log(title = "系统的博客数据", businessType = BusinessType.ALL_LIST)
     public ApiResult<List<BlogInfoVo>> getBlogInfoControllerAllList() throws Exception {
         List<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServiceList(new BlogInfoListParam());
         return ApiResult.ok(blogInfoVoList);
@@ -175,6 +196,8 @@ public class BlogInfoController extends BaseController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客数据 对象列表")
+    @PreAuthorize(hasPermi = "sys:blog:info:list")
+    @Log(title = "系统的博客数据", businessType = BusinessType.LIST)
     public ApiResult<List<BlogInfoVo>> getBlogInfoControllerList(@Valid @RequestBody BlogInfoListParam blogInfoListParam) throws Exception {
         List<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServiceList(blogInfoListParam);
         return ApiResult.ok(blogInfoVoList);
@@ -189,6 +212,8 @@ public class BlogInfoController extends BaseController {
      */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客数据 分页对象列表")
+    @PreAuthorize(hasPermi = "sys:blog:info:pageList")
+    @Log(title = "系统的博客数据", businessType = BusinessType.PAGE_LIST)
     public ApiResult<Paging<BlogInfoVo>> getBlogInfoControllerPageList(@Valid @RequestBody BlogInfoPageParam blogInfoPageParam) throws Exception {
         Paging<BlogInfoVo> blogInfoVoList = blogInfoService.getBlogInfoServicePageList(blogInfoPageParam);
         return ApiResult.ok(blogInfoVoList);
@@ -203,6 +228,8 @@ public class BlogInfoController extends BaseController {
      */
     @PostMapping("/count")
     @ApiOperation(value = "求 系统的博客数据 对象的记录数")
+    @PreAuthorize(hasPermi = "sys:blog:info:count")
+    @Log(title = "系统的博客数据", businessType = BusinessType.COUNT)
     public ApiResult<Integer> countBlogInfoController(@Valid @RequestBody BlogInfoCountParam blogInfoCountParam) throws Exception {
         Integer count = blogInfoService.countBlogInfoService(blogInfoCountParam);
         return ApiResult.ok(count);

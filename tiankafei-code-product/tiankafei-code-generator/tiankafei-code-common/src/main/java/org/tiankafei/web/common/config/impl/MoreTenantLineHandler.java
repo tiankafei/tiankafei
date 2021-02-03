@@ -13,9 +13,9 @@ public class MoreTenantLineHandler implements TenantLineHandler {
     /**
      * 租户
      */
-    private String tenantId;
+    private Integer tenantId = 0;
 
-    public MoreTenantLineHandler(String tenantId){
+    public MoreTenantLineHandler(Integer tenantId){
         this.tenantId = tenantId;
     }
 

@@ -15,22 +15,6 @@ import springfox.documentation.annotations.ApiIgnore;
 public class ApiDocController extends BaseController {
 
     /**
-     * swaggerUI
-     */
-    @GetMapping("/docs")
-    public String docs() {
-        return "redirect:/swagger-ui.html";
-    }
-
-    /**
-     * Knife4j API 文档
-     */
-    @GetMapping("/doc")
-    public String doc() {
-        return "redirect:/doc.html";
-    }
-
-    /**
      * api文档错误提示
      *
      * @return

@@ -18,7 +18,7 @@ public class DynamicTableProperties {
     /**
      * 租户
      */
-    private String tenantId = "default";
+    private Integer tenantId = 0;
 
     /**
      * 数据库类型

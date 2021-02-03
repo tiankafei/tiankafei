@@ -2,21 +2,19 @@ server:
   port: 7602
 spring:
   autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+    exclude:
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   profiles:
-    active: dev, eureka
+    active: dev, nacos
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei
   application:
     name: multi-datasource-mp-service
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-  jpa:
-    properties:
-      hibernate:
-        hbm2ddl:
-          auto: update
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: true
   datasource:
     druid:
       stat-view-servlet:
@@ -46,7 +44,6 @@ spring:
         useGlobalDataSourceStat: true
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       primary: blog
-      strict: false
       datasource:
         blog:
           url: jdbc:mysql://localhost:3306/db-blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
@@ -87,15 +84,18 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
-  enable: false
-  contact:
-    email: 798971170@qq.com
-    name: ${spring.application.name}
-    url: 'https://tiankafei.top'
-  description: 'mybatis-plus的多数据源服务'
-  title: ${spring.application.name}
-  url: 'https://tiankafei.top'
-  version: 1.0
+  enabled: false
+  title: mybatis-plus的多数据源服务接口文档
+  license: Powered By ruoyi
+  licenseUrl: https://tiankafei.top
+  authorization:
+    name: RuoYi OAuth
+    auth-regex: ^.*$
+    authorization-scope-list:
+      - scope: server
+        description: 客户端授权范围
+    token-url-list:
+      - http://localhost:8080/auth/oauth/token
 #################################### Swagger end ###################################
 
 #################################### tiankafei自定义配置 start #################################

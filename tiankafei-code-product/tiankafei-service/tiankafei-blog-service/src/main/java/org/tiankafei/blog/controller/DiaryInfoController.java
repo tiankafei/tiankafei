@@ -1,5 +1,8 @@
 package org.tiankafei.blog.controller;
 
+import com.ruoyi.common.log.annotation.Log;
+import com.ruoyi.common.log.enums.BusinessType;
+import com.ruoyi.common.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -50,6 +53,8 @@ public class DiaryInfoController extends BaseController {
      */
     @PostMapping("/check")
     @ApiOperation(value = "校验 系统的博客日记 对象是否存在")
+    @PreAuthorize(hasPermi = "sys:diary:info:check")
+    @Log(title = "系统的博客日记", businessType = BusinessType.CHECK)
     public ApiResult<Boolean> checkDiaryInfoControllerExists(@Valid @RequestBody DiaryInfoCheckParam diaryInfoCheckParam) throws Exception {
         Boolean flag = diaryInfoService.checkDiaryInfoServiceExists(diaryInfoCheckParam);
         return ApiResult.ok(flag);
@@ -64,6 +69,8 @@ public class DiaryInfoController extends BaseController {
      */
     @PostMapping
     @ApiOperation(value = "添加 系统的博客日记")
+    @PreAuthorize(hasPermi = "sys:diary:info:add")
+    @Log(title = "系统的博客日记", businessType = BusinessType.INSERT)
     public ApiResult<Long> addDiaryInfoController(@Valid @RequestBody DiaryInfoVo diaryInfoVo) throws Exception {
         Long id = diaryInfoService.addDiaryInfoService(diaryInfoVo);
         return ApiResult.ok(id);
@@ -78,6 +85,8 @@ public class DiaryInfoController extends BaseController {
      */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 系统的博客日记")
+    @PreAuthorize(hasPermi = "sys:diary:info:batchAdd")
+    @Log(title = "系统的博客日记", businessType = BusinessType.BATCH_INSERT)
     public ApiResult<List<Long>> batchAddDiaryInfoController(@Valid @RequestBody List<DiaryInfoVo> diaryInfoVoList) throws Exception {
         List<Long> idList = diaryInfoService.batchAddDiaryInfoService(diaryInfoVoList);
         return ApiResult.ok(idList);
@@ -92,6 +101,8 @@ public class DiaryInfoController extends BaseController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 系统的博客日记")
+    @PreAuthorize(hasPermi = "sys:diary:info:delete")
+    @Log(title = "系统的博客日记", businessType = BusinessType.DELETE)
     public ApiResult<Boolean> deleteDiaryInfoController(@PathVariable(value = "id") String id) throws Exception {
         boolean flag = diaryInfoService.deleteDiaryInfoService(id);
         return ApiResult.ok(flag);
@@ -106,6 +117,8 @@ public class DiaryInfoController extends BaseController {
      */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统的博客日记")
+    @PreAuthorize(hasPermi = "sys:diary:info:batchDelete")
+    @Log(title = "系统的博客日记", businessType = BusinessType.BATCH_DELETE)
     public ApiResult<Boolean> batchDeleteDiaryInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = diaryInfoService.batchDeleteDiaryInfoService(idsParam.getIds());
         return ApiResult.ok(flag);
@@ -120,6 +133,8 @@ public class DiaryInfoController extends BaseController {
      */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 系统的博客日记")
+    @PreAuthorize(hasPermi = "sys:diary:info:conditionDelete")
+    @Log(title = "系统的博客日记", businessType = BusinessType.CONDITION_DELETE)
     public ApiResult<Boolean> conditionDeleteDiaryInfoController(@Valid @RequestBody DiaryInfoDeleteParam diaryInfoDeleteParam) throws Exception {
         boolean flag = diaryInfoService.conditionDeleteDiaryInfoService(diaryInfoDeleteParam);
         return ApiResult.ok(flag);
@@ -134,6 +149,8 @@ public class DiaryInfoController extends BaseController {
      */
     @PatchMapping
     @ApiOperation(value = "修改 系统的博客日记")
+    @PreAuthorize(hasPermi = "sys:diary:info:update")
+    @Log(title = "系统的博客日记", businessType = BusinessType.UPDATE)
     public ApiResult<Boolean> updateDiaryInfoController(@Valid @RequestBody DiaryInfoVo diaryInfoVo) throws Exception {
         boolean flag = diaryInfoService.updateDiaryInfoService(diaryInfoVo);
         return ApiResult.ok(flag);
@@ -148,6 +165,8 @@ public class DiaryInfoController extends BaseController {
      */
     @GetMapping("/{id}")
     @ApiOperation(value = "根据ID获取 系统的博客日记 对象")
+    @PreAuthorize(hasPermi = "sys:diary:info:info")
+    @Log(title = "系统的博客日记", businessType = BusinessType.INFO)
     public ApiResult<DiaryInfoVo> getDiaryInfoController(@PathVariable(value = "id") String id) throws Exception {
         DiaryInfoVo diaryInfoVo = diaryInfoService.getDiaryInfoServiceById(id);
         return ApiResult.ok(diaryInfoVo);
@@ -161,6 +180,8 @@ public class DiaryInfoController extends BaseController {
      */
     @GetMapping
     @ApiOperation(value = "获取 系统的博客日记 对象全部列表")
+    @PreAuthorize(hasPermi = "sys:diary:info:AllList")
+    @Log(title = "系统的博客日记", businessType = BusinessType.ALL_LIST)
     public ApiResult<List<DiaryInfoVo>> getDiaryInfoControllerAllList() throws Exception {
         List<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServiceList(new DiaryInfoListParam());
         return ApiResult.ok(diaryInfoVoList);
@@ -175,6 +196,8 @@ public class DiaryInfoController extends BaseController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 系统的博客日记 对象列表")
+    @PreAuthorize(hasPermi = "sys:diary:info:list")
+    @Log(title = "系统的博客日记", businessType = BusinessType.LIST)
     public ApiResult<List<DiaryInfoVo>> getDiaryInfoControllerList(@Valid @RequestBody DiaryInfoListParam diaryInfoListParam) throws Exception {
         List<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServiceList(diaryInfoListParam);
         return ApiResult.ok(diaryInfoVoList);
@@ -189,6 +212,8 @@ public class DiaryInfoController extends BaseController {
      */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 系统的博客日记 分页对象列表")
+    @PreAuthorize(hasPermi = "sys:diary:info:pageList")
+    @Log(title = "系统的博客日记", businessType = BusinessType.PAGE_LIST)
     public ApiResult<Paging<DiaryInfoVo>> getDiaryInfoControllerPageList(@Valid @RequestBody DiaryInfoPageParam diaryInfoPageParam) throws Exception {
         Paging<DiaryInfoVo> diaryInfoVoList = diaryInfoService.getDiaryInfoServicePageList(diaryInfoPageParam);
         return ApiResult.ok(diaryInfoVoList);
@@ -203,6 +228,8 @@ public class DiaryInfoController extends BaseController {
      */
     @PostMapping("/count")
     @ApiOperation(value = "求 系统的博客日记 对象的记录数")
+    @PreAuthorize(hasPermi = "sys:diary:info:count")
+    @Log(title = "系统的博客日记", businessType = BusinessType.COUNT)
     public ApiResult<Integer> countDiaryInfoController(@Valid @RequestBody DiaryInfoCountParam diaryInfoCountParam) throws Exception {
         Integer count = diaryInfoService.countDiaryInfoService(diaryInfoCountParam);
         return ApiResult.ok(count);

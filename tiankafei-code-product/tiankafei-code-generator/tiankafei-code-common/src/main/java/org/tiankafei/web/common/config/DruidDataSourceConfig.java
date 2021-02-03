@@ -1,14 +1,11 @@
 package org.tiankafei.web.common.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.google.common.collect.Maps;
 import java.util.Arrays;
 import java.util.Map;
 import javax.servlet.Servlet;
-import javax.sql.DataSource;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -20,12 +17,6 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 public class DruidDataSourceConfig {
-
-    @ConfigurationProperties(prefix = "spring.datasource")
-    @Bean
-    public DataSource druidDataSource() {
-        return new DruidDataSource();
-    }
 
     @Bean
     public ServletRegistrationBean druidServletRegistrationBean() {

@@ -61,6 +61,14 @@
                     <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                     <groupId>com.baomidou</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>ruoyi-common-security</artifactId>
+                    <groupId>com.ruoyi</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>ruoyi-common-log</artifactId>
+                    <groupId>com.ruoyi</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>

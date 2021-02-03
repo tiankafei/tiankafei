@@ -15,10 +15,6 @@
     <name>tiankafei-code-common</name>
     <description></description>
 
-    <properties>
-        <ruoyi.version>2.4.0-SNAPSHOT</ruoyi.version>
-    </properties>
-
     <dependencies>
         <!--web依赖包-->
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
@@ -71,21 +67,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <!-- swagger-ui -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
@@ -113,13 +94,16 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-log</artifactId>
-            <version>${ruoyi.version}</version>
         </dependency>
         <!-- RuoYi Common Security -->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-security</artifactId>
-            <version>${ruoyi.version}</version>
+        </dependency>
+        <!-- RuoYi Common Swagger -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-swagger</artifactId>
         </dependency>
 
         <!--自己的工具包-->

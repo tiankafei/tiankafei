@@ -3,13 +3,13 @@ package org.tiankafei.zuul.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import com.ruoyi.common.swagger.config.SwaggerProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.properties.ExclusionsUrlsProperties;
-import org.tiankafei.zuul.properties.SwaggerProperties;
 import org.tiankafei.zuul.utils.ZuulUtil;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        if (swaggerProperties.getEnable()) {
+        if (swaggerProperties.getEnabled()) {
             // swagger开启的时候，不需要走网关的过滤器
             return false;
         }
