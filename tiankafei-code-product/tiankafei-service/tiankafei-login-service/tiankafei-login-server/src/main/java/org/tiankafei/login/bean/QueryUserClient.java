@@ -3,11 +3,11 @@ package org.tiankafei.login.bean;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import java.util.Set;
+import org.tiankafei.login.service.QueryUserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import org.tiankafei.login.service.QueryUserService;
 import org.tiankafei.user.vo.UserLoginVo;
 import org.tiankafei.web.common.exception.LoginException;
 

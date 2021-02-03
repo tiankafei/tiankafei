@@ -17,7 +17,6 @@
 
     <modules>
         <module>tiankafei-login-api</module>
-        <module>tiankafei-login-common</module>
         <module>tiankafei-login-server</module>
     </modules>
 
