@@ -52,8 +52,8 @@ public class MybatisPlusConfig {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 
         // note note note 这里是多租户的配置
-        TenantLineInnerInterceptor tenantLineInnerInterceptor = new TenantLineInnerInterceptor(new MoreTenantLineHandler(dynamicTableProperties.getTenantId()));
-        interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
+//        TenantLineInnerInterceptor tenantLineInnerInterceptor = new TenantLineInnerInterceptor(new MoreTenantLineHandler(dynamicTableProperties.getTenantId()));
+//        interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
 
         // note note note 这里是动态表名的配置
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();

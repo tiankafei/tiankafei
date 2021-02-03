@@ -1,5 +1,8 @@
 package org.tiankafei.db.controller;
 
+import com.ruoyi.common.log.annotation.Log;
+import com.ruoyi.common.log.enums.BusinessType;
+import com.ruoyi.common.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -37,6 +40,8 @@ public class FieldController extends BaseController {
      */
     @PostMapping("/fieldEntity")
     @ApiOperation(value = "获取 数据库表的字段 对象", notes = "获取 数据库表的字段")
+    @PreAuthorize(hasPermi = "field:info:get")
+    @Log(title = "数据库表的字段", businessType = BusinessType.CHECK)
     public ApiResult<FieldEntity> getFieldEntity(@Valid @RequestBody FieldNameParam fieldNameParam) throws Exception {
         FieldEntity fieldEntity = fieldService.getFieldEntity(fieldNameParam);
         return ApiResult.ok(fieldEntity);
@@ -51,6 +56,8 @@ public class FieldController extends BaseController {
      */
     @PostMapping("/pageFieldList")
     @ApiOperation(value = "获取 数据库表的字段集合 分页对象列表", notes = "获取 数据库表的字段集合 分页对象列表")
+    @PreAuthorize(hasPermi = "field:info:pageList")
+    @Log(title = "数据库表的字段", businessType = BusinessType.PAGE_LIST)
     public ApiResult<Paging<FieldEntity>> getFieldEntityPageList(@Valid @RequestBody FieldNamePageParam fieldNamePageParam) throws Exception {
         Paging<FieldEntity> sysUserLoginPageList = fieldService.getFieldEntityPageList(fieldNamePageParam);
         return ApiResult.ok(sysUserLoginPageList);
@@ -65,6 +72,8 @@ public class FieldController extends BaseController {
      */
     @PostMapping("/fieldList")
     @ApiOperation(value = "取 数据库表的字段集合 对象列表", notes = "取 数据库表的字段集合 对象列表")
+    @PreAuthorize(hasPermi = "field:info:list")
+    @Log(title = "数据库表的字段", businessType = BusinessType.LIST)
     public ApiResult<List<FieldEntity>> getFieldEntityList(@Valid @RequestBody FieldNameListParam fieldNameListParam) throws Exception {
         List<FieldEntity> sysUserLoginList = fieldService.getFieldEntityList(fieldNameListParam);
         return ApiResult.ok(sysUserLoginList);

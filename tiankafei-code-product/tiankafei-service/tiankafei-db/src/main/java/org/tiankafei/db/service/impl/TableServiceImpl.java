@@ -77,8 +77,8 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         String tableSchema = tableNameListParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
             tableSchema = dbService.getTableSchema();
-            lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
+        lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         List<TableEntity> tableEntityList = super.list(lambdaQueryWrapper);
         return tableEntityList;
     }
