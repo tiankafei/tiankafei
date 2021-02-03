@@ -12,7 +12,7 @@
 
     <groupId>org.tiankafei</groupId>
     <artifactId>tiankafei-parent</artifactId>
-    <version>1.1-RELEASE</version>
+    <version>1.2-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-parent</name>
@@ -99,7 +99,7 @@
 
         <!--自己的包版本依赖-->
         <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
-        <org.tiankafei.produce.version>1.1-RELEASE</org.tiankafei.produce.version>
+        <org.tiankafei.produce.version>1.2-RELEASE</org.tiankafei.produce.version>
     </properties>
 
     <dependencyManagement>
@@ -677,11 +677,6 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei.tool</groupId>
-                <artifactId>tiankafei-agent</artifactId>
-                <version>${org.tiankafei.tool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-aviator-extend</artifactId>
                 <version>${org.tiankafei.tool.version}</version>
             </dependency>
@@ -725,18 +720,6 @@
                 <artifactId>tiankafei-code-common</artifactId>
                 <version>${org.tiankafei.produce.version}</version>
             </dependency>
-            <!--用户公共属性工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-user-common</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-            <!--用户缓存工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-user-cache</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
             <!--通用的数据库查询工程-->
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
@@ -747,25 +730,6 @@
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-collection</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-
-            <!--feign调用客户端工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-user-api</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-login-api</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-
-            <!--用户登录相关工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-login-common</artifactId>
                 <version>${org.tiankafei.produce.version}</version>
             </dependency>
 
