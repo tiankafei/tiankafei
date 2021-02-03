@@ -17,8 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringCloudApplication
 @EntityScan(basePackages = "org.tiankafei")
-@MapperScan(basePackages = {"org.tiankafei.**.mapper", "com.ruoyi.**.mapper"})
-@ComponentScan(basePackages = {"org.tiankafei"})
+@MapperScan(basePackages = {"org.tiankafei.**.mapper"})
 @EnableFeignClients(basePackages = {"org.tiankafei", "com.ruoyi"})
 @EnableHystrixDashboard
 @EnableCustomSwagger2

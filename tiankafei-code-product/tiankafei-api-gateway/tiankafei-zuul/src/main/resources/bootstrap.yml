@@ -6,6 +6,9 @@ server:
       force: true
       charset: UTF-8
 spring:
+  autoconfigure:
+    exclude:
+      - org.tiankafei.web.common.config.WebCommonConfig
   profiles:
     active: dev, nacos
   redis:
@@ -26,18 +29,9 @@ zuul:
   sensitiveHeaders:
   prefix: /api
   routes:
-    user:
-      path: /user/**
-      serviceId: user-service
-    login:
-      path: /login/**
-      serviceId: login-service
     blog:
       path: /blog/**
       serviceId: blog-service
-    questionnaire:
-      path: /questionnaire/**
-      serviceId: questionnaire-service
     activiti:
       path: /activiti/**
       serviceId: activiti-service

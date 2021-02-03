@@ -15,6 +15,7 @@ spring:
   autoconfigure:
     exclude:
       - com.ruoyi.common.swagger.config.SwaggerAutoConfiguration
+      - org.tiankafei.web.common.config.WebCommonConfig
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -32,28 +33,10 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/api/user/**
-          filters:
-            - StripPrefix=2
-        - id: login-service
-          uri: lb://login-service
-          predicates:
-            - Path=/api/signin/**
-          filters:
-            - StripPrefix=2
         - id: blog-service
           uri: lb://blog-service
           predicates:
             - Path=/api/blog/**
-          filters:
-            - StripPrefix=2
-        - id: questionnaire-service
-          uri: lb://questionnaire-service
-          predicates:
-            - Path=/api/questionnaire/**
           filters:
             - StripPrefix=2
         - id: activiti-service
