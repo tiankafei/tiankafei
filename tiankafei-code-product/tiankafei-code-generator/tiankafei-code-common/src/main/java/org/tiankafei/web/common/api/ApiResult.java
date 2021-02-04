@@ -25,7 +25,7 @@ import org.tiankafei.web.common.enums.BaseEnums;
 public class ApiResult<T> implements Serializable {
 
     /**
-     * 状态（0，失败；1成功，2错误）
+     * 状态
      */
     @ApiModelProperty(value = "状态（0，失败；1成功，2错误）")
     private Integer code;
