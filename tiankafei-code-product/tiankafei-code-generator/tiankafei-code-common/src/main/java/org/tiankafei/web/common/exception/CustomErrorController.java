@@ -17,7 +17,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 @RestController
 @Slf4j
-public class GlobalErrorController implements ErrorController {
+public class CustomErrorController implements ErrorController {
 
     private static final String ERROR_PATH = "/error";
 

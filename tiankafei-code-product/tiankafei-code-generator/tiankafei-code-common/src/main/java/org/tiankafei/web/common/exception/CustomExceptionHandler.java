@@ -1,6 +1,7 @@
 package org.tiankafei.web.common.exception;
 
 import com.alibaba.fastjson.JSON;
+import com.ruoyi.common.security.handler.GlobalExceptionHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,7 @@ import org.tiankafei.web.common.enums.ExceptionEnum;
 @ControllerAdvice
 @RestController
 @Slf4j
-public class GlobalExceptionHandler {
+public class CustomExceptionHandler extends GlobalExceptionHandler {
 
     /**
      * 非法参数验证异常
@@ -83,19 +84,6 @@ public class GlobalExceptionHandler {
     public ApiResult exception(UserException userException) {
         log.error("exception:", userException);
         return ApiResult.fail(ApiStatusEnum.FAIL, userException.getMessage());
-    }
-
-    /**
-     * 数据库的异常处理
-     *
-     * @param daoException
-     * @return
-     */
-    @ExceptionHandler(value = DaoException.class)
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResult exception(DaoException daoException) {
-        log.error("exception:", daoException);
-        return ApiResult.error(ExceptionEnum.DAO_EXCEPTION, daoException.getMessage());
     }
 
     /**
