@@ -99,17 +99,17 @@ public class AttributesInfoEntity extends Model<AttributesInfoEntity> {
     private String isDefaultQueryProperty;
 
     @ApiModelProperty(value = "查询方式（等于、不等于、大于、小于、范围）")
-    @Size(max = 200, message = "查询方式（等于、不等于、大于、小于、范围）长度不能超过 200 ！")
+    @Size(max = 2, message = "查询方式（等于、不等于、大于、小于、范围）长度不能超过 2 ！")
     @TableField("query_type")
     private String queryType;
 
     @ApiModelProperty(value = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
-    @Size(max = 200, message = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    @Size(max = 2, message = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 2 ！")
     @TableField("fill_type")
     private String fillType;
 
     @ApiModelProperty(value = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
-    @Size(max = 200, message = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    @Size(max = 2, message = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 2 ！")
     @TableField("search_type")
     private String searchType;
 
@@ -128,7 +128,7 @@ public class AttributesInfoEntity extends Model<AttributesInfoEntity> {
     private String dataUrl;
 
     @ApiModelProperty(value = "数据原来为字典的字典类型")
-    @Size(max = 200, message = "数据原来为字典的字典类型长度不能超过 200 ！")
+    @Size(max = 50, message = "数据原来为字典的字典类型长度不能超过 50 ！")
     @TableField("dict_type")
     private String dictType;
 

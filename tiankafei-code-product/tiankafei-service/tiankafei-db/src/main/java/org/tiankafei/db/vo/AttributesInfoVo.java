@@ -78,15 +78,15 @@ public class AttributesInfoVo extends BaseQueryVo {
     private String isDefaultQueryProperty;
 
     @ApiModelProperty(value = "查询方式（等于、不等于、大于、小于、范围）")
-    @Size(max = 200, message = "查询方式（等于、不等于、大于、小于、范围）长度不能超过 200 ！")
+    @Size(max = 2, message = "查询方式（等于、不等于、大于、小于、范围）长度不能超过 2 ！")
     private String queryType;
 
     @ApiModelProperty(value = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
-    @Size(max = 200, message = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    @Size(max = 2, message = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 2 ！")
     private String fillType;
 
     @ApiModelProperty(value = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
-    @Size(max = 200, message = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    @Size(max = 2, message = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 2 ！")
     private String searchType;
 
     @ApiModelProperty(value = "数据来源：1:json，2:url，3字典")
@@ -101,7 +101,7 @@ public class AttributesInfoVo extends BaseQueryVo {
     private String dataUrl;
 
     @ApiModelProperty(value = "数据原来为字典的字典类型")
-    @Size(max = 200, message = "数据原来为字典的字典类型长度不能超过 200 ！")
+    @Size(max = 50, message = "数据原来为字典的字典类型长度不能超过 50 ！")
     private String dictType;
 
     @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
