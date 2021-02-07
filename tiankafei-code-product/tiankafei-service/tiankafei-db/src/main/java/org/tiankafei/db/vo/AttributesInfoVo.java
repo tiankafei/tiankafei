@@ -60,26 +60,27 @@ public class AttributesInfoVo extends BaseQueryVo {
     @ApiModelProperty(value = "功能描述")
     private String description;
 
-    @ApiModelProperty(value = "乐观锁版本")
-    private Integer version;
+    @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
+    @Size(max = 1, message = "删除标志（0代表存在 2代表删除）长度不能超过 1 ！")
+    private String delFlag;
 
-    @ApiModelProperty(value = "逻辑删除字段")
-    private Integer deleteMark;
+    @ApiModelProperty(value = "创建者")
+    @Size(max = 64, message = "创建者长度不能超过 64 ！")
+    private String createBy;
 
     @ApiModelProperty(value = "创建时间")
     private Timestamp createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty(value = "更新者")
+    @Size(max = 64, message = "更新者长度不能超过 64 ！")
+    private String updateBy;
+
+    @ApiModelProperty(value = "更新时间")
     private Timestamp updateTime;
 
-    @ApiModelProperty(value = "创建用户ID")
-    private Long createUserId;
-
-    @ApiModelProperty(value = "修改用户ID")
-    private Long updateUserId;
-
-    @ApiModelProperty(value = "租户ID")
-    private Long tenantId;
+    @ApiModelProperty(value = "备注")
+    @Size(max = 500, message = "备注长度不能超过 500 ！")
+    private String remark;
 
 
     public static final String ID = "id";
@@ -102,19 +103,17 @@ public class AttributesInfoVo extends BaseQueryVo {
 
     public static final String DESCRIPTION = "description";
 
-    public static final String VERSION = "version";
+    public static final String DEL_FLAG = "del_flag";
 
-    public static final String DELETE_MARK = "delete_mark";
+    public static final String CREATE_BY = "create_by";
 
     public static final String CREATE_TIME = "create_time";
 
+    public static final String UPDATE_BY = "update_by";
+
     public static final String UPDATE_TIME = "update_time";
 
-    public static final String CREATE_USER_ID = "create_user_id";
-
-    public static final String UPDATE_USER_ID = "update_user_id";
-
-    public static final String TENANT_ID = "tenant_id";
+    public static final String REMARK = "remark";
 
 
 }

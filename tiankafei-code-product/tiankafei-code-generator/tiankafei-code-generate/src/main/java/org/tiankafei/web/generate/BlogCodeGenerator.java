@@ -11,12 +11,12 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class BlogCodeGenerator extends BaseCodeGenerator {
 
     private String author = "tiankafei";
-    private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-blog-service\\src\\main\\java";
+    private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-db\\src\\main\\java";
 
     private boolean shiroAuthority = Boolean.TRUE;
     private boolean logFlag = Boolean.TRUE;
     private String baseParentPath = "org.tiankafei";
-    private String moduleName = "blog";
+    private String moduleName = "db";
 
     private String baseEntityClassPath = "com.baomidou.mybatisplus.extension.activerecord.Model";
     private String baseMapperClassPath = "com.baomidou.mybatisplus.core.mapper.BaseMapper";
@@ -32,9 +32,11 @@ public class BlogCodeGenerator extends BaseCodeGenerator {
     public static void main(String[] args) throws Exception {
         BlogCodeGenerator tiankafeiCodeGenerator = new BlogCodeGenerator();
         List<String> tableNameList = Arrays.asList(
-                "sys_blog_info",
-                "sys_diary_info",
-                "sys_global_setting");
+//                "sys_blog_info",
+//                "sys_diary_info",
+//                "sys_global_setting",
+                "sys_features_info",
+                "sys_attributes_info");
         tiankafeiCodeGenerator.execute(tableNameList);
     }
 

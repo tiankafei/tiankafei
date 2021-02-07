@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -61,35 +59,33 @@ public class FeaturesInfoEntity extends Model<FeaturesInfoEntity> {
     @TableField("description")
     private String description;
 
-    @ApiModelProperty(value = "乐观锁版本")
-    @TableField("version")
-    @Version
-    private Integer version;
+    @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
+    @Size(max = 1, message = "删除标志（0代表存在 2代表删除）长度不能超过 1 ！")
+    @TableField("del_flag")
+    private String delFlag;
 
-    @ApiModelProperty(value = "逻辑删除字段")
-    @TableField("delete_mark")
-    @TableLogic
-    private Integer deleteMark;
+    @ApiModelProperty(value = "创建者")
+    @Size(max = 64, message = "创建者长度不能超过 64 ！")
+    @TableField("create_by")
+    private String createBy;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Timestamp createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty(value = "更新者")
+    @Size(max = 64, message = "更新者长度不能超过 64 ！")
+    @TableField("update_by")
+    private String updateBy;
+
+    @ApiModelProperty(value = "更新时间")
     @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Timestamp updateTime;
 
-    @ApiModelProperty(value = "创建用户ID")
-    @TableField(value = "create_user_id", fill = FieldFill.INSERT)
-    private Long createUserId;
-
-    @ApiModelProperty(value = "修改用户ID")
-    @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
-    private Long updateUserId;
-
-    @ApiModelProperty(value = "租户ID")
-    @TableField("tenant_id")
-    private Long tenantId;
+    @ApiModelProperty(value = "备注")
+    @Size(max = 500, message = "备注长度不能超过 500 ！")
+    @TableField("remark")
+    private String remark;
 
 
     public static final String ID = "id";
@@ -104,19 +100,17 @@ public class FeaturesInfoEntity extends Model<FeaturesInfoEntity> {
 
     public static final String DESCRIPTION = "description";
 
-    public static final String VERSION = "version";
+    public static final String DEL_FLAG = "del_flag";
 
-    public static final String DELETE_MARK = "delete_mark";
+    public static final String CREATE_BY = "create_by";
 
     public static final String CREATE_TIME = "create_time";
 
+    public static final String UPDATE_BY = "update_by";
+
     public static final String UPDATE_TIME = "update_time";
 
-    public static final String CREATE_USER_ID = "create_user_id";
-
-    public static final String UPDATE_USER_ID = "update_user_id";
-
-    public static final String TENANT_ID = "tenant_id";
+    public static final String REMARK = "remark";
 
     @Override
     protected Serializable pkVal() {

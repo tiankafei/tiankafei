@@ -53,7 +53,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @PostMapping("/check")
     @ApiOperation(value = "校验 功能注册表 对象是否存在")
-    @PreAuthorize(hasPermi = "features:info:check")
+    @PreAuthorize(hasPermi = "sys:features:info:check")
     @Log(title = "功能注册表", businessType = BusinessType.CHECK)
     public ApiResult<Boolean> checkFeaturesInfoControllerExists(@Valid @RequestBody FeaturesInfoCheckParam featuresInfoCheckParam) throws Exception {
         Boolean flag = featuresInfoService.checkFeaturesInfoServiceExists(featuresInfoCheckParam);
@@ -69,7 +69,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @PostMapping
     @ApiOperation(value = "添加 功能注册表")
-    @PreAuthorize(hasPermi = "features:info:add")
+    @PreAuthorize(hasPermi = "sys:features:info:add")
     @Log(title = "功能注册表", businessType = BusinessType.INSERT)
     public ApiResult<Integer> addFeaturesInfoController(@Valid @RequestBody FeaturesInfoVo featuresInfoVo) throws Exception {
         Integer id = featuresInfoService.addFeaturesInfoService(featuresInfoVo);
@@ -85,7 +85,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @PostMapping("/batch")
     @ApiOperation(value = "批量添加 功能注册表")
-    @PreAuthorize(hasPermi = "features:info:batchAdd")
+    @PreAuthorize(hasPermi = "sys:features:info:batchAdd")
     @Log(title = "功能注册表", businessType = BusinessType.BATCH_INSERT)
     public ApiResult<List<Integer>> batchAddFeaturesInfoController(@Valid @RequestBody List<FeaturesInfoVo> featuresInfoVoList) throws Exception {
         List<Integer> idList = featuresInfoService.batchAddFeaturesInfoService(featuresInfoVoList);
@@ -101,7 +101,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除 功能注册表")
-    @PreAuthorize(hasPermi = "features:info:delete")
+    @PreAuthorize(hasPermi = "sys:features:info:delete")
     @Log(title = "功能注册表", businessType = BusinessType.DELETE)
     public ApiResult<Boolean> deleteFeaturesInfoController(@PathVariable(value = "id") String id) throws Exception {
         boolean flag = featuresInfoService.deleteFeaturesInfoService(id);
@@ -117,7 +117,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 功能注册表")
-    @PreAuthorize(hasPermi = "features:info:batchDelete")
+    @PreAuthorize(hasPermi = "sys:features:info:batchDelete")
     @Log(title = "功能注册表", businessType = BusinessType.BATCH_DELETE)
     public ApiResult<Boolean> batchDeleteFeaturesInfoController(@Valid @RequestBody IdsParam idsParam) throws Exception {
         boolean flag = featuresInfoService.batchDeleteFeaturesInfoService(idsParam.getIds());
@@ -133,7 +133,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @DeleteMapping("/condition")
     @ApiOperation(value = "条件删除 功能注册表")
-    @PreAuthorize(hasPermi = "features:info:conditionDelete")
+    @PreAuthorize(hasPermi = "sys:features:info:conditionDelete")
     @Log(title = "功能注册表", businessType = BusinessType.CONDITION_DELETE)
     public ApiResult<Boolean> conditionDeleteFeaturesInfoController(@Valid @RequestBody FeaturesInfoDeleteParam featuresInfoDeleteParam) throws Exception {
         boolean flag = featuresInfoService.conditionDeleteFeaturesInfoService(featuresInfoDeleteParam);
@@ -149,7 +149,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @PatchMapping
     @ApiOperation(value = "修改 功能注册表")
-    @PreAuthorize(hasPermi = "features:info:update")
+    @PreAuthorize(hasPermi = "sys:features:info:update")
     @Log(title = "功能注册表", businessType = BusinessType.UPDATE)
     public ApiResult<Boolean> updateFeaturesInfoController(@Valid @RequestBody FeaturesInfoVo featuresInfoVo) throws Exception {
         boolean flag = featuresInfoService.updateFeaturesInfoService(featuresInfoVo);
@@ -165,7 +165,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @GetMapping("/{id}")
     @ApiOperation(value = "根据ID获取 功能注册表 对象")
-    @PreAuthorize(hasPermi = "features:info:get")
+    @PreAuthorize(hasPermi = "sys:features:info:info")
     @Log(title = "功能注册表", businessType = BusinessType.INFO)
     public ApiResult<FeaturesInfoVo> getFeaturesInfoController(@PathVariable(value = "id") String id) throws Exception {
         FeaturesInfoVo featuresInfoVo = featuresInfoService.getFeaturesInfoServiceById(id);
@@ -180,7 +180,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @GetMapping
     @ApiOperation(value = "获取 功能注册表 对象全部列表")
-    @PreAuthorize(hasPermi = "features:info:allList")
+    @PreAuthorize(hasPermi = "sys:features:info:AllList")
     @Log(title = "功能注册表", businessType = BusinessType.ALL_LIST)
     public ApiResult<List<FeaturesInfoVo>> getFeaturesInfoControllerAllList() throws Exception {
         List<FeaturesInfoVo> featuresInfoVoList = featuresInfoService.getFeaturesInfoServiceList(new FeaturesInfoListParam());
@@ -196,7 +196,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @PostMapping("/list")
     @ApiOperation(value = "获取 功能注册表 对象列表")
-    @PreAuthorize(hasPermi = "features:info:list")
+    @PreAuthorize(hasPermi = "sys:features:info:list")
     @Log(title = "功能注册表", businessType = BusinessType.LIST)
     public ApiResult<List<FeaturesInfoVo>> getFeaturesInfoControllerList(@Valid @RequestBody FeaturesInfoListParam featuresInfoListParam) throws Exception {
         List<FeaturesInfoVo> featuresInfoVoList = featuresInfoService.getFeaturesInfoServiceList(featuresInfoListParam);
@@ -212,7 +212,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @PostMapping("/pageList")
     @ApiOperation(value = "获取 功能注册表 分页对象列表")
-    @PreAuthorize(hasPermi = "features:info:pageList")
+    @PreAuthorize(hasPermi = "sys:features:info:pageList")
     @Log(title = "功能注册表", businessType = BusinessType.PAGE_LIST)
     public ApiResult<Paging<FeaturesInfoVo>> getFeaturesInfoControllerPageList(@Valid @RequestBody FeaturesInfoPageParam featuresInfoPageParam) throws Exception {
         Paging<FeaturesInfoVo> featuresInfoVoList = featuresInfoService.getFeaturesInfoServicePageList(featuresInfoPageParam);
@@ -228,7 +228,7 @@ public class FeaturesInfoController extends BaseController {
      */
     @PostMapping("/count")
     @ApiOperation(value = "求 功能注册表 对象的记录数")
-    @PreAuthorize(hasPermi = "features:info:count")
+    @PreAuthorize(hasPermi = "sys:features:info:count")
     @Log(title = "功能注册表", businessType = BusinessType.COUNT)
     public ApiResult<Integer> countFeaturesInfoController(@Valid @RequestBody FeaturesInfoCountParam featuresInfoCountParam) throws Exception {
         Integer count = featuresInfoService.countFeaturesInfoService(featuresInfoCountParam);
