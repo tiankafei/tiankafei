@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 80020
  Source Host           : localhost:3306
- Source Schema         : db-blog
+ Source Schema         : db-features
 
  Target Server Type    : MySQL
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 07/02/2021 09:35:33
+ Date: 07/02/2021 09:56:03
 */
 
 SET NAMES utf8mb4;
@@ -72,6 +72,6 @@ CREATE TABLE `sys_features_info`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '功能注册表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '功能注册表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

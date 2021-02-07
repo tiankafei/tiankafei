@@ -36,10 +36,6 @@
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-db</artifactId>
-        </dependency>
         <!--<dependency>
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-user-cache</artifactId>

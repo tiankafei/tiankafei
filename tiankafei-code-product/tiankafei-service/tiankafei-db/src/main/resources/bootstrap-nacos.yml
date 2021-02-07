@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+        # 命名空间
+        namespace: 7d026928-029e-4ecf-8b2c-0e7f773edebc
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        # 命名空间
+        namespace: 7d026928-029e-4ecf-8b2c-0e7f773edebc
+        # 配置文件格式
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: localhost:8020
