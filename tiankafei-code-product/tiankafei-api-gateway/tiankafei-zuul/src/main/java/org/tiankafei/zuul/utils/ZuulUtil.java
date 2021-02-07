@@ -61,7 +61,7 @@ public class ZuulUtil {
         currentContext.setSendZuulResponse(true);
         currentContext.getResponse().setContentType(contentType);
         currentContext.setResponseBody(JSON.toJSONString(apiResult));
-        currentContext.setResponseStatusCode(apiResult.getStatus());
+        currentContext.setResponseStatusCode(apiResult.getCode());
     }
 
     private static Charset getDefaultCharset() {
