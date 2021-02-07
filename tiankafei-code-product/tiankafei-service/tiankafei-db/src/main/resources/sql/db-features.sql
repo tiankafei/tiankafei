@@ -31,6 +31,7 @@ CREATE TABLE `sys_attributes_info`  (
   `data_precision` tinyint(0) NULL DEFAULT NULL COMMENT '数据精度',
   `is_null` tinyint(1) NULL DEFAULT NULL COMMENT '是否允许为空',
   `default_value` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '默认值',
+  `order_num` int(0) NULL DEFAULT 0 COMMENT '显示顺序',
   `is_insert_property` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '是否新增属性（1是）',
   `is_edit_property` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '是否编辑属性（1是）',
   `is_list_property` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '是否列表属性（1是）',
