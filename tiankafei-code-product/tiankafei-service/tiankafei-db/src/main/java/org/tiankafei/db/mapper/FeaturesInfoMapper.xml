@@ -5,8 +5,9 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="baseResultMap" type="org.tiankafei.db.entity.FeaturesInfoEntity">
         <id column="id" property="id"/>
-        <result column="features_code" property="featuresCode"/>
-        <result column="features_name" property="featuresName"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
         <result column="features_table_name" property="featuresTableName"/>
         <result column="serial_number" property="serialNumber"/>
         <result column="description" property="description"/>
@@ -22,8 +23,9 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="voResultMap" type="org.tiankafei.db.vo.FeaturesInfoVo">
         <id column="id" property="id"/>
-        <result column="features_code" property="featuresCode"/>
-        <result column="features_name" property="featuresName"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
         <result column="features_table_name" property="featuresTableName"/>
         <result column="serial_number" property="serialNumber"/>
         <result column="description" property="description"/>
@@ -38,7 +40,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, features_code, features_name, features_table_name, serial_number, description, del_flag, create_by, create_time, update_by, update_time, remark
+        id, code, name, status, features_table_name, serial_number, description, del_flag, create_by, create_time, update_by, update_time, remark
     </sql>
 
     <!-- 校验 功能注册表 是否已经存在 -->

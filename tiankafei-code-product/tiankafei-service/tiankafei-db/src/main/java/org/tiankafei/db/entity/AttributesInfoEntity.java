@@ -43,13 +43,13 @@ public class AttributesInfoEntity extends Model<AttributesInfoEntity> {
 
     @ApiModelProperty(value = "属性代码")
     @Size(max = 20, message = "属性代码长度不能超过 20 ！")
-    @TableField("attributes_code")
-    private String attributesCode;
+    @TableField("code")
+    private String code;
 
     @ApiModelProperty(value = "属性名称")
     @Size(max = 100, message = "属性名称长度不能超过 100 ！")
-    @TableField("attributes_name")
-    private String attributesName;
+    @TableField("name")
+    private String name;
 
     @ApiModelProperty(value = "数据类型")
     @Size(max = 3, message = "数据类型长度不能超过 3 ！")
@@ -73,9 +73,64 @@ public class AttributesInfoEntity extends Model<AttributesInfoEntity> {
     @TableField("default_value")
     private String defaultValue;
 
-    @ApiModelProperty(value = "功能描述")
-    @TableField("description")
-    private String description;
+    @ApiModelProperty(value = "是否新增属性（1是）")
+    @Size(max = 1, message = "是否新增属性（1是）长度不能超过 1 ！")
+    @TableField("is_insert_property")
+    private String isInsertProperty;
+
+    @ApiModelProperty(value = "是否编辑属性（1是）")
+    @Size(max = 1, message = "是否编辑属性（1是）长度不能超过 1 ！")
+    @TableField("is_edit_property")
+    private String isEditProperty;
+
+    @ApiModelProperty(value = "是否列表属性（1是）")
+    @Size(max = 1, message = "是否列表属性（1是）长度不能超过 1 ！")
+    @TableField("is_list_property")
+    private String isListProperty;
+
+    @ApiModelProperty(value = "是否查询属性（1是）")
+    @Size(max = 1, message = "是否查询属性（1是）长度不能超过 1 ！")
+    @TableField("is_query_property")
+    private String isQueryProperty;
+
+    @ApiModelProperty(value = "是否默认查询属性（1是）")
+    @Size(max = 1, message = "是否默认查询属性（1是）长度不能超过 1 ！")
+    @TableField("is_default_query_property")
+    private String isDefaultQueryProperty;
+
+    @ApiModelProperty(value = "查询方式（等于、不等于、大于、小于、范围）")
+    @Size(max = 200, message = "查询方式（等于、不等于、大于、小于、范围）长度不能超过 200 ！")
+    @TableField("query_type")
+    private String queryType;
+
+    @ApiModelProperty(value = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
+    @Size(max = 200, message = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    @TableField("fill_type")
+    private String fillType;
+
+    @ApiModelProperty(value = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
+    @Size(max = 200, message = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    @TableField("search_type")
+    private String searchType;
+
+    @ApiModelProperty(value = "数据来源：1:json，2:url，3字典")
+    @Size(max = 1, message = "数据来源：1:json，2:url，3字典长度不能超过 1 ！")
+    @TableField("data_source")
+    private String dataSource;
+
+    @ApiModelProperty(value = "数据来源为json的数据结构")
+    @TableField("data_structure")
+    private String dataStructure;
+
+    @ApiModelProperty(value = "数据来原为url")
+    @Size(max = 100, message = "数据来原为url长度不能超过 100 ！")
+    @TableField("data_url")
+    private String dataUrl;
+
+    @ApiModelProperty(value = "数据原来为字典的字典类型")
+    @Size(max = 200, message = "数据原来为字典的字典类型长度不能超过 200 ！")
+    @TableField("dict_type")
+    private String dictType;
 
     @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
     @Size(max = 1, message = "删除标志（0代表存在 2代表删除）长度不能超过 1 ！")
@@ -110,9 +165,9 @@ public class AttributesInfoEntity extends Model<AttributesInfoEntity> {
 
     public static final String FEATURES_CODE = "features_code";
 
-    public static final String ATTRIBUTES_CODE = "attributes_code";
+    public static final String CODE = "code";
 
-    public static final String ATTRIBUTES_NAME = "attributes_name";
+    public static final String NAME = "name";
 
     public static final String DATA_TYPE = "data_type";
 
@@ -124,7 +179,29 @@ public class AttributesInfoEntity extends Model<AttributesInfoEntity> {
 
     public static final String DEFAULT_VALUE = "default_value";
 
-    public static final String DESCRIPTION = "description";
+    public static final String IS_INSERT_PROPERTY = "is_insert_property";
+
+    public static final String IS_EDIT_PROPERTY = "is_edit_property";
+
+    public static final String IS_LIST_PROPERTY = "is_list_property";
+
+    public static final String IS_QUERY_PROPERTY = "is_query_property";
+
+    public static final String IS_DEFAULT_QUERY_PROPERTY = "is_default_query_property";
+
+    public static final String QUERY_TYPE = "query_type";
+
+    public static final String FILL_TYPE = "fill_type";
+
+    public static final String SEARCH_TYPE = "search_type";
+
+    public static final String DATA_SOURCE = "data_source";
+
+    public static final String DATA_STRUCTURE = "data_structure";
+
+    public static final String DATA_URL = "data_url";
+
+    public static final String DICT_TYPE = "dict_type";
 
     public static final String DEL_FLAG = "del_flag";
 

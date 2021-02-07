@@ -6,14 +6,25 @@
     <resultMap id="baseResultMap" type="org.tiankafei.db.entity.AttributesInfoEntity">
         <id column="id" property="id"/>
         <result column="features_code" property="featuresCode"/>
-        <result column="attributes_code" property="attributesCode"/>
-        <result column="attributes_name" property="attributesName"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
         <result column="data_type" property="dataType"/>
         <result column="data_length" property="dataLength"/>
         <result column="data_precision" property="dataPrecision"/>
         <result column="is_null" property="isNull"/>
         <result column="default_value" property="defaultValue"/>
-        <result column="description" property="description"/>
+        <result column="is_insert_property" property="isInsertProperty"/>
+        <result column="is_edit_property" property="isEditProperty"/>
+        <result column="is_list_property" property="isListProperty"/>
+        <result column="is_query_property" property="isQueryProperty"/>
+        <result column="is_default_query_property" property="isDefaultQueryProperty"/>
+        <result column="query_type" property="queryType"/>
+        <result column="fill_type" property="fillType"/>
+        <result column="search_type" property="searchType"/>
+        <result column="data_source" property="dataSource"/>
+        <result column="data_structure" property="dataStructure"/>
+        <result column="data_url" property="dataUrl"/>
+        <result column="dict_type" property="dictType"/>
         <result column="del_flag" property="delFlag"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>
@@ -27,14 +38,25 @@
     <resultMap id="voResultMap" type="org.tiankafei.db.vo.AttributesInfoVo">
         <id column="id" property="id"/>
         <result column="features_code" property="featuresCode"/>
-        <result column="attributes_code" property="attributesCode"/>
-        <result column="attributes_name" property="attributesName"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
         <result column="data_type" property="dataType"/>
         <result column="data_length" property="dataLength"/>
         <result column="data_precision" property="dataPrecision"/>
         <result column="is_null" property="isNull"/>
         <result column="default_value" property="defaultValue"/>
-        <result column="description" property="description"/>
+        <result column="is_insert_property" property="isInsertProperty"/>
+        <result column="is_edit_property" property="isEditProperty"/>
+        <result column="is_list_property" property="isListProperty"/>
+        <result column="is_query_property" property="isQueryProperty"/>
+        <result column="is_default_query_property" property="isDefaultQueryProperty"/>
+        <result column="query_type" property="queryType"/>
+        <result column="fill_type" property="fillType"/>
+        <result column="search_type" property="searchType"/>
+        <result column="data_source" property="dataSource"/>
+        <result column="data_structure" property="dataStructure"/>
+        <result column="data_url" property="dataUrl"/>
+        <result column="dict_type" property="dictType"/>
         <result column="del_flag" property="delFlag"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>
@@ -46,7 +68,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, features_code, attributes_code, attributes_name, data_type, data_length, data_precision, is_null, default_value, description, del_flag, create_by, create_time, update_by, update_time, remark
+        id, features_code, code, name, data_type, data_length, data_precision, is_null, default_value, is_insert_property, is_edit_property, is_list_property, is_query_property, is_default_query_property, query_type, fill_type, search_type, data_source, data_structure, data_url, dict_type, del_flag, create_by, create_time, update_by, update_time, remark
     </sql>
 
     <!-- 校验 功能的属性注册表 是否已经存在 -->

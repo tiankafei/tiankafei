@@ -34,11 +34,11 @@ public class AttributesInfoVo extends BaseQueryVo {
 
     @ApiModelProperty(value = "属性代码")
     @Size(max = 20, message = "属性代码长度不能超过 20 ！")
-    private String attributesCode;
+    private String code;
 
     @ApiModelProperty(value = "属性名称")
     @Size(max = 100, message = "属性名称长度不能超过 100 ！")
-    private String attributesName;
+    private String name;
 
     @ApiModelProperty(value = "数据类型")
     @Size(max = 3, message = "数据类型长度不能超过 3 ！")
@@ -57,8 +57,52 @@ public class AttributesInfoVo extends BaseQueryVo {
     @Size(max = 20, message = "默认值长度不能超过 20 ！")
     private String defaultValue;
 
-    @ApiModelProperty(value = "功能描述")
-    private String description;
+    @ApiModelProperty(value = "是否新增属性（1是）")
+    @Size(max = 1, message = "是否新增属性（1是）长度不能超过 1 ！")
+    private String isInsertProperty;
+
+    @ApiModelProperty(value = "是否编辑属性（1是）")
+    @Size(max = 1, message = "是否编辑属性（1是）长度不能超过 1 ！")
+    private String isEditProperty;
+
+    @ApiModelProperty(value = "是否列表属性（1是）")
+    @Size(max = 1, message = "是否列表属性（1是）长度不能超过 1 ！")
+    private String isListProperty;
+
+    @ApiModelProperty(value = "是否查询属性（1是）")
+    @Size(max = 1, message = "是否查询属性（1是）长度不能超过 1 ！")
+    private String isQueryProperty;
+
+    @ApiModelProperty(value = "是否默认查询属性（1是）")
+    @Size(max = 1, message = "是否默认查询属性（1是）长度不能超过 1 ！")
+    private String isDefaultQueryProperty;
+
+    @ApiModelProperty(value = "查询方式（等于、不等于、大于、小于、范围）")
+    @Size(max = 200, message = "查询方式（等于、不等于、大于、小于、范围）长度不能超过 200 ！")
+    private String queryType;
+
+    @ApiModelProperty(value = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
+    @Size(max = 200, message = "填写类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    private String fillType;
+
+    @ApiModelProperty(value = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）")
+    @Size(max = 200, message = "查询类型（文本框、文本域、下拉框、复选框、单选框、日期控件）长度不能超过 200 ！")
+    private String searchType;
+
+    @ApiModelProperty(value = "数据来源：1:json，2:url，3字典")
+    @Size(max = 1, message = "数据来源：1:json，2:url，3字典长度不能超过 1 ！")
+    private String dataSource;
+
+    @ApiModelProperty(value = "数据来源为json的数据结构")
+    private String dataStructure;
+
+    @ApiModelProperty(value = "数据来原为url")
+    @Size(max = 100, message = "数据来原为url长度不能超过 100 ！")
+    private String dataUrl;
+
+    @ApiModelProperty(value = "数据原来为字典的字典类型")
+    @Size(max = 200, message = "数据原来为字典的字典类型长度不能超过 200 ！")
+    private String dictType;
 
     @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
     @Size(max = 1, message = "删除标志（0代表存在 2代表删除）长度不能超过 1 ！")
@@ -87,9 +131,9 @@ public class AttributesInfoVo extends BaseQueryVo {
 
     public static final String FEATURES_CODE = "features_code";
 
-    public static final String ATTRIBUTES_CODE = "attributes_code";
+    public static final String CODE = "code";
 
-    public static final String ATTRIBUTES_NAME = "attributes_name";
+    public static final String NAME = "name";
 
     public static final String DATA_TYPE = "data_type";
 
@@ -101,7 +145,29 @@ public class AttributesInfoVo extends BaseQueryVo {
 
     public static final String DEFAULT_VALUE = "default_value";
 
-    public static final String DESCRIPTION = "description";
+    public static final String IS_INSERT_PROPERTY = "is_insert_property";
+
+    public static final String IS_EDIT_PROPERTY = "is_edit_property";
+
+    public static final String IS_LIST_PROPERTY = "is_list_property";
+
+    public static final String IS_QUERY_PROPERTY = "is_query_property";
+
+    public static final String IS_DEFAULT_QUERY_PROPERTY = "is_default_query_property";
+
+    public static final String QUERY_TYPE = "query_type";
+
+    public static final String FILL_TYPE = "fill_type";
+
+    public static final String SEARCH_TYPE = "search_type";
+
+    public static final String DATA_SOURCE = "data_source";
+
+    public static final String DATA_STRUCTURE = "data_structure";
+
+    public static final String DATA_URL = "data_url";
+
+    public static final String DICT_TYPE = "dict_type";
 
     public static final String DEL_FLAG = "del_flag";
 

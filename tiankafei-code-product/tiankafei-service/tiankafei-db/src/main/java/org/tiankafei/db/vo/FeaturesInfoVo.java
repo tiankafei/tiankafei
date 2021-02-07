@@ -30,11 +30,15 @@ public class FeaturesInfoVo extends BaseQueryVo {
 
     @ApiModelProperty(value = "功能代码")
     @Size(max = 20, message = "功能代码长度不能超过 20 ！")
-    private String featuresCode;
+    private String code;
 
     @ApiModelProperty(value = "功能名称")
     @Size(max = 100, message = "功能名称长度不能超过 100 ！")
-    private String featuresName;
+    private String name;
+
+    @ApiModelProperty(value = "帐号状态（0正常 1停用）")
+    @Size(max = 1, message = "帐号状态（0正常 1停用）长度不能超过 1 ！")
+    private String status;
 
     @ApiModelProperty(value = "功能的数据表")
     @Size(max = 30, message = "功能的数据表长度不能超过 30 ！")
@@ -71,9 +75,11 @@ public class FeaturesInfoVo extends BaseQueryVo {
 
     public static final String ID = "id";
 
-    public static final String FEATURES_CODE = "features_code";
+    public static final String CODE = "code";
 
-    public static final String FEATURES_NAME = "features_name";
+    public static final String NAME = "name";
+
+    public static final String STATUS = "status";
 
     public static final String FEATURES_TABLE_NAME = "features_table_name";
 
