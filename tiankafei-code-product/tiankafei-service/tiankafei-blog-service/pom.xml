@@ -36,10 +36,10 @@
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-user-cache</artifactId>
-        </dependency>-->
+            <artifactId>tiankafei-db</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
