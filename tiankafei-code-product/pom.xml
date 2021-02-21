@@ -18,7 +18,7 @@
     <url>https://github.com/tiankafei/tiankafei</url>
 
     <properties>
-        <ruoyi.version>2.4.0-SNAPSHOT</ruoyi.version>
+        <ruoyi.version>2.5.0-SNAPSHOT</ruoyi.version>
     </properties>
 
     <modules>
