@@ -46,10 +46,6 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        if (swaggerProperties.getEnabled()) {
-            // swagger开启的时候，不需要走网关的过滤器
-            return false;
-        }
         // 不需要执行过滤的url集合
         List<String> urls = exclusionsUrlsProperties.getUrls();
         // 获取当前请求路径
