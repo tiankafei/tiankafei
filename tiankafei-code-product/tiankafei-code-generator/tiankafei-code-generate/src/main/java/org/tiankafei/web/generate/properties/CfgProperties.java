@@ -37,8 +37,9 @@ public class CfgProperties implements Serializable {
     private String pageParamClassName;
     private String pageParamConstName;
 
-    private boolean shiroAuthority;
+    private boolean shiroAuthority = Boolean.FALSE;
     private String authority;
+    private boolean logFlag = Boolean.FALSE;
 
     private List<String> importPackageList;
 

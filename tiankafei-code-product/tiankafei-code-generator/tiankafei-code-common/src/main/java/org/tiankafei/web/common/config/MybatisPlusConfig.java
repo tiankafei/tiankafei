@@ -52,8 +52,8 @@ public class MybatisPlusConfig {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 
         // note note note 这里是多租户的配置
-        TenantLineInnerInterceptor tenantLineInnerInterceptor = new TenantLineInnerInterceptor(new MoreTenantLineHandler(dynamicTableProperties.getTenantId()));
-        interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
+//        TenantLineInnerInterceptor tenantLineInnerInterceptor = new TenantLineInnerInterceptor(new MoreTenantLineHandler(dynamicTableProperties.getTenantId()));
+//        interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
 
         // note note note 这里是动态表名的配置
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
@@ -101,12 +101,12 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(optimisticLockerInnerInterceptor);
 
         // note note note 这里是sql性能规范的配置
-        IllegalSQLInnerInterceptor illegalSQLInnerInterceptor = new IllegalSQLInnerInterceptor();
-        interceptor.addInnerInterceptor(illegalSQLInnerInterceptor);
+//        IllegalSQLInnerInterceptor illegalSQLInnerInterceptor = new IllegalSQLInnerInterceptor();
+//        interceptor.addInnerInterceptor(illegalSQLInnerInterceptor);
 
         // note note note 这里是防止全表更新与删除的配置
-        BlockAttackInnerInterceptor blockAttackInnerInterceptor = new BlockAttackInnerInterceptor();
-        interceptor.addInnerInterceptor(blockAttackInnerInterceptor);
+//        BlockAttackInnerInterceptor blockAttackInnerInterceptor = new BlockAttackInnerInterceptor();
+//        interceptor.addInnerInterceptor(blockAttackInnerInterceptor);
 
         return interceptor;
     }

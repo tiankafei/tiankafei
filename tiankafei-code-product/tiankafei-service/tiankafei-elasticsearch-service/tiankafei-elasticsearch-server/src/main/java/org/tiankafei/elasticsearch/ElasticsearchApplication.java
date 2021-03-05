@@ -1,5 +1,6 @@
 package org.tiankafei.elasticsearch;
 
+import com.ruoyi.common.swagger.annotation.EnableCustomSwagger2;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -15,12 +16,13 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringCloudApplication
 @EntityScan(basePackages = "org.tiankafei")
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
-@ComponentScan(basePackages = {"org.tiankafei"})
-@EnableFeignClients(basePackages = {"org.tiankafei"})
+@EnableFeignClients(basePackages = {"org.tiankafei", "com.ruoyi"})
 @EnableHystrixDashboard
+@EnableCustomSwagger2
 public class ElasticsearchApplication {
 
     public static void main(String[] args) {
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(ElasticsearchApplication.class, args);
     }
 

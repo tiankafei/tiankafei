@@ -25,16 +25,16 @@ import org.tiankafei.web.common.enums.BaseEnums;
 public class ApiResult<T> implements Serializable {
 
     /**
-     * 状态（0，失败；1成功，2错误）
+     * 状态
      */
     @ApiModelProperty(value = "状态（0，失败；1成功，2错误）")
-    private Integer status;
+    private Integer code;
 
     /**
      * 返回的响应消息
      */
     @ApiModelProperty(value = "返回的响应消息")
-    private String message;
+    private String msg;
 
 
     /**
@@ -160,8 +160,8 @@ public class ApiResult<T> implements Serializable {
 
     private static ApiResult result(Integer status, String message, Object data) {
         return ApiResult.builder()
-                .status(status)
-                .message(message)
+                .code(status)
+                .msg(message)
                 .data(data)
                 .time(new Date())
                 .build();

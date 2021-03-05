@@ -6,8 +6,15 @@ server:
       force: true
       charset: UTF-8
 spring:
+  autoconfigure:
+    exclude:
+      - org.tiankafei.web.common.config.WebCommonConfig
   profiles:
-    active: dev, eureka
+    active: dev, nacos
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei
   application:
     name: zuul-service
 exclusions:
@@ -22,18 +29,9 @@ zuul:
   sensitiveHeaders:
   prefix: /api
   routes:
-    user:
-      path: /user/**
-      serviceId: user-service
-    login:
-      path: /login/**
-      serviceId: login-service
     blog:
       path: /blog/**
       serviceId: blog-service
-    questionnaire:
-      path: /questionnaire/**
-      serviceId: questionnaire-service
     activiti:
       path: /activiti/**
       serviceId: activiti-service
@@ -72,5 +70,5 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
-  enable: false
+  enabled: false
 #################################### Swagger end ###################################

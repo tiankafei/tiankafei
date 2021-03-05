@@ -1,8 +1,14 @@
 server:
   port: 7500
 spring:
+  autoconfigure:
+    exclude: org.activiti.spring.boot.SecurityAutoConfiguration
   profiles:
-    active: dev, eureka
+    active: dev, nacos
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei
   application:
     name: activiti-service
   jackson:
@@ -59,7 +65,7 @@ logging:
   level:
     ROOT: info
     # mapper sql日志的包路径
-    org.tiankafei.blog.mapper: debug
+    org.tiankafei.activiti.mapper: debug
     # db 工程的日志包路径
     org.tiankafei.db.mapper: debug
     org.tiankafei.db.service.impl: debug
@@ -74,15 +80,18 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
-  enable: false
-  contact:
-    email: 798971170@qq.com
-    name: ${spring.application.name}
-    url: 'https://tiankafei.top'
-  description: '工作流服务'
-  title: ${spring.application.name}
-  url: 'https://tiankafei.top'
-  version: 1.0
+  enabled: false
+  title: 工作流服务接口文档
+  license: Powered By ruoyi
+  licenseUrl: https://tiankafei.top
+  authorization:
+    name: RuoYi OAuth
+    auth-regex: ^.*$
+    authorization-scope-list:
+      - scope: server
+        description: 客户端授权范围
+    token-url-list:
+      - http://localhost:8080/auth/oauth/token
 #################################### Swagger end ###################################
 
 #################################### tiankafei自定义配置 start #################################

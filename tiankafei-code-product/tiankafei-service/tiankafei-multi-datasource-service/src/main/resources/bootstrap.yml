@@ -2,9 +2,14 @@ server:
   port: 7600
 spring:
   autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+    exclude:
+     - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   profiles:
-    active: dev, eureka
+    active: dev, nacos
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei
   application:
     name: multi-datasource-service
   jackson:
@@ -75,9 +80,6 @@ logging:
     org.tiankafei.multidatasource.mapper: debug
     org.tiankafei.multidatasource.primary.mapper: debug
     org.tiankafei.multidatasource.secondary.mapper: debug
-    # db 工程的日志包路径
-    org.tiankafei.db.mapper: debug
-    org.tiankafei.db.service.impl: debug
     # nacos日志的包路径
     com.alibaba.nacos.client.naming: WARN
     # nacos日志的包路径
@@ -89,15 +91,18 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
-  enable: false
-  contact:
-    email: 798971170@qq.com
-    name: ${spring.application.name}
-    url: 'https://tiankafei.top'
-  description: '博客系统服务'
-  title: ${spring.application.name}
-  url: 'https://tiankafei.top'
-  version: 1.0
+  enabled: false
+  title: 多数据源服务接口文档
+  license: Powered By ruoyi
+  licenseUrl: https://tiankafei.top
+  authorization:
+    name: RuoYi OAuth
+    auth-regex: ^.*$
+    authorization-scope-list:
+      - scope: server
+        description: 客户端授权范围
+    token-url-list:
+      - http://localhost:8080/auth/oauth/token
 #################################### Swagger end ###################################
 
 #################################### tiankafei自定义配置 start #################################

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.common.core.exception.DaoException;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.entity.TableEntity;
 import org.tiankafei.db.mapper.TableMapper;
-import org.tiankafei.db.param.TableNameParam;
 import org.tiankafei.db.param.TableNameListParam;
 import org.tiankafei.db.param.TableNamePageParam;
-import org.tiankafei.db.service.DbService;
+import org.tiankafei.db.param.TableNameParam;
 import org.tiankafei.db.service.TableService;
-import org.tiankafei.web.common.exception.DaoException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.web.common.service.impl.QueryDbNameService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
@@ -29,7 +29,7 @@ import org.tiankafei.web.common.vo.Paging;
 public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> implements TableService {
 
     @Autowired
-    private DbService dbService;
+    private QueryDbNameService queryDbNameService;
 
     @Override
     public TableEntity getTableEntity(TableNameParam tableNameParam) throws Exception {
@@ -37,7 +37,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         lambdaQueryWrapper.eq(TableEntity::getTableName, tableNameParam.getTableName());
         String tableSchema = tableNameParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
-            tableSchema = dbService.getTableSchema();
+            tableSchema = queryDbNameService.getDbName();
         }
         lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         try {
@@ -59,7 +59,7 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         }
         String tableSchema = tableNamePageParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
-            tableSchema = dbService.getTableSchema();
+            tableSchema = queryDbNameService.getDbName();
             lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         }
 
@@ -76,9 +76,9 @@ public class TableServiceImpl extends BaseServiceImpl<TableMapper, TableEntity> 
         }
         String tableSchema = tableNameListParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
-            tableSchema = dbService.getTableSchema();
-            lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
+            tableSchema = queryDbNameService.getDbName();
         }
+        lambdaQueryWrapper.eq(TableEntity::getTableSchema, tableSchema);
         List<TableEntity> tableEntityList = super.list(lambdaQueryWrapper);
         return tableEntityList;
     }

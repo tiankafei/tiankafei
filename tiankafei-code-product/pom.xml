@@ -6,16 +6,20 @@
     <parent>
         <groupId>org.tiankafei</groupId>
         <artifactId>tiankafei-parent</artifactId>
-        <version>1.1-RELEASE</version>
+        <version>1.2.1-RELEASE</version>
     </parent>
 
     <groupId>org.tiankafei.product</groupId>
     <artifactId>tiankafei-code-product</artifactId>
-    <version>1.1-RELEASE</version>
+    <version>1.2.1-RELEASE</version>
     <packaging>pom</packaging>
 
     <description>此工程是tiankafei的产品包集合</description>
     <url>https://github.com/tiankafei/tiankafei</url>
+
+    <properties>
+        <ruoyi.version>2.5.0-SNAPSHOT</ruoyi.version>
+    </properties>
 
     <modules>
         <module>tiankafei-register-center</module>
@@ -32,5 +36,28 @@
         <module>tiankafei-distributed-scheduling-center</module>
         <module>tiankafei-service</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- RuoYi Common Log -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-common-log</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+            <!-- RuoYi Common Security -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-common-security</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+            <!-- RuoYi Common Swagger -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-common-swagger</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

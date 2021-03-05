@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+#if(${cfg.shiroAuthority})
+import com.ruoyi.common.security.annotation.PreAuthorize;
+#end
+#if(${cfg.logFlag})
+import com.ruoyi.common.log.annotation.Log;
+import com.ruoyi.common.log.enums.BusinessType;
+#end
 #if($!{swagger2})
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -75,7 +82,13 @@ public class $!{table.controllerName} {
 	@PostMapping("/check")
 #if($!{swagger2})
 	@ApiOperation(value = "校验 $!{table.comment} 对象是否存在")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:check")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.CHECK)
+#end
 	public ApiResult<Boolean> check$!{table.controllerName}Exists(@Valid @RequestBody $!{cfg.checkParamClassName} $!{cfg.checkParamConstName}) throws Exception {
 		Boolean flag = $!{cfg.serviceConstName}.check$!{table.serviceName}Exists($!{cfg.checkParamConstName});
 		return ApiResult.ok(flag);
@@ -91,7 +104,13 @@ public class $!{table.controllerName} {
 	@PostMapping
 #if($!{swagger2})
 	@ApiOperation(value = "添加 $!{table.comment}")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:add")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.INSERT)
+#end
 	public ApiResult<$!{cfg.keyColumnType}> add$!{table.controllerName}(@Valid @RequestBody $!{cfg.voClassName} $!{cfg.voConstName}) throws Exception {
 		$!{cfg.keyColumnType} id = $!{cfg.serviceConstName}.add$!{table.serviceName}($!{cfg.voConstName});
 		return ApiResult.ok(id);
@@ -107,7 +126,13 @@ public class $!{table.controllerName} {
 	@PostMapping("/batch")
 #if($!{swagger2})
 	@ApiOperation(value = "批量添加 $!{table.comment}")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:batchAdd")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.BATCH_INSERT)
+#end
 	public ApiResult<List<$!{cfg.keyColumnType}>> batchAdd$!{table.controllerName}(@Valid @RequestBody List<$!{cfg.voClassName}> $!{cfg.voConstName}List) throws Exception {
 		List<$!{cfg.keyColumnType}> idList = $!{cfg.serviceConstName}.batchAdd$!{table.serviceName}($!{cfg.voConstName}List);
 		return ApiResult.ok(idList);
@@ -123,7 +148,13 @@ public class $!{table.controllerName} {
 	@DeleteMapping("/{id}")
 #if($!{swagger2})
 	@ApiOperation(value = "删除 $!{table.comment}")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:delete")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.DELETE)
+#end
 	public ApiResult<Boolean> delete$!{table.controllerName}(@PathVariable(value = "id") String id) throws Exception {
 		boolean flag = $!{cfg.serviceConstName}.delete$!{table.serviceName}(id);
 		return ApiResult.ok(flag);
@@ -139,7 +170,13 @@ public class $!{table.controllerName} {
 	@DeleteMapping("/batch")
 #if($!{swagger2})
 	@ApiOperation(value = "批量删除 $!{table.comment}")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:batchDelete")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.BATCH_DELETE)
+#end
 	public ApiResult<Boolean> batchDelete$!{table.controllerName}(@Valid @RequestBody IdsParam idsParam) throws Exception {
 		boolean flag = $!{cfg.serviceConstName}.batchDelete$!{table.serviceName}(idsParam.getIds());
 		return ApiResult.ok(flag);
@@ -155,7 +192,13 @@ public class $!{table.controllerName} {
 	@DeleteMapping("/condition")
 #if($!{swagger2})
 	@ApiOperation(value = "条件删除 $!{table.comment}")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:conditionDelete")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.CONDITION_DELETE)
+#end
 	public ApiResult<Boolean> conditionDelete$!{table.controllerName}(@Valid @RequestBody $!{cfg.deleteParamClassName} $!{cfg.deleteParamConstName}) throws Exception {
 		boolean flag = $!{cfg.serviceConstName}.conditionDelete$!{table.serviceName}($!{cfg.deleteParamConstName});
 		return ApiResult.ok(flag);
@@ -171,7 +214,13 @@ public class $!{table.controllerName} {
 	@PatchMapping
 #if($!{swagger2})
 	@ApiOperation(value = "修改 $!{table.comment}")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:update")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.UPDATE)
+#end
 	public ApiResult<Boolean> update$!{table.controllerName}(@Valid @RequestBody $!{cfg.voClassName} $!{cfg.voConstName}) throws Exception {
 		boolean flag = $!{cfg.serviceConstName}.update$!{table.serviceName}($!{cfg.voConstName});
 		return ApiResult.ok(flag);
@@ -187,7 +236,13 @@ public class $!{table.controllerName} {
 	@GetMapping("/{id}")
 #if($!{swagger2})
 	@ApiOperation(value = "根据ID获取 $!{table.comment} 对象")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:info")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.INFO)
+#end
 	public ApiResult<$!{cfg.voClassName}> get$!{table.controllerName}(@PathVariable(value = "id") String id) throws Exception {
 		$!{cfg.voClassName} $!{cfg.voConstName} = $!{cfg.serviceConstName}.get$!{table.serviceName}ById(id);
 		return ApiResult.ok($!{cfg.voConstName});
@@ -202,7 +257,13 @@ public class $!{table.controllerName} {
 	@GetMapping
 #if($!{swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 对象全部列表")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:AllList")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.ALL_LIST)
+#end
 	public ApiResult<List<$!{cfg.voClassName}>> get$!{table.controllerName}AllList() throws Exception {
 		List<$!{cfg.voClassName}> $!{cfg.voConstName}List = $!{cfg.serviceConstName}.get$!{table.serviceName}List(new $!{cfg.listParamClassName}());
 		return ApiResult.ok($!{cfg.voConstName}List);
@@ -218,7 +279,13 @@ public class $!{table.controllerName} {
 	@PostMapping("/list")
 #if($!{swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 对象列表")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:list")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.LIST)
+#end
 	public ApiResult<List<$!{cfg.voClassName}>> get$!{table.controllerName}List(@Valid @RequestBody $!{cfg.listParamClassName} $!{cfg.listParamConstName}) throws Exception {
 		List<$!{cfg.voClassName}> $!{cfg.voConstName}List = $!{cfg.serviceConstName}.get$!{table.serviceName}List($!{cfg.listParamConstName});
 		return ApiResult.ok($!{cfg.voConstName}List);
@@ -234,7 +301,13 @@ public class $!{table.controllerName} {
 	@PostMapping("/pageList")
 #if($!{swagger2})
 	@ApiOperation(value = "获取 $!{table.comment} 分页对象列表")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:pageList")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.PAGE_LIST)
+#end
 	public ApiResult<Paging<$!{cfg.voClassName}>> get$!{table.controllerName}PageList(@Valid @RequestBody $!{cfg.pageParamClassName} $!{cfg.pageParamConstName}) throws Exception {
 		Paging<$!{cfg.voClassName}> $!{cfg.voConstName}List = $!{cfg.serviceConstName}.get$!{table.serviceName}PageList($!{cfg.pageParamConstName});
 		return ApiResult.ok($!{cfg.voConstName}List);
@@ -250,7 +323,13 @@ public class $!{table.controllerName} {
 	@PostMapping("/count")
 #if($!{swagger2})
 	@ApiOperation(value = "求 $!{table.comment} 对象的记录数")
-#end	
+#end
+#if(${cfg.shiroAuthority})
+	@PreAuthorize(hasPermi = "$!{cfg.authority}:count")
+#end
+#if(${cfg.logFlag})
+	@Log(title = "$!{table.comment}", businessType = BusinessType.COUNT)
+#end
 	public ApiResult<Integer> count$!{table.controllerName}(@Valid @RequestBody $!{cfg.countParamClassName} $!{cfg.countParamConstName}) throws Exception {
 		Integer count = $!{cfg.serviceConstName}.count$!{table.serviceName}($!{cfg.countParamConstName});
 		return ApiResult.ok(count);

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.tiankafei.product</groupId>
         <artifactId>tiankafei-code-product</artifactId>
-        <version>1.1-RELEASE</version>
+        <version>1.2.1-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -18,18 +18,12 @@
     <modules>
         <module>tiankafei-db</module>
         <module>tiankafei-collection</module>
-        <module>tiankafei-user-common</module>
-        <module>tiankafei-user-cache</module>
-        <module>tiankafei-login-service</module>
-        <module>tiankafei-user-service</module>
         <module>tiankafei-blog-service</module>
-        <module>tiankafei-questionnaire-service</module>
         <module>tiankafei-elasticsearch-service</module>
         <module>tiankafei-activiti-service</module>
         <module>tiankafei-multi-datasource-service</module>
         <module>tiankafei-multi-datasource-jpa-service</module>
         <module>tiankafei-multi-datasource-mp-service</module>
-        <module>tiankafei-multi-datasource-custom-service</module>
     </modules>
 
 </project>

@@ -2,7 +2,11 @@ server:
   port: 7300
 spring:
   profiles:
-    active: dev, eureka
+    active: dev, nacos
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei
   application:
     name: blog-service
   jackson:
@@ -65,15 +69,18 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
-  enable: false
-  contact:
-    email: 798971170@qq.com
-    name: ${spring.application.name}
-    url: 'https://tiankafei.top'
-  description: '博客系统服务'
-  title: ${spring.application.name}
-  url: 'https://tiankafei.top'
-  version: 1.0
+  enabled: false
+  title: 博客系统服务接口文档
+  license: Powered By ruoyi
+  licenseUrl: https://ruoyi.vip
+  authorization:
+    name: RuoYi OAuth
+    auth-regex: ^.*$
+    authorization-scope-list:
+      - scope: server
+        description: 客户端授权范围
+    token-url-list:
+      - http://localhost:8080/auth/oauth/token
 #################################### Swagger end ###################################
 
 #################################### tiankafei自定义配置 start #################################

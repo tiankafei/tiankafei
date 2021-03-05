@@ -12,7 +12,7 @@
 
     <groupId>org.tiankafei</groupId>
     <artifactId>tiankafei-parent</artifactId>
-    <version>1.1-RELEASE</version>
+    <version>1.2.1-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-parent</name>
@@ -35,7 +35,7 @@
         <guava.version>29.0-jre</guava.version>
         <fastjson.version>1.2.72</fastjson.version>
         <disruptor.version>3.4.2</disruptor.version>
-        <aviator.version>5.1.4</aviator.version>
+        <aviator.version>5.2.3</aviator.version>
         <kilim.version>2.0.2</kilim.version>
         <quasar.version>0.8.0</quasar.version>
         <objenesis.version>3.1</objenesis.version>
@@ -67,7 +67,8 @@
         <jfreechart.version>1.0.13</jfreechart.version>
 
         <!--web 相关版本依赖-->
-        <swagger.version>2.9.2</swagger.version>
+        <swagger.fox.version>2.9.2</swagger.fox.version>
+        <swagger.core.version>1.5.24</swagger.core.version>
         <knife4j.version>2.0.4</knife4j.version>
         <mybatis-plus.version>3.4.0</mybatis-plus.version>
         <dynamic-datasource.version>3.2.1</dynamic-datasource.version>
@@ -79,7 +80,7 @@
         <rocksdb.version>6.11.4</rocksdb.version>
         <sqlite.version>3.32.3.2</sqlite.version>
         <c3p0.version>0.9.5.5</c3p0.version>
-        <druid.version>1.1.23</druid.version>
+        <druid.version>1.2.4</druid.version>
         <spring-data-elasticsearch.version>4.0.6.RELEASE</spring-data-elasticsearch.version>
 
         <!--用户安全认证 相关版本依赖-->
@@ -98,7 +99,7 @@
 
         <!--自己的包版本依赖-->
         <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
-        <org.tiankafei.produce.version>1.1-RELEASE</org.tiankafei.produce.version>
+        <org.tiankafei.produce.version>1.2.1-RELEASE</org.tiankafei.produce.version>
     </properties>
 
     <dependencyManagement>
@@ -465,14 +466,24 @@
             </dependency>
 
             <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.core.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger.fox.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger.fox.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
             <dependency>
@@ -714,18 +725,6 @@
                 <artifactId>tiankafei-code-common</artifactId>
                 <version>${org.tiankafei.produce.version}</version>
             </dependency>
-            <!--用户公共属性工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-user-common</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-            <!--用户缓存工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-user-cache</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
             <!--通用的数据库查询工程-->
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
@@ -736,25 +735,6 @@
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-collection</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-
-            <!--feign调用客户端工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-user-api</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-login-api</artifactId>
-                <version>${org.tiankafei.produce.version}</version>
-            </dependency>
-
-            <!--用户登录相关工程-->
-            <dependency>
-                <groupId>org.tiankafei.product</groupId>
-                <artifactId>tiankafei-login-common</artifactId>
                 <version>${org.tiankafei.produce.version}</version>
             </dependency>
 

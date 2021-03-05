@@ -1,5 +1,6 @@
 package org.tiankafei.web.common.filters;
 
+import com.ruoyi.common.swagger.config.SwaggerProperties;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,7 +16,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.tiankafei.web.common.properties.SwaggerProperties;
 
 /**
  * @author tiankafei
@@ -38,7 +38,7 @@ public class ApiDocFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (swaggerProperties.getEnable()) {
+        if (swaggerProperties.getEnabled()) {
             // 只有在开发模式才提供api文档支持
             chain.doFilter(request, response);
         } else {

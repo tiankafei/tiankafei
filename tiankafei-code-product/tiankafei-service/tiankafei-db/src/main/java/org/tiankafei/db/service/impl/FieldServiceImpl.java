@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.common.core.exception.DaoException;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.entity.FieldEntity;
 import org.tiankafei.db.mapper.FieldMapper;
-import org.tiankafei.db.param.FieldNameParam;
 import org.tiankafei.db.param.FieldNameListParam;
 import org.tiankafei.db.param.FieldNamePageParam;
-import org.tiankafei.db.service.DbService;
+import org.tiankafei.db.param.FieldNameParam;
 import org.tiankafei.db.service.FieldService;
-import org.tiankafei.web.common.exception.DaoException;
 import org.tiankafei.web.common.service.impl.BaseServiceImpl;
+import org.tiankafei.web.common.service.impl.QueryDbNameService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**
@@ -29,7 +29,7 @@ import org.tiankafei.web.common.vo.Paging;
 public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> implements FieldService {
 
     @Autowired
-    private DbService dbService;
+    private QueryDbNameService queryDbNameService;
 
     @Override
     public FieldEntity getFieldEntity(FieldNameParam fieldNameParam) throws Exception {
@@ -38,7 +38,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         lambdaQueryWrapper.eq(FieldEntity::getFieldName, fieldNameParam.getFieldName());
         String tableSchema = fieldNameParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
-            tableSchema = dbService.getTableSchema();
+            tableSchema = queryDbNameService.getDbName();
         }
         lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         try {
@@ -61,7 +61,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         }
         String tableSchema = fieldNamePageParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
-            tableSchema = dbService.getTableSchema();
+            tableSchema = queryDbNameService.getDbName();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }
         IPage<FieldEntity> iPage = super.page(page, lambdaQueryWrapper);
@@ -78,7 +78,7 @@ public class FieldServiceImpl extends BaseServiceImpl<FieldMapper, FieldEntity> 
         }
         String tableSchema = fieldNameListParam.getTableSchema();
         if (StringUtils.isBlank(tableSchema)) {
-            tableSchema = dbService.getTableSchema();
+            tableSchema = queryDbNameService.getDbName();
             lambdaQueryWrapper.eq(FieldEntity::getTableSchema, tableSchema);
         }
         List<FieldEntity> fieldEntityList = super.list(lambdaQueryWrapper);

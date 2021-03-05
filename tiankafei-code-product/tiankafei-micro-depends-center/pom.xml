@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.tiankafei.product</groupId>
         <artifactId>tiankafei-code-product</artifactId>
-        <version>1.1-RELEASE</version>
+        <version>1.2.1-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -52,45 +52,45 @@
 
         <!--使用 eureka 注册中心时使用以下依赖-->
         <!--eureka客户端-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        </dependency>-->
         <!-- spring cloud config 配置中心客户端 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
-        </dependency>
+        </dependency>-->
         <!-- 企业消息总线 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-        </dependency>
+        </dependency>-->
 
 
         <!--使用 nacos 注册中心时使用以下依赖-->
         <!--nacos注册中心引用的依赖-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>-->
+        </dependency>
         <!--nacos配置中心引用的依赖-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>-->
+        </dependency>
         <!--sentinel熔断引用的依赖-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-            <exclusions>
+            <!--<exclusions>
                 &lt;!&ndash;这个会把返回结果有json转成xml&ndash;&gt;
                 <exclusion>
                     <groupId>com.fasterxml.jackson.dataformat</groupId>
                     <artifactId>jackson-dataformat-xml</artifactId>
                 </exclusion>
-            </exclusions>
-        </dependency>-->
+            </exclusions>-->
+        </dependency>
 
 
         <!--使用 consul 注册中心时使用以下依赖-->
