@@ -216,7 +216,7 @@ public abstract class AviatorExtendUtil {
         try {
             expression = parseExpression(expression);
             Object result = null;
-            BaseExpression exp = (BaseExpression) AviatorEvaluator.compile(expression);
+            Expression exp = AviatorEvaluator.compile(expression);
 //            System.out.println(exp.getClass());
 //            byte[] serialize = ObjectUtil.serialize(exp);
 //
@@ -230,7 +230,13 @@ public abstract class AviatorExtendUtil {
 //            System.out.println(exp1.getVariableFullNames());
 //            System.out.println(exp1.getSourceFile());
 
-            System.out.println(exp);
+            String name = exp.getClass().getName();
+            System.out.println(name);
+            String className = name.split("/")[0];
+            System.out.println(className);
+
+
+
             System.out.println(exp.getVariableNames());
             System.out.println(exp.getVariableFullNames());
             System.out.println(exp.getSourceFile());
