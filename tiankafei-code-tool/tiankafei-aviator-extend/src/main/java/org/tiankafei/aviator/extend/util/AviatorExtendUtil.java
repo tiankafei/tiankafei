@@ -1,5 +1,6 @@
 package org.tiankafei.aviator.extend.util;
 
+import com.googlecode.aviator.BaseExpression;
 import org.apache.commons.collections4.CollectionUtils;
 import org.tiankafei.aviator.extend.InitFunction;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
@@ -96,11 +97,13 @@ public abstract class AviatorExtendUtil {
         String name = aviatorFunctionProxy.getName();
         String lowerCase = name.toLowerCase();
         String upperCase = name.toUpperCase();
-        if (lowerCase.equals(upperCase)) {
+        if(AviatorEvaluator.getFunction(lowerCase) == null){
             AviatorEvaluator.getInstance().addFunction(lowerCase, aviatorFunctionProxy);
-        } else {
-            AviatorEvaluator.getInstance().addFunction(lowerCase, aviatorFunctionProxy);
-            AviatorEvaluator.getInstance().addFunction(upperCase, aviatorFunctionProxy);
+        }
+        if (!lowerCase.equals(upperCase)) {
+            if(AviatorEvaluator.getFunction(upperCase) == null){
+                AviatorEvaluator.getInstance().addFunction(upperCase, aviatorFunctionProxy);
+            }
         }
     }
 
@@ -213,7 +216,24 @@ public abstract class AviatorExtendUtil {
         try {
             expression = parseExpression(expression);
             Object result = null;
-            Expression exp = AviatorEvaluator.compile(expression);
+            BaseExpression exp = (BaseExpression) AviatorEvaluator.compile(expression);
+//            System.out.println(exp.getClass());
+//            byte[] serialize = ObjectUtil.serialize(exp);
+//
+//            String filePath = "D:\\Script_1615568517996_56.class";
+//            FileUtil.writeByteFile(serialize, filePath);
+//
+//            byte[] bytes = FileUtil.readByteFile(filePath);
+//            Expression exp1 = ObjectUtil.deserialize(bytes);
+//            System.out.println(exp1);
+//            System.out.println(exp1.getVariableNames());
+//            System.out.println(exp1.getVariableFullNames());
+//            System.out.println(exp1.getSourceFile());
+
+            System.out.println(exp);
+            System.out.println(exp.getVariableNames());
+            System.out.println(exp.getVariableFullNames());
+            System.out.println(exp.getSourceFile());
             if (dataMap != null) {
                 result = exp.execute(dataMap);
             } else {
