@@ -3,10 +3,9 @@ package org.tiankafei.web.common.exception;
 import com.ruoyi.common.security.handler.GlobalExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.enums.ApiStatusEnum;
 
@@ -14,8 +13,7 @@ import org.tiankafei.web.common.enums.ApiStatusEnum;
  * @author tiankafei
  * @since 1.0
  **/
-@ControllerAdvice
-@RestController
+@RestControllerAdvice
 @Slf4j
 public class CustomExceptionHandler extends GlobalExceptionHandler {
 
