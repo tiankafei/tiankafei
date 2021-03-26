@@ -20,9 +20,9 @@
         <module>tiankafei-agent</module>
         <module>tiankafei-expression-fastel</module>
         <module>tiankafei-proxy</module>
+        <module>tiankafei-common</module>
         <module>tiankafei-asm</module>
         <module>tiankafei-aviator-extend</module>
-        <module>tiankafei-base</module>
         <module>tiankafei-antlr4</module>
         <module>tiankafei-poi</module>
         <module>tiankafei-email</module>
