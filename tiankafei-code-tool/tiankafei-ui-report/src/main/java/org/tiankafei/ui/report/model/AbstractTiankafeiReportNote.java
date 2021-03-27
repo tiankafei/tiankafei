@@ -4,7 +4,7 @@ import com.fr.base.BaseUtils;
 import com.fr.report.write.AbstractNote;
 import java.io.PrintWriter;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.util.LogUtil;
+import org.tiankafei.common.exceptions.CommonException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -96,8 +96,7 @@ public abstract class AbstractTiankafeiReportNote extends AbstractNote {
             return Integer.valueOf(value);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            LogUtil.error(value + "不是数字，请检查！");
-            return -1;
+            throw new CommonException(value + "不是数字，请检查！");
         }
     }
 

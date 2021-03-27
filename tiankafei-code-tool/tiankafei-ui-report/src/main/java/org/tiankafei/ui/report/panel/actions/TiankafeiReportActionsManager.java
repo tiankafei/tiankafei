@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.againsui.TiankafeiMenuBar;
 import org.tiankafei.ui.design.againsui.TiankafeiPopupMenu;
 import org.tiankafei.ui.design.againsui.TiankafeiToolBar;
@@ -836,70 +835,52 @@ public class TiankafeiReportActionsManager {
      * 初始化工具栏面板
      *
      * @return 工具栏面板
-     * @throws BaseException 自定义异常
      */
-    public TkfToolBar initTkfToolBar() throws BaseException {
-        try {
-            //工具栏面板
-            TiankafeiToolBar tiankafeiToolBar = new TiankafeiToolBar();
-            TkfToolBar tkfToolBar = tiankafeiToolBar.initTiankafeiToolBar();
-            for (int index = 0, length = toolBarsList.size(); index < length; index++) {
-                String toolBars = toolBarsList.get(index);
-                AbstractTiankafeiReportAction tiankafeiReportAction = getTiankafeiReportActionMap().get(toolBars);
-                TkfButton tkfButton = tiankafeiReportAction.initTiankafeiButton();
-                tkfButton.setText("");
-                KeyStroke[] keyStrokeArray = tiankafeiReportAction.getKeyStrokeArray();
-                if (keyStrokeArray != null && keyStrokeArray.length != 0) {
-                    for (int keyIndex = 0, keyLength = keyStrokeArray.length; keyIndex < keyLength; keyIndex++) {
-                        KeyStroke keyStroke = keyStrokeArray[keyIndex];
-                        tkfButton.registerKeyboardAction(tiankafeiReportAction, keyStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
-                    }
+    public TkfToolBar initTkfToolBar() {
+        //工具栏面板
+        TiankafeiToolBar tiankafeiToolBar = new TiankafeiToolBar();
+        TkfToolBar tkfToolBar = tiankafeiToolBar.initTiankafeiToolBar();
+        for (int index = 0, length = toolBarsList.size(); index < length; index++) {
+            String toolBars = toolBarsList.get(index);
+            AbstractTiankafeiReportAction tiankafeiReportAction = getTiankafeiReportActionMap().get(toolBars);
+            TkfButton tkfButton = tiankafeiReportAction.initTiankafeiButton();
+            tkfButton.setText("");
+            KeyStroke[] keyStrokeArray = tiankafeiReportAction.getKeyStrokeArray();
+            if (keyStrokeArray != null && keyStrokeArray.length != 0) {
+                for (int keyIndex = 0, keyLength = keyStrokeArray.length; keyIndex < keyLength; keyIndex++) {
+                    KeyStroke keyStroke = keyStrokeArray[keyIndex];
+                    tkfButton.registerKeyboardAction(tiankafeiReportAction, keyStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
                 }
-                tkfToolBar.add(tkfButton);
             }
-            return tkfToolBar;
-        } catch (BaseException e) {
-            e.printStackTrace();
-            throw e;
+            tkfToolBar.add(tkfButton);
         }
+        return tkfToolBar;
     }
 
     /**
      * 初始化菜单栏面板
      *
      * @return 菜单栏面板
-     * @throws BaseException 自定义异常
      */
-    public TkfMenuBar initTkfMenuBar() throws BaseException {
-        try {
-            //菜单栏面板
-            TiankafeiMenuBar tiankafeiMenuBar = new TiankafeiMenuBar();
-            tiankafeiMenuBar.setMenuList(menuList);
-            TkfMenuBar tkfMenuBar = tiankafeiMenuBar.initTiankafeiMenuBar();
-            return tkfMenuBar;
-        } catch (BaseException e) {
-            e.printStackTrace();
-            throw e;
-        }
+    public TkfMenuBar initTkfMenuBar() {
+        //菜单栏面板
+        TiankafeiMenuBar tiankafeiMenuBar = new TiankafeiMenuBar();
+        tiankafeiMenuBar.setMenuList(menuList);
+        TkfMenuBar tkfMenuBar = tiankafeiMenuBar.initTiankafeiMenuBar();
+        return tkfMenuBar;
     }
 
     /**
      * 初始化右键菜单栏面板
      *
      * @return 右键菜单栏面板
-     * @throws BaseException 自定义异常
      */
-    public TkfPopupMenu initTkfPopupMenu() throws BaseException {
-        try {
-            //右键菜单栏面板
-            TiankafeiPopupMenu tiankafeiPopupMenu = new TiankafeiPopupMenu();
-            tiankafeiPopupMenu.setMenuList(popupMenuList);
-            TkfPopupMenu tkfPopupMenu = tiankafeiPopupMenu.initTiankafeiPopupMenu();
-            return tkfPopupMenu;
-        } catch (BaseException e) {
-            e.printStackTrace();
-            throw e;
-        }
+    public TkfPopupMenu initTkfPopupMenu() {
+        //右键菜单栏面板
+        TiankafeiPopupMenu tiankafeiPopupMenu = new TiankafeiPopupMenu();
+        tiankafeiPopupMenu.setMenuList(popupMenuList);
+        TkfPopupMenu tkfPopupMenu = tiankafeiPopupMenu.initTiankafeiPopupMenu();
+        return tkfPopupMenu;
     }
 
     public Map<String, AbstractTiankafeiReportAction> getTiankafeiReportActionMap() {

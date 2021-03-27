@@ -11,7 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.report.dto.TiankafeiReportDTO;
 import org.tiankafei.ui.report.panel.TiankafeiExcelPanel;
 
@@ -49,9 +49,8 @@ public class TiankafeiReportUtil {
      *
      * @param report 报表对象
      * @return 返回byte数组
-     * @throws BaseException 自定义异常
      */
-    public static byte[] getReportByteArray(Report report) throws BaseException {
+    public static byte[] getReportByteArray(Report report) {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             TemplateExporter templateExporter = new TemplateExporter(byteArrayOutputStream);
@@ -60,7 +59,7 @@ public class TiankafeiReportUtil {
             return byteArray;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("报表转换数据失败！");
         }
     }
 
@@ -69,9 +68,8 @@ public class TiankafeiReportUtil {
      *
      * @param byteArray byte数组
      * @return 报表对象
-     * @throws BaseException 自定义异常
      */
-    public static TiankafeiReportDTO getTiankafeiReportDTO(byte[] byteArray) throws BaseException {
+    public static TiankafeiReportDTO getTiankafeiReportDTO(byte[] byteArray) {
         try {
             String tiankafeiReportXml = new String(byteArray);
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(tiankafeiReportXml.getBytes("UTF-8"));
@@ -82,10 +80,10 @@ public class TiankafeiReportUtil {
             return tiankafeiReportDTO;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("不支持的编码！");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("数据转换失败！");
         }
     }
 

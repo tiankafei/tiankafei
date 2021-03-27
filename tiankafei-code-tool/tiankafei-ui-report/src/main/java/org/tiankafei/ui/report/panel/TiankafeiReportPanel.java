@@ -1,7 +1,6 @@
 package org.tiankafei.ui.report.panel;
 
 import java.awt.BorderLayout;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.modelsui.TkfPanel;
 import org.tiankafei.ui.design.modelsui.TkfToolBar;
 import org.tiankafei.ui.report.dto.TiankafeiReportDTO;
@@ -46,10 +45,8 @@ public class TiankafeiReportPanel extends TkfPanel {
 
     /**
      * 初始化报表面板
-     *
-     * @throws BaseException 自定义异常
      */
-    public void initComponent() throws BaseException {
+    public void initComponent() {
         this.setLayout(new BorderLayout());
         //加入excel面板
         this.add(tiankafeiExcelPanel, BorderLayout.CENTER);
