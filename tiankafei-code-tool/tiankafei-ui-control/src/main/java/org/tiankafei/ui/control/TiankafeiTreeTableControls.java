@@ -21,7 +21,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.control.tabletree.ITiankafeiTreeTableModel;
 import org.tiankafei.ui.control.tabletree.TiankafeiTreeTableModel;
 import org.tiankafei.ui.control.tabletree.TiankafeiTreeTableModelAdapter;
@@ -75,16 +75,15 @@ public class TiankafeiTreeTableControls extends JTable {
      *
      * @param tiankafeiTreeAttributeVO  自定义树属性对象
      * @param tiankafeiTableAttributeVO 自定义表格属性对象
-     * @throws BaseException 自定义异常
      */
-    public TiankafeiTreeTableControls(TiankafeiTreeAttributeVO tiankafeiTreeAttributeVO, TiankafeiTableAttributeVO tiankafeiTableAttributeVO) throws BaseException {
+    public TiankafeiTreeTableControls(TiankafeiTreeAttributeVO tiankafeiTreeAttributeVO, TiankafeiTableAttributeVO tiankafeiTableAttributeVO) {
         super();
         this.tiankafeiTreeAttributeVO = tiankafeiTreeAttributeVO;
         this.tiankafeiTableAttributeVO = tiankafeiTableAttributeVO;
         //验证控件参数是否足够使用返回的消息
         String message = checkControlsParam(tiankafeiTreeAttributeVO, tiankafeiTableAttributeVO);
         if (StringUtils.isNotEmpty(message)) {
-            throw new BaseException(message);
+            throw new CommonException(message);
         }
         tiankafeiTreeAttributeVO.setTreeRowHeight(tiankafeiTableAttributeVO.getTableRowHeight());
 

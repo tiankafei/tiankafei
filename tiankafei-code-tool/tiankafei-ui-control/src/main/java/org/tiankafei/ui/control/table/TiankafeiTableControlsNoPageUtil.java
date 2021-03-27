@@ -1,7 +1,7 @@
 package org.tiankafei.ui.control.table;
 
 import java.util.List;
-import org.tiankafei.base.dto.PaginatedDTO;
+import org.tiankafei.common.dto.PaginatedDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiTableControlsPageUtil;
 import org.tiankafei.ui.design.againsui.TiankafeiTable;
 import org.tiankafei.ui.design.models.TiankafeiTablePageVO;

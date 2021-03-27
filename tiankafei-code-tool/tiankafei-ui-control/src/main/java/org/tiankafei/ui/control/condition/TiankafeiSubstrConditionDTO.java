@@ -3,8 +3,8 @@ package org.tiankafei.ui.control.condition;
 import java.util.List;
 import javax.swing.JTextField;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 import org.tiankafei.ui.control.condition.actions.TiankafeiConditionTkfComboBoxAction;
 import org.tiankafei.ui.control.constants.TiankafeiConditionConstants;
@@ -35,7 +35,7 @@ public class TiankafeiSubstrConditionDTO extends AbstractTiankafeiConditionDTO {
     }
 
     @Override
-    public void handleTiankafeiCondition(TkfPanel conditionTkfPanel, int number, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO) throws BaseException {
+    public void handleTiankafeiCondition(TkfPanel conditionTkfPanel, int number, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO) {
         //先删除
         deleteTiankafeiCondition(conditionTkfPanel, number);
         //截取开始位置标签
@@ -111,9 +111,8 @@ public class TiankafeiSubstrConditionDTO extends AbstractTiankafeiConditionDTO {
         conditionTkfPanel.updateUI();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) throws BaseException {
+    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) {
         String message = null;
         JTextField beginIndexTextField = (JTextField) tempTkfPanel.getComponents()[number + 1];
         String beginIndexValue = beginIndexTextField.getText().trim();
@@ -122,7 +121,7 @@ public class TiankafeiSubstrConditionDTO extends AbstractTiankafeiConditionDTO {
             if (StringUtils.isNotEmpty(message)) {
                 StringBuffer errorBuffer = new StringBuffer();
                 errorBuffer.append(getInputErrorInfo(tiankafeiCustomConditionDTO)).append("操作中的第___位").append(message);
-                throw new BaseException(errorBuffer.toString());
+                throw new CommonException(errorBuffer.toString());
             }
             tiankafeiCustomConditionDTO.setBeginIndex(Integer.parseInt(beginIndexValue));
         }
@@ -134,7 +133,7 @@ public class TiankafeiSubstrConditionDTO extends AbstractTiankafeiConditionDTO {
             if (StringUtils.isNotEmpty(message)) {
                 StringBuffer errorBuffer = new StringBuffer();
                 errorBuffer.append(getInputErrorInfo(tiankafeiCustomConditionDTO)).append("操作中的取___位").append(message);
-                throw new BaseException(errorBuffer.toString());
+                throw new CommonException(errorBuffer.toString());
             }
             tiankafeiCustomConditionDTO.setNumberIndex(Integer.parseInt(endIndexValue));
         }

@@ -2,7 +2,6 @@ package org.tiankafei.ui.control;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.againsui.TiankafeiDialog;
 import org.tiankafei.ui.design.againsui.TiankafeiLabel;
 import org.tiankafei.ui.design.againsui.TiankafeiPanel;
@@ -72,10 +71,8 @@ public class TiankafeiProgressBarControls {
 
     /**
      * 初始化自定义进度条控件对象
-     *
-     * @throws BaseException 自定义异常
      */
-    public void initTiankafeiProgressBarControls() throws BaseException {
+    public void initTiankafeiProgressBarControls() {
         TiankafeiDialog tiankafeiDialog = new TiankafeiDialog();
         tiankafeiDialog.setWidth(controlsWidth);
         tiankafeiDialog.setHeight(controlsHeight);

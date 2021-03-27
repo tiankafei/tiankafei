@@ -2,7 +2,7 @@ package org.tiankafei.ui.control.table.actions;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
-import org.tiankafei.base.dto.PaginatedDTO;
+import org.tiankafei.common.dto.PaginatedDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiTableControlsPageUtil;
 import org.tiankafei.ui.design.abstractinterface.AbstractTiankafeiActionListener;
 import org.tiankafei.ui.design.againsui.TiankafeiTable;

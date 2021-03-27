@@ -1,6 +1,6 @@
 package org.tiankafei.ui.control.choose;
 
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.control.choose.actions.TiankafeiChooseAction;
 import org.tiankafei.ui.control.choose.actions.TiankafeiChooseAllAction;
 import org.tiankafei.ui.control.choose.actions.TiankafeiChooseBottomAction;
@@ -18,8 +18,7 @@ import org.tiankafei.ui.design.modelsui.TkfList;
  */
 public class TiankafeiChooseFactory {
 
-    @SuppressWarnings("rawtypes")
-    public static AbstractTiankafeiChooseAction getAbstractTiankafeiChooseAction(String text, TkfList leftTkfList, TkfList rightTkfList) throws BaseException {
+    public static AbstractTiankafeiChooseAction getAbstractTiankafeiChooseAction(String text, TkfList leftTkfList, TkfList rightTkfList) {
         AbstractTiankafeiChooseAction abstractTiankafeiChooseAction = null;
         if (TiankafeiChooseConstants.CHOOSE.equals(text)) {
             abstractTiankafeiChooseAction = new TiankafeiChooseAction(leftTkfList, rightTkfList);
@@ -38,7 +37,7 @@ public class TiankafeiChooseFactory {
         } else if (TiankafeiChooseConstants.CHOOSE_BOTTOM.equals(text)) {
             abstractTiankafeiChooseAction = new TiankafeiChooseBottomAction(leftTkfList, rightTkfList);
         } else {
-            throw new BaseException("不支持传入的参数对于的事件，请确认！");
+            throw new CommonException("不支持传入的参数对应的事件，请确认！");
         }
         return abstractTiankafeiChooseAction;
     }

@@ -1,7 +1,6 @@
 package org.tiankafei.ui.control.condition;
 
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 import org.tiankafei.ui.control.constants.TiankafeiConditionConstants;
 import org.tiankafei.ui.control.dto.TiankafeiCustomConditionDTO;
@@ -30,7 +29,7 @@ public class TiankafeiNoNullConditionDTO extends AbstractTiankafeiConditionDTO {
     }
 
     @Override
-    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) throws BaseException {
+    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) {
         //非空不需要赋值
         return null;
     }

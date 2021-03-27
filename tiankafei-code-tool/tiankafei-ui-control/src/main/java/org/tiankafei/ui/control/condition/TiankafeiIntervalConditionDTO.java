@@ -2,8 +2,7 @@ package org.tiankafei.ui.control.condition;
 
 import java.util.List;
 import javax.swing.JTextField;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 import org.tiankafei.ui.control.constants.TiankafeiConditionConstants;
 import org.tiankafei.ui.control.dto.TiankafeiCustomConditionDTO;
@@ -30,7 +29,7 @@ public class TiankafeiIntervalConditionDTO extends AbstractTiankafeiConditionDTO
     }
 
     @Override
-    public void handleTiankafeiCondition(TkfPanel conditionTkfPanel, int number, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO) throws BaseException {
+    public void handleTiankafeiCondition(TkfPanel conditionTkfPanel, int number, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO) {
         //先删除
         deleteTiankafeiCondition(conditionTkfPanel, number);
         //区间前标签
@@ -70,7 +69,7 @@ public class TiankafeiIntervalConditionDTO extends AbstractTiankafeiConditionDTO
     }
 
     @Override
-    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) throws BaseException {
+    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) {
         JTextField beginValueTextField = (JTextField) tempTkfPanel.getComponents()[number + 1];
         tiankafeiCustomConditionDTO.setBeginValue(beginValueTextField.getText().trim());
 

@@ -6,8 +6,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.List;
 import java.util.Vector;
-import org.tiankafei.base.dto.PaginatedDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.PaginatedDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiTableControlsPageUtil;
 import org.tiankafei.ui.control.table.actions.TiankafeiTableControlsFirstPageAction;
 import org.tiankafei.ui.control.table.actions.TiankafeiTableControlsJumpPageAction;
@@ -48,7 +47,7 @@ public class TiankafeiTableControlsPageUtil extends AbstractTiankafeiTableContro
     private TiankafeiButton firstTiankafeiButton, previousTiankafeiButton, nextTiankafeiButton, lastTiankafeiButton;
 
     @Override
-    public void initTiankafeiTablePagePanel(TiankafeiTablePageVO tiankafeiTablePageVO, TkfPanel pageTkfPanel, List<TiankafeiTable> tiankafeiTableList) throws BaseException {
+    public void initTiankafeiTablePagePanel(TiankafeiTablePageVO tiankafeiTablePageVO, TkfPanel pageTkfPanel, List<TiankafeiTable> tiankafeiTableList) {
         //初始化中间分页按钮面板
         TkfPanel pageButtonTkfPanel = initPageButtonTiankafeiPanel(tiankafeiTablePageVO, tiankafeiTableList);
         pageTkfPanel.add(pageButtonTkfPanel, BorderLayout.CENTER);
@@ -97,40 +96,36 @@ public class TiankafeiTableControlsPageUtil extends AbstractTiankafeiTableContro
             }
         }
 
-        try {
-            if (currentPage == 1) {
-                firstTiankafeiButton.setEnabled(false);
-                previousTiankafeiButton.setEnabled(false);
+        if (currentPage == 1) {
+            firstTiankafeiButton.setEnabled(false);
+            previousTiankafeiButton.setEnabled(false);
 
-                nextTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableNextButtonIconPath());
-                nextTiankafeiButton.setImageIcon();
+            nextTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableNextButtonIconPath());
+            nextTiankafeiButton.setImageIcon();
 
-                lastTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableLastButtonIconPath());
-                lastTiankafeiButton.setImageIcon();
-            } else if (currentPage == pageCount) {
-                firstTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableFirstButtonIconPath());
-                firstTiankafeiButton.setImageIcon();
+            lastTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableLastButtonIconPath());
+            lastTiankafeiButton.setImageIcon();
+        } else if (currentPage == pageCount) {
+            firstTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableFirstButtonIconPath());
+            firstTiankafeiButton.setImageIcon();
 
-                previousTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTablePreviousButtonIconPath());
-                previousTiankafeiButton.setImageIcon();
+            previousTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTablePreviousButtonIconPath());
+            previousTiankafeiButton.setImageIcon();
 
-                nextTiankafeiButton.setEnabled(false);
-                lastTiankafeiButton.setEnabled(false);
-            } else {
-                firstTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableFirstButtonIconPath());
-                firstTiankafeiButton.setImageIcon();
+            nextTiankafeiButton.setEnabled(false);
+            lastTiankafeiButton.setEnabled(false);
+        } else {
+            firstTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableFirstButtonIconPath());
+            firstTiankafeiButton.setImageIcon();
 
-                previousTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTablePreviousButtonIconPath());
-                previousTiankafeiButton.setImageIcon();
+            previousTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTablePreviousButtonIconPath());
+            previousTiankafeiButton.setImageIcon();
 
-                nextTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableNextButtonIconPath());
-                nextTiankafeiButton.setImageIcon();
+            nextTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableNextButtonIconPath());
+            nextTiankafeiButton.setImageIcon();
 
-                lastTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableLastButtonIconPath());
-                lastTiankafeiButton.setImageIcon();
-            }
-        } catch (BaseException e) {
-            e.printStackTrace();
+            lastTiankafeiButton.setIconFilePath(tiankafeiTablePageVO.getTableLastButtonIconPath());
+            lastTiankafeiButton.setImageIcon();
         }
     }
 
@@ -157,9 +152,8 @@ public class TiankafeiTableControlsPageUtil extends AbstractTiankafeiTableContro
      *
      * @param tiankafeiTablePageVO 自定义表格分页对象
      * @return 分页按钮面板
-     * @throws BaseException
      */
-    private TkfPanel initPageButtonTiankafeiPanel(TiankafeiTablePageVO tiankafeiTablePageVO, List<TiankafeiTable> tiankafeiTableList) throws BaseException {
+    private TkfPanel initPageButtonTiankafeiPanel(TiankafeiTablePageVO tiankafeiTablePageVO, List<TiankafeiTable> tiankafeiTableList) {
         PaginatedDTO tablePaginatedDTO = tiankafeiTablePageVO.getTablePaginatedDTO();
 
         TiankafeiPanel pageButtonTiankafeiPanel = new TiankafeiPanel();
@@ -234,9 +228,8 @@ public class TiankafeiTableControlsPageUtil extends AbstractTiankafeiTableContro
      *
      * @param tiankafeiTablePageVO 表格分页对象
      * @return 分页跳转面板
-     * @throws BaseException
      */
-    private TkfPanel initPageJumpTiankafeiPanel(TiankafeiTablePageVO tiankafeiTablePageVO, List<TiankafeiTable> tiankafeiTableList) throws BaseException {
+    private TkfPanel initPageJumpTiankafeiPanel(TiankafeiTablePageVO tiankafeiTablePageVO, List<TiankafeiTable> tiankafeiTableList) {
         PaginatedDTO tablePaginatedDTO = tiankafeiTablePageVO.getTablePaginatedDTO();
 
         TiankafeiPanel pageJumpTiankafeiPanel = new TiankafeiPanel();

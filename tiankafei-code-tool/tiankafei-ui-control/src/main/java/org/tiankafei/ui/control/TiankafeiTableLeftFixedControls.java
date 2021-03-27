@@ -7,8 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.DataStreamUtil;
+import org.tiankafei.common.util.DataStreamUtil;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiTableControlsPageUtil;
 import org.tiankafei.ui.design.againsui.TiankafeiPanel;
 import org.tiankafei.ui.design.againsui.TiankafeiScrollPane;
@@ -68,9 +67,8 @@ public class TiankafeiTableLeftFixedControls extends TiankafeiDesignerVO {
      * 初始化放置表格对象的面板
      *
      * @return 放置表格对象的面板
-     * @throws BaseException 自定义异常
      */
-    public TkfPanel initTiankafeiTablePanel() throws BaseException {
+    public TkfPanel initTiankafeiTablePanel() {
         AbstractTiankafeiTableControlsPageUtil abstractTiankafeiTableControlsPageUtil = TiankafeiControlsUiFactory.getAbstractTiankafeiTableControlsPageUtil(tiankafeiTableAttributeVO.isTablePageFlag());
         //表格集合新增对象
         List<TiankafeiTable> tiankafeiTableList = Lists.newArrayList();

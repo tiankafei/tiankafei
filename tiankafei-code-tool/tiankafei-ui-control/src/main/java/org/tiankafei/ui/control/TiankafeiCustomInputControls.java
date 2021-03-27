@@ -15,7 +15,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.againsui.TiankafeiDialog;
 import org.tiankafei.ui.design.againsui.TiankafeiFrame;
 import org.tiankafei.ui.design.againsui.TiankafeiLabel;
@@ -50,7 +49,7 @@ public class TiankafeiCustomInputControls {
 
     private TiankafeiCustomInputVO tiankafeiCustomInputVO;
 
-    public TiankafeiCustomInputControls(TiankafeiFrame tiankafeiFrame) throws BaseException {
+    public TiankafeiCustomInputControls(TiankafeiFrame tiankafeiFrame) {
         this.tiankafeiFrame = tiankafeiFrame;
         tiankafeiCustomInputVO = new TiankafeiCustomInputVO();
 
@@ -98,7 +97,7 @@ public class TiankafeiCustomInputControls {
         });
     }
 
-    public TkfPanel initTiankafeiCustomInputControls() throws BaseException {
+    public TkfPanel initTiankafeiCustomInputControls() {
         TiankafeiPanel tiankafeiPanel = new TiankafeiPanel();
         tiankafeiPanel.setWidth(tiankafeiCustomInputVO.getCustomInputWidth() + tiankafeiCustomInputVO.getIconInputWidth());
         tiankafeiPanel.setHeight(tiankafeiCustomInputVO.getCustonInputHeight());

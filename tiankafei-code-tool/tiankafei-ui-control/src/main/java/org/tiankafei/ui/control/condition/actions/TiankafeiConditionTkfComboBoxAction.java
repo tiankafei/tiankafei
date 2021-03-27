@@ -1,7 +1,6 @@
 package org.tiankafei.ui.control.condition.actions;
 
 import java.awt.event.ItemEvent;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 import org.tiankafei.ui.control.dto.TiankafeiCustomConditionDTO;
 import org.tiankafei.ui.design.abstractinterface.AbstractTiankafeiItemAction;
@@ -45,14 +44,10 @@ public class TiankafeiConditionTkfComboBoxAction extends AbstractTiankafeiItemAc
 
     @Override
     public void handleItemStateChanged(ItemEvent e) {
-        try {
-            AbstractTiankafeiConditionDTO abstractTiankafeiConditionDTO = (AbstractTiankafeiConditionDTO) tiankafeiConditionTkfComboBox.getSelectedItem();
-            TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO = (TiankafeiCustomConditionDTO) tiankafeiConditionTkfComboBox.getTiankafeiModelUiVO().getParamObject();
-            //处理自定义过滤条件
-            abstractTiankafeiConditionDTO.handleTiankafeiCondition(conditionTkfPanel, number, tiankafeiCustomConditionDTO);
-        } catch (BaseException e1) {
-            e1.printStackTrace();
-        }
+        AbstractTiankafeiConditionDTO abstractTiankafeiConditionDTO = (AbstractTiankafeiConditionDTO) tiankafeiConditionTkfComboBox.getSelectedItem();
+        TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO = (TiankafeiCustomConditionDTO) tiankafeiConditionTkfComboBox.getTiankafeiModelUiVO().getParamObject();
+        //处理自定义过滤条件
+        abstractTiankafeiConditionDTO.handleTiankafeiCondition(conditionTkfPanel, number, tiankafeiCustomConditionDTO);
     }
 
 }

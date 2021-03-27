@@ -14,8 +14,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiHandleConditionDTO;
 import org.tiankafei.ui.control.condition.actions.TiankafeiAddConditionAction;
@@ -79,9 +79,8 @@ public class TiankafeiConditionControls {
      * @param frameWidth 控件宽度
      * @param tiankafeiAssembleConditionDTO        对象
      * @return 自定义过滤条件面板
-     * @throws BaseException 自定义异常
      */
-    public TkfPanel initTiankafeiConditionPanle(int frameWidth, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) throws BaseException {
+    public TkfPanel initTiankafeiConditionPanle(int frameWidth, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) {
         int controlsWidth = frameWidth - 50;
 
         TiankafeiPanel tiankafeiContentPanel = new TiankafeiPanel();
@@ -155,9 +154,8 @@ public class TiankafeiConditionControls {
      * @param deleteFlag                    删除标示
      * @param tiankafeiAssembleConditionDTO 自定义条件对象
      * @return 区域大面板
-     * @throws BaseException 自定义异常
      */
-    public TkfPanel initTiankafeiPanel(int width, int paramCode, boolean deleteFlag, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) throws BaseException {
+    public TkfPanel initTiankafeiPanel(int width, int paramCode, boolean deleteFlag, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) {
         TiankafeiPanel tiankafeiPanel = new TiankafeiPanel();
         int number = 2;
         if (paramCode % number == 1) {
@@ -183,9 +181,8 @@ public class TiankafeiConditionControls {
      * @param deleteFlag                    删除标示
      * @param tiankafeiAssembleConditionDTO 自定义条件对象
      * @return 操作按钮面板
-     * @throws BaseException 自定义异常
      */
-    private TkfPanel initHandleButtonPanel(int paramCode, int width, TkfPanel tkfPanel, boolean deleteFlag, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) throws BaseException {
+    private TkfPanel initHandleButtonPanel(int paramCode, int width, TkfPanel tkfPanel, boolean deleteFlag, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) {
         TiankafeiPanel handleButtonTiankafeiPanel = new TiankafeiPanel();
         handleButtonTiankafeiPanel.setWidth(width);
         handleButtonTiankafeiPanel.setHeight(tiankafeiConditionDTO.getControlsPanelHeight());
@@ -248,9 +245,8 @@ public class TiankafeiConditionControls {
      * @param backgroundColor             背景色
      * @param tiankafeiCustomConditionDTO 自定义条件对象
      * @return 条件面板
-     * @throws BaseException 自定义异常
      */
-    public TkfPanel initConditionPanel(int width, int paramCode, Color backgroundColor, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO) throws BaseException {
+    public TkfPanel initConditionPanel(int width, int paramCode, Color backgroundColor, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO) {
         int indentationWidth = tiankafeiConditionDTO.getIndentationWidth() * paramCode;
 
         TiankafeiPanel conditionTiankafeiPanel = new TiankafeiPanel();
@@ -363,16 +359,11 @@ public class TiankafeiConditionControls {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO = getCondition();
-                SqlParamDTO sqlParamDTO = tiankafeiAssembleConditionDTO.getSqlParamDTO();
-                System.out.println(sqlParamDTO.getSql());
-                System.out.println(sqlParamDTO.getParamList());
-                System.out.println(JSON.toJSONString(tiankafeiAssembleConditionDTO, SerializerFeature.DisableCircularReferenceDetect));
-            } catch (BaseException e1) {
-                e1.printStackTrace();
-                JOptionPane.showMessageDialog(null, e1.getMessage());
-            }
+            TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO = getCondition();
+            SqlParamDTO sqlParamDTO = tiankafeiAssembleConditionDTO.getSqlParamDTO();
+            System.out.println(sqlParamDTO.getSql());
+            System.out.println(sqlParamDTO.getParamList());
+            System.out.println(JSON.toJSONString(tiankafeiAssembleConditionDTO, SerializerFeature.DisableCircularReferenceDetect));
         }
     }
 
@@ -405,9 +396,8 @@ public class TiankafeiConditionControls {
      * 获取自定义条件
      *
      * @return 自定义组合条件对象
-     * @throws BaseException 自定义异常
      */
-    public TiankafeiAssembleConditionDTO getCondition() throws BaseException {
+    public TiankafeiAssembleConditionDTO getCondition() {
         TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO = new TiankafeiAssembleConditionDTO();
         //设置自定义条件值
         setConditionValue(tkfPanel, tiankafeiAssembleConditionDTO);
@@ -463,10 +453,8 @@ public class TiankafeiConditionControls {
      *
      * @param tkfPanel                      自定义条件面板
      * @param tiankafeiAssembleConditionDTO 自定义组合条件对象
-     * @throws BaseException
      */
-    @SuppressWarnings("unchecked")
-    private void setConditionValue(TkfPanel tkfPanel, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) throws BaseException {
+    private void setConditionValue(TkfPanel tkfPanel, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) {
         //获取自定义条件集合
         List<TiankafeiCustomConditionDTO> tiankafeiCustomConditionList = tiankafeiAssembleConditionDTO.getTiankafeiCustomConditionList();
         //自定义组合条件对象集合
@@ -496,7 +484,7 @@ public class TiankafeiConditionControls {
                 //设置值
                 String message = abstractTiankafeiConditionDTO.setAbstractTiankafeiConditionValue(tempTkfPanel, tiankafeiCustomConditionDTO, 3);
                 if (StringUtils.isNotEmpty(message)) {
-                    throw new BaseException(message);
+                    throw new CommonException(message);
                 }
                 //设置SQL
                 SqlParamDTO sqlParamDTO = abstractTiankafeiConditionDTO.getAbstractTiankafeiConditionSql(tiankafeiCustomConditionDTO);
@@ -611,30 +599,26 @@ public class TiankafeiConditionControls {
      * @param tiankafeiAssembleConditionDTO 自定义组合条件对象
      */
     public void initAddGroupPanel(TkfPanel tkfPanel, int width, TiankafeiAssembleConditionDTO tiankafeiAssembleConditionDTO) {
-        try {
-            String paramCode = tkfPanel.getTiankafeiModelUiVO().getParamCode();
-            int newParamCode = Integer.parseInt(paramCode) + 1;
-            //自定义过滤条件属性对象
-            TiankafeiConditionDTO tiankafeiConditionDTO = getTiankafeiConditionDTO();
-            int needAddHeight = tiankafeiConditionDTO.getControlsPanelHeight();
-            //面板当前的宽度和高度
-            Dimension dimension = tkfPanel.getPreferredSize();
-            int controlsWidth = (int) dimension.getWidth();
-            int controlsHeight = (int) dimension.getHeight();
-            //设置当前面板的宽度和高度
-            tkfPanel.setPreferredSize(new Dimension(controlsWidth, controlsHeight + needAddHeight));
-            //设置父面板高度
-            setParentPanelHeight(tkfPanel, needAddHeight, true);
-            //加入面板，当前面板的面板数量
-            Component[] components = tkfPanel.getComponents();
-            //初始化条件面板
-            TkfPanel conditionTkfPanel = initTiankafeiPanel(width - tiankafeiConditionDTO.getIndentationWidth(), newParamCode, true, tiankafeiAssembleConditionDTO);
-            tkfPanel.add(conditionTkfPanel, components.length - 1);
-            //更新面板
-            tkfPanel.updateUI();
-        } catch (BaseException e1) {
-            e1.printStackTrace();
-        }
+        String paramCode = tkfPanel.getTiankafeiModelUiVO().getParamCode();
+        int newParamCode = Integer.parseInt(paramCode) + 1;
+        //自定义过滤条件属性对象
+        TiankafeiConditionDTO tiankafeiConditionDTO = getTiankafeiConditionDTO();
+        int needAddHeight = tiankafeiConditionDTO.getControlsPanelHeight();
+        //面板当前的宽度和高度
+        Dimension dimension = tkfPanel.getPreferredSize();
+        int controlsWidth = (int) dimension.getWidth();
+        int controlsHeight = (int) dimension.getHeight();
+        //设置当前面板的宽度和高度
+        tkfPanel.setPreferredSize(new Dimension(controlsWidth, controlsHeight + needAddHeight));
+        //设置父面板高度
+        setParentPanelHeight(tkfPanel, needAddHeight, true);
+        //加入面板，当前面板的面板数量
+        Component[] components = tkfPanel.getComponents();
+        //初始化条件面板
+        TkfPanel conditionTkfPanel = initTiankafeiPanel(width - tiankafeiConditionDTO.getIndentationWidth(), newParamCode, true, tiankafeiAssembleConditionDTO);
+        tkfPanel.add(conditionTkfPanel, components.length - 1);
+        //更新面板
+        tkfPanel.updateUI();
     }
 
     /**
@@ -670,29 +654,25 @@ public class TiankafeiConditionControls {
      * @param tiankafeiCustomConditionDTO 自定义条件对象
      */
     public void initAddConditionPanel(TkfPanel tkfPanel, int width, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO) {
-        try {
-            //自定义过滤条件属性对象
-            TiankafeiConditionDTO tiankafeiConditionDTO = getTiankafeiConditionDTO();
-            int needAddHeight = tiankafeiConditionDTO.getControlsPanelHeight();
-            int paramCode = Integer.valueOf(tkfPanel.getTiankafeiModelUiVO().getParamCode());
-            //面板当前的宽度和高度
-            Dimension dimension = tkfPanel.getPreferredSize();
-            int controlsWidth = (int) dimension.getWidth();
-            int controlsHeight = (int) dimension.getHeight();
-            //设置当前面板的宽度和高度
-            tkfPanel.setPreferredSize(new Dimension(controlsWidth, controlsHeight + needAddHeight));
-            //设置父面板高度
-            setParentPanelHeight(tkfPanel, needAddHeight, true);
-            //当前面板的面板数量
-            Component[] components = tkfPanel.getComponents();
-            //初始化条件面板
-            TkfPanel conditionTkfPanel = initConditionPanel(width, paramCode, tkfPanel.getBackground(), tiankafeiCustomConditionDTO);
-            tkfPanel.add(conditionTkfPanel, components.length - 1);
-            //更新面板
-            tkfPanel.updateUI();
-        } catch (BaseException e1) {
-            e1.printStackTrace();
-        }
+        //自定义过滤条件属性对象
+        TiankafeiConditionDTO tiankafeiConditionDTO = getTiankafeiConditionDTO();
+        int needAddHeight = tiankafeiConditionDTO.getControlsPanelHeight();
+        int paramCode = Integer.valueOf(tkfPanel.getTiankafeiModelUiVO().getParamCode());
+        //面板当前的宽度和高度
+        Dimension dimension = tkfPanel.getPreferredSize();
+        int controlsWidth = (int) dimension.getWidth();
+        int controlsHeight = (int) dimension.getHeight();
+        //设置当前面板的宽度和高度
+        tkfPanel.setPreferredSize(new Dimension(controlsWidth, controlsHeight + needAddHeight));
+        //设置父面板高度
+        setParentPanelHeight(tkfPanel, needAddHeight, true);
+        //当前面板的面板数量
+        Component[] components = tkfPanel.getComponents();
+        //初始化条件面板
+        TkfPanel conditionTkfPanel = initConditionPanel(width, paramCode, tkfPanel.getBackground(), tiankafeiCustomConditionDTO);
+        tkfPanel.add(conditionTkfPanel, components.length - 1);
+        //更新面板
+        tkfPanel.updateUI();
     }
 
     /**

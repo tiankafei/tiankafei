@@ -2,10 +2,9 @@ package org.tiankafei.ui.control.util;
 
 import java.sql.Timestamp;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.datetime.DateTimeUtil;
-import org.tiankafei.base.enums.DateTimeEnum;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.ValidatorUtil;
+import org.tiankafei.common.datetime.DateTimeUtil;
+import org.tiankafei.common.enums.DateTimeEnum;
+import org.tiankafei.common.util.ValidatorUtil;
 
 /**
  * 公共校验处理类
@@ -580,9 +579,8 @@ public class CommonCheckUtil {
      * @param flag        为true校验的是大于等于，为false校验是大于
      * @param viewTitle   错误显示头部信息
      * @return 返回验证信息
-     * @throws BaseException 自定义异常
      */
-    public static String checkDateTimeBig(String firstValue, String secondValue, boolean flag, String viewTitle) throws BaseException {
+    public static String checkDateTimeBig(String firstValue, String secondValue, boolean flag, String viewTitle) {
         firstValue = StringUtils.trim(firstValue);
         secondValue = StringUtils.trim(secondValue);
         StringBuffer message = new StringBuffer();
@@ -616,9 +614,8 @@ public class CommonCheckUtil {
      * @param flag        为true校验的是小于等于，为false校验是小于
      * @param viewTitle   错误显示头部信息
      * @return 返回验证信息
-     * @throws BaseException 自定义异常
      */
-    public static String checkDateTimeSmall(String firstValue, String secondValue, boolean flag, String viewTitle) throws BaseException {
+    public static String checkDateTimeSmall(String firstValue, String secondValue, boolean flag, String viewTitle) {
         firstValue = StringUtils.trim(firstValue);
         secondValue = StringUtils.trim(secondValue);
         StringBuffer message = new StringBuffer();
@@ -651,9 +648,8 @@ public class CommonCheckUtil {
      * @param dateTimeValue 传入的时间
      * @param viewTitle     错误显示头部信息
      * @return 返回验证信息
-     * @throws BaseException 自定义异常
      */
-    public static String checkBigCurrentTime(Timestamp timestamp, String dateTimeValue, String viewTitle) throws BaseException {
+    public static String checkBigCurrentTime(Timestamp timestamp, String dateTimeValue, String viewTitle) {
         dateTimeValue = StringUtils.trim(dateTimeValue);
         StringBuffer message = new StringBuffer();
 
@@ -674,9 +670,8 @@ public class CommonCheckUtil {
      * @param dateTimeValue 传入的时间
      * @param viewTitle     错误显示头部信息
      * @return 返回验证信息
-     * @throws BaseException 自定义异常
      */
-    public static String checkSmallCurrentTime(Timestamp timestamp, String dateTimeValue, String viewTitle) throws BaseException {
+    public static String checkSmallCurrentTime(Timestamp timestamp, String dateTimeValue, String viewTitle) {
         dateTimeValue = StringUtils.trim(dateTimeValue);
         StringBuffer message = new StringBuffer();
 

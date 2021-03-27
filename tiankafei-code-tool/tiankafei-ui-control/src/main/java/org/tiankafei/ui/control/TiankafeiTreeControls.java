@@ -11,8 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.UuidUtil;
+import org.tiankafei.common.util.UuidUtil;
 import org.tiankafei.ui.design.abstractinterface.AbstractTiankafeiAction;
 import org.tiankafei.ui.design.abstractinterface.AbstractTiankafeiMouseAction;
 import org.tiankafei.ui.design.againsui.TiankafeiPopupMenu;
@@ -114,9 +113,8 @@ public class TiankafeiTreeControls {
      * 初始化树控件面板
      *
      * @return 树控件面板
-     * @throws BaseException 自定义异常
      */
-    public TkfScrollPane initTiankafeiTreeControls() throws BaseException {
+    public TkfScrollPane initTiankafeiTreeControls() {
         tiankafeiPopupMenu.setMenuList(menuList);
         tiankafeiPopupMenu.setMenuItemList(menuItemList);
         //设置树对象属性
@@ -153,9 +151,8 @@ public class TiankafeiTreeControls {
      * 设置右键菜单
      *
      * @param treeMoveFlag 树节点移动标识
-     * @throws BaseException 自定义异常
      */
-    public void setRightMenu(boolean treeMoveFlag) throws BaseException {
+    public void setRightMenu(boolean treeMoveFlag) {
         if (treeMoveFlag) {
             //初始化移动的菜单事件
             initMenuItemAction();
@@ -229,8 +226,6 @@ public class TiankafeiTreeControls {
 
     /**
      * 初始化移动的菜单事件
-     *
-     * @throws BaseException
      */
     private void initMenuItemAction() {
         MenuItemVO moveTopMenuItemVO = new MenuItemVO();
