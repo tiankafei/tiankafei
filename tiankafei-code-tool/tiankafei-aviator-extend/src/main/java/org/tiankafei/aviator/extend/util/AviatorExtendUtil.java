@@ -27,7 +27,7 @@ import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.util.JdkSpiUtil;
+import org.tiankafei.common.util.JdkSpiUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;

@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Set;
 import javax.swing.JOptionPane;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.tio.client.ClientStarter;
 import org.tiankafei.tio.common.TioConstants;
 import org.tiankafei.ui.design.againsui.TiankafeiButton;
@@ -46,74 +45,70 @@ public class TestTioCenterFrame {
     }
 
     protected void initFrame() {
-        try {
-            TiankafeiFrame tiankafeiFrame = new TiankafeiFrame();
-            tiankafeiFrame.setWidth(800);
-            tiankafeiFrame.setHeight(600);
-            tiankafeiFrame.setTitle("测试自定义窗体");
-            tiankafeiFrame.initTiankafeiFrame();
+        TiankafeiFrame tiankafeiFrame = new TiankafeiFrame();
+        tiankafeiFrame.setWidth(800);
+        tiankafeiFrame.setHeight(600);
+        tiankafeiFrame.setTitle("测试自定义窗体");
+        tiankafeiFrame.initTiankafeiFrame();
 
-            TkfPanel contentTkfPanel = tiankafeiFrame.getContentTkfPanel();
-            contentTkfPanel.setLayout(new BorderLayout());
+        TkfPanel contentTkfPanel = tiankafeiFrame.getContentTkfPanel();
+        contentTkfPanel.setLayout(new BorderLayout());
 
-            TiankafeiPanel tiankafeiTextPanel = new TiankafeiPanel();
-            TkfPanel tkfTextPanel = tiankafeiTextPanel.initTiankafeiPanel();
-            tkfTextPanel.setLayout(new GridLayout(1, 2));
-            contentTkfPanel.add(tkfTextPanel, BorderLayout.CENTER);
+        TiankafeiPanel tiankafeiTextPanel = new TiankafeiPanel();
+        TkfPanel tkfTextPanel = tiankafeiTextPanel.initTiankafeiPanel();
+        tkfTextPanel.setLayout(new GridLayout(1, 2));
+        contentTkfPanel.add(tkfTextPanel, BorderLayout.CENTER);
 
-            TiankafeiTextArea tiankafeiClentTextArea = new TiankafeiTextArea();
-            tkfClientTextArea = tiankafeiClentTextArea.initTiankafeiTextArea();
-            TiankafeiScrollPane tiankafeiClientScrollPane = new TiankafeiScrollPane(tkfClientTextArea);
-            tiankafeiClientScrollPane.setTitle("客户端(中心节点)消息");
-            TkfScrollPane tkfClientScrollPane = tiankafeiClientScrollPane.initTiankafeiScrollPane();
-            tkfTextPanel.add(tkfClientScrollPane);
+        TiankafeiTextArea tiankafeiClentTextArea = new TiankafeiTextArea();
+        tkfClientTextArea = tiankafeiClentTextArea.initTiankafeiTextArea();
+        TiankafeiScrollPane tiankafeiClientScrollPane = new TiankafeiScrollPane(tkfClientTextArea);
+        tiankafeiClientScrollPane.setTitle("客户端(中心节点)消息");
+        TkfScrollPane tkfClientScrollPane = tiankafeiClientScrollPane.initTiankafeiScrollPane();
+        tkfTextPanel.add(tkfClientScrollPane);
 
-            TiankafeiTextArea tiankafeiServerTextArea = new TiankafeiTextArea();
-            tkfServerTextArea = tiankafeiServerTextArea.initTiankafeiTextArea();
-            TiankafeiScrollPane tiankafeiServerScrollPane = new TiankafeiScrollPane(tkfServerTextArea);
-            tiankafeiServerScrollPane.setTitle("服务器端(节点)消息");
-            TkfScrollPane tkfServerScrollPane = tiankafeiServerScrollPane.initTiankafeiScrollPane();
-            tkfTextPanel.add(tkfServerScrollPane);
+        TiankafeiTextArea tiankafeiServerTextArea = new TiankafeiTextArea();
+        tkfServerTextArea = tiankafeiServerTextArea.initTiankafeiTextArea();
+        TiankafeiScrollPane tiankafeiServerScrollPane = new TiankafeiScrollPane(tkfServerTextArea);
+        tiankafeiServerScrollPane.setTitle("服务器端(节点)消息");
+        TkfScrollPane tkfServerScrollPane = tiankafeiServerScrollPane.initTiankafeiScrollPane();
+        tkfTextPanel.add(tkfServerScrollPane);
 
-            TiankafeiPanel tiankafeiButtonPanel = new TiankafeiPanel();
-            TkfPanel tkfButtonPanel = tiankafeiButtonPanel.initTiankafeiPanel();
-            tkfButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-            contentTkfPanel.add(tkfButtonPanel, BorderLayout.SOUTH);
+        TiankafeiPanel tiankafeiButtonPanel = new TiankafeiPanel();
+        TkfPanel tkfButtonPanel = tiankafeiButtonPanel.initTiankafeiPanel();
+        tkfButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        contentTkfPanel.add(tkfButtonPanel, BorderLayout.SOUTH);
 
-            TiankafeiButton tiankafeiClearButton = new TiankafeiButton();
-            tiankafeiClearButton.setText("清空");
-            TkfButton tkfClearButton = tiankafeiClearButton.initTiankafeiButton();
-            tkfButtonPanel.add(tkfClearButton);
-            tkfClearButton.addActionListener(new ClearActionListener());
+        TiankafeiButton tiankafeiClearButton = new TiankafeiButton();
+        tiankafeiClearButton.setText("清空");
+        TkfButton tkfClearButton = tiankafeiClearButton.initTiankafeiButton();
+        tkfButtonPanel.add(tkfClearButton);
+        tkfClearButton.addActionListener(new ClearActionListener());
 
-            TiankafeiPanel tiankafeiOperatePanel = new TiankafeiPanel();
-            TkfPanel tkfOperatePanel = tiankafeiOperatePanel.initTiankafeiPanel();
-            tkfOperatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-            contentTkfPanel.add(tkfOperatePanel, BorderLayout.NORTH);
+        TiankafeiPanel tiankafeiOperatePanel = new TiankafeiPanel();
+        TkfPanel tkfOperatePanel = tiankafeiOperatePanel.initTiankafeiPanel();
+        tkfOperatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        contentTkfPanel.add(tkfOperatePanel, BorderLayout.NORTH);
 
-            TiankafeiButton tiankafeiStartButton = new TiankafeiButton();
-            tiankafeiStartButton.setText("启动中心节点");
-            TkfButton tkfStartButton = tiankafeiStartButton.initTiankafeiButton();
-            tkfOperatePanel.add(tkfStartButton);
-            tkfStartButton.addActionListener(new StartCenterActionListener());
+        TiankafeiButton tiankafeiStartButton = new TiankafeiButton();
+        tiankafeiStartButton.setText("启动中心节点");
+        TkfButton tkfStartButton = tiankafeiStartButton.initTiankafeiButton();
+        tkfOperatePanel.add(tkfStartButton);
+        tkfStartButton.addActionListener(new StartCenterActionListener());
 
-            TiankafeiLabel tiankafeiPortLabel = new TiankafeiLabel();
-            tiankafeiPortLabel.setText("选择要发送数据的端口");
-            TkfLabel tkfPortLabel = tiankafeiPortLabel.initTiankafeiLabel();
-            tkfOperatePanel.add(tkfPortLabel);
-            TiankafeiComboBox tiankafeiPortComboBox = new TiankafeiComboBox(TioConstants.TEST_PORT_ARRAY);
-            TkfComboBox tkfPortComboBox = tiankafeiPortComboBox.initTiankafeiComboBox();
-            tkfOperatePanel.add(tkfPortComboBox);
+        TiankafeiLabel tiankafeiPortLabel = new TiankafeiLabel();
+        tiankafeiPortLabel.setText("选择要发送数据的端口");
+        TkfLabel tkfPortLabel = tiankafeiPortLabel.initTiankafeiLabel();
+        tkfOperatePanel.add(tkfPortLabel);
+        TiankafeiComboBox tiankafeiPortComboBox = new TiankafeiComboBox(TioConstants.TEST_PORT_ARRAY);
+        TkfComboBox tkfPortComboBox = tiankafeiPortComboBox.initTiankafeiComboBox();
+        tkfOperatePanel.add(tkfPortComboBox);
 
-            TiankafeiButton tiankafeiSendButton = new TiankafeiButton();
-            tiankafeiSendButton.setText("发送消息");
-            TkfButton tkfSendButton = tiankafeiSendButton.initTiankafeiButton();
-            tkfOperatePanel.add(tkfSendButton);
-            tkfSendButton.addActionListener(new SendMessageActionListener(tkfPortComboBox));
-            tiankafeiFrame.setVisible(true);
-        } catch (BaseException e) {
-            e.printStackTrace();
-        }
+        TiankafeiButton tiankafeiSendButton = new TiankafeiButton();
+        tiankafeiSendButton.setText("发送消息");
+        TkfButton tkfSendButton = tiankafeiSendButton.initTiankafeiButton();
+        tkfOperatePanel.add(tkfSendButton);
+        tkfSendButton.addActionListener(new SendMessageActionListener(tkfPortComboBox));
+        tiankafeiFrame.setVisible(true);
     }
 
     class ClearActionListener implements ActionListener {

@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.tiankafei.tool</groupId>
         <artifactId>tiankafei-code-tool</artifactId>
-        <version>1.4.1-RELEASE</version>
+        <version>1.4.2-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -37,7 +37,7 @@
         <!--自己的依赖管理-->
         <dependency>
             <groupId>org.tiankafei.tool</groupId>
-            <artifactId>tiankafei-base</artifactId>
+            <artifactId>tiankafei-common</artifactId>
         </dependency>
     </dependencies>
 

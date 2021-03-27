@@ -1,6 +1,6 @@
 package org.tiankafei.tio.common;
 
-import org.tiankafei.base.util.SystemUtil;
+import org.tiankafei.common.util.SystemUtil;
 
 /**
  * @author 甜咖啡
