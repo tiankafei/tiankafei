@@ -21,7 +21,7 @@ import org.apache.commons.compress.archivers.jar.JarArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
-import org.tiankafei.common.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 
 /**
  * 文件处理工具类
@@ -41,9 +41,8 @@ public class ZipFileUtil {
      *
      * @param zipFilePath zip文件路径
      * @param targetDir   目录路径
-     * @throws BaseException 自定义异常
      */
-    public static void unZipFiles(String zipFilePath, String targetDir) throws BaseException {
+    public static void unZipFiles(String zipFilePath, String targetDir) {
         ZipFile zipFile = null;
         try {
             zipFile = new ZipFile(zipFilePath);
@@ -55,17 +54,16 @@ public class ZipFileUtil {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
                 unZipFile(entry, zipFile, targetDir);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("解压文件失败！");
         } finally {
-            try {
-                if (zipFile != null) {
+            if (zipFile != null) {
+                try {
                     zipFile.close();
+                } catch (IOException e) {
+                    throw new CommonException("解压文件的最后操作失败！");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BaseException(e.getMessage());
             }
         }
     }
@@ -76,9 +74,8 @@ public class ZipFileUtil {
      * @param entry     压缩文件下一个文件对象
      * @param zip       zip文件对象
      * @param targetDir 目标目录
-     * @throws BaseException 自定义异常
      */
-    private static void unZipFile(ZipEntry entry, ZipFile zip, String targetDir) throws BaseException {
+    private static void unZipFile(ZipEntry entry, ZipFile zip, String targetDir) {
         InputStream in = null;
         OutputStream out = null;
         try {
@@ -99,16 +96,15 @@ public class ZipFileUtil {
                     out.write(buf1, 0, len);
                 }
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
-            try {
-                DataStreamUtil.closeInputStream(in);
-                DataStreamUtil.closeOutputStream(out);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BaseException(e.getMessage());
-            }
+            DataStreamUtil.closeInputStream(in);
+            DataStreamUtil.closeOutputStream(out);
         }
     }
 
@@ -117,9 +113,8 @@ public class ZipFileUtil {
      *
      * @param jarPath   要解压的jar文件
      * @param unzipPath 要解压的路径
-     * @throws BaseException 自定义异常
      */
-    public static void unZipJar(String jarPath, String unzipPath) throws BaseException {
+    public static void unZipJar(String jarPath, String unzipPath) {
         ArchiveInputStream archiveInputStream = null;
         BufferedInputStream bufferedInputStream = null;
         try {
@@ -141,15 +136,15 @@ public class ZipFileUtil {
                     out.close();
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage() + "未找到war文件");
         } catch (ArchiveException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage() + "不支持的压缩格式");
+            throw new CommonException("不支持的压缩格式！");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new CommonException("访问的文件不存在！");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage() + "文件写入发生错误");
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeInputStream(archiveInputStream);
             DataStreamUtil.closeInputStream(bufferedInputStream);
@@ -161,9 +156,8 @@ public class ZipFileUtil {
      *
      * @param targetJarFile 要压缩的目标jar文件
      * @param zipDir        被压缩的目录
-     * @throws BaseException 自定义异常
      */
-    public static void zipJar(String targetJarFile, String zipDir) throws BaseException {
+    public static void zipJar(String targetJarFile, String zipDir) {
         BufferedOutputStream bufferedOutputStream = null;
         ArchiveOutputStream archiveOutputStream = null;
         try {
@@ -187,12 +181,15 @@ public class ZipFileUtil {
             }
             archiveOutputStream.finish();
             archiveOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage() + "创建文件失败");
         } catch (ArchiveException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage() + "不支持的压缩格式");
+            throw new CommonException("不支持的压缩格式！");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeOutputStream(bufferedOutputStream);
             DataStreamUtil.closeOutputStream(archiveOutputStream);

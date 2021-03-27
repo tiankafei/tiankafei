@@ -22,43 +22,28 @@ public class SerializationUtil {
         KRYO.setMaxDepth(20);
     }
 
-    public static byte[] serialize(Object obj) throws Exception {
+    public static byte[] serialize(Object obj) {
         ByteArrayOutputStream out = null;
         Output output = null;
+
         try {
             out = new ByteArrayOutputStream();
             output = new Output(out, 1024);
             KRYO.writeClassAndObject(output, obj);
             return output.toBytes();
-        } catch (Exception e) {
-            throw new Exception(e);
         } finally {
-            if (null != out) {
-                try {
-                    out.close();
-                    out = null;
-                } catch (IOException e) {
-                }
-            }
-            if (null != output) {
-                output.close();
-                output = null;
-            }
+            DataStreamUtil.closeOutputStream(output);
+            DataStreamUtil.closeOutputStream(out);
         }
     }
 
-    public static Object deserialize(byte[] bytes) throws Exception {
+    public static Object deserialize(byte[] bytes) {
         Input input = null;
         try {
             input = new Input(bytes, 0, 1024);
             return KRYO.readClassAndObject(input);
-        } catch (Exception e) {
-            throw new Exception(e);
         } finally {
-            if (null != input) {
-                input.close();
-                input = null;
-            }
+            DataStreamUtil.closeInputStream(input);
         }
     }
 

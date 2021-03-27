@@ -2,8 +2,9 @@ package org.tiankafei.common.util;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.common.enums.BaseEnum;
-import org.tiankafei.common.exceptions.BaseException;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;
@@ -20,8 +21,8 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.List;
+import org.tiankafei.common.exceptions.CommonException;
 
 /**
  * 文件处理工具类
@@ -41,35 +42,32 @@ public class FileUtil {
      *
      * @param filePath       文件路径
      * @param targetFilePath 目标文件路径
-     * @throws BaseException 自定义异常
      */
-    public static void copyFile(String filePath, String targetFilePath) throws BaseException {
+    public static void copyFile(String filePath, String targetFilePath) {
         FileInputStream fi = null;
         FileOutputStream fo = null;
         FileChannel in = null;
         FileChannel out = null;
         try {
-            fi = new FileInputStream(new File(filePath));
-            fo = new FileOutputStream(new File(targetFilePath));
+            fi = new FileInputStream(filePath);
+            fo = new FileOutputStream(targetFilePath);
             //得到对应的文件通道
             in = fi.getChannel();
             //得到对应的文件通道
             out = fo.getChannel();
             //连接两个通道，并且从in通道读取，然后写入out通道
             in.transferTo(0, in.size(), out);
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
-            try {
-                DataStreamUtil.closeChannel(in);
-                DataStreamUtil.closeChannel(out);
-                DataStreamUtil.closeOutputStream(fo);
-                DataStreamUtil.closeInputStream(fi);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BaseException(e.getMessage());
-            }
+            DataStreamUtil.closeChannel(in);
+            DataStreamUtil.closeChannel(out);
+            DataStreamUtil.closeOutputStream(fo);
+            DataStreamUtil.closeInputStream(fi);
         }
     }
 
@@ -78,9 +76,8 @@ public class FileUtil {
      *
      * @param filePath 文件路径
      * @param list     要写如的内容集合
-     * @throws BaseException 自定义异常
      */
-    public static void writerFile(String filePath, List<String> list) throws BaseException {
+    public static void writerFile(String filePath, List<String> list) {
         OutputStreamWriter fs = null;
         FileOutputStream out = null;
         try {
@@ -90,9 +87,15 @@ public class FileUtil {
                 fs.write(list.get(i) + "\n");
             }
             fs.flush();
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("不支持的编码！");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeWriter(fs);
             DataStreamUtil.closeOutputStream(out);
@@ -103,19 +106,13 @@ public class FileUtil {
      * 根据传过来的路径创建目录或文件
      *
      * @param path 目录路径
-     * @throws BaseException 自定义异常
      */
-    public static void create(String path) throws BaseException {
+    public static void create(String path) {
         File file = new File(path);
         if (file.isDirectory()) {
             createDirectory(path);
         } else if (file.isFile()) {
-            try {
-                createFile(path);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BaseException(e.getMessage());
-            }
+            createFile(path);
         }
     }
 
@@ -135,16 +132,15 @@ public class FileUtil {
      * 创建文件
      *
      * @param filePath 文件路径
-     * @throws BaseException 自定义异常
      */
-    public static void createFile(String filePath) throws BaseException {
+    public static void createFile(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
-                throw new BaseException(e.getMessage());
+                throw new CommonException("创建文件失败！");
             }
         }
     }
@@ -185,19 +181,20 @@ public class FileUtil {
      *
      * @param filePath 文件路径
      * @return 返回读取文件的结果集
-     * @throws BaseException 自定义异常
      */
-    public static List<String> readFileTxtAndCsv(String filePath) throws BaseException {
+    public static List<String> readFileTxtAndCsv(String filePath) {
         FileInputStream in = null;
         InputStreamReader reader = null;
         BufferedReader bufferedReader = null;
         try {
-            List<String> strList = new ArrayList<String>();
+            List<String> strList = Lists.newArrayList();
             File file = new File(filePath);
             if (file.isFile()) {
                 String fileName = file.getName().toLowerCase();
                 //是txt或者csv格式的文件
-                if (fileName.endsWith(BaseEnum.FILE_SUFFIX_TXT.getValue()) || fileName.endsWith(BaseEnum.FILE_SUFFIX_CSV.getValue())) {
+                boolean flag = StringUtils.endsWithIgnoreCase(fileName, BaseEnum.FILE_SUFFIX_TXT.getValue())
+                        || StringUtils.endsWithIgnoreCase(fileName, BaseEnum.FILE_SUFFIX_CSV.getValue());
+                if (flag) {
                     in = new FileInputStream(file);
                     reader = new InputStreamReader(in, "UTF-8");
                     bufferedReader = new BufferedReader(reader);
@@ -208,28 +205,29 @@ public class FileUtil {
                 }
             }
             return strList;
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("不支持的编码！");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
-            try {
-                DataStreamUtil.closeReader(bufferedReader);
-                DataStreamUtil.closeReader(reader);
-                DataStreamUtil.closeInputStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BaseException(e.getMessage());
-            }
+            DataStreamUtil.closeReader(bufferedReader);
+            DataStreamUtil.closeReader(reader);
+            DataStreamUtil.closeInputStream(in);
         }
     }
 
     /**
      * 读取文件到byte数组
-     * @param filePath  要读取的文件
+     *
+     * @param filePath 要读取的文件
      * @return
-     * @throws BaseException
      */
-    public static byte[] readByteFile(String filePath) throws BaseException {
+    public static byte[] readByteFile(String filePath) {
         // 定义一个输入流对象
         FileInputStream fis = null;
         // 定义一个存放输入流的缓冲对象
@@ -254,9 +252,12 @@ public class FileUtil {
             byte[] buffer = baos.toByteArray();
 
             return buffer;
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeOutputStream(baos);
             DataStreamUtil.closeInputStream(bis);
@@ -269,17 +270,19 @@ public class FileUtil {
      *
      * @param byteArray byte数组
      * @param filePath  文件路径
-     * @throws BaseException 自定义异常
      */
-    public static void writeByteFile(byte[] byteArray, String filePath) throws BaseException {
+    public static void writeByteFile(byte[] byteArray, String filePath) {
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream(new File(filePath));
+            fileOutputStream = new FileOutputStream(filePath);
             fileOutputStream.write(byteArray);
             fileOutputStream.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new CommonException("访问的文件不存在！");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeOutputStream(fileOutputStream);
         }
@@ -290,9 +293,8 @@ public class FileUtil {
      *
      * @param objectOutputStream 对象输出流
      * @param object             要写入的对象
-     * @throws BaseException 自定义异常
      */
-    public static void writeObjectOutputStream(ObjectOutputStream objectOutputStream, Object object) throws BaseException {
+    public static void writeObjectOutputStream(ObjectOutputStream objectOutputStream, Object object) {
         try {
             if (objectOutputStream != null) {
                 objectOutputStream.writeObject(object);
@@ -300,7 +302,7 @@ public class FileUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeOutputStream(objectOutputStream);
         }
@@ -311,9 +313,8 @@ public class FileUtil {
      *
      * @param filePath 文件路径
      * @param textList 要写的字符串集合
-     * @throws BaseException 自定义异常
      */
-    public static void writeTextFile(String filePath, List<String> textList) throws BaseException {
+    public static void writeTextFile(String filePath, List<String> textList) {
         writeTextFile(filePath, textList, true);
     }
 
@@ -323,9 +324,8 @@ public class FileUtil {
      * @param filePath  文件路径
      * @param textList  要写的字符串集合
      * @param clearFlag 为true,继续添加，为false清空后添加
-     * @throws BaseException 自定义异常
      */
-    public static void writeTextFile(String filePath, List<String> textList, boolean clearFlag) throws BaseException {
+    public static void writeTextFile(String filePath, List<String> textList, boolean clearFlag) {
         OutputStreamWriter outputStreamWriter = null;
         FileOutputStream fileOutputStream = null;
         try {
@@ -337,13 +337,13 @@ public class FileUtil {
             outputStreamWriter.flush();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("不支持的编码！");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问的文件不存在！");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeWriter(outputStreamWriter);
             DataStreamUtil.closeOutputStream(fileOutputStream);
@@ -355,9 +355,8 @@ public class FileUtil {
      *
      * @param filePath 文件路径
      * @param text     要写的字符串
-     * @throws BaseException 自定义异常
      */
-    public static void writeTextFile(String filePath, String text) throws BaseException {
+    public static void writeTextFile(String filePath, String text) {
         writeTextFile(filePath, text, true);
     }
 
@@ -367,9 +366,8 @@ public class FileUtil {
      * @param filePath  文件路径
      * @param text      要写的字符串
      * @param clearFlag 为true,继续添加，为false清空后添加
-     * @throws BaseException 自定义异常
      */
-    public static void writeTextFile(String filePath, String text, boolean clearFlag) throws BaseException {
+    public static void writeTextFile(String filePath, String text, boolean clearFlag) {
         OutputStreamWriter outputStreamWriter = null;
         FileOutputStream fileOutputStream = null;
         try {
@@ -379,20 +377,20 @@ public class FileUtil {
             outputStreamWriter.flush();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("不支持的编码！");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问的文件不存在！");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeWriter(outputStreamWriter);
             DataStreamUtil.closeOutputStream(fileOutputStream);
         }
     }
 
-    public static Image readImage(String imageIconPath) throws BaseException {
+    public static Image readImage(String imageIconPath) {
         return readImage(FileUtil.class.getClassLoader(), imageIconPath);
     }
 
@@ -401,9 +399,8 @@ public class FileUtil {
      *
      * @param imageIconPath 图片路径
      * @return 图片对象
-     * @throws BaseException 自定义异常
      */
-    public static Image readImage(ClassLoader classLoader, String imageIconPath) throws BaseException {
+    public static Image readImage(ClassLoader classLoader, String imageIconPath) {
         try {
             InputStream inputStream = classLoader.getResourceAsStream(imageIconPath);
             Image image = ImageIO.read(inputStream);
@@ -411,11 +408,11 @@ public class FileUtil {
             return image;
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage() + "读取图片发生异常！");
+            throw new CommonException(e.getMessage() + "读取图片发生异常！");
         }
     }
 
-    public static String readJsonFile(String fileName) throws BaseException {
+    public static String readJsonFile(String fileName) {
         return readJsonFile(FileUtil.class.getClassLoader(), fileName);
     }
 
@@ -426,14 +423,14 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    public static String readJsonFile(ClassLoader classLoader, String fileName) throws BaseException {
+    public static String readJsonFile(ClassLoader classLoader, String fileName) {
         InputStream in = null;
         try {
             in = classLoader.getResourceAsStream(fileName);
             return readJsonFile(in);
-        } catch (BaseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new BaseException("读取" + fileName + "文件出错！" + e.getMessage());
+            throw new CommonException("读取" + fileName + "文件出错：" + e.getMessage());
         } finally {
             DataStreamUtil.closeInputStream(in);
         }
@@ -444,9 +441,8 @@ public class FileUtil {
      *
      * @param in
      * @return
-     * @throws Exception
      */
-    public static String readJsonFile(InputStream in) throws BaseException {
+    public static String readJsonFile(InputStream in) {
         Reader reader = null;
         try {
             reader = new InputStreamReader(in);
@@ -458,7 +454,7 @@ public class FileUtil {
             return stringBuffer.toString();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问数据失败！");
         } finally {
             DataStreamUtil.closeReader(reader);
         }
@@ -466,18 +462,19 @@ public class FileUtil {
 
     /**
      * 更改文件名
+     *
      * @param filePath
      * @param sourceName
      * @param targetName
      */
-    public static void updateFileName(String filePath, String sourceName, String targetName){
+    public static void updateFileName(String filePath, String sourceName, String targetName) {
         File file = new File(filePath);
         File[] files = file.listFiles();
         for (File subFile : files) {
             String path = subFile.getParent();
             String name = subFile.getName();
 
-            while(name.contains(sourceName)){
+            while (name.contains(sourceName)) {
                 name = name.replace(sourceName, targetName);
             }
             subFile.renameTo(new File(path + File.separator + name));

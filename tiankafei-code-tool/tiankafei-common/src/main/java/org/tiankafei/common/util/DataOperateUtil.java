@@ -2,7 +2,7 @@ package org.tiankafei.common.util;
 
 import java.math.BigDecimal;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.common.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 
 /**
  * 数据操作工具类
@@ -117,9 +117,8 @@ public class DataOperateUtil {
      * @param left  相加前的值
      * @param right 相加后的值
      * @return 相加后的值
-     * @throws BaseException 自定义异常
      */
-    public static int addValue(Object left, Object right) throws BaseException {
+    public static int addValue(Object left, Object right) {
         return (int) getValue(left, right, ADD_TYPE);
     }
 
@@ -129,9 +128,8 @@ public class DataOperateUtil {
      * @param left  相加前的值
      * @param right 相加后的值
      * @return 相加后的值
-     * @throws BaseException 自定义异常
      */
-    public static int subValue(Object left, Object right) throws BaseException {
+    public static int subValue(Object left, Object right) {
         return (int) getValue(left, right, SUB_TYPE);
     }
 
@@ -141,9 +139,8 @@ public class DataOperateUtil {
      * @param left  相加前的值
      * @param right 相加后的值
      * @return 相加后的值
-     * @throws BaseException 自定义异常
      */
-    public static int mulValue(Object left, Object right) throws BaseException {
+    public static int mulValue(Object left, Object right) {
         return (int) getValue(left, right, MUL_TYPE);
     }
 
@@ -153,9 +150,8 @@ public class DataOperateUtil {
      * @param left  相加前的值
      * @param right 相加后的值
      * @return 相加后的值
-     * @throws BaseException 自定义异常
      */
-    public static int divValue(Object left, Object right) throws BaseException {
+    public static int divValue(Object left, Object right) {
         return (int) getValue(left, right, DIV_TYPE);
     }
 
@@ -165,9 +161,8 @@ public class DataOperateUtil {
      * @param left  相加前的值
      * @param right 相加后的值
      * @return 相加后的值
-     * @throws BaseException 自定义异常
      */
-    public static int modValue(Object left, Object right) throws BaseException {
+    public static int modValue(Object left, Object right) {
         return (int) getValue(left, right, MOD_TYPE);
     }
 
@@ -178,16 +173,15 @@ public class DataOperateUtil {
      * @param right       操作后值
      * @param operateType 操作类型(ADD_TYPE加、SUB_TYPE减、MUL_TYPE乘、DIV_TYPE除、MOD_TYPE求余)
      * @return 返回值
-     * @throws BaseException 自定义异常
      */
-    private static Object getValue(Object left, Object right, int operateType) throws BaseException {
+    private static Object getValue(Object left, Object right, int operateType) {
         BigDecimal valueBigDecimal = null;
 
         if (left != null && !StringUtils.isNumeric(left.toString())) {
-            throw new BaseException("字符串不能参与运算，请检查！");
+            throw new CommonException("字符串不能参与运算，请检查！");
         }
         if (right != null && !StringUtils.isNumeric(right.toString())) {
-            throw new BaseException("字符串不能参与运算，请检查！");
+            throw new CommonException("字符串不能参与运算，请检查！");
         }
         BigDecimal leftBigDecimal = new BigDecimal(left.toString());
         BigDecimal rightBigDecimal = new BigDecimal(right.toString());
@@ -200,13 +194,13 @@ public class DataOperateUtil {
             valueBigDecimal = leftBigDecimal.multiply(rightBigDecimal);
         } else if (DIV_TYPE == operateType) {
             if (rightBigDecimal.doubleValue() == 0.0) {
-                throw new BaseException("除数不能为0，请检查！");
+                throw new CommonException("除数不能为0，请检查！");
             }
             double d = leftBigDecimal.doubleValue() / rightBigDecimal.doubleValue();
             valueBigDecimal = new BigDecimal(d);
         } else if (MOD_TYPE == operateType) {
             if (rightBigDecimal.doubleValue() == 0.0) {
-                throw new BaseException("除数不能为0，请检查！");
+                throw new CommonException("除数不能为0，请检查！");
             }
             valueBigDecimal = leftBigDecimal.remainder(rightBigDecimal);
         }
@@ -225,6 +219,8 @@ public class DataOperateUtil {
             try {
                 return parseNumber(Double.parseDouble(trimValue));
             } catch (NumberFormatException e) {
+                e.printStackTrace();
+                throw new CommonException(trimValue + "不能转换成数字，请检查！");
             }
         }
         return null;

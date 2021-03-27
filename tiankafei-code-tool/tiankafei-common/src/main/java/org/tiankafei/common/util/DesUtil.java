@@ -1,13 +1,19 @@
 package org.tiankafei.common.util;
 
+import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import org.apache.commons.codec.binary.Base64;
-import org.tiankafei.common.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 
 /**
  * DES加密算法类
@@ -33,13 +39,12 @@ public class DesUtil {
     }
 
     /**
-     * @Description: 生成密钥key对象
-     * @Param: [keyStr]
-     * @Return: javax.crypto.SecretKey
-     * @Author: tiankafei
-     * @Date: 2019/10/22
-     **/
-    private static SecretKey keyGenerator(String keyStr) throws BaseException {
+     * 生成密钥key对象
+     *
+     * @param keyStr
+     * @return
+     */
+    private static SecretKey keyGenerator(String keyStr) {
         try {
             byte[] input = hexString2Bytes(keyStr);
             DESKeySpec desKey = new DESKeySpec(input);
@@ -47,19 +52,24 @@ public class DesUtil {
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
             SecretKey securekey = keyFactory.generateSecret(desKey);
             return securekey;
-        } catch (Exception e) {
+        } catch (InvalidKeyException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("加密初始化失败！");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new CommonException("获取加密方法失败！");
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+            throw new CommonException("生成密钥失败！");
         }
     }
 
     /**
-     * @Description: 解析char
-     * @Param: [c]
-     * @Return: int
-     * @Author: tiankafei
-     * @Date: 2019/10/22
-     **/
+     * 解析char
+     *
+     * @param c
+     * @return
+     */
     private static int parse(char c) {
         char str = 'a';
         if (c >= str) {
@@ -73,12 +83,11 @@ public class DesUtil {
     }
 
     /**
-     * @Description: 从十六进制字符串到字节数组转换
-     * @Param: [hexstr]
-     * @Return: byte[]
-     * @Author: tiankafei
-     * @Date: 2019/10/22
-     **/
+     * 从十六进制字符串到字节数组转换
+     *
+     * @param hexstr
+     * @return
+     */
     private static byte[] hexString2Bytes(String hexstr) {
         byte[] b = new byte[hexstr.length() / 2];
         int j = 0;
@@ -94,12 +103,11 @@ public class DesUtil {
      * 加密数据
      * 该部分是为了与加解密在线测试网站（http://tripledes.online-domain-tools.com/）的十六进制结果进行核对
      *
-     * @Param: [data, key]
-     * @Return: java.lang.String
-     * @Author: tiankafei
-     * @Date: 2019/10/22
-     **/
-    private static String encrypt(String data, String key) throws BaseException {
+     * @param data
+     * @param key
+     * @return
+     */
+    private static String encrypt(String data, String key) {
         try {
             Key deskey = keyGenerator(key);
             // 实例化Cipher对象，它用于完成实际的加密操作
@@ -110,20 +118,32 @@ public class DesUtil {
             byte[] results = cipher.doFinal(data.getBytes());
             // 执行加密操作。加密后的结果通常都会用Base64编码进行传输
             return Base64.encodeBase64String(results);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("获取加密方法失败！");
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+            throw new CommonException("没有获取到加密方法！");
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+            throw new CommonException("加密填充失败！");
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+            throw new CommonException("加密无效的块大小！");
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+            throw new CommonException("加密无效的key值！");
         }
     }
 
     /**
-     * @Description: 解密数据
-     * @Param: [data, key]
-     * @Return: java.lang.String
-     * @Author: tiankafei
-     * @Date: 2019/10/22
-     **/
-    private static String decrypt(String data, String key) throws BaseException {
+     * 解密数据
+     *
+     * @param data
+     * @param key
+     * @return
+     */
+    private static String decrypt(String data, String key) {
         try {
             Key deskey = keyGenerator(key);
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
@@ -131,44 +151,44 @@ public class DesUtil {
             cipher.init(Cipher.DECRYPT_MODE, deskey);
             // 执行解密操作
             return new String(cipher.doFinal(Base64.decodeBase64(data)));
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("获取解密方法失败！");
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+            throw new CommonException("没有获取到解密方法！");
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+            throw new CommonException("解密填充失败！");
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+            throw new CommonException("解密无效的块大小！");
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+            throw new CommonException("解密无效的key值！");
         }
     }
 
     /**
-     * @Description: 加密字符串
-     * @Param: [encryptionString]
-     * @Return: java.lang.String
-     * @Author: tiankafei
-     * @Date: 2019/10/22
-     **/
-    public static String encryptionString(String encryptionString) throws BaseException {
-        try {
-            String encryptData = encrypt(encryptionString, DES_KEY);
-            return encryptData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+     * 加密字符串
+     *
+     * @param encryptionString
+     * @return
+     */
+    public static String encryptionString(String encryptionString) {
+        String encryptData = encrypt(encryptionString, DES_KEY);
+        return encryptData;
     }
 
     /**
-     * @Description: 解密字符串
-     * @Param: [decryptionString]
-     * @Return: java.lang.String
-     * @Author: tiankafei
-     * @Date: 2019/10/22
-     **/
-    public static String decryptionString(String decryptionString) throws BaseException {
-        try {
-            String decryptData = decrypt(decryptionString, DES_KEY);
-            return decryptData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+     * 解密字符串
+     *
+     * @param decryptionString
+     * @return
+     */
+    public static String decryptionString(String decryptionString) {
+        String decryptData = decrypt(decryptionString, DES_KEY);
+        return decryptData;
     }
 
 }

@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import org.apache.commons.codec.binary.Base64;
 import org.objenesis.strategy.StdInstantiatorStrategy;
+import org.tiankafei.common.exceptions.CommonException;
 
 /**
  * Kryo序列化工具类
@@ -94,7 +95,8 @@ public class KryoUtil {
         try {
             return new String(Base64.encodeBase64(writeToByteArray(obj)), DEFAULT_ENCODING);
         } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
+            e.printStackTrace();
+            throw new CommonException("不支持的文件编码！");
         }
     }
 
@@ -126,7 +128,8 @@ public class KryoUtil {
         try {
             return readFromByteArray(Base64.decodeBase64(str.getBytes(DEFAULT_ENCODING)));
         } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
+            e.printStackTrace();
+            throw new CommonException("不支持的文件编码！");
         }
     }
 
@@ -165,7 +168,8 @@ public class KryoUtil {
         try {
             return new String(Base64.encodeBase64(writeObjectToByteArray(obj)), DEFAULT_ENCODING);
         } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
+            e.printStackTrace();
+            throw new CommonException("不支持的文件编码！");
         }
     }
 
@@ -199,7 +203,8 @@ public class KryoUtil {
         try {
             return readObjectFromByteArray(Base64.decodeBase64(str.getBytes(DEFAULT_ENCODING)), clazz);
         } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
+            e.printStackTrace();
+            throw new CommonException("不支持的文件编码！");
         }
     }
 

@@ -3,6 +3,7 @@ package org.tiankafei.common.util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.tiankafei.common.exceptions.CommonException;
 
 /**
  * 密码加密工具类
@@ -22,10 +23,10 @@ public class PasswordUtil {
      */
     public static String encrypt(String pwd, String salt) {
         if (StringUtils.isBlank(pwd)) {
-            throw new IllegalArgumentException("密码不能为空");
+            throw new CommonException("密码不能为空");
         }
         if (StringUtils.isBlank(salt)) {
-            throw new IllegalArgumentException("盐值不能为空");
+            throw new CommonException("盐值不能为空");
         }
         return DigestUtils.sha256Hex(pwd + salt);
     }

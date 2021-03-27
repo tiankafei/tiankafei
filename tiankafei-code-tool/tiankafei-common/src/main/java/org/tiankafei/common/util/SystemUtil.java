@@ -2,17 +2,19 @@ package org.tiankafei.common.util;
 
 import com.google.common.collect.Lists;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 import org.tiankafei.common.enums.BaseEnum;
-import org.tiankafei.common.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 
 /**
  * 系统工具处理类
@@ -114,10 +116,13 @@ public class SystemUtil {
             }
             // 如果没有发现 non-loopback地址.只能用最次选的方案
             return InetAddress.getLocalHost();
-        } catch (Exception e) {
+        } catch (UnknownHostException e) {
             e.printStackTrace();
+            throw new CommonException("未知的主机！");
+        } catch (SocketException e) {
+            e.printStackTrace();
+            throw new CommonException("连接失败！");
         }
-        return null;
     }
 
     /**
@@ -144,9 +149,8 @@ public class SystemUtil {
      * @param fileName linux命令的文件
      * @param flag     为true返回读取控制台信息，为false返回空集合
      * @return 返回执行命令后的结果集
-     * @throws BaseException 自定义异常
      */
-    public static List<String> executionLinuxCommand(String fileName, boolean flag) throws BaseException {
+    public static List<String> executionLinuxCommand(String fileName, boolean flag) {
         try {
             List<String> list = Lists.newArrayList();
             String a = "/bin/sh";
@@ -164,9 +168,12 @@ public class SystemUtil {
                 file.delete();
             }
             return list;
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("执行过程中发生中断！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         }
     }
 
@@ -176,9 +183,8 @@ public class SystemUtil {
      * @param command window命令
      * @param flag    为true返回读取控制台信息，为false返回空集合
      * @return 返回执行命令后的结果集
-     * @throws BaseException 自定义异常
      */
-    public static List<String> executionWindowsCommand(String command, boolean flag) throws BaseException {
+    public static List<String> executionWindowsCommand(String command, boolean flag) {
         try {
             List<String> list = Lists.newArrayList();
             Process process = Runtime.getRuntime().exec("cmd.exe /c start " + command);
@@ -188,9 +194,12 @@ public class SystemUtil {
             process.waitFor();
             process.destroy();
             return list;
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("执行过程中发生中断！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         }
     }
 
@@ -199,22 +208,26 @@ public class SystemUtil {
      *
      * @param process
      * @return 返回执行命令后的结果集
-     * @throws BaseException 自定义异常
      */
-    private static List<String> readConsoleInfo(Process process) throws BaseException {
+    private static List<String> readConsoleInfo(Process process) {
+        InputStreamReader ir = null;
+        LineNumberReader input = null;
         try {
             List<String> list = Lists.newArrayList();
-            InputStreamReader ir = new InputStreamReader(process.getInputStream());
-            LineNumberReader input = new LineNumberReader(ir);
+            ir = new InputStreamReader(process.getInputStream());
+            input = new LineNumberReader(ir);
             String line;
             while ((line = input.readLine()) != null) {
                 list.add(line);
             }
             process.destroy();
             return list;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问数据失败！");
+        } finally {
+            DataStreamUtil.closeReader(input);
+            DataStreamUtil.closeReader(ir);
         }
     }
 
