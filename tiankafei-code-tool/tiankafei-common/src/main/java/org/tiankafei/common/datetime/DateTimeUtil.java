@@ -1,9 +1,10 @@
 package org.tiankafei.common.datetime;
 
+import java.text.ParseException;
 import org.tiankafei.common.constants.DateTimeConstants;
 import org.tiankafei.common.enums.DateTimeEnum;
-import org.tiankafei.common.exceptions.BaseException;
 import org.tiankafei.common.dto.CodeNameDTO;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.common.util.SystemTimeUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -61,9 +62,8 @@ public class DateTimeUtil {
      * @param date       需要转换的时间值
      * @param formatType 需要转换的格式
      * @return 返回String类型转换为Timestamp类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp dateToTimestamp(Date date, String formatType) throws BaseException {
+    public static Timestamp dateToTimestamp(Date date, String formatType) {
         if (date == null || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -77,9 +77,8 @@ public class DateTimeUtil {
      * @param currentTime 要转换的long类型的时间
      * @param formatType  要转换的string类型的时间格式
      * @return 返回long类型转换为String类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static String longToString(long currentTime, String formatType) throws BaseException {
+    public static String longToString(long currentTime, String formatType) {
         if (currentTime == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -94,9 +93,8 @@ public class DateTimeUtil {
      * @param currentTime 要转换的long类型的时间
      * @param formatType  要转换的时间格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日 HH时mm分ss秒
      * @return 返回long转换为Date类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static Date longToDate(long currentTime, String formatType) throws BaseException {
+    public static Date longToDate(long currentTime, String formatType) {
         if (currentTime == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -110,20 +108,18 @@ public class DateTimeUtil {
      * String类型转换为Timestamp类型
      *
      * @return 返回String类型转换为Timestamp类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp longToTimestamp() throws BaseException {
+    public static Timestamp longToTimestamp() {
         return longToTimestamp(System.currentTimeMillis());
     }
 
     /**
      * String类型转换为Timestamp类型
      *
-     * @param time       需要转换的时间值
+     * @param time 需要转换的时间值
      * @return 返回String类型转换为Timestamp类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp longToTimestamp(Long time) throws BaseException {
+    public static Timestamp longToTimestamp(Long time) {
         if (time == null) {
             return null;
         }
@@ -151,9 +147,8 @@ public class DateTimeUtil {
      *
      * @param timestamp 需要转换的时间值
      * @return 返回Timestamp类型转换为String类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static Date timestampToDate(Timestamp timestamp) throws BaseException {
+    public static Date timestampToDate(Timestamp timestamp) {
         if (timestamp == null) {
             return null;
         }
@@ -168,9 +163,8 @@ public class DateTimeUtil {
      *
      * @param timestamp 需要转换的时间值
      * @return 返回Timestamp类型转换为String类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static long timestampToLong(Timestamp timestamp) throws BaseException {
+    public static long timestampToLong(Timestamp timestamp) {
         if (timestamp == null) {
             return -1;
         }
@@ -186,9 +180,8 @@ public class DateTimeUtil {
      * @param strTime    要转换的string类型的时间
      * @param formatType 要转换的格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日 HH时mm分ss秒
      * @return 返回string类型转换为date类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static Date stringToDate(String strTime, String formatType) throws BaseException {
+    public static Date stringToDate(String strTime, String formatType) {
         try {
             if (StringUtils.isEmpty(strTime) || StringUtils.isEmpty(formatType)) {
                 return null;
@@ -196,9 +189,9 @@ public class DateTimeUtil {
             SimpleDateFormat formatter = new SimpleDateFormat(formatType);
             Date date = formatter.parse(strTime);
             return date;
-        } catch (Exception e) {
+        } catch (ParseException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("要转换的时间格式错误，请检查！");
         }
     }
 
@@ -208,9 +201,8 @@ public class DateTimeUtil {
      * @param strTime    要转换的String类型的时间
      * @param formatType 时间格式
      * @return 返回string类型转换为long类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static long stringToLong(String strTime, String formatType) throws BaseException {
+    public static long stringToLong(String strTime, String formatType) {
         if (StringUtils.isEmpty(strTime) || StringUtils.isEmpty(formatType)) {
             return -1;
         }
@@ -231,9 +223,8 @@ public class DateTimeUtil {
      * @param strTime    需要转换的时间值
      * @param formatType 需要转换的格式
      * @return 返回String类型转换为Timestamp类型的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp stringToTimestamp(String strTime, String formatType) throws BaseException {
+    public static Timestamp stringToTimestamp(String strTime, String formatType) {
         if (StringUtils.isEmpty(strTime) || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -297,7 +288,6 @@ public class DateTimeUtil {
      *
      * @param timestamp 要获取年份的数值
      * @return 返回传入数值的年份
-     * @throws BaseException 自定义异常
      */
     public static int getCurrentYear(Timestamp timestamp) {
         if (timestamp == null) {
@@ -339,7 +329,6 @@ public class DateTimeUtil {
      *
      * @param timestamp 获取传入时间的月份
      * @return 返回传入时间的月份
-     * @throws BaseException 自定义异常
      */
     public static int getCurrentMonth(Timestamp timestamp) {
         if (timestamp == null) {
@@ -525,9 +514,8 @@ public class DateTimeUtil {
      * @param year       往后推的年数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定年数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterYear(String strTime, int year, String formatType) throws BaseException {
+    public static String afterYear(String strTime, int year, String formatType) {
         if (StringUtils.isEmpty(strTime) || year == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -560,9 +548,8 @@ public class DateTimeUtil {
      * @param year       往后推的年数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定年数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterYear(Timestamp timestamp, int year, String formatType) throws BaseException {
+    public static Timestamp afterYear(Timestamp timestamp, int year, String formatType) {
         if (timestamp == null || year == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -578,9 +565,8 @@ public class DateTimeUtil {
      * @param month      往后推的月数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定月数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterMonth(String strTime, int month, String formatType) throws BaseException {
+    public static String afterMonth(String strTime, int month, String formatType) {
         if (StringUtils.isEmpty(strTime) || month == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -613,9 +599,8 @@ public class DateTimeUtil {
      * @param month      往后推的月数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定月数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterMonth(Timestamp timestamp, int month, String formatType) throws BaseException {
+    public static Timestamp afterMonth(Timestamp timestamp, int month, String formatType) {
         if (timestamp == null || month == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -631,9 +616,8 @@ public class DateTimeUtil {
      * @param week       往后退的周数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定周数(一年中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterWeek(String strTime, int week, String formatType) throws BaseException {
+    public static String afterWeek(String strTime, int week, String formatType) {
         if (StringUtils.isEmpty(strTime) || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -666,9 +650,8 @@ public class DateTimeUtil {
      * @param week       往后退的周数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定周数(一年中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterWeek(Timestamp timestamp, int week, String formatType) throws BaseException {
+    public static Timestamp afterWeek(Timestamp timestamp, int week, String formatType) {
         if (timestamp == null || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -684,9 +667,8 @@ public class DateTimeUtil {
      * @param week       往后退的周数(一月中的第几周)
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定周数(一月中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterWeekOfMonth(String strTime, int week, String formatType) throws BaseException {
+    public static String afterWeekOfMonth(String strTime, int week, String formatType) {
         if (StringUtils.isEmpty(strTime) || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -719,9 +701,8 @@ public class DateTimeUtil {
      * @param week       往后退的周数(一月中的第几周)
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定周数(一月中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterWeekOfMonth(Timestamp timestamp, int week, String formatType) throws BaseException {
+    public static Timestamp afterWeekOfMonth(Timestamp timestamp, int week, String formatType) {
         if (timestamp == null || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -737,9 +718,8 @@ public class DateTimeUtil {
      * @param days       往后推的天数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定天数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterDay(String strTime, int days, String formatType) throws BaseException {
+    public static String afterDay(String strTime, int days, String formatType) {
         if (StringUtils.isEmpty(strTime) || days == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -772,9 +752,8 @@ public class DateTimeUtil {
      * @param days       往后推的天数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定天数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterDay(Timestamp timestamp, int days, String formatType) throws BaseException {
+    public static Timestamp afterDay(Timestamp timestamp, int days, String formatType) {
         if (timestamp == null || days == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -790,9 +769,8 @@ public class DateTimeUtil {
      * @param hours      往后推的小时数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定天数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterHours(String strTime, int hours, String formatType) throws BaseException {
+    public static String afterHours(String strTime, int hours, String formatType) {
         if (StringUtils.isEmpty(strTime) || hours == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -825,9 +803,8 @@ public class DateTimeUtil {
      * @param hours      往后推的小时数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定天数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterHours(Timestamp timestamp, int hours, String formatType) throws BaseException {
+    public static Timestamp afterHours(Timestamp timestamp, int hours, String formatType) {
         if (timestamp == null || hours == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -843,9 +820,8 @@ public class DateTimeUtil {
      * @param minutes    往后推的分钟数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定分钟数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterMinutes(String strTime, int minutes, String formatType) throws BaseException {
+    public static String afterMinutes(String strTime, int minutes, String formatType) {
         if (StringUtils.isEmpty(strTime) || minutes == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -878,9 +854,8 @@ public class DateTimeUtil {
      * @param minutes    往后推的分钟数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定分钟数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterMinutes(Timestamp timestamp, int minutes, String formatType) throws BaseException {
+    public static Timestamp afterMinutes(Timestamp timestamp, int minutes, String formatType) {
         if (timestamp == null || minutes == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -896,9 +871,8 @@ public class DateTimeUtil {
      * @param second     往后推的秒数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定秒数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String afterSecond(String strTime, int second, String formatType) throws BaseException {
+    public static String afterSecond(String strTime, int second, String formatType) {
         if (StringUtils.isEmpty(strTime) || second == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -931,9 +905,8 @@ public class DateTimeUtil {
      * @param second     往后推的秒数
      * @param formatType 时间格式
      * @return 返回传入的时间往后推一定秒数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp afterSecond(Timestamp timestamp, int second, String formatType) throws BaseException {
+    public static Timestamp afterSecond(Timestamp timestamp, int second, String formatType) {
         if (timestamp == null || second == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -949,9 +922,8 @@ public class DateTimeUtil {
      * @param year       往前推的年份
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定年数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeYear(String strTime, int year, String formatType) throws BaseException {
+    public static String beforeYear(String strTime, int year, String formatType) {
         if (StringUtils.isEmpty(strTime) || year == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -984,9 +956,8 @@ public class DateTimeUtil {
      * @param year       往前推的年份
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定年数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeYear(Timestamp timestamp, int year, String formatType) throws BaseException {
+    public static Timestamp beforeYear(Timestamp timestamp, int year, String formatType) {
         if (timestamp == null || year == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1002,9 +973,8 @@ public class DateTimeUtil {
      * @param month      往前推的月份
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定月数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeMonth(String strTime, int month, String formatType) throws BaseException {
+    public static String beforeMonth(String strTime, int month, String formatType) {
         if (StringUtils.isEmpty(strTime) || month == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1037,9 +1007,8 @@ public class DateTimeUtil {
      * @param month      往前推的月份
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定月数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeMonth(Timestamp timestamp, int month, String formatType) throws BaseException {
+    public static Timestamp beforeMonth(Timestamp timestamp, int month, String formatType) {
         if (timestamp == null || month == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1055,9 +1024,8 @@ public class DateTimeUtil {
      * @param week       往前推的周数(一年中的第几周)
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定周数(一年中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeWeek(String strTime, int week, String formatType) throws BaseException {
+    public static String beforeWeek(String strTime, int week, String formatType) {
         if (StringUtils.isEmpty(strTime) || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1090,9 +1058,8 @@ public class DateTimeUtil {
      * @param week       往前推的周数(一年中的第几周)
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定周数(一年中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeWeek(Timestamp timestamp, int week, String formatType) throws BaseException {
+    public static Timestamp beforeWeek(Timestamp timestamp, int week, String formatType) {
         if (timestamp == null || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1108,9 +1075,8 @@ public class DateTimeUtil {
      * @param week       往前推的周数(一月中的第几周)
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定周数(一月中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeWeekOfMonth(String strTime, int week, String formatType) throws BaseException {
+    public static String beforeWeekOfMonth(String strTime, int week, String formatType) {
         if (StringUtils.isEmpty(strTime) || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1143,9 +1109,8 @@ public class DateTimeUtil {
      * @param week       往前推的周数(一月中的第几周)
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定周数(一月中的第几周)的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeWeekOfMonth(Timestamp timestamp, int week, String formatType) throws BaseException {
+    public static Timestamp beforeWeekOfMonth(Timestamp timestamp, int week, String formatType) {
         if (timestamp == null || week == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1161,9 +1126,8 @@ public class DateTimeUtil {
      * @param days       往前推的天数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定天数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeDay(String strTime, int days, String formatType) throws BaseException {
+    public static String beforeDay(String strTime, int days, String formatType) {
         if (StringUtils.isEmpty(strTime) || days == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1196,9 +1160,8 @@ public class DateTimeUtil {
      * @param days       往前推的天数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定天数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeDay(Timestamp timestamp, int days, String formatType) throws BaseException {
+    public static Timestamp beforeDay(Timestamp timestamp, int days, String formatType) {
         if (timestamp == null || days == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1214,9 +1177,8 @@ public class DateTimeUtil {
      * @param hours      往前推的小时数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定小时数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeHours(String strTime, int hours, String formatType) throws BaseException {
+    public static String beforeHours(String strTime, int hours, String formatType) {
         if (StringUtils.isEmpty(strTime) || hours == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1249,9 +1211,8 @@ public class DateTimeUtil {
      * @param hours      往前推的小时数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定小时数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeHours(Timestamp timestamp, int hours, String formatType) throws BaseException {
+    public static Timestamp beforeHours(Timestamp timestamp, int hours, String formatType) {
         if (timestamp == null || hours == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1267,9 +1228,8 @@ public class DateTimeUtil {
      * @param minutes    往前推的分钟数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定分钟数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeMinutes(String strTime, int minutes, String formatType) throws BaseException {
+    public static String beforeMinutes(String strTime, int minutes, String formatType) {
         if (StringUtils.isEmpty(strTime) || minutes == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1302,9 +1262,8 @@ public class DateTimeUtil {
      * @param minutes    往前推的分钟数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定分钟数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeMinutes(Timestamp timestamp, int minutes, String formatType) throws BaseException {
+    public static Timestamp beforeMinutes(Timestamp timestamp, int minutes, String formatType) {
         if (timestamp == null || minutes == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1320,9 +1279,8 @@ public class DateTimeUtil {
      * @param second     往前推的秒数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定秒数的时间
-     * @throws BaseException 自定义异常
      */
-    public static String beforeSecond(String strTime, int second, String formatType) throws BaseException {
+    public static String beforeSecond(String strTime, int second, String formatType) {
         if (StringUtils.isEmpty(strTime) || second == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1355,9 +1313,8 @@ public class DateTimeUtil {
      * @param second     往前推的秒数
      * @param formatType 时间格式
      * @return 返回传入的时间往前推一定秒数的时间
-     * @throws BaseException 自定义异常
      */
-    public static Timestamp beforeSecond(Timestamp timestamp, int second, String formatType) throws BaseException {
+    public static Timestamp beforeSecond(Timestamp timestamp, int second, String formatType) {
         if (timestamp == null || second == 0 || StringUtils.isEmpty(formatType)) {
             return null;
         }
@@ -1423,9 +1380,8 @@ public class DateTimeUtil {
      *
      * @param dataString 要转换的时间
      * @return 返回年月日(年积日转年月日)
-     * @throws BaseException 自定义异常
      */
-    public static String dataSwitch(String dataString) throws BaseException {
+    public static String dataSwitch(String dataString) {
         if (StringUtils.isEmpty(dataString)) {
             return null;
         }
@@ -1476,9 +1432,8 @@ public class DateTimeUtil {
      *
      * @param timestamp 时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static int getWeek(Timestamp timestamp) throws BaseException {
+    public static int getWeek(Timestamp timestamp) {
         Calendar calendar = Calendar.getInstance();
         Date date = timestampToDate(timestamp);
         calendar.setTime(date);
@@ -1491,9 +1446,8 @@ public class DateTimeUtil {
      * @param strTime    时间
      * @param formatType 时间格式
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static int getWeek(String strTime, String formatType) throws BaseException {
+    public static int getWeek(String strTime, String formatType) {
         Calendar calendar = Calendar.getInstance();
         Date date = stringToDate(strTime, formatType);
         calendar.setTime(date);
@@ -1505,9 +1459,8 @@ public class DateTimeUtil {
      *
      * @param time 时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static int getWeek(long time) throws BaseException {
+    public static int getWeek(long time) {
         Calendar calendar = Calendar.getInstance();
         Date date = longToDate(time, DateTimeEnum.YYYY_MM_DDHH_MM_SS.getCode());
         calendar.setTime(date);
@@ -1519,9 +1472,8 @@ public class DateTimeUtil {
      *
      * @param date 时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static int getWeek(Date date) throws BaseException {
+    public static int getWeek(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return getWeek(calendar);
@@ -1532,9 +1484,8 @@ public class DateTimeUtil {
      *
      * @param calendar 当前时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static int getWeek(Calendar calendar) throws BaseException {
+    public static int getWeek(Calendar calendar) {
         int week = 0;
         switch (calendar.get(Calendar.DAY_OF_WEEK)) {
             case 1:
@@ -1563,7 +1514,7 @@ public class DateTimeUtil {
                 break;
         }
         if (week == 0) {
-            throw new BaseException("获取星期失败！");
+            throw new CommonException("获取星期失败！");
         }
         return week;
     }
@@ -1573,9 +1524,8 @@ public class DateTimeUtil {
      *
      * @param timestamp 时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static String getWeekChineseName(Timestamp timestamp) throws BaseException {
+    public static String getWeekChineseName(Timestamp timestamp) {
         Calendar calendar = Calendar.getInstance();
         Date date = timestampToDate(timestamp);
         calendar.setTime(date);
@@ -1588,9 +1538,8 @@ public class DateTimeUtil {
      * @param strTime    时间
      * @param formatType 时间格式
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static String getWeekChineseName(String strTime, String formatType) throws BaseException {
+    public static String getWeekChineseName(String strTime, String formatType) {
         Calendar calendar = Calendar.getInstance();
         Date date = stringToDate(strTime, formatType);
         calendar.setTime(date);
@@ -1602,9 +1551,8 @@ public class DateTimeUtil {
      *
      * @param time 时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static String getWeekChineseName(long time) throws BaseException {
+    public static String getWeekChineseName(long time) {
         Calendar calendar = Calendar.getInstance();
         Date date = longToDate(time, DateTimeEnum.YYYY_MM_DDHH_MM_SS.getCode());
         calendar.setTime(date);
@@ -1616,9 +1564,8 @@ public class DateTimeUtil {
      *
      * @param date 时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static String getWeekChineseName(Date date) throws BaseException {
+    public static String getWeekChineseName(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return getWeekChineseName(calendar);
@@ -1629,9 +1576,8 @@ public class DateTimeUtil {
      *
      * @param calendar 当前时间
      * @return 星期
-     * @throws BaseException 自定义异常
      */
-    public static String getWeekChineseName(Calendar calendar) throws BaseException {
+    public static String getWeekChineseName(Calendar calendar) {
         String result = "";
         int week = getWeek(calendar);
         switch (week) {
@@ -1660,7 +1606,7 @@ public class DateTimeUtil {
                 break;
         }
         if (StringUtils.isEmpty(result)) {
-            throw new BaseException("获取星期失败！");
+            throw new CommonException("获取星期失败！");
         }
         return result;
     }

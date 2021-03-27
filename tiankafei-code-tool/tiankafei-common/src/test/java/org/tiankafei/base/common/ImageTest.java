@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.tiankafei.common.exceptions.BaseException;
 import org.tiankafei.common.util.FileUtil;
 
 public class ImageTest {
@@ -74,11 +73,7 @@ public class ImageTest {
             } else {
                 filePathMap.put(fileName, 0);
             }
-            try {
-                FileUtil.copyFile(filePath, targetFilePath);
-            } catch (BaseException e) {
-                e.printStackTrace();
-            }
+            FileUtil.copyFile(filePath, targetFilePath);
         }
     }
 
