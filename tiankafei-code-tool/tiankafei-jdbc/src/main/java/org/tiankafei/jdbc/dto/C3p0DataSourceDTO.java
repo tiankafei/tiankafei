@@ -4,8 +4,7 @@ import java.util.Properties;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.common.exceptions.BaseException;
-import org.tiankafei.common.util.LogUtil;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.common.util.PropertiesUtil;
 import org.tiankafei.jdbc.constant.C3p0DataSourceConstants;
 
@@ -149,7 +148,7 @@ public class C3p0DataSourceDTO extends DataSourceDTO {
             if (StringUtils.isNotEmpty(dbPropertis)) {
                 dbProperties = PropertiesUtil.getInstance(dbPropertis);
             } else {
-                throw new BaseException("没有传入jdbc配置文件！");
+                throw new CommonException("没有传入数据库配置文件！");
             }
             //数据库类型：1Oracle;2MySql,3SQLServer,4DB2,5SQLite;
             setProductName(getStringValue(dbProperties, C3p0DataSourceConstants.DATABASE_PRODUCT_NAME));
@@ -200,7 +199,7 @@ public class C3p0DataSourceDTO extends DataSourceDTO {
             dbFilePath = getStringValue(dbProperties, C3p0DataSourceConstants.DB_FILE_PATH);
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtil.error("解析数据库配置文件失败：" + e.getMessage());
+            throw new CommonException("解析数据库配置文件失败！");
         }
     }
 
@@ -221,9 +220,8 @@ public class C3p0DataSourceDTO extends DataSourceDTO {
      * @param dbProperties 资源配置文件
      * @param paramName    参数名称
      * @return 数值型值
-     * @throws BaseException 自定义异常
      */
-    protected int getIntegerValue(Properties dbProperties, String paramName) throws BaseException {
+    protected int getIntegerValue(Properties dbProperties, String paramName) {
         return PropertiesUtil.getIntegerValue(dbProperties, paramName);
     }
 
@@ -233,9 +231,8 @@ public class C3p0DataSourceDTO extends DataSourceDTO {
      * @param dbProperties 资源配置文件
      * @param paramName    参数名称
      * @return boolean类型值
-     * @throws BaseException 自定义异常
      */
-    protected boolean getBooleanValue(Properties dbProperties, String paramName) throws BaseException {
+    protected boolean getBooleanValue(Properties dbProperties, String paramName) {
         return PropertiesUtil.getBooleanValue(dbProperties, paramName);
     }
 

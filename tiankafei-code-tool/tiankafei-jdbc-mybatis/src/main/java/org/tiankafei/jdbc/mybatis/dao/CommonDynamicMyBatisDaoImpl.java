@@ -9,10 +9,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.jdbc.dto.C3p0DataSourceDTO;
+import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.mybatis.CommonMybatisFactory;
 import org.tiankafei.jdbc.mybatis.mapper.ICommonMyBatisMapperDAO;
 import org.tiankafei.jdbc.mybatis.util.ConnectionMyBatisUtil;
@@ -52,10 +51,8 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
 
     /**
      * 构造mybatis动态DAO对象
-     *
-     * @throws BaseException 自定义异常
      */
-    public CommonDynamicMyBatisDaoImpl() throws BaseException {
+    public CommonDynamicMyBatisDaoImpl() {
         this(null);
     }
 
@@ -63,9 +60,8 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
      * 构造mybatis动态DAO对象
      *
      * @param myBatisResource mybatis连接数据库的资源文件
-     * @throws BaseException 自定义异常
      */
-    public CommonDynamicMyBatisDaoImpl(String myBatisResource) throws BaseException {
+    public CommonDynamicMyBatisDaoImpl(String myBatisResource) {
         initCommonDynamicMyBatisDAO(myBatisResource);
     }
 
@@ -73,9 +69,8 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
      * 初始化mybatis动态DAO对象
      *
      * @param myBatisResource mybatis连接数据库的资源文件
-     * @throws BaseException 自定义异常
      */
-    protected void initCommonDynamicMyBatisDAO(String myBatisResource) throws BaseException {
+    protected void initCommonDynamicMyBatisDAO(String myBatisResource) {
         ConnectionMyBatisUtil connectionMyBatisUtil = new ConnectionMyBatisUtil(myBatisResource);
         sqlSessionFactory = connectionMyBatisUtil.getSqlSessionFactory();
         c3p0DataSourceDTO = connectionMyBatisUtil.getC3p0DataSourceDTO();
@@ -85,22 +80,22 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
     }
 
     @Override
-    public void transactionBegin() throws BaseException {
+    public void transactionBegin() {
         openSession(false);
     }
 
     @Override
-    public void transactionCommit() throws BaseException {
+    public void transactionCommit() {
         sqlSession.commit();
     }
 
     @Override
-    public void transactionRollBack() throws BaseException {
+    public void transactionRollBack() {
         sqlSession.rollback();
     }
 
     @Override
-    public void transactionClose() throws BaseException {
+    public void transactionClose() {
         sqlSession.close();
     }
 
@@ -125,12 +120,12 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
     }
 
     @Override
-    public JdbcTemplate getJdbcTemplate() throws BaseException {
+    public JdbcTemplate getJdbcTemplate() {
         return null;
     }
 
     @Override
-    public DataSource getDataSource() throws BaseException {
+    public DataSource getDataSource() {
         return null;
     }
 
@@ -145,32 +140,32 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
     }
 
     @Override
-    public Timestamp getCurrentTimestamp() throws BaseException {
+    public Timestamp getCurrentTimestamp() {
         return generalMyBatisDAO.getCurrentTimestamp(commonMyBatisMapperDAO);
     }
 
     @Override
-    public boolean createDatabase(String dbFilePath, List<String> sqlList) throws BaseException {
+    public boolean createDatabase(String dbFilePath, List<String> sqlList) {
         return generalMyBatisDAO.createDatabase(dbFilePath, sqlList, getDatabaseProductName());
     }
 
     @Override
-    public boolean update(SqlParamDTO sqlParamDTO) throws BaseException {
+    public boolean update(SqlParamDTO sqlParamDTO) {
         return MyBatisGeneralSqlUtil.executeUpdateSql(sqlParamDTO, commonMyBatisMapperDAO, this);
     }
 
     @Override
-    public boolean batchUpdate(SqlParamDTO sqlParamDTO) throws BaseException {
+    public boolean batchUpdate(SqlParamDTO sqlParamDTO) {
         return MyBatisGeneralSqlUtil.executeBatchUpdateSql(sqlParamDTO, commonMyBatisMapperDAO, this);
     }
 
     @Override
-    public List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO) throws BaseException {
+    public List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO) {
         return MyBatisGeneralSqlUtil.queryDataMapList(sqlParamDTO, commonMyBatisMapperDAO);
     }
 
     @Override
-    public boolean checkTableExists(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean checkTableExists(PhysicalStorageTableDTO physicalStorageTableDTO) {
         List<PhysicalStorageTableDTO> physicalStorageTableList = commonMyBatisMapperDAO.checkTableExists(physicalStorageTableDTO);
         if (CollectionUtils.isNotEmpty(physicalStorageTableList)) {
             return true;
@@ -179,13 +174,13 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
     }
 
     @Override
-    public boolean createTable(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean createTable(PhysicalStorageTableDTO physicalStorageTableDTO) {
         commonMyBatisMapperDAO.createTable(physicalStorageTableDTO);
         return true;
     }
 
     @Override
-    public boolean dropTable(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean dropTable(PhysicalStorageTableDTO physicalStorageTableDTO) {
         commonMyBatisMapperDAO.dropTable(physicalStorageTableDTO);
         return true;
     }
@@ -200,22 +195,22 @@ public class CommonDynamicMyBatisDaoImpl implements ICommonMyBatisDAO {
     }
 
     @Override
-    public SqlParamDTO getCurrentTimestampSql() throws BaseException {
+    public SqlParamDTO getCurrentTimestampSql() {
         return generalMyBatisDAO.getCurrentTimestampSql(sqlSessionFactory);
     }
 
     @Override
-    public SqlParamDTO checkTableExistSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO checkTableExistSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return generalMyBatisDAO.checkTableExistSql(sqlSessionFactory, physicalStorageTableDTO);
     }
 
     @Override
-    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return generalMyBatisDAO.createTableSql(sqlSessionFactory, physicalStorageTableDTO);
     }
 
     @Override
-    public SqlParamDTO dropTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO dropTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return generalMyBatisDAO.dropTableSql(sqlSessionFactory, physicalStorageTableDTO);
     }
 

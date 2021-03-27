@@ -3,8 +3,7 @@ package org.tiankafei.jdbc.mybatis.util;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+ import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.jdbc.dao.ICommonDAO;
 import org.tiankafei.jdbc.mybatis.mapper.ICommonMyBatisMapperDAO;
 
@@ -19,9 +18,8 @@ public class MyBatisGeneralSqlUtil {
      * @param sqlParamDTO            sql参数对象
      * @param commonMyBatisMapperDAO mybatis接口对象
      * @return 数据结果集
-     * @throws BaseException 自定义异常
      */
-    public static List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO, ICommonMyBatisMapperDAO commonMyBatisMapperDAO) throws BaseException {
+    public static List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO, ICommonMyBatisMapperDAO commonMyBatisMapperDAO) {
         String sql = getSql(sqlParamDTO);
         int length = sqlParamDTO.getParamList().size();
         Map<String, Object> map = new HashMap<String, Object>(length + 1);
@@ -41,9 +39,8 @@ public class MyBatisGeneralSqlUtil {
      * @param commonMyBatisMapperDAO mybatis接口对象
      * @param commonDAO              dao层处理对象
      * @return 操作成功与否
-     * @throws BaseException 自定义异常
      */
-    public static boolean executeUpdateSql(SqlParamDTO sqlParamDTO, ICommonMyBatisMapperDAO commonMyBatisMapperDAO, ICommonDAO commonDAO) throws BaseException {
+    public static boolean executeUpdateSql(SqlParamDTO sqlParamDTO, ICommonMyBatisMapperDAO commonMyBatisMapperDAO, ICommonDAO commonDAO) {
         String sql = getSql(sqlParamDTO);
         int length = sqlParamDTO.getParamList().size();
         Map<String, Object> map = new HashMap<String, Object>(length + 1);
@@ -67,9 +64,8 @@ public class MyBatisGeneralSqlUtil {
      * @param commonMyBatisMapperDAO mybatis接口对象
      * @param commonDAO              dao层处理对象
      * @return 操作成功与否
-     * @throws BaseException 自定义异常
      */
-    public static boolean executeBatchUpdateSql(SqlParamDTO sqlParamDTO, ICommonMyBatisMapperDAO commonMyBatisMapperDAO, ICommonDAO commonDAO) throws BaseException {
+    public static boolean executeBatchUpdateSql(SqlParamDTO sqlParamDTO, ICommonMyBatisMapperDAO commonMyBatisMapperDAO, ICommonDAO commonDAO) {
         String sql = getSql(sqlParamDTO);
         boolean flag = true;
 
@@ -98,7 +94,7 @@ public class MyBatisGeneralSqlUtil {
      * @param sqlParamDTO sql参数对象
      * @return mybatis执行的SQL
      */
-    private static String getSql(SqlParamDTO sqlParamDTO) throws BaseException {
+    private static String getSql(SqlParamDTO sqlParamDTO) {
         String str = "?";
         if (!sqlParamDTO.getSql().contains(str)) {
             return sqlParamDTO.getSql();

@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.jdbc.dto.C3p0DataSourceDTO;
 import org.tiankafei.jdbc.util.ConnectionUtil;
 
@@ -36,10 +36,8 @@ public class ConnectionMyBatisUtil {
 
     /**
      * 构造mybatis的session会话工厂类
-     *
-     * @throws BaseException 自定义异常
      */
-    public ConnectionMyBatisUtil() throws BaseException {
+    public ConnectionMyBatisUtil() {
         this(null);
     }
 
@@ -47,9 +45,8 @@ public class ConnectionMyBatisUtil {
      * 构造mybatis的session会话工厂类
      *
      * @param resource mybatis连接数据库的资源文件
-     * @throws BaseException 自定义异常
      */
-    public ConnectionMyBatisUtil(String resource) throws BaseException {
+    public ConnectionMyBatisUtil(String resource) {
         initGetDatabaseConnectionUtil(resource);
     }
 
@@ -60,9 +57,8 @@ public class ConnectionMyBatisUtil {
      * @param url      连接数据库url
      * @param username 连接数据库的用户名
      * @param password 连接数据库的密码
-     * @throws BaseException 自定义异常
      */
-    public ConnectionMyBatisUtil(String driver, String url, String username, String password) throws BaseException {
+    public ConnectionMyBatisUtil(String driver, String url, String username, String password) {
         initGetDatabaseConnectionUtil(driver, url, username, password);
     }
 
@@ -70,9 +66,8 @@ public class ConnectionMyBatisUtil {
      * 初始化获取数据库连接对象
      *
      * @param resource db数据库配置文件
-     * @throws BaseException 自定义异常
      */
-    protected void initGetDatabaseConnectionUtil(String resource) throws BaseException {
+    protected void initGetDatabaseConnectionUtil(String resource) {
         createCommonMyBatisDAO(resource);
     }
 
@@ -83,9 +78,8 @@ public class ConnectionMyBatisUtil {
      * @param url      连接数据库url
      * @param username 连接数据库的用户名
      * @param password 连接数据库的密码
-     * @throws BaseException 自定义异常
      */
-    protected void initGetDatabaseConnectionUtil(String driver, String url, String username, String password) throws BaseException {
+    protected void initGetDatabaseConnectionUtil(String driver, String url, String username, String password) {
         createCommonMyBatisDAO(driver, url, username, password);
     }
 
@@ -93,19 +87,18 @@ public class ConnectionMyBatisUtil {
      * 初始化公共的由xml创建的MyBatisDAO对象
      *
      * @param resource 资源文件路径
-     * @throws BaseException 自定义异常类
      */
-    private void createCommonMyBatisDAO(String resource) throws BaseException {
+    private void createCommonMyBatisDAO(String resource) {
+        if (StringUtils.isEmpty(resource)) {
+            throw new CommonException("缺失mybatis配置文件！");
+        }
         try {
-            if (StringUtils.isEmpty(resource)) {
-                throw new BaseException("没有传入mybatis配置文件！");
-            }
             Reader reader = Resources.getResourceAsReader(resource);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             c3p0DataSourceDTO = ConnectionUtil.initDatabaseConnectionParamVO(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource());
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("获取资源文件失败！");
         }
     }
 
@@ -116,9 +109,8 @@ public class ConnectionMyBatisUtil {
      * @param url      数据库连接URL
      * @param username 用户名
      * @param password 密码
-     * @throws BaseException 自定义异常
      */
-    private void createCommonMyBatisDAO(String driver, String url, String username, String password) throws BaseException {
+    private void createCommonMyBatisDAO(String driver, String url, String username, String password) {
         Properties properties = new Properties();
         properties.setProperty("driver", driver);
         properties.setProperty("url", url);

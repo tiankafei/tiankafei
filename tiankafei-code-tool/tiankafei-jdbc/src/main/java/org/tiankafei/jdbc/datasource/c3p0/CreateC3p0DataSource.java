@@ -2,7 +2,6 @@ package org.tiankafei.jdbc.datasource.c3p0;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import javax.sql.DataSource;
-import org.tiankafei.common.exceptions.BaseException;
 import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
 import org.tiankafei.jdbc.datasource.AbstractCreateDataSource;
@@ -41,7 +40,7 @@ public class CreateC3p0DataSource extends AbstractCreateDataSource {
                 driver = DbConfigConstants.DB_DRIVER_SQLITE;
             }
             if (jdbcUrl == null || driver == null) {
-                throw new BaseException(c3p0DataSourceDTO.getProductName() + "不支持当前数据库！");
+                throw new CommonException(c3p0DataSourceDTO.getProductName() + "不支持当前数据库！");
             }
             //连接
             comboPooledDataSource.setJdbcUrl(jdbcUrl);

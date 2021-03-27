@@ -16,12 +16,10 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.mybatis.generator.internal.util.StringUtility;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.jdbc.mybatis.constant.MybatisDbConfigConstants;
 import org.tiankafei.jdbc.mybatis.dao.CommonDynamicMyBatisDaoImpl;
-
-import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
 /**
  * 自定义mybatis生成注释类
@@ -38,50 +36,46 @@ public class TiankafeiCommentGenerator implements CommentGenerator {
     private Map<String, String> tableNameMap = new HashMap<String, String>();
 
     public TiankafeiCommentGenerator() {
-        try {
-            suppressAllComments = false;
-            systemPro = System.getProperties();
-            String mybatisConfigProperties = systemPro.getProperty(MybatisDbConfigConstants.MYBATIS_CONFIG_PROPERTIES);
-            String columnTableName = systemPro.getProperty(MybatisDbConfigConstants.COLUMN_TABLE_NAME_PROPERTIES);
-            String tableTableName = systemPro.getProperty(MybatisDbConfigConstants.TABLE_TABLE_NAME_PROPERTIES);
+        suppressAllComments = false;
+        systemPro = System.getProperties();
+        String mybatisConfigProperties = systemPro.getProperty(MybatisDbConfigConstants.MYBATIS_CONFIG_PROPERTIES);
+        String columnTableName = systemPro.getProperty(MybatisDbConfigConstants.COLUMN_TABLE_NAME_PROPERTIES);
+        String tableTableName = systemPro.getProperty(MybatisDbConfigConstants.TABLE_TABLE_NAME_PROPERTIES);
 
-            CommonDynamicMyBatisDaoImpl commonDynamicMyBatisDaoImpl = new CommonDynamicMyBatisDaoImpl(mybatisConfigProperties);
-            //获取字段中文注释
-            StringBuffer sqlBuffer = new StringBuffer().append("SELECT * FROM ").append(columnTableName);
-            List<Map<String, Object>> dataMapList = commonDynamicMyBatisDaoImpl.queryDataMapList(new SqlParamDTO(sqlBuffer.toString()));
-            for (int index = 0, length = dataMapList.size(); index < length; index++) {
-                Map<String, Object> dataMap = dataMapList.get(index);
-                String tableName = (String) dataMap.get("TABLE_NAME");
-                String columnName = (String) dataMap.get("COLUMN_NAME");
-                String chineseName = (String) dataMap.get("CHINESE_NAME");
+        CommonDynamicMyBatisDaoImpl commonDynamicMyBatisDaoImpl = new CommonDynamicMyBatisDaoImpl(mybatisConfigProperties);
+        //获取字段中文注释
+        StringBuffer sqlBuffer = new StringBuffer().append("SELECT * FROM ").append(columnTableName);
+        List<Map<String, Object>> dataMapList = commonDynamicMyBatisDaoImpl.queryDataMapList(new SqlParamDTO(sqlBuffer.toString()));
+        for (int index = 0, length = dataMapList.size(); index < length; index++) {
+            Map<String, Object> dataMap = dataMapList.get(index);
+            String tableName = (String) dataMap.get("TABLE_NAME");
+            String columnName = (String) dataMap.get("COLUMN_NAME");
+            String chineseName = (String) dataMap.get("CHINESE_NAME");
 
-                Map<String, String> columnChineseMap = null;
-                if (columnChineseMapMap.containsKey(tableName)) {
-                    columnChineseMap = columnChineseMapMap.get(tableName);
-                } else {
-                    columnChineseMap = new HashMap<String, String>();
-                    columnChineseMapMap.put(tableName, columnChineseMap);
-                }
-                columnChineseMap.put(columnName, chineseName);
+            Map<String, String> columnChineseMap = null;
+            if (columnChineseMapMap.containsKey(tableName)) {
+                columnChineseMap = columnChineseMapMap.get(tableName);
+            } else {
+                columnChineseMap = new HashMap<String, String>();
+                columnChineseMapMap.put(tableName, columnChineseMap);
             }
+            columnChineseMap.put(columnName, chineseName);
+        }
 
-            //获取物理表中文注释
-            sqlBuffer = new StringBuffer().append("SELECT * FROM ").append(tableTableName);
-            dataMapList = commonDynamicMyBatisDaoImpl.queryDataMapList(new SqlParamDTO(sqlBuffer.toString()));
-            for (int index = 0, length = dataMapList.size(); index < length; index++) {
-                Map<String, Object> dataMap = dataMapList.get(index);
-                String tableName = (String) dataMap.get("TABLE_NAME");
-                String tableComments = (String) dataMap.get("TABLE_COMMENTS");
-                tableNameMap.put(tableName, tableComments);
-            }
-        } catch (BaseException e) {
-            e.printStackTrace();
+        //获取物理表中文注释
+        sqlBuffer = new StringBuffer().append("SELECT * FROM ").append(tableTableName);
+        dataMapList = commonDynamicMyBatisDaoImpl.queryDataMapList(new SqlParamDTO(sqlBuffer.toString()));
+        for (int index = 0, length = dataMapList.size(); index < length; index++) {
+            Map<String, Object> dataMap = dataMapList.get(index);
+            String tableName = (String) dataMap.get("TABLE_NAME");
+            String tableComments = (String) dataMap.get("TABLE_COMMENTS");
+            tableNameMap.put(tableName, tableComments);
         }
     }
 
     @Override
     public void addConfigurationProperties(Properties properties) {
-        suppressAllComments = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS));
+        suppressAllComments = StringUtility.isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS));
     }
 
     /**
