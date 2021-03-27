@@ -8,9 +8,9 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.common.util.DataStreamUtil;
-import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
 import org.tiankafei.jdbc.constant.ColumnNameConstants;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
+import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
 
 /**
  * @author 甜咖啡

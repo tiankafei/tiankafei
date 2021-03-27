@@ -4,9 +4,9 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import org.tiankafei.common.dto.SqlParamDTO;
-import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.dao.CommonDynamicDaoImpl;
 import org.tiankafei.jdbc.dao.ICommonDAO;
+import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 
 /**
  * 动态CommonLogic

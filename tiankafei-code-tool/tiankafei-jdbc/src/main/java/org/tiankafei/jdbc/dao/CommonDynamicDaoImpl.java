@@ -16,11 +16,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.tiankafei.common.dto.SqlParamDTO;
-import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.CommonJdbcFactory;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
 import org.tiankafei.jdbc.datasource.AbstractCreateDataSource;
 import org.tiankafei.jdbc.dto.C3p0DataSourceDTO;
+import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 
 /**
  * 动态CommonDAO

@@ -1,9 +1,9 @@
 package org.tiankafei.jdbc.dao.mysql;
 
 import org.tiankafei.common.dto.SqlParamDTO;
+import org.tiankafei.jdbc.dao.AbstractGeneralDAO;
 import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
 import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
-import org.tiankafei.jdbc.dao.AbstractGeneralDAO;
 import org.tiankafei.jdbc.util.GeneralSqlUtil;
 
 /**

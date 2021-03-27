@@ -3,10 +3,10 @@ package org.tiankafei.jdbc.dao.oracle;
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.tiankafei.common.dto.SqlParamDTO;
-import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
-import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.constant.ColumnNameConstants;
 import org.tiankafei.jdbc.dao.AbstractGeneralDAO;
+import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
+import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.util.GeneralSqlUtil;
 
 /**
