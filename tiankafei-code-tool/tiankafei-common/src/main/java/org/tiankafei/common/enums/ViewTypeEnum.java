@@ -2,6 +2,7 @@ package org.tiankafei.common.enums;
 
 /**
  * 显示类型
+ *
  * @author tiankafei
  */
 public enum ViewTypeEnum {

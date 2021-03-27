@@ -1,8 +1,8 @@
 package org.tiankafei.common.sort.observer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.tiankafei.common.sort.MainInterface;
 import org.tiankafei.common.sort.observer.event.ObserverEvent;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author 魏双双

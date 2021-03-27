@@ -1,15 +1,14 @@
 package org.tiankafei.common.sort.observer;
 
+import java.util.Observable;
+import java.util.Observer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tiankafei.common.sort.comparator.DoubleSortComparator;
 import org.tiankafei.common.sort.comparator.IntegerSortComparator;
 import org.tiankafei.common.sort.observer.event.ObserverEvent;
 import org.tiankafei.common.sort.singleton.SortComparatorSingleton;
 import org.tiankafei.common.sort.singleton.SortFactoryStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * 观察者模式

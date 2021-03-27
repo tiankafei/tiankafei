@@ -1,7 +1,7 @@
 package org.tiankafei.common.sort.selection;
 
-import org.tiankafei.common.sort.comparator.SortComparator;
 import lombok.extern.slf4j.Slf4j;
+import org.tiankafei.common.sort.comparator.SortComparator;
 
 /**
  * 第一轮从第一个位置开始找到一个最小值，放在第一个位置，

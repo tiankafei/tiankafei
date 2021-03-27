@@ -1,8 +1,8 @@
 package org.tiankafei.common.sort.decorator;
 
+import lombok.extern.slf4j.Slf4j;
 import org.tiankafei.common.sort.bubble.BubbleSortFactory;
 import org.tiankafei.common.sort.factory.SortFactory;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author tiankafei

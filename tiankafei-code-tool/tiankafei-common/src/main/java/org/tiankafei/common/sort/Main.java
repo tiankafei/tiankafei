@@ -1,5 +1,10 @@
 package org.tiankafei.common.sort;
 
+import com.google.common.base.Stopwatch;
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 import org.tiankafei.common.sort.chain.MainChain;
 import org.tiankafei.common.sort.decorator.MainDecorator;
 import org.tiankafei.common.sort.observer.MainObserver;
@@ -9,12 +14,6 @@ import org.tiankafei.common.sort.proxy.TestProxy;
 import org.tiankafei.common.sort.proxy.TestTimeProxy;
 import org.tiankafei.proxy.IAspect;
 import org.tiankafei.proxy.ProxyUtil;
-import com.google.common.base.Stopwatch;
-import lombok.extern.slf4j.Slf4j;
-
-import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 使用的模式如下：

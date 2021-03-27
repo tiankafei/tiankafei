@@ -1,7 +1,7 @@
 package org.tiankafei.common.sort.quick;
 
-import org.tiankafei.common.sort.comparator.SortComparator;
 import lombok.extern.slf4j.Slf4j;
+import org.tiankafei.common.sort.comparator.SortComparator;
 
 /**
  * 第一轮：以最右边的数据为标准，从左到右遍历，找到第一个大于标准值得位置；从右到左遍历，找到第一个小于标准值得位置，然年两者交换位置，然后跳出里层循环；当左右索引位置相同时，跳出最外面的循环，同时记录刚才的索引位置。如果当前位置和标准值的位置不相等时，该索引的位置与标准值的位置进行交换

@@ -1,12 +1,11 @@
 package org.tiankafei.common.sort.singleton;
 
+import java.util.Arrays;
+import java.util.Collections;
+import lombok.extern.slf4j.Slf4j;
 import org.tiankafei.common.sort.comparator.DoubleSortComparator;
 import org.tiankafei.common.sort.comparator.IntegerSortComparator;
 import org.tiankafei.common.sort.factory.SortFactory;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @ClassName SortDecoratorImpl

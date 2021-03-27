@@ -1,7 +1,7 @@
 package org.tiankafei.common.sort.bubble;
 
-import org.tiankafei.common.sort.comparator.SortComparator;
 import lombok.extern.slf4j.Slf4j;
+import org.tiankafei.common.sort.comparator.SortComparator;
 
 /**
  * 第一轮，第一个位置和第二个位置比，前面值大的进行交换位置，然后第二个和第三个比，前面值大的交换位置，以此类推，一直比到最后一个值，第一轮会把最大值交换到最右边的位置

@@ -1,7 +1,7 @@
 package org.tiankafei.common.sort.shell;
 
-import org.tiankafei.common.sort.comparator.SortComparator;
 import lombok.extern.slf4j.Slf4j;
+import org.tiankafei.common.sort.comparator.SortComparator;
 
 /**
  * @ClassName SelectionSortUtil

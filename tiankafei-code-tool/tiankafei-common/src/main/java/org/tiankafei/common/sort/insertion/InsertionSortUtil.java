@@ -1,7 +1,7 @@
 package org.tiankafei.common.sort.insertion;
 
-import org.tiankafei.common.sort.comparator.SortComparator;
 import lombok.extern.slf4j.Slf4j;
+import org.tiankafei.common.sort.comparator.SortComparator;
 
 /**
  * 第一轮，第一个值和第二个值进行比较，后面小的进行交换位置

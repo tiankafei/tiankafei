@@ -1,10 +1,9 @@
 package org.tiankafei.common.dto;
 
-import org.tiankafei.common.enums.ViewTypeEnum;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import org.tiankafei.common.enums.ViewTypeEnum;
 
 /**
  * 代码名称视图模型

@@ -4,7 +4,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 /**
  * Kryo序列化工具类

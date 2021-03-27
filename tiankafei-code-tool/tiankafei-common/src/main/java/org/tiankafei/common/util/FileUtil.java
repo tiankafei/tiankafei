@@ -1,14 +1,9 @@
 package org.tiankafei.common.util;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import org.apache.commons.compress.utils.Lists;
-import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.common.enums.BaseEnum;
-
-import javax.imageio.ImageIO;
 import java.awt.Image;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,6 +17,10 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.FileChannel;
 import java.util.List;
+import javax.imageio.ImageIO;
+import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.lang3.StringUtils;
+import org.tiankafei.common.enums.BaseEnum;
 import org.tiankafei.common.exceptions.CommonException;
 
 /**

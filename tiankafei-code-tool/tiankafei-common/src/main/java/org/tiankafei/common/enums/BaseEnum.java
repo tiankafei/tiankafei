@@ -66,7 +66,7 @@ public enum BaseEnum {
 
     private String value;
 
-    BaseEnum(String value){
+    BaseEnum(String value) {
         this.value = value;
     }
 

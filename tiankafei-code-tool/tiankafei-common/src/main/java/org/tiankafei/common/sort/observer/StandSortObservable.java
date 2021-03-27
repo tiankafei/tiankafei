@@ -1,8 +1,7 @@
 package org.tiankafei.common.sort.observer;
 
-import org.tiankafei.common.sort.observer.event.ObserverEvent;
-
 import java.util.Observable;
+import org.tiankafei.common.sort.observer.event.ObserverEvent;
 
 /**
  * 这是被监听的对象
