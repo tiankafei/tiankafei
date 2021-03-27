@@ -1,7 +1,7 @@
 package org.tiankafei.ui.design.models;
 
 import java.io.Serializable;
-import org.tiankafei.base.dto.PaginatedDTO;
+import org.tiankafei.common.dto.PaginatedDTO;
 
 /**
  * 自定义表格分页对象

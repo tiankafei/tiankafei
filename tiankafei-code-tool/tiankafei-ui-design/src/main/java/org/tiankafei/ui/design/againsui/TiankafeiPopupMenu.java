@@ -1,7 +1,6 @@
 package org.tiankafei.ui.design.againsui;
 
 import java.util.List;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.models.MenuItemVO;
 import org.tiankafei.ui.design.models.MenuVO;
 import org.tiankafei.ui.design.models.TiankafeiDesignerVO;
@@ -40,9 +39,8 @@ public class TiankafeiPopupMenu extends TiankafeiDesignerVO {
      * 初始化自定义右键菜单对象
      *
      * @return 自定义右键菜单对象
-     * @throws BaseException 自定义异常
      */
-    public TkfPopupMenu initTiankafeiPopupMenu() throws BaseException {
+    public TkfPopupMenu initTiankafeiPopupMenu() {
         tkfPopupMenu.setTiankafeiModelUiVO(getTiankafeiModelUiVO());
         //设置控件属性
         setComponentParam(tkfPopupMenu);

@@ -10,8 +10,8 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import org.apache.commons.collections4.CollectionUtils;
-import org.tiankafei.base.enums.DataTypeEnum;
-import org.tiankafei.base.util.LogUtil;
+import org.tiankafei.common.enums.DataTypeEnum;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.design.againsui.abstractinterface.AbstractTiankafeiTableRendererUtil;
 import org.tiankafei.ui.design.againsui.table.TiankafeiTableRendererUtil;
 import org.tiankafei.ui.design.constant.TiankafeiDesignerConstants;
@@ -96,7 +96,7 @@ public class TiankafeiTableCellRenderer extends DefaultTableCellRenderer impleme
                 }
             }
         } else {
-            LogUtil.error("表格渲染失败，原因是:当前列号大于表格中的列的总数量！");
+            throw new CommonException("表格渲染失败，原因是:当前列号大于表格中的列的总数量！");
         }
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }

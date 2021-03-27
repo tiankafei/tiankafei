@@ -2,7 +2,7 @@ package org.tiankafei.ui.design.againsui;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import org.tiankafei.base.dto.CodeNameDTO;
+import org.tiankafei.common.dto.CodeNameDTO;
 import org.tiankafei.ui.design.models.TiankafeiDesignerVO;
 import org.tiankafei.ui.design.modelsui.TkfList;
 

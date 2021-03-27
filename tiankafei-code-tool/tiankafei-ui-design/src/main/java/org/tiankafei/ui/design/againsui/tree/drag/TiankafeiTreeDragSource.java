@@ -12,8 +12,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.DataStreamUtil;
+import org.tiankafei.common.util.DataStreamUtil;
 import org.tiankafei.ui.design.models.TiankafeiTreeAttributeVO;
 import org.tiankafei.ui.design.modelsui.TkfTree;
 import org.tiankafei.ui.design.modelsui.TkfTreeNode;
@@ -48,11 +47,7 @@ public class TiankafeiTreeDragSource extends DragSourceAdapter implements DragGe
         TreePath treePath = tkfTree.getPathForLocation(point.x, point.y);
         if (treePath != null) {
             TkfTreeNode tkfTreeNode = (TkfTreeNode) treePath.getLastPathComponent();
-            try {
-                serializableNode(tkfTreeNode);
-            } catch (BaseException e) {
-                e.printStackTrace();
-            }
+            serializableNode(tkfTreeNode);
 
             if (tiankafeiTreeAttributeVO.isTreeDragSourceDeleteFlag()) {
                 //源树节点拖拽时删除节点
@@ -63,7 +58,7 @@ public class TiankafeiTreeDragSource extends DragSourceAdapter implements DragGe
         dge.startDrag(cursor, new StringSelection("drag"), this);
     }
 
-    private void serializableNode(TkfTreeNode tkfTreeNode) throws BaseException {
+    private void serializableNode(TkfTreeNode tkfTreeNode) {
         FileOutputStream objfile = null;
         ObjectOutputStream objectOutputStream = null;
         try {

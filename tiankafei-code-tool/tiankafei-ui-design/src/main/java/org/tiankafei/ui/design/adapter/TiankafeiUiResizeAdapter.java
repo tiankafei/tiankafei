@@ -6,7 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JFrame;
-import org.tiankafei.base.util.LogUtil;
+import org.tiankafei.common.util.LogUtil;
 
 /**
  * 自定义的调整拉伸适配器对象

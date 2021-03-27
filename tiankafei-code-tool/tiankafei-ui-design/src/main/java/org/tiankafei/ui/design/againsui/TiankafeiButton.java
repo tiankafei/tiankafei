@@ -1,6 +1,5 @@
 package org.tiankafei.ui.design.againsui;
 
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.models.TiankafeiButtonAttributeDTO;
 import org.tiankafei.ui.design.models.TiankafeiDesignerVO;
 import org.tiankafei.ui.design.modelsui.TkfButton;
@@ -33,9 +32,8 @@ public class TiankafeiButton extends TiankafeiDesignerVO {
      * 初始化自定义按钮对象
      *
      * @return 自定义按钮对象
-     * @throws BaseException 自定义异常
      */
-    public TkfButton initTiankafeiButton() throws BaseException {
+    public TkfButton initTiankafeiButton() {
         tkfButton = new TkfButton();
         tkfButton.setTiankafeiButtonAttributeDTO(getTiankafeiButtonAttributeDTO());
         //设置控件属性
@@ -51,9 +49,8 @@ public class TiankafeiButton extends TiankafeiDesignerVO {
      * 初始化重新绘制的自定义按钮对象
      *
      * @return 自定义按钮对象
-     * @throws BaseException 自定义异常
      */
-    public TkfButton initFreshDrawTiankafeiButton() throws BaseException {
+    public TkfButton initFreshDrawTiankafeiButton() {
         //初始化自定义按钮对象
         initTiankafeiButton();
         //重绘按钮
@@ -64,10 +61,8 @@ public class TiankafeiButton extends TiankafeiDesignerVO {
 
     /**
      * 设置图标
-     *
-     * @throws BaseException 自定义异常
      */
-    public void setImageIcon() throws BaseException {
+    public void setImageIcon() {
         super.setImageIcon(tkfButton);
         setEnabled(true);
     }

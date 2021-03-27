@@ -2,7 +2,6 @@ package org.tiankafei.ui.design.againsui;
 
 import javax.swing.ImageIcon;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.models.TiankafeiDesignerVO;
 import org.tiankafei.ui.design.modelsui.TkfCheckBox;
 import org.tiankafei.ui.design.util.ImageIconUtil;
@@ -30,9 +29,8 @@ public class TiankafeiCheckBox extends TiankafeiDesignerVO {
      * 初始化自定义复选按钮
      *
      * @return 自定义复选按钮
-     * @throws BaseException 自定义异常
      */
-    public TkfCheckBox initTiankafeiCheckBox() throws BaseException {
+    public TkfCheckBox initTiankafeiCheckBox() {
         tkfCheckBox.setTiankafeiModelUiVO(getTiankafeiModelUiVO());
         //设置控件属性
         setComponentParam(tkfCheckBox);
