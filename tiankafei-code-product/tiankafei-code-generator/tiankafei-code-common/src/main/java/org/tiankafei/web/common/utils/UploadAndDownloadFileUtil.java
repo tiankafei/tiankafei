@@ -2,16 +2,18 @@ package org.tiankafei.web.common.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import org.tiankafei.base.datetime.DateTimeUtil;
-import org.tiankafei.base.enums.DateTimeEnum;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.DataStreamUtil;
-import org.tiankafei.base.util.FileUtil;
-import org.tiankafei.base.util.UuidUtil;
+import org.tiankafei.common.datetime.DateTimeUtil;
+import org.tiankafei.common.enums.DateTimeEnum;
+import org.tiankafei.common.exceptions.CommonException;
+import org.tiankafei.common.util.DataStreamUtil;
+import org.tiankafei.common.util.FileUtil;
+import org.tiankafei.common.util.UuidUtil;
 
 /**
  * 文件上传工具类
@@ -30,22 +32,16 @@ public class UploadAndDownloadFileUtil {
      * @param byteArray   要上传文件的字节
      * @param targetDir   目标目录
      * @param newFilename 文件后缀名
-     * @throws BaseException 自定义异常
      */
-    public static void uploadFileToServer(byte[] byteArray, String targetDir, String newFilename) throws BaseException {
-        try {
-            //创建目录
-            FileUtil.createDirectory(targetDir);
+    public static void uploadFileToServer(byte[] byteArray, String targetDir, String newFilename) {
+        //创建目录
+        FileUtil.createDirectory(targetDir);
 
-            //文件上传的路径
-            String targetFilePath = targetDir + File.separator + newFilename;
+        //文件上传的路径
+        String targetFilePath = targetDir + File.separator + newFilename;
 
-            //上传文件
-            uploadFile(byteArray, targetFilePath);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+        //上传文件
+        uploadFile(byteArray, targetFilePath);
     }
 
     /**
@@ -56,27 +52,21 @@ public class UploadAndDownloadFileUtil {
      * @param suffixName 文件后缀名
      * @param timestamp  当前时间，组装新的文件名使用
      * @return 新的文件名
-     * @throws BaseException 自定义异常
      */
-    public static String uploadFileToServer(byte[] byteArray, String targetDir, String suffixName, Timestamp timestamp) throws BaseException {
-        try {
-            //创建目录
-            FileUtil.createDirectory(targetDir);
+    public static String uploadFileToServer(byte[] byteArray, String targetDir, String suffixName, Timestamp timestamp) {
+        //创建目录
+        FileUtil.createDirectory(targetDir);
 
-            //开始上传=====================
-            String newFilename = DateTimeUtil.timestampToString(timestamp, DateTimeEnum.YYYYMMDDHHMMSS.getCode()) + "_" + UuidUtil.getUuid(8) + suffixName;
+        //开始上传=====================
+        String newFilename = DateTimeUtil.timestampToString(timestamp, DateTimeEnum.YYYYMMDDHHMMSS.getCode()) + "_" + UuidUtil.getUuid(8) + suffixName;
 
-            //文件上传的路径
-            String targetFilePath = targetDir + File.separator + newFilename;
+        //文件上传的路径
+        String targetFilePath = targetDir + File.separator + newFilename;
 
-            //上传文件
-            uploadFile(byteArray, targetFilePath);
+        //上传文件
+        uploadFile(byteArray, targetFilePath);
 
-            return newFilename;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+        return newFilename;
     }
 
     /**
@@ -84,25 +74,22 @@ public class UploadAndDownloadFileUtil {
      *
      * @param byteArray      要上传文件的字节
      * @param targetFilePath 要上传文件的目录路径
-     * @throws BaseException 自定义异常
      */
-    private static void uploadFile(byte[] byteArray, String targetFilePath) throws BaseException {
+    private static void uploadFile(byte[] byteArray, String targetFilePath) {
         FileOutputStream fileOutputStream = null;
         try {
             //创建输出
             fileOutputStream = new FileOutputStream(targetFilePath);
             //写入
             fileOutputStream.write(byteArray);
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
-            try {
-                DataStreamUtil.closeOutputStream(fileOutputStream);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BaseException(e.getMessage());
-            }
+            DataStreamUtil.closeOutputStream(fileOutputStream);
         }
     }
 
@@ -113,17 +100,11 @@ public class UploadAndDownloadFileUtil {
      * @param downloadFileTempDir 要下载的文件在服务器上生成的临时目录
      * @param suffixName          要下载的文件后缀名
      * @param timestamp           获取当前时间
-     * @throws BaseException 自定义异常
      */
-    public static void downloadFileToLocal(HttpServletResponse response, String downloadFileTempDir, String suffixName, Timestamp timestamp) throws BaseException {
-        try {
-            boolean deleteFlag = true;
-            //下载文件
-            downloadFileToLocal(response, downloadFileTempDir, suffixName, timestamp, deleteFlag);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+    public static void downloadFileToLocal(HttpServletResponse response, String downloadFileTempDir, String suffixName, Timestamp timestamp) {
+        boolean deleteFlag = true;
+        //下载文件
+        downloadFileToLocal(response, downloadFileTempDir, suffixName, timestamp, deleteFlag);
     }
 
     /**
@@ -134,28 +115,22 @@ public class UploadAndDownloadFileUtil {
      * @param suffixName          后缀
      * @param timestamp           获取当前时间
      * @param deleteFlag          下载完成后是否要删除该文件
-     * @throws BaseException 自定义异常
      */
-    public static void downloadFileToLocal(HttpServletResponse response, String downloadFileTempDir, String suffixName, Timestamp timestamp, boolean deleteFlag) throws BaseException {
-        try {
-            //要下载的文件名
-            String downloadFileName = DateTimeUtil.timestampToString(timestamp, DateTimeEnum.YYYYMMDDHHMMSS.getCode()) + "_" + UuidUtil.getUuid(8) + "." + suffixName;
+    public static void downloadFileToLocal(HttpServletResponse response, String downloadFileTempDir, String suffixName, Timestamp timestamp, boolean deleteFlag) {
+        //要下载的文件名
+        String downloadFileName = DateTimeUtil.timestampToString(timestamp, DateTimeEnum.YYYYMMDDHHMMSS.getCode()) + "_" + UuidUtil.getUuid(8) + "." + suffixName;
 
-            //要下载的文件在服务器上生成的临时目录
-            String downloadFileTempFilePath = downloadFileTempDir + File.separator + downloadFileName;
-            //下载文件
-            downloadFile(response, downloadFileTempFilePath);
+        //要下载的文件在服务器上生成的临时目录
+        String downloadFileTempFilePath = downloadFileTempDir + File.separator + downloadFileName;
+        //下载文件
+        downloadFile(response, downloadFileTempFilePath);
 
-            if (deleteFlag) {
-                File file = new File(downloadFileTempDir);
-                //生成文件的临时目录里如果没有其他文件或目录则删除该目录
-                if (file.listFiles().length <= 0) {
-                    file.delete();
-                }
+        if (deleteFlag) {
+            File file = new File(downloadFileTempDir);
+            //生成文件的临时目录里如果没有其他文件或目录则删除该目录
+            if (file.listFiles().length <= 0) {
+                file.delete();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
         }
     }
 
@@ -164,9 +139,8 @@ public class UploadAndDownloadFileUtil {
      *
      * @param response jsp响应对象
      * @param filePath 要下载的文件路径
-     * @throws BaseException 自定义异常
      */
-    private static void downloadFile(HttpServletResponse response, String filePath) throws BaseException {
+    private static void downloadFile(HttpServletResponse response, String filePath) {
         ServletOutputStream servletOutputStream = null;
         FileInputStream fileInputStream = null;
         try {
@@ -191,17 +165,15 @@ public class UploadAndDownloadFileUtil {
             }
             //删除文件
             FileUtil.delteFile(filePath);
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("访问的文件不存在！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CommonException("访问数据失败！");
         } finally {
-            try {
-                DataStreamUtil.closeInputStream(fileInputStream);
-                DataStreamUtil.closeOutputStream(servletOutputStream);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BaseException(e.getMessage());
-            }
+            DataStreamUtil.closeInputStream(fileInputStream);
+            DataStreamUtil.closeOutputStream(servletOutputStream);
         }
     }
 
