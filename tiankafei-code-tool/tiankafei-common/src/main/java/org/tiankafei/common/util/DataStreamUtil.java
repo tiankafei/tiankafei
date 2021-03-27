@@ -16,7 +16,9 @@ import java.io.Writer;
 import java.nio.channels.Channel;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.imageio.ImageIO;
 import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.common.exceptions.CommonException;
@@ -350,6 +352,38 @@ public class DataStreamUtil {
         } catch (IOException e) {
             e.printStackTrace();
             throw new CommonException("关闭文件失败！");
+        }
+    }
+
+    /**
+     * 关闭数据库句柄
+     *
+     * @param statement 需要关闭的数据库句柄
+     */
+    public static void closeStatement(Statement statement) {
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new CommonException("关闭数据库句柄失败！");
+        }
+    }
+
+    /**
+     * 关闭数据库连接
+     *
+     * @param connection 需要关闭的数据库连接
+     */
+    public static void closeConnection(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new CommonException("关闭数据库连接失败！");
         }
     }
 
