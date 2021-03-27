@@ -2,7 +2,8 @@ package org.tiankafei.jdbc.datasource.c3p0;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import javax.sql.DataSource;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
 import org.tiankafei.jdbc.datasource.AbstractCreateDataSource;
 import org.tiankafei.jdbc.dto.C3p0DataSourceDTO;
@@ -16,7 +17,7 @@ import org.tiankafei.jdbc.dto.DataSourceDTO;
 public class CreateC3p0DataSource extends AbstractCreateDataSource {
 
     @Override
-    public DataSource createDataSource(DataSourceDTO dataSourceDTO) throws BaseException {
+    public DataSource createDataSource(DataSourceDTO dataSourceDTO) {
         try {
             C3p0DataSourceDTO c3p0DataSourceDTO = (C3p0DataSourceDTO) dataSourceDTO;
             ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
@@ -83,7 +84,7 @@ public class CreateC3p0DataSource extends AbstractCreateDataSource {
             return dataSource;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BaseException("数据库连接失败：" + e.getMessage());
+            throw new CommonException("创建c3p0数据库连接失败");
         }
     }
 

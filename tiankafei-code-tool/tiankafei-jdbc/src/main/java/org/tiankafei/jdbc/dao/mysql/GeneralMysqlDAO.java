@@ -1,7 +1,6 @@
 package org.tiankafei.jdbc.dao.mysql;
 
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
 import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.dao.AbstractGeneralDAO;
@@ -39,7 +38,7 @@ public class GeneralMysqlDAO extends AbstractGeneralDAO {
     }
 
     @Override
-    public String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO) throws BaseException {
+    public String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO) {
         return GeneralSqlUtil.getPackageColumnSqlMysqlAndSqlite(physicalStorageColumnDTO);
     }
 

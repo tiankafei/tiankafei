@@ -4,7 +4,7 @@ import java.io.File;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
 import org.tiankafei.jdbc.dto.C3p0DataSourceDTO;
 
@@ -18,9 +18,8 @@ public class ConnectionUtil {
      *
      * @param dataSource 数据源
      * @return 数据库连接参数对象
-     * @throws BaseException 自定义异常
      */
-    public static C3p0DataSourceDTO initDatabaseConnectionParamVO(DataSource dataSource) throws BaseException {
+    public static C3p0DataSourceDTO initDatabaseConnectionParamVO(DataSource dataSource) {
         try {
             DatabaseMetaData databaseMetaData = dataSource.getConnection().getMetaData();
             String databaseProductName = databaseMetaData.getDatabaseProductName();
@@ -46,7 +45,7 @@ public class ConnectionUtil {
                 String filePath = url.split(DbConfigConstants.DB_DRIVER_SQLITE_PREFIX)[1];
                 dbName = new File(filePath).getName();
             } else {
-                throw new BaseException("系统不支持连接当前的数据库类型！");
+                throw new CommonException("系统不支持连接当前的数据库类型！");
             }
 
             c3p0DataSourceDTO.setDbName(dbName);
@@ -57,7 +56,7 @@ public class ConnectionUtil {
             return c3p0DataSourceDTO;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("获取数据库连接失败！");
         }
     }
 

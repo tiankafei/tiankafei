@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
+import org.tiankafei.common.util.DataStreamUtil;
 import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
 import org.tiankafei.jdbc.constant.ColumnNameConstants;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
@@ -106,9 +107,8 @@ public class GeneralSqlUtil {
      *
      * @param dbFilePath 数据库文件路径
      * @param sqlList    要执行的sql集合
-     * @throws BaseException 自定义异常
      */
-    public static void createDatabaseSqlite(String dbFilePath, List<String> sqlList) throws BaseException {
+    public static void createDatabaseSqlite(String dbFilePath, List<String> sqlList) {
         Connection connection = null;
         Statement statement = null;
 
@@ -133,19 +133,11 @@ public class GeneralSqlUtil {
                 connection.rollback();
             } catch (SQLException e1) {
                 e1.printStackTrace();
+                throw new CommonException("数据提交失败！");
             }
-            throw new BaseException(e.getMessage());
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            DataStreamUtil.closeStatement(statement);
+            DataStreamUtil.closeConnection(connection);
         }
     }
 

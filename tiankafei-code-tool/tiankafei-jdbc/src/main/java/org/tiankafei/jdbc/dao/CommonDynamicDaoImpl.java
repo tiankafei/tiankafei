@@ -9,15 +9,13 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.CommonJdbcFactory;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
@@ -89,25 +87,19 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
         c3p0DataSourceDTO = new C3p0DataSourceDTO(dbPropertis);
         generalDAO = CommonJdbcFactory.getGeneralDAO(getDatabaseProductName());
         if (DbConfigConstants.DB_SQLITE.equals(c3p0DataSourceDTO.getProductName())) {
-            try {
-                File file = new File(c3p0DataSourceDTO.getDbFilePath());
-                if (!file.exists()) {
-                    //sqlite数据库文件不存在，则创建
-                    generalDAO.createDatabase(c3p0DataSourceDTO.getDbFilePath(), Lists.newArrayList(), this);
-                }
-            } catch (BaseException e) {
-                e.printStackTrace();
+            File file = new File(c3p0DataSourceDTO.getDbFilePath());
+            if (!file.exists()) {
+                //sqlite数据库文件不存在，则创建
+                generalDAO.createDatabase(c3p0DataSourceDTO.getDbFilePath(), Lists.newArrayList(), this);
             }
         }
     }
 
     /**
      * 开启事物
-     *
-     * @throws BaseException 自定义异常
      */
     @Override
-    public void transactionBegin() throws BaseException {
+    public void transactionBegin() {
         platformTransactionManager = new DataSourceTransactionManager(getDataSource());
         defaultTransactionDefinition = new DefaultTransactionDefinition();
         transactionStatus = platformTransactionManager.getTransaction(defaultTransactionDefinition);
@@ -115,21 +107,17 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
 
     /**
      * 提交事务
-     *
-     * @throws BaseException 自定义异常
      */
     @Override
-    public void transactionCommit() throws BaseException {
+    public void transactionCommit() {
         platformTransactionManager.commit(transactionStatus);
     }
 
     /**
      * 回滚事件
-     *
-     * @throws BaseException 自定义异常
      */
     @Override
-    public void transactionRollBack() throws BaseException {
+    public void transactionRollBack() {
         platformTransactionManager.rollback(transactionStatus);
     }
 
@@ -137,39 +125,27 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      * 获取数据库连接
      *
      * @return 返回spring的JdbcTemplate
-     * @throws BaseException 自定义异常
      */
     @Override
-    public JdbcTemplate getJdbcTemplate() throws BaseException {
-        try {
-            if (jdbcTemplate == null) {
-                jdbcTemplate = new JdbcTemplate(getDataSource());
-            }
-            return jdbcTemplate;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
+    public JdbcTemplate getJdbcTemplate() {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = new JdbcTemplate(getDataSource());
         }
+        return jdbcTemplate;
     }
 
     /**
      * 获取数据源对象
      *
      * @return 返回DataSource的对象
-     * @throws BaseException 自定义异常
      */
     @Override
-    public DataSource getDataSource() throws BaseException {
-        try {
-            if (dataSource == null) {
-                AbstractCreateDataSource createDataSource = CommonJdbcFactory.getCreateDataSource("1");
-                dataSource = createDataSource.createDataSource(c3p0DataSourceDTO);
-            }
-            return dataSource;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
+    public DataSource getDataSource() {
+        if (dataSource == null) {
+            AbstractCreateDataSource createDataSource = CommonJdbcFactory.getCreateDataSource("1");
+            dataSource = createDataSource.createDataSource(c3p0DataSourceDTO);
         }
+        return dataSource;
     }
 
     /**
@@ -209,10 +185,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      * 获取当前Timestamp时间
      *
      * @return 当前Timestamp时间
-     * @throws BaseException 自定义异常
      */
     @Override
-    public Timestamp getCurrentTimestamp() throws BaseException {
+    public Timestamp getCurrentTimestamp() {
         return generalDAO.getCurrentTimestamp(this);
     }
 
@@ -220,10 +195,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      * 获取当前Timestamp时间sql
      *
      * @return 当前Timestamp时间sql
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO getCurrentTimestampSql() throws BaseException {
+    public SqlParamDTO getCurrentTimestampSql() {
         return generalDAO.getCurrentTimestampSql();
     }
 
@@ -233,10 +207,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      * @param dbFilePath 数据库路径
      * @param sqlList    创建数据库的sql集合
      * @return 创建成功返回true, 创建失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean createDatabase(String dbFilePath, List<String> sqlList) throws BaseException {
+    public boolean createDatabase(String dbFilePath, List<String> sqlList) {
         return generalDAO.createDatabase(dbFilePath, sqlList, this);
     }
 
@@ -245,17 +218,11 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param sqlParamDTO SQL参数对象
      * @return 更新成功返回true, 更新失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean update(SqlParamDTO sqlParamDTO) throws BaseException {
-        try {
-            getJdbcTemplate().update(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray());
-            return true;
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+    public boolean update(SqlParamDTO sqlParamDTO) {
+        getJdbcTemplate().update(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray());
+        return true;
     }
 
     /**
@@ -263,31 +230,25 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param sqlParamDTO SQL参数对象
      * @return 更新成功返回true, 更新失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean batchUpdate(SqlParamDTO sqlParamDTO) throws BaseException {
-        try {
-            List<List<Object>> paramListList = sqlParamDTO.getParamListList();
-            getJdbcTemplate().batchUpdate(sqlParamDTO.getSql(), new BatchPreparedStatementSetter() {
-                @Override
-                public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                    List<Object> paramList = paramListList.get(i);
-                    for (int index = 0, length = paramList.size(); index < length; index++) {
-                        preparedStatement.setObject(index + 1, paramList.get(index));
-                    }
+    public boolean batchUpdate(SqlParamDTO sqlParamDTO) {
+        List<List<Object>> paramListList = sqlParamDTO.getParamListList();
+        getJdbcTemplate().batchUpdate(sqlParamDTO.getSql(), new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                List<Object> paramList = paramListList.get(i);
+                for (int index = 0, length = paramList.size(); index < length; index++) {
+                    preparedStatement.setObject(index + 1, paramList.get(index));
                 }
+            }
 
-                @Override
-                public int getBatchSize() {
-                    return paramListList.size();
-                }
-            });
-            return true;
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+            @Override
+            public int getBatchSize() {
+                return paramListList.size();
+            }
+        });
+        return true;
     }
 
     /**
@@ -295,16 +256,10 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param sqlParamDTO SQL参数对象
      * @return 结果集
-     * @throws BaseException 自定义异常
      */
     @Override
-    public List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO) throws BaseException {
-        try {
-            return getJdbcTemplate().queryForList(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray());
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+    public List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO) {
+        return getJdbcTemplate().queryForList(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray());
     }
 
     /**
@@ -312,10 +267,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 存在返回true，不存在返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean checkTableExists(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean checkTableExists(PhysicalStorageTableDTO physicalStorageTableDTO) {
         SqlParamDTO sqlParamDTO = checkTableExistSql(physicalStorageTableDTO);
         List<?> list = queryDataMapList(sqlParamDTO);
         if (CollectionUtils.isEmpty(list)) {
@@ -330,10 +284,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 存在返回true，不存在返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO checkTableExistSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO checkTableExistSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return generalDAO.checkTableExistsSql(physicalStorageTableDTO);
     }
 
@@ -342,10 +295,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 创建成功返回true，创建失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean createTable(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean createTable(PhysicalStorageTableDTO physicalStorageTableDTO) {
         SqlParamDTO sqlParamDTO = createTableSql(physicalStorageTableDTO);
         return update(sqlParamDTO);
     }
@@ -355,10 +307,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 创建表的sql集合
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return generalDAO.createTableSql(physicalStorageTableDTO);
     }
 
@@ -367,10 +318,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 删除成功返回true，删除失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean dropTable(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean dropTable(PhysicalStorageTableDTO physicalStorageTableDTO) {
         SqlParamDTO sqlParamDTO = dropTableSql(physicalStorageTableDTO);
         return update(sqlParamDTO);
     }
@@ -380,10 +330,9 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 删除表SQL
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO dropTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO dropTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         //删除表
         String tableName = physicalStorageTableDTO.getTableName();
         StringBuffer sqlBuffer = new StringBuffer().append("DROP TABLE ").append(tableName);
@@ -395,16 +344,10 @@ public class CommonDynamicDaoImpl implements ICommonDAO {
      *
      * @param sqlParamDTO SQL参数对象
      * @return 记录总数
-     * @throws BaseException 自定义异常
      */
-    public int queryRecordCount(SqlParamDTO sqlParamDTO) throws BaseException {
-        try {
-            Integer count = getJdbcTemplate().queryForObject(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray(), Integer.class);
-            return count;
-        } catch (BaseException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+    public int queryRecordCount(SqlParamDTO sqlParamDTO) {
+        Integer count = getJdbcTemplate().queryForObject(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray(), Integer.class);
+        return count;
     }
 
 }

@@ -1,7 +1,6 @@
 package org.tiankafei.jdbc.datasource;
 
 import javax.sql.DataSource;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.jdbc.dto.DataSourceDTO;
 
 /**
@@ -16,8 +15,7 @@ public abstract class AbstractCreateDataSource {
      *
      * @param dataSourceDTO 数据源参数对象
      * @return 数据源
-     * @throws BaseException 自定义异常
      */
-    public abstract DataSource createDataSource(DataSourceDTO dataSourceDTO) throws BaseException;
+    public abstract DataSource createDataSource(DataSourceDTO dataSourceDTO);
 
 }

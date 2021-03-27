@@ -3,11 +3,9 @@ package org.tiankafei.jdbc.dao.sqlite;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
-import org.springframework.dao.DataAccessException;
-import org.tiankafei.base.datetime.DateTimeUtil;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.enums.DateTimeEnum;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.datetime.DateTimeUtil;
+import org.tiankafei.common.dto.SqlParamDTO;
+import org.tiankafei.common.enums.DateTimeEnum;
 import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
 import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.dao.AbstractGeneralDAO;
@@ -36,17 +34,12 @@ public class GeneralSqliteDAO extends AbstractGeneralDAO {
     }
 
     @Override
-    public Timestamp getCurrentTimestamp(ICommonDAO commonDAO) throws BaseException {
-        try {
-            SqlParamDTO sqlParamDTO = getCurrentTimestampSql();
-            List<Map<String, Object>> dataMapList = commonDAO.getJdbcTemplate().queryForList(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray());
-            String dateTime = dataMapList.get(0).get("DATETIME").toString();
-            Timestamp timestamp = DateTimeUtil.stringToTimestamp(dateTime, DateTimeEnum.YYYY_MM_DDHH_MM_SS.getCode());
-            return timestamp;
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+    public Timestamp getCurrentTimestamp(ICommonDAO commonDAO) {
+        SqlParamDTO sqlParamDTO = getCurrentTimestampSql();
+        List<Map<String, Object>> dataMapList = commonDAO.getJdbcTemplate().queryForList(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray());
+        String dateTime = dataMapList.get(0).get("DATETIME").toString();
+        Timestamp timestamp = DateTimeUtil.stringToTimestamp(dateTime, DateTimeEnum.YYYY_MM_DDHH_MM_SS.getCode());
+        return timestamp;
     }
 
     @Override
@@ -58,12 +51,12 @@ public class GeneralSqliteDAO extends AbstractGeneralDAO {
     }
 
     @Override
-    public String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO) throws BaseException {
+    public String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO) {
         return GeneralSqlUtil.getPackageColumnSqlMysqlAndSqlite(physicalStorageColumnDTO);
     }
 
     @Override
-    public boolean createDatabase(String dbFilePath, List<String> sqlList, ICommonDAO commonDAO) throws BaseException {
+    public boolean createDatabase(String dbFilePath, List<String> sqlList, ICommonDAO commonDAO) {
         GeneralSqlUtil.createDatabaseSqlite(dbFilePath, sqlList);
         return true;
     }

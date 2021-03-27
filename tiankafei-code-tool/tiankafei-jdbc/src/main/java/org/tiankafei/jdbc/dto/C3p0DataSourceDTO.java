@@ -4,9 +4,9 @@ import java.util.Properties;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.LogUtil;
-import org.tiankafei.base.util.PropertiesUtil;
+import org.tiankafei.common.exceptions.BaseException;
+import org.tiankafei.common.util.LogUtil;
+import org.tiankafei.common.util.PropertiesUtil;
 import org.tiankafei.jdbc.constant.C3p0DataSourceConstants;
 
 /**

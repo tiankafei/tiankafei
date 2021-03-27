@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 
 /**
@@ -50,31 +49,25 @@ public class CommonDaoImpl implements ICommonDAO {
 
     /**
      * 开启事物
-     *
-     * @throws BaseException 自定义异常
      */
     @Override
-    public void transactionBegin() throws BaseException {
+    public void transactionBegin() {
         commonDynamicDAO.transactionBegin();
     }
 
     /**
      * 提交事务
-     *
-     * @throws BaseException 自定义异常
      */
     @Override
-    public void transactionCommit() throws BaseException {
+    public void transactionCommit() {
         commonDynamicDAO.transactionCommit();
     }
 
     /**
      * 回滚事件
-     *
-     * @throws BaseException 自定义异常
      */
     @Override
-    public void transactionRollBack() throws BaseException {
+    public void transactionRollBack() {
         commonDynamicDAO.transactionRollBack();
     }
 
@@ -82,10 +75,9 @@ public class CommonDaoImpl implements ICommonDAO {
      * 获取数据库连接
      *
      * @return 返回spring的JdbcTemplate
-     * @throws BaseException 自定义异常
      */
     @Override
-    public JdbcTemplate getJdbcTemplate() throws BaseException {
+    public JdbcTemplate getJdbcTemplate() {
         return commonDynamicDAO.getJdbcTemplate();
     }
 
@@ -93,10 +85,9 @@ public class CommonDaoImpl implements ICommonDAO {
      * 获取数据源对象
      *
      * @return 返回DataSource的对象
-     * @throws BaseException 自定义异常
      */
     @Override
-    public DataSource getDataSource() throws BaseException {
+    public DataSource getDataSource() {
         return commonDynamicDAO.getDataSource();
     }
 
@@ -127,10 +118,9 @@ public class CommonDaoImpl implements ICommonDAO {
      * 获取当前Timestamp时间
      *
      * @return 当前Timestamp时间
-     * @throws BaseException 自定义异常
      */
     @Override
-    public Timestamp getCurrentTimestamp() throws BaseException {
+    public Timestamp getCurrentTimestamp() {
         return commonDynamicDAO.getCurrentTimestamp();
     }
 
@@ -138,10 +128,9 @@ public class CommonDaoImpl implements ICommonDAO {
      * 获取当前Timestamp时间sql
      *
      * @return 当前Timestamp时间sql
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO getCurrentTimestampSql() throws BaseException {
+    public SqlParamDTO getCurrentTimestampSql() {
         return commonDynamicDAO.getCurrentTimestampSql();
     }
 
@@ -151,7 +140,7 @@ public class CommonDaoImpl implements ICommonDAO {
      * @return 数据库类型名称
      */
     @Override
-    public String getDatabaseProductName() throws BaseException {
+    public String getDatabaseProductName() {
         return commonDynamicDAO.getDatabaseProductName();
     }
 
@@ -161,10 +150,9 @@ public class CommonDaoImpl implements ICommonDAO {
      * @param dbFilePath 数据库路径
      * @param sqlList    创建数据库的sql集合
      * @return 创建成功返回true, 创建失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean createDatabase(String dbFilePath, List<String> sqlList) throws BaseException {
+    public boolean createDatabase(String dbFilePath, List<String> sqlList) {
         return commonDynamicDAO.createDatabase(dbFilePath, sqlList);
     }
 
@@ -173,10 +161,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param sqlParamDTO SQL参数对象
      * @return 更新成功返回true, 更新失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean update(SqlParamDTO sqlParamDTO) throws BaseException {
+    public boolean update(SqlParamDTO sqlParamDTO) {
         return commonDynamicDAO.update(sqlParamDTO);
     }
 
@@ -185,10 +172,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param sqlParamDTO SQL参数对象
      * @return 更新成功返回true, 更新失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean batchUpdate(SqlParamDTO sqlParamDTO) throws BaseException {
+    public boolean batchUpdate(SqlParamDTO sqlParamDTO) {
         return commonDynamicDAO.batchUpdate(sqlParamDTO);
     }
 
@@ -197,10 +183,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param sqlParamDTO SQL参数对象
      * @return 结果集
-     * @throws BaseException 自定义异常
      */
     @Override
-    public List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO) throws BaseException {
+    public List<Map<String, Object>> queryDataMapList(SqlParamDTO sqlParamDTO) {
         return commonDynamicDAO.queryDataMapList(sqlParamDTO);
     }
 
@@ -209,10 +194,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 存在返回true，不存在返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean checkTableExists(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean checkTableExists(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return commonDynamicDAO.checkTableExists(physicalStorageTableDTO);
     }
 
@@ -221,10 +205,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 验证物理表是否存在的sql
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO checkTableExistSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO checkTableExistSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return commonDynamicDAO.checkTableExistSql(physicalStorageTableDTO);
     }
 
@@ -233,10 +216,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 创建成功返回true，创建失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean createTable(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean createTable(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return commonDynamicDAO.createTable(physicalStorageTableDTO);
     }
 
@@ -245,10 +227,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 创建表的sql集合
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return commonDynamicDAO.createTableSql(physicalStorageTableDTO);
     }
 
@@ -257,10 +238,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 删除成功返回true，删除失败返回false
-     * @throws BaseException 自定义异常
      */
     @Override
-    public boolean dropTable(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public boolean dropTable(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return commonDynamicDAO.dropTable(physicalStorageTableDTO);
     }
 
@@ -269,10 +249,9 @@ public class CommonDaoImpl implements ICommonDAO {
      *
      * @param physicalStorageTableDTO 物理存表对象
      * @return 删除表SQL
-     * @throws BaseException 自定义异常
      */
     @Override
-    public SqlParamDTO dropTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO dropTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         return commonDynamicDAO.dropTableSql(physicalStorageTableDTO);
     }
 
