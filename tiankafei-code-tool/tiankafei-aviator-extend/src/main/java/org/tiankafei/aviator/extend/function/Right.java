@@ -1,10 +1,9 @@
 package org.tiankafei.aviator.extend.function;
 
+import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
-import org.tiankafei.aviator.extend.exception.AviatorException;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
 import com.googlecode.aviator.runtime.type.AviatorObject;
-import com.googlecode.aviator.runtime.type.AviatorString;
 
 /**
  * @Author 魏双双
@@ -12,6 +11,7 @@ import com.googlecode.aviator.runtime.type.AviatorString;
  * @Version V1.0
  **/
 public class Right extends TwoParamFunction {
+
     @Override
     public String getName() {
         return FunctionConstants.RIGHT;
@@ -20,29 +20,21 @@ public class Right extends TwoParamFunction {
     @Override
     protected AviatorObject apply(Object value1, Object value2) {
         if (value1 == null) {
-            return new AviatorString("");
+            return AviatorRuntimeJavaType.valueOf("");
         }
-        Integer count = null;
+        String value = value1.toString();
         if (value2 == null) {
-            throw new AviatorException(getName() + "函数截取的位置为空，请确认!");
+            return AviatorRuntimeJavaType.valueOf(value);
         } else {
-            if (FunctionUtils.isString(value2)) {
-                if (FunctionUtils.isNumerics(value2.toString())) {
-                    count = Integer.valueOf(value2.toString());
-                } else {
-                    throw new AviatorException(getName() + "函数截取的位置数据类型不正确，请确认!");
+            int maxLength = value.length();
+            int start = maxLength;
+            if(FunctionUtils.isNumerics(value2)){
+                start = Integer.valueOf(value2.toString());
+                if(start > maxLength){
+                    start = maxLength;
                 }
-            } else if (value2 instanceof Number) {
-                count = Integer.valueOf(value2.toString());
             }
+            return AviatorRuntimeJavaType.valueOf(value.substring(maxLength - start));
         }
-        if (count != null) {
-            String value = value1.toString();
-            if (count > value.length()) {
-                count = value.length();
-            }
-            return new AviatorString(value.substring(value.length() - count));
-        }
-        throw new AviatorException(getName() + "函数传入参数数组为空或者参数个数不正确!");
     }
 }

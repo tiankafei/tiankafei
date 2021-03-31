@@ -1,5 +1,7 @@
 package org.tiankafei.aviator.extend.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author tiankafei
  */
@@ -28,7 +30,7 @@ public class FunctionUtils {
      * @return
      */
     public static Boolean isNumerics(Object object) {
-        if (object == null) {
+        if (object == null || StringUtils.isBlank(object.toString())) {
             return Boolean.FALSE;
         }
         Boolean strResult = object.toString().matches("^[\\+\\-]?(0|[0-9]\\d*|[1-9]\\d*\\.\\d+|0\\.\\d+)");

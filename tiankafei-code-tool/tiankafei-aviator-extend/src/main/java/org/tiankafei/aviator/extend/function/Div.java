@@ -1,5 +1,7 @@
 package org.tiankafei.aviator.extend.function;
 
+import com.googlecode.aviator.runtime.type.AviatorObject;
+import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import org.tiankafei.aviator.extend.exception.AviatorException;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
 import org.tiankafei.aviator.extend.util.NumberUtil;
@@ -20,6 +22,23 @@ public class Div extends TwoParamFunction {
     }
 
     @Override
+    protected AviatorObject apply(Object left, Object right) {
+        if (left == null && right == null) {
+            return AviatorRuntimeJavaType.valueOf(null);
+        } else if (left == null) {
+            return AviatorRuntimeJavaType.valueOf(null);
+        } else if (right == null) {
+            if (FunctionUtils.isNumerics(left)) {
+                return AviatorRuntimeJavaType.valueOf(left);
+            } else {
+                return AviatorRuntimeJavaType.valueOf(null);
+            }
+        } else {
+            return super.apply(left, right);
+        }
+    }
+
+    @Override
     public Object evlNormalOperation(Object left, Object right) {
         BigDecimal leftBigDecimal = new BigDecimal(left.toString());
         BigDecimal rightBigDecimal = new BigDecimal(right.toString());
@@ -34,7 +53,7 @@ public class Div extends TwoParamFunction {
         if (FunctionUtils.isNumerics(left.toString()) && FunctionUtils.isNumerics(right.toString())) {
             return evlNormalOperation(left, right);
         } else {
-            throw new AviatorException("文本字符串不能参与除法运算！");
+            return AviatorRuntimeJavaType.valueOf(null);
         }
     }
 

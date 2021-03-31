@@ -30,7 +30,7 @@ public class Lookat extends TwoParamFunction {
             return AviatorBoolean.valueOf(m.lookingAt());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new AviatorException(getName() + "函数的参数类型不合法!");
+            return AviatorBoolean.FALSE;
         }
     }
 }

@@ -1,6 +1,6 @@
 package org.tiankafei.aviator.extend.util;
 
-import com.googlecode.aviator.BaseExpression;
+import com.googlecode.aviator.lexer.SymbolTable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.tiankafei.aviator.extend.InitFunction;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
@@ -97,14 +97,19 @@ public abstract class AviatorExtendUtil {
         String name = aviatorFunctionProxy.getName();
         String lowerCase = name.toLowerCase();
         String upperCase = name.toUpperCase();
-        if(AviatorEvaluator.getFunction(lowerCase) == null){
+        if(checkFunctionExists(lowerCase)){
             AviatorEvaluator.getInstance().addFunction(lowerCase, aviatorFunctionProxy);
         }
         if (!lowerCase.equals(upperCase)) {
-            if(AviatorEvaluator.getFunction(upperCase) == null){
+            if(checkFunctionExists(upperCase)){
                 AviatorEvaluator.getInstance().addFunction(upperCase, aviatorFunctionProxy);
             }
         }
+    }
+
+    public static boolean checkFunctionExists(String funName){
+        AviatorFunction function = AviatorEvaluator.getFunction(funName);
+        return "com.googlecode.aviator.RuntimeFunctionDelegator".equals(function.getClass().getName()) && !SymbolTable.isReservedKeyword(funName);
     }
 
     /**

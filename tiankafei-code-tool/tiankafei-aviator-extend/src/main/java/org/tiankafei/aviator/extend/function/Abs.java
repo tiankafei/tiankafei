@@ -1,5 +1,6 @@
 package org.tiankafei.aviator.extend.function;
 
+import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
 import org.tiankafei.aviator.extend.util.NumberUtil;
@@ -31,8 +32,7 @@ public class Abs extends OneParamFunction {
             Object value = Math.abs(bigDecimal.doubleValue());
             return AviatorDecimal.valueOf(NumberUtil.parseNumber(value.toString()));
         }
-//        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
-        return AviatorNil.NIL;
+        return AviatorRuntimeJavaType.valueOf(null);
     }
 
     @Override
