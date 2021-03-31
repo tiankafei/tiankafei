@@ -1,10 +1,9 @@
 package org.tiankafei.aviator.extend.function;
 
-import com.googlecode.aviator.runtime.type.AviatorObject;
-import org.tiankafei.aviator.extend.util.FunctionUtils;
 import com.googlecode.aviator.lexer.token.OperatorType;
-
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import java.math.BigDecimal;
+import org.tiankafei.aviator.extend.util.FunctionUtils;
 
 /**
  * @Author 魏双双
@@ -20,10 +19,10 @@ public class LessThen extends TwoParamFunction {
 
     @Override
     protected AviatorObject apply(Object left, Object right) {
-        if(left == null){
+        if (left == null) {
             left = "";
         }
-        if(right == null){
+        if (right == null) {
             right = "";
         }
         return super.apply(left, right);

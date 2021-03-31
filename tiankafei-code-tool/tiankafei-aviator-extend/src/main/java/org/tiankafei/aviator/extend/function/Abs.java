@@ -1,15 +1,13 @@
 package org.tiankafei.aviator.extend.function;
 
-import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
-import org.tiankafei.aviator.extend.constant.FunctionConstants;
-import org.tiankafei.aviator.extend.util.FunctionUtils;
-import org.tiankafei.aviator.extend.util.NumberUtil;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
 import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
-import lombok.extern.slf4j.Slf4j;
-
 import java.math.BigDecimal;
+import lombok.extern.slf4j.Slf4j;
+import org.tiankafei.aviator.extend.constant.FunctionConstants;
+import org.tiankafei.aviator.extend.util.FunctionUtils;
+import org.tiankafei.aviator.extend.util.NumberUtil;
 
 /**
  * @Author 魏双双
@@ -32,7 +30,7 @@ public class Abs extends OneParamFunction {
             Object value = Math.abs(bigDecimal.doubleValue());
             return AviatorDecimal.valueOf(NumberUtil.parseNumber(value.toString()));
         }
-        return AviatorRuntimeJavaType.valueOf(null);
+        return AviatorNil.NIL;
     }
 
     @Override

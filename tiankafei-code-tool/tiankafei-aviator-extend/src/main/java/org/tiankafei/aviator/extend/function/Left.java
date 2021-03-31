@@ -1,9 +1,9 @@
 package org.tiankafei.aviator.extend.function;
 
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
-import com.googlecode.aviator.runtime.type.AviatorObject;
 
 /**
  * @Author 魏双双
@@ -27,9 +27,9 @@ public class Left extends TwoParamFunction {
             return AviatorRuntimeJavaType.valueOf(value);
         } else {
             int start = 1;
-            if(FunctionUtils.isNumerics(value2)){
+            if (FunctionUtils.isNumerics(value2)) {
                 start = Integer.valueOf(value2.toString());
-                if(start < 1){
+                if (start < 1) {
                     start = 1;
                 }
             }

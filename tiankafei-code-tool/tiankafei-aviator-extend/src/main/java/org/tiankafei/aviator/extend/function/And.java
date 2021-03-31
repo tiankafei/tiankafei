@@ -1,9 +1,9 @@
 package org.tiankafei.aviator.extend.function;
 
-import org.tiankafei.aviator.extend.util.NumberUtil;
 import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+import org.tiankafei.aviator.extend.util.NumberUtil;
 
 /**
  * @Author 魏双双

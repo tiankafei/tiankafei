@@ -1,9 +1,9 @@
 package org.tiankafei.aviator.extend.function;
 
-import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+import org.tiankafei.aviator.extend.constant.FunctionConstants;
 
 /**
  * @Author 魏双双
@@ -16,7 +16,6 @@ public class Not extends OneParamFunction {
         if (object instanceof Boolean) {
             return AviatorBoolean.valueOf(!(Boolean) object);
         }
-//        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
         return AviatorNil.NIL;
     }
 

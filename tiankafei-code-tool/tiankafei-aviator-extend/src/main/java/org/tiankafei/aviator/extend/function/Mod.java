@@ -1,13 +1,12 @@
 package org.tiankafei.aviator.extend.function;
 
+import com.googlecode.aviator.lexer.token.OperatorType;
+import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
-import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
+import java.math.BigDecimal;
 import org.tiankafei.aviator.extend.exception.AviatorException;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
 import org.tiankafei.aviator.extend.util.NumberUtil;
-import com.googlecode.aviator.lexer.token.OperatorType;
-
-import java.math.BigDecimal;
 
 /**
  * @Author 魏双双
@@ -24,7 +23,7 @@ public class Mod extends TwoParamFunction {
     @Override
     protected AviatorObject apply(Object left, Object right) {
         if (left == null || right == null) {
-            return AviatorRuntimeJavaType.valueOf(null);
+            return AviatorNil.NIL;
         } else {
             return super.apply(left, right);
         }
@@ -45,7 +44,7 @@ public class Mod extends TwoParamFunction {
         if (FunctionUtils.isNumerics(left.toString()) && FunctionUtils.isNumerics(right.toString())) {
             return evlNormalOperation(left, right);
         } else {
-            return AviatorRuntimeJavaType.valueOf(null);
+            return AviatorNil.NIL;
         }
     }
 

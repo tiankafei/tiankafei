@@ -1,9 +1,9 @@
 package org.tiankafei.aviator.extend.function;
 
-import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorString;
+import org.tiankafei.aviator.extend.constant.FunctionConstants;
 
 /**
  * @Author 魏双双

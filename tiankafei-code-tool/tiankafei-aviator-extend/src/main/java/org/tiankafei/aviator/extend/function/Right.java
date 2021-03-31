@@ -1,9 +1,9 @@
 package org.tiankafei.aviator.extend.function;
 
+import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
-import com.googlecode.aviator.runtime.type.AviatorObject;
 
 /**
  * @Author 魏双双
@@ -28,9 +28,9 @@ public class Right extends TwoParamFunction {
         } else {
             int maxLength = value.length();
             int start = maxLength;
-            if(FunctionUtils.isNumerics(value2)){
+            if (FunctionUtils.isNumerics(value2)) {
                 start = Integer.valueOf(value2.toString());
-                if(start > maxLength){
+                if (start > maxLength) {
                     start = maxLength;
                 }
             }

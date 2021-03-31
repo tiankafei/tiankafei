@@ -1,12 +1,11 @@
 package org.tiankafei.aviator.extend.function;
 
-import org.tiankafei.aviator.extend.constant.FunctionConstants;
 import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorString;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.tiankafei.aviator.extend.constant.FunctionConstants;
 
 /**
  * @Author 魏双双
@@ -22,7 +21,6 @@ public class CurrentTime extends OneParamFunction {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(param);
             return new AviatorString(localDateTime.format(formatter));
         }
-//        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
         return AviatorNil.NIL;
     }
 

@@ -1,10 +1,10 @@
 package org.tiankafei.aviator.extend.function;
 
-import org.tiankafei.aviator.extend.constant.FunctionConstants;
-import org.tiankafei.aviator.extend.util.FunctionUtils;
 import com.googlecode.aviator.runtime.type.AviatorDecimal;
 import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+import org.tiankafei.aviator.extend.constant.FunctionConstants;
+import org.tiankafei.aviator.extend.util.FunctionUtils;
 
 /**
  * @Author 魏双双
@@ -29,7 +29,6 @@ public class Round extends OneParamFunction {
         if (value != null) {
             return AviatorDecimal.valueOf(Math.round(value));
         }
-//        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
         return AviatorNil.NIL;
     }
 
