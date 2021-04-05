@@ -263,5 +263,14 @@ print(dicts)
 print("============================")
 
 
+print('1.', '123.12'.isalnum())
+print(bool(0))
 
-
+lst = [10, 29, 34, 23, 44, 53, 55]
+for i in lst:
+    # print(i % 2)
+    if i % 2: # 非0，奇数
+        print('奇数', i)
+        # pass
+    else:
+        print('偶数', i)
