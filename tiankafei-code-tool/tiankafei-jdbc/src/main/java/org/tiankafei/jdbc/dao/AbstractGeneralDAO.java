@@ -4,9 +4,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.dao.DataAccessException;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
 import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 
@@ -39,17 +38,11 @@ public abstract class AbstractGeneralDAO {
      *
      * @param commonDAO 公共数据库操作方法
      * @return 当前时间
-     * @throws BaseException 自定义异常
      */
-    public Timestamp getCurrentTimestamp(ICommonDAO commonDAO) throws BaseException {
-        try {
-            SqlParamDTO sqlParamDTO = getCurrentTimestampSql();
-            Timestamp timestamp = (Timestamp) commonDAO.getJdbcTemplate().queryForObject(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray(), Timestamp.class);
-            return timestamp;
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
-        }
+    public Timestamp getCurrentTimestamp(ICommonDAO commonDAO) {
+        SqlParamDTO sqlParamDTO = getCurrentTimestampSql();
+        Timestamp timestamp = commonDAO.getJdbcTemplate().queryForObject(sqlParamDTO.getSql(), sqlParamDTO.getParamList().toArray(), Timestamp.class);
+        return timestamp;
     }
 
     /**
@@ -65,9 +58,8 @@ public abstract class AbstractGeneralDAO {
      *
      * @param physicalStorageTableDTO 物理存储表对象
      * @return 创建表的sql集合
-     * @throws BaseException 自定义异常
      */
-    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) throws BaseException {
+    public SqlParamDTO createTableSql(PhysicalStorageTableDTO physicalStorageTableDTO) {
         List<PhysicalStorageColumnDTO> physicalStorageColumnList = physicalStorageTableDTO.getPhysicalStorageColumnList();
         if (CollectionUtils.isNotEmpty(physicalStorageColumnList)) {
             SqlParamDTO sqlParamDTO = new SqlParamDTO();
@@ -94,7 +86,7 @@ public abstract class AbstractGeneralDAO {
             sqlParamDTO.setSql(sqlBuffer.toString());
             return sqlParamDTO;
         } else {
-            throw new BaseException(physicalStorageTableDTO.getTableName() + "没有获取到字段信息，请检查！");
+            throw new CommonException(physicalStorageTableDTO.getTableName() + "没有获取到字段信息，请检查！");
         }
     }
 
@@ -103,9 +95,8 @@ public abstract class AbstractGeneralDAO {
      *
      * @param physicalStorageColumnDTO 字段对象
      * @return 字段类型sql
-     * @throws BaseException 自定义异常
      */
-    public abstract String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO) throws BaseException;
+    public abstract String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO);
 
     /**
      * 创建数据库
@@ -114,10 +105,9 @@ public abstract class AbstractGeneralDAO {
      * @param sqlList    创建数据库的sql集合
      * @param commonDAO  公共数据库操作方法
      * @return 创建成功返回true, 创建失败返回false
-     * @throws BaseException 自定义异常
      */
-    public boolean createDatabase(String dbFilePath, List<String> sqlList, ICommonDAO commonDAO) throws BaseException {
-        throw new BaseException(commonDAO.getDatabaseProductName() + "不支持程序创建数据库！");
+    public boolean createDatabase(String dbFilePath, List<String> sqlList, ICommonDAO commonDAO) {
+        throw new CommonException(commonDAO.getDatabaseProductName() + "不支持程序创建数据库！");
     }
 
 }

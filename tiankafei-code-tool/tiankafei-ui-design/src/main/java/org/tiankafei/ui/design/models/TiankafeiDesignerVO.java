@@ -15,7 +15,7 @@ import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.design.abstractinterface.AbstractTiankafeiAction;
 import org.tiankafei.ui.design.againsui.TiankafeiMenu;
 import org.tiankafei.ui.design.constant.TiankafeiDesignerConstants;
@@ -615,9 +615,8 @@ public class TiankafeiDesignerVO {
      * 设置图标
      *
      * @param abstractButton 抽象按钮对象
-     * @throws BaseException 自定义异常
      */
-    public void setImageIcon(AbstractButton abstractButton) throws BaseException {
+    public void setImageIcon(AbstractButton abstractButton) {
         if (StringUtils.isNotEmpty(getIconFilePath())) {
             ImageIcon imageIcon = null;
             if (getIconHeight() == 0 || getIconWidth() == 0) {
@@ -691,9 +690,8 @@ public class TiankafeiDesignerVO {
      * @param component     菜单控件
      * @param menuList      菜单集合
      * @param popupMenuFlag 是否右键菜单标识
-     * @throws BaseException 自定义异常
      */
-    protected void initTkfMenu(JComponent component, List<MenuVO> menuList, boolean popupMenuFlag) throws BaseException {
+    protected void initTkfMenu(JComponent component, List<MenuVO> menuList, boolean popupMenuFlag) {
         if (CollectionUtils.isNotEmpty(menuList)) {
             for (int menuIndex = 0, menuLength = menuList.size(); menuIndex < menuLength; menuIndex++) {
                 MenuVO menuVO = menuList.get(menuIndex);
@@ -727,16 +725,15 @@ public class TiankafeiDesignerVO {
      * @param component     菜单项
      * @param menuItemList  菜单项集合
      * @param popupMenuFlag 是否右键菜单标识
-     * @throws BaseException 自定义异常
      */
-    protected void initTkfMenuItem(JComponent component, List<MenuItemVO> menuItemList, boolean popupMenuFlag) throws BaseException {
+    protected void initTkfMenuItem(JComponent component, List<MenuItemVO> menuItemList, boolean popupMenuFlag) {
         if (CollectionUtils.isNotEmpty(menuItemList)) {
             //初始化下级菜单
             for (int menuIndex = 0, menuLength = menuItemList.size(); menuIndex < menuLength; menuIndex++) {
                 MenuItemVO menuItemVO = menuItemList.get(menuIndex);
                 AbstractTiankafeiAction tiankafeiAction = menuItemVO.getTiankafeiAction();
                 if (tiankafeiAction == null) {
-                    throw new BaseException("该菜单项没有绑定事件！");
+                    throw new CommonException("该菜单项没有绑定事件！");
                 }
                 TkfMenuItem tkfMenuItem = null;
                 if (popupMenuFlag) {

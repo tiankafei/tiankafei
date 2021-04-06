@@ -5,8 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
-import org.tiankafei.base.dto.PaginatedDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.PaginatedDTO;
 import org.tiankafei.ui.control.table.actions.TiankafeiTableControlsExportPageAction;
 import org.tiankafei.ui.control.table.actions.TiankafeiTableControlsSelectAllPageAction;
 import org.tiankafei.ui.control.table.actions.TiankafeiTableControlsUnSelectPageAction;
@@ -40,9 +39,8 @@ public abstract class AbstractTiankafeiTableControlsPageUtil {
      * @param tiankafeiTablePageVO      自定义表格分页对象
      * @param tiankafeiTableList        表格对象集合
      * @return 表格分页面板
-     * @throws BaseException 自定义异常
      */
-    public TkfPanel initTiankafeiTablePagePanel(TiankafeiTableAttributeVO tiankafeiTableAttributeVO, TiankafeiTablePageVO tiankafeiTablePageVO, List<TiankafeiTable> tiankafeiTableList) throws BaseException {
+    public TkfPanel initTiankafeiTablePagePanel(TiankafeiTableAttributeVO tiankafeiTableAttributeVO, TiankafeiTablePageVO tiankafeiTablePageVO, List<TiankafeiTable> tiankafeiTableList) {
         TiankafeiPanel pageTiankafeiPanel = new TiankafeiPanel();
         TkfPanel pageTkfPanel = pageTiankafeiPanel.initTiankafeiPanel();
 
@@ -69,9 +67,8 @@ public abstract class AbstractTiankafeiTableControlsPageUtil {
      * @param tiankafeiTablePageVO 表格分页对象
      * @param pageTkfPanel         表格分页面板
      * @param tiankafeiTableList   表格对象集合
-     * @throws BaseException 自定义异常
      */
-    public abstract void initTiankafeiTablePagePanel(TiankafeiTablePageVO tiankafeiTablePageVO, TkfPanel pageTkfPanel, List<TiankafeiTable> tiankafeiTableList) throws BaseException;
+    public abstract void initTiankafeiTablePagePanel(TiankafeiTablePageVO tiankafeiTablePageVO, TkfPanel pageTkfPanel, List<TiankafeiTable> tiankafeiTableList);
 
     /**
      * 初始化表格分页面板的数据
@@ -129,9 +126,8 @@ public abstract class AbstractTiankafeiTableControlsPageUtil {
      * @param tiankafeiTableAttributeVO 表格属性对象
      * @param tiankafeiTableList        表格对象集合
      * @return 表格操作按钮面板
-     * @throws BaseException
      */
-    private TkfPanel initTiankafeiTableButtonPanel(TiankafeiTableAttributeVO tiankafeiTableAttributeVO, List<TiankafeiTable> tiankafeiTableList) throws BaseException {
+    private TkfPanel initTiankafeiTableButtonPanel(TiankafeiTableAttributeVO tiankafeiTableAttributeVO, List<TiankafeiTable> tiankafeiTableList) {
         TiankafeiPanel buttonTiankafeiPanel = new TiankafeiPanel();
         TkfPanel buttonTkfPanel = buttonTiankafeiPanel.initTiankafeiPanel();
         buttonTkfPanel.setLayout(new FlowLayout(FlowLayout.CENTER));

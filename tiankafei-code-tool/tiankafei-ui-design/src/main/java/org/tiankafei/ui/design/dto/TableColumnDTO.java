@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.tiankafei.base.dto.CodeNameDTO;
-import org.tiankafei.base.enums.DataTypeEnum;
+import org.tiankafei.common.dto.CodeNameDTO;
+import org.tiankafei.common.enums.DataTypeEnum;
 import org.tiankafei.ui.design.constant.TiankafeiDesignerConstants;
 
 /**

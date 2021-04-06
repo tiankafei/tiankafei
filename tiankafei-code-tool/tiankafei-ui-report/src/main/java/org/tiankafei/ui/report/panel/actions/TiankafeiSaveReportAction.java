@@ -3,9 +3,7 @@ package org.tiankafei.ui.report.panel.actions;
 import com.fr.report.Report;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.report.enums.ActionIdentificationEnum;
 import org.tiankafei.ui.report.panel.TiankafeiExcelPanel;
 import org.tiankafei.ui.report.panel.utils.TiankafeiCreateHtmlUtil;
@@ -29,15 +27,10 @@ public class TiankafeiSaveReportAction extends AbstractTiankafeiReportAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            Report report = tiankafeiExcelPanel.getReport();
-            byte[] byteArray = TiankafeiReportUtil.getReportByteArray(report);
-            System.out.println(new String(byteArray));
-            System.out.println(new TiankafeiCreateHtmlUtil(report).createReportHtml());
-        } catch (BaseException e1) {
-            e1.printStackTrace();
-            JOptionPane.showMessageDialog(null, e1.getMessage());
-        }
+        Report report = tiankafeiExcelPanel.getReport();
+        byte[] byteArray = TiankafeiReportUtil.getReportByteArray(report);
+        System.out.println(new String(byteArray));
+        System.out.println(new TiankafeiCreateHtmlUtil(report).createReportHtml());
     }
 
     @Override

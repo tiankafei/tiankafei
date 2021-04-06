@@ -5,14 +5,16 @@ import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.email.dto.EmailSenderDTO;
 import org.tiankafei.email.dto.MyAuthenticatorDTO;
 
@@ -35,9 +37,8 @@ public class EmailContentSenderUtil {
      *
      * @param emailSenderDTO 待发送的邮件的信息
      * @return 返回true or false
-     * @throws BaseException 自定义异常
      */
-    public boolean sendTextMail(EmailSenderDTO emailSenderDTO) throws BaseException {
+    public boolean sendTextMail(EmailSenderDTO emailSenderDTO) {
         try {
             // 判断是否需要身份认证
             MyAuthenticatorDTO authenticator = null;
@@ -67,9 +68,12 @@ public class EmailContentSenderUtil {
             // 发送邮件
             Transport.send(mailMessage);
             return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new BaseException(ex.getMessage());
+        } catch (AddressException e) {
+            e.printStackTrace();
+            throw new CommonException("发送方或接收方邮件地址不存在！");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            throw new CommonException("发送邮件失败！");
         }
     }
 
@@ -78,9 +82,8 @@ public class EmailContentSenderUtil {
      *
      * @param emailSenderDTO 待发送的邮件信息
      * @return 返回true or false
-     * @throws BaseException 自定义异常
      */
-    public static boolean sendHtmlMail(EmailSenderDTO emailSenderDTO) throws BaseException {
+    public static boolean sendHtmlMail(EmailSenderDTO emailSenderDTO) {
         try {
             // 判断是否需要身份认证
             MyAuthenticatorDTO authenticator = null;
@@ -117,9 +120,12 @@ public class EmailContentSenderUtil {
             // 发送邮件
             Transport.send(mailMessage);
             return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new BaseException(ex.getMessage());
+        } catch (AddressException e) {
+            e.printStackTrace();
+            throw new CommonException("发送方或接收方邮件地址不存在！");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            throw new CommonException("发送邮件失败！");
         }
     }
 

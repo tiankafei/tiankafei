@@ -8,7 +8,7 @@ import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.List;
 import org.junit.Test;
-import org.tiankafei.base.util.FileUtil;
+import org.tiankafei.common.util.FileUtil;
 import org.tiankafei.web.common.api.ApiResult;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.service.impl.CommonCaptchaUtil;

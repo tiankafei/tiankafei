@@ -1,9 +1,11 @@
 package org.tiankafei.aviator.extend.function;
 
-import org.tiankafei.aviator.extend.util.NumberUtil;
 import com.googlecode.aviator.lexer.token.OperatorType;
-
+import com.googlecode.aviator.runtime.type.AviatorNil;
+import com.googlecode.aviator.runtime.type.AviatorObject;
+import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import java.math.BigDecimal;
+import org.tiankafei.aviator.extend.util.NumberUtil;
 
 /**
  * @Author 魏双双
@@ -15,6 +17,19 @@ public class Add extends TwoParamFunction {
     @Override
     public String getName() {
         return OperatorType.ADD.token;
+    }
+
+    @Override
+    protected AviatorObject apply(Object left, Object right) {
+        if (left == null && right == null) {
+            return AviatorNil.NIL;
+        } else if (left == null) {
+            return AviatorRuntimeJavaType.valueOf(right);
+        } else if (right == null) {
+            return AviatorRuntimeJavaType.valueOf(left);
+        } else {
+            return super.apply(left, right);
+        }
     }
 
     @Override

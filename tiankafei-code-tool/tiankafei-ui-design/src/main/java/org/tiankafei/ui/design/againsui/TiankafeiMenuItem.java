@@ -2,7 +2,6 @@ package org.tiankafei.ui.design.againsui;
 
 import java.awt.event.KeyEvent;
 import javax.swing.KeyStroke;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.models.MenuItemVO;
 import org.tiankafei.ui.design.models.TiankafeiDesignerVO;
 import org.tiankafei.ui.design.modelsui.TkfMenuItem;
@@ -36,9 +35,8 @@ public class TiankafeiMenuItem extends TiankafeiDesignerVO {
      * 初始化自定义菜单项对象
      *
      * @return 自定义菜单项对象
-     * @throws BaseException 自定义异常
      */
-    public TkfMenuItem initTiankafeiMenuItem() throws BaseException {
+    public TkfMenuItem initTiankafeiMenuItem() {
         tkfMenuItem.setTiankafeiModelUiVO(getTiankafeiModelUiVO());
         tkfMenuItem.setMenuItemVO(getMenuItemVO());
         //设置控件属性

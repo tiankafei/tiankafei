@@ -9,9 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.DataStreamUtil;
-import org.tiankafei.base.util.FileUtil;
+import org.tiankafei.common.exceptions.CommonException;
+import org.tiankafei.common.util.DataStreamUtil;
+import org.tiankafei.common.util.FileUtil;
 
 /**
  * 基础http操作类
@@ -29,16 +29,15 @@ public abstract class AbstractHttpClient {
      * 构造基础http操作类
      *
      * @param url 连接服务器的url地址
-     * @throws BaseException 自定义异常
      */
-    public AbstractHttpClient(String url) throws BaseException {
-        try {
-            if (StringUtils.isNotEmpty(url)) {
+    public AbstractHttpClient(String url) {
+        if (StringUtils.isNotEmpty(url)) {
+            try {
                 this.url = new URL(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                throw new CommonException(url + "：格式错误，请检查！");
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            throw new BaseException(e.getMessage());
         }
     }
 
@@ -49,13 +48,11 @@ public abstract class AbstractHttpClient {
      * @param methodName       提交要反射的class方法名
      * @param objectArray      参数
      * @return http连接对象
-     * @throws BaseException 自定义异常
      */
-    protected HttpURLConnection submit(String packageClassName, String methodName, Object... objectArray) throws BaseException {
-        HttpURLConnection httpUrlConnection = null;
+    protected HttpURLConnection submit(String packageClassName, String methodName, Object... objectArray) {
         try {
             //打开http连接
-            httpUrlConnection = (HttpURLConnection) url.openConnection();
+            HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
             httpUrlConnection.setDoOutput(true);
             httpUrlConnection.setUseCaches(false);
             httpUrlConnection.setRequestProperty("Content-Type", "applicaiton/x-java-serialized-object");
@@ -73,7 +70,7 @@ public abstract class AbstractHttpClient {
             return httpUrlConnection;
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("打开连接失败，请确认url是否能够访问！");
         }
     }
 
@@ -82,22 +79,23 @@ public abstract class AbstractHttpClient {
      *
      * @param httpUrlConnection http连接对象
      * @return http返回的对象
-     * @throws BaseException 自定义异常
      */
-    protected Object receive(HttpURLConnection httpUrlConnection) throws BaseException {
+    protected Object receive(HttpURLConnection httpUrlConnection) {
         try {
             //状态代码
             int statusCode = httpUrlConnection.getResponseCode();
+
             int minStatusCode = 200;
             int maxStatusCode = 300;
             if ((statusCode >= minStatusCode) && (statusCode <= maxStatusCode)) {
-                ObjectInputStream objectInputStream = new ObjectInputStream(httpUrlConnection.getInputStream());
-                return DataStreamUtil.readObjectInputStream(objectInputStream);
+
             }
-            throw new BaseException(httpUrlConnection.getResponseMessage());
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(httpUrlConnection.getInputStream());
+            return DataStreamUtil.readObjectInputStream(objectInputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("url数据返回失败，请检查！");
         }
     }
 

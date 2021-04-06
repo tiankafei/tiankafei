@@ -107,16 +107,8 @@ logging:
 swagger:
   enabled: false
   title: jpa的多数据源服务接口文档
-  license: Powered By ruoyi
+  license: Powered By tiankafei
   licenseUrl: https://tiankafei.top
-  authorization:
-    name: RuoYi OAuth
-    auth-regex: ^.*$
-    authorization-scope-list:
-      - scope: server
-        description: 客户端授权范围
-    token-url-list:
-      - http://localhost:8080/auth/oauth/token
 #################################### Swagger end ###################################
 
 #################################### tiankafei自定义配置 start #################################

@@ -15,8 +15,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.FileUtil;
+import org.tiankafei.common.util.FileUtil;
 import org.tiankafei.ui.design.againsui.frame.TiankafeiCustonFramePanel;
 import org.tiankafei.ui.design.models.MenuVO;
 import org.tiankafei.ui.design.models.TiankafeiDesignerVO;
@@ -58,10 +57,8 @@ public class TiankafeiFrame extends TiankafeiDesignerVO {
 
     /**
      * 初始化自定义窗体对象
-     *
-     * @throws BaseException 自定义异常
      */
-    public void initTiankafeiFrame() throws BaseException {
+    public void initTiankafeiFrame() {
         tkfFrame.setTiankafeiModelUiVO(getTiankafeiModelUiVO());
         //设置主题
         TiankafeiComponentUtil.setTheme(tiankafeiFrameAttributeVO.getFrameTheme());
@@ -102,10 +99,8 @@ public class TiankafeiFrame extends TiankafeiDesignerVO {
 
     /**
      * 初始化菜单栏
-     *
-     * @throws BaseException 自定义异常
      */
-    private void initMenuList() throws BaseException {
+    private void initMenuList() {
         List<MenuVO> menuList = tiankafeiFrameAttributeVO.getMenuList();
         TiankafeiMenuBar tiankafeiMenuBar = new TiankafeiMenuBar();
         tiankafeiMenuBar.setMenuList(menuList);

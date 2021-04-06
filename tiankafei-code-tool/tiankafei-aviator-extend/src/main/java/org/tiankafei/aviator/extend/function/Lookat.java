@@ -1,12 +1,10 @@
 package org.tiankafei.aviator.extend.function;
 
-import org.tiankafei.aviator.extend.constant.FunctionConstants;
-import org.tiankafei.aviator.extend.exception.AviatorException;
 import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.tiankafei.aviator.extend.constant.FunctionConstants;
 
 /**
  * @Author 魏双双
@@ -30,7 +28,7 @@ public class Lookat extends TwoParamFunction {
             return AviatorBoolean.valueOf(m.lookingAt());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new AviatorException(getName() + "函数的参数类型不合法!");
+            return AviatorBoolean.FALSE;
         }
     }
 }

@@ -5,7 +5,7 @@ import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.ibatis.type.ClobTypeHandler;
-import org.tiankafei.base.util.LogUtil;
+import org.tiankafei.common.util.LogUtil;
 import org.tiankafei.jdbc.constant.DbConfigConstants;
 
 /**

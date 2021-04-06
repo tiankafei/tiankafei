@@ -3,7 +3,6 @@ package org.tiankafei.ui.design.againsui;
 import java.util.List;
 import javax.swing.BorderFactory;
 import org.apache.commons.collections4.CollectionUtils;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.abstractinterface.AbstractTiankafeiMenuToolBarActoin;
 import org.tiankafei.ui.design.models.TiankafeiDesignerVO;
 import org.tiankafei.ui.design.modelsui.TkfButton;
@@ -37,9 +36,8 @@ public class TiankafeiToolBar extends TiankafeiDesignerVO {
      * 初始化自定义工具栏对象
      *
      * @return 自定义工具栏对象
-     * @throws BaseException 自定义异常
      */
-    public TkfToolBar initTiankafeiToolBar() throws BaseException {
+    public TkfToolBar initTiankafeiToolBar() {
         tkfToolBar.setTiankafeiModelUiVO(getTiankafeiModelUiVO());
         //设置控件背景色
         tkfToolBar.setBackground(getBackgroundColor());

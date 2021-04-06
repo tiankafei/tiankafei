@@ -8,7 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.tiankafei.base.util.LogUtil;
+import org.tiankafei.common.util.LogUtil;
 import org.tiankafei.netty.common.NettyConstants;
 import org.tiankafei.netty.server.adapter.DemoServerNettyAdapter;
 

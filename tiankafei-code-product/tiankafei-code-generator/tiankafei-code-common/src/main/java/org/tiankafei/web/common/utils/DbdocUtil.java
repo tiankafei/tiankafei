@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.FileUtil;
+import org.tiankafei.common.exceptions.CommonException;
+import org.tiankafei.common.util.FileUtil;
 import org.tiankafei.web.common.properties.DbDocProperties;
 
 import java.util.List;
@@ -20,9 +20,8 @@ public class DbdocUtil {
      *
      * @param jsonName json文件的名字
      * @return
-     * @throws BaseException
      */
-    public static List<DbDocProperties> createDatabaseDocumentProperties(String jsonName) throws BaseException {
+    public static List<DbDocProperties> createDatabaseDocumentProperties(String jsonName) {
         List<DbDocProperties> list = Lists.newArrayList();
         String json = FileUtil.readJsonFile(jsonName);
         JSONObject jsonObject = JSON.parseObject(json);
@@ -36,7 +35,7 @@ public class DbdocUtil {
 
         key = "data";
         if (!jsonObject.containsKey(key)) {
-            throw new BaseException("json文件中没有 data 集合属性");
+            throw new CommonException("json文件中没有 data 集合属性");
         }
         JSONArray data = jsonObject.getJSONArray(key);
         List<DbDocProperties> propertiesList = data.toJavaList(DbDocProperties.class);
@@ -63,17 +62,17 @@ public class DbdocUtil {
         return list;
     }
 
-    private static <T> void setValue(Supplier<T> supplier, Consumer<T> consumer, T value, String message) throws BaseException {
+    private static <T> void setValue(Supplier<T> supplier, Consumer<T> consumer, T value, String message) {
         T t = supplier.get();
         if( t == null || StringUtils.isBlank(t.toString())){
             if(value == null || StringUtils.isBlank(value.toString())){
-                throw new BaseException(message + "不能为空！");
+                throw new CommonException(message + "不能为空！");
             }
             consumer.accept(value);
         }
     }
 
-    private static void addValue(Supplier<List<String>> supplier, Consumer<List<String>> consumer, List<String> valueList) throws BaseException {
+    private static void addValue(Supplier<List<String>> supplier, Consumer<List<String>> consumer, List<String> valueList) {
         List<String> dataList = supplier.get();
         if(dataList == null){
             dataList = Lists.newArrayList();

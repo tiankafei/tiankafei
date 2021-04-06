@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.adapter.TiankafeiUiResizeAdapter;
 import org.tiankafei.ui.design.againsui.TiankafeiFrame;
 import org.tiankafei.ui.design.againsui.TiankafeiLabel;
@@ -53,9 +52,8 @@ public class TiankafeiCustonFramePanel {
      * @param tiankafeiFrame            自定义窗体
      * @param tkfFrame                  窗体
      * @param tiankafeiFrameAttributeVO 窗体属性对象
-     * @throws BaseException 自定义异常
      */
-    public TiankafeiCustonFramePanel(TiankafeiFrame tiankafeiFrame, TkfFrame tkfFrame, TiankafeiFrameAttributeVO tiankafeiFrameAttributeVO) throws BaseException {
+    public TiankafeiCustonFramePanel(TiankafeiFrame tiankafeiFrame, TkfFrame tkfFrame, TiankafeiFrameAttributeVO tiankafeiFrameAttributeVO) {
         this.tiankafeiFrame = tiankafeiFrame;
         this.tkfFrame = tkfFrame;
         this.tiankafeiFrameAttributeVO = tiankafeiFrameAttributeVO;
@@ -65,10 +63,8 @@ public class TiankafeiCustonFramePanel {
 
     /**
      * 初始化自定义窗体的面板
-     *
-     * @throws BaseException 自定义异常
      */
-    private void initTiankafeiCustonFramePanel() throws BaseException {
+    private void initTiankafeiCustonFramePanel() {
         //去掉JFrame的标题栏
         tkfFrame.setUndecorated(true);
         //设置圆角
@@ -116,9 +112,8 @@ public class TiankafeiCustonFramePanel {
      *
      * @param titleTkfPanel
      * @param titleTiankafeiPanel
-     * @throws BaseException
      */
-    private void initLeftUpperOperatePanel(TkfPanel titleTkfPanel, TiankafeiPanel titleTiankafeiPanel) throws BaseException {
+    private void initLeftUpperOperatePanel(TkfPanel titleTkfPanel, TiankafeiPanel titleTiankafeiPanel) {
         TiankafeiPanel systemIconTiankafeiPanel = new TiankafeiPanel();
         TkfPanel systemTkfPanel = systemIconTiankafeiPanel.initTiankafeiPanel();
         systemTkfPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -161,9 +156,8 @@ public class TiankafeiCustonFramePanel {
      * 初始化右上角图标面板
      *
      * @param titleTkfPanel
-     * @throws BaseException
      */
-    private void initRightUpperOperatePanel(TkfPanel titleTkfPanel) throws BaseException {
+    private void initRightUpperOperatePanel(TkfPanel titleTkfPanel) {
         TiankafeiPanel handleTiankafeiPanel = new TiankafeiPanel();
         TkfPanel handleTkfPanel = handleTiankafeiPanel.initTiankafeiPanel();
         handleTkfPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 1, 1));
@@ -229,23 +223,15 @@ public class TiankafeiCustonFramePanel {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            try {
-                minIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMinMoveIconFilePath());
-                minIconTiankafeiLabel.setImageIcon();
-                tkfFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            } catch (BaseException e1) {
-                e1.printStackTrace();
-            }
+            minIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMinMoveIconFilePath());
+            minIconTiankafeiLabel.setImageIcon();
+            tkfFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            try {
-                minIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMinIconFilePath());
-                minIconTiankafeiLabel.setImageIcon();
-            } catch (BaseException e1) {
-                e1.printStackTrace();
-            }
+            minIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMinIconFilePath());
+            minIconTiankafeiLabel.setImageIcon();
         }
 
         @Override
@@ -268,35 +254,27 @@ public class TiankafeiCustonFramePanel {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            try {
-                if (tkfFrame.getExtendedState() == TkfFrame.MAXIMIZED_BOTH) {
-                    maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxScalingMoveIconFilePath());
-                    maxIconTkfLabel.setToolTipText("向下还原");
-                } else {
-                    maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxMoveIconFilePath());
-                    maxIconTkfLabel.setToolTipText("最大化");
-                }
-                maxIconTiankafeiLabel.setImageIcon();
-                tkfFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            } catch (BaseException e1) {
-                e1.printStackTrace();
+            if (tkfFrame.getExtendedState() == TkfFrame.MAXIMIZED_BOTH) {
+                maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxScalingMoveIconFilePath());
+                maxIconTkfLabel.setToolTipText("向下还原");
+            } else {
+                maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxMoveIconFilePath());
+                maxIconTkfLabel.setToolTipText("最大化");
             }
+            maxIconTiankafeiLabel.setImageIcon();
+            tkfFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            try {
-                if (tkfFrame.getExtendedState() == TkfFrame.MAXIMIZED_BOTH) {
-                    maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxScalingIconFilePath());
-                    maxIconTkfLabel.setToolTipText("向下还原");
-                } else {
-                    maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxIconFilePath());
-                    maxIconTkfLabel.setToolTipText("最大化");
-                }
-                maxIconTiankafeiLabel.setImageIcon();
-            } catch (BaseException e1) {
-                e1.printStackTrace();
+            if (tkfFrame.getExtendedState() == TkfFrame.MAXIMIZED_BOTH) {
+                maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxScalingIconFilePath());
+                maxIconTkfLabel.setToolTipText("向下还原");
+            } else {
+                maxIconTiankafeiLabel.setIconFilePath(tiankafeiFrameAttributeVO.getMaxIconFilePath());
+                maxIconTkfLabel.setToolTipText("最大化");
             }
+            maxIconTiankafeiLabel.setImageIcon();
         }
 
         @Override

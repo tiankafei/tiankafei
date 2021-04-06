@@ -7,8 +7,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.List;
 import javax.swing.BoxLayout;
-import org.tiankafei.base.dto.CodeNameDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.CodeNameDTO;
 import org.tiankafei.ui.control.choose.TiankafeiChooseFactory;
 import org.tiankafei.ui.control.constants.TiankafeiChooseConstants;
 import org.tiankafei.ui.design.abstractinterface.AbstractTiankafeiChooseAction;
@@ -42,8 +41,7 @@ public class TiankafeiLeftChooseRightControls {
         targetCodeNameDtoList = Lists.newArrayList();
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public TkfPanel initTiankafeiLeftChooseRightControls(TiankafeiFrame tiankafeiFrame) throws BaseException {
+    public TkfPanel initTiankafeiLeftChooseRightControls(TiankafeiFrame tiankafeiFrame) {
         TiankafeiPanel tiankafeiPanel = new TiankafeiPanel();
         TkfPanel tkfPanel = tiankafeiPanel.initTiankafeiPanel();
         tkfPanel.setLayout(new BoxLayout(tkfPanel, BoxLayout.X_AXIS));
@@ -120,10 +118,9 @@ public class TiankafeiLeftChooseRightControls {
      * @param leftTkfList  左侧要选择的面板
      * @param rightTkfList 右侧选中的面板
      * @return 按钮对象
-     * @throws BaseException 自定义异常
      */
     @SuppressWarnings("rawtypes")
-    private TkfButton initOperateButton(String text, TkfList leftTkfList, TkfList rightTkfList) throws BaseException {
+    private TkfButton initOperateButton(String text, TkfList leftTkfList, TkfList rightTkfList) {
         TiankafeiButton tiankafeiButton = new TiankafeiButton();
         tiankafeiButton.setText(text);
         TkfButton tkfButton = tiankafeiButton.initTiankafeiButton();

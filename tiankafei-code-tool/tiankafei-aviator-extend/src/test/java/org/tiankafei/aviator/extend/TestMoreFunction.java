@@ -38,9 +38,9 @@ public class TestMoreFunction {
 
     @Test
     public void testLeft() {
-        String expression = "LEFT('weishuangshuang', 6)";
+        String expression = "LEFT('weishuangshuang', 4)";
         AviatorExtendUtil.execute(expression);
-        expression = "LEFT(a, 6)";
+        expression = "LEFT(a, 4)";
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("a", "weishuangshuang");
         AviatorExtendUtil.execute(expression, dataMap);

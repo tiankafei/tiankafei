@@ -1,5 +1,6 @@
 package org.tiankafei.aviator.extend.util;
 
+import com.googlecode.aviator.lexer.SymbolTable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.tiankafei.aviator.extend.InitFunction;
 import org.tiankafei.aviator.extend.constant.FunctionConstants;
@@ -26,7 +27,7 @@ import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.util.JdkSpiUtil;
+import org.tiankafei.common.util.JdkSpiUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -96,12 +97,19 @@ public abstract class AviatorExtendUtil {
         String name = aviatorFunctionProxy.getName();
         String lowerCase = name.toLowerCase();
         String upperCase = name.toUpperCase();
-        if (lowerCase.equals(upperCase)) {
+        if(checkFunctionExists(lowerCase)){
             AviatorEvaluator.getInstance().addFunction(lowerCase, aviatorFunctionProxy);
-        } else {
-            AviatorEvaluator.getInstance().addFunction(lowerCase, aviatorFunctionProxy);
-            AviatorEvaluator.getInstance().addFunction(upperCase, aviatorFunctionProxy);
         }
+        if (!lowerCase.equals(upperCase)) {
+            if(checkFunctionExists(upperCase)){
+                AviatorEvaluator.getInstance().addFunction(upperCase, aviatorFunctionProxy);
+            }
+        }
+    }
+
+    public static boolean checkFunctionExists(String funName){
+        AviatorFunction function = AviatorEvaluator.getFunction(funName);
+        return "com.googlecode.aviator.RuntimeFunctionDelegator".equals(function.getClass().getName()) && !SymbolTable.isReservedKeyword(funName);
     }
 
     /**
@@ -214,6 +222,29 @@ public abstract class AviatorExtendUtil {
             expression = parseExpression(expression);
             Object result = null;
             Expression exp = AviatorEvaluator.compile(expression);
+//            System.out.println(exp.getClass());
+//            byte[] serialize = ObjectUtil.serialize(exp);
+//
+//            String filePath = "D:\\Script_1615568517996_56.class";
+//            FileUtil.writeByteFile(serialize, filePath);
+//
+//            byte[] bytes = FileUtil.readByteFile(filePath);
+//            Expression exp1 = ObjectUtil.deserialize(bytes);
+//            System.out.println(exp1);
+//            System.out.println(exp1.getVariableNames());
+//            System.out.println(exp1.getVariableFullNames());
+//            System.out.println(exp1.getSourceFile());
+
+            String name = exp.getClass().getName();
+            System.out.println(name);
+            String className = name.split("/")[0];
+            System.out.println(className);
+
+
+
+            System.out.println(exp.getVariableNames());
+            System.out.println(exp.getVariableFullNames());
+            System.out.println(exp.getSourceFile());
             if (dataMap != null) {
                 result = exp.execute(dataMap);
             } else {

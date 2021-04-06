@@ -15,11 +15,10 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.tiankafei.base.datetime.DateTimeUtil;
-import org.tiankafei.base.enums.DateTimeEnum;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.datetime.DateTimeUtil;
+import org.tiankafei.common.enums.DateTimeEnum;
+import org.tiankafei.common.util.DataOperateUtil;
 import org.tiankafei.ui.control.datetime.DataTimeControlsDTO;
-import org.tiankafei.base.util.DataOperateUtil;
 import org.tiankafei.ui.design.againsui.TiankafeiButton;
 import org.tiankafei.ui.design.againsui.TiankafeiComboBox;
 import org.tiankafei.ui.design.againsui.TiankafeiDialog;
@@ -135,8 +134,6 @@ public class TiankafeiDateTimeControls {
 
     /**
      * 构造自定义日期事件选择控件
-     *
-     * @throws BaseException 自定义异常
      */
     public TiankafeiDateTimeControls() {
         formatSimpleDateFormat1 = DateTimeEnum.YYYY_NAME_MM_NAME_DD.getCode();
@@ -158,9 +155,8 @@ public class TiankafeiDateTimeControls {
      * 初始化自定义日期事件选择控件
      *
      * @return 自定义日期事件选择控件
-     * @throws BaseException 自定义异常
      */
-    public TiankafeiDialog initTiankafeiDateTimeControls() throws BaseException {
+    public TiankafeiDialog initTiankafeiDateTimeControls() {
         String format = getDefaultFormatType();
         return initTiankafeiDateTimeControls(new Date(), format);
     }
@@ -170,9 +166,8 @@ public class TiankafeiDateTimeControls {
      *
      * @param dateTime 时间
      * @return 自定义日期事件选择控件
-     * @throws BaseException 自定义异常
      */
-    public TiankafeiDialog initTiankafeiDateTimeControls(String dateTime) throws BaseException {
+    public TiankafeiDialog initTiankafeiDateTimeControls(String dateTime) {
         String format = getDefaultFormatType();
         return initTiankafeiDateTimeControls(DateTimeUtil.stringToDate(dateTime, format), format);
     }
@@ -183,9 +178,8 @@ public class TiankafeiDateTimeControls {
      * @param dateTime 时间
      * @param format   时间格式
      * @return 自定义日期事件选择控件
-     * @throws BaseException 自定义异常
      */
-    public TiankafeiDialog initTiankafeiDateTimeControls(String dateTime, String format) throws BaseException {
+    public TiankafeiDialog initTiankafeiDateTimeControls(String dateTime, String format) {
         return initTiankafeiDateTimeControls(DateTimeUtil.stringToDate(dateTime, format), format);
     }
 
@@ -195,9 +189,8 @@ public class TiankafeiDateTimeControls {
      * @param date   时间
      * @param format 时间格式
      * @return 自定义日期事件选择控件
-     * @throws BaseException 自定义异常
      */
-    public TiankafeiDialog initTiankafeiDateTimeControls(Date date, String format) throws BaseException {
+    public TiankafeiDialog initTiankafeiDateTimeControls(Date date, String format) {
         currentCalendar = Calendar.getInstance();
         formatSimpleDateFormat = format;
         selectCalendar.setTime(date);
@@ -263,10 +256,8 @@ public class TiankafeiDateTimeControls {
 
     /**
      * 初始化自定义日期事件选择控件的数据
-     *
-     * @throws BaseException
      */
-    private void initTiankafeiDateTimeControlsData() throws BaseException {
+    private void initTiankafeiDateTimeControlsData() {
         //更新时间
         updateDateTime();
         //更新时间选择的内容
@@ -275,10 +266,8 @@ public class TiankafeiDateTimeControls {
 
     /**
      * 初始化选择年份和月份面板
-     *
-     * @throws BaseException
      */
-    private TkfPanel initChooseYearAndMonthPanel() throws BaseException {
+    private TkfPanel initChooseYearAndMonthPanel() {
         TiankafeiPanel chooseYearAndMonthTiankafeiPanel = new TiankafeiPanel();
         chooseYearAndMonthTiankafeiPanel.setBackgroundColor(titleBackgroundColor);
         chooseYearAndMonthTiankafeiPanel.setWidth(controlsWidth);
@@ -340,12 +329,8 @@ public class TiankafeiDateTimeControls {
         @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                try {
-                    setSelectCalendar();
-                    updateDateTimeContent();
-                } catch (BaseException e1) {
-                    e1.printStackTrace();
-                }
+                setSelectCalendar();
+                updateDateTimeContent();
             }
         }
     }
@@ -354,12 +339,8 @@ public class TiankafeiDateTimeControls {
         @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                try {
-                    setSelectCalendar();
-                    updateDateTimeContent();
-                } catch (BaseException e1) {
-                    e1.printStackTrace();
-                }
+                setSelectCalendar();
+                updateDateTimeContent();
             }
         }
     }
@@ -368,9 +349,8 @@ public class TiankafeiDateTimeControls {
      * 初始化时间日期选择面板
      *
      * @return 时间日期选择面板
-     * @throws BaseException
      */
-    private TkfPanel initDateTimeChoosePanel() throws BaseException {
+    private TkfPanel initDateTimeChoosePanel() {
         TiankafeiPanel dateTimeChooseTiankafeiPanel = new TiankafeiPanel();
         dateTimeChooseTiankafeiPanel.setBackgroundColor(dateBackgroundColor);
         dateTimeChooseTiankafeiPanel.setWidth(controlsWidth);
@@ -429,9 +409,8 @@ public class TiankafeiDateTimeControls {
      * 初始化时间日期选择标题面板
      *
      * @return 时间日期选择标题面板
-     * @throws BaseException
      */
-    private TkfPanel initDateTimeChooseTitlePanel() throws BaseException {
+    private TkfPanel initDateTimeChooseTitlePanel() {
         TiankafeiPanel dateTimeChooseTitleTiankafeiPanel = new TiankafeiPanel();
         dateTimeChooseTitleTiankafeiPanel.setBackgroundColor(dateBackgroundColor);
         dateTimeChooseTitleTiankafeiPanel.setWidth(controlsWidth);
@@ -495,10 +474,8 @@ public class TiankafeiDateTimeControls {
 
     /**
      * 初始化当前时间面板
-     *
-     * @throws BaseException
      */
-    private TkfPanel initCurrentDateTimePanel() throws BaseException {
+    private TkfPanel initCurrentDateTimePanel() {
         TiankafeiPanel currentDateTimeTiankafeiPanel = new TiankafeiPanel();
         currentDateTimeTiankafeiPanel.setBackgroundColor(titleBackgroundColor);
         currentDateTimeTiankafeiPanel.setWidth(controlsWidth);
@@ -566,10 +543,8 @@ public class TiankafeiDateTimeControls {
 
     /**
      * 更新时间选择的内容
-     *
-     * @throws BaseException
      */
-    private void updateDateTimeContent() throws BaseException {
+    private void updateDateTimeContent() {
         dateTimeChooseContentTkfPanel.removeAll();
         //选择日期
         Date selectDate = selectCalendar.getTime();
@@ -640,9 +615,8 @@ public class TiankafeiDateTimeControls {
      * @param newCalendar 新建的日期选择器
      * @param chooseMonth 选择的当前月份
      * @return 日期内容标签
-     * @throws BaseException
      */
-    private TkfLabel getTkfLabel(Calendar newCalendar, int chooseMonth) throws BaseException {
+    private TkfLabel getTkfLabel(Calendar newCalendar, int chooseMonth) {
         int year = newCalendar.get(Calendar.YEAR);
         int month = newCalendar.get(Calendar.MONTH);
         int days = newCalendar.get(Calendar.DAY_OF_MONTH);
@@ -714,9 +688,8 @@ public class TiankafeiDateTimeControls {
      * @param tkfPanel  下拉框放置的面板
      * @param labelText 显示文本
      * @param array     下拉框内容
-     * @throws BaseException
      */
-    private void setTkfComboBoxArray(int index, TkfPanel tkfPanel, String labelText, String[] array) throws BaseException {
+    private void setTkfComboBoxArray(int index, TkfPanel tkfPanel, String labelText, String[] array) {
         TiankafeiComboBox<String> yearTiankafeiComboBox = new TiankafeiComboBox<String>(array);
         tkfComboBoxArray[index] = yearTiankafeiComboBox.initTiankafeiComboBox();
         tkfPanel.add(tkfComboBoxArray[index]);
@@ -759,13 +732,9 @@ public class TiankafeiDateTimeControls {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (field != 0 && amount != 0) {
-                    try {
-                        selectCalendar.add(field, amount);
-                        updateDateTime();
-                        updateDateTimeContent();
-                    } catch (BaseException e1) {
-                        e1.printStackTrace();
-                    }
+                    selectCalendar.add(field, amount);
+                    updateDateTime();
+                    updateDateTimeContent();
                 }
             }
         });

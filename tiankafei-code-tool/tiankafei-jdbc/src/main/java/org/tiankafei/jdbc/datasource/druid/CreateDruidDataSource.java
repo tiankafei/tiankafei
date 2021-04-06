@@ -1,7 +1,6 @@
 package org.tiankafei.jdbc.datasource.druid;
 
 import javax.sql.DataSource;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.jdbc.datasource.AbstractCreateDataSource;
 import org.tiankafei.jdbc.dto.DataSourceDTO;
 
@@ -13,7 +12,7 @@ import org.tiankafei.jdbc.dto.DataSourceDTO;
 public class CreateDruidDataSource extends AbstractCreateDataSource {
 
     @Override
-    public DataSource createDataSource(DataSourceDTO dataSourceDTO) throws BaseException {
+    public DataSource createDataSource(DataSourceDTO dataSourceDTO) {
         return null;
     }
 

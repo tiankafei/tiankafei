@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.ActionMap;
 import javax.swing.JPopupMenu;
 import javax.swing.undo.UndoManager;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.report.dto.TiankafeiReportDTO;
 import org.tiankafei.ui.report.panel.actions.TiankafeiReportActionsManager;
 
@@ -96,11 +95,6 @@ public class TiankafeiExcelPanel extends ReportPane {
 
     @Override
     public JPopupMenu createPopupMenu(MouseEvent mouseEvent) {
-        try {
-            return tiankafeiReportActionsManager.initTkfPopupMenu();
-        } catch (BaseException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return tiankafeiReportActionsManager.initTkfPopupMenu();
     }
 }

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.tiankafei.base.dto.CodeNameDTO;
+import org.tiankafei.common.dto.CodeNameDTO;
 
 /**
  * 物理表字段常量类

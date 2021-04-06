@@ -2,7 +2,6 @@ package org.tiankafei.ui.control;
 
 import java.awt.BorderLayout;
 import java.util.List;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiTableControlsPageUtil;
 import org.tiankafei.ui.design.againsui.TiankafeiPanel;
 import org.tiankafei.ui.design.againsui.TiankafeiScrollPane;
@@ -49,9 +48,8 @@ public class TiankafeiTableControls extends TiankafeiDesignerVO {
      * 初始化放置表格对象的面板
      *
      * @return 放置表格对象的面板
-     * @throws BaseException 自定义异常
      */
-    public TkfPanel initTiankafeiTablePanel() throws BaseException {
+    public TkfPanel initTiankafeiTablePanel() {
         //表格对象集合
         List<TiankafeiTable> tiankafeiTableList = tiankafeiTableAttributeVO.getTiankafeiTableList();
         tiankafeiTableList.add(tiankafeiTable);

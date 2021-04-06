@@ -1,7 +1,7 @@
 package org.tiankafei.ui.design.abstractinterface;
 
 import java.util.List;
-import org.tiankafei.base.dto.CodeNameDTO;
+import org.tiankafei.common.dto.CodeNameDTO;
 import org.tiankafei.ui.design.modelsui.TkfList;
 
 /**

@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-import org.tiankafei.base.datetime.DateTimeUtil;
-import org.tiankafei.base.enums.DateTimeEnum;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.datetime.DateTimeUtil;
+import org.tiankafei.common.enums.DateTimeEnum;
 import org.tiankafei.ui.design.againsui.TiankafeiLabel;
 import org.tiankafei.ui.design.constant.TiankafeiDesignerConstants;
 import org.tiankafei.ui.design.modelsui.TkfLabel;
@@ -26,7 +25,7 @@ public class TiankafeiTimeControls {
 
     }
 
-    public TkfLabel initTiankafeiTimeControls() throws BaseException {
+    public TkfLabel initTiankafeiTimeControls() {
         TiankafeiLabel tiankafeiLabel = new TiankafeiLabel();
         tiankafeiLabel.setTopBorderWidth(1);
         tiankafeiLabel.setBottomBorderWidth(1);
@@ -87,11 +86,7 @@ public class TiankafeiTimeControls {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                try {
-                    setCurrentTime(tkfLabel);
-                } catch (BaseException e) {
-                    e.printStackTrace();
-                }
+                setCurrentTime(tkfLabel);
             }
         }, calendar.getTime(), intervalTime);
 
@@ -102,9 +97,8 @@ public class TiankafeiTimeControls {
      * 设置当前时间
      *
      * @param tkfLabel 当前时间标签
-     * @throws BaseException 自定义异常
      */
-    private void setCurrentTime(TkfLabel tkfLabel) throws BaseException {
+    private void setCurrentTime(TkfLabel tkfLabel) {
         Calendar calendar = Calendar.getInstance();
         String week = DateTimeUtil.getWeekChineseName(calendar);
         String dateTime = DateTimeUtil.getCurrentTime(calendar, formatType);

@@ -15,8 +15,8 @@ import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
 import org.rocksdb.RocksIterator;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.base.util.DataStreamUtil;
+import org.tiankafei.common.exceptions.CommonException;
+import org.tiankafei.common.util.DataStreamUtil;
 import org.tiankafei.rocksdb.constants.RocksdbConstants;
 
 /**
@@ -101,6 +101,7 @@ public class RocksdbUtil<T> {
             rocksDb = RocksDB.open(options, rocksdbPath);
         } catch (RocksDBException e) {
             e.printStackTrace();
+            throw new CommonException("初始化数据文件失败！");
         }
     }
 
@@ -161,8 +162,7 @@ public class RocksdbUtil<T> {
             }
         } catch (RocksDBException e) {
             e.printStackTrace();
-        } catch (BaseException e) {
-            e.printStackTrace();
+            throw new CommonException("初始化带分区的数据文件失败！");
         }
     }
 
@@ -171,10 +171,10 @@ public class RocksdbUtil<T> {
      *
      * @param rocksdbPartitionName 分区名称
      */
-    public void createColumnFamily(String rocksdbPartitionName) throws BaseException {
+    public void createColumnFamily(String rocksdbPartitionName) {
         try {
             if (!rocksdbPartitionFlag) {
-                throw new BaseException("创建分区失败，只有新建rocksdb分区对象才能创建分区！");
+                throw new CommonException("创建分区失败，只有新建rocksdb分区对象才能创建分区！");
             }
             if (!columnFamilyHandleMap.containsKey(rocksdbPartitionName)) {
                 //创建分区
@@ -184,7 +184,7 @@ public class RocksdbUtil<T> {
             }
         } catch (RocksDBException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("创建列簇失败！");
         }
     }
 
@@ -194,12 +194,12 @@ public class RocksdbUtil<T> {
      * @param key 键
      * @return 分区名称
      */
-    private String getRocksdbPartitionNameFromKey(String key) throws BaseException {
+    private String getRocksdbPartitionNameFromKey(String key) {
         if (key.contains(RocksdbConstants.rocksdbKeySplit)) {
             String rocksdbPartitionName = key.split(RocksdbConstants.rocksdbKeySplit)[0];
             return rocksdbPartitionName;
         } else {
-            throw new BaseException(key + "不符合命名规范，请确认！");
+            throw new CommonException(key + "不符合命名规范，请确认！");
         }
     }
 
@@ -230,7 +230,7 @@ public class RocksdbUtil<T> {
      * @param key 键
      * @return 分区列簇
      */
-    private ColumnFamilyHandle getColumnFamilyHandle(String key) throws BaseException {
+    private ColumnFamilyHandle getColumnFamilyHandle(String key) {
         String rocksdbPartitionName = getRocksdbPartitionNameFromKey(key);
         ColumnFamilyHandle columnFamilyHandle = columnFamilyHandleMap.get(rocksdbPartitionName);
         return columnFamilyHandle;
@@ -241,9 +241,8 @@ public class RocksdbUtil<T> {
      *
      * @param key    键
      * @param object 数据
-     * @throws BaseException 自定义异常
      */
-    public void setValue(String key, T object) throws BaseException {
+    public void setValue(String key, T object) {
         try {
             if (rocksdbPartitionFlag) {
                 rocksDb.put(getColumnFamilyHandle(key), key.getBytes(), DataStreamUtil.getByteArray(object));
@@ -252,7 +251,7 @@ public class RocksdbUtil<T> {
             }
         } catch (RocksDBException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("存储数据失败！");
         }
     }
 
@@ -261,9 +260,8 @@ public class RocksdbUtil<T> {
      *
      * @param key 键
      * @return 指定键的数据
-     * @throws BaseException 自定义异常
      */
-    public T getValue(String key) throws BaseException {
+    public T getValue(String key) {
         try {
             byte[] byteArray = null;
             if (rocksdbPartitionFlag) {
@@ -275,7 +273,7 @@ public class RocksdbUtil<T> {
             return (T) object;
         } catch (RocksDBException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("获取数据失败！");
         }
     }
 
@@ -284,9 +282,8 @@ public class RocksdbUtil<T> {
      *
      * @param keyList 键集合
      * @return 指定键集合的数据集合
-     * @throws BaseException 自定义异常
      */
-    public Map<String, T> getValueArray(List<String> keyList) throws BaseException {
+    public Map<String, T> getValueArray(List<String> keyList) {
         try {
             int keyLength = keyList.size();
             Map<String, T> resultMap = new HashMap<String, T>(keyLength);
@@ -327,7 +324,7 @@ public class RocksdbUtil<T> {
             return resultMap;
         } catch (RocksDBException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("获取数据集失败！");
         }
     }
 
@@ -335,9 +332,8 @@ public class RocksdbUtil<T> {
      * 获取所有的数据
      *
      * @return 所有的数据
-     * @throws BaseException 自定义异常
      */
-    public Map<String, T> getValueArray() throws BaseException {
+    public Map<String, T> getValueArray() {
         return getValueArray("", 0);
     }
 
@@ -346,9 +342,8 @@ public class RocksdbUtil<T> {
      *
      * @param prefix 指定前缀
      * @return 指定前缀的数据
-     * @throws BaseException 自定义异常
      */
-    public Map<String, T> getValueArray(String prefix) throws BaseException {
+    public Map<String, T> getValueArray(String prefix) {
         return getValueArray(prefix, 0);
     }
 
@@ -357,9 +352,8 @@ public class RocksdbUtil<T> {
      *
      * @param count 指定个数
      * @return 指定个数的数据
-     * @throws BaseException 自定义异常
      */
-    public Map<String, T> getValueArray(int count) throws BaseException {
+    public Map<String, T> getValueArray(int count) {
         return getValueArray("", count);
     }
 
@@ -369,9 +363,8 @@ public class RocksdbUtil<T> {
      * @param prefix 指定前缀
      * @param count  指定个数
      * @return 指定前缀和个数的数据
-     * @throws BaseException 自定义异常
      */
-    public Map<String, T> getValueArray(String prefix, int count) throws BaseException {
+    public Map<String, T> getValueArray(String prefix, int count) {
         Map<String, T> resultMap = new HashMap<String, T>(10);
 
         int index = 0;
@@ -401,9 +394,8 @@ public class RocksdbUtil<T> {
      * 删除键
      *
      * @param key 键
-     * @throws BaseException 自定义异常
      */
-    public void removeKey(String key) throws BaseException {
+    public void removeKey(String key) {
         try {
             if (rocksdbPartitionFlag) {
                 rocksDb.delete(getColumnFamilyHandle(key), key.getBytes());
@@ -412,7 +404,7 @@ public class RocksdbUtil<T> {
             }
         } catch (RocksDBException e) {
             e.printStackTrace();
-            throw new BaseException(e.getMessage());
+            throw new CommonException("删除数据失败！");
         }
     }
 

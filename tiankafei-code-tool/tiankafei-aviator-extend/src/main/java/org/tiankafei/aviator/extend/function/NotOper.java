@@ -16,7 +16,6 @@ public class NotOper extends OneParamFunction {
         if (object instanceof Boolean) {
             return AviatorBoolean.valueOf(!(Boolean) object);
         }
-//        throw new AviatorException(getName() + "函数传入的数据类型错误，请确认！");
         return AviatorNil.NIL;
     }
 

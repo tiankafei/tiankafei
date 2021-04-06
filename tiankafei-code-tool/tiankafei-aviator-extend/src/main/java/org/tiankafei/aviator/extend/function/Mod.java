@@ -1,22 +1,34 @@
 package org.tiankafei.aviator.extend.function;
 
+import com.googlecode.aviator.lexer.token.OperatorType;
+import com.googlecode.aviator.runtime.type.AviatorNil;
+import com.googlecode.aviator.runtime.type.AviatorObject;
+import java.math.BigDecimal;
+import lombok.extern.slf4j.Slf4j;
 import org.tiankafei.aviator.extend.exception.AviatorException;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
 import org.tiankafei.aviator.extend.util.NumberUtil;
-import com.googlecode.aviator.lexer.token.OperatorType;
-
-import java.math.BigDecimal;
 
 /**
  * @Author 魏双双
  * @Date 2020/6/2
  * @Version V1.0
  **/
+@Slf4j
 public class Mod extends TwoParamFunction {
 
     @Override
     public String getName() {
         return OperatorType.MOD.token;
+    }
+
+    @Override
+    protected AviatorObject apply(Object left, Object right) {
+        if (left == null || right == null) {
+            return AviatorNil.NIL;
+        } else {
+            return super.apply(left, right);
+        }
     }
 
     @Override
@@ -34,7 +46,8 @@ public class Mod extends TwoParamFunction {
         if (FunctionUtils.isNumerics(left.toString()) && FunctionUtils.isNumerics(right.toString())) {
             return evlNormalOperation(left, right);
         } else {
-            throw new AviatorException("文本字符串不能参与求余数运算！");
+            log.error("文本字符串不能参与求余数运算！");
+            return AviatorNil.NIL;
         }
     }
 

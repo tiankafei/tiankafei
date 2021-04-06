@@ -4,8 +4,8 @@ import cn.hutool.core.lang.Validator;
 import java.util.List;
 import javax.swing.JTextField;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
+import org.tiankafei.common.dto.SqlParamDTO;
+import org.tiankafei.common.exceptions.CommonException;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 import org.tiankafei.ui.control.constants.TiankafeiConditionConstants;
 import org.tiankafei.ui.control.dto.TiankafeiCustomConditionDTO;
@@ -28,22 +28,18 @@ public class TiankafeiLengthConditionDTO extends AbstractTiankafeiConditionDTO {
     }
 
     @Override
-    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) throws BaseException {
+    public String setAbstractTiankafeiConditionValue(TkfPanel tempTkfPanel, TiankafeiCustomConditionDTO tiankafeiCustomConditionDTO, int number) {
         String message = null;
         JTextField valueTextField = (JTextField) tempTkfPanel.getComponents()[number];
         String value = valueTextField.getText().trim();
         if (StringUtils.isNotEmpty(value)) {
-            try {
-                if (!Validator.isNumber(value)) {
-                    message = "";
-                }
-            } catch (Exception e) {
-                message = e.getMessage();
+            if (!Validator.isNumber(value)) {
+                message = "您输入的" + value+ "不是数字，请检查！";
             }
             if (StringUtils.isNotEmpty(message)) {
                 StringBuffer errorBuffer = new StringBuffer();
                 errorBuffer.append(getInputErrorInfo(tiankafeiCustomConditionDTO)).append(message);
-                throw new BaseException(errorBuffer.toString());
+                throw new CommonException(errorBuffer.toString());
             }
             tiankafeiCustomConditionDTO.setValue(valueTextField.getText().trim());
             return message;

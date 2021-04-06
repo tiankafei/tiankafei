@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.tiankafei</groupId>
+        <groupId>org.tiankafei.parent</groupId>
         <artifactId>tiankafei-parent</artifactId>
-        <version>1.2.1-RELEASE</version>
+        <version>1.2.3-RELEASE</version>
     </parent>
 
     <groupId>org.tiankafei.product</groupId>
     <artifactId>tiankafei-code-product</artifactId>
-    <version>1.2.1-RELEASE</version>
+    <version>1.2.3-RELEASE</version>
     <packaging>pom</packaging>
 
     <description>此工程是tiankafei的产品包集合</description>

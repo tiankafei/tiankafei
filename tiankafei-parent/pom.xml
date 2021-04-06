@@ -10,9 +10,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.tiankafei</groupId>
+    <groupId>org.tiankafei.parent</groupId>
     <artifactId>tiankafei-parent</artifactId>
-    <version>1.2.1-RELEASE</version>
+    <version>1.2.3-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>tiankafei-parent</name>
@@ -98,8 +98,8 @@
         <netty4.version>4.1.54.Final</netty4.version>
 
         <!--自己的包版本依赖-->
-        <org.tiankafei.tool.version>1.4.1-RELEASE</org.tiankafei.tool.version>
-        <org.tiankafei.produce.version>1.2.1-RELEASE</org.tiankafei.produce.version>
+        <org.tiankafei.tool.version>1.4.2-RELEASE</org.tiankafei.tool.version>
+        <org.tiankafei.produce.version>1.2.3-RELEASE</org.tiankafei.produce.version>
     </properties>
 
     <dependencyManagement>
@@ -688,6 +688,11 @@
             <dependency>
                 <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-base</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-common</artifactId>
                 <version>${org.tiankafei.tool.version}</version>
             </dependency>
             <dependency>

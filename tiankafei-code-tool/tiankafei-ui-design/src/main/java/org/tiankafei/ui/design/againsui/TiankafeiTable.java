@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import org.tiankafei.base.dto.PaginatedDTO;
+import org.tiankafei.common.dto.PaginatedDTO;
 import org.tiankafei.ui.design.againsui.table.renderer.TiankafeiTableCellRenderer;
 import org.tiankafei.ui.design.constant.TiankafeiDesignerConstants;
 import org.tiankafei.ui.design.dto.TableColumnDTO;

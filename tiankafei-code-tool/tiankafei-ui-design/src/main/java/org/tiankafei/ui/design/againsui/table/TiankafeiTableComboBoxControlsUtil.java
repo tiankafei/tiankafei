@@ -2,7 +2,7 @@ package org.tiankafei.ui.design.againsui.table;
 
 import java.util.List;
 import javax.swing.table.TableColumn;
-import org.tiankafei.base.dto.CodeNameDTO;
+import org.tiankafei.common.dto.CodeNameDTO;
 import org.tiankafei.ui.design.againsui.abstractinterface.AbstractTableControlsUtil;
 import org.tiankafei.ui.design.againsui.table.editor.TiankafeiTableComboBoxCellEditor;
 import org.tiankafei.ui.design.dto.TableColumnDTO;

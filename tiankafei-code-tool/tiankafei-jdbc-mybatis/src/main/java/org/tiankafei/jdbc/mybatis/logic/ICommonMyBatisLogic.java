@@ -1,7 +1,6 @@
 package org.tiankafei.jdbc.mybatis.logic;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.jdbc.logic.ICommonLogic;
 
 /**
@@ -25,10 +24,8 @@ public interface ICommonMyBatisLogic extends ICommonLogic {
 
     /**
      * 关闭sqlSession
-     *
-     * @throws BaseException 自定义异常
      */
-    public void transactionClose() throws BaseException;
+    public void transactionClose();
 
     /**
      * 获取查询结果

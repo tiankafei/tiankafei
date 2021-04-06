@@ -3,7 +3,7 @@ package org.tiankafei.ui.control.dto;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.tiankafei.base.dto.SqlParamDTO;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 
 /**

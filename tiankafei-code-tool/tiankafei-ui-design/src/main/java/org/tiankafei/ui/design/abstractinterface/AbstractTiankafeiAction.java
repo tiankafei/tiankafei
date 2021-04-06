@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.againsui.TiankafeiButton;
 import org.tiankafei.ui.design.againsui.TiankafeiMenuItem;
 import org.tiankafei.ui.design.modelsui.TkfButton;
@@ -76,9 +75,8 @@ public abstract class AbstractTiankafeiAction extends AbstractAction {
      * 初始化右键菜单项
      *
      * @return 菜单项
-     * @throws BaseException 自定义异常
      */
-    public TkfMenuItem initTiankafeiPopupMenuItem() throws BaseException {
+    public TkfMenuItem initTiankafeiPopupMenuItem() {
         TiankafeiMenuItem tiankafeiPopupMenuItem = new TiankafeiMenuItem();
         tiankafeiPopupMenuItem.setText(displayText);
         tiankafeiPopupMenuItem.setWidth(width);
@@ -101,9 +99,8 @@ public abstract class AbstractTiankafeiAction extends AbstractAction {
      * 初始化菜单项
      *
      * @return 菜单项
-     * @throws BaseException 自定义异常
      */
-    public TkfMenuItem initTiankafeiMenuItem() throws BaseException {
+    public TkfMenuItem initTiankafeiMenuItem() {
         TiankafeiMenuItem tiankafeiMenuItem = new TiankafeiMenuItem();
         tiankafeiMenuItem.setText(displayText);
         tiankafeiMenuItem.setWidth(width);
@@ -126,9 +123,8 @@ public abstract class AbstractTiankafeiAction extends AbstractAction {
      * 初始化按钮
      *
      * @return 按钮
-     * @throws BaseException 自定义异常
      */
-    public TkfButton initTiankafeiButton() throws BaseException {
+    public TkfButton initTiankafeiButton() {
         TiankafeiButton tiankafeiButton = new TiankafeiButton();
         tiankafeiButton.setText(displayText);
         tiankafeiButton.setWidth(width);

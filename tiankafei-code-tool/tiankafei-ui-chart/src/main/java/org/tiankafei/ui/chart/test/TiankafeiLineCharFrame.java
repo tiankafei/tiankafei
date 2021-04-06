@@ -1,6 +1,5 @@
 package org.tiankafei.ui.chart.test;
 
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.chart.dto.TiankafeiAxisDTO;
 import org.tiankafei.ui.chart.dto.TiankafeiAxixPointDTO;
 import org.tiankafei.ui.chart.dto.TiankafeiLineCharDTO;
@@ -14,24 +13,20 @@ import org.tiankafei.ui.design.againsui.TiankafeiFrame;
 public class TiankafeiLineCharFrame {
 
     public static void main(String[] args) {
-        try {
-            TiankafeiFrame tiankafeiFrame = new TiankafeiFrame();
-            tiankafeiFrame.setWidth(800);
-            tiankafeiFrame.setHeight(600);
-            tiankafeiFrame.setTitle("测试自定义窗体");
-            tiankafeiFrame.initTiankafeiFrame();
+        TiankafeiFrame tiankafeiFrame = new TiankafeiFrame();
+        tiankafeiFrame.setWidth(800);
+        tiankafeiFrame.setHeight(600);
+        tiankafeiFrame.setTitle("测试自定义窗体");
+        tiankafeiFrame.initTiankafeiFrame();
 
-            //线形控件
-            TiankafeiLineCharControls tiankafeiLineCharControls = new TiankafeiLineCharControls();
-            TiankafeiLineCharDTO tiankafeiLineCharVO = initTiankafeiLineCharVO();
-            tiankafeiLineCharControls.setTiankafeiLineCharVO(tiankafeiLineCharVO);
-            TkfDemoPanel tkfChartPanel = tiankafeiLineCharControls.initTiankafeiLineCharControls();
-            tiankafeiFrame.add(tkfChartPanel);
+        //线形控件
+        TiankafeiLineCharControls tiankafeiLineCharControls = new TiankafeiLineCharControls();
+        TiankafeiLineCharDTO tiankafeiLineCharVO = initTiankafeiLineCharVO();
+        tiankafeiLineCharControls.setTiankafeiLineCharVO(tiankafeiLineCharVO);
+        TkfDemoPanel tkfChartPanel = tiankafeiLineCharControls.initTiankafeiLineCharControls();
+        tiankafeiFrame.add(tkfChartPanel);
 
-            tiankafeiFrame.setVisible(true);
-        } catch (BaseException e) {
-            e.printStackTrace();
-        }
+        tiankafeiFrame.setVisible(true);
     }
 
     /**

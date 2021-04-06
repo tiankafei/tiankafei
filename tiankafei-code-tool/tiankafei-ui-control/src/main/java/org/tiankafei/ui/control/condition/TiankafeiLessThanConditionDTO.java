@@ -1,7 +1,7 @@
 package org.tiankafei.ui.control.condition;
 
 import java.util.List;
-import org.tiankafei.base.dto.SqlParamDTO;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.ui.control.abstractinterface.AbstractTiankafeiConditionDTO;
 import org.tiankafei.ui.control.constants.TiankafeiConditionConstants;
 import org.tiankafei.ui.control.dto.TiankafeiCustomConditionDTO;

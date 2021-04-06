@@ -45,6 +45,15 @@ public class TestFunction {
         expression = "'a'+'1'";
         AviatorExtendUtil.execute(expression);
         System.out.println("=====================================================");
+
+        expression = "a+b";
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.remove("a");
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.put("b", "1");
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.put("b", "aaa");
+        AviatorExtendUtil.execute(expression, dataMap);
     }
 
     @Test
@@ -78,6 +87,15 @@ public class TestFunction {
 //        expression = "'a'-'1'";
 //        AviatorExtendUtil.execute(expression);
         System.out.println("=====================================================");
+
+        expression = "a-b";
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.remove("a");
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.put("b", "1");
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.put("b", "aaaaa");
+        AviatorExtendUtil.execute(expression, dataMap);
     }
 
     @Test
@@ -111,6 +129,15 @@ public class TestFunction {
 //        expression = "'a'*'1'";
 //        AviatorExtendUtil.execute(expression);
         System.out.println("=====================================================");
+
+        expression = "a*b";
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.remove("a");
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.put("b", "1");
+        AviatorExtendUtil.execute(expression, dataMap);
+        dataMap.put("b", "aaaaa");
+        AviatorExtendUtil.execute(expression, dataMap);
     }
 
     @Test

@@ -5,7 +5,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import org.apache.commons.lang3.StringUtils;
-import org.tiankafei.base.exceptions.BaseException;
 import org.tiankafei.ui.design.models.TiankafeiTreeAttributeVO;
 import org.tiankafei.ui.design.models.TiankafeiTreeNodeAttributeVO;
 import org.tiankafei.ui.design.modelsui.TkfTreeNode;
@@ -41,18 +40,14 @@ public class TiankafeiTreeCellRenderer extends DefaultTreeCellRenderer {
 //		setBorderSelectionColor(Color.MAGENTA);
 //		//设置绘制选中状态下节点文本的颜色
 //		setTextSelectionColor(Color.MAGENTA);
-        try {
-            ImageIcon expandImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getExpandIconFilePath(), tiankafeiTreeAttributeVO.getExpandIconWidth(), tiankafeiTreeAttributeVO.getExpandIconHeight());
-            setOpenIcon(expandImageIcon);
+        ImageIcon expandImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getExpandIconFilePath(), tiankafeiTreeAttributeVO.getExpandIconWidth(), tiankafeiTreeAttributeVO.getExpandIconHeight());
+        setOpenIcon(expandImageIcon);
 
-            ImageIcon closedImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getClosedIconFilePath(), tiankafeiTreeAttributeVO.getClosedIconWidth(), tiankafeiTreeAttributeVO.getClosedIconHeight());
-            setClosedIcon(closedImageIcon);
+        ImageIcon closedImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getClosedIconFilePath(), tiankafeiTreeAttributeVO.getClosedIconWidth(), tiankafeiTreeAttributeVO.getClosedIconHeight());
+        setClosedIcon(closedImageIcon);
 
-            ImageIcon leafImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getLeafIconFilePath(), tiankafeiTreeAttributeVO.getLeafIconWidth(), tiankafeiTreeAttributeVO.getLeafIconHeight());
-            setLeafIcon(leafImageIcon);
-        } catch (BaseException e) {
-            e.printStackTrace();
-        }
+        ImageIcon leafImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getLeafIconFilePath(), tiankafeiTreeAttributeVO.getLeafIconWidth(), tiankafeiTreeAttributeVO.getLeafIconHeight());
+        setLeafIcon(leafImageIcon);
     }
 
     @Override
@@ -64,33 +59,29 @@ public class TiankafeiTreeCellRenderer extends DefaultTreeCellRenderer {
             TiankafeiTreeNodeAttributeVO tiankafeiTreeNodeAttributeVO = tkfTreeNode.getTiankafeiTreeNodeAttributeVO();
             /**设置CheckBox所展示的文本。*/
             setText(tiankafeiTreeNodeAttributeVO.getUserObject().toString());
-            try {
-                setOpaque(false);
-                if (StringUtils.isNotEmpty(tiankafeiTreeNodeAttributeVO.getNodeIconFilePath())
-                        && tiankafeiTreeNodeAttributeVO.getNodeIconHeight() != 0
-                        && tiankafeiTreeNodeAttributeVO.getNodeIconWidth() != 0) {
-                    ImageIcon imageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeNodeAttributeVO.getNodeIconFilePath(), tiankafeiTreeNodeAttributeVO.getNodeIconWidth(), tiankafeiTreeNodeAttributeVO.getNodeIconHeight());
-                    //自定义的图标
-                    setIcon(imageIcon);
+            setOpaque(false);
+            if (StringUtils.isNotEmpty(tiankafeiTreeNodeAttributeVO.getNodeIconFilePath())
+                    && tiankafeiTreeNodeAttributeVO.getNodeIconHeight() != 0
+                    && tiankafeiTreeNodeAttributeVO.getNodeIconWidth() != 0) {
+                ImageIcon imageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeNodeAttributeVO.getNodeIconFilePath(), tiankafeiTreeNodeAttributeVO.getNodeIconWidth(), tiankafeiTreeNodeAttributeVO.getNodeIconHeight());
+                //自定义的图标
+                setIcon(imageIcon);
+            } else {
+                if (leaf) {
+                    //叶节点的图标
+                    ImageIcon leafImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getLeafIconFilePath(), tiankafeiTreeAttributeVO.getLeafIconWidth(), tiankafeiTreeAttributeVO.getLeafIconHeight());
+                    setIcon(leafImageIcon);
                 } else {
-                    if (leaf) {
-                        //叶节点的图标
-                        ImageIcon leafImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getLeafIconFilePath(), tiankafeiTreeAttributeVO.getLeafIconWidth(), tiankafeiTreeAttributeVO.getLeafIconHeight());
-                        setIcon(leafImageIcon);
+                    if (expanded) {
+                        //展开时的图标
+                        ImageIcon expandImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getExpandIconFilePath(), tiankafeiTreeAttributeVO.getExpandIconWidth(), tiankafeiTreeAttributeVO.getExpandIconHeight());
+                        setIcon(expandImageIcon);
                     } else {
-                        if (expanded) {
-                            //展开时的图标
-                            ImageIcon expandImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getExpandIconFilePath(), tiankafeiTreeAttributeVO.getExpandIconWidth(), tiankafeiTreeAttributeVO.getExpandIconHeight());
-                            setIcon(expandImageIcon);
-                        } else {
-                            //关闭时的图标
-                            ImageIcon closedImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getClosedIconFilePath(), tiankafeiTreeAttributeVO.getClosedIconWidth(), tiankafeiTreeAttributeVO.getClosedIconHeight());
-                            setIcon(closedImageIcon);
-                        }
+                        //关闭时的图标
+                        ImageIcon closedImageIcon = ImageIconUtil.getScaledImageIcon(tiankafeiTreeAttributeVO.getClosedIconFilePath(), tiankafeiTreeAttributeVO.getClosedIconWidth(), tiankafeiTreeAttributeVO.getClosedIconHeight());
+                        setIcon(closedImageIcon);
                     }
                 }
-            } catch (BaseException e) {
-                e.printStackTrace();
             }
         }
         return component;

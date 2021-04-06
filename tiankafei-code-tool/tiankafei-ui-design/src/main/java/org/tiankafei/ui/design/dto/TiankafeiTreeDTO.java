@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.base.dto.CodeNameDTO;
+import org.tiankafei.common.dto.CodeNameDTO;
 
 /**
  * 树节点对象

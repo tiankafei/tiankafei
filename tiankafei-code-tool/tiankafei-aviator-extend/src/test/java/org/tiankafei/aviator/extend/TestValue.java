@@ -4,7 +4,7 @@ import org.tiankafei.aviator.extend.util.AviatorExtendUtil;
 import org.tiankafei.aviator.extend.util.FunctionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.tiankafei.base.util.JdkSpiUtil;
+import org.tiankafei.common.util.JdkSpiUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;

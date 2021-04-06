@@ -3,7 +3,7 @@ package org.tiankafei.ui.design.modelsui;
 import com.google.common.collect.Lists;
 import java.util.List;
 import javax.swing.JList;
-import org.tiankafei.base.dto.CodeNameDTO;
+import org.tiankafei.common.dto.CodeNameDTO;
 import org.tiankafei.ui.design.againsui.list.TiankafeiListModel;
 import org.tiankafei.ui.design.models.TiankafeiModelUiVO;
 

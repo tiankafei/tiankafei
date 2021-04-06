@@ -2,12 +2,11 @@ package org.tiankafei.jdbc.dao.oracle;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import org.tiankafei.base.dto.SqlParamDTO;
-import org.tiankafei.base.exceptions.BaseException;
-import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
-import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
+import org.tiankafei.common.dto.SqlParamDTO;
 import org.tiankafei.jdbc.constant.ColumnNameConstants;
 import org.tiankafei.jdbc.dao.AbstractGeneralDAO;
+import org.tiankafei.jdbc.dto.PhysicalStorageColumnDTO;
+import org.tiankafei.jdbc.dto.PhysicalStorageTableDTO;
 import org.tiankafei.jdbc.util.GeneralSqlUtil;
 
 /**
@@ -40,7 +39,7 @@ public class GeneralOracleDAO extends AbstractGeneralDAO {
     }
 
     @Override
-    public String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO) throws BaseException {
+    public String packageColumnTypeSql(PhysicalStorageColumnDTO physicalStorageColumnDTO) {
         StringBuffer sqlBuffer = new StringBuffer();
         sqlBuffer.append(physicalStorageColumnDTO.getColumnName());
         //char类型
