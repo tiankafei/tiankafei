@@ -12,6 +12,7 @@ import math
 import decimal
 import logging
 import schedule
+import turtle
 
 print(sys.getsizeof(24))
 print(sys.getsizeof(45))
@@ -38,3 +39,9 @@ print('===============================================')
 print(os.getcwd())
 print(os.listdir())
 print(os.listdir('package1'))
+
+t = turtle.Pen()
+
+for x in range(360):
+    t.forward(x)
+    t.left(59)
