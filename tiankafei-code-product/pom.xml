@@ -57,6 +57,42 @@
                 <artifactId>ruoyi-common-swagger</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-user-common</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-user-cache</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-login-common</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-login-api</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-login-server</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-user-api</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
