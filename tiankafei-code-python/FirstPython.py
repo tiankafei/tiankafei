@@ -344,3 +344,8 @@ print(s)
 print("============================")
 
 
+import copy
+# 浅拷贝
+copy.copy(s)
+# 深拷贝
+copy.deepcopy(s)
