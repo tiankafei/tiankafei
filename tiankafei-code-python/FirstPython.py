@@ -274,3 +274,30 @@ for i in lst:
         # pass
     else:
         print('偶数', i)
+
+
+def fun1():
+    print('1')
+
+res = fun1()
+print(res)
+
+
+t = tuple((1, 2, 3, 5))
+print(t)
+print(len(t))
+
+def fun2(*args):
+    print(args)
+
+def fun3(**args):
+    print(args)
+
+fun2(1, 2, 3)
+fun3(a=1, b=3)
+
+def fun4(*args1, **args2):
+    print(args1)
+    print(args2)
+
+fun4(1,2,3, 4, a=1, b=2)
