@@ -29,3 +29,12 @@ print(math.pi)
 print(math.ceil(1.23))
 print('===============================================')
 
+# 执行系统命令
+# os.system('notepad.exe')
+# os.system('calc.exe')
+# 打开系统程序
+# os.startfile('')
+
+print(os.getcwd())
+print(os.listdir())
+print(os.listdir('package1'))
