@@ -271,11 +271,10 @@ for i in lst:
     # print(i % 2)
     if i % 2: # 非0，奇数
         print('奇数', i)
-        # pass
     else:
         print('偶数', i)
 
-
+print("============================")
 def fun1():
     print('1')
 
@@ -301,3 +300,47 @@ def fun4(*args1, **args2):
     print(args2)
 
 fun4(1,2,3, 4, a=1, b=2)
+
+def fun5(a, b, c, d):
+    print(a, b, c, d)
+
+lst = [1, 2, 3, 4]
+fun5(*lst)
+res = (1, 2, 3, 4)
+fun5(*res)
+
+def fun6(a,b,c,d,*args):
+    print(a,b,c,d,args)
+fun6(1,2,3, 4, 5, 6)
+
+
+def fun6(a, b, *, c, d):
+    print(a, b, c, d)
+fun6(10, 20, c=30, d=40)
+
+print("============================")
+
+def fun7(n):
+    if n == 1:
+        return 1
+    else:
+        return n*fun7(n-1)
+
+print(fun7(6))
+
+def fun8(n):
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 1
+    else:
+        return fun8(n-1) + fun8(n-2)
+
+print(fun8(6))
+
+s = [fun8(i) for i in range(1, 7)]
+print(s)
+
+print("============================")
+
+
