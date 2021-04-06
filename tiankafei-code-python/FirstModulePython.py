@@ -24,25 +24,25 @@ class Test:
     def test3():
         print('执行了静态方法')
 
+if __name__ == '__main__':
+    a = 0
+    b = 1
+    s = a + b
+    print(s)
 
-a = 0
-b = 1
-s = a + b
-print(s)
+    t1 = Test('张三', 18)
+    t1.test1()
+    t1.test2()
+    t1.test3()
 
-t1 = Test('张三', 18)
-t1.test1()
-t1.test2()
-t1.test3()
+    import math
 
-import math
+    print(math)
+    print(dir(math))
+    print(math.pow(2, 3))
+    print(math.pi)
 
-print(math)
-print(dir(math))
-print(math.pow(2, 3))
-print(math.pi)
+    from math import pi
 
-from math import pi
-
-print(pi)
-print(pow(2, 3))
+    print(pi)
+    print(pow(2, 3))

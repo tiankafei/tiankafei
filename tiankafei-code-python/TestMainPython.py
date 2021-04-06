@@ -1,6 +1,6 @@
 import FirstModulePython
 
-FirstModulePython.fun()
-
 from FirstModulePython import fun
-fun()
+if __name__ == '__main__':
+    FirstModulePython.fun()
+    fun()
