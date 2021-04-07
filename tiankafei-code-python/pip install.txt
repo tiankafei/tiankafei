@@ -7,7 +7,7 @@ pip install pandas
 pip install xlrd
 pip install xlwt
 pip install scrapy
-pip install email
+pip install emails
 pip install pymysql
 pip install paramiko
 pip install sympy
