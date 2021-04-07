@@ -21,8 +21,6 @@ for s1, s2 in zip(a1, a2):
 lst.append(v1)
 lst.append(v2)
 
-print(lst)
-
 def mean_confidence_interval(data, confidence=0.95):
     a = 1.0 * np.array(data)
     n = len(a)
@@ -46,7 +44,6 @@ for data in lst:
     v99 = st.scoreatpercentile(data, 99, interpolation_method='lower')
     sem = st.sem(data, ddof=1, nan_policy='omit')
     avg95 = mean_confidence_interval(data, confidence=0.95)
-    # variation = st.variation(data, nan_policy='omit')
     variation = np.var(data, ddof=1)
     fd = st.kurtosis(data, bias=False, nan_policy='omit')
     pd = st.skew(data, bias=False, nan_policy='omit')
