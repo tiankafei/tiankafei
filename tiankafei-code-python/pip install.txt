@@ -2,13 +2,12 @@ pip install scipy
 pip install numpy
 pip install matplotlib
 pip install scikit-learn
+pip install pandas
 
 pip install xlrd
 pip install xlwt
 pip install scrapy
 pip install email
-pip install scipy
-pip install matplotlib
 pip install pymysql
 pip install paramiko
 pip install sympy
