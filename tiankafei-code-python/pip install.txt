@@ -1,0 +1,19 @@
+pip install scipy
+pip install numpy
+pip install matplotlib
+pip install scikit-learn
+
+pip install xlrd
+pip install xlwt
+pip install scrapy
+pip install email
+pip install scipy
+pip install matplotlib
+pip install pymysql
+pip install paramiko
+pip install sympy
+pip install scapy
+pip install nltk
+
+
+pip install -i https://pypi.douban.com/simple elasticsearch
