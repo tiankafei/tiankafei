@@ -4,16 +4,30 @@
 # sklearn.linear_model.LinearRegression（多元线性回归）
 # statsmodels.（新的多元线性回归）
 
-# TODO 有待测试拿结果
-
 import pandas as pd
-import statsmodels.formula.api as sm
+import statsmodels.api as sm
 
-datas = pd.read_excel(r'D:\python\linear_regression.xlsx') # 读取 excel 数据，引号里面是 excel 文件的位置
+datas = pd.read_excel(r'D:\python\data.xls')  # 读取 excel 数据，引号里面是 excel 文件的位置
+names = list(datas.columns)
+#
+a = datas[names[0]].to_list()
+b1 = datas[names[1]].to_list()
+b2 = datas[names[2]].to_list()
 
-model = sm.ols('测试数据1~测试数据2', datas).fit() # 构建最小二乘模型并拟合，
-                               #此时不用单独输入 x，y了，而是将自变量与因变量用统计语言公式表示，将全部数据导入
+da = pd.DataFrame([], index=None)
+da['b1'] = b1
+da['b2'] = b2
+b = da
+
+# 若模型中有截距，必须有这一步
+b = sm.add_constant(b)
+model = sm.OLS(a, b).fit()
 
 s = model.summary()
-
-print(s) # 输出回归结果
+print(s)
+print("==============================================================================")
+tables = list(s.tables)
+for table in tables:
+    twoDimension = table.data
+    for row in twoDimension:
+        print(len(row), row)
