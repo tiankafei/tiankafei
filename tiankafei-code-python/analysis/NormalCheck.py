@@ -12,7 +12,8 @@ names = list(datas.columns)
 a2 = datas[names[1]].to_list()
 
 # K-S检验 TODO 数据不对
-res1 = st.kstest(a2, a2)
+# res1 = st.kstest(a2, 'norm')
+res1 = st.ks_1samp(a2, st.norm.cdf, mode='asymp')
 print(res1.statistic)
 print(res1.pvalue)
 
