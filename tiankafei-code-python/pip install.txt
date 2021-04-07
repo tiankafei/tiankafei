@@ -6,6 +6,7 @@ pip install pandas
 
 pip install xlrd
 pip install xlwt
+pip install openpyxl
 pip install scrapy
 pip install emails
 pip install pymysql
@@ -13,6 +14,51 @@ pip install paramiko
 pip install sympy
 pip install scapy
 pip install nltk
+pip install requests
+
+pip install pyquery
+pip install xmltodict
+pip install xhtml2pdf
+pip install untangle
+pip install Levenshtein
+pip install fuzzywuzzy
+
+pip install unidecode
+pip install xpinyin
+pip install pyparsing
+pip install phonenumbers
+
+
+pip install tablib
+pip install textract
+pip install messytables
+pip install rows
+pip install python-docx
+pip install XlsxWriter
+pip install PDFMiner
+pip install PyPDF2
+pip install ReportLab
+pip install sqlparse
+
+--------------------------------------------
+pip install NLTK
+pip install Pattern
+pip install jieba
+pip install SnowNLP
+pip install loso
+pip install genius
+pip install langid.py
+
+
+pip install selenium
+pip install threading
+pip install celery
+pip install Twisted
+pip install Tornado
+pip install RQ
+
+
+pip install newspaper
 
 
 pip install -i https://pypi.douban.com/simple elasticsearch
