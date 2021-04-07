@@ -34,7 +34,7 @@ res2 = st.ttest_1samp(a2, 100, nan_policy='omit')
 print(res2.statistic)
 print(res2.pvalue)
 
-# 没填就按0计算
+# paired-t检验（没填就按0计算）
 res3 = st.ttest_rel(a2, a1)
 print(res3.statistic)
 print(res3.pvalue)
