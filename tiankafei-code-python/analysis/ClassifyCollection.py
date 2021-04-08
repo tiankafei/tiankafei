@@ -63,7 +63,7 @@ class IndexResultDTO(BaseModel):
 
 
 def execute_analysis_index_list(index_param_list: list[IndexParamDTO]):
-    index_result_list = []
+    index_result_list = list[IndexResultDTO]()
     for index_param in index_param_list:
         index_result = execute_analysis_index(index_param)
         index_result_list.append(index_result)
@@ -72,7 +72,7 @@ def execute_analysis_index_list(index_param_list: list[IndexParamDTO]):
 
 def execute_analysis_index(index_param: IndexParamDTO):
     index_result = IndexResultDTO()
-    item_list = []
+    item_list = list[IndexResultDTO]()
 
     item_param_list = index_param.item_list
     for item_param in item_param_list:
