@@ -2,6 +2,7 @@
 # 分类汇总分析算法
 
 import pandas as pd
+from typing import Optional
 import numpy as np
 import scipy.stats as st
 from pydantic import BaseModel, Field
@@ -28,41 +29,41 @@ class IndexParamDTO(BaseModel):
 
 
 class ItemResultDTO(BaseModel):
-    item_name: str = Field(title='选项名称', example=example_item_name)
-    count: int = Field(title='总个数')
-    avg: float = Field(title='平均值')
-    sum: float = Field(title='总和')
-    cen: float = Field(title='中位数')
-    max: float = Field(title='最大值')
-    min: float = Field(title='最小值')
-    std: float = Field(title='标准差')
-    v25: float = Field(title='25分位数')
-    v75: float = Field(title='75分位数')
-    v90: float = Field(title='90分位数')
-    v95: float = Field(title='95分位数')
-    v99: float = Field(title='99分位数')
-    sem: float = Field(title='标准误')
-    avg95ll: float = Field(title='均值95%CI(LL)')
-    avg95ul: float = Field(title='均值95%CI(UL)')
-    jc: float = Field(title='极差')
-    fc: float = Field(title='方差')
-    fd: float = Field(title='峰度')
-    pd: float = Field(title='偏度')
+    item_name: Optional[str] = Field(title='选项名称', example=example_item_name)
+    count: Optional[int] = Field(title='总个数')
+    avg: Optional[float] = Field(title='平均值')
+    sum: Optional[float] = Field(title='总和')
+    cen: Optional[float] = Field(title='中位数')
+    max: Optional[float] = Field(title='最大值')
+    min: Optional[float] = Field(title='最小值')
+    std: Optional[float] = Field(title='标准差')
+    v25: Optional[float] = Field(title='25分位数')
+    v75: Optional[float] = Field(title='75分位数')
+    v90: Optional[float] = Field(title='90分位数')
+    v95: Optional[float] = Field(title='95分位数')
+    v99: Optional[float] = Field(title='99分位数')
+    sem: Optional[float] = Field(title='标准误')
+    avg95ll: Optional[float] = Field(title='均值95%CI(LL)')
+    avg95ul: Optional[float] = Field(title='均值95%CI(UL)')
+    jc: Optional[float] = Field(title='极差')
+    fc: Optional[float] = Field(title='方差')
+    fd: Optional[float] = Field(title='峰度')
+    pd: Optional[float] = Field(title='偏度')
 
     class Config:
         title = '【' + method_view_name + '】返回选项结果'
 
 
 class IndexResultDTO(BaseModel):
-    index_name: str = Field(title='指标名称', example=example_index_name)
-    item_list: list[ItemResultDTO] = Field(title='满足选项条件的指标数据集合')
+    index_name: Optional[str] = Field(title='指标名称', example=example_index_name)
+    item_list: Optional[list[ItemResultDTO]] = Field(title='满足选项条件的指标数据集合')
 
     class Config:
         title = '【' + method_view_name + '】返回指标结果'
 
 
 def execute_analysis_index_list(index_param_list: list[IndexParamDTO]):
-    index_result_list = list[IndexResultDTO]
+    index_result_list = []
     for index_param in index_param_list:
         index_result = execute_analysis_index(index_param)
         index_result_list.append(index_result)
@@ -71,9 +72,9 @@ def execute_analysis_index_list(index_param_list: list[IndexParamDTO]):
 
 def execute_analysis_index(index_param: IndexParamDTO):
     index_result = IndexResultDTO()
-    item_list = list[ItemParamDTO]
+    item_list = []
 
-    item_param_list = index_param.itemList
+    item_param_list = index_param.item_list
     for item_param in item_param_list:
         item_result = execute_analysis_item(item_param)
         item_list.append(item_result)
