@@ -6,6 +6,8 @@ import numpy as np
 import scipy.stats as st
 from pydantic import BaseModel, Field
 
+method_view_name = '分类汇总分析算法'
+
 
 class ClassifyCollectionResultDTO(BaseModel):
     name: str = Field(title='名称')
@@ -28,6 +30,9 @@ class ClassifyCollectionResultDTO(BaseModel):
     fc: float = Field(title='方差')
     fd: float = Field(title='峰度')
     pd: float = Field(title='偏度')
+
+    class Config:
+        title = '【' + method_view_name + '】返回结果对象'
 
 
 def execute_analysis_all(request_data_list):

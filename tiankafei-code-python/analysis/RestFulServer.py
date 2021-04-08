@@ -1,3 +1,4 @@
+# -- coding: utf-8 -
 # 作者：甜咖啡
 # 新建时间：2021/4/8 21:13
 import uvicorn
@@ -25,8 +26,12 @@ async def request_validation_exception_handler(request: Request, exc: RequestVal
 class ClassifyCollectionParamDTO(BaseModel):
     name: str = Field(title='选项')
     valueList: list[int] = Field(title='满足选项条件的数值集合')
+
     # name: Optional[str] = Field(title='选项') Optional不是必选参数
     # valueList: Optional[list[int]] = Field(title='满足选项条件的数值集合') Optional不是必选参数
+
+    class Config:
+        title = '【' + ClassifyCollection.method_view_name + '】参数对象'
 
 
 @app.post(path='/classifyCollection', response_model=list[ClassifyCollection.ClassifyCollectionResultDTO],
