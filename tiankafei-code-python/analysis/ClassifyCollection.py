@@ -22,7 +22,7 @@ class ItemParamDTO(BaseModel):
 
 class IndexParamDTO(BaseModel):
     index_name: str = Field(title='指标名称', example=example_index_name)
-    item_list: list[ItemParamDTO] = Field(title='满足选项条件的指标数据集合')
+    item_list: list[ItemParamDTO] = Field(title='满足选项条件的指标数值集合')
 
     class Config:
         title = '【' + method_view_name + '】指标参数'
