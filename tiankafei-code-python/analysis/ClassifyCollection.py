@@ -1,3 +1,4 @@
+# -- coding: utf-8 -
 # 分类汇总分析算法
 
 import pandas as pd
