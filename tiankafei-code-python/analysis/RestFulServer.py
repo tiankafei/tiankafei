@@ -4,7 +4,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import ClassifyCollection
 
 app = FastAPI(title="数据分析算法接口", description="用于获取数据分析算法接口", version="0.0.1", openapi_url="/fastapi/data_manger.json",
@@ -23,14 +23,17 @@ async def request_validation_exception_handler(request: Request, exc: RequestVal
 
 
 class ClassifyCollectionParamDTO(BaseModel):
-    name: str = None
-    valueList: list[int] = None
+    name: str = Field(title='选项')
+    valueList: list[int] = Field(title='满足选项条件的数值集合')
+    # name: Optional[str] = Field(title='选项') Optional不是必选参数
+    # valueList: Optional[list[int]] = Field(title='满足选项条件的数值集合') Optional不是必选参数
 
 
-@app.post(path='/classifyCollection', summary='分类汇总分析算法', description='分类汇总分析算法', tags={'分析算法'})
+@app.post(path='/classifyCollection', response_model=list[ClassifyCollection.ClassifyCollectionResultDTO],
+          summary='分类汇总分析算法', description='分类汇总分析算法', tags={'分析算法'})
 async def read_item(request_data_list: list[ClassifyCollectionParamDTO]):
     lst = ClassifyCollection.execute_analysis_all(request_data_list)
-    return {'res': str(lst)}
+    return lst
 
 
 if __name__ == '__main__':

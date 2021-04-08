@@ -4,30 +4,30 @@
 import pandas as pd
 import numpy as np
 import scipy.stats as st
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class ClassifyCollectionResultDTO(BaseModel):
-    name: str = None
-    count: int = None
-    avg: float = None
-    sum: float = None
-    cen: float = None
-    max: float = None
-    min: float = None
-    std: float = None
-    v25: float = None
-    v75: float = None
-    v90: float = None
-    v95: float = None
-    v99: float = None
-    sem: float = None
-    avg95ll: float = None
-    avg95ul: float = None
-    jc: float = None
-    fc: float = None
-    fd: float = None
-    pd: float = None
+    name: str = Field(title='名称')
+    count: int = Field(title='总个数')
+    avg: float = Field(title='平均值')
+    sum: float = Field(title='总和')
+    cen: float = Field(title='中位数')
+    max: float = Field(title='最大值')
+    min: float = Field(title='最小值')
+    std: float = Field(title='标准差')
+    v25: float = Field(title='25分位数')
+    v75: float = Field(title='75分位数')
+    v90: float = Field(title='90分位数')
+    v95: float = Field(title='95分位数')
+    v99: float = Field(title='99分位数')
+    sem: float = Field(title='标准误')
+    avg95ll: float = Field(title='均值95%CI(LL)')
+    avg95ul: float = Field(title='均值95%CI(UL)')
+    jc: float = Field(title='极差')
+    fc: float = Field(title='方差')
+    fd: float = Field(title='峰度')
+    pd: float = Field(title='偏度')
 
 
 def execute_analysis_all(request_data_list):
