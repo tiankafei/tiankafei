@@ -7,10 +7,28 @@ import scipy.stats as st
 from pydantic import BaseModel, Field
 
 method_view_name = '分类汇总分析算法'
+example_index_name = '工业总产值-本期'
+example_item_name = '轻工业'
 
 
-class ClassifyCollectionResultDTO(BaseModel):
-    name: str = Field(title='名称')
+class ItemParamDTO(BaseModel):
+    item_name: str = Field(title='选项名称', example=example_item_name)
+    value_list: list[int] = Field(title='满足选项条件的数值集合', example=[1, 2, 3, 4, 5])
+
+    class Config:
+        title = '【' + method_view_name + '】选项参数'
+
+
+class IndexParamDTO(BaseModel):
+    index_name: str = Field(title='指标名称', example=example_index_name)
+    item_list: list[ItemParamDTO] = Field(title='满足选项条件的指标数据集合')
+
+    class Config:
+        title = '【' + method_view_name + '】指标参数'
+
+
+class ItemResultDTO(BaseModel):
+    item_name: str = Field(title='选项名称', example=example_item_name)
     count: int = Field(title='总个数')
     avg: float = Field(title='平均值')
     sum: float = Field(title='总和')
@@ -32,18 +50,41 @@ class ClassifyCollectionResultDTO(BaseModel):
     pd: float = Field(title='偏度')
 
     class Config:
-        title = '【' + method_view_name + '】返回结果对象'
+        title = '【' + method_view_name + '】返回选项结果'
 
 
-def execute_analysis_all(request_data_list):
-    result = []
-    for request_data in request_data_list:
-        res = execute_analysis(request_data.name, request_data.valueList)
-        result.append(res)
-    return result
+class IndexResultDTO(BaseModel):
+    index_name: str = Field(title='指标名称', example=example_index_name)
+    item_list: list[ItemResultDTO] = Field(title='满足选项条件的指标数据集合')
+
+    class Config:
+        title = '【' + method_view_name + '】返回指标结果'
 
 
-def execute_analysis(name, data):
+def execute_analysis_index_list(index_param_list: list[IndexParamDTO]):
+    index_result_list = list[IndexResultDTO]
+    for index_param in index_param_list:
+        index_result = execute_analysis_index(index_param)
+        index_result_list.append(index_result)
+    return index_result_list
+
+
+def execute_analysis_index(index_param: IndexParamDTO):
+    index_result = IndexResultDTO()
+    item_list = list[ItemParamDTO]
+
+    item_param_list = index_param.itemList
+    for item_param in item_param_list:
+        item_result = execute_analysis_item(item_param)
+        item_list.append(item_result)
+
+    index_result.index_name = index_param.index_name
+    index_result.item_list = item_list
+    return index_result
+
+
+def execute_analysis_item(item_param: ItemParamDTO):
+    data = item_param.value_list
     count_v = len(data)
     avg_v = np.average(data)
     sum_v = np.sum(data)
@@ -62,28 +103,28 @@ def execute_analysis(name, data):
     fd_v = st.kurtosis(data, bias=False, nan_policy='omit')
     pd_v = st.skew(data, bias=False, nan_policy='omit')
 
-    result = ClassifyCollectionResultDTO()
-    result.count = count_v
-    result.avg = avg_v
-    result.sum = sum_v
-    result.cen = cen_v
-    result.max = max_v
-    result.min = min_v
-    result.std = std_v
-    result.v25 = v25
-    result.v75 = v75
-    result.v90 = v90
-    result.v95 = v95
-    result.v99 = v99
-    result.sem = sem_v
-    result.avg95ll = avg95[0]
-    result.avg95ul = avg95[1]
-    result.jc = max_v - min_v
-    result.fc = fc_v
-    result.fd = fd_v
-    result.pd = pd_v
-    result.name = name
-    return result
+    item_result = ItemResultDTO()
+    item_result.count = count_v
+    item_result.avg = avg_v
+    item_result.sum = sum_v
+    item_result.cen = cen_v
+    item_result.max = max_v
+    item_result.min = min_v
+    item_result.std = std_v
+    item_result.v25 = v25
+    item_result.v75 = v75
+    item_result.v90 = v90
+    item_result.v95 = v95
+    item_result.v99 = v99
+    item_result.sem = sem_v
+    item_result.avg95ll = avg95[0]
+    item_result.avg95ul = avg95[1]
+    item_result.jc = max_v - min_v
+    item_result.fc = fc_v
+    item_result.fd = fd_v
+    item_result.pd = pd_v
+    item_result.item_name = item_param.item_name
+    return item_result
 
 
 def mean_confidence_interval(data, confidence=0.95):
@@ -94,28 +135,28 @@ def mean_confidence_interval(data, confidence=0.95):
     return m - h, m + h
 
 
-if __name__ == '__main__':
-    datas = pd.read_excel(r'D:\python\data.xls')  # 读取 excel 数据，引号里面是 excel 文件的位置
-    names = list(datas.columns)
-
-    a1 = datas['分析项1_定类'].to_list()
-    a2 = datas['分析项2_定量'].to_list()
-
-    lst = []
-    v1 = []
-    v2 = []
-    for s1, s2 in zip(a1, a2):
-        if s1 == 1:
-            v1.append(s2)
-        elif s1 == 2:
-            v2.append(s2)
-    lst.append(v1)
-    lst.append(v2)
-
-    res1 = execute_analysis('', v1)
-    print(res1)
-    res2 = execute_analysis('', v2)
-    print(res2)
-
-    res3 = execute_analysis_all('[{"name":"测试1","valueList":[1,2,3,4,5,6,7,8,9]}]')
-    print(res3)
+# if __name__ == '__main__':
+#     datas = pd.read_excel(r'D:\python\data.xls')  # 读取 excel 数据，引号里面是 excel 文件的位置
+#     names = list(datas.columns)
+#
+#     a1 = datas['分析项1_定类'].to_list()
+#     a2 = datas['分析项2_定量'].to_list()
+#
+#     lst = []
+#     v1 = []
+#     v2 = []
+#     for s1, s2 in zip(a1, a2):
+#         if s1 == 1:
+#             v1.append(s2)
+#         elif s1 == 2:
+#             v2.append(s2)
+#     lst.append(v1)
+#     lst.append(v2)
+#
+#     res1 = execute_analysis('', v1)
+#     print(res1)
+#     res2 = execute_analysis('', v2)
+#     print(res2)
+#
+#     res3 = execute_analysis_all('[{"name":"测试1","valueList":[1,2,3,4,5,6,7,8,9]}]')
+#     print(res3)

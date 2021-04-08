@@ -23,22 +23,25 @@ async def request_validation_exception_handler(request: Request, exc: RequestVal
     return JSONResponse({"code": "400", "message": exc.errors()})
 
 
-class ClassifyCollectionParamDTO(BaseModel):
-    name: str = Field(title='选项')
-    valueList: list[int] = Field(title='满足选项条件的数值集合')
-
-    # name: Optional[str] = Field(title='选项') Optional不是必选参数
-    # valueList: Optional[list[int]] = Field(title='满足选项条件的数值集合') Optional不是必选参数
-
-    class Config:
-        title = '【' + ClassifyCollection.method_view_name + '】参数对象'
+@app.post(path='/classify_collection_index_list', response_model=list[ClassifyCollection.IndexResultDTO],
+          summary='分类汇总分析算法【按照指标集合计算】', description='分类汇总分析算法', tags={'分析算法'})
+async def classify_collection_index_list(index_param_list: list[ClassifyCollection.IndexParamDTO]):
+    index_result_list = ClassifyCollection.execute_analysis_index_list(index_param_list)
+    return index_result_list
 
 
-@app.post(path='/classifyCollection', response_model=list[ClassifyCollection.ClassifyCollectionResultDTO],
-          summary='分类汇总分析算法', description='分类汇总分析算法', tags={'分析算法'})
-async def read_item(request_data_list: list[ClassifyCollectionParamDTO]):
-    lst = ClassifyCollection.execute_analysis_all(request_data_list)
-    return lst
+@app.post(path='/classify_collection_index', response_model=ClassifyCollection.IndexResultDTO,
+          summary='分类汇总分析算法【按照指标计算】', description='分类汇总分析算法', tags={'分析算法'})
+async def classify_collection_index(index_param: ClassifyCollection.IndexParamDTO):
+    index_result = ClassifyCollection.execute_analysis_index(index_param)
+    return index_result
+
+
+@app.post(path='/classify_collection_item', response_model=ClassifyCollection.ItemResultDTO,
+          summary='分类汇总分析算法【按照选项计算】', description='分类汇总分析算法', tags={'分析算法'})
+async def classify_collection_item(item_param: ClassifyCollection.ItemParamDTO):
+    item_result = ClassifyCollection.execute_analysis_item(item_param)
+    return item_result
 
 
 if __name__ == '__main__':
