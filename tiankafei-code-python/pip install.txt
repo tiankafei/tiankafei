@@ -45,6 +45,11 @@ pip install demjson
 pip install NLTK
 pip install Pattern
 pip install jieba
+
+pip install fastapi
+pip install uvicorn
+pip install baseModel
+
 pip install SnowNLP
 pip install loso
 pip install genius

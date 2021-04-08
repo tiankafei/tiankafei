@@ -4,17 +4,36 @@
 import pandas as pd
 import numpy as np
 import scipy.stats as st
-import json
+from pydantic import BaseModel
 
 
-def execute_analysis_all(string):
-    json_list = json.loads(string)
+class ClassifyCollectionResultDTO(BaseModel):
+    name: str = None
+    count: int = None
+    avg: float = None
+    sum: float = None
+    cen: float = None
+    max: float = None
+    min: float = None
+    std: float = None
+    v25: float = None
+    v75: float = None
+    v90: float = None
+    v95: float = None
+    v99: float = None
+    sem: float = None
+    avg95ll: float = None
+    avg95ul: float = None
+    jc: float = None
+    fc: float = None
+    fd: float = None
+    pd: float = None
+
+
+def execute_analysis_all(request_data_list):
     result = []
-    for data in json_list:
-        name = data['name']
-        value_list = data['valueList']
-
-        res = execute_analysis(name, value_list)
+    for request_data in request_data_list:
+        res = execute_analysis(request_data.name, request_data.valueList)
         result.append(res)
     return result
 
@@ -38,28 +57,28 @@ def execute_analysis(name, data):
     fd_v = st.kurtosis(data, bias=False, nan_policy='omit')
     pd_v = st.skew(data, bias=False, nan_policy='omit')
 
-    res = dict()
-    res['count'] = count_v
-    res['avg'] = avg_v
-    res['sum'] = sum_v
-    res['cen'] = cen_v
-    res['max'] = max_v
-    res['min'] = min_v
-    res['std'] = std_v
-    res['v25'] = v25
-    res['v75'] = v75
-    res['v90'] = v90
-    res['v95'] = v95
-    res['v99'] = v99
-    res['sem'] = sem_v
-    res['avg95ll'] = avg95[0]
-    res['avg95ul'] = avg95[1]
-    res['jc'] = max_v - min_v
-    res['fc'] = fc_v
-    res['fd'] = fd_v
-    res['pd'] = pd_v
-    res['name'] = name
-    return res
+    result = ClassifyCollectionResultDTO()
+    result.count = count_v
+    result.avg = avg_v
+    result.sum = sum_v
+    result.cen = cen_v
+    result.max = max_v
+    result.min = min_v
+    result.std = std_v
+    result.v25 = v25
+    result.v75 = v75
+    result.v90 = v90
+    result.v95 = v95
+    result.v99 = v99
+    result.sem = sem_v
+    result.avg95ll = avg95[0]
+    result.avg95ul = avg95[1]
+    result.jc = max_v - min_v
+    result.fc = fc_v
+    result.fd = fd_v
+    result.pd = pd_v
+    result.name = name
+    return result
 
 
 def mean_confidence_interval(data, confidence=0.95):
@@ -95,6 +114,3 @@ if __name__ == '__main__':
 
     res3 = execute_analysis_all('[{"name":"测试1","valueList":[1,2,3,4,5,6,7,8,9]}]')
     print(res3)
-
-
-
