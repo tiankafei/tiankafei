@@ -41,6 +41,7 @@ pip install ReportLab
 pip install sqlparse
 
 --------------------------------------------
+pip install demjson
 pip install NLTK
 pip install Pattern
 pip install jieba
