@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-import ClassifyCollection
+import classify_collection.ClassifyCollection as ClassifyCollection
 
 app = FastAPI(title="数据分析算法接口", description="用于获取数据分析算法接口", version="0.0.1", openapi_url="/fastapi/data_manger.json",
               docs_url="/fastapi/docs", redoc_url="/fastapi/redoc")
