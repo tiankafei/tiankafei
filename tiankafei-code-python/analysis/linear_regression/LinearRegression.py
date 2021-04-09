@@ -50,6 +50,9 @@ class LinearResultDTO(BaseModel):
     ff: Optional[float] = Field(title='线性回归分析:ff的值')
     fp: Optional[float] = Field(title='线性回归分析:fp的值')
 
+    class Config:
+        title = '【' + method_view_name + '】整体结果'
+
 
 def execute_analysis(linear_param: LinearParamDTO):
     cause_index_data = linear_param.cause_index_data
