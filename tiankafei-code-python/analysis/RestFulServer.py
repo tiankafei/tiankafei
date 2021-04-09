@@ -55,4 +55,4 @@ async def classify_collection_item(item_param: ClassifyCollection.ItemParamDTO):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=9000)
+    uvicorn.run(app, host="0.0.0.0", port=25535)
