@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 import classify_collection.ClassifyCollection as ClassifyCollection
+import linear_regression.LinearRegression as LinearRegression
 import sys
 
 '''
@@ -52,6 +53,14 @@ async def classify_collection_index(index_param: ClassifyCollection.IndexParamDT
 async def classify_collection_item(item_param: ClassifyCollection.ItemParamDTO):
     item_result = ClassifyCollection.execute_analysis_item(item_param)
     return item_result
+
+
+@app.post(path='/linear_regression', response_model=LinearRegression.LinearResultDTO,
+          summary='线性回归分析算法', description='线性回归分析算法', tags={'分析算法'})
+async def linear_regression(linear_param: LinearRegression.LinearParamDTO):
+    linear_result = LinearRegression.execute_analysis(linear_param)
+    print(linear_result)
+    return linear_result
 
 
 if __name__ == '__main__':
