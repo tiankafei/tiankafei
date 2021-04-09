@@ -7,6 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 import classify_collection.ClassifyCollection as ClassifyCollection
 import linear_regression.LinearRegression as LinearRegression
+import related.Related as Related
 import sys
 
 '''
@@ -62,6 +63,35 @@ async def linear_regression(linear_param: LinearRegression.LinearParamDTO):
     print(linear_result)
     return linear_result
 
+
+@app.post(path='/related_pearsonr', response_model=list[Related.RelatedResultDTO](),
+          summary='相关性分析算法【pearsonr】', description='相关性分析算法', tags={'分析算法'})
+async def related_pearsonr(related_param: Related.RelatedParamDTO):
+    one_list = related_param.one_list
+    two_list = related_param.two_list
+
+    result = Related.execute_analysis_pearsonr_list(one_list, two_list)
+    return result
+
+
+@app.post(path='/related_spearmanr', response_model=list[Related.RelatedResultDTO](),
+          summary='相关性分析算法【spearmanr】', description='相关性分析算法', tags={'分析算法'})
+async def related_spearmanr(related_param: Related.RelatedParamDTO):
+    one_list = related_param.one_list
+    two_list = related_param.two_list
+
+    result = Related.execute_analysis_spearmanr_list(one_list, two_list)
+    return result
+
+
+@app.post(path='/related_kendalltau', response_model=list[Related.RelatedResultDTO](),
+          summary='相关性分析算法【kendalltau】', description='相关性分析算法', tags={'分析算法'})
+async def related_kendalltau(related_param: Related.RelatedParamDTO):
+    one_list = related_param.one_list
+    two_list = related_param.two_list
+
+    result = Related.execute_analysis_kendalltau_list(one_list, two_list)
+    return result
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=25535)
