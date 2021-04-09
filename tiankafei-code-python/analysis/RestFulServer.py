@@ -6,9 +6,20 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 import classify_collection.ClassifyCollection as ClassifyCollection
+import sys
+
+'''
+如果参数个数大于1，第一个参数任意一个字符或数字，非0即为开启文档，0则关闭文档
+'''
+enabled = 1
+if len(sys.argv) > 1:
+    try:
+        enabled = int(sys.argv[1])
+    except ValueError:
+        pass
 
 app = FastAPI(title="数据分析算法接口", description="用于获取数据分析算法接口", version="0.0.1", openapi_url="/fastapi/data_manger.json",
-              docs_url="/fastapi/docs", redoc_url="/fastapi/redoc")
+              docs_url="/fastapi/docs" if enabled == 1 else None, redoc_url="/fastapi/redoc")
 
 
 @app.get(path='/', summary='根路径', tags={'默认'})
