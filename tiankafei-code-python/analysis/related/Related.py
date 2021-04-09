@@ -48,33 +48,6 @@ class RelatedResultDTO(BaseModel):
         title = '【' + method_view_name + '】返回结果'
 
 
-def execute_analysis_pearsonr_list(one_list, two_list):
-    result = list[RelatedResultDTO]()
-    for one in one_list:
-        for two in two_list:
-            index_result = execute_analysis_pearsonr(one, two)
-            result.append(index_result)
-    return result
-
-
-def execute_analysis_spearmanr_list(one_list, two_list):
-    result = list[RelatedResultDTO]()
-    for one in one_list:
-        for two in two_list:
-            index_result = execute_analysis_spearmanr(one, two)
-            result.append(index_result)
-    return result
-
-
-def execute_analysis_kendalltau_list(one_list, two_list):
-    result = list[RelatedResultDTO]()
-    for one in one_list:
-        for two in two_list:
-            index_result = execute_analysis_kendalltau(one, two)
-            result.append(index_result)
-    return result
-
-
 def execute_analysis_pearsonr(one: IndexParamDTO, two: IndexParamDTO):
     res = st.pearsonr(one.value_list, two.value_list)
 

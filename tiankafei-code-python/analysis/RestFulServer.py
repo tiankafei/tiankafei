@@ -69,7 +69,11 @@ async def related_pearsonr(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
     two_list = related_param.two_list
 
-    result = Related.execute_analysis_pearsonr_list(one_list, two_list)
+    result = list[Related.RelatedResultDTO]()
+    for one in one_list:
+        for two in two_list:
+            index_result = Related.execute_analysis_pearsonr(one, two)
+            result.append(index_result)
     return result
 
 
@@ -79,7 +83,11 @@ async def related_spearmanr(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
     two_list = related_param.two_list
 
-    result = Related.execute_analysis_spearmanr_list(one_list, two_list)
+    result = list[Related.RelatedResultDTO]()
+    for one in one_list:
+        for two in two_list:
+            index_result = Related.execute_analysis_spearmanr(one, two)
+            result.append(index_result)
     return result
 
 
@@ -89,7 +97,11 @@ async def related_kendalltau(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
     two_list = related_param.two_list
 
-    result = Related.execute_analysis_kendalltau_list(one_list, two_list)
+    result = list[Related.RelatedResultDTO]()
+    for one in one_list:
+        for two in two_list:
+            index_result = Related.execute_analysis_kendalltau(one, two)
+            result.append(index_result)
     return result
 
 if __name__ == '__main__':
