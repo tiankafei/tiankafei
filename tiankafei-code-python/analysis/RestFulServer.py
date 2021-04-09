@@ -60,7 +60,6 @@ async def classify_collection_item(item_param: ClassifyCollection.ItemParamDTO):
           summary='线性回归分析算法', description='线性回归分析算法', tags={'分析算法'})
 async def linear_regression(linear_param: LinearRegression.LinearParamDTO):
     linear_result = LinearRegression.execute_analysis(linear_param)
-    print(linear_result)
     return linear_result
 
 
