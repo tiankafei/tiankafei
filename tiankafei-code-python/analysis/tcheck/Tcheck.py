@@ -62,56 +62,64 @@ class PairedTcheckParamDTO(BaseModel):
         title = '【' + method_view_name + '】paired-t检验:指标数值集合参数'
 
 
-def execute_analysis_ttest_ind(tcheck_param_list: list[TcheckParamDTO]):
+def execute_analysis_ttest_ind(tcheck_param: TcheckParamDTO):
+    index_name = tcheck_param.index_name
+    value_list_1 = tcheck_param.value_list_1
+    value_list_2 = tcheck_param.value_list_2
+
+    # t检验
+    res = st.ttest_ind(value_list_1, value_list_2, equal_var=False, nan_policy='omit')
+
+    result = ResultDTO()
+    result.index_name = index_name
+    result.statistic = res.statistic
+    result.pvalue = res.pvalue
+
+    avg_1 = np.average(value_list_1)
+    std_1 = np.std(value_list_1, ddof=1)
+
+    avg_2 = np.average(value_list_2)
+    std_2 = np.std(value_list_2, ddof=1)
+    result.avg_1 = avg_1
+    result.std_1 = std_1
+    result.avg_2 = avg_2
+    result.std_2 = std_2
+    return result
+
+
+def execute_analysis_ttest_ind_list(tcheck_param_list: list[TcheckParamDTO]):
     result_list = list[ResultDTO]()
     for tcheck_param in tcheck_param_list:
-        index_name = tcheck_param.index_name
-        value_list_1 = tcheck_param.value_list_1
-        value_list_2 = tcheck_param.value_list_2
-
-        # t检验
-        res = st.ttest_ind(value_list_1, value_list_2, equal_var=False, nan_policy='omit')
-
-        result = ResultDTO()
-        result.index_name = index_name
-        result.statistic = res.statistic
-        result.pvalue = res.pvalue
-
-        avg_1 = np.average(value_list_1)
-        std_1 = np.std(value_list_1, ddof=1)
-
-        avg_2 = np.average(value_list_2)
-        std_2 = np.std(value_list_2, ddof=1)
-        result.avg_1 = avg_1
-        result.std_1 = std_1
-        result.avg_2 = avg_2
-        result.std_2 = std_2
-
+        result = execute_analysis_ttest_ind(tcheck_param)
         result_list.append(result)
     return result_list
 
 
-def execute_analysis_ttest_1samp(single_sample_param_list: list[SingleSampleParamDTO]):
+def execute_analysis_ttest_1samp(single_sample_param: SingleSampleParamDTO):
+    index_name = single_sample_param.index_name
+    value_list = single_sample_param.value_list
+    standard_value = single_sample_param.standard_value
+
+    # 单样本t检验
+    res = st.ttest_1samp(value_list, standard_value, nan_policy='omit')
+
+    avg_1 = np.average(value_list)
+    std_1 = np.std(value_list, ddof=1)
+
+    result = ResultDTO()
+    result.index_name = index_name
+    result.statistic = res.statistic
+    result.pvalue = res.pvalue
+
+    result.avg_1 = avg_1
+    result.std_1 = std_1
+    return result
+
+
+def execute_analysis_ttest_1samp_list(single_sample_param_list: list[SingleSampleParamDTO]):
     result_list = list[ResultDTO]()
     for single_sample_param in single_sample_param_list:
-        index_name = single_sample_param.index_name
-        value_list = single_sample_param.value_list
-        standard_value = single_sample_param.standard_value
-
-        # 单样本t检验
-        res = st.ttest_1samp(value_list, standard_value, nan_policy='omit')
-
-        avg_1 = np.average(value_list)
-        std_1 = np.std(value_list, ddof=1)
-
-        result = ResultDTO()
-        result.index_name = index_name
-        result.statistic = res.statistic
-        result.pvalue = res.pvalue
-
-        result.avg_1 = avg_1
-        result.std_1 = std_1
-
+        result = execute_analysis_ttest_1samp(single_sample_param)
         result_list.append(result)
     return result_list
 
