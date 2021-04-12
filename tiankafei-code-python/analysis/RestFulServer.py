@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 import classify_collection.ClassifyCollection as ClassifyCollection
 import linear_regression.LinearRegression as LinearRegression
 import related.Related as Related
+import tcheck.Tcheck as Tcheck
 import sys
 
 '''
@@ -103,6 +104,28 @@ async def related_kendalltau(related_param: Related.RelatedParamDTO):
             index_result = Related.execute_analysis_kendalltau(one, two)
             result.append(index_result)
     return result
+
+
+@app.post(path='/tcheck_ttest_ind', response_model=list[Tcheck.ResultDTO](),
+          summary='t校验分析算法【t检验】', description='t校验分析算法', tags={'分析算法'})
+async def tcheck_ttest_ind(tcheck_param: list[Tcheck.TcheckParamDTO]):
+    result_list = Tcheck.execute_analysis_ttest_ind(tcheck_param)
+    return result_list
+
+
+@app.post(path='/tcheck_ttest_1samp', response_model=list[Tcheck.ResultDTO](),
+          summary='t校验分析算法【单样本t检验】', description='t校验分析算法', tags={'分析算法'})
+async def tcheck_ttest_1samp(single_sample_param_list: list[Tcheck.SingleSampleParamDTO]):
+    result_list = Tcheck.execute_analysis_ttest_1samp(single_sample_param_list)
+    return result_list
+
+
+@app.post(path='/tcheck_ttest_rel', response_model=list[Tcheck.ResultDTO](),
+          summary='t校验分析算法【paired-t检验】', description='t校验分析算法', tags={'分析算法'})
+async def tcheck_ttest_rel(paired_tcheck_param: Tcheck.PairedTcheckParamDTO):
+    result_list = Tcheck.execute_analysis_ttest_rel(paired_tcheck_param)
+    return result_list
+
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=25535)
