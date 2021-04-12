@@ -10,6 +10,7 @@ import linear_regression.LinearRegression as LinearRegression
 import related.Related as Related
 import tcheck.Tcheck as Tcheck
 import variance.Variance as Variance
+import normal_check.NormalCheck as NormalCheck
 import sys
 
 '''
@@ -139,6 +140,20 @@ async def variance(index_param: Variance.IndexParamDTO):
           summary='方差分析算法【批量指标】', description='方差分析算法', tags={'分析算法'})
 async def variance(index_param_list: list[Variance.IndexParamDTO]):
     result_list = Variance.execute_analysis_variance_list(index_param_list)
+    return result_list
+
+
+@app.post(path='/normal_check', response_model=NormalCheck.ResultDTO,
+          summary='正态性校验分析算法【单个指标】', description='正态性校验分析算法', tags={'分析算法'})
+async def normal_check(index_param: NormalCheck.IndexParamDTO):
+    result = NormalCheck.execute_analysis_normal_check(index_param)
+    return result
+
+
+@app.post(path='/normal_check_list', response_model=list[NormalCheck.ResultDTO](),
+          summary='正态性校验分析算法【批量指标】', description='正态性校验分析算法', tags={'分析算法'})
+async def normal_check_list(index_param_list: list[NormalCheck.IndexParamDTO]):
+    result_list = NormalCheck.execute_analysis_normal_check_list(index_param_list)
     return result_list
 
 
