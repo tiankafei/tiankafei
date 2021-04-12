@@ -66,7 +66,7 @@ async def linear_regression(linear_param: LinearRegression.LinearParamDTO):
     return linear_result
 
 
-@app.post(path='/related_pearsonr', response_model=list[Related.RelatedResultDTO](),
+@app.post(path='/related_pearsonr', response_model=list[Related.RelatedResultDTO],
           summary='相关性分析算法【pearsonr】', description='相关性分析算法', tags={'分析算法'})
 async def related_pearsonr(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
@@ -80,7 +80,7 @@ async def related_pearsonr(related_param: Related.RelatedParamDTO):
     return result
 
 
-@app.post(path='/related_spearmanr', response_model=list[Related.RelatedResultDTO](),
+@app.post(path='/related_spearmanr', response_model=list[Related.RelatedResultDTO],
           summary='相关性分析算法【spearmanr】', description='相关性分析算法', tags={'分析算法'})
 async def related_spearmanr(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
@@ -94,7 +94,7 @@ async def related_spearmanr(related_param: Related.RelatedParamDTO):
     return result
 
 
-@app.post(path='/related_kendalltau', response_model=list[Related.RelatedResultDTO](),
+@app.post(path='/related_kendalltau', response_model=list[Related.RelatedResultDTO],
           summary='相关性分析算法【kendalltau】', description='相关性分析算法', tags={'分析算法'})
 async def related_kendalltau(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
@@ -108,21 +108,21 @@ async def related_kendalltau(related_param: Related.RelatedParamDTO):
     return result
 
 
-@app.post(path='/tcheck_ttest_ind', response_model=list[Tcheck.ResultDTO](),
+@app.post(path='/tcheck_ttest_ind', response_model=list[Tcheck.ResultDTO],
           summary='t校验分析算法【t检验】', description='t校验分析算法', tags={'分析算法'})
 async def tcheck_ttest_ind(tcheck_param: list[Tcheck.TcheckParamDTO]):
     result_list = Tcheck.execute_analysis_ttest_ind(tcheck_param)
     return result_list
 
 
-@app.post(path='/tcheck_ttest_1samp', response_model=list[Tcheck.ResultDTO](),
+@app.post(path='/tcheck_ttest_1samp', response_model=list[Tcheck.ResultDTO],
           summary='t校验分析算法【单样本t检验】', description='t校验分析算法', tags={'分析算法'})
 async def tcheck_ttest_1samp(single_sample_param_list: list[Tcheck.SingleSampleParamDTO]):
     result_list = Tcheck.execute_analysis_ttest_1samp(single_sample_param_list)
     return result_list
 
 
-@app.post(path='/tcheck_ttest_rel', response_model=list[Tcheck.ResultDTO](),
+@app.post(path='/tcheck_ttest_rel', response_model=list[Tcheck.ResultDTO],
           summary='t校验分析算法【paired-t检验】', description='t校验分析算法', tags={'分析算法'})
 async def tcheck_ttest_rel(paired_tcheck_param: Tcheck.PairedTcheckParamDTO):
     result_list = Tcheck.execute_analysis_ttest_rel(paired_tcheck_param)
@@ -136,7 +136,7 @@ async def variance(index_param: Variance.IndexParamDTO):
     return result_list
 
 
-@app.post(path='/variance_list', response_model=list[Variance.ResultDTO](),
+@app.post(path='/variance_list', response_model=list[Variance.ResultDTO],
           summary='方差分析算法【批量指标】', description='方差分析算法', tags={'分析算法'})
 async def variance(index_param_list: list[Variance.IndexParamDTO]):
     result_list = Variance.execute_analysis_variance_list(index_param_list)
@@ -150,7 +150,7 @@ async def normal_check(index_param: NormalCheck.IndexParamDTO):
     return result
 
 
-@app.post(path='/normal_check_list', response_model=list[NormalCheck.ResultDTO](),
+@app.post(path='/normal_check_list', response_model=list[NormalCheck.ResultDTO],
           summary='正态性校验分析算法【批量指标】', description='正态性校验分析算法', tags={'分析算法'})
 async def normal_check_list(index_param_list: list[NormalCheck.IndexParamDTO]):
     result_list = NormalCheck.execute_analysis_normal_check_list(index_param_list)
