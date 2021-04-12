@@ -9,22 +9,23 @@ from pydantic import BaseModel, Field
 
 method_view_name = 't检验分析算法'
 example_index_name = '工业总产值-本期'
+example_item_name = '轻工业'
 
 
-class VariancePerParamDTO(BaseModel):
+class ItemParamDTO(BaseModel):
+    item_name: str = Field(title='选项名称', example=example_item_name)
+    value_list: list[int] = Field(title='满足选项条件的数值集合', example=[1, 2, 3, 4, 5])
+
+    class Config:
+        title = '【' + method_view_name + '】选项参数'
+
+
+class IndexParamDTO(BaseModel):
     index_name: str = Field(title='指标名称', example=example_index_name)
-    value_list: list[int] = Field(title='满足选项条件的数值集合')
+    item_list: list[ItemParamDTO] = Field(title='满足选项条件的指标数值集合')
 
     class Config:
-        title = '【' + method_view_name + '】paired-t检验:指标数值集合参数'
-
-
-class VarianceParamDTO(BaseModel):
-    data_list_1: Optional[list[VariancePerParamDTO]] = Field(title='paired-t检验:第一个指标数值集合参数')
-    data_list_2: Optional[list[VariancePerParamDTO]] = Field(title='paired-t检验:第二个指标数值集合参数')
-
-    class Config:
-        title = '【' + method_view_name + '】paired-t检验:指标数值集合参数'
+        title = '【' + method_view_name + '】指标参数'
 
 
 class ResultDTO(BaseModel):
@@ -36,20 +37,32 @@ class ResultDTO(BaseModel):
         title = '【' + method_view_name + '】指标结果'
 
 
-def execute_analysis_variance(variance_param: VarianceParamDTO):
-    data_list_1 = variance_param.data_list_1
-    data_list_2 = variance_param.data_list_2
+def execute_analysis_variance(index_param: IndexParamDTO):
+    index_param.index_name
+    item_list = index_param.item_list
 
+    result_name = ""
+    data_list = []
+    for item in item_list:
+        item_name = item.item_name
+        value_list = item.value_list
+        data_list.append(value_list)
+        result_name = item_name + ' @@@'
+
+    res = st.f_oneway(*data_list)
+
+    result = ResultDTO()
+    result.index_name = result_name
+    result.statistic = res.statistic
+    result.pvalue = res.pvalue
+    return result
+
+
+def execute_analysis_variance_list(index_param_list: list[IndexParamDTO]):
     result_list = list[ResultDTO]()
-    for list_1 in data_list_1:
-        for list_2 in data_list_2:
-            res = st.f_oneway(list_1.value_list, list_2.value_list)
-
-            result = ResultDTO()
-            result.index_name = list_1.index_name + ' @@@ ' + list_2.index_name
-            result.statistic = res.statistic
-            result.pvalue = res.pvalue
-            result_list.append(result)
+    for index_param in index_param_list:
+        result = execute_analysis_variance(index_param)
+        result_list.append(result)
     return result_list
 
 

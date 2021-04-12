@@ -128,10 +128,17 @@ async def tcheck_ttest_rel(paired_tcheck_param: Tcheck.PairedTcheckParamDTO):
     return result_list
 
 
-@app.post(path='/variance', response_model=list[Variance.ResultDTO](),
-          summary='方差分析算法', description='方差分析算法', tags={'分析算法'})
-async def variance(variance_param: Variance.VarianceParamDTO):
-    result_list = Variance.execute_analysis_variance(variance_param)
+@app.post(path='/variance', response_model=Variance.ResultDTO,
+          summary='方差分析算法【单个指标】', description='方差分析算法', tags={'分析算法'})
+async def variance(index_param: Variance.IndexParamDTO):
+    result_list = Variance.execute_analysis_variance(index_param)
+    return result_list
+
+
+@app.post(path='/variance_list', response_model=list[Variance.ResultDTO](),
+          summary='方差分析算法【批量指标】', description='方差分析算法', tags={'分析算法'})
+async def variance(index_param_list: list[Variance.IndexParamDTO]):
+    result_list = Variance.execute_analysis_variance_list(index_param_list)
     return result_list
 
 
