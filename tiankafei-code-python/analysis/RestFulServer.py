@@ -66,27 +66,27 @@ async def linear_regression(linear_param: LinearRegression.LinearParamDTO):
     return linear_result
 
 
-@app.post(path='/related_pearsonr', response_model=list[Related.RelatedResultDTO],
+@app.post(path='/related_pearsonr', response_model=list[Related.IndexResultDTO],
           summary='相关性分析算法【pearsonr】', description='相关性分析算法', tags={'分析算法'})
 async def related_pearsonr(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
     two_list = related_param.two_list
 
-    result = list[Related.RelatedResultDTO]()
+    result_list = list[Related.IndexResultDTO]()
     for one in one_list:
         for two in two_list:
-            index_result = Related.execute_analysis_pearsonr(one, two)
-            result.append(index_result)
-    return result
+            result = Related.execute_analysis_pearsonr(one, two)
+            result_list.append(result)
+    return result_list
 
 
-@app.post(path='/related_spearmanr', response_model=list[Related.RelatedResultDTO],
+@app.post(path='/related_spearmanr', response_model=list[Related.IndexResultDTO],
           summary='相关性分析算法【spearmanr】', description='相关性分析算法', tags={'分析算法'})
 async def related_spearmanr(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
     two_list = related_param.two_list
 
-    result = list[Related.RelatedResultDTO]()
+    result = list[Related.IndexResultDTO]()
     for one in one_list:
         for two in two_list:
             index_result = Related.execute_analysis_spearmanr(one, two)
@@ -94,13 +94,13 @@ async def related_spearmanr(related_param: Related.RelatedParamDTO):
     return result
 
 
-@app.post(path='/related_kendalltau', response_model=list[Related.RelatedResultDTO],
+@app.post(path='/related_kendalltau', response_model=list[Related.IndexResultDTO],
           summary='相关性分析算法【kendalltau】', description='相关性分析算法', tags={'分析算法'})
 async def related_kendalltau(related_param: Related.RelatedParamDTO):
     one_list = related_param.one_list
     two_list = related_param.two_list
 
-    result = list[Related.RelatedResultDTO]()
+    result = list[Related.IndexResultDTO]()
     for one in one_list:
         for two in two_list:
             index_result = Related.execute_analysis_kendalltau(one, two)

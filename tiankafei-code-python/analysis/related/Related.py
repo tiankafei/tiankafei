@@ -6,7 +6,7 @@
 
 import pandas as pd
 import scipy.stats as st
-from typing import Optional, List
+from typing import Optional
 from pydantic import BaseModel, Field
 
 method_view_name = '相关性分析算法'
@@ -41,20 +41,13 @@ class IndexResultDTO(BaseModel):
         title = '【' + method_view_name + '】指标返回结果'
 
 
-class RelatedResultDTO(BaseModel):
-    index_result_list: list[IndexResultDTO] = Field(title='指标结果集合')
-
-    class Config:
-        title = '【' + method_view_name + '】返回结果'
-
-
 def execute_analysis_pearsonr(one: IndexParamDTO, two: IndexParamDTO):
     res = st.pearsonr(one.value_list, two.value_list)
 
     index_result = IndexResultDTO()
     index_result.correlation = res[0]
     index_result.pvalue = res[1]
-    index_result.one_index_name = one.index_name;
+    index_result.one_index_name = one.index_name
     index_result.two_index_name = two.index_name
     return index_result
 
@@ -65,7 +58,7 @@ def execute_analysis_spearmanr(one: IndexParamDTO, two: IndexParamDTO):
     index_result = IndexResultDTO()
     index_result.correlation = res.correlation
     index_result.pvalue = res.pvalue
-    index_result.one_index_name = one.index_name;
+    index_result.one_index_name = one.index_name
     index_result.two_index_name = two.index_name
     return index_result
 
@@ -76,7 +69,7 @@ def execute_analysis_kendalltau(one: IndexParamDTO, two: IndexParamDTO):
     index_result = IndexResultDTO()
     index_result.correlation = res.correlation
     index_result.pvalue = res.pvalue
-    index_result.one_index_name = one.index_name;
+    index_result.one_index_name = one.index_name
     index_result.two_index_name = two.index_name
     return index_result
 
