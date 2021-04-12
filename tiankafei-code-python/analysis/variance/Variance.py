@@ -4,6 +4,7 @@
 
 import pandas as pd
 import scipy.stats as st
+import numpy as np
 from typing import Optional
 from pydantic import BaseModel, Field
 
@@ -28,10 +29,17 @@ class IndexParamDTO(BaseModel):
         title = '【' + method_view_name + '】指标参数'
 
 
+class ItemResultDTO(BaseModel):
+    item_name: Optional[str] = Field(title='选项名称', example=example_item_name)
+    avg: Optional[float] = Field(title='平均值')
+    std: Optional[float] = Field(title='标准差')
+
+
 class ResultDTO(BaseModel):
     index_name: Optional[str] = Field(title='指标名称', example=example_index_name)
-    statistic: Optional[float] = Field(title='')
-    pvalue: Optional[float] = Field(title='')
+    statistic: Optional[float] = Field(title='F值')
+    pvalue: Optional[float] = Field(title='P值')
+    item_result_list: Optional[list[ItemResultDTO]] = Field(title='每一个选项的属性对象')
 
     class Config:
         title = '【' + method_view_name + '】指标结果'
@@ -43,11 +51,21 @@ def execute_analysis_variance(index_param: IndexParamDTO):
 
     result_name = ""
     data_list = []
+    item_result_list = list[ItemResultDTO]()
     for item in item_list:
         item_name = item.item_name
         value_list = item.value_list
         data_list.append(value_list)
         result_name = item_name + ' @@@'
+
+        avg = np.average(value_list)
+        std = np.std(value_list, ddof=1)
+
+        item_result = ItemResultDTO()
+        item_result.item_name = item_name
+        item_result.avg = avg
+        item_result.std = std
+        item_result_list.append(item_result)
 
     res = st.f_oneway(*data_list)
 
@@ -55,6 +73,7 @@ def execute_analysis_variance(index_param: IndexParamDTO):
     result.index_name = result_name
     result.statistic = res.statistic
     result.pvalue = res.pvalue
+    result.item_result_list = item_result_list
     return result
 
 

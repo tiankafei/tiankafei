@@ -6,6 +6,7 @@
 
 import pandas as pd
 import scipy.stats as st
+import numpy as np
 from typing import Optional
 from pydantic import BaseModel, Field
 
@@ -27,6 +28,10 @@ class ResultDTO(BaseModel):
     index_name: Optional[str] = Field(title='指标名称', example=example_index_name)
     statistic: Optional[float] = Field(title='')
     pvalue: Optional[float] = Field(title='')
+    avg_1: Optional[float] = Field(title='平均值1')
+    std_1: Optional[float] = Field(title='标准差1')
+    avg_2: Optional[float] = Field(title='平均值2')
+    std_2: Optional[float] = Field(title='标准差2')
 
     class Config:
         title = '【' + method_view_name + '】指标结果'
@@ -71,6 +76,17 @@ def execute_analysis_ttest_ind(tcheck_param_list: list[TcheckParamDTO]):
         result.index_name = index_name
         result.statistic = res.statistic
         result.pvalue = res.pvalue
+
+        avg_1 = np.average(value_list_1)
+        std_1 = np.std(value_list_1, ddof=1)
+
+        avg_2 = np.average(value_list_2)
+        std_2 = np.std(value_list_2, ddof=1)
+        result.avg_1 = avg_1
+        result.std_1 = std_1
+        result.avg_2 = avg_2
+        result.std_2 = std_2
+
         result_list.append(result)
     return result_list
 
@@ -85,10 +101,17 @@ def execute_analysis_ttest_1samp(single_sample_param_list: list[SingleSamplePara
         # 单样本t检验
         res = st.ttest_1samp(value_list, standard_value, nan_policy='omit')
 
+        avg_1 = np.average(value_list)
+        std_1 = np.std(value_list, ddof=1)
+
         result = ResultDTO()
         result.index_name = index_name
         result.statistic = res.statistic
         result.pvalue = res.pvalue
+
+        result.avg_1 = avg_1
+        result.std_1 = std_1
+
         result_list.append(result)
     return result_list
 
@@ -101,12 +124,26 @@ def execute_analysis_ttest_rel(paired_tcheck_param: PairedTcheckParamDTO):
     for list_1 in data_list_1:
         for list_2 in data_list_2:
             # paired-t检验（没填就按0计算）
-            res = st.ttest_rel(list_2.value_list, list_1.value_list)
+            value_list_2 = list_2.value_list
+            value_list_1 = list_1.value_list
+            res = st.ttest_rel(value_list_2, value_list_1)
 
             result = ResultDTO()
             result.index_name = list_1.index_name + ' @@@ ' + list_2.index_name
             result.statistic = res.statistic
             result.pvalue = res.pvalue
+
+            avg_2 = np.average(value_list_2)
+            std_2 = np.std(value_list_2, ddof=1)
+
+            avg_1 = np.average(value_list_1)
+            std_1 = np.std(value_list_1, ddof=1)
+
+            result.avg_1 = avg_1
+            result.std_1 = std_1
+            result.avg_2 = avg_2
+            result.std_2 = std_2
+
             result_list.append(result)
 
     return result_list
