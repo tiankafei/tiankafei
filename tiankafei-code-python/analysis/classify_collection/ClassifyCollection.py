@@ -137,7 +137,8 @@ def mean_confidence_interval(data, confidence=0.95):
 
 
 if __name__ == '__main__':
-    datas = pd.read_excel(r'D:\python\data.xls')  # 读取 excel 数据，引号里面是 excel 文件的位置
+    # 读取 excel 数据，引号里面是 excel 文件的位置
+    datas = pd.read_excel(r'D:\python\data.xls')
     names = list(datas.columns)
 
     a1 = datas['分析项1_定类'].to_list()
