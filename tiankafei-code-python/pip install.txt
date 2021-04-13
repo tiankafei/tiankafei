@@ -48,6 +48,7 @@ pip install jieba
 
 pip install fastapi
 pip install uvicorn
+pip install nacos-sdk-python
 pip install baseModel
 
 pip install SnowNLP
@@ -66,5 +67,6 @@ pip install RQ
 
 pip install newspaper
 
+pip install jupyterlab
 
 pip install -i https://pypi.douban.com/simple elasticsearch
