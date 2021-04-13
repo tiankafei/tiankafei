@@ -39,7 +39,7 @@ def register_nacos(ip, port, interval, server_addresses, namespace):
 '''
 如果参数个数大于1，第一个参数任意一个字符或数字，非0即为开启文档，0则关闭文档
 '''
-enabled = 1
+doc_enabled = 1
 
 
 def check_config(config_path):
@@ -72,8 +72,8 @@ def check_config(config_path):
     # doc文档配置是否存在
     doc_enable_flag = config.has_option('config', 'doc_enable')
     if doc_enable_flag:
-        global enabled
-        enabled = int(config.get("config", "doc_enable"))
+        global doc_enabled
+        doc_enabled = int(config.get("config", "doc_enable"))
 
     # nacos注册中心地址是否存在
     server_addresses_flag = config.has_option('config', 'server_addresses')
@@ -116,12 +116,12 @@ if len(sys.argv) > 1:
             sys.exit()
     else:
         try:
-            enabled = int(sys.argv[1])
+            doc_enabled = int(sys.argv[1])
         except ValueError:
             pass
 
 app = FastAPI(title="数据分析算法接口", description="用于获取数据分析算法接口", version="0.0.1", openapi_url="/fastapi/data_manger.json",
-              docs_url="/fastapi/docs" if enabled == 1 else None, redoc_url="/fastapi/redoc")
+              docs_url="/fastapi/docs" if doc_enabled == 1 else None, redoc_url="/fastapi/redoc")
 
 
 @app.get(path='/', summary='根路径', tags={'默认'})
