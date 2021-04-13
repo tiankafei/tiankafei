@@ -12,16 +12,113 @@ import tcheck.Tcheck as Tcheck
 import variance.Variance as Variance
 import normal_check.NormalCheck as NormalCheck
 import sys
+import nacos
+import threading
+import time
+import configparser
+import os
+
+
+# naocs心跳保持
+def send_heartbeat(nacos_client, ip, port, interval):
+    while True:
+        nacos_client.send_heartbeat(service_name='analysis-algorithm', ip=ip, port=port,
+                                    cluster_name='DEFAULT')
+        time.sleep(interval)
+
+
+# 注册nacos
+def register_nacos(ip, port, interval, server_addresses, namespace):
+    client = nacos.NacosClient(server_addresses=server_addresses, namespace=namespace)
+    client.add_naming_instance(service_name='analysis-algorithm', ip=ip, port=port,
+                               cluster_name='DEFAULT')
+    t1 = threading.Thread(target=send_heartbeat, args=(client, ip, port, interval))
+    t1.start()
+
 
 '''
 如果参数个数大于1，第一个参数任意一个字符或数字，非0即为开启文档，0则关闭文档
 '''
 enabled = 1
+
+
+def check_config(config_path):
+    config = configparser.ConfigParser()
+    config.read(config_path, 'UTF-8')
+
+    ip = ''
+    port = 25535
+    doc_enable = False
+    namespace = ''
+    server_addresses = ''
+    interval = 10
+
+    # ip配置是否存在
+    ip_flag = config.has_option('config', 'ip')
+    if ip_flag:
+        ip = config.get("config", "ip")
+    else:
+        print('ip配置不能为空')
+        return False
+    # 端口配置是否存在
+    port_flag = config.has_option('config', 'port')
+    if port_flag:
+        try:
+            port = int(config.get("config", "port"))
+        except:
+            print('端口必须是数值')
+            return False
+
+    # doc文档配置是否存在
+    doc_enable_flag = config.has_option('config', 'doc_enable')
+    if doc_enable_flag:
+        global enabled
+        enabled = int(config.get("config", "doc_enable"))
+
+    # nacos注册中心地址是否存在
+    server_addresses_flag = config.has_option('config', 'server_addresses')
+    if server_addresses_flag:
+        server_addresses = config.get("config", "server_addresses")
+    else:
+        print('nacos注册地址不能为空')
+        return False
+
+    # nacos命名空间配置是否存在
+    namespace_flag = config.has_option('config', 'namespace')
+    if namespace_flag:
+        namespace = config.get("config", "namespace")
+
+    # nacos心跳间隔配置是否存在
+    interval_flag = config.has_option('config', 'interval')
+    if interval_flag:
+        try:
+            interval = int(config.get("config", "interval"))
+            if interval > 10:
+                interval = 10
+        except:
+            print('nacos心跳间隔，必须是数值')
+            return False
+
+    register_nacos(ip, port, interval, server_addresses, namespace)
+    return True
+
+
 if len(sys.argv) > 1:
-    try:
-        enabled = int(sys.argv[1])
-    except ValueError:
-        pass
+    config_path = sys.argv[1]
+    exists = os.path.exists(os.path.join(os.getcwd(), config_path))
+    # 如果传入的参数是配置文件，则通过读取配置，拿到必要的属性
+    if exists:
+        # 读取配置并进行校验
+        flag = check_config(config_path)
+        if flag:
+            pass
+        else:
+            sys.exit()
+    else:
+        try:
+            enabled = int(sys.argv[1])
+        except ValueError:
+            pass
 
 app = FastAPI(title="数据分析算法接口", description="用于获取数据分析算法接口", version="0.0.1", openapi_url="/fastapi/data_manger.json",
               docs_url="/fastapi/docs" if enabled == 1 else None, redoc_url="/fastapi/redoc")
@@ -127,6 +224,7 @@ async def tcheck_ttest_ind_list(tcheck_param_list: list[Tcheck.TcheckParamDTO]):
 async def tcheck_ttest_1samp(single_sample_param: Tcheck.SingleSampleParamDTO):
     result = Tcheck.execute_analysis_ttest_1samp(single_sample_param)
     return result
+
 
 @app.post(path='/tcheck_ttest_1samp_list', response_model=list[Tcheck.ResultDTO],
           summary='t校验分析算法【单样本t检验批量】', description='t校验分析算法', tags={'分析算法'})
