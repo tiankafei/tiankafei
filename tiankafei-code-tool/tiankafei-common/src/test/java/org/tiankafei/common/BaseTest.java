@@ -1,6 +1,8 @@
 package org.tiankafei.common;
 
 import com.google.common.base.Stopwatch;
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
@@ -22,6 +24,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.time.StopWatch;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 import org.tiankafei.common.sort.MainInterface;
 import org.tiankafei.common.sort.observer.MainObserver;
@@ -466,7 +469,21 @@ public class BaseTest {
         b = --a;
         System.out.println(a);
         System.out.println(b);
+    }
 
+    @Test
+    public void test15(){
+        Integer t1 = 1;
+        Integer t2 = 0;
+        System.out.println(t1 + ":" + t2);
+        Tuple2<Integer, Integer> t = replace(t1, t2);
+        t1 = t._1();
+        t2 = t._2();
+        System.out.println(t1 + ":" + t2);
+    }
+
+    public Tuple2<Integer, Integer> replace(int t1, int t2){
+        return Tuple.of(t1,t2);
     }
 
     private int get(int value) {
