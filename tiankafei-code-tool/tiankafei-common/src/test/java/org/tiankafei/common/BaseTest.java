@@ -445,6 +445,30 @@ public class BaseTest {
         System.out.println(a);
     }
 
+    @Test
+    public void test14(){
+        int a = 1;
+        int b = a++;
+        System.out.println(a);
+        System.out.println(b);
+
+        a = 1;
+        b = a--;
+        System.out.println(a);
+        System.out.println(b);
+
+        a = 1;
+        b = ++a;
+        System.out.println(a);
+        System.out.println(b);
+
+        a = 1;
+        b = --a;
+        System.out.println(a);
+        System.out.println(b);
+
+    }
+
     private int get(int value) {
         return value - value % 10000;
     }
