@@ -40,6 +40,7 @@ def register_nacos(ip, port, interval, server_addresses, namespace):
 如果参数个数大于1，第一个参数任意一个字符或数字，非0即为开启文档，0则关闭文档
 '''
 doc_enabled = 1
+service_port = 25535
 
 
 def check_config(config_path):
@@ -65,6 +66,8 @@ def check_config(config_path):
     if port_flag:
         try:
             port = int(config.get("config", "port"))
+            global service_port
+            service_port = port
         except:
             print('端口必须是数值')
             return False
@@ -269,4 +272,4 @@ async def normal_check_list(index_param_list: list[NormalCheck.IndexParamDTO]):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=25535)
+    uvicorn.run(app, host="0.0.0.0", port=service_port)
