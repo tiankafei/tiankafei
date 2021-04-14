@@ -43,7 +43,7 @@ class IndexResultDTO(BaseModel):
 
 
 class LinearResultDTO(BaseModel):
-    const: Optional[IndexResultDTO] = Field(title='常数值')
+    const_v: Optional[IndexResultDTO] = Field(title='常数值')
     index_list: Optional[list[IndexResultDTO]] = Field(title='指标的值')
     r: Optional[float] = Field(title='线性回归分析:r的值')
     tzr: Optional[float] = Field(title='线性回归分析:调整r的值')
@@ -75,7 +75,7 @@ def execute_analysis_(cause, other):
     s = model.summary()
 
     result = LinearResultDTO()
-    const = IndexResultDTO()
+    const_v = IndexResultDTO()
     index_list = list[IndexResultDTO]()
 
     tables = list(s.tables)
@@ -94,12 +94,12 @@ def execute_analysis_(cause, other):
                 result.fp = float(row[3].strip())
 
             if table_index == 1 and row_index == 1:
-                const.name = '常数'
-                const.b = float(row[1].strip())
-                const.sem = float(row[2].strip())
-                const.t = float(row[3].strip())
-                const.p = float(row[4].strip())
-                result.const = const
+                const_v.name = '常数'
+                const_v.b = float(row[1].strip())
+                const_v.sem = float(row[2].strip())
+                const_v.t = float(row[3].strip())
+                const_v.p = float(row[4].strip())
+                result.const_v = const_v
             elif table_index == 1 and row_index > 1:
                 index = IndexResultDTO()
                 index.name = row[0].strip()
