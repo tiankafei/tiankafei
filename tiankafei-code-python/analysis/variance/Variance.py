@@ -37,7 +37,7 @@ class ItemResultDTO(BaseModel):
 
 
 class ResultDTO(BaseModel):
-    # index_name: Optional[str] = Field(title='指标名称', example=example_index_name)
+    index_name: Optional[str] = Field(title='指标名称', example=example_index_name)
     statistic: Optional[float] = Field(title='F值')
     pvalue: Optional[float] = Field(title='P值')
     item_result_list: Optional[list[ItemResultDTO]] = Field(title='每一个选项的属性对象')
@@ -47,17 +47,14 @@ class ResultDTO(BaseModel):
 
 
 def execute_analysis_variance(index_param: IndexParamDTO):
-    index_param.index_name
     item_list = index_param.item_list
 
-    # result_name = ""
     data_list = []
     item_result_list = list[ItemResultDTO]()
     for item in item_list:
         item_name = item.item_name
         value_list = item.value_list
         data_list.append(value_list)
-        # result_name = item_name + ' '
 
         avg = np.average(value_list)
         std = np.std(value_list, ddof=1)
@@ -71,7 +68,7 @@ def execute_analysis_variance(index_param: IndexParamDTO):
     res = st.f_oneway(*data_list)
 
     result = ResultDTO()
-    # result.index_name = result_name
+    result.index_name = index_param.index_name
     result.statistic = res.statistic
     result.pvalue = res.pvalue
     result.item_result_list = item_result_list
