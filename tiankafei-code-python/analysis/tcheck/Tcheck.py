@@ -1,3 +1,4 @@
+# -- coding: utf-8 -
 # t校验分析算法
 
 # scipy.stats.ttest_ind（t检验）
@@ -25,7 +26,8 @@ class TcheckParamDTO(BaseModel):
 
 
 class ResultDTO(BaseModel):
-    index_name: Optional[str] = Field(title='指标名称', example=example_index_name)
+    one_index_name: Optional[str] = Field(title='前面的指标名称', example=example_index_name)
+    two_index_name: Optional[str] = Field(title='后面的指标名称', example=example_index_name)
     statistic: Optional[float] = Field(title='')
     pvalue: Optional[float] = Field(title='')
     avg_1: Optional[float] = Field(title='平均值1')
@@ -137,7 +139,8 @@ def execute_analysis_ttest_rel(paired_tcheck_param: PairedTcheckParamDTO):
             res = st.ttest_rel(value_list_2, value_list_1)
 
             result = ResultDTO()
-            result.index_name = list_1.index_name + ' @@@ ' + list_2.index_name
+            result.one_index_name = list_1.index_name
+            result.two_index_name = list_2.index_name
             result.statistic = res.statistic
             result.pvalue = res.pvalue
 

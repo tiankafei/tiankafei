@@ -1,3 +1,4 @@
+# -- coding: utf-8 -
 # 相关性分析算法
 
 # scipy.stats.spearmanr

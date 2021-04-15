@@ -1,3 +1,4 @@
+# -- coding: utf-8 -
 # 线性回归分析算法
 
 # scipy.stats.linregress(一元线性回归)
