@@ -1,7 +1,6 @@
 package org.tiankafei.common.exceptions;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  * 异常处理工具类
@@ -18,17 +17,7 @@ public class ExceptionUtil {
      * @return 异常的堆栈信息
      */
     public static String getStackTrace(Throwable throwable) {
-        PrintWriter printWriter = null;
-        try {
-            StringWriter stringWriter = new StringWriter();
-            printWriter = new PrintWriter(stringWriter);
-            throwable.printStackTrace(printWriter);
-            return stringWriter.toString();
-        } finally {
-            if (printWriter != null) {
-                printWriter.close();
-            }
-        }
+        return ExceptionUtils.getStackTrace(throwable);
     }
 
 }
