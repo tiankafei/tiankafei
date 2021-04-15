@@ -46,8 +46,8 @@ def execute_analysis_pearsonr(one: IndexParamDTO, two: IndexParamDTO):
     res = st.pearsonr(one.value_list, two.value_list)
 
     index_result = IndexResultDTO()
-    index_result.correlation = res[0]
-    index_result.pvalue = res[1]
+    index_result.correlation = 0.0 if res[0] else res[0]
+    index_result.pvalue = 0.0 if res[1] else res[1]
     index_result.one_index_name = one.index_name
     index_result.two_index_name = two.index_name
     return index_result
@@ -57,8 +57,8 @@ def execute_analysis_spearmanr(one: IndexParamDTO, two: IndexParamDTO):
     res = st.spearmanr(one.value_list, two.value_list)
 
     index_result = IndexResultDTO()
-    index_result.correlation = res.correlation
-    index_result.pvalue = res.pvalue
+    index_result.correlation = 0.0 if res.correlation else res.correlation
+    index_result.pvalue = 0.0 if res.pvalue else res.pvalue
     index_result.one_index_name = one.index_name
     index_result.two_index_name = two.index_name
     return index_result

@@ -69,8 +69,8 @@ def execute_analysis_variance(index_param: IndexParamDTO):
 
     result = ResultDTO()
     result.index_name = index_param.index_name
-    result.statistic = res.statistic
-    result.pvalue = res.pvalue
+    result.statistic = 0.0 if res.statistic else res.statistic
+    result.pvalue = 0.0 if res.pvalue else res.pvalue
     result.item_result_list = item_result_list
     return result
 

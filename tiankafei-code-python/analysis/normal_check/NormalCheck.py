@@ -50,13 +50,13 @@ def execute_analysis_normal_check(index_param: IndexParamDTO):
     ks_res = st.ks_1samp(value_list, st.norm.cdf, mode='asymp')
 
     result = ResultDTO()
-    result.ks_statistic = ks_res.statistic
-    result.ks_pvalue = ks_res.pvalue
+    result.ks_statistic = 0.0 if ks_res.statistic else ks_res.statistic
+    result.ks_pvalue = 0.0 if ks_res.pvalue else ks_res.pvalue
 
     # S-W检验
     sw_res = st.shapiro(value_list)
-    result.sw_statistic = sw_res.statistic
-    result.sw_pvalue = sw_res.pvalue
+    result.sw_statistic = 0.0 if sw_res.statistic else sw_res.statistic
+    result.sw_pvalue = 0.0 if sw_res.pvalue else sw_res.pvalue
 
     avg = np.average(value_list)
     std = np.std(value_list, ddof=1)

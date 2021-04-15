@@ -73,8 +73,8 @@ def execute_analysis_ttest_ind(tcheck_param: TcheckParamDTO):
 
     result = ResultDTO()
     result.index_name = index_name
-    result.statistic = res.statistic
-    result.pvalue = res.pvalue
+    result.statistic = 0.0 if res.statistic else res.statistic
+    result.pvalue = 0.0 if res.pvalue else res.pvalue
 
     avg_1 = np.average(value_list_1)
     std_1 = np.std(value_list_1, ddof=1)
@@ -109,8 +109,8 @@ def execute_analysis_ttest_1samp(single_sample_param: SingleSampleParamDTO):
 
     result = ResultDTO()
     result.index_name = index_name
-    result.statistic = res.statistic
-    result.pvalue = res.pvalue
+    result.statistic = 0.0 if res.statistic else res.statistic
+    result.pvalue = 0.0 if res.pvalue else res.pvalue
 
     result.avg_1 = avg_1
     result.std_1 = std_1
@@ -136,8 +136,8 @@ def execute_analysis_ttest_rel(paired_tcheck_param: PairedTcheckParamDTO):
 
     result = ResultDTO()
     result.index_name = data_list_1.index_name + '@@' + data_list_2.index_name
-    result.statistic = res.statistic
-    result.pvalue = res.pvalue
+    result.statistic = 0.0 if res.statistic else res.statistic
+    result.pvalue = 0.0 if res.pvalue else res.statistic
 
     avg_2 = np.average(value_list_2)
     std_2 = np.std(value_list_2, ddof=1)
