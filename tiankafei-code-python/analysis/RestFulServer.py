@@ -236,7 +236,7 @@ async def tcheck_ttest_1samp_list(single_sample_param_list: list[Tcheck.SingleSa
     return result_list
 
 
-@app.post(path='/tcheck_ttest_rel', response_model=list[Tcheck.ResultDTO],
+@app.post(path='/tcheck_ttest_rel', response_model=Tcheck.ResultDTO,
           summary='t校验分析算法【paired-t检验】', description='t校验分析算法', tags={'分析算法'})
 async def tcheck_ttest_rel(paired_tcheck_param: Tcheck.PairedTcheckParamDTO):
     result_list = Tcheck.execute_analysis_ttest_rel(paired_tcheck_param)

@@ -56,8 +56,8 @@ class PairedTcheckPerParamDTO(BaseModel):
 
 
 class PairedTcheckParamDTO(BaseModel):
-    data_list_1: Optional[list[PairedTcheckPerParamDTO]] = Field(title='paired-t检验:第一个指标数值集合参数')
-    data_list_2: Optional[list[PairedTcheckPerParamDTO]] = Field(title='paired-t检验:第二个指标数值集合参数')
+    data_list_1: Optional[PairedTcheckPerParamDTO] = Field(title='paired-t检验:第一个指标数值集合参数')
+    data_list_2: Optional[PairedTcheckPerParamDTO] = Field(title='paired-t检验:第二个指标数值集合参数')
 
     class Config:
         title = '【' + method_view_name + '】paired-t检验:指标数值集合参数'
@@ -129,33 +129,27 @@ def execute_analysis_ttest_rel(paired_tcheck_param: PairedTcheckParamDTO):
     data_list_1 = paired_tcheck_param.data_list_1
     data_list_2 = paired_tcheck_param.data_list_2
 
-    result_list = list[ResultDTO]()
-    for list_1 in data_list_1:
-        for list_2 in data_list_2:
-            # paired-t检验（没填就按0计算）
-            value_list_2 = list_2.value_list
-            value_list_1 = list_1.value_list
-            res = st.ttest_rel(value_list_2, value_list_1)
+    # paired-t检验（没填就按0计算）
+    value_list_2 = data_list_2.value_list
+    value_list_1 = data_list_1.value_list
+    res = st.ttest_rel(value_list_2, value_list_1)
 
-            result = ResultDTO()
-            result.index_name = list_1.index_name + '@@' + list_2.index_name
-            result.statistic = res.statistic
-            result.pvalue = res.pvalue
+    result = ResultDTO()
+    result.index_name = data_list_1.index_name + '@@' + data_list_2.index_name
+    result.statistic = res.statistic
+    result.pvalue = res.pvalue
 
-            avg_2 = np.average(value_list_2)
-            std_2 = np.std(value_list_2, ddof=1)
+    avg_2 = np.average(value_list_2)
+    std_2 = np.std(value_list_2, ddof=1)
 
-            avg_1 = np.average(value_list_1)
-            std_1 = np.std(value_list_1, ddof=1)
+    avg_1 = np.average(value_list_1)
+    std_1 = np.std(value_list_1, ddof=1)
 
-            result.avg_1 = avg_1
-            result.std_1 = std_1
-            result.avg_2 = avg_2
-            result.std_2 = std_2
-
-            result_list.append(result)
-
-    return result_list
+    result.avg_1 = avg_1
+    result.std_1 = std_1
+    result.avg_2 = avg_2
+    result.std_2 = std_2
+    return result
 
 
 if __name__ == '__main__':
