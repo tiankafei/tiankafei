@@ -22,6 +22,16 @@ func main() {
 	fmt.Println(a, b)
 	a, b = repalce(a, b)
 	fmt.Println(a, b)
+
+	var age3 int32 = 123
+	fmt.Printf("%T", 132)
+	fmt.Println()
+	fmt.Printf("%T", age3)
+	fmt.Println()
+
+	var age4 int64 = 123
+	var agr5 int = 123
+	fmt.Println(int(age4) + agr5)
 }
 
 func repalce(a int, b int) (a1 int, b1 int) {
