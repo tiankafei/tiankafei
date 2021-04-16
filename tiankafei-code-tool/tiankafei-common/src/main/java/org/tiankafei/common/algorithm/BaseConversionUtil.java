@@ -17,7 +17,12 @@ public class BaseConversionUtil {
         System.out.println("\t\t-1的二进制 ：" + printTwoBase(-1));
     }
 
-    private static String printTwoBase(int num) {
+    /**
+     * 打印数字的二进制
+     * @param num   数字
+     * @return      二进制
+     */
+    public static String printTwoBase(int num) {
         StringBuilder stringBuilder = new StringBuilder();
         int init = 31;
         for (int i = init; i >= 0; i--) {
