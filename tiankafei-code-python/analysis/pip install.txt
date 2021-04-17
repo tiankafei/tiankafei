@@ -1,12 +1,12 @@
-pip install scipy
-pip install numpy
-pip install matplotlib
-pip install scikit-learn
-pip install pandas
-pip install xlrd
-pip install xlwt
-pip install openpyxl
-pip install fastapi
-pip install uvicorn
-pip install nacos-sdk-python
-pip install statsmodels
+pip install scipy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install scikit-learn -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install xlrd -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install xlwt -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install openpyxl -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install fastapi -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install uvicorn -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install nacos-sdk-python -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install statsmodels -i https://pypi.tuna.tsinghua.edu.cn/simple
