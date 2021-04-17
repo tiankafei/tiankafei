@@ -1,72 +1,72 @@
-pip install scipy
-pip install numpy
-pip install matplotlib
-pip install scikit-learn
-pip install pandas
+pip install scipy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install scikit-learn -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install xlrd
-pip install xlwt
-pip install openpyxl
-pip install scrapy
-pip install emails
-pip install pymysql
-pip install paramiko
-pip install sympy
-pip install scapy
-pip install nltk
-pip install requests
+pip install xlrd -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install xlwt -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install openpyxl -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install scrapy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install emails -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pymysql -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install paramiko -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install sympy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install scapy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install nltk -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install pyquery
-pip install xmltodict
-pip install xhtml2pdf
-pip install untangle
-pip install Levenshtein
-pip install fuzzywuzzy
+pip install pyquery -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install xmltodict -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install xhtml2pdf -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install untangle -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install Levenshtein -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install fuzzywuzzy -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install unidecode
-pip install xpinyin
-pip install pyparsing
-pip install phonenumbers
+pip install unidecode -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install xpinyin -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pyparsing -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install phonenumbers -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
-pip install tablib
-pip install textract
-pip install messytables
-pip install rows
-pip install python-docx
-pip install XlsxWriter
-pip install PDFMiner
-pip install PyPDF2
-pip install ReportLab
-pip install sqlparse
+pip install tablib -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install textract -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install messytables -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install rows -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install python-docx -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install XlsxWriter -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install PDFMiner -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install PyPDF2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install ReportLab -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install sqlparse -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 --------------------------------------------
-pip install demjson
-pip install NLTK
-pip install Pattern
-pip install jieba
+pip install demjson -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install NLTK -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install Pattern -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install jieba -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install fastapi
-pip install uvicorn
-pip install nacos-sdk-python
-pip install baseModel
+pip install fastapi -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install uvicorn -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install nacos-sdk-python -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install baseModel -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install SnowNLP
-pip install loso
-pip install genius
-pip install langid.py
-
-
-pip install selenium
-pip install threading
-pip install celery
-pip install Twisted
-pip install Tornado
-pip install RQ
+pip install SnowNLP -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install loso -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install genius -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install langid.py -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
-pip install newspaper
+pip install selenium -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install threading -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install celery -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install Twisted -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install Tornado -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install RQ -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-pip install jupyterlab
+
+pip install newspaper -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+pip install jupyterlab -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install -i https://pypi.douban.com/simple elasticsearch
