@@ -11,6 +11,10 @@ public class BitOperationUtil {
         System.out.println(add(46, -20));
         System.out.println(sub(46, -20));
         System.out.println(mul(46, -20));
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(div(Integer.MIN_VALUE, -23));
+        System.out.println(div(Integer.MIN_VALUE, -23) == Integer.MIN_VALUE / -23);
+
     }
 
     /**
@@ -53,6 +57,10 @@ public class BitOperationUtil {
         return add(~x, 1);
     }
 
+    public static boolean isNeg(int x) {
+        return x < 0;
+    }
+
     /**
      * 位运算乘法
      *
@@ -71,6 +79,61 @@ public class BitOperationUtil {
             b >>>= 1;
         }
         return res;
+    }
+
+    public static int div(int a, int b) {
+        int res = 0;
+
+        if (a == Integer.MIN_VALUE && b == Integer.MIN_VALUE) {
+            return 1;
+        } else if (b == Integer.MIN_VALUE) {
+            return 0;
+        } else if (a == Integer.MIN_VALUE) {
+            if (b == negNum(1)) {
+                return Integer.MAX_VALUE;
+            } else {
+                // (a + 1) / b == c
+                // a - (b * c) = d
+                // d / b = e
+                // c + e
+
+                int c = div(add(a, 1), b);
+                res = add(c, div(sub(a, mul(b, c)), b));
+            }
+        } else {
+            res = divide(a, b);
+        }
+
+        return res;
+    }
+
+    /**
+     * 真正两个数的除法运算
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    private static int divide(int a, int b) {
+        boolean f1 = isNeg(a);
+        boolean f2 = isNeg(b);
+
+        int res = 0;
+
+        a = f1 ? negNum(a) : a;
+        b = f2 ? negNum(b) : b;
+
+        for (int i = 30; i >= 0; i--) {
+            if (a >> i >= b) {
+                // 1 左移i位 或 上res：在指定位置置成1
+                res = res | (1 << i);
+                // a 右移i位大于等于b, 那么b左移i位就会和a很接近，然后用a减掉很接近的这个值，继续周而复始
+                a = sub(a, b << i);
+            }
+        }
+
+        // f1 ^ f2 相同为0，false。不同为1，true
+        return f1 ^ f2 ? negNum(res) : res;
     }
 
 }
