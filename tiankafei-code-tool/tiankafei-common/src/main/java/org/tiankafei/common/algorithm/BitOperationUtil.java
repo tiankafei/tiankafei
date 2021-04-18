@@ -8,8 +8,9 @@ package org.tiankafei.common.algorithm;
 public class BitOperationUtil {
 
     public static void main(String[] args) {
-        System.out.println(add(46, 20));
-        System.out.println(sub(46, 20));
+        System.out.println(add(46, -20));
+        System.out.println(sub(46, -20));
+        System.out.println(mul(46, -20));
     }
 
     /**
@@ -50,6 +51,26 @@ public class BitOperationUtil {
      */
     public static int negNum(int x) {
         return add(~x, 1);
+    }
+
+    /**
+     * 位运算乘法
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static int mul(int a, int b) {
+        int res = 0;
+        while (b != 0) {
+            if ((b & 1) != 0) {
+                res = add(a, res);
+            }
+
+            a <<= 1;
+            b >>>= 1;
+        }
+        return res;
     }
 
 }
