@@ -98,8 +98,9 @@ public class BaseConversionUtil {
 
     /**
      * 随机生成固定长度的，最大值是【maxValue】的数组
-     * @param len   固定的长度
-     * @param maxValue  最大值
+     *
+     * @param len      固定的长度
+     * @param maxValue 最大值
      * @return
      */
     public static Integer[] randomFixLenArray(int len, int maxValue) {
@@ -115,8 +116,9 @@ public class BaseConversionUtil {
 
     /**
      * 随机生成最大长度是【maxLen】的，最大值是【maxValue】的数组
-     * @param maxLen    最大长度
-     * @param maxValue  最大值
+     *
+     * @param maxLen   最大长度
+     * @param maxValue 最大值
      * @return
      */
     public static Integer[] randomValueArray(int maxLen, int maxValue) {
@@ -125,6 +127,13 @@ public class BaseConversionUtil {
         return randomFixLenArray(len, maxValue);
     }
 
+    /**
+     * & 与运算，两者都为1，结果才为1，否则为0;
+     * 负数按补码形式参加按位与运算。
+     *
+     * @param num
+     * @return
+     */
     public static Integer mod2(int num) {
         return num & 1;
     }
