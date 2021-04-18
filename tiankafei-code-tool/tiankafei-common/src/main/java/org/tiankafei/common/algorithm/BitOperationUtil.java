@@ -1,5 +1,7 @@
 package org.tiankafei.common.algorithm;
 
+import java.util.Arrays;
+
 /**
  * 位运算工具类
  *
@@ -14,7 +16,15 @@ public class BitOperationUtil {
         System.out.println(Integer.MIN_VALUE);
         System.out.println(div(Integer.MIN_VALUE, -23));
         System.out.println(div(Integer.MIN_VALUE, -23) == Integer.MIN_VALUE / -23);
+        System.out.println(avg(2, 4));
+        System.out.println(avg(12, 50));
 
+        Integer[] arr = new Integer[]{};
+        System.out.println(avg(Arrays.asList(1, 3, 5, 7, 9).toArray(arr)));
+        System.out.println("Integer.MAX_VALUE = " + Integer.MAX_VALUE);
+        System.out.println(avg(Arrays.asList(Integer.MAX_VALUE - 1, Integer.MAX_VALUE - 3, Integer.MAX_VALUE - 5, Integer.MAX_VALUE - 7).toArray(arr)));
+
+        System.out.println(mod(110, 50));
     }
 
     /**
@@ -45,6 +55,34 @@ public class BitOperationUtil {
      */
     public static int sub(int a, int b) {
         return add(a, negNum(b));
+    }
+
+    /**
+     * 求两个数的平均值
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static int avg(int a, int b) {
+        return add(a, b) >> 1;
+    }
+
+    /**
+     * 计算一个数组的平均值
+     *
+     * @param arr
+     * @return
+     */
+    public static int avg(Integer[] arr) {
+        int avg = 0;
+        int mod = 0;
+        int length = arr.length;
+        for (int index = 0; index < length; index++) {
+            avg += div(arr[index], length);
+            mod += arr[index] % length;
+        }
+        return avg + div(mod, length);
     }
 
     /**
@@ -134,6 +172,27 @@ public class BitOperationUtil {
 
         // f1 ^ f2 相同为0，false。不同为1，true
         return f1 ^ f2 ? negNum(res) : res;
+    }
+
+    /**
+     * 求两个数的模
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static int mod(int a, int b) {
+        a = isNeg(a) ? negNum(a) : a;
+        b = isNeg(b) ? negNum(b) : b;
+
+        for (int i = 30; i >= 0; i--) {
+            if (a >> i >= b) {
+                // a 右移i位大于等于b, 那么b左移i位就会和a很接近，然后用a减掉很接近的这个值，继续周而复始
+                a = sub(a, b << i);
+            }
+        }
+
+        return a;
     }
 
 }
