@@ -1,5 +1,7 @@
 package org.tiankafei.common.algorithm;
 
+import java.util.Arrays;
+
 /**
  * 位运算工具类
  *
@@ -21,21 +23,21 @@ public class OperationMain {
         avgArray();
         System.out.println("测试结束！");
 
-//        System.out.println(add(46, -20));
-//        System.out.println(sub(46, -20));
-//        System.out.println(mul(46, -20));
+        System.out.println(bigOperation.add(46, -20));
+        System.out.println(bigOperation.sub(46, -20));
+        System.out.println(bigOperation.mul(46, -20));
 //        System.out.println(Integer.MIN_VALUE);
-//        System.out.println(div(Integer.MIN_VALUE, -23));
-//        System.out.println(div(Integer.MIN_VALUE, -23) == Integer.MIN_VALUE / -23);
-//        System.out.println(avg(2, 4));
-//        System.out.println(avg(12, 50));
+        System.out.println(bigOperation.div(Integer.MIN_VALUE, -23));
+        System.out.println(bigOperation.div(Integer.MIN_VALUE, -23) == Integer.MIN_VALUE / -23);
+        System.out.println(bigOperation.avg(2, 4));
+        System.out.println(bigOperation.avg(12, 50));
 //
-//        Integer[] arr = new Integer[]{};
-//        System.out.println(avg(Arrays.asList(1, 3, 5, 7, 9).toArray(arr)));
-//        System.out.println("Integer.MAX_VALUE = " + Integer.MAX_VALUE);
-//        System.out.println(avg(Arrays.asList(Integer.MAX_VALUE - 1, Integer.MAX_VALUE - 3, Integer.MAX_VALUE - 5, Integer.MAX_VALUE - 7).toArray(arr)));
+        Integer[] arr = new Integer[]{};
+        System.out.println(bigOperation.avg(Arrays.asList(1, 3, 5, 7, 9).toArray(arr)));
+        System.out.println("Integer.MAX_VALUE = " + Integer.MAX_VALUE);
+        System.out.println(bigOperation.avg(Arrays.asList(Integer.MAX_VALUE - 1, Integer.MAX_VALUE - 3, Integer.MAX_VALUE - 5, Integer.MAX_VALUE - 7).toArray(arr)));
 //
-//        System.out.println(mod(110, 50));
+        System.out.println(bigOperation.mod(110, 50));
     }
 
     public static void add() {
