@@ -152,7 +152,7 @@ public class OperationMain {
     public static void avgArray() {
         int times = 100000;
         for (int index = 0; index < times; index++) {
-            Integer[] arr = BaseConversionUtil.randomFixLenArray(3, Integer.MAX_VALUE);
+            Integer[] arr = BaseConversionUtil.randomFixLenArray(10, Integer.MAX_VALUE);
             int s1 = bigOperation.avg(arr);
             int s2 = bitOperation.avg(arr);
             boolean flag = s1 == s2;

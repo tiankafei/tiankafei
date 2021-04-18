@@ -39,11 +39,7 @@ public class BigOperation implements BaseOperation {
 
     @Override
     public int avg(int a, int b) {
-        int avg1 = div(a, 2);
-        int avg2 = div(b, 2);
-        int mod1 = mod(a, 2);
-        int mod2 = mod(b, 2);
-        return add(add(avg1, avg2), div(add(mod1, mod2), 2));
+        return (int) (BigDecimal.valueOf(a).add(BigDecimal.valueOf(b)).longValue() / 2);
     }
 
     @Override
