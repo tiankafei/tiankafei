@@ -156,9 +156,15 @@ public class BitOperation implements BaseOperation {
 
     @Override
     public int avg(Integer[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        int length = arr.length;
+        if (arr.length == 1) {
+            return arr[0];
+        }
         int avg = 0;
         int mod = 0;
-        int length = arr.length;
         for (int index = 0; index < length; index++) {
             avg = add(avg, div(arr[index], length));
             mod = add(mod, mod(arr[index], length));

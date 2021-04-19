@@ -50,7 +50,13 @@ public class BigOperation implements BaseOperation {
 
     @Override
     public int avg(Integer[] arr) {
-        long length = arr.length;
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        int length = arr.length;
+        if (arr.length == 1) {
+            return arr[0];
+        }
 
         BigDecimal resultDecimal = BigDecimal.valueOf(0);
 
