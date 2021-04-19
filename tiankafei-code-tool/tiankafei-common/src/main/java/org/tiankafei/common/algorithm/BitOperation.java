@@ -149,7 +149,7 @@ public class BitOperation implements BaseOperation {
         int avg2 = b >> 1;
         int mod1 = mod(a, 2);
         int mod2 = mod(b, 2);
-        return add(add(avg1, avg2), div(add(mod1, mod2), 2));
+        return add(add(avg1, avg2), add(mod1, mod2) >> 1);
     }
 
     @Override
