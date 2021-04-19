@@ -145,11 +145,13 @@ public class BitOperation implements BaseOperation {
 
     @Override
     public int avg(int a, int b) {
-        int avg1 = a >> 1;
-        int avg2 = b >> 1;
-        int mod1 = mod(a, 2);
-        int mod2 = mod(b, 2);
-        return add(add(avg1, avg2), add(mod1, mod2) >> 1);
+        if (a > b) {
+            return add(b, sub(a, b) >> 1);
+        } else if (a < b) {
+            return add(a, sub(b, a) >> 1);
+        } else {
+            return a;
+        }
     }
 
     @Override
