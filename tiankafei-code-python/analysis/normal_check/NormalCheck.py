@@ -47,7 +47,10 @@ def execute_analysis_normal_check(index_param: IndexParamDTO):
 
     # K-S检验 TODO 数据不对
     # res1 = st.kstest(a2, 'norm')
-    ks_res = st.ks_1samp(value_list, st.norm.cdf, mode='asymp')
+    # ks_res = st.ks_1samp(value_list, st.norm.cdf, mode='asymp')
+    loc_1, loc_2 = st.norm.fit(a2)
+    n1 = st.norm(loc=loc_1, scale=loc_2)
+    ks_res = st.ks_1samp(a2, n1.cdf)
 
     result = ResultDTO()
     result.ks_statistic = 0.0 if ks_res.statistic else ks_res.statistic
@@ -88,11 +91,19 @@ if __name__ == '__main__':
 
     # K-S检验 TODO 数据不对
     # res1 = st.kstest(a2, 'norm')
-    res1 = st.ks_1samp(a2, st.norm.cdf, mode='asymp')
-    print(res1.statistic)
-    print(res1.pvalue)
+    # res1 = st.ks_1samp(a2, st.norm.cdf, mode='asymp')
+    # loc, scale = st.norm.fit(a2)
+    # n = st.norm(loc=loc, scale=scale)
+    # res1 = st.ks_1samp(a2, n.cdf)
 
-    # S-W检验
-    res2 = st.shapiro(a2)
-    print(res2.statistic)
-    print(res2.pvalue)
+    # loc_1, loc_2 = st.norm.fit(a2)
+    # n1 = st.norm(loc=loc_1, scale=loc_2)
+    # res1 = st.ks_1samp(a2, n1.cdf)
+    #
+    # print(res1.statistic)
+    # print(res1.pvalue)
+    #
+    # # S-W检验
+    # res2 = st.shapiro(a2)
+    # print(res2.statistic)
+    # print(res2.pvalue)
