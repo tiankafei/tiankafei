@@ -146,8 +146,10 @@ public class BitOperation implements BaseOperation {
     @Override
     public int avg(int a, int b) {
         if (a > b) {
+            // b + (a - b) / 2
             return add(b, sub(a, b) >> 1);
         } else if (a < b) {
+            // a + (b - a) / 2
             return add(a, sub(b, a) >> 1);
         } else {
             return a;
@@ -160,7 +162,7 @@ public class BitOperation implements BaseOperation {
             return 0;
         }
         int length = arr.length;
-        if (arr.length == 1) {
+        if (length == 1) {
             return arr[0];
         }
         int avg = 0;

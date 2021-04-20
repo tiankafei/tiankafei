@@ -54,10 +54,9 @@ public class BigOperation implements BaseOperation {
             return 0;
         }
         int length = arr.length;
-        if (arr.length == 1) {
+        if (length == 1) {
             return arr[0];
         }
-
         BigDecimal resultDecimal = BigDecimal.valueOf(0);
 
         for (int index = 0; index < length; index++) {
