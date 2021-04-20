@@ -136,8 +136,8 @@ def execute_analysis_ttest_rel(paired_tcheck_param: PairedTcheckParamDTO):
 
     result = ResultDTO()
     result.index_name = data_list_1.index_name + '@@' + data_list_2.index_name
-    result.statistic = 0.0 if res.statistic else res.statistic
-    result.pvalue = 0.0 if res.pvalue else res.statistic
+    result.statistic = 0.0 if res.statistic or res.statistic == 'inf' else res.statistic
+    result.pvalue = 0.0 if res.pvalue else res.pvalue
 
     avg_2 = np.average(value_list_2)
     std_2 = np.std(value_list_2, ddof=1)
