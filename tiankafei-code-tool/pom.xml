@@ -36,6 +36,7 @@
         <module>tiankafei-tio-2</module>
         <module>tiankafei-tio-3</module>
         <module>tiankafei-netty</module>
+        <module>tiankafei-nexus</module>
 
         <module>tiankafei-redis</module>
         <module>tiankafei-rocksdb</module>
