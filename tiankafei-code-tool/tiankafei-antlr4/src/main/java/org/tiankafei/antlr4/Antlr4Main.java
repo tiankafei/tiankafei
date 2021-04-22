@@ -3,6 +3,7 @@ package org.tiankafei.antlr4;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.tiankafei.antlr4.expression.RuleSetBaseVisitor;
 import org.tiankafei.antlr4.hello.HelloLexer;
 import org.tiankafei.antlr4.hello.HelloParser;
 import org.tiankafei.antlr4.math.MathLexer;
