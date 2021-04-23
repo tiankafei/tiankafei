@@ -8,6 +8,8 @@ import java.util.List;
 
 @Data
 public class PerParamDTO implements Serializable {
+    
+    private String url;
 
     private String node;
 
@@ -15,10 +17,14 @@ public class PerParamDTO implements Serializable {
 
     private Integer maxCount = 6;
 
+    private String cookie;
+
     private List<String> nodeList = Lists.newArrayList();
 
-    public PerParamDTO(String node, Integer tid) {
+    public PerParamDTO(String url, String node, Integer tid, String cookie) {
+        this.url = url;
         this.node = node;
         this.tid = tid;
+        this.cookie = cookie;
     }
 }
