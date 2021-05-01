@@ -76,16 +76,11 @@ logging:
 #################################### Swagger start #################################
 # swagger配置
 swagger:
-  enable: false
-  contact:
-    email: 798971170@qq.com
-    name: ${spring.application.name}
-    url: 'https://tiankafei.top'
-  description: '用户管理服务'
-  title: ${spring.application.name}
-  url: 'https://tiankafei.top'
-  version: 1.0
-#################################### dynamic end ###################################
+  enabled: false
+  title: 用户管理服务
+  license: Powered By tiankafei
+  licenseUrl: https://tiankafei.top
+#################################### Swagger end ###################################
 
 #################################### dynamic table start #################################
 dynamic:

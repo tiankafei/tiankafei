@@ -26,4 +26,13 @@ public class DictInfoPageParam extends BaseOrderQueryParam {
     @ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
     private Integer deleteMark = 0;
 
+    @ApiModelProperty(value = "系统数据字典代码")
+    private String code;
+
+    @ApiModelProperty(value = "系统数据字典名称")
+    private String name;
+
+    @ApiModelProperty(value = "系统数据字典状态")
+    private Boolean status;
+
 }

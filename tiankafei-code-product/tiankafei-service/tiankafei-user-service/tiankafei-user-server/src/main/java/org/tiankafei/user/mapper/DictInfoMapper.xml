@@ -112,6 +112,28 @@
             <if test="param.deleteMark != null">
                 and delete_mark = #{param.deleteMark}
             </if>
+            <if test="param.code != null and param.code != ''">
+                and dict_code like concat(#{param.code}, '%')
+            </if>
+            <if test="param.name != null and param.name != ''">
+                and dict_name like concat('%', #{param.name}, '%')
+            </if>
+            <if test="param.status != null">
+                <choose>
+                    <when test="param.status">
+                        and `status` = 1
+                    </when>
+                    <otherwise>
+                        and `status` = 0
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="param.beginTime != null">
+                and `create_time` &gt;= #{param.beginTime}
+            </if>
+            <if test="param.endTime != null">
+                and `create_time` &lt;= #{param.endTime}
+            </if>
         </where>
     </select>
 
