@@ -51,7 +51,7 @@ public class DictInfoVo extends BaseQueryVo {
 
     @ApiModelProperty(value = "数据表")
 //    @Size(max = 30, message = "数据表长度不能超过 30 ！")
-    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9_]{9,29}$" , message = "数据表只能以字母开头，包含字母、数字、下划线，且长度只能在10-30之间")
+    @Pattern(regexp = "^$|^[a-zA-Z][a-zA-Z0-9_]{9,29}$" , message = "数据表只能以字母开头，包含字母、数字、下划线，且长度只能在10-30之间")
     private String dataTable;
 
     @ApiModelProperty(value = "乐观锁版本")
