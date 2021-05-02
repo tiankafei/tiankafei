@@ -96,12 +96,25 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         }
         // 生成序列号
         Long id = defaultIdentifierGenerator.nextId(null);
-
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
         BeanUtils.copyProperties(dictInfoVo, dictInfoEntity);
         dictInfoEntity.setId(id);
-        dictInfoEntity.setStatus(Boolean.FALSE);
-        dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + id);
+
+        String dataTable = dictInfoVo.getDataTable();
+        if (StringUtils.isNotBlank(dataTable)) {
+            boolean tableExists = dbService.checkTableExists(dataTable);
+            if (tableExists) {
+                throw new UserException("字典数据表：" + dataTable + " 已经存在！");
+            }
+        } else {
+            dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + id);
+        }
+
+        Boolean status = dictInfoVo.getStatus();
+        if (status) {
+            // 启用时：创建字段数据表
+            dbService.createTable("sys_dict_table" , dictInfoVo.getDataTable(), dictInfoVo.getDictName() + "字典数据表");
+        }
         super.save(dictInfoEntity);
         return dictInfoEntity.getId();
     }
@@ -256,7 +269,14 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
                 throw new UserException("字典代码：" + newDictCode + " 已经存在！");
             }
         }
-
+        if (dictInfoVo.getStatus()) {
+            // 修改成启用状态时，如果表不存在，则执行创建
+            boolean tableExists = dbService.checkTableExists(oldDictInfoEntity.getDataTable());
+            if (!tableExists) {
+                // 启用时：创建字段数据表
+                dbService.createTable("sys_dict_table" , oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
+            }
+        }
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
         BeanUtils.copyProperties(dictInfoVo, dictInfoEntity);
         return super.updateById(dictInfoEntity);
