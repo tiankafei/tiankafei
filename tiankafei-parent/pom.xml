@@ -29,7 +29,7 @@
         <!--spring cloud 版本依赖-->
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <!--spring cloud alibaba版本依赖-->
-        <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
 
         <!--第三方工具 相关版本依赖-->
         <guava.version>29.0-jre</guava.version>
