@@ -23,7 +23,7 @@ public class UserLoginPageParam extends BaseOrderQueryParam {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
-    private Integer deleteMark = 0;
+    @ApiModelProperty(value = "逻辑删除字段：2已删除，0未删除")
+    private Integer deleteMark;
 
 }

@@ -68,12 +68,12 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
 
     @ApiModelProperty(value = "乐观锁版本")
     @TableField("version")
-    @Version
+//    @Version
     private Integer version;
 
     @ApiModelProperty(value = "逻辑删除字段")
     @TableField("delete_mark")
-    @TableLogic
+//    @TableLogic
     private Integer deleteMark;
 
     @ApiModelProperty(value = "创建时间")

@@ -32,12 +32,12 @@ public class $!{cfg.pageParamClassName} extends $!{cfg.superPageParamClassName} 
     private static final long serialVersionUID = 1L;
 
 #if($!{swagger2})
-@ApiModelProperty(value = "逻辑删除字段：1已删除，0未删除")
+@ApiModelProperty(value = "逻辑删除字段：2已删除，0未删除")
 #else
 /**
  * 主键id集合
  */
 #end
-private Integer deleteMark = 0;
+private Integer deleteMark;
 
 }
