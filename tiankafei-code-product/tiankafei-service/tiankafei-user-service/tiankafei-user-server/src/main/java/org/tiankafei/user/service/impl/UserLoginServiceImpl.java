@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.user.bean.CheckExistsClient;
 import org.tiankafei.user.entity.UserLoginEntity;
 import org.tiankafei.user.enums.UserEnums;
@@ -37,6 +38,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class UserLoginServiceImpl extends BaseServiceImpl<UserLoginMapper, UserLoginEntity> implements UserLoginService {
 
     @Autowired

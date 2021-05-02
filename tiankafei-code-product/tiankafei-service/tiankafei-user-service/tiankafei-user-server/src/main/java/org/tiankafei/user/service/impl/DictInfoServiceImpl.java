@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.db.service.DbService;
 import org.tiankafei.user.constants.UserConstants;
 import org.tiankafei.user.entity.DictInfoEntity;
@@ -42,6 +43,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInfoEntity> implements DictInfoService {
 
     @Autowired
@@ -293,23 +295,19 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
     @Override
     public boolean updateDictInfoServiceStatus(String id, Boolean status) throws Exception {
-        // 获取字典数据对象
-        DictInfoEntity oldDictInfoEntity = dictInfoMapper.selectById(id);
-        // 更新状态
-        oldDictInfoEntity.setStatus(status);
-        boolean flag = super.updateById(oldDictInfoEntity);
+        DictInfoEntity dictInfoEntity = super.getById(id);
+        dictInfoEntity.setStatus(status);
+        super.updateById(dictInfoEntity);
 
         if (Boolean.TRUE.equals(status)) {
-            // 要求启用
-            Boolean oldStatus = oldDictInfoEntity.getStatus();
-            if (oldStatus) {
-                // 已经是启用状态，无需再创建表结构
-            } else {
-                // 创建字段数据表
-                dbService.createTable("sys_dict_table" , oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
+            // 启用
+            String dataTable = dictInfoEntity.getDataTable();
+            if (!dbService.checkTableExists(dataTable)) {
+                // 物理表不存在时创建字段数据表
+                dbService.createTable("sys_dict_table" , dataTable, dictInfoEntity.getDictName() + "字典数据表");
             }
         }
-        return flag;
+        return Boolean.TRUE;
     }
 
     /**

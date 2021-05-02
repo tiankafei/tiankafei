@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.user.entity.MenuInfoEntity;
 import org.tiankafei.user.mapper.MenuInfoMapper;
 import org.tiankafei.user.param.MenuInfoCheckParam;
@@ -35,6 +36,7 @@ import org.tiankafei.web.common.vo.Paging;
  * @since 1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class MenuInfoServiceImpl extends BaseServiceImpl<MenuInfoMapper, MenuInfoEntity> implements MenuInfoService {
 
     @Autowired
