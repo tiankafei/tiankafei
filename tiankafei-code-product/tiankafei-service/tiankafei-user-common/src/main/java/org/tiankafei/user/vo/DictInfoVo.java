@@ -39,7 +39,7 @@ public class DictInfoVo extends BaseQueryVo {
     private String dictName;
 
     @ApiModelProperty(value = "状态：0停用，1启用")
-    private Boolean status;
+    private Boolean status = Boolean.FALSE;
 
     @ApiModelProperty(value = "描述")
     private String description;

@@ -159,11 +159,15 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     public boolean deleteDictInfoService(String id) throws Exception {
         if (StringUtils.isNotBlank(id)) {
             DictInfoEntity oldDictInfoEntity = dictInfoMapper.selectById(id);
-            String dataTable = oldDictInfoEntity.getDataTable();
             // 删除字典数据
             boolean flag = super.removeById(id);
-            // 删除字典数据表
-            dbService.dropTable(dataTable);
+            // drop 字典数据表
+            String dataTable = oldDictInfoEntity.getDataTable();
+            boolean tableExists = dbService.checkTableExists(dataTable);
+            if (tableExists) {
+                // 删除字典数据表
+                dbService.dropTable(dataTable);
+            }
             return flag;
         }
         return Boolean.TRUE;
@@ -273,7 +277,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
                 // 已经是启用状态，无需再创建表结构
             } else {
                 // 创建字段数据表
-                dbService.createTable("sys_dict_table", oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
+                dbService.createTable("sys_dict_table" , oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
             }
         }
         return flag;

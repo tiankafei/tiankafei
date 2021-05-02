@@ -1,2 +1,7 @@
 swagger:
   enabled: true
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei

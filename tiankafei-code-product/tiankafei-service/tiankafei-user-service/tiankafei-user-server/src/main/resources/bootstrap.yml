@@ -45,6 +45,12 @@ ribbon:
   MaxAutoRetriesNextServer: 3
   #是否所有操作都重试
   OkToRetryOnAllOperations: false
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 2
+      logic-delete-field: delete_mark
+      logic-not-delete-value: 0
 management:
   endpoints:
     web:
