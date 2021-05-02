@@ -34,11 +34,26 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  hystrix:
+    enabled: true
+    command:
+      default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 60000
 ribbon:
   #连接超时时间(ms)
   ConnectTimeout: 60000
   #业务逻辑超时时间(ms)
   ReadTimeout: 60000
+# feign 设置超时时间
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 60000
 mybatis-plus:
   global-config:
     db-config:
