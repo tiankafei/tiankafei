@@ -9,17 +9,17 @@ public enum ApiStatusEnum implements BaseEnums {
     /**
      * 失败的状态
      */
-    FAIL(0),
+    FAIL(500),
 
     /**
      * 成功的状态
      */
-    OK(1),
+    OK(200),
 
     /**
      * 发生异常的状态
      */
-    ERROR(2),
+    ERROR(500),
     ;
 
     private Integer status;
