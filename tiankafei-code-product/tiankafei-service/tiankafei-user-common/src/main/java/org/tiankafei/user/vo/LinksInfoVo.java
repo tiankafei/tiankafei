@@ -36,7 +36,7 @@ public class LinksInfoVo extends BaseQueryVo {
     @Size(max = 100, message = "链接地址长度不能超过 100 ！")
     private String links;
 
-    @ApiModelProperty(value = "状态：是否启用，1启用，2停用")
+    @ApiModelProperty(value = "状态：1启用，0停用")
     private Boolean status;
 
     @ApiModelProperty(value = "序号")

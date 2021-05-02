@@ -48,7 +48,7 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
     @TableField("dict_name")
     private String dictName;
 
-    @ApiModelProperty(value = "状态：0设计中，1启用，2停用")
+    @ApiModelProperty(value = "状态：0停用，1启用")
     @TableField("status")
     private Boolean status;
 

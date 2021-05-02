@@ -38,7 +38,7 @@ public class DictInfoVo extends BaseQueryVo {
     @Size(max = 100, message = "字典名称长度不能超过 100 ！")
     private String dictName;
 
-    @ApiModelProperty(value = "状态：0设计中，1启用，2停用")
+    @ApiModelProperty(value = "状态：0停用，1启用")
     private Boolean status;
 
     @ApiModelProperty(value = "描述")

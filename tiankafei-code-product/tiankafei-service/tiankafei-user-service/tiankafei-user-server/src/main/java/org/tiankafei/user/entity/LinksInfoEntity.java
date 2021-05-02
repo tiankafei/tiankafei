@@ -48,7 +48,7 @@ public class LinksInfoEntity extends Model<LinksInfoEntity> {
     @TableField("links")
     private String links;
 
-    @ApiModelProperty(value = "状态：是否启用，1启用，2停用")
+    @ApiModelProperty(value = "状态：1启用，0停用")
     @TableField("status")
     private Boolean status;
 
