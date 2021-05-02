@@ -8,6 +8,3 @@ spring:
         server-addr: localhost:8848
         file-extension: properties
         namespace: 7d026928-029e-4ecf-8b2c-0e7f773edebc
-    sentinel:
-      transport:
-        dashboard: localhost:8020
