@@ -109,9 +109,6 @@
         id
         from sys_dict_info
         <where>
-            <if test="param.deleteMark != null">
-                and delete_mark = #{param.deleteMark}
-            </if>
             <if test="param.code != null and param.code != ''">
                 and dict_code like concat(#{param.code}, '%')
             </if>
@@ -133,6 +130,9 @@
             </if>
             <if test="param.endTime != null">
                 and `create_time` &lt;= #{param.endTime}
+            </if>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
             </if>
         </where>
     </select>
