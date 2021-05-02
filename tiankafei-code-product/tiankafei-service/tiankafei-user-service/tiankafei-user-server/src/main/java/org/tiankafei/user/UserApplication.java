@@ -7,6 +7,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author tiankafei
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"org.tiankafei"})
 @EnableFeignClients(basePackages = {"org.tiankafei", "com.ruoyi"})
 @EnableHystrixDashboard
+@EnableTransactionManagement
 public class UserApplication {
 
     public static void main(String[] args) {
