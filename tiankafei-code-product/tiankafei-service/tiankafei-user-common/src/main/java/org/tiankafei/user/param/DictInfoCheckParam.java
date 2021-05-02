@@ -3,7 +3,6 @@ package org.tiankafei.user.param;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-import java.util.List;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -29,9 +28,5 @@ public class DictInfoCheckParam implements Serializable {
     @ApiModelProperty(value = "字典代码")
     @Size(max = 20, message = "字典代码长度不能超过 20 ！")
     private String dictCode;
-
-
-    @ApiModelProperty(value = "字典代码集合")
-    private List<String> dictCodeList;
 
 }

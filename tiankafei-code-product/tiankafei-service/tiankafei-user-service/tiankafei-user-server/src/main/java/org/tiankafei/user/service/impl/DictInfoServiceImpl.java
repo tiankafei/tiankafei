@@ -68,14 +68,23 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             if (StringUtils.isNotBlank(dictCode)) {
                 lambdaQueryWrapper.eq(DictInfoEntity::getDictCode, dictCode);
             }
-            List<String> dictCodeList = dictInfoCheckParam.getDictCodeList();
-            if (CollectionUtils.isNotEmpty(dictCodeList)) {
-                lambdaQueryWrapper.in(DictInfoEntity::getDictCode, dictCodeList);
-            }
             Long id = dictInfoCheckParam.getId();
             if (id != null) {
                 lambdaQueryWrapper.ne(DictInfoEntity::getId, id);
             }
+        }
+        int count = super.count(lambdaQueryWrapper);
+        return count > 0;
+    }
+
+    @Override
+    public boolean checkDictInfoServiceDataTableExists(String dataTable, String id) throws Exception {
+        LambdaQueryWrapper<DictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (StringUtils.isNotBlank(dataTable)) {
+            lambdaQueryWrapper.eq(DictInfoEntity::getDataTable, dataTable);
+        }
+        if (StringUtils.isNotBlank(id)) {
+            lambdaQueryWrapper.ne(DictInfoEntity::getId, id);
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

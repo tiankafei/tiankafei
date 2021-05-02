@@ -56,6 +56,20 @@ public class DictInfoController extends BaseController {
     }
 
     /**
+     * 校验 系统数据字典表的代码表 是否已经存在
+     *
+     * @param dataTable
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/check/{dataTable}/{id}")
+    @ApiOperation(value = "校验 系统数据字典表的代码表 是否已经存在")
+    public ApiResult<Boolean> checkDictInfoControllerDataTableExists(@PathVariable(value = "dataTable") String dataTable, @PathVariable(value = "id", required = false) String id) throws Exception {
+        Boolean flag = dictInfoService.checkDictInfoServiceDataTableExists(dataTable, id);
+        return ApiResult.ok(flag);
+    }
+
+    /**
      * 保存 系统数据字典表
      *
      * @param dictInfoVo

@@ -32,6 +32,16 @@ public interface DictInfoService extends BaseService<DictInfoEntity> {
     boolean checkDictInfoServiceExists(DictInfoCheckParam dictInfoCheckParam) throws Exception;
 
     /**
+     * 校验 系统数据字典表的数据表是否已经存在
+     *
+     * @param dataTable
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean checkDictInfoServiceDataTableExists(String dataTable, String id) throws Exception;
+
+    /**
      * 保存 系统数据字典表
      *
      * @param dictInfoVo

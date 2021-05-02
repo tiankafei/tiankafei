@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +22,7 @@ import org.tiankafei.web.common.vo.BaseQueryVo;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "DictInfoEntity对象", description = "系统数据字典表")
+@ApiModel(value = "DictInfoEntity对象" , description = "系统数据字典表")
 public class DictInfoVo extends BaseQueryVo {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +50,8 @@ public class DictInfoVo extends BaseQueryVo {
     private String remarks;
 
     @ApiModelProperty(value = "数据表")
-    @Size(max = 30, message = "数据表长度不能超过 30 ！")
+//    @Size(max = 30, message = "数据表长度不能超过 30 ！")
+    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9_]{9,29}$" , message = "数据表只能以字母开头，包含字母、数字、下划线，且长度只能在10-30之间")
     private String dataTable;
 
     @ApiModelProperty(value = "乐观锁版本")
