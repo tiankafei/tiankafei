@@ -50,6 +50,8 @@ mybatis-plus:
     db-config:
       logic-delete-value: 2
       logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 management:
   endpoints:
     web:
