@@ -217,9 +217,11 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             List<String> dataTableList = dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getDataTable()).collect(Collectors.toList());
             // 删除字典数据
             boolean flag = super.removeByIds(idList);
-            // 删除字典数据表
+            // drop 字典数据表
             for (String dataTable : dataTableList) {
-                dbService.dropTable(dataTable);
+                if(dbService.checkTableExists(dataTable)){
+                    dbService.dropTable(dataTable);
+                }
             }
             return flag;
         }
