@@ -51,48 +51,70 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-swagger</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- RuoYi Common Core-->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-core</artifactId>
-        </dependency>
-
-        <!--<dependency>
-            <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-code-common</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>com.alibaba</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                    <groupId>commons-fileupload</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-io</artifactId>
+                    <groupId>commons-io</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-pool2</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+                <exclusion>
                     <artifactId>druid-spring-boot-starter</artifactId>
+                    <groupId>com.alibaba</groupId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-jdbc</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
                     <groupId>com.baomidou</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>ruoyi-common-security</artifactId>
-                    <groupId>com.ruoyi</groupId>
+                    <artifactId>pagehelper-spring-boot-starter</artifactId>
+                    <groupId>com.github.pagehelper</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>ruoyi-common-log</artifactId>
-                    <groupId>com.ruoyi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                    <groupId>org.apache.poi</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>spring-boot-starter-web</artifactId>
+                    <artifactId>spring-boot-starter-validation</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>spring-cloud-starter-openfeign</artifactId>
+                    <groupId>org.springframework.cloud</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-context-support</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-web</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>swagger-annotations</artifactId>
+                    <groupId>io.swagger</groupId>
+                </exclusion>
             </exclusions>
-        </dependency>-->
+        </dependency>
+
     </dependencies>
 
     <build>
