@@ -1,7 +1,7 @@
 package org.tiankafei.web.common.config.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
-import org.tiankafei.web.common.utils.DynamicTableNameUtil;
+import com.ruoyi.common.core.utils.DynamicTableNameUtil;
 
 /**
  * @author tiankafei

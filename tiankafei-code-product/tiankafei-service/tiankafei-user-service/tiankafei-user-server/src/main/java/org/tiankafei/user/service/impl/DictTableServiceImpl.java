@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.ruoyi.common.core.utils.DynamicTableNameUtil;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -25,7 +26,6 @@ import org.tiankafei.user.param.DictTableListParam;
 import org.tiankafei.user.param.DictTablePageParam;
 import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictTableVo;
-import org.tiankafei.web.common.utils.DynamicTableNameUtil;
 import com.ruoyi.common.core.web.page.Paging;
 
 /**
