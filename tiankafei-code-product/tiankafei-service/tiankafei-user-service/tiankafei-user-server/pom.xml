@@ -35,6 +35,12 @@
         <dependency>
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                    <groupId>com.baomidou</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.ruoyi</groupId>
