@@ -8,7 +8,11 @@ server:
 spring:
   autoconfigure:
     exclude:
-      - org.tiankafei.web.common.config.WebCommonConfig
+      - com.ruoyi.common.core.utils.SpringUtils
+      - com.ruoyi.common.core.web.aspect.PageAspect
+      - com.ruoyi.common.core.config.CoreConfig
+      - com.ruoyi.common.core.config.MybatisPlusConfig
+      - com.ruoyi.common.core.properties.DynamicTableProperties
   profiles:
     active: dev, nacos
   redis:
