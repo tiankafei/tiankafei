@@ -18,12 +18,21 @@ public class QueryDbNameService {
     private JdbcTemplate jdbcTemplate;
 
     public String getDbName() throws DaoException {
+        Connection connection = null;
         try {
-            Connection connection = jdbcTemplate.getDataSource().getConnection();
+            connection = jdbcTemplate.getDataSource().getConnection();
             return connection.getCatalog();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DaoException("获取数据库名发生异常");
+        } finally {
+            try {
+                if(connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException throwables) {
+                throw new DaoException(throwables.getMessage());
+            }
         }
     }
 
