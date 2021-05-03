@@ -1,5 +1,6 @@
 package org.tiankafei.web.common.utils;
 
+import com.ruoyi.common.core.constant.StringConstants;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
-import org.tiankafei.web.common.constants.StringConstants;
 
 /**
  * @author tiankafei

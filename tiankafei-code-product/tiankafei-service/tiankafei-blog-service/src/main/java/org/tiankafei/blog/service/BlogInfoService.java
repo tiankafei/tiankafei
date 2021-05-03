@@ -10,7 +10,7 @@ import org.tiankafei.blog.param.BlogInfoDeleteParam;
 import org.tiankafei.blog.param.BlogInfoListParam;
 import org.tiankafei.blog.param.BlogInfoPageParam;
 import org.tiankafei.blog.vo.BlogInfoVo;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

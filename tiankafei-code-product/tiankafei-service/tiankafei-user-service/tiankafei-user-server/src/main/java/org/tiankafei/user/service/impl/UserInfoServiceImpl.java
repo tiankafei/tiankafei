@@ -27,7 +27,7 @@ import org.tiankafei.user.param.UserInfoListParam;
 import org.tiankafei.user.param.UserInfoPageParam;
 import org.tiankafei.user.service.UserInfoService;
 import org.tiankafei.user.vo.UserInfoVo;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

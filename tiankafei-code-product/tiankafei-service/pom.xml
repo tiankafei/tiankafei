@@ -16,7 +16,6 @@
     <description></description>
 
     <modules>
-        <module>tiankafei-db</module>
         <module>tiankafei-collection</module>
         <module>tiankafei-blog-service</module>
         <module>tiankafei-elasticsearch-service</module>

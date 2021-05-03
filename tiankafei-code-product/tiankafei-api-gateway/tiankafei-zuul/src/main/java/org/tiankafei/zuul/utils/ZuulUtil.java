@@ -2,9 +2,9 @@ package org.tiankafei.zuul.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.context.RequestContext;
+import com.ruoyi.common.core.constant.GatewayConstants;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.springframework.http.MediaType;
-import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.constants.GatewayConstants;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

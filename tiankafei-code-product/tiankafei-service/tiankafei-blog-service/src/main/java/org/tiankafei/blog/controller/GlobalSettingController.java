@@ -24,9 +24,9 @@ import org.tiankafei.blog.param.GlobalSettingListParam;
 import org.tiankafei.blog.param.GlobalSettingPageParam;
 import org.tiankafei.blog.service.GlobalSettingService;
 import org.tiankafei.blog.vo.GlobalSettingVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.web.common.param.IdsParam;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

@@ -32,7 +32,7 @@ import org.tiankafei.user.param.DictInfoPageParam;
 import org.tiankafei.user.service.DictInfoService;
 import org.tiankafei.user.vo.DictInfoVo;
 import org.tiankafei.web.common.exception.UserException;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

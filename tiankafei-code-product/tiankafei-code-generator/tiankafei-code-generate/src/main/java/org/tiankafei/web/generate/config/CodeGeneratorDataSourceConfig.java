@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
-import org.tiankafei.web.common.constants.StringConstants;
+import com.ruoyi.common.core.constant.StringConstants;
 import org.tiankafei.web.generate.properties.CodeProperties;
 
 /**

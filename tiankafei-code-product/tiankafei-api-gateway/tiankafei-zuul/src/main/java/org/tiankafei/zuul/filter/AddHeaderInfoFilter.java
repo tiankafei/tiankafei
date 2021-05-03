@@ -1,11 +1,11 @@
 package org.tiankafei.zuul.filter;
 
 import com.netflix.zuul.context.RequestContext;
+import com.ruoyi.common.core.constant.GatewayConstants;
+import com.ruoyi.common.core.utils.SequenceUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
-import org.tiankafei.web.common.constants.GatewayConstants;
-import org.tiankafei.web.common.utils.SequenceUtil;
 
 import javax.servlet.http.HttpServletResponse;
 

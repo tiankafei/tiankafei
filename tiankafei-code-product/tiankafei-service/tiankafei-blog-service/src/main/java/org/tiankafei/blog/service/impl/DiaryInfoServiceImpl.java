@@ -25,7 +25,7 @@ import org.tiankafei.blog.param.DiaryInfoListParam;
 import org.tiankafei.blog.param.DiaryInfoPageParam;
 import org.tiankafei.blog.service.DiaryInfoService;
 import org.tiankafei.blog.vo.DiaryInfoVo;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

@@ -10,7 +10,7 @@ import org.tiankafei.user.param.UserRoleDeleteParam;
 import org.tiankafei.user.param.UserRoleListParam;
 import org.tiankafei.user.param.UserRolePageParam;
 import org.tiankafei.user.vo.UserRoleVo;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

@@ -1,5 +1,6 @@
 package org.tiankafei.user.feign;
 
+import com.ruoyi.common.core.web.page.Paging;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.validation.Valid;
@@ -16,9 +17,8 @@ import org.tiankafei.user.param.DictInfoDeleteParam;
 import org.tiankafei.user.param.DictInfoListParam;
 import org.tiankafei.user.param.DictInfoPageParam;
 import org.tiankafei.user.vo.DictInfoVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.web.common.param.IdsParam;
-import org.tiankafei.web.common.vo.Paging;
 
 /**
  * @author tiankafei

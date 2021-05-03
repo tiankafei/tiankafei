@@ -10,7 +10,7 @@ import org.tiankafei.user.param.DictTableDeleteParam;
 import org.tiankafei.user.param.DictTableListParam;
 import org.tiankafei.user.param.DictTablePageParam;
 import org.tiankafei.user.vo.DictTableVo;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

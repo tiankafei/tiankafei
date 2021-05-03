@@ -1,13 +1,13 @@
 package org.tiankafei.web.common.exception;
 
+import com.ruoyi.common.core.enums.ExceptionEnum;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.enums.ExceptionEnum;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**

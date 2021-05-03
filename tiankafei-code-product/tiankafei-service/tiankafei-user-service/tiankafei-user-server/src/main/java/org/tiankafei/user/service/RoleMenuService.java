@@ -10,7 +10,7 @@ import org.tiankafei.user.param.RoleMenuDeleteParam;
 import org.tiankafei.user.param.RoleMenuListParam;
 import org.tiankafei.user.param.RoleMenuPageParam;
 import org.tiankafei.user.vo.RoleMenuVo;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

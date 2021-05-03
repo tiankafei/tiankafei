@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.tiankafei.user.vo.LoginParamVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 
 /**
  * @author tiankafei

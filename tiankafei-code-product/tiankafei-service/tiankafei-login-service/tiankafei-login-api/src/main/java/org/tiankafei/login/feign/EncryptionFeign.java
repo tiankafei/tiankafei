@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 
 /**
  * @author 魏双双

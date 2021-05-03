@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 
 import com.google.common.collect.Maps;
+import com.ruoyi.common.core.constant.StringConstants;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.beans.BeanMap;
-import org.tiankafei.web.common.constants.StringConstants;
 import org.tiankafei.web.generate.properties.CfgProperties;
 import org.tiankafei.web.generate.properties.CodeProperties;
 

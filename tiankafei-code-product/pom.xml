@@ -64,6 +64,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- RuoYi tiankafei db -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>tiankafei-db</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-user-common</artifactId>

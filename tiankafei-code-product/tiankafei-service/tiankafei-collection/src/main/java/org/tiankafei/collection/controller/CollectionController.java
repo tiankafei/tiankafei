@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.collection.bean.ComponentClient;
 import org.tiankafei.collection.param.ComponentTypeVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 
 /**
  * 采集相关API

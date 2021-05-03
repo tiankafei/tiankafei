@@ -16,7 +16,7 @@ import org.tiankafei.login.model.LoginResultDto;
 import org.tiankafei.login.service.LoginService;
 import org.tiankafei.user.vo.LoginParamVo;
 import org.tiankafei.user.vo.UserInfoVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.web.common.config.TokenConfig;
 
 /**

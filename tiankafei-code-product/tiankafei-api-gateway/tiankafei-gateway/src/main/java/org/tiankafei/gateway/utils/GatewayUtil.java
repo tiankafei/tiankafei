@@ -2,6 +2,8 @@ package org.tiankafei.gateway.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.ruoyi.common.core.constant.GatewayConstants;
+import com.ruoyi.common.core.constant.StringConstants;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
@@ -12,9 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import org.tiankafei.gateway.vo.GatewayRouteVo;
-import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.constants.GatewayConstants;
-import org.tiankafei.web.common.constants.StringConstants;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.Charset;

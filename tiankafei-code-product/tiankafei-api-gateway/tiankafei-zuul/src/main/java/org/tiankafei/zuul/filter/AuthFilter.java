@@ -1,13 +1,13 @@
 package org.tiankafei.zuul.filter;
 
 import com.netflix.zuul.context.RequestContext;
+import com.ruoyi.common.core.enums.ExceptionEnum;
+import com.ruoyi.common.core.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
-import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.enums.ExceptionEnum;
-import org.tiankafei.web.common.utils.CommonUtil;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.zuul.utils.ZuulUtil;
 
 import java.util.List;

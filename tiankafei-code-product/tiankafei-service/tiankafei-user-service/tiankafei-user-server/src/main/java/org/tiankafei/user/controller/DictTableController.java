@@ -23,8 +23,8 @@ import org.tiankafei.user.param.DictTableListParam;
 import org.tiankafei.user.param.DictTablePageParam;
 import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictTableVo;
-import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.domain.ApiResult;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

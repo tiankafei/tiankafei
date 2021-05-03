@@ -21,9 +21,9 @@ import org.tiankafei.user.param.RoleInfoListParam;
 import org.tiankafei.user.param.RoleInfoPageParam;
 import org.tiankafei.user.service.RoleInfoService;
 import org.tiankafei.user.vo.RoleInfoVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.web.common.param.IdsParam;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

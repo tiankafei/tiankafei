@@ -1,5 +1,6 @@
 package org.tiankafei.web.common.service.impl;
 
+import com.ruoyi.common.core.constant.StringConstants;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -14,7 +15,6 @@ import java.util.Arrays;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import org.springframework.stereotype.Service;
-import org.tiankafei.web.common.constants.StringConstants;
 import org.tiankafei.web.common.enums.CaptchaEnum;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.exception.VerificationException;

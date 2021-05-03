@@ -1,10 +1,10 @@
 package org.tiankafei.web.common.utils;
 
+import com.ruoyi.common.core.constant.StringConstants;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.tiankafei.web.common.constants.StringConstants;
 
 /**
  * @author tiankafei

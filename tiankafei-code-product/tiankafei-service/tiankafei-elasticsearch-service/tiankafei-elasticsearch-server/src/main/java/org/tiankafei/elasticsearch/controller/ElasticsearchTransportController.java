@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tiankafei.elasticsearch.param.IndexParam;
 import org.tiankafei.elasticsearch.service.IElasticsearchService;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 
 import javax.validation.Valid;
 

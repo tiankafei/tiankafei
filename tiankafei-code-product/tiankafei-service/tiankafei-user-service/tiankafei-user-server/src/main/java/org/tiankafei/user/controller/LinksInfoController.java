@@ -21,9 +21,9 @@ import org.tiankafei.user.param.LinksInfoListParam;
 import org.tiankafei.user.param.LinksInfoPageParam;
 import org.tiankafei.user.service.LinksInfoService;
 import org.tiankafei.user.vo.LinksInfoVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.web.common.param.IdsParam;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>

@@ -1,6 +1,7 @@
 package org.tiankafei.user.controller;
 
 import com.ruoyi.common.core.web.controller.BaseController;
+import com.ruoyi.common.core.web.page.Paging;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -21,9 +22,8 @@ import org.tiankafei.user.param.DeptInfoListParam;
 import org.tiankafei.user.param.DeptInfoPageParam;
 import org.tiankafei.user.service.DeptInfoService;
 import org.tiankafei.user.vo.DeptInfoVo;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.web.common.param.IdsParam;
-import org.tiankafei.web.common.vo.Paging;
 
 /**
  * <p>

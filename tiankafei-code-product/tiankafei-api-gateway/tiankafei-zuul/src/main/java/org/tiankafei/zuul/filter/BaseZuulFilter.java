@@ -3,12 +3,11 @@ package org.tiankafei.zuul.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-import com.ruoyi.common.swagger.config.SwaggerProperties;
+import com.ruoyi.common.core.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
-import org.tiankafei.web.common.utils.CommonUtil;
 import org.tiankafei.zuul.properties.ExclusionsUrlsProperties;
 import org.tiankafei.zuul.utils.ZuulUtil;
 
@@ -30,9 +29,6 @@ public abstract class BaseZuulFilter extends ZuulFilter {
 
     @Autowired
     protected ServerProperties serverProperties;
-
-    @Autowired
-    private SwaggerProperties swaggerProperties;
 
     /**
      * 当前url路径

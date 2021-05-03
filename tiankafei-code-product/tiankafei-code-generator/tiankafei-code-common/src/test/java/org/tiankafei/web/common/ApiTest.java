@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.junit.Test;
 import org.tiankafei.common.util.FileUtil;
-import org.tiankafei.web.common.api.ApiResult;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import org.tiankafei.web.common.enums.CaptchaTypeEnum;
 import org.tiankafei.web.common.service.impl.CommonCaptchaUtil;
 

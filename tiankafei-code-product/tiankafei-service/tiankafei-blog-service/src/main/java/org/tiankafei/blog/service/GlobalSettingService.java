@@ -10,7 +10,7 @@ import org.tiankafei.blog.param.GlobalSettingDeleteParam;
 import org.tiankafei.blog.param.GlobalSettingListParam;
 import org.tiankafei.blog.param.GlobalSettingPageParam;
 import org.tiankafei.blog.vo.GlobalSettingVo;
-import org.tiankafei.web.common.vo.Paging;
+import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>
