@@ -37,7 +37,7 @@
             <artifactId>tiankafei-code-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.tiankafei.product</groupId>
+            <groupId>com.ruoyi</groupId>
             <artifactId>tiankafei-db</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
