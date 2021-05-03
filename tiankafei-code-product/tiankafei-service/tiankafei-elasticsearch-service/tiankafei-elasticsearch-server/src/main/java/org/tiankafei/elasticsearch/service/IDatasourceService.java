@@ -1,7 +1,7 @@
 package org.tiankafei.elasticsearch.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import org.tiankafei.elasticsearch.entity.DatasourceEntity;
-import org.tiankafei.web.common.service.BaseService;
 
 import java.util.List;
 

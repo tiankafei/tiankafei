@@ -1,5 +1,6 @@
 package org.tiankafei.blog.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.blog.entity.DiaryInfoEntity;
@@ -9,7 +10,6 @@ import org.tiankafei.blog.param.DiaryInfoDeleteParam;
 import org.tiankafei.blog.param.DiaryInfoListParam;
 import org.tiankafei.blog.param.DiaryInfoPageParam;
 import org.tiankafei.blog.vo.DiaryInfoVo;
-import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

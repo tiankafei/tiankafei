@@ -2,13 +2,13 @@ package org.tiankafei.db.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.ruoyi.common.core.web.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.tiankafei.web.common.entity.BaseEntity;
 
 /**
  * @author tiankafei

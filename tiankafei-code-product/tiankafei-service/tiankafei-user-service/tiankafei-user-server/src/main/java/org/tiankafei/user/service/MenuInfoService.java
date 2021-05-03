@@ -1,5 +1,6 @@
 package org.tiankafei.user.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.user.entity.MenuInfoEntity;
@@ -9,7 +10,6 @@ import org.tiankafei.user.param.MenuInfoDeleteParam;
 import org.tiankafei.user.param.MenuInfoListParam;
 import org.tiankafei.user.param.MenuInfoPageParam;
 import org.tiankafei.user.vo.MenuInfoVo;
-import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

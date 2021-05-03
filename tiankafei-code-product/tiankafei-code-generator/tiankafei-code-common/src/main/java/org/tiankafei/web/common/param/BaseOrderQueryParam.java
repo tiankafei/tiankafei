@@ -2,6 +2,7 @@ package org.tiankafei.web.common.param;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.web.domain.SearchEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
@@ -20,7 +21,7 @@ import org.apache.commons.collections4.CollectionUtils;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel("可排序查询参数对象")
-public abstract class BaseOrderQueryParam extends BaseQueryParam {
+public abstract class BaseOrderQueryParam extends SearchEntity {
 
     @ApiModelProperty(value = "排序")
     private List<OrderItem> orders;

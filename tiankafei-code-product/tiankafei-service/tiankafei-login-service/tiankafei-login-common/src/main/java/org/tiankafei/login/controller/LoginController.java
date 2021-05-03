@@ -1,10 +1,12 @@
 package org.tiankafei.login.controller;
 
+import com.ruoyi.common.core.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +17,7 @@ import org.tiankafei.login.service.LoginService;
 import org.tiankafei.user.vo.LoginParamVo;
 import org.tiankafei.user.vo.UserInfoVo;
 import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.controller.BaseController;
+import org.tiankafei.web.common.config.TokenConfig;
 
 /**
  * @author tiankafei
@@ -28,6 +30,9 @@ public class LoginController extends BaseController {
 
     @Resource
     private LoginService loginService;
+
+    @Autowired
+    private TokenConfig tokenConfig;
 
     /**
      * 用户登录
@@ -52,7 +57,7 @@ public class LoginController extends BaseController {
     @GetMapping("/getUserInfo")
     @ApiOperation(value = "获取用户详细信息，以及角色和权限", notes = "获取用户详细信息，以及角色和权限")
     public ApiResult<UserInfoVo> getUserInfo() throws Exception {
-        UserInfoVo userInfoVo = loginService.getUserInfo(getToken());
+        UserInfoVo userInfoVo = loginService.getUserInfo(tokenConfig.getToken());
         return ApiResult.ok(userInfoVo);
     }
 

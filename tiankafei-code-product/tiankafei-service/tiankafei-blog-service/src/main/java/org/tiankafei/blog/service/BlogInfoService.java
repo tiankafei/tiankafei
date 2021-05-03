@@ -1,5 +1,6 @@
 package org.tiankafei.blog.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.blog.entity.BlogInfoEntity;
@@ -9,7 +10,6 @@ import org.tiankafei.blog.param.BlogInfoDeleteParam;
 import org.tiankafei.blog.param.BlogInfoListParam;
 import org.tiankafei.blog.param.BlogInfoPageParam;
 import org.tiankafei.blog.vo.BlogInfoVo;
-import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

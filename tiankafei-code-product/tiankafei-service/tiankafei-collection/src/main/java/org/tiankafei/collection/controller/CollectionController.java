@@ -1,5 +1,6 @@
 package org.tiankafei.collection.controller;
 
+import com.ruoyi.common.core.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.collection.bean.ComponentClient;
 import org.tiankafei.collection.param.ComponentTypeVo;
 import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.controller.BaseController;
 
 /**
  * 采集相关API

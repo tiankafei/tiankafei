@@ -1,13 +1,13 @@
 package org.tiankafei.multidatasource.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tiankafei.multidatasource.entity.UserInfoMpEntity;
 import org.tiankafei.multidatasource.mapper.UserInfoMapper;
 import org.tiankafei.multidatasource.service.UserInfoMpService;
-import org.tiankafei.web.common.service.impl.BaseServiceImpl;
 
 /**
  * <p>

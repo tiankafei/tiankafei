@@ -1,5 +1,6 @@
 package org.tiankafei.user.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.user.entity.DictTableEntity;
@@ -9,7 +10,6 @@ import org.tiankafei.user.param.DictTableDeleteParam;
 import org.tiankafei.user.param.DictTableListParam;
 import org.tiankafei.user.param.DictTablePageParam;
 import org.tiankafei.user.vo.DictTableVo;
-import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

@@ -1,11 +1,11 @@
 package org.tiankafei.db.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.util.List;
 import org.tiankafei.db.entity.FieldEntity;
 import org.tiankafei.db.param.FieldNameListParam;
 import org.tiankafei.db.param.FieldNamePageParam;
 import org.tiankafei.db.param.FieldNameParam;
-import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

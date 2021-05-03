@@ -1,5 +1,6 @@
 package org.tiankafei.user.controller;
 
+import com.ruoyi.common.core.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -23,7 +24,6 @@ import org.tiankafei.user.param.DictTablePageParam;
 import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictTableVo;
 import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

@@ -1,5 +1,6 @@
 package org.tiankafei.user.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.user.entity.UserLoginEntity;
@@ -9,7 +10,6 @@ import org.tiankafei.user.param.UserLoginDeleteParam;
 import org.tiankafei.user.param.UserLoginListParam;
 import org.tiankafei.user.param.UserLoginPageParam;
 import org.tiankafei.user.vo.UserLoginVo;
-import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

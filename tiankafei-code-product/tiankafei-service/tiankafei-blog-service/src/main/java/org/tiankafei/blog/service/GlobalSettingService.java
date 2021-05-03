@@ -1,5 +1,6 @@
 package org.tiankafei.blog.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.blog.entity.GlobalSettingEntity;
@@ -9,7 +10,6 @@ import org.tiankafei.blog.param.GlobalSettingDeleteParam;
 import org.tiankafei.blog.param.GlobalSettingListParam;
 import org.tiankafei.blog.param.GlobalSettingPageParam;
 import org.tiankafei.blog.vo.GlobalSettingVo;
-import org.tiankafei.web.common.service.BaseService;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

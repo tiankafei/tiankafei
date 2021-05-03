@@ -1,5 +1,6 @@
 package org.tiankafei.db.controller;
 
+import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.PreAuthorize;
@@ -18,7 +19,6 @@ import org.tiankafei.db.param.TableNamePageParam;
 import org.tiankafei.db.param.TableNameParam;
 import org.tiankafei.db.service.TableService;
 import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.vo.Paging;
 
 /**

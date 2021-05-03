@@ -1,5 +1,6 @@
 package org.tiankafei.web.common.controller;
 
+import com.ruoyi.common.core.web.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

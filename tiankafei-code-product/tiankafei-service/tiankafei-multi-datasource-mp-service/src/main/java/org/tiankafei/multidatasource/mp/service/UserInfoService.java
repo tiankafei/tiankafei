@@ -1,9 +1,9 @@
 package org.tiankafei.multidatasource.mp.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.Map;
 import org.tiankafei.multidatasource.mp.entity.UserInfoEntity;
-import org.tiankafei.web.common.service.BaseService;
 
 /**
  * <p>

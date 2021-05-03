@@ -1,8 +1,8 @@
 package org.tiankafei.multidatasource.service;
 
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import org.tiankafei.multidatasource.entity.UserInfoMpEntity;
-import org.tiankafei.web.common.service.BaseService;
 
 /**
  * <p>

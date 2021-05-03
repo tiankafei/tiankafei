@@ -28,9 +28,11 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- RuoYi Common Core-->
         <dependency>
-            <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-code-common</artifactId>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-core</artifactId>
         </dependency>
     </dependencies>
 

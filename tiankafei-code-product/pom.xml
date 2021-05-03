@@ -39,6 +39,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- RuoYi Common Core -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-common-core</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
             <!-- RuoYi Common Log -->
             <dependency>
                 <groupId>com.ruoyi</groupId>

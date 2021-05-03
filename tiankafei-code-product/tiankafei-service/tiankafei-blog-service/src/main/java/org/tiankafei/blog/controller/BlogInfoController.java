@@ -1,5 +1,6 @@
 package org.tiankafei.blog.controller;
 
+import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.PreAuthorize;
@@ -24,7 +25,6 @@ import org.tiankafei.blog.param.BlogInfoPageParam;
 import org.tiankafei.blog.service.BlogInfoService;
 import org.tiankafei.blog.vo.BlogInfoVo;
 import org.tiankafei.web.common.api.ApiResult;
-import org.tiankafei.web.common.controller.BaseController;
 import org.tiankafei.web.common.param.IdsParam;
 import org.tiankafei.web.common.vo.Paging;
 
