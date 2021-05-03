@@ -15,11 +15,7 @@ spring:
   autoconfigure:
     exclude:
       - com.ruoyi.common.swagger.config.SwaggerAutoConfiguration
-      - com.ruoyi.common.core.utils.SpringUtils
-      - com.ruoyi.common.core.web.aspect.PageAspect
       - com.ruoyi.common.core.config.CoreConfig
-      - com.ruoyi.common.core.config.MybatisPlusConfig
-      - com.ruoyi.common.core.properties.DynamicTableProperties
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
