@@ -3,7 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,10 +26,9 @@ public class DictTableVo extends BaseQueryVo {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "数据表名")
-    @Size(max = 30, message = "数据表名长度不能超过 30 ！")
-    @NotBlank(message = "数据表名不能为空！")
-    private String dataTable;
+    @ApiModelProperty(value = "系统字典id")
+    @NotNull(message = "系统字典id不能为空！")
+    private Long dictId;
 
     @ApiModelProperty(value = "主键id")
     private Long id;
@@ -46,7 +45,7 @@ public class DictTableVo extends BaseQueryVo {
     private String description;
 
     @ApiModelProperty(value = "备注")
-    @Size(max = 100, message = "备注长度不能超过 100 ！")
+    @Size(max = 500, message = "备注长度不能超过 500 ！")
     private String remarks;
 
     @ApiModelProperty(value = "父id")

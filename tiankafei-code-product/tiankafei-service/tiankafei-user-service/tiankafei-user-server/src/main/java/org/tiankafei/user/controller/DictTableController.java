@@ -87,22 +87,22 @@ public class DictTableController extends BaseController {
     /**
      * 删除 系统数据字典的数据表
      *
-     * @param dataTable
+     * @param dictId
      * @param id
      * @return
      * @throws Exception
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{dictId}/{id}")
     @ApiOperation(value = "删除 系统数据字典的数据表")
-    public ApiResult<Boolean> deleteDictTableController(@PathVariable(value = "dataTable") String dataTable, @PathVariable(value = "id") String id) throws Exception {
-        boolean flag = dictTableService.deleteDictTableService(dataTable, id);
+    public ApiResult<Boolean> deleteDictTableController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+        boolean flag = dictTableService.deleteDictTableService(dictId, id);
         return ApiResult.ok(flag);
     }
 
     /**
      * 批量删除 系统数据字典的数据表
      *
-     * @param dataTable
+     * @param dictId
      * @param ids
      * @return
      * @throws Exception
@@ -110,9 +110,9 @@ public class DictTableController extends BaseController {
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统数据字典的数据表")
     public ApiResult<Boolean> batchDeleteDictTableController(
-            @ApiParam(name = "dataTable", value = "字典数据表") @RequestParam("dataTable") String dataTable,
+            @ApiParam(name = "dictId", value = "字典数据表") @RequestParam("dictId") Long dictId,
             @ApiParam(name = "ids", value = "要删除的字典数据的代码，多个用逗号分隔") @RequestParam("ids") String ids) throws Exception {
-        boolean flag = dictTableService.batchDeleteDictTableService(dataTable, ids);
+        boolean flag = dictTableService.batchDeleteDictTableService(dictId, ids);
         return ApiResult.ok(flag);
     }
 
@@ -147,30 +147,30 @@ public class DictTableController extends BaseController {
     /**
      * 根据ID获取 系统数据字典的数据表 对象
      *
-     * @param dataTable
+     * @param dictId
      * @param id
      * @return
      * @throws Exception
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 系统数据字典的数据表 对象")
-    public ApiResult<DictTableVo> getDictTableController(@PathVariable(value = "dataTable") String dataTable, @PathVariable(value = "id") String id) throws Exception {
-        DictTableVo dictTableVo = dictTableService.getDictTableServiceById(dataTable, id);
+    public ApiResult<DictTableVo> getDictTableController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+        DictTableVo dictTableVo = dictTableService.getDictTableServiceById(dictId, id);
         return ApiResult.ok(dictTableVo);
     }
 
     /**
      * 获取 系统数据字典的数据表 对象列表
      *
-     * @param dataTable
+     * @param dictId
      * @return
      * @throws Exception
      */
-    @GetMapping
+    @GetMapping(value = "{dictId}")
     @ApiOperation(value = "获取 系统数据字典的数据表 对象全部列表")
-    public ApiResult<List<DictTableVo>> getDictTableControllerAllList(@PathVariable(value = "dataTable") String dataTable) throws Exception {
+    public ApiResult<List<DictTableVo>> getDictTableControllerAllList(@PathVariable(value = "dictId") Long dictId) throws Exception {
         DictTableListParam dictTableListParam = new DictTableListParam();
-        dictTableListParam.setDataTable(dataTable);
+        dictTableListParam.setDictId(dictId);
         List<DictTableVo> dictTableVoList = dictTableService.getDictTableServiceList(dictTableListParam);
         return ApiResult.ok(dictTableVoList);
     }
