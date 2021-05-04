@@ -144,9 +144,15 @@
         id
         from sys_dict_table
         <where>
-            <if test="param.parentId != null">
-                and `parent_id` = #{param.parentId}
-            </if>
+            <choose>
+                <when test="param.parentId == -1">
+                    `parent_id` is null
+                </when>
+                <otherwise>
+                    `parent_id` = #{param.parentId}
+                </otherwise>
+            </choose>
+
             <if test="param.code != null and param.code != ''">
                 and `code` like concat(#{param.code}, '%')
             </if>
