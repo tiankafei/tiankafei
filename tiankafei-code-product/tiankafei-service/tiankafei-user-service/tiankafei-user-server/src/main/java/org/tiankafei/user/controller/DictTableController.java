@@ -186,6 +186,22 @@ public class DictTableController extends BaseController {
     }
 
     /**
+     * 获取 系统数据字典的数据表 对象同步树列表
+     *
+     * @param dictId
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/syncTree/{dictId}")
+    @ApiOperation(value = "获取 系统数据字典的数据表 对象同步树列表")
+    public ApiResult<List<DictTableVo>> getDictTableTreeControllerAllList(@PathVariable(value = "dictId") Long dictId) throws Exception {
+        DictTableListParam dictTableListParam = new DictTableListParam();
+        dictTableListParam.setDictId(dictId);
+        List<DictTableVo> dictTableVoList = dictTableService.getDictTableTreeServiceList(dictTableListParam);
+        return ApiResult.ok(dictTableVoList);
+    }
+
+    /**
      * 获取 系统数据字典的数据表 对象列表
      *
      * @param dictTableListParam

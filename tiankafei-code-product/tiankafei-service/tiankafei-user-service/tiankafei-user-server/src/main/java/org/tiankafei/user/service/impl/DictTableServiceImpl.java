@@ -221,15 +221,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         setDynamicTableName(dictId);
 
         List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableChildrenService(parentId);
-        Map<Long, List<DictTableVo>> dictTableMap = dictTableVoList.stream().filter(dictTableVo -> dictTableVo.getParentId() != null).collect(Collectors.groupingBy(DictTableVo::getParentId));
-        List<DictTableVo> resultList = dictTableVoList.stream().map(dictTableVo -> {
-            Long id = dictTableVo.getId();
-            if(dictTableMap.containsKey(id)){
-                dictTableVo.setChildren(dictTableMap.get(id));
-            }
-            return dictTableVo;
-        }).filter(dictTableVo -> dictTableVo.getParentId() == null).collect(Collectors.toList());
-        return resultList;
+        // list转树结构
+        return processListToTree(dictTableVoList);
     }
 
     /**
@@ -244,6 +237,25 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         setDynamicTableName(dictTableListParam.getDictId());
 
         return dictTableMapper.getDictTableServiceList(dictTableListParam);
+    }
+
+    @Override
+    public List<DictTableVo> getDictTableTreeServiceList(DictTableListParam dictTableListParam) throws Exception {
+        List<DictTableVo> dictTableVoList = getDictTableServiceList(dictTableListParam);
+        // list转树结构
+        return processListToTree(dictTableVoList);
+    }
+
+    private List<DictTableVo> processListToTree(List<DictTableVo> dictTableVoList){
+        Map<Long, List<DictTableVo>> dictTableMap = dictTableVoList.stream().filter(dictTableVo -> dictTableVo.getParentId() != null).collect(Collectors.groupingBy(DictTableVo::getParentId));
+        List<DictTableVo> resultList = dictTableVoList.stream().map(dictTableVo -> {
+            Long id = dictTableVo.getId();
+            if(dictTableMap.containsKey(id)){
+                dictTableVo.setChildren(dictTableMap.get(id));
+            }
+            return dictTableVo;
+        }).filter(dictTableVo -> dictTableVo.getParentId() == null).collect(Collectors.toList());
+        return resultList;
     }
 
     /**
