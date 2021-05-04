@@ -72,7 +72,10 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
         LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (dictTableCheckParam != null) {
-
+            lambdaQueryWrapper.eq(DictTableEntity::getCode, dictTableCheckParam.getCode());
+            if(dictTableCheckParam.getId() != null){
+                lambdaQueryWrapper.ne(DictTableEntity::getId, dictTableCheckParam.getId());
+            }
         }
         int count = super.count(lambdaQueryWrapper);
         return count > 0;

@@ -26,4 +26,8 @@ public class DictTableDeleteParam implements Serializable {
     @NotNull(message = "系统字典id不能为空！")
     private Long dictId;
 
+    @ApiModelProperty(value = "代码的唯一标识集合，如果有多个，用逗号分割")
+    @NotNull(message = "要删除的代码不能为空！")
+    private String ids;
+
 }

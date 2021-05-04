@@ -3,7 +3,6 @@ package org.tiankafei.user.controller;
 import com.ruoyi.common.core.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiankafei.user.param.DictTableCheckParam;
 import org.tiankafei.user.param.DictTableCountParam;
@@ -102,17 +100,14 @@ public class DictTableController extends BaseController {
     /**
      * 批量删除 系统数据字典的数据表
      *
-     * @param dictId
-     * @param ids
+     * @param dictTableDeleteParam
      * @return
      * @throws Exception
      */
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除 系统数据字典的数据表")
-    public ApiResult<Boolean> batchDeleteDictTableController(
-            @ApiParam(name = "dictId", value = "字典数据表") @RequestParam("dictId") Long dictId,
-            @ApiParam(name = "ids", value = "要删除的字典数据的代码，多个用逗号分隔") @RequestParam("ids") String ids) throws Exception {
-        boolean flag = dictTableService.batchDeleteDictTableService(dictId, ids);
+    public ApiResult<Boolean> batchDeleteDictTableController(@Valid @RequestBody DictTableDeleteParam dictTableDeleteParam) throws Exception {
+        boolean flag = dictTableService.batchDeleteDictTableService(dictTableDeleteParam.getDictId(), dictTableDeleteParam.getIds());
         return ApiResult.ok(flag);
     }
 

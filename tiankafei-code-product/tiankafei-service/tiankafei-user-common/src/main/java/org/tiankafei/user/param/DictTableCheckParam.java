@@ -3,6 +3,7 @@ package org.tiankafei.user.param;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -27,6 +28,10 @@ public class DictTableCheckParam implements Serializable {
     private Long dictId;
 
     @ApiModelProperty(value = "代码")
+    @NotBlank(message = "代码不能为空！")
     private String code;
+
+    @ApiModelProperty(value = "代码的唯一标识")
+    private Long id;
 
 }
