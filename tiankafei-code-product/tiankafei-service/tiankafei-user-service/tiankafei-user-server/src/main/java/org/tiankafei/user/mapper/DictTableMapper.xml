@@ -127,11 +127,11 @@
         from sys_dict_table
         <where>
             <choose>
-                <when test="param == -1">
-                    parent_id is null
+                <when test="param == null">
+                    `parent_id` is null
                 </when>
                 <otherwise>
-                    parent_id = #{param}
+                    `parent_id` = #{param}
                 </otherwise>
             </choose>
         </where>
@@ -145,11 +145,11 @@
         from sys_dict_table
         <where>
             <choose>
-                <when test="param.parentId == -1">
-                    `parent_id` is null
+                <when test="param.parentId == null">
+                    and `parent_id` is null
                 </when>
                 <otherwise>
-                    `parent_id` = #{param.parentId}
+                    and `parent_id` = #{param.parentId}
                 </otherwise>
             </choose>
 
@@ -169,7 +169,7 @@
                 and `delete_mark` = #{param.deleteMark}
             </if>
         </where>
-        order by serial_number
+        order by serial_number, code
     </select>
 
     <!-- 计算 系统数据字典的数据表 总记录数 -->

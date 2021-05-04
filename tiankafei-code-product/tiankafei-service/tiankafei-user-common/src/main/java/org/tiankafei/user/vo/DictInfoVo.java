@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Data;
@@ -50,11 +51,11 @@ public class DictInfoVo extends BaseQueryVo {
     private String remarks;
 
     @ApiModelProperty(value = "数据表")
-//    @Size(max = 30, message = "数据表长度不能超过 30 ！")
     @Pattern(regexp = "^$|^[a-zA-Z][a-zA-Z0-9_]{9,29}$" , message = "数据表只能以字母开头，包含字母、数字、下划线，且长度只能在10-30之间")
     private String dataTable;
 
-    @ApiModelProperty(value = "乐观锁版本")
+    @ApiModelProperty(value = "版本")
+    @NotNull(message = "版本不能为空")
     private Integer version;
 
     @ApiModelProperty(value = "逻辑删除字段")

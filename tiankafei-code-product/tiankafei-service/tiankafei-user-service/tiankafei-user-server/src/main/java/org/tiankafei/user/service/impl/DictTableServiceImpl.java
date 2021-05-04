@@ -243,10 +243,10 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     }
 
     @Override
-    public List<DictTableVo> getDictTableChildrenService(Long dictId, Serializable parentId) throws Exception {
-        setDynamicTableName(dictId);
+    public List<DictTableVo> getDictTableChildrenService(DictTablePageParam dictTablePageParam) throws Exception {
+        setDynamicTableName(dictTablePageParam.getDictId());
 
-        List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableChildrenService(parentId);
+        List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableChildrenService(dictTablePageParam.getParentId());
         return dictTableVoList;
     }
 
