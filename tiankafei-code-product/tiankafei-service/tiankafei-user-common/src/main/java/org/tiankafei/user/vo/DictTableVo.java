@@ -50,7 +50,6 @@ public class DictTableVo extends BaseQueryVo {
     private String remarks;
 
     @ApiModelProperty(value = "父id")
-    @Size(max = 20, message = "父id长度不能超过 20 ！")
     private Long parentId;
 
     @ApiModelProperty(value = "所有父id，用逗号分隔")

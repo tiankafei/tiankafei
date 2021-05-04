@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -58,7 +56,6 @@ public class DictTableEntity extends Model<DictTableEntity> {
     private String remarks;
 
     @ApiModelProperty(value = "父id")
-    @Size(max = 20, message = "父id长度不能超过 20 ！")
     @TableField("parent_id")
     private Long parentId;
 
