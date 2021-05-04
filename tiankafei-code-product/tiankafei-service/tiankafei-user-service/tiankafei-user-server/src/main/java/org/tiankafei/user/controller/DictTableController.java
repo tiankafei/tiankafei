@@ -155,6 +155,21 @@ public class DictTableController extends BaseController {
     }
 
     /**
+     * 根据父ID获取 子系统数据字典项集合
+     *
+     * @param dictId
+     * @param parentId
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/children/{dictId}/{parentId}")
+    @ApiOperation(value = "根据父ID获取 子系统数据字典项集合")
+    public ApiResult<List<DictTableVo>> getDictTableChildrenController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "parentId") String parentId) throws Exception {
+        List<DictTableVo> dictTableVoList = dictTableService.getDictTableChildrenService(dictId, parentId);
+        return ApiResult.ok(dictTableVoList);
+    }
+
+    /**
      * 获取 系统数据字典的数据表 对象列表
      *
      * @param dictId

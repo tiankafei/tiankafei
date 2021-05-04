@@ -3,6 +3,7 @@ package org.tiankafei.user.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
@@ -50,7 +51,7 @@ public class DictTableVo extends BaseQueryVo {
 
     @ApiModelProperty(value = "父id")
     @Size(max = 20, message = "父id长度不能超过 20 ！")
-    private String parentId;
+    private Long parentId;
 
     @ApiModelProperty(value = "所有父id，用逗号分隔")
     @Size(max = 2100, message = "所有父id，用逗号分隔长度不能超过 2100 ！")
@@ -107,6 +108,8 @@ public class DictTableVo extends BaseQueryVo {
     @ApiModelProperty(value = "租户ID")
     private Long tenantId;
 
+    @ApiModelProperty(value = "子代码集合")
+    private List<DictTableVo> children;
 
     public static final String ID = "id";
 

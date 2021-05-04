@@ -90,12 +90,22 @@ public interface DictTableService extends BaseService<DictTableEntity> {
     /**
      * 根据ID获取 系统数据字典的数据表 对象
      *
-     * @param dataTable
+     * @param dictId
      * @param id
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableServiceById(Long dataTable, Serializable id) throws Exception;
+    DictTableVo getDictTableServiceById(Long dictId, Serializable id) throws Exception;
+
+    /**
+     * 根据父ID获取 子系统数据字典项集合
+     *
+     * @param dictId
+     * @param parentId
+     * @return
+     * @throws Exception
+     */
+    List<DictTableVo> getDictTableChildrenService(Long dictId, Serializable parentId) throws Exception;
 
     /**
      * 获取 系统数据字典的数据表 对象列表

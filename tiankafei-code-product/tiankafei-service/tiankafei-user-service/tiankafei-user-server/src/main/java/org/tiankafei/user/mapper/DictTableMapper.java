@@ -99,6 +99,15 @@ public interface DictTableMapper extends BaseMapper<DictTableEntity> {
     DictTableVo getDictTableServiceById(@Param("param") Serializable id) throws Exception;
 
     /**
+     * 根据父ID获取 子系统数据字典项集合
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    List<DictTableVo> getDictTableChildrenService(@Param("param") Serializable id) throws Exception;
+
+    /**
      * 获取 系统数据字典的数据表 对象列表
      *
      * @param dictTableListParam

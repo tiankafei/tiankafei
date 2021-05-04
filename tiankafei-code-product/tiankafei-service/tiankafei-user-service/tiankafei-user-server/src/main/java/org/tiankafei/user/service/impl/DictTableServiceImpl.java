@@ -10,6 +10,7 @@ import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -213,6 +214,22 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         DictTableVo dictTableVo = new DictTableVo();
         BeanUtils.copyProperties(dictTableEntity, dictTableVo);
         return dictTableVo;
+    }
+
+    @Override
+    public List<DictTableVo> getDictTableChildrenService(Long dictId, Serializable parentId) throws Exception {
+        setDynamicTableName(dictId);
+
+        List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableChildrenService(parentId);
+        Map<Long, List<DictTableVo>> dictTableMap = dictTableVoList.stream().filter(dictTableVo -> dictTableVo.getParentId() != null).collect(Collectors.groupingBy(DictTableVo::getParentId));
+        List<DictTableVo> resultList = dictTableVoList.stream().map(dictTableVo -> {
+            Long id = dictTableVo.getId();
+            if(dictTableMap.containsKey(id)){
+                dictTableVo.setChildren(dictTableMap.get(id));
+            }
+            return dictTableVo;
+        }).filter(dictTableVo -> dictTableVo.getParentId() == null).collect(Collectors.toList());
+        return resultList;
     }
 
     /**

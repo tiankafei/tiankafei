@@ -117,6 +117,25 @@
                 and delete_mark = #{param.deleteMark}
             </if>
         </where>
+        order by serial_number
+    </select>
+
+    <!-- 根据父ID获取 子系统数据字典项集合 -->
+    <select id="getDictTableChildrenService" resultMap="voResultMap">
+        select
+        <include refid="base_Column_List"/>
+        from sys_dict_table
+        <where>
+            <choose>
+                <when test="param == -1">
+                    parent_id is null
+                </when>
+                <otherwise>
+                    parent_id = #{param}
+                </otherwise>
+            </choose>
+        </where>
+        order by serial_number
     </select>
 
     <!-- 获取 系统数据字典的数据表 分页对象列表 -->
@@ -141,6 +160,7 @@
                 and delete_mark = #{param.deleteMark}
             </if>
         </where>
+        order by serial_number
     </select>
 
     <!-- 计算 系统数据字典的数据表 总记录数 -->

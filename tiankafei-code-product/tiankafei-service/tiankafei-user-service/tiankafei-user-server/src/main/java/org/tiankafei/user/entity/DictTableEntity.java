@@ -60,7 +60,7 @@ public class DictTableEntity extends Model<DictTableEntity> {
     @ApiModelProperty(value = "父id")
     @Size(max = 20, message = "父id长度不能超过 20 ！")
     @TableField("parent_id")
-    private String parentId;
+    private Long parentId;
 
     @ApiModelProperty(value = "所有父id，用逗号分隔")
     @Size(max = 2100, message = "所有父id，用逗号分隔长度不能超过 2100 ！")
