@@ -33,6 +33,9 @@ public class DictTablePageParam extends BaseOrderQueryParam {
     @ApiModelProperty(value = "名称")
     private String name;
 
+    @ApiModelProperty(value = "父id")
+    private Long parentId;
+
     @ApiModelProperty(value = "系统字典id")
     @NotNull(message = "系统字典id不能为空！")
     private Long dictId;
