@@ -221,8 +221,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         setDynamicTableName(dictId);
 
         List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableChildrenService(parentId);
-        // list转树结构
-        return processListToTree(dictTableVoList);
+        return dictTableVoList;
     }
 
     /**
