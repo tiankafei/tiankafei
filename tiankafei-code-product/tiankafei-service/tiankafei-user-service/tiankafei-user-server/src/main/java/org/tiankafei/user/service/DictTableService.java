@@ -57,7 +57,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    boolean deleteDictTableService(Long dictId, String id) throws Exception;
+    boolean deleteDictTableService(Long dictId, Long id) throws Exception;
 
     /**
      * 批量删除 系统数据字典的数据表

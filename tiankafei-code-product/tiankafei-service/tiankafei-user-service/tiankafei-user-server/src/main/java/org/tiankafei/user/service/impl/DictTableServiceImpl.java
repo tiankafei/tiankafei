@@ -8,12 +8,11 @@ import com.google.common.collect.Lists;
 import com.ruoyi.common.core.utils.DynamicTableNameUtil;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,13 +132,35 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      * @throws Exception
      */
     @Override
-    public boolean deleteDictTableService(Long dictId, String id) throws Exception {
-        setDynamicTableName(dictId);
+    public boolean deleteDictTableService(Long dictId, Long id) throws Exception {
+        setDynamicTableName(dictId, false);
+        // 查询所有下级的id集合
+        List<Long> childrenList = Lists.newArrayList();
+        childrenList.add(id);
+        getChildrenIdList(childrenList, childrenList);
+        // 删除的时候，把所有下级都删了
+        boolean flag = super.removeByIds(childrenList);
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
+        return flag;
+    }
 
-        if (StringUtils.isNotBlank(id)) {
-            return super.removeById(id);
+    /**
+     * 查询所有下级的id集合
+     * @param idList
+     * @return
+     */
+    private void getChildrenIdList(List<Long> idList, List<Long> childrenList){
+        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.select(DictTableEntity::getId);
+        lambdaQueryWrapper.in(DictTableEntity::getParentId, idList);
+
+        List<Long> tmpIdList = super.list(lambdaQueryWrapper).stream().map(dictTableEntity -> dictTableEntity.getId()).collect(Collectors.toList());
+        if(CollectionUtils.isNotEmpty(tmpIdList)){
+            childrenList.addAll(tmpIdList);
+
+            getChildrenIdList(tmpIdList, childrenList);
         }
-        return Boolean.TRUE;
     }
 
     /**
@@ -152,13 +173,18 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
      */
     @Override
     public boolean batchDeleteDictTableService(Long dictId, String ids) throws Exception {
-        setDynamicTableName(dictId);
+        setDynamicTableName(dictId, false);
 
-        if (StringUtils.isNotBlank(ids)) {
-            List<String> idList = Arrays.asList(ids.split(","));
-            return super.removeByIds(idList);
-        }
-        return Boolean.TRUE;
+        // 遍历得到每一个要删除的id以及所有子id
+        List<Long> childrenList = Lists.newArrayList();
+        List<Long> idList = Stream.of(ids.split(",")).map(s -> Long.valueOf(s)).collect(Collectors.toList());
+        childrenList.addAll(idList);
+        getChildrenIdList(idList, childrenList);
+        // 执行删除
+        boolean flag = super.removeByIds(childrenList);
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
+        return flag;
     }
 
     /**
@@ -312,6 +338,16 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     private void setDynamicTableName(Long dictId) throws Exception {
         String dataTable = getDictDataTable(dictId);
         DynamicTableNameUtil.setDynamicTableName(dataTable);
+    }
+
+    /**
+     * 设置动态表名
+     *
+     * @param dictId
+     */
+    private void setDynamicTableName(Long dictId, boolean once) throws Exception {
+        String dataTable = getDictDataTable(dictId);
+        DynamicTableNameUtil.setDynamicTableName(dataTable, once);
     }
 
 }

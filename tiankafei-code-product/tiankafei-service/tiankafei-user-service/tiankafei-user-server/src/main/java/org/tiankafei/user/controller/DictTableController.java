@@ -92,7 +92,7 @@ public class DictTableController extends BaseController {
      */
     @DeleteMapping("/{dictId}/{id}")
     @ApiOperation(value = "删除 系统数据字典的数据表")
-    public ApiResult<Boolean> deleteDictTableController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<Boolean> deleteDictTableController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         boolean flag = dictTableService.deleteDictTableService(dictId, id);
         return ApiResult.ok(flag);
     }

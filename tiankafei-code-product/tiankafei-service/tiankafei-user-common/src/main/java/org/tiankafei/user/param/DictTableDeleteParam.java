@@ -3,6 +3,7 @@ package org.tiankafei.user.param;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -27,7 +28,7 @@ public class DictTableDeleteParam implements Serializable {
     private Long dictId;
 
     @ApiModelProperty(value = "代码的唯一标识集合，如果有多个，用逗号分割")
-    @NotNull(message = "要删除的代码不能为空！")
+    @NotBlank(message = "要删除的代码不能为空！")
     private String ids;
 
 }
