@@ -70,3 +70,9 @@ pip install newspaper -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install jupyterlab -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install -i https://pypi.douban.com/simple elasticsearch
+
+
+## 安装下载网页视频类库
+pip install you-get -i https://pypi.tuna.tsinghua.edu.cn/simple
+## 使用命令
+you-get url
