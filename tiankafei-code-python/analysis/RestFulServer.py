@@ -22,9 +22,12 @@ import os
 # naocs心跳保持
 def send_heartbeat(nacos_client, ip, port, interval):
     while True:
-        nacos_client.send_heartbeat(service_name='analysis-algorithm', ip=ip, port=port,
-                                    cluster_name='DEFAULT')
-        time.sleep(interval)
+        try:
+            nacos_client.send_heartbeat(service_name='analysis-algorithm', ip=ip, port=port,
+                                        cluster_name='DEFAULT')
+            time.sleep(interval)
+        except:
+          pass
 
 
 # 注册nacos
