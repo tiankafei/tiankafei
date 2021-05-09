@@ -76,3 +76,8 @@ pip install -i https://pypi.douban.com/simple elasticsearch
 pip install you-get -i https://pypi.tuna.tsinghua.edu.cn/simple
 ## 使用命令
 you-get url
+
+
+
+pip install bs4 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install lxml -i https://pypi.tuna.tsinghua.edu.cn/simple
