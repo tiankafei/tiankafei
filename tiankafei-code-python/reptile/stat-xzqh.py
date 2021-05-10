@@ -47,13 +47,6 @@ def get_jc_url(url):
             t['code'] = code
             t['name'] = name
             data.append(t)
-
-            print(t)
-            f = open(os.path.join('D:\data', 't.json'), 'w', encoding='utf-8')
-            f.write(json.dumps(t))
-            f.close()
-            break
-
         cur_index += 1
     return data
 
@@ -95,8 +88,6 @@ def get_xz_url(url, suffix):
             sub_data = get_jc_url(jc_url)
             t['sub'] = sub_data
             data.append(t)
-
-            break
         else:
             code = titles[i]
 
@@ -141,8 +132,6 @@ def get_qx_url(url, suffix):
             sub_data = get_xz_url(xz_url, t['link'])
             t['sub'] = sub_data
             data.append(t)
-
-            break
         else:
             code = titles[i]
 
@@ -193,12 +182,10 @@ def get_shi_url(url, suffix, sheng_path):
 
             sub_data = get_qx_url(qx_url, t['link'])
             t['sub'] = sub_data
-            shi = json.dumps(data)
 
             f = open(os.path.join(shi_path, 't.json'), 'w', encoding='utf-8')
-            f.write(shi)
+            f.write(json.dumps(data, indent=2, ensure_ascii=False))
             f.close()
-            break
         else:
             code = titles[i]
 
@@ -226,8 +213,6 @@ def get_sheng_url(url, path):
     links = dom.xpath(xpath_link)
     titles = dom.xpath(xpath_title)
 
-    # 将每篇文章的链接 标题 评论数 点赞数放到一个字典里
-    data = []
     for i in range(len(links)):
         t = {}
         t['link'] = links[i]
@@ -235,7 +220,6 @@ def get_sheng_url(url, path):
 
         t['code'] = t['link'].replace('.html', '')
         shi_url = url.replace('index.html', t['link'])
-        data.append(t)
         sheng_path = os.path.join(path, t['code'])
         if os.path.exists(sheng_path):
             pass
@@ -243,8 +227,6 @@ def get_sheng_url(url, path):
             os.makedirs(sheng_path)
 
         time.sleep(interval * 10)
-        print(sheng_path)
-        print(t)
         get_shi_url(shi_url, t['link'], sheng_path)
 
 
