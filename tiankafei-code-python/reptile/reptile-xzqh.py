@@ -125,23 +125,23 @@ def get_shi_data(url, suffix, year_data, sheng_data):
         href = childs[0].getchildren()[0].get("href")
         qx_url = url.replace(suffix, href)
 
-        year_name = year_data['year'] + '.json'
+        year_name = year_data['year']
         year_path = os.path.join(file_directory, year_name)
 
-        sheng_name = sheng_data['code'] + '(' + sheng_data['name'] + ')' + '.json'
+        sheng_name = sheng_data['code'] + '(' + sheng_data['name'] + ')'
         sheng_path = os.path.join(year_path, sheng_name)
 
-        shi_name = shi_data['code'] + '(' + shi_data['name'] + ')' + '.json'
+        shi_name = shi_data['code'] + '(' + shi_data['name'] + ')'
         shi_path = os.path.join(sheng_path, shi_name)
         if os.path.exists(shi_path):
-            pass
+            continue
         else:
             os.makedirs(shi_path)
 
-        write_path(shi_path, year_name, year_data)
-        write_path(shi_path, sheng_name, sheng_data)
+        write_path(shi_path, (year_name + '.json'), year_data)
+        write_path(shi_path, (sheng_name + '.json'), sheng_data)
         qx_data = get_qx_data(qx_url, href)
-        write_path(shi_path, shi_name, qx_data)
+        write_path(shi_path, (shi_name + '.json'), qx_data)
 
 
 def get_sheng_data(url, year_data):
