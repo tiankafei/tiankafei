@@ -7,7 +7,7 @@ import time
 import os
 import json
 
-interval = 0.1
+interval = 1
 domain = 'http://www.stats.gov.cn'
 file_directory = 'D:\data'
 
