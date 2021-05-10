@@ -85,13 +85,18 @@ def get_qx_data(url, suffix):
         qx_data = dict()
 
         childs = county.getchildren()
-        qx_data['code'] = childs[0].getchildren()[0].text
-        qx_data['name'] = childs[1].getchildren()[0].text
-        href = childs[0].getchildren()[0].get("href")
-        tmp_url = url.replace(suffix.split('/')[-1], '')
-        xz_url = tmp_url + href
-        qx_data['sub'] = get_xz_data(xz_url, href)
-        data.append(qx_data)
+        if childs[0].getchildren():
+            qx_data['code'] = childs[0].getchildren()[0].text
+            qx_data['name'] = childs[1].getchildren()[0].text
+            href = childs[0].getchildren()[0].get("href")
+            tmp_url = url.replace(suffix.split('/')[-1], '')
+            xz_url = tmp_url + href
+            qx_data['sub'] = get_xz_data(xz_url, href)
+            data.append(qx_data)
+        else:
+            qx_data['code'] = childs[0].text
+            qx_data['name'] = childs[1].text
+            data.append(qx_data)
     return data
 
 
