@@ -44,3 +44,10 @@ if __name__ == '__main__':
     # 打印结果
     for t in data:
         print(t)
+
+
+    data = []
+    data.append(1)
+    data.append(2)
+    data.append(3)
+    print(str(data))
