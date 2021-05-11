@@ -16,7 +16,9 @@ file_directory = 'D:\data'
 def get_request_dom(url):
     # 请求头和目标网址
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36'
+        'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0'
     }
     time.sleep(interval)
     # 获取和解析网页
