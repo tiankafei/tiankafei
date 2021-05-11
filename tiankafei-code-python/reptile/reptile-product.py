@@ -26,11 +26,15 @@ def get_request_dom(url):
         print(url)
         r = requests.get(url, headers=headers)
         r.encoding = r.apparent_encoding
-        return etree.HTML(r.text)
+        dom = etree.HTML(r.text)
+        print(dom, type(dom), dir(dom))
+        return dom
     except:
         # 如果抛出异常，休眠5秒继续
         time.sleep(5)
-        get_request_dom(url)
+        dom = get_request_dom(url)
+        print(dom, type(dom), dir(dom))
+        return dom
 
 
 def get_catalog_item3_data(url):
