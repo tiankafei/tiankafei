@@ -26,7 +26,6 @@ def get_request_dom(url):
     r = requests.get(url, headers=headers)
     r.encoding = r.apparent_encoding
     dom = etree.HTML(r.text)
-    print(dom, type(dom), dir(dom))
     if dom is None:
         time.sleep(5)
         dom = get_request_dom(url)
