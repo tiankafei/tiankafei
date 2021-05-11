@@ -14,18 +14,23 @@ file_directory = 'D:\data'
 
 # 获取url的dom对象
 def get_request_dom(url):
-    # 请求头和目标网址
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
-                      'AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0'
-    }
-    time.sleep(interval)
-    # 获取和解析网页
-    print(url)
-    r = requests.get(url, headers=headers, timeout=6)
-    r.encoding = r.apparent_encoding
-    return etree.HTML(r.text)
+    try:
+        # 请求头和目标网址
+        headers = {
+            'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
+                          'AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0'
+        }
+        time.sleep(interval)
+        # 获取和解析网页
+        print(url)
+        r = requests.get(url, headers=headers)
+        r.encoding = r.apparent_encoding
+        return etree.HTML(r.text)
+    except:
+        # 如果抛出异常，休眠5秒继续
+        time.sleep(5)
+        get_request_dom(url)
 
 
 def get_jc_data(url):
