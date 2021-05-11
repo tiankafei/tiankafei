@@ -7,7 +7,7 @@ import time
 import os
 import json
 
-interval = 1
+interval = 0.1
 domain = 'http://www.stats.gov.cn'
 file_directory = 'D:\data'
 
@@ -21,7 +21,7 @@ def get_request_dom(url):
     time.sleep(interval)
     # 获取和解析网页
     print(url)
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=6)
     r.encoding = r.apparent_encoding
     return etree.HTML(r.text)
 
