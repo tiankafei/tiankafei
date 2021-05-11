@@ -49,6 +49,10 @@ def get_catalog_item3_data(url):
 
 
 def get_catalog_item2_data(url, suffix):
+    tmp_data = get_catalog_item3_data(url)
+    if tmp_data:
+        return tmp_data
+
     city_dom = get_request_dom(url)
 
     xpath_town = '//table[@class="towntable"]/tr[@class="towntr"]'
@@ -81,6 +85,10 @@ def get_catalog_item2_data(url, suffix):
 
 
 def get_catalog_item1_data(url, suffix):
+    tmp_data = get_catalog_item3_data(url)
+    if tmp_data:
+        return tmp_data
+
     city_dom = get_request_dom(url)
 
     xpath_county = '//table[@class="countytable"]/tr[@class="countytr"]'
@@ -112,13 +120,17 @@ def get_catalog_item1_data(url, suffix):
     return data
 
 
-def write_path(file_path, file_name, data):
-    f = open(os.path.join(file_path, file_name), 'w', encoding='utf-8')
+def write_path(file_path, data):
+    f = open(file_path, 'w', encoding='utf-8')
     f.write(json.dumps(data, indent=2, ensure_ascii=False))
     f.close()
 
 
 def get_catalog_item_data(url):
+    tmp_data = get_catalog_item3_data(url)
+    if tmp_data:
+        return tmp_data
+
     city_dom = get_request_dom(url)
     time.sleep(interval * 5)
 
@@ -195,8 +207,13 @@ if __name__ == '__main__':
     for catalog in catalgos:
         catalog_path = os.path.join(file_directory, catalog['text'])
         if os.path.exists(catalog_path):
-            continue
+            pass
         else:
             os.makedirs(catalog_path)
+
+        file_path = os.path.join(catalog_path, (catalog['text'] + '.json'))
+        if os.path.exists(file_path):
+            continue
+
         catalog_item_data = get_catalog_item_data(catalog['link'])
-        write_path(catalog_path, (catalog['text'] + '.json'), catalog_item_data)
+        write_path(file_path, catalog_item_data)
