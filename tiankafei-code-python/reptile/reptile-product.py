@@ -14,27 +14,23 @@ file_directory = 'D:\data\catalogs'
 
 # 获取url的dom对象
 def get_request_dom(url):
-    try:
-        # 请求头和目标网址
-        headers = {
-            'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
-                          'AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0'
-        }
-        time.sleep(interval)
-        # 获取和解析网页
-        print(url)
-        r = requests.get(url, headers=headers)
-        r.encoding = r.apparent_encoding
-        dom = etree.HTML(r.text)
-        print(dom, type(dom), dir(dom))
-        return dom
-    except:
-        # 如果抛出异常，休眠5秒继续
+    # 请求头和目标网址
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0'
+    }
+    time.sleep(interval)
+    # 获取和解析网页
+    print(url)
+    r = requests.get(url, headers=headers)
+    r.encoding = r.apparent_encoding
+    dom = etree.HTML(r.text)
+    print(dom, type(dom), dir(dom))
+    if dom is None:
         time.sleep(5)
         dom = get_request_dom(url)
-        print(dom, type(dom), dir(dom))
-        return dom
+    return dom
 
 
 def get_catalog_item3_data(url):
