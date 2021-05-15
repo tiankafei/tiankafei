@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.ruoyi.business.api.RemoteAttributesService;
 import com.ruoyi.business.api.RemoteFeaturesService;
 import com.ruoyi.business.api.constants.FeaturesConstants;
+import com.ruoyi.business.api.domain.SysAttributes;
 import com.ruoyi.business.api.domain.SysFeatures;
 import com.ruoyi.common.core.enums.ApiStatusEnum;
 import com.ruoyi.common.core.web.domain.ApiResult;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
+import com.ruoyi.common.core.web.service.impl.QueryDbNameService;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,7 +28,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.tiankafei.db.entity.FieldEntity;
+import org.tiankafei.db.param.FieldNameListParam;
+import org.tiankafei.db.param.FieldParam;
 import org.tiankafei.db.service.DbService;
+import org.tiankafei.db.service.FieldService;
 import org.tiankafei.user.constants.UserConstants;
 import org.tiankafei.user.entity.DictInfoEntity;
 import org.tiankafei.user.mapper.DictInfoMapper;
@@ -58,10 +65,19 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     private DbService dbService;
 
     @Autowired
+    private FieldService fieldService;
+
+    @Autowired
+    private QueryDbNameService queryDbNameService;
+
+    @Autowired
     private DefaultIdentifierGenerator defaultIdentifierGenerator;
 
     @Autowired
     private RemoteFeaturesService remoteFeaturesService;
+
+    @Autowired
+    private RemoteAttributesService remoteAttributesService;
 
     /**
      * 校验 系统数据字典表 是否已经存在
@@ -378,14 +394,56 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         super.updateById(dictInfoEntity);
 
         if (Boolean.TRUE.equals(status)) {
+            List<SysAttributes> sysAttributesList = remoteAttributesService.list(dictInfoEntity.getFeaturesId()).getData();
             // 启用
             String dataTable = dictInfoEntity.getDataTable();
-            if (!dbService.checkTableExists(dataTable)) {
+            if (dbService.checkTableExists(dataTable)) {
+                List<SysAttributes> noExistsAttributesList = findNoExistsAttributes(dataTable, sysAttributesList);
+                addAttributes(dataTable, noExistsAttributesList);
+            } else {
                 // 物理表不存在时创建字段数据表
                 dbService.createTable("sys_dict_table", dataTable, dictInfoEntity.getDictName() + "字典数据表");
+                if (CollectionUtils.isNotEmpty(sysAttributesList)) {
+                    addAttributes(dataTable, sysAttributesList);
+                }
             }
         }
         return Boolean.TRUE;
+    }
+
+    private void addAttributes(String dataTable, List<SysAttributes> sysAttributesList) {
+        String dbName = queryDbNameService.getDbName();
+        for (SysAttributes sysAttributes : sysAttributesList) {
+            FieldParam fieldParam = new FieldParam(dbName, dataTable, sysAttributes.getCode());
+            fieldParam.setColumnType(sysAttributes.getDataType());
+            fieldParam.setColumnLength(sysAttributes.getDataLength());
+            fieldParam.setColumnPrecision(sysAttributes.getDataPrecision());
+            fieldParam.setIsNullable("1".equals(sysAttributes.getIsNull()) ? Boolean.TRUE : Boolean.FALSE);
+            fieldParam.setDefaultValue(sysAttributes.getDefaultValue());
+            fieldParam.setComments(sysAttributes.getName());
+
+            // 新增字段
+            dbService.addColumn(fieldParam);
+        }
+    }
+
+    /**
+     * 找出不存在的属性，用于新增字段
+     *
+     * @param dataTable
+     * @param sysAttributesList
+     * @return
+     * @throws Exception
+     */
+    private List<SysAttributes> findNoExistsAttributes(String dataTable, List<SysAttributes> sysAttributesList) throws Exception {
+        // 获取物理表的字段，看属性代码是否已经存在了
+        FieldNameListParam fieldNameListParam = new FieldNameListParam();
+        fieldNameListParam.setTableSchema(queryDbNameService.getDbName());
+        fieldNameListParam.setTableName(dataTable);
+        List<FieldEntity> fieldEntityList = fieldService.getFieldEntityList(fieldNameListParam);
+        Map<String, String> existsAttributesMap = fieldEntityList.stream().collect(Collectors.toMap(FieldEntity::getFieldName, FieldEntity::getColumnComment));
+
+        return sysAttributesList.stream().filter(sysAttributes -> !existsAttributesMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
     }
 
     /**
