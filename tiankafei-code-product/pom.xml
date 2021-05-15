@@ -71,6 +71,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 业务接口 -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-api-business</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-user-common</artifactId>

@@ -6,6 +6,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.ruoyi.business.api.RemoteFeaturesService;
+import com.ruoyi.business.api.constants.FeaturesConstants;
+import com.ruoyi.business.api.domain.SysFeatures;
+import com.ruoyi.common.core.enums.ApiStatusEnum;
+import com.ruoyi.common.core.web.domain.ApiResult;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -54,6 +59,9 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
     @Autowired
     private DefaultIdentifierGenerator defaultIdentifierGenerator;
+
+    @Autowired
+    private RemoteFeaturesService remoteFeaturesService;
 
     /**
      * 校验 系统数据字典表 是否已经存在
@@ -115,7 +123,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         if (StringUtils.isNotBlank(dataTable)) {
             boolean tableExists = dbService.checkTableExists(dataTable);
             if (tableExists) {
-                throw new UserException("字典数据表：" + dataTable + " 已经存在！");
+                throw new UserException("代码数据表：" + dataTable + " 已经存在！");
             }
         } else {
             dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + id);
@@ -124,10 +132,24 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         Boolean status = dictInfoVo.getStatus();
         if (status) {
             // 启用时：创建字段数据表
-            dbService.createTable("sys_dict_table" , dictInfoVo.getDataTable(), dictInfoVo.getDictName() + "字典数据表");
+            dbService.createTable("sys_dict_table", dictInfoVo.getDataTable(), dictInfoVo.getDictName() + "字典数据表");
         }
-        super.save(dictInfoEntity);
-        return dictInfoEntity.getId();
+
+        SysFeatures sysFeatures = new SysFeatures();
+        sysFeatures.setCode(dictInfoVo.getDictCode());
+        sysFeatures.setName(dictInfoVo.getDictName());
+        sysFeatures.setStatus(false);
+        sysFeatures.setSerialNumber(0L);
+        sysFeatures.setUseType(FeaturesConstants.FEATURES_USE_TYPE_SYS);
+
+        ApiResult<Long> result = remoteFeaturesService.add(sysFeatures);
+        if (ApiStatusEnum.OK.getStatus().equals(result.getCode())) {
+            dictInfoEntity.setFeaturesId(result.getData());
+
+            super.save(dictInfoEntity);
+            return dictInfoEntity.getId();
+        }
+        throw new UserException("新增代码表失败");
     }
 
     /**
@@ -143,31 +165,73 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             // 生成序列号
             Long id = defaultIdentifierGenerator.nextId(null);
             // 批量新增时的字典代码集合
-            List<String> dictCodeList = Lists.newArrayList();
+            List<String> codeList = Lists.newArrayList();
+            // 批量新增时的字典数据表集合
+            List<String> tableList = Lists.newArrayList();
+            // 批量新增时的字典时创建的对应的功能属性集合
+            List<SysFeatures> sysFeaturesList = Lists.newArrayList();
             // 批量保存数据字典
             List<DictInfoEntity> dictInfoEntityList = Lists.newArrayList();
             for (int index = 0, length = dictInfoVoList.size(); index < length; index++) {
                 DictInfoVo dictInfoVo = dictInfoVoList.get(index);
-                dictCodeList.add(dictInfoVo.getDictCode());
+                codeList.add(dictInfoVo.getDictCode());
 
                 DictInfoEntity dictInfoEntity = new DictInfoEntity();
                 BeanUtils.copyProperties(dictInfoVo, dictInfoEntity);
-                dictInfoEntity.setId(id + 1);
-                dictInfoEntity.setStatus(Boolean.FALSE);
-                dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + (id + 1));
+                dictInfoEntity.setId(id + index);
+                // 数据表
+                if (StringUtils.isNotBlank(dictInfoVo.getDataTable())) {
+                    tableList.add(dictInfoVo.getDataTable());
+                } else {
+                    dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + dictInfoEntity.getId());
+                }
                 dictInfoEntityList.add(dictInfoEntity);
+
+                SysFeatures sysFeatures = new SysFeatures();
+                sysFeatures.setCode(dictInfoVo.getDictCode());
+                sysFeatures.setName(dictInfoVo.getDictName());
+                sysFeatures.setStatus(false);
+                sysFeatures.setSerialNumber(0L);
+                sysFeatures.setUseType(FeaturesConstants.FEATURES_USE_TYPE_SYS);
+                sysFeaturesList.add(sysFeatures);
             }
             // 批量新增时校验字典代码是否已经存在
             LambdaQueryWrapper<DictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
             lambdaQueryWrapper.select(DictInfoEntity::getId);
-            lambdaQueryWrapper.in(DictInfoEntity::getDictCode, dictCodeList);
-            List<String> alreadyDictCodeList = super.list(lambdaQueryWrapper).stream().map(dictInfoEntity -> dictInfoEntity.getDictCode()).collect(Collectors.toList());
-            if (CollectionUtils.isNotEmpty(alreadyDictCodeList)) {
-                throw new UserException("字典代码：" + alreadyDictCodeList + " 已经存在！");
+            lambdaQueryWrapper.in(DictInfoEntity::getDictCode, codeList);
+            List<String> alreadyCodeList = super.list(lambdaQueryWrapper).stream().map(dictInfoEntity -> dictInfoEntity.getDictCode()).collect(Collectors.toList());
+            if (CollectionUtils.isNotEmpty(alreadyCodeList)) {
+                throw new UserException("字典代码：" + alreadyCodeList + " 已经存在！");
             }
-            // 执行保存
-            super.saveBatch(dictInfoEntityList);
-            return dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getId()).collect(Collectors.toList());
+
+            // 批量新增时校验字典数据表是否已经存在
+            if (CollectionUtils.isNotEmpty(tableList)) {
+                lambdaQueryWrapper = new LambdaQueryWrapper();
+                lambdaQueryWrapper.select(DictInfoEntity::getId);
+                lambdaQueryWrapper.in(DictInfoEntity::getDataTable, tableList);
+                List<String> alreadyTableList = super.list(lambdaQueryWrapper).stream().map(dictInfoEntity -> dictInfoEntity.getDataTable()).collect(Collectors.toList());
+                if (CollectionUtils.isNotEmpty(alreadyTableList)) {
+                    throw new UserException("字典数据表：" + alreadyTableList + " 已经存在！");
+                }
+            }
+
+            // 如果启用，创建物理表
+            for (DictInfoEntity dictInfoEntity : dictInfoEntityList) {
+                if (dictInfoEntity.getStatus()) {
+                    // 启用时：创建字段数据表
+                    dbService.createTable("sys_dict_table", dictInfoEntity.getDataTable(), dictInfoEntity.getDictName() + "字典数据表");
+                }
+            }
+
+            // 创建代码表对应的功能属性维护的数据
+            ApiResult<List<Long>> result = remoteFeaturesService.batchAdd(sysFeaturesList);
+            if (ApiStatusEnum.OK.getStatus().equals(result.getCode())) {
+                // 批量保存代码表数据
+                super.saveBatch(dictInfoEntityList);
+                return dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getId()).collect(Collectors.toList());
+            } else {
+                throw new UserException("批量新增代码表失败！");
+            }
         }
         return Lists.newArrayList();
     }
@@ -183,6 +247,10 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     public boolean deleteDictInfoService(String id) throws Exception {
         if (StringUtils.isNotBlank(id)) {
             DictInfoEntity oldDictInfoEntity = dictInfoMapper.selectById(id);
+            // 删除代码表对应的功能属性维护的数据
+            if (oldDictInfoEntity.getFeaturesId() != null) {
+                remoteFeaturesService.remove(new Long[]{oldDictInfoEntity.getFeaturesId()});
+            }
             // 删除字典数据
             boolean flag = super.removeById(id);
             // drop 字典数据表
@@ -219,7 +287,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             boolean flag = super.removeByIds(idList);
             // drop 字典数据表
             for (String dataTable : dataTableList) {
-                if(dbService.checkTableExists(dataTable)){
+                if (dbService.checkTableExists(dataTable)) {
                     dbService.dropTable(dataTable);
                 }
             }
@@ -287,7 +355,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             boolean tableExists = dbService.checkTableExists(oldDictInfoEntity.getDataTable());
             if (!tableExists) {
                 // 启用时：创建字段数据表
-                dbService.createTable("sys_dict_table" , oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
+                dbService.createTable("sys_dict_table", oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
             }
         }
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
@@ -306,7 +374,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             String dataTable = dictInfoEntity.getDataTable();
             if (!dbService.checkTableExists(dataTable)) {
                 // 物理表不存在时创建字段数据表
-                dbService.createTable("sys_dict_table" , dataTable, dictInfoEntity.getDictName() + "字典数据表");
+                dbService.createTable("sys_dict_table", dataTable, dictInfoEntity.getDictName() + "字典数据表");
             }
         }
         return Boolean.TRUE;

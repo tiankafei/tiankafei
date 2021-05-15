@@ -96,6 +96,10 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
     @TableField("tenant_id")
     private Long tenantId;
 
+    @ApiModelProperty(value = "功能属性id")
+    @TableField("features_id")
+    private Long featuresId;
+
 
     public static final String ID = "id";
 
@@ -124,6 +128,8 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
     public static final String UPDATE_USER_ID = "update_user_id";
 
     public static final String TENANT_ID = "tenant_id";
+
+    public static final String FEATURES_ID = "features_id";
 
     @Override
     protected Serializable pkVal() {
