@@ -279,10 +279,18 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
             // 先把要删的字典的数据查出来，再进行删除，否则删除之后，数据表就查不到了
             LambdaQueryWrapper<DictInfoEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-            lambdaQueryWrapper.select(DictInfoEntity::getDataTable);
+            lambdaQueryWrapper.select(DictInfoEntity::getDataTable, DictInfoEntity::getFeaturesId);
             lambdaQueryWrapper.in(DictInfoEntity::getId, idList);
             List<DictInfoEntity> dictInfoEntityList = super.list(lambdaQueryWrapper);
             List<String> dataTableList = dictInfoEntityList.stream().map(dictInfoEntity -> dictInfoEntity.getDataTable()).collect(Collectors.toList());
+
+            // 删除代码表对应的功能属性维护的数据
+            List<Long> featuresIds = dictInfoEntityList.stream().filter(dictInfoEntity -> dictInfoEntity.getFeaturesId() != null).map(dictInfoEntity -> dictInfoEntity.getFeaturesId()).collect(Collectors.toList());
+            if (CollectionUtils.isNotEmpty(featuresIds)) {
+                Long[] longs = featuresIds.toArray(new Long[]{});
+                remoteFeaturesService.remove(longs);
+            }
+
             // 删除字典数据
             boolean flag = super.removeByIds(idList);
             // drop 字典数据表
