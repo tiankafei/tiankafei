@@ -418,7 +418,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             fieldParam.setColumnType(sysAttributes.getDataType());
             fieldParam.setColumnLength(sysAttributes.getDataLength());
             fieldParam.setColumnPrecision(sysAttributes.getDataPrecision());
-            fieldParam.setIsNullable("1".equals(sysAttributes.getIsNull()) ? Boolean.TRUE : Boolean.FALSE);
+            fieldParam.setIsNullable("Y".equals(sysAttributes.getIsNull()) ? Boolean.TRUE : Boolean.FALSE);
             fieldParam.setDefaultValue(sysAttributes.getDefaultValue());
             fieldParam.setComments(sysAttributes.getName());
 
