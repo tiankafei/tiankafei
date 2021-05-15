@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.ruoyi.common.core.utils.DynamicTableNameUtil;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
+import com.ruoyi.common.core.web.service.impl.QueryDbNameService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,6 +19,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.tiankafei.db.entity.FieldEntity;
+import org.tiankafei.db.param.FieldNameListParam;
+import org.tiankafei.db.service.FieldService;
 import org.tiankafei.user.entity.DictInfoEntity;
 import org.tiankafei.user.entity.DictTableEntity;
 import org.tiankafei.user.mapper.DictTableMapper;
@@ -48,6 +53,12 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     @Autowired
     private DictInfoService dictInfoService;
 
+    @Autowired
+    private FieldService fieldService;
+
+    @Autowired
+    private QueryDbNameService queryDbNameService;
+
     /**
      * 获取系统字典的数据表
      * @param dictId
@@ -58,6 +69,18 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         return dictInfoEntity.getDataTable();
     }
 
+
+    @Override
+    public Map<String, FieldEntity> getDictTableFixedColumnNameMap() throws Exception {
+        // 获取物理表的字段，看属性代码是否已经存在了
+        FieldNameListParam fieldNameListParam = new FieldNameListParam();
+        fieldNameListParam.setTableSchema(queryDbNameService.getDbName());
+        fieldNameListParam.setTableName("sys_dict_table");
+        List<FieldEntity> fieldEntityList = fieldService.getFieldEntityList(fieldNameListParam);
+
+        Map<String, FieldEntity> fixedColumnNameMap = fieldEntityList.stream().collect(Collectors.toMap(FieldEntity::getFieldName, (fieldEntity) -> fieldEntity));
+        return fixedColumnNameMap;
+    }
 
     /**
      * 校验 系统数据字典的数据表 是否已经存在

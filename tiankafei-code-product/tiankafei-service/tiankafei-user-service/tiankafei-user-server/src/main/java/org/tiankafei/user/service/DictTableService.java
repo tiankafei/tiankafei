@@ -3,6 +3,8 @@ package org.tiankafei.user.service;
 import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import org.tiankafei.db.entity.FieldEntity;
 import org.tiankafei.user.entity.DictTableEntity;
 import org.tiankafei.user.param.DictTableCheckParam;
 import org.tiankafei.user.param.DictTableCountParam;
@@ -21,6 +23,13 @@ import com.ruoyi.common.core.web.page.Paging;
  * @since 1.0
  */
 public interface DictTableService extends BaseService<DictTableEntity> {
+
+    /**
+     * 获取字典模板表固定字段名集合
+     *
+     * @return
+     */
+    Map<String, FieldEntity> getDictTableFixedColumnNameMap() throws Exception;
 
     /**
      * 校验 系统数据字典的数据表 是否已经存在

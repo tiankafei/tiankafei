@@ -42,6 +42,7 @@ import org.tiankafei.user.param.DictInfoDeleteParam;
 import org.tiankafei.user.param.DictInfoListParam;
 import org.tiankafei.user.param.DictInfoPageParam;
 import org.tiankafei.user.service.DictInfoService;
+import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictInfoVo;
 import org.tiankafei.web.common.exception.UserException;
 import com.ruoyi.common.core.web.page.Paging;
@@ -78,6 +79,9 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
     @Autowired
     private RemoteAttributesService remoteAttributesService;
+
+    @Autowired
+    private DictTableService dictTableService;
 
     /**
      * 校验 系统数据字典表 是否已经存在
@@ -394,21 +398,82 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         super.updateById(dictInfoEntity);
 
         if (Boolean.TRUE.equals(status)) {
+            // 新增的业务属性集合
             List<SysAttributes> sysAttributesList = remoteAttributesService.list(dictInfoEntity.getFeaturesId()).getData();
+            // 字典模板表的字段名集合（固定16个字段）
+            Map<String, FieldEntity> dictTableFixedColumnNameMap = dictTableService.getDictTableFixedColumnNameMap();
             // 启用
             String dataTable = dictInfoEntity.getDataTable();
             if (dbService.checkTableExists(dataTable)) {
-                List<SysAttributes> noExistsAttributesList = findNoExistsAttributes(dataTable, sysAttributesList);
-                addAttributes(dataTable, noExistsAttributesList);
+                ///
+                /**
+                 *  这里的逻辑有一点儿绕，举例说明
+                 *      1.sysAttributesList：新传入的属性集合
+                 *      2.dictTableFixedColumnNameMap：固定模板表的字段名集合；固定字段个数16个
+                 *      3.curTableColumnNameMap：当前数据表的字段名集合
+                 *
+                 *  数据表在创建表的第一次，传入了10个业务属性，其中有1个属性的代码，正好是模板表的字段，那么这个属性将不进行创建字段，下面这行代码就是为了过滤掉这个属性
+                 *      sysAttributesList = sysAttributesList.stream().filter(sysAttributes -> !dictTableFixedColumnNameMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
+                 *      此时在该表中创建了9个属性的字段
+                 *
+                 *  当数据表存在时，说明时第二次进来了
+                 *      1.依然过滤掉属性代码和模板表字段相同的属性
+                 *          sysAttributesList = sysAttributesList.stream().filter(sysAttributes -> !dictTableFixedColumnNameMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
+                 *      2.此时当前物理表的字段有16+9=25个字段
+                 *          Map<String, FieldEntity> curTableColumnNameMap = findCurTableColumnNameMap(dataTable);
+                 *      3.当前物理表字段集合删除模板表的16个字段，剩余9个属性字段
+                 *          removeAll(curTableColumnNameMap, dictTableFixedColumnNameMap);
+                 *      4.如果当前传来的属性代码，不在这9个当中，则说明有新增的属性需要创建字段
+                 *          List<SysAttributes> addSysAttributesList = sysAttributesList.stream().filter(sysAttributes -> !curTableColumnNameMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
+                 *          如果当前传来的属性代码和这个9个字段名完全一样，说明没有要新增的字段
+                 *      5.剩余这9个字段，过滤掉传来的属性代码，如果还有剩余，则说明有字段要进行删除
+                 *          Map<String, SysAttributes> sysAttributesMap = sysAttributesList.stream().collect(Collectors.toMap(SysAttributes::getCode, (sysAttributes) -> sysAttributes));
+                 *          removeAll(curTableColumnNameMap, sysAttributesMap);
+                 *          if (!curTableColumnNameMap.isEmpty()) {
+                 *
+                 *          }
+                 *
+                 */
+                // 过滤掉属性代码和模板表字段相同的属性
+                sysAttributesList = sysAttributesList.stream().filter(sysAttributes -> !dictTableFixedColumnNameMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
+
+                // 当前物理表字段集合删除模板表字段
+                Map<String, FieldEntity> curTableColumnNameMap = findCurTableColumnNameMap(dataTable);
+                removeAll(curTableColumnNameMap, dictTableFixedColumnNameMap);
+
+                // 如果当前传来的属性代码，不在上面的集合当中，则说明有新增的属性需要创建字段
+                List<SysAttributes> addSysAttributesList = sysAttributesList.stream().filter(sysAttributes -> !curTableColumnNameMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
+                addAttributes(dataTable, addSysAttributesList);
+
+                // 当前物理表字段剩余的集合，过滤掉传来的属性代码，如果还有剩余，则说明有字段要进行删除
+                Map<String, SysAttributes> sysAttributesMap = sysAttributesList.stream().collect(Collectors.toMap(SysAttributes::getCode, (sysAttributes) -> sysAttributes));
+                removeAll(curTableColumnNameMap, sysAttributesMap);
+                if (!curTableColumnNameMap.isEmpty()) {
+                    Set<Map.Entry<String, FieldEntity>> entries = curTableColumnNameMap.entrySet();
+                    for (Map.Entry<String, FieldEntity> entry : entries) {
+                        FieldEntity fieldEntity = entry.getValue();
+                        dbService.dropColumn(new FieldParam(fieldEntity.getTableSchema(), fieldEntity.getTableName(), fieldEntity.getFieldName()));
+                    }
+                }
             } else {
                 // 物理表不存在时创建字段数据表
                 dbService.createTable("sys_dict_table", dataTable, dictInfoEntity.getDictName() + "字典数据表");
+                sysAttributesList = sysAttributesList.stream().filter(sysAttributes -> !dictTableFixedColumnNameMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
                 if (CollectionUtils.isNotEmpty(sysAttributesList)) {
                     addAttributes(dataTable, sysAttributesList);
                 }
             }
         }
         return Boolean.TRUE;
+    }
+
+    private <T1, T2> void removeAll(Map<String, T1> map1, Map<String, T2> map2){
+        List<String> keyList = Lists.newArrayList(map1.keySet());
+        for (String key : keyList) {
+            if(map2.containsKey(key)){
+                map1.remove(key);
+            }
+        }
     }
 
     private void addAttributes(String dataTable, List<SysAttributes> sysAttributesList) {
@@ -428,22 +493,20 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     }
 
     /**
-     * 找出不存在的属性，用于新增字段
+     * 获取当前吴丽奥的字段名集合
      *
      * @param dataTable
-     * @param sysAttributesList
      * @return
      * @throws Exception
      */
-    private List<SysAttributes> findNoExistsAttributes(String dataTable, List<SysAttributes> sysAttributesList) throws Exception {
-        // 获取物理表的字段，看属性代码是否已经存在了
+    private Map<String, FieldEntity> findCurTableColumnNameMap(String dataTable) throws Exception {
         FieldNameListParam fieldNameListParam = new FieldNameListParam();
         fieldNameListParam.setTableSchema(queryDbNameService.getDbName());
         fieldNameListParam.setTableName(dataTable);
         List<FieldEntity> fieldEntityList = fieldService.getFieldEntityList(fieldNameListParam);
-        Map<String, String> existsAttributesMap = fieldEntityList.stream().collect(Collectors.toMap(FieldEntity::getFieldName, FieldEntity::getColumnComment));
+        Map<String, FieldEntity> curTableColumnNameMap = fieldEntityList.stream().collect(Collectors.toMap(FieldEntity::getFieldName, (fieldEntity) -> fieldEntity));
 
-        return sysAttributesList.stream().filter(sysAttributes -> !existsAttributesMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
+        return curTableColumnNameMap;
     }
 
     /**
