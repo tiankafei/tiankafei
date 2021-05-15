@@ -62,30 +62,6 @@ public class DictTableVo extends BaseQueryVo {
     @ApiModelProperty(value = "所在层级")
     private Integer level;
 
-    @ApiModelProperty(value = "计量单位1")
-    @Size(max = 10, message = "计量单位1长度不能超过 10 ！")
-    private String unit1;
-
-    @ApiModelProperty(value = "计量单位2")
-    @Size(max = 10, message = "计量单位2长度不能超过 10 ！")
-    private String unit2;
-
-    @ApiModelProperty(value = "计量单位3")
-    @Size(max = 10, message = "计量单位3长度不能超过 10 ！")
-    private String unit3;
-
-    @ApiModelProperty(value = "计量单位4")
-    @Size(max = 10, message = "计量单位4长度不能超过 10 ！")
-    private String unit4;
-
-    @ApiModelProperty(value = "计量单位5")
-    @Size(max = 10, message = "计量单位5长度不能超过 10 ！")
-    private String unit5;
-
-    @ApiModelProperty(value = "计量单位6")
-    @Size(max = 10, message = "计量单位6长度不能超过 10 ！")
-    private String unit6;
-
     @ApiModelProperty(value = "乐观锁版本")
     private Integer version;
 
