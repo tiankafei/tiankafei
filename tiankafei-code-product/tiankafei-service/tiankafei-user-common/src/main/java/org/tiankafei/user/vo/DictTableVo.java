@@ -104,18 +104,6 @@ public class DictTableVo extends BaseQueryVo {
 
     public static final String LEVEL = "level";
 
-    public static final String UNIT1 = "unit1";
-
-    public static final String UNIT2 = "unit2";
-
-    public static final String UNIT3 = "unit3";
-
-    public static final String UNIT4 = "unit4";
-
-    public static final String UNIT5 = "unit5";
-
-    public static final String UNIT6 = "unit6";
-
     public static final String VERSION = "version";
 
     public static final String DELETE_MARK = "delete_mark";
