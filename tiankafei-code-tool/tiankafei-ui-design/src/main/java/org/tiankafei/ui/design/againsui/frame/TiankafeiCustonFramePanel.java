@@ -1,12 +1,12 @@
 package org.tiankafei.ui.design.againsui.frame;
 
-import com.sun.awt.AWTUtilities;
+//import com.sun.awt.AWTUtilities;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
+//import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import org.tiankafei.ui.design.adapter.TiankafeiUiResizeAdapter;
 import org.tiankafei.ui.design.againsui.TiankafeiFrame;
@@ -68,7 +68,7 @@ public class TiankafeiCustonFramePanel {
         //去掉JFrame的标题栏
         tkfFrame.setUndecorated(true);
         //设置圆角
-        AWTUtilities.setWindowShape(tkfFrame, new RoundRectangle2D.Double(0.0D, 0.0D, tiankafeiFrame.getWidth(), tiankafeiFrame.getHeight(), 15.0D, 15.0D));
+//        AWTUtilities.setWindowShape(tkfFrame, new RoundRectangle2D.Double(0.0D, 0.0D, tiankafeiFrame.getWidth(), tiankafeiFrame.getHeight(), 15.0D, 15.0D));
 
         if (tiankafeiFrameAttributeVO.isFrameResizable()) {
             //窗口拉伸方法
@@ -287,11 +287,11 @@ public class TiankafeiCustonFramePanel {
                 int screenWidth = (int) TiankafeiComponentUtil.getScreenWidth();
                 int screenHeight = (int) TiankafeiComponentUtil.getScreenHeight();
                 /** 设置圆角 */
-                AWTUtilities.setWindowShape(tkfFrame, new RoundRectangle2D.Double(0.0D, 0.0D, screenWidth, screenHeight, 15.0D, 15.0D));
+//                AWTUtilities.setWindowShape(tkfFrame, new RoundRectangle2D.Double(0.0D, 0.0D, screenWidth, screenHeight, 15.0D, 15.0D));
             } else {
                 tkfFrame.setExtendedState(TkfFrame.NORMAL);
                 /** 设置圆角 */
-                AWTUtilities.setWindowShape(tkfFrame, new RoundRectangle2D.Double(0.0D, 0.0D, tiankafeiFrameAttributeVO.getRememberWidth(), tiankafeiFrameAttributeVO.getRememberHeight(), 15.0D, 15.0D));
+//                AWTUtilities.setWindowShape(tkfFrame, new RoundRectangle2D.Double(0.0D, 0.0D, tiankafeiFrameAttributeVO.getRememberWidth(), tiankafeiFrameAttributeVO.getRememberHeight(), 15.0D, 15.0D));
             }
         }
     }

@@ -1,10 +1,10 @@
 package org.tiankafei.ui.design.adapter;
 
-import com.sun.awt.AWTUtilities;
+//import com.sun.awt.AWTUtilities;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
+//import java.awt.geom.RoundRectangle2D;
 import javax.swing.JFrame;
 import org.tiankafei.common.util.LogUtil;
 
@@ -121,7 +121,7 @@ public class TiankafeiUiResizeAdapter extends MouseAdapter {
 
         frame.setBounds(nextx, nexty, nextWidth, nextHeight);
         /** 设置圆角 */
-        AWTUtilities.setWindowShape(frame, new RoundRectangle2D.Double(0.0D, 0.0D, nextWidth, nextHeight, 15.0D, 15.0D));
+//        AWTUtilities.setWindowShape(frame, new RoundRectangle2D.Double(0.0D, 0.0D, nextWidth, nextHeight, 15.0D, 15.0D));
         frame.setSize(nextWidth, nextHeight);
     }
 
