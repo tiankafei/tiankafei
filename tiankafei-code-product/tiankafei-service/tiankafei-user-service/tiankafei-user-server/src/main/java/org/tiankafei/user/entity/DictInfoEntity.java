@@ -66,6 +66,13 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
     @TableField("data_table")
     private String dataTable;
 
+    /**
+     * 用途类型：1系统用，2业务使用
+     */
+    @Size(max = 1, message = "用途类型：1系统用，2业务使用 长度不能超过1！")
+    @ApiModelProperty(value = "用途类型：1系统用，2业务使用")
+    private String useType;
+
     @ApiModelProperty(value = "乐观锁版本")
     @TableField("version")
 //    @Version
@@ -114,6 +121,8 @@ public class DictInfoEntity extends Model<DictInfoEntity> {
     public static final String REMARKS = "remarks";
 
     public static final String DATA_TABLE = "data_table";
+
+    public static final String USE_TYPE = "use_type";
 
     public static final String VERSION = "version";
 

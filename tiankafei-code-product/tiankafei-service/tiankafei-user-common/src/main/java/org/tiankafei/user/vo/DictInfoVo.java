@@ -54,6 +54,13 @@ public class DictInfoVo extends BaseQueryVo {
     @Pattern(regexp = "^$|^[a-zA-Z][a-zA-Z0-9_]{9,29}$" , message = "数据表只能以字母开头，包含字母、数字、下划线，且长度只能在10-30之间")
     private String dataTable;
 
+    /**
+     * 用途类型：1系统用，2业务使用
+     */
+    @Size(max = 1, message = "用途类型：1系统用，2业务使用 长度不能超过1！")
+    @ApiModelProperty(value = "用途类型：1系统用，2业务使用")
+    private String useType;
+
     @ApiModelProperty(value = "版本")
     @NotNull(message = "版本不能为空")
     private Integer version;
@@ -93,6 +100,8 @@ public class DictInfoVo extends BaseQueryVo {
     public static final String REMARKS = "remarks";
 
     public static final String DATA_TABLE = "data_table";
+
+    public static final String USE_TYPE = "use_type";
 
     public static final String VERSION = "version";
 

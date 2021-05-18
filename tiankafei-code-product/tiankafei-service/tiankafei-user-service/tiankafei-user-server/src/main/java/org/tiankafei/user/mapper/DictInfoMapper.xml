@@ -11,6 +11,7 @@
         <result column="description" property="description"/>
         <result column="remarks" property="remarks"/>
         <result column="data_table" property="dataTable"/>
+        <result column="use_type" property="useType"/>
         <result column="version" property="version"/>
         <result column="delete_mark" property="deleteMark"/>
         <result column="create_time" property="createTime"/>
@@ -30,6 +31,7 @@
         <result column="description" property="description"/>
         <result column="remarks" property="remarks"/>
         <result column="data_table" property="dataTable"/>
+        <result column="use_type" property="useType"/>
         <result column="version" property="version"/>
         <result column="delete_mark" property="deleteMark"/>
         <result column="create_time" property="createTime"/>
@@ -42,7 +44,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, dict_code, dict_name, status, description, remarks, data_table, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id, features_id
+        id, dict_code, dict_name, status, description, remarks, data_table, use_type, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id, features_id
     </sql>
 
     <!-- 校验 系统数据字典表 是否已经存在 -->
@@ -100,6 +102,9 @@
             <if test="param.deleteMark != null">
                 and delete_mark = #{param.deleteMark}
             </if>
+            <if test="param.useType != null and param.useType != ''">
+                and use_type = #{param.useType}
+            </if>
         </where>
     </select>
 
@@ -133,6 +138,9 @@
             </if>
             <if test="param.deleteMark != null">
                 and delete_mark = #{param.deleteMark}
+            </if>
+            <if test="param.useType != null and param.useType != ''">
+                and use_type = #{param.useType}
             </if>
         </where>
     </select>

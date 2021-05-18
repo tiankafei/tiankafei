@@ -482,6 +482,32 @@ public class BaseTest {
         System.out.println(t1 + ":" + t2);
     }
 
+    @Test
+    public void test16(){
+        String filePath = "D:\\data";
+        File file1 = new File(filePath);
+        File[] files1 = file1.listFiles();
+        for (File file2 : files1) {
+            if(file2.isDirectory()){
+                String name = file2.getName();
+                if(name.endsWith("年")){
+                    File[] files2 = file2.listFiles();
+                    for(File file3 : files2){
+                        File[] files3 = file3.listFiles();
+                        for(File file4 : files3){
+                            if(file4.listFiles().length != 3){
+                                System.out.println(file4.getPath());
+                                System.out.println(file4.listFiles().length);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
     public Tuple2<Integer, Integer> replace(int t1, int t2){
         return Tuple.of(t1,t2);
     }

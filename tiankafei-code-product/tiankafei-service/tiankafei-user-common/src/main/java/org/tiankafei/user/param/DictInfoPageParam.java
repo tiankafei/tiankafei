@@ -2,6 +2,7 @@ package org.tiankafei.user.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -34,5 +35,9 @@ public class DictInfoPageParam extends BaseOrderQueryParam {
 
     @ApiModelProperty(value = "系统数据字典状态")
     private Boolean status;
+
+    @Size(max = 1, message = "用途类型：1系统用，2业务使用 长度不能超过1！")
+    @ApiModelProperty(value = "用途类型：1系统用，2业务使用")
+    private String useType = "1";
 
 }
