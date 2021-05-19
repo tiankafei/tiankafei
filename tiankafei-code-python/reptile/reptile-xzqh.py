@@ -67,12 +67,16 @@ def get_xz_data(url, suffix):
         xz_data = dict()
 
         childs = town.getchildren()
-        xz_data['code'] = childs[0].getchildren()[0].text
-        xz_data['name'] = childs[1].getchildren()[0].text
-        href = childs[0].getchildren()[0].get("href")
-        tmp_url = url.replace(suffix.split('/')[-1], '')
-        xz_url = tmp_url + href
-        xz_data['sub'] = get_jc_data(xz_url)
+        if childs[0].getchildren():
+            xz_data['code'] = childs[0].getchildren()[0].text
+            xz_data['name'] = childs[1].getchildren()[0].text
+            href = childs[0].getchildren()[0].get("href")
+            tmp_url = url.replace(suffix.split('/')[-1], '')
+            xz_url = tmp_url + href
+            xz_data['sub'] = get_jc_data(xz_url)
+        else:
+            xz_data['code'] = childs[0].text
+            xz_data['name'] = childs[1].text
         data.append(xz_data)
     return data
 
@@ -98,11 +102,10 @@ def get_qx_data(url, suffix):
             tmp_url = url.replace(suffix.split('/')[-1], '')
             xz_url = tmp_url + href
             qx_data['sub'] = get_xz_data(xz_url, href)
-            data.append(qx_data)
         else:
             qx_data['code'] = childs[0].text
             qx_data['name'] = childs[1].text
-            data.append(qx_data)
+        data.append(qx_data)
     return data
 
 
@@ -147,7 +150,12 @@ def get_shi_data(url, suffix, year_data, sheng_data):
         write_path(shi_path, (year_name + '.json'), year_data)
         write_path(shi_path, (sheng_name + '.json'), sheng_data)
         qx_data = get_qx_data(qx_url, href)
-        write_path(shi_path, (shi_name + '.json'), qx_data)
+        if len(qx_data) == 0:
+            # 处理市级下面没有区县，直接就是乡镇的 中山和东莞
+            qx_data = get_xz_data(qx_url, href)
+            write_path(shi_path, (shi_name + '-null.json'), qx_data)
+        else:
+            write_path(shi_path, (shi_name + '.json'), qx_data)
 
 
 def get_sheng_data(url, year_data):
