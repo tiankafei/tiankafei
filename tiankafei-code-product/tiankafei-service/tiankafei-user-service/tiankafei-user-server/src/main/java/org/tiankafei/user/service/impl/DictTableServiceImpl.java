@@ -132,7 +132,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     public List<Long> batchAddDictTableService(List<DictTableVo> dictTableVoList) throws Exception {
         if (CollectionUtils.isNotEmpty(dictTableVoList)) {
             List<DictTableEntity> dictTableEntityList = Lists.newArrayList();
-            setDynamicTableName(dictTableVoList.get(0).getDictId());
+            setDynamicTableName(dictTableVoList.get(0).getDictId(), false);
 
             for (DictTableVo dictTableVo : dictTableVoList) {
                 DictTableEntity dictTableEntity = new DictTableEntity();
@@ -141,6 +141,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
             }
             super.saveBatch(dictTableEntityList);
 
+            DynamicTableNameUtil.remove();
             return dictTableEntityList.stream().map(dictTableEntity -> dictTableEntity.getId()).collect(Collectors.toList());
         }
         return Lists.newArrayList();

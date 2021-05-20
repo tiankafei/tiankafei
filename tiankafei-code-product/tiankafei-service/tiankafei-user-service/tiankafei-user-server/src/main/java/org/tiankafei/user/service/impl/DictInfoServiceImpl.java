@@ -117,8 +117,6 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             catalogTreeToList(catalogDtos, dataList, dictInfoVo);
             dictTableService.batchAddDictTableService(dataList);
             log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
-
-            break;
         }
         return true;
     }
