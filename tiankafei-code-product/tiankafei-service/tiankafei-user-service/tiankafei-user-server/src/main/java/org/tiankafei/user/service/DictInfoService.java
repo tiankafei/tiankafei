@@ -23,6 +23,14 @@ import com.ruoyi.common.core.web.page.Paging;
 public interface DictInfoService extends BaseService<DictInfoEntity> {
 
     /**
+     * 初始化字典信息
+     *
+     * @return
+     * @throws Exception
+     */
+    boolean initDictInfoServiceExists() throws Exception;
+
+    /**
      * 校验 系统数据字典表 是否已经存在
      *
      * @param dictInfoCheckParam

@@ -1,5 +1,6 @@
 package org.tiankafei.user.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,6 +16,7 @@ import com.ruoyi.common.core.enums.ApiStatusEnum;
 import com.ruoyi.common.core.web.domain.ApiResult;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import com.ruoyi.common.core.web.service.impl.QueryDbNameService;
+import java.io.File;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,7 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,7 @@ import org.tiankafei.db.service.FieldService;
 import org.tiankafei.user.constants.UserConstants;
 import org.tiankafei.user.entity.DictInfoEntity;
 import org.tiankafei.user.mapper.DictInfoMapper;
+import org.tiankafei.user.model.CatalogDto;
 import org.tiankafei.user.param.DictInfoCheckParam;
 import org.tiankafei.user.param.DictInfoCountParam;
 import org.tiankafei.user.param.DictInfoDeleteParam;
@@ -44,6 +49,7 @@ import org.tiankafei.user.param.DictInfoPageParam;
 import org.tiankafei.user.service.DictInfoService;
 import org.tiankafei.user.service.DictTableService;
 import org.tiankafei.user.vo.DictInfoVo;
+import org.tiankafei.user.vo.DictTableVo;
 import org.tiankafei.web.common.exception.UserException;
 import com.ruoyi.common.core.web.page.Paging;
 
@@ -55,6 +61,7 @@ import com.ruoyi.common.core.web.page.Paging;
  * @author tiankafei
  * @since 1.0
  */
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInfoEntity> implements DictInfoService {
@@ -82,6 +89,86 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
     @Autowired
     private DictTableService dictTableService;
+
+    @Override
+    public boolean initDictInfoServiceExists() throws Exception {
+        String directory = "D:\\data\\catalogs";
+        File file = new File(directory);
+        File[] files = file.listFiles();
+        for (File f : files) {
+            String name = f.getName();
+            String filePath = f.getPath() + File.separator + name + ".json";
+            String str = FileUtils.readFileToString(new File(filePath), "utf-8");
+
+            DictInfoVo dictInfoVo = new DictInfoVo();
+            dictInfoVo.setDictCode(name.split("-")[0]);
+            dictInfoVo.setDictName(name.split("-")[1]);
+            dictInfoVo.setStatus(Boolean.TRUE);
+            dictInfoVo.setDescription(dictInfoVo.getDictName());
+            dictInfoVo.setRemarks(dictInfoVo.getDictName());
+            dictInfoVo.setUseType("1");
+            dictInfoVo.setVersion(20210520);
+            addDictInfoService(dictInfoVo);
+
+            List<CatalogDto> catalogDtos = JSONArray.parseArray(str, CatalogDto.class);
+            processCatalogTree(catalogDtos, 0, null, null);
+
+            List<DictTableVo> dataList = Lists.newArrayList();
+            catalogTreeToList(catalogDtos, dataList, dictInfoVo);
+            dictTableService.batchAddDictTableService(dataList);
+            log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
+
+            break;
+        }
+        return true;
+    }
+
+    private Long getId() {
+        return defaultIdentifierGenerator.nextId(null);
+    }
+
+    /**
+     * 处理树结构
+     *
+     * @param catalogDtos
+     * @param level
+     * @param parentId
+     * @param allParentId
+     */
+    private void processCatalogTree(List<CatalogDto> catalogDtos, Integer level, Long parentId, String allParentId) {
+        if (CollectionUtils.isNotEmpty(catalogDtos)) {
+            for (int index = 0, length = catalogDtos.size(); index < length; index++) {
+                Long id = getId();
+                CatalogDto catalogDto = catalogDtos.get(index);
+                catalogDto.setSerialNumber(index + 1);
+                catalogDto.setLevel(level);
+                catalogDto.setId(id);
+                catalogDto.setParentId(parentId);
+
+                catalogDto.setAllParentId(allParentId);
+
+                String str = allParentId == null ? id + "" : catalogDto.getAllParentId() + "," + id;
+
+                processCatalogTree(catalogDto.getSub(), level + 1, id, str);
+            }
+        }
+    }
+
+    private void catalogTreeToList(List<CatalogDto> catalogDtos, List<DictTableVo> dataList, DictInfoVo dictInfoVo) {
+        if (CollectionUtils.isNotEmpty(catalogDtos)) {
+            for (CatalogDto catalogDto : catalogDtos) {
+                List<CatalogDto> sub = catalogDto.getSub();
+
+                DictTableVo dictTableVo = new DictTableVo();
+                BeanUtils.copyProperties(catalogDto, dictTableVo);
+                dictTableVo.setDictId(dictInfoVo.getId());
+                dictTableVo.setVersion(dictInfoVo.getVersion());
+                dataList.add(dictTableVo);
+
+                catalogTreeToList(sub, dataList, dictInfoVo);
+            }
+        }
+    }
 
     /**
      * 校验 系统数据字典表 是否已经存在
@@ -147,12 +234,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             }
         } else {
             dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + id);
-        }
-
-        Boolean status = dictInfoVo.getStatus();
-        if (status) {
-            // 启用时：创建字段数据表
-            dbService.createTable("sys_dict_table", dictInfoVo.getDataTable(), dictInfoVo.getDictName() + "字典数据表");
+            dictInfoVo.setDataTable(dictInfoEntity.getDataTable());
         }
 
         SysFeatures sysFeatures = new SysFeatures();
@@ -167,6 +249,13 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             dictInfoEntity.setFeaturesId(result.getData());
 
             super.save(dictInfoEntity);
+
+            Boolean status = dictInfoVo.getStatus();
+            if (status) {
+                // 启用时：创建字段数据表
+                dbService.createTable("sys_dict_table", dictInfoEntity.getDataTable(), dictInfoEntity.getDictName() + "字典数据表");
+            }
+            dictInfoVo.setId(dictInfoEntity.getId());
             return dictInfoEntity.getId();
         }
         throw new UserException("新增代码表失败");
@@ -467,10 +556,10 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         return Boolean.TRUE;
     }
 
-    private <T1, T2> void removeAll(Map<String, T1> map1, Map<String, T2> map2){
+    private <T1, T2> void removeAll(Map<String, T1> map1, Map<String, T2> map2) {
         List<String> keyList = Lists.newArrayList(map1.keySet());
         for (String key : keyList) {
-            if(map2.containsKey(key)){
+            if (map2.containsKey(key)) {
                 map1.remove(key);
             }
         }

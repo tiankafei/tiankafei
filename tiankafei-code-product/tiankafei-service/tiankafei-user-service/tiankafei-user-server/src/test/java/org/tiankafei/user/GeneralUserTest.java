@@ -5,4 +5,7 @@ package org.tiankafei.user;
  * @since 1.0
  **/
 public class GeneralUserTest {
+
+
+
 }

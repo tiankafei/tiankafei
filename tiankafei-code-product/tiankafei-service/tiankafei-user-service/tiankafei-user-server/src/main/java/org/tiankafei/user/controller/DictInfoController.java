@@ -41,6 +41,11 @@ public class DictInfoController extends BaseController {
     @Autowired
     private DictInfoService dictInfoService;
 
+    @GetMapping("/init")
+    public ApiResult<Boolean> initDictInfoControllerExists() throws Exception {
+        return ApiResult.ok(dictInfoService.initDictInfoServiceExists());
+    }
+
     /**
      * 校验 系统数据字典表 是否已经存在
      *
