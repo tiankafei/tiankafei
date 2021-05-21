@@ -635,7 +635,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
      */
     @Override
     public Paging<DictInfoVo> getDictInfoServicePageList(DictInfoPageParam dictInfoPageParam) throws Exception {
-        Page page = setPageParam(dictInfoPageParam, OrderItem.desc("create_time"));
+        Page page = setPageParam(dictInfoPageParam, OrderItem.asc("dict_code"));
         // 分页查询先查询主键id
         IPage<DictInfoVo> iPage = dictInfoMapper.getDictInfoServicePageList(page, dictInfoPageParam);
         List<Long> idList = iPage.getRecords().stream().map(dictInfoVo -> dictInfoVo.getId()).collect(Collectors.toList());
@@ -647,7 +647,14 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             DictInfoListParam dictInfoListParam = new DictInfoListParam();
             dictInfoListParam.setIdList(idList);
             List<DictInfoVo> dictInfoVoList = this.getDictInfoServiceList(dictInfoListParam);
-            paging.setRecords(dictInfoVoList);
+
+            // 根据idList的顺序，对查询结果进行排序
+            Map<Long, DictInfoVo> dictInfoVoMap = dictInfoVoList.stream().collect(Collectors.toMap(DictInfoVo::getId, (dictInfoVo -> dictInfoVo)));
+            List<DictInfoVo> result = Lists.newArrayList();
+            for (int index = 0, length = idList.size(); index < length; index++) {
+                result.add(dictInfoVoMap.get(idList.get(index)));
+            }
+            paging.setRecords(result);
         }
         return paging;
     }
