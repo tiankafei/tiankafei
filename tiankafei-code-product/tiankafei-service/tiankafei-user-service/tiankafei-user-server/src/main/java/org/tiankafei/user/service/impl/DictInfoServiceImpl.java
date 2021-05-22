@@ -1,6 +1,7 @@
 package org.tiankafei.user.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -92,6 +93,98 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
     @Override
     public boolean initDictInfoServiceExists() throws Exception {
+        initCatalog();
+        initAdministrativeDivisions();
+        return true;
+    }
+
+    public static void main(String[] args) throws Exception {
+        DictInfoServiceImpl dictInfoServiceImpl = new DictInfoServiceImpl();
+        dictInfoServiceImpl.initAdministrativeDivisions();
+    }
+
+    /**
+     * 初始化行政区划
+     *
+     * @throws Exception
+     */
+    private void initAdministrativeDivisions() throws Exception {
+        String directory = "D:\\data";
+        File file = new File(directory);
+        File[] yearFiles = file.listFiles();
+        for (File yearFile : yearFiles) {
+            String yearName = yearFile.getName();
+            if(yearName.endsWith("年")){
+
+                DictInfoVo dictInfoVo = new DictInfoVo();
+                dictInfoVo.setDictCode(yearName);
+                dictInfoVo.setDictName(yearName + "行政区划");
+                dictInfoVo.setStatus(Boolean.TRUE);
+                dictInfoVo.setDescription(dictInfoVo.getDictName());
+                dictInfoVo.setRemarks(dictInfoVo.getDictName());
+                dictInfoVo.setUseType("1");
+                dictInfoVo.setVersion(20210520);
+                addDictInfoService(dictInfoVo);
+
+                File[] provinceFiles = yearFile.listFiles();
+                List<CatalogDto> catalogDtos = Lists.newArrayList();
+                for (File provinceFile : provinceFiles) {
+                    String provinceName = provinceFile.getName();
+                    File[] cityFiles = provinceFile.listFiles();
+
+                    CatalogDto provinceCatalogDto = null;
+                    for (File cityFile : cityFiles) {
+                        String cityName = cityFile.getName();
+                        String newCityName = cityName.replace("(", "-").replace(")", "");
+
+                        CatalogDto cityCatalogDto = new CatalogDto();
+                        cityCatalogDto.setCode(newCityName.split("-")[0]);
+                        cityCatalogDto.setName(newCityName.split("-")[1]);
+
+                        if(provinceCatalogDto == null){
+                            String provinceFilePath = cityFile.getPath() + File.separator + provinceName + ".json";
+                            File file1 = new File(provinceFilePath);
+                            if(file1.exists()){
+                                String str = FileUtils.readFileToString(file1, "utf-8");
+                                provinceCatalogDto = JSONObject.parseObject(str, CatalogDto.class);
+                                provinceCatalogDto.setSub(Lists.newArrayList());
+                            }
+                        }
+
+                        String cityFilePath = cityFile.getPath() + File.separator + cityName + ".json";
+                        File file2 = new File(cityFilePath);
+                        if(!file2.exists()){
+                            cityFilePath = cityFile.getPath() + File.separator + cityName + "-null.json";
+                            file2 = new File(cityFilePath);
+                        }
+                        if(file2.exists()){
+                            String str = FileUtils.readFileToString(file2, "utf-8");
+                            List<CatalogDto> townCatalogDtos = JSONArray.parseArray(str, CatalogDto.class);
+                            cityCatalogDto.setSub(townCatalogDtos);
+                        }
+
+                        provinceCatalogDto.getSub().add(cityCatalogDto);
+                    }
+
+                    catalogDtos.add(provinceCatalogDto);
+                }
+
+                processCatalogTree(catalogDtos, 0, null, null);
+
+                List<DictTableVo> dataList = Lists.newArrayList();
+                catalogTreeToList(catalogDtos, dataList, dictInfoVo);
+                dictTableService.batchAddDictTableService(dataList);
+                log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
+            }
+        }
+    }
+
+    /**
+     * 初始化目录
+     *
+     * @throws Exception
+     */
+    private void initCatalog() throws Exception {
         String directory = "D:\\data\\catalogs";
         File file = new File(directory);
         File[] files = file.listFiles();
@@ -118,7 +211,6 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             dictTableService.batchAddDictTableService(dataList);
             log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
         }
-        return true;
     }
 
     private Long getId() {

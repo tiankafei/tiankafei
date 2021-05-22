@@ -2,7 +2,6 @@ package org.tiankafei.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.ruoyi.common.core.utils.DynamicTableNameUtil;
@@ -11,7 +10,6 @@ import com.ruoyi.common.core.web.service.impl.QueryDbNameService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.collections4.CollectionUtils;
@@ -318,7 +316,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     public Paging<DictTableVo> getDictTableServicePageList(DictTablePageParam dictTablePageParam) throws Exception {
         setDynamicTableName(dictTablePageParam.getDictId());
 
-        Page page = setPageParam(dictTablePageParam, OrderItem.desc("create_time"));
+        Page page = setPageParam(dictTablePageParam);
         // 分页查询先查询主键id
         IPage<DictTableVo> iPage = dictTableMapper.getDictTableServicePageList(page, dictTablePageParam);
         List<Long> idList = iPage.getRecords().stream().map(dictTableVo -> dictTableVo.getId()).collect(Collectors.toList());
