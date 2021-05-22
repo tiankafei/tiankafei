@@ -316,11 +316,10 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         if (checkDictInfoServiceExists(new DictInfoCheckParam().setDictCode(dictCode))) {
             throw new UserException("字典代码：" + dictCode + " 已经存在！");
         }
-        // 生成序列号
-        Long id = defaultIdentifierGenerator.nextId(null);
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
         BeanUtils.copyProperties(dictInfoVo, dictInfoEntity);
-        dictInfoEntity.setId(id);
+        dictInfoEntity.setId(defaultIdentifierGenerator.nextId(null));
+        dictInfoVo.setId(dictInfoEntity.getId());
 
         String dataTable = dictInfoVo.getDataTable();
         if (StringUtils.isNotBlank(dataTable)) {
@@ -329,7 +328,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
                 throw new UserException("代码数据表：" + dataTable + " 已经存在！");
             }
         } else {
-            dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + id);
+            dictInfoEntity.setDataTable(UserConstants.DICT_DATA_TABLE_PREFIX + dictInfoEntity.getId());
             dictInfoVo.setDataTable(dictInfoEntity.getDataTable());
         }
 
@@ -343,7 +342,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         ApiResult<Long> result = remoteFeaturesService.add(sysFeatures);
         if (ApiStatusEnum.OK.getStatus().equals(result.getCode())) {
             dictInfoEntity.setFeaturesId(result.getData());
-
+            // 保存字典数据
             super.save(dictInfoEntity);
 
             Boolean status = dictInfoVo.getStatus();
@@ -351,7 +350,6 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
                 // 启用时：创建字段数据表
                 dbService.createTableLike("sys_dict_table", dictInfoEntity.getDataTable(), dictInfoEntity.getDictName() + "字典数据表");
             }
-            dictInfoVo.setId(dictInfoEntity.getId());
             return dictInfoEntity.getId();
         }
         throw new UserException("新增代码表失败");
