@@ -287,7 +287,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     }
 
     @Override
-    public List<DictTableVo> getDictTableTreeServiceList(DictTableListParam dictTableListParam) throws Exception {
+    public List<DictTableVo> getDictTableServiceTreeList(DictTableListParam dictTableListParam) throws Exception {
         List<DictTableVo> dictTableVoList = getDictTableServiceList(dictTableListParam);
         // list转树结构
         return processListToTree(dictTableVoList);

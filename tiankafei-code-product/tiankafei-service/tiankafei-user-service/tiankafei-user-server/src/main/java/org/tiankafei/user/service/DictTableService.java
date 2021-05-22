@@ -131,7 +131,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    List<DictTableVo> getDictTableTreeServiceList(DictTableListParam dictTableListParam) throws Exception;
+    List<DictTableVo> getDictTableServiceTreeList(DictTableListParam dictTableListParam) throws Exception;
 
     /**
      * 获取 系统数据字典的数据表 分页对象列表
