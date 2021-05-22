@@ -94,7 +94,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     @Override
     public boolean initDictInfoServiceExists() throws Exception {
         initCatalog();
-//        initAdministrativeDivisions();
+        initAdministrativeDivisions();
         return true;
     }
 
@@ -114,7 +114,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
         File[] yearFiles = file.listFiles();
         for (File yearFile : yearFiles) {
             String yearName = yearFile.getName();
-            if(yearName.endsWith("年")){
+            if (yearName.endsWith("年")) {
 
                 DictInfoVo dictInfoVo = new DictInfoVo();
                 dictInfoVo.setDictCode(yearName);
@@ -141,10 +141,10 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
                         cityCatalogDto.setCode(newCityName.split("-")[0]);
                         cityCatalogDto.setName(newCityName.split("-")[1]);
 
-                        if(provinceCatalogDto == null){
+                        if (provinceCatalogDto == null) {
                             String provinceFilePath = cityFile.getPath() + File.separator + provinceName + ".json";
                             File file1 = new File(provinceFilePath);
-                            if(file1.exists()){
+                            if (file1.exists()) {
                                 String str = FileUtils.readFileToString(file1, "utf-8");
                                 provinceCatalogDto = JSONObject.parseObject(str, CatalogDto.class);
                                 provinceCatalogDto.setSub(Lists.newArrayList());
@@ -153,11 +153,11 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
 
                         String cityFilePath = cityFile.getPath() + File.separator + cityName + ".json";
                         File file2 = new File(cityFilePath);
-                        if(!file2.exists()){
+                        if (!file2.exists()) {
                             cityFilePath = cityFile.getPath() + File.separator + cityName + "-null.json";
                             file2 = new File(cityFilePath);
                         }
-                        if(file2.exists()){
+                        if (file2.exists()) {
                             String str = FileUtils.readFileToString(file2, "utf-8");
                             List<CatalogDto> townCatalogDtos = JSONArray.parseArray(str, CatalogDto.class);
                             cityCatalogDto.setSub(townCatalogDtos);
@@ -169,12 +169,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
                     catalogDtos.add(provinceCatalogDto);
                 }
 
-                processCatalogTree(catalogDtos, 0, null, null);
-
-                List<DictTableVo> dataList = Lists.newArrayList();
-                catalogTreeToList(catalogDtos, dataList, dictInfoVo);
-                dictTableService.batchAddDictTableService(dataList);
-                log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
+                initAdd(catalogDtos, dictInfoVo);
             }
         }
     }
@@ -194,7 +189,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             String str = FileUtils.readFileToString(new File(filePath), "utf-8");
 
             DictInfoVo dictInfoVo = new DictInfoVo();
-            dictInfoVo.setDictCode("00" + name.split("-")[0]);
+            dictInfoVo.setDictCode(name.split("-")[0] + "00");
             dictInfoVo.setDictName(name.split("-")[1]);
             dictInfoVo.setStatus(Boolean.TRUE);
             dictInfoVo.setDescription(dictInfoVo.getDictName());
@@ -204,14 +199,24 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             addDictInfoService(dictInfoVo);
 
             List<CatalogDto> catalogDtos = JSONArray.parseArray(str, CatalogDto.class);
-            processCatalogTree(catalogDtos, 0, null, null);
-
-            List<DictTableVo> dataList = Lists.newArrayList();
-            catalogTreeToList(catalogDtos, dataList, dictInfoVo);
-            dictTableService.batchAddDictTableService(dataList);
-            log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
-            break;
+            initAdd(catalogDtos, dictInfoVo);
         }
+    }
+
+    /**
+     * 初始化新增
+     *
+     * @param catalogDtos
+     * @param dictInfoVo
+     * @throws Exception
+     */
+    private void initAdd(List<CatalogDto> catalogDtos, DictInfoVo dictInfoVo) throws Exception {
+        processCatalogTree(catalogDtos, 0, null, null);
+
+        List<DictTableVo> dataList = Lists.newArrayList();
+        catalogTreeToList(catalogDtos, dataList, dictInfoVo);
+        dictTableService.batchAddDictTableService(dataList);
+        log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
     }
 
     private Long getId() {
