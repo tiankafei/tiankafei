@@ -196,7 +196,7 @@ public class DictTableController extends BaseController {
     public ApiResult<List<DictTableVo>> getDictTableControllerAllTreeList(@PathVariable(value = "dictId") Long dictId) throws Exception {
         DictTableListParam dictTableListParam = new DictTableListParam();
         dictTableListParam.setDictId(dictId);
-        List<DictTableVo> dictTableVoList = dictTableService.getDictTableTreeServiceList(dictTableListParam);
+        List<DictTableVo> dictTableVoList = dictTableService.getDictTableServiceTreeList(dictTableListParam);
         return ApiResult.ok(dictTableVoList);
     }
 
