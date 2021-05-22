@@ -94,7 +94,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
     @Override
     public boolean initDictInfoServiceExists() throws Exception {
         initCatalog();
-        initAdministrativeDivisions();
+//        initAdministrativeDivisions();
         return true;
     }
 
@@ -194,7 +194,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             String str = FileUtils.readFileToString(new File(filePath), "utf-8");
 
             DictInfoVo dictInfoVo = new DictInfoVo();
-            dictInfoVo.setDictCode(name.split("-")[0]);
+            dictInfoVo.setDictCode("00" + name.split("-")[0]);
             dictInfoVo.setDictName(name.split("-")[1]);
             dictInfoVo.setStatus(Boolean.TRUE);
             dictInfoVo.setDescription(dictInfoVo.getDictName());
@@ -210,6 +210,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             catalogTreeToList(catalogDtos, dataList, dictInfoVo);
             dictTableService.batchAddDictTableService(dataList);
             log.info("字典代码：{},字典名称{},数据表：{},版本：{}", dictInfoVo.getDictCode(), dictInfoVo.getDictName(), dictInfoVo.getDataTable(), dictInfoVo.getVersion());
+            break;
         }
     }
 
@@ -343,7 +344,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             Boolean status = dictInfoVo.getStatus();
             if (status) {
                 // 启用时：创建字段数据表
-                dbService.createTable("sys_dict_table", dictInfoEntity.getDataTable(), dictInfoEntity.getDictName() + "字典数据表");
+                dbService.createTableLike("sys_dict_table", dictInfoEntity.getDataTable(), dictInfoEntity.getDictName() + "字典数据表");
             }
             dictInfoVo.setId(dictInfoEntity.getId());
             return dictInfoEntity.getId();
@@ -418,7 +419,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             for (DictInfoEntity dictInfoEntity : dictInfoEntityList) {
                 if (dictInfoEntity.getStatus()) {
                     // 启用时：创建字段数据表
-                    dbService.createTable("sys_dict_table", dictInfoEntity.getDataTable(), dictInfoEntity.getDictName() + "字典数据表");
+                    dbService.createTableLike("sys_dict_table", dictInfoEntity.getDataTable(), dictInfoEntity.getDictName() + "字典数据表");
                 }
             }
 
@@ -562,7 +563,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
             boolean tableExists = dbService.checkTableExists(oldDictInfoEntity.getDataTable());
             if (!tableExists) {
                 // 启用时：创建字段数据表
-                dbService.createTable("sys_dict_table", oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
+                dbService.createTableLike("sys_dict_table", oldDictInfoEntity.getDataTable(), oldDictInfoEntity.getDictName() + "字典数据表");
             }
         }
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
@@ -636,7 +637,7 @@ public class DictInfoServiceImpl extends BaseServiceImpl<DictInfoMapper, DictInf
                 }
             } else {
                 // 物理表不存在时创建字段数据表
-                dbService.createTable("sys_dict_table", dataTable, dictInfoEntity.getDictName() + "字典数据表");
+                dbService.createTableLike("sys_dict_table", dataTable, dictInfoEntity.getDictName() + "字典数据表");
                 sysAttributesList = sysAttributesList.stream().filter(sysAttributes -> !dictTableFixedColumnNameMap.containsKey(sysAttributes.getCode())).collect(Collectors.toList());
                 if (CollectionUtils.isNotEmpty(sysAttributesList)) {
                     addAttributes(dataTable, sysAttributesList);
