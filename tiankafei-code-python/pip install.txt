@@ -83,3 +83,6 @@ pip install bs4 -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install lxml -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install pymysql  -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+pip install pdfplumber -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pypdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple
