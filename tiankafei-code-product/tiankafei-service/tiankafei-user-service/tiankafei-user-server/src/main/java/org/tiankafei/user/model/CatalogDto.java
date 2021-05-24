@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import javax.validation.constraints.Size;
 import lombok.Data;
+import org.apache.commons.compress.utils.Lists;
 
 @Data
 public class CatalogDto {
@@ -35,6 +36,6 @@ public class CatalogDto {
     @ApiModelProperty(value = "所在层级")
     private Integer level;
 
-    private List<CatalogDto> sub;
+    private List<CatalogDto> sub = Lists.newArrayList();
 
 }
