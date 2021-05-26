@@ -156,6 +156,36 @@ public class DictTableController extends BaseController {
     }
 
     /**
+     * 根据ID获取 字典名称
+     *
+     * @param dictId
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getNames/{dictId}/{ids}")
+    @ApiOperation(value = "根据ID获取 字典名称")
+    public ApiResult<List<String>> getDictTableNamesController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "ids") String ids) throws Exception {
+        // TODO 根据ID获取 字典名称
+        return ApiResult.ok(Lists.newArrayList());
+    }
+
+    /**
+     * 根据代码获取 字典名称
+     *
+     * @param dictId
+     * @param codes
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getNamesFromCodes/{dictId}/{codes}")
+    @ApiOperation(value = "根据代码获取 字典名称")
+    public ApiResult<List<String>> getDictTableNamesFromCodesController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "codes") String codes) throws Exception {
+        // TODO 根据代码获取 字典名称
+        return ApiResult.ok(Lists.newArrayList());
+    }
+
+    /**
      * 根据ID获取 获取本级及下一级数据字典列表对象
      *
      * @param dictId
