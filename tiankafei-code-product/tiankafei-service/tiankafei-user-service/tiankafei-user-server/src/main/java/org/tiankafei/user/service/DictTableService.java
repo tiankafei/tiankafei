@@ -107,6 +107,86 @@ public interface DictTableService extends BaseService<DictTableEntity> {
     DictTableVo getDictTableServiceById(Long dictId, Serializable id) throws Exception;
 
     /**
+     * 根据ID获取 字典名称
+     *
+     * @param dictId
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    List<String> getDictTableNamesService(Long dictId, String ids) throws Exception;
+
+    /**
+     * 根据代码获取 字典名称
+     *
+     * @param dictId
+     * @param codes
+     * @return
+     * @throws Exception
+     */
+    List<String> getDictTableNamesFromCodesService(Long dictId, String codes) throws Exception;
+
+    /**
+     * 根据ID获取 获取本级及下一级数据字典列表对象
+     *
+     * @param dictId
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    DictTableVo getDictTableThisAndNextLevelService(Long dictId, String id) throws Exception;
+
+    /**
+     * 根据ID获取 获取本级及所有下级数据字典列表对象
+     *
+     * @param dictId
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, String id) throws Exception;
+
+    /**
+     * 根据ID获取 获取上级数据字典对象
+     *
+     * @param dictId
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    DictTableVo getDictTableParentService(Long dictId, String id) throws Exception;
+
+    /**
+     * 根据ID获取 获取所有上级数据字典对象
+     *
+     * @param dictId
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    DictTableVo getDictTableAllParentService(Long dictId, String id) throws Exception;
+
+    /**
+     * 根据ID获取 获取本级和上级数据字典对象
+     *
+     * @param dictId
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    DictTableVo getDictTableThisAndParentService(Long dictId, String id) throws Exception;
+
+    /**
+     * 根据ID获取 获取本级和所有上级数据字典对象
+     *
+     * @param dictId
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    DictTableVo getDictTableThisAndAllParentService(Long dictId, String id) throws Exception;
+
+    /**
      * 根据父ID获取 子系统数据字典项集合
      *
      * @param dictTablePageParam
@@ -114,6 +194,15 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @throws Exception
      */
     List<DictTableVo> getDictTableChildrenService(DictTablePageParam dictTablePageParam) throws Exception;
+
+    /**
+     * 根据父ID获取 所有下级数据字典项集合
+     *
+     * @param dictTablePageParam
+     * @return
+     * @throws Exception
+     */
+    List<DictTableVo> getDictTableAllChildrenService(DictTablePageParam dictTablePageParam) throws Exception;
 
     /**
      * 获取 系统数据字典的数据表 对象列表

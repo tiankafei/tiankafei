@@ -265,11 +265,65 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     }
 
     @Override
+    public List<String> getDictTableNamesService(Long dictId, String ids) throws Exception {
+        // TODO 根据ID获取 字典名称
+        return null;
+    }
+
+    @Override
+    public List<String> getDictTableNamesFromCodesService(Long dictId, String codes) throws Exception {
+        // TODO 根据代码获取 字典名称
+        return null;
+    }
+
+    @Override
+    public DictTableVo getDictTableThisAndNextLevelService(Long dictId, String id) throws Exception {
+        // TODO 根据ID获取 获取本级及下一级数据字典列表对象
+        return null;
+    }
+
+    @Override
+    public DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, String id) throws Exception {
+        // TODO 根据ID获取 获取本级及所有下级数据字典列表对象
+        return null;
+    }
+
+    @Override
+    public DictTableVo getDictTableParentService(Long dictId, String id) throws Exception {
+        // TODO 根据ID获取 获取上级数据字典对象
+        return null;
+    }
+
+    @Override
+    public DictTableVo getDictTableAllParentService(Long dictId, String id) throws Exception {
+        // TODO 根据ID获取 获取所有上级数据字典对象
+        return null;
+    }
+
+    @Override
+    public DictTableVo getDictTableThisAndParentService(Long dictId, String id) throws Exception {
+        // TODO 根据ID获取 获取本级和上级数据字典对象
+        return null;
+    }
+
+    @Override
+    public DictTableVo getDictTableThisAndAllParentService(Long dictId, String id) throws Exception {
+        // TODO 根据ID获取 获取本级和所有上级数据字典对象
+        return null;
+    }
+
+    @Override
     public List<DictTableVo> getDictTableChildrenService(DictTablePageParam dictTablePageParam) throws Exception {
         setDynamicTableName(dictTablePageParam.getDictId());
 
         List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableChildrenService(dictTablePageParam.getParentId());
         return dictTableVoList;
+    }
+
+    @Override
+    public List<DictTableVo> getDictTableAllChildrenService(DictTablePageParam dictTablePageParam) throws Exception {
+        // TODO 根据父ID获取 所有下级数据字典项集合
+        return null;
     }
 
     /**
