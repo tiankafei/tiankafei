@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.ruoyi.common.core.utils.DynamicTableNameUtil;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import com.ruoyi.common.core.web.service.impl.QueryDbNameService;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.collections4.CollectionUtils;
@@ -265,49 +268,81 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     }
 
     @Override
-    public List<String> getDictTableNamesService(Long dictId, String ids) throws Exception {
-        // TODO 根据ID获取 字典名称
-        return null;
+    public Map<Long, String> getDictTableNamesService(Long dictId, String ids) throws Exception {
+        setDynamicTableName(dictId);
+
+        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.select(DictTableEntity::getName, DictTableEntity::getId);
+        lambdaQueryWrapper.in(DictTableEntity::getId, Arrays.asList(ids.split(",")));
+
+        return super.list(lambdaQueryWrapper).stream().collect(Collectors.toMap(DictTableEntity::getId, DictTableEntity::getName));
     }
 
     @Override
-    public List<String> getDictTableNamesFromCodesService(Long dictId, String codes) throws Exception {
-        // TODO 根据代码获取 字典名称
-        return null;
+    public Map<String, String> getDictTableNamesFromCodesService(Long dictId, String codes) throws Exception {
+        setDynamicTableName(dictId);
+
+        LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.select(DictTableEntity::getName, DictTableEntity::getCode);
+        lambdaQueryWrapper.in(DictTableEntity::getCode, Arrays.asList(codes.split(",")));
+        // 当code不是唯一索引时，相同的代码可能会存在多个名称
+        Map<String, List<DictTableEntity>> dataListMap = super.list(lambdaQueryWrapper).stream().collect(Collectors.groupingBy(DictTableEntity::getCode));
+
+        // 简单粗暴返回第一个
+        Map<String, String> dataMap = Maps.newHashMap();
+        Set<Map.Entry<String, List<DictTableEntity>>> entries = dataListMap.entrySet();
+        for (Map.Entry<String, List<DictTableEntity>> entry : entries) {
+            String key = entry.getKey();
+            List<DictTableEntity> value = entry.getValue();
+            dataMap.put(key, value.get(0).getName());
+        }
+        return dataMap;
     }
 
     @Override
     public DictTableVo getDictTableThisAndNextLevelService(Long dictId, String id) throws Exception {
+        setDynamicTableName(dictId);
+
         // TODO 根据ID获取 获取本级及下一级数据字典列表对象
         return null;
     }
 
     @Override
     public DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, String id) throws Exception {
+        setDynamicTableName(dictId);
+
         // TODO 根据ID获取 获取本级及所有下级数据字典列表对象
         return null;
     }
 
     @Override
     public DictTableVo getDictTableParentService(Long dictId, String id) throws Exception {
+        setDynamicTableName(dictId);
+
         // TODO 根据ID获取 获取上级数据字典对象
         return null;
     }
 
     @Override
     public DictTableVo getDictTableAllParentService(Long dictId, String id) throws Exception {
+        setDynamicTableName(dictId);
+
         // TODO 根据ID获取 获取所有上级数据字典对象
         return null;
     }
 
     @Override
     public DictTableVo getDictTableThisAndParentService(Long dictId, String id) throws Exception {
+        setDynamicTableName(dictId);
+
         // TODO 根据ID获取 获取本级和上级数据字典对象
         return null;
     }
 
     @Override
     public DictTableVo getDictTableThisAndAllParentService(Long dictId, String id) throws Exception {
+        setDynamicTableName(dictId);
+
         // TODO 根据ID获取 获取本级和所有上级数据字典对象
         return null;
     }
@@ -322,6 +357,8 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     @Override
     public List<DictTableVo> getDictTableAllChildrenService(DictTablePageParam dictTablePageParam) throws Exception {
+        setDynamicTableName(dictTablePageParam.getDictId());
+
         // TODO 根据父ID获取 所有下级数据字典项集合
         return null;
     }

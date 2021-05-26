@@ -114,7 +114,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    List<String> getDictTableNamesService(Long dictId, String ids) throws Exception;
+    Map<Long, String> getDictTableNamesService(Long dictId, String ids) throws Exception;
 
     /**
      * 根据代码获取 字典名称
@@ -124,7 +124,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    List<String> getDictTableNamesFromCodesService(Long dictId, String codes) throws Exception;
+    Map<String, String> getDictTableNamesFromCodesService(Long dictId, String codes) throws Exception;
 
     /**
      * 根据ID获取 获取本级及下一级数据字典列表对象

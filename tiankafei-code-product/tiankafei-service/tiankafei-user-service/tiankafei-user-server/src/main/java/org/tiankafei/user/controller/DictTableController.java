@@ -4,6 +4,7 @@ import com.ruoyi.common.core.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,9 +166,9 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/getNames/{dictId}/{ids}")
     @ApiOperation(value = "根据ID获取 字典名称")
-    public ApiResult<List<String>> getDictTableNamesController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "ids") String ids) throws Exception {
-        List<String> names = dictTableService.getDictTableNamesService(dictId, ids);
-        return ApiResult.ok(names);
+    public ApiResult<Map<Long, String>> getDictTableNamesController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "ids") String ids) throws Exception {
+        Map<Long, String> dataMap = dictTableService.getDictTableNamesService(dictId, ids);
+        return ApiResult.ok(dataMap);
     }
 
     /**
@@ -180,9 +181,9 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/getNamesFromCodes/{dictId}/{codes}")
     @ApiOperation(value = "根据代码获取 字典名称")
-    public ApiResult<List<String>> getDictTableNamesFromCodesController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "codes") String codes) throws Exception {
-        List<String> names = dictTableService.getDictTableNamesFromCodesService(dictId, codes);
-        return ApiResult.ok(names);
+    public ApiResult<Map<String, String>> getDictTableNamesFromCodesController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "codes") String codes) throws Exception {
+        Map<String, String> dataMap = dictTableService.getDictTableNamesFromCodesService(dictId, codes);
+        return ApiResult.ok(dataMap);
     }
 
     /**
