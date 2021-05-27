@@ -151,7 +151,7 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 系统数据字典的数据表 对象")
-    public ApiResult<DictTableVo> getDictTableController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<DictTableVo> getDictTableController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         DictTableVo dictTableVo = dictTableService.getDictTableServiceById(dictId, id);
         return ApiResult.ok(dictTableVo);
     }
@@ -196,7 +196,7 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/thisAndNextLevel/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 获取本级及下一级数据字典列表对象")
-    public ApiResult<DictTableVo> getDictTableThisAndNextLevelController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<DictTableVo> getDictTableThisAndNextLevelController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         DictTableVo dictTableVo = dictTableService.getDictTableThisAndNextLevelService(dictId, id);
         return ApiResult.ok(dictTableVo);
     }
@@ -211,7 +211,7 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/thisAndAllNextLevel/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 获取本级及所有下级数据字典列表对象")
-    public ApiResult<DictTableVo> getDictTableThisAndAllNextLevelController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<DictTableVo> getDictTableThisAndAllNextLevelController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         DictTableVo dictTableVo = dictTableService.getDictTableThisAndAllNextLevelService(dictId, id);
         return ApiResult.ok(dictTableVo);
     }
@@ -226,7 +226,7 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/parent/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 获取上级数据字典对象")
-    public ApiResult<DictTableVo> getDictTableParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<DictTableVo> getDictTableParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         DictTableVo dictTableVo = dictTableService.getDictTableParentService(dictId, id);
         return ApiResult.ok(dictTableVo);
     }
@@ -241,7 +241,7 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/allParent/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 获取所有上级数据字典对象")
-    public ApiResult<DictTableVo> getDictTableAllParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<DictTableVo> getDictTableAllParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         DictTableVo dictTableVo = dictTableService.getDictTableAllParentService(dictId, id);
         return ApiResult.ok(dictTableVo);
     }
@@ -256,7 +256,7 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/thisAndParent/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 获取本级和上级数据字典对象")
-    public ApiResult<DictTableVo> getDictTableThisAndParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<DictTableVo> getDictTableThisAndParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         DictTableVo dictTableVo = dictTableService.getDictTableThisAndParentService(dictId, id);
         return ApiResult.ok(dictTableVo);
     }
@@ -271,7 +271,7 @@ public class DictTableController extends BaseController {
      */
     @GetMapping("/thisAndAllParent/{dictId}/{id}")
     @ApiOperation(value = "根据ID获取 获取本级和所有上级数据字典对象")
-    public ApiResult<DictTableVo> getDictTableThisAndAllParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") String id) throws Exception {
+    public ApiResult<DictTableVo> getDictTableThisAndAllParentController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
         DictTableVo dictTableVo = dictTableService.getDictTableThisAndAllParentService(dictId, id);
         return ApiResult.ok(dictTableVo);
     }

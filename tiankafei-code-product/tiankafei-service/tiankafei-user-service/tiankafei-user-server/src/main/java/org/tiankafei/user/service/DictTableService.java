@@ -134,7 +134,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableThisAndNextLevelService(Long dictId, String id) throws Exception;
+    DictTableVo getDictTableThisAndNextLevelService(Long dictId, Serializable id) throws Exception;
 
     /**
      * 根据ID获取 获取本级及所有下级数据字典列表对象
@@ -144,7 +144,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, String id) throws Exception;
+    DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, Serializable id) throws Exception;
 
     /**
      * 根据ID获取 获取上级数据字典对象
@@ -154,7 +154,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableParentService(Long dictId, String id) throws Exception;
+    DictTableVo getDictTableParentService(Long dictId, Serializable id) throws Exception;
 
     /**
      * 根据ID获取 获取所有上级数据字典对象
@@ -164,7 +164,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableAllParentService(Long dictId, String id) throws Exception;
+    DictTableVo getDictTableAllParentService(Long dictId, Serializable id) throws Exception;
 
     /**
      * 根据ID获取 获取本级和上级数据字典对象
@@ -174,7 +174,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableThisAndParentService(Long dictId, String id) throws Exception;
+    DictTableVo getDictTableThisAndParentService(Long dictId, Serializable id) throws Exception;
 
     /**
      * 根据ID获取 获取本级和所有上级数据字典对象
@@ -184,7 +184,7 @@ public interface DictTableService extends BaseService<DictTableEntity> {
      * @return
      * @throws Exception
      */
-    DictTableVo getDictTableThisAndAllParentService(Long dictId, String id) throws Exception;
+    DictTableVo getDictTableThisAndAllParentService(Long dictId, Serializable id) throws Exception;
 
     /**
      * 根据父ID获取 子系统数据字典项集合

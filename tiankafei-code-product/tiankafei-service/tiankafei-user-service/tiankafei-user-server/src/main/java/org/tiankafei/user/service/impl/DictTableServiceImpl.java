@@ -62,6 +62,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     /**
      * 获取系统字典的数据表
+     *
      * @param dictId
      * @return
      */
@@ -97,7 +98,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
         if (dictTableCheckParam != null) {
             lambdaQueryWrapper.eq(DictTableEntity::getCode, dictTableCheckParam.getCode());
-            if(dictTableCheckParam.getId() != null){
+            if (dictTableCheckParam.getId() != null) {
                 lambdaQueryWrapper.ne(DictTableEntity::getId, dictTableCheckParam.getId());
             }
         }
@@ -172,16 +173,17 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     /**
      * 查询所有下级的id集合
+     *
      * @param idList
      * @return
      */
-    private void getChildrenIdList(List<Long> idList, List<Long> childrenList){
+    private void getChildrenIdList(List<Long> idList, List<Long> childrenList) {
         LambdaQueryWrapper<DictTableEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.select(DictTableEntity::getId);
         lambdaQueryWrapper.in(DictTableEntity::getParentId, idList);
 
         List<Long> tmpIdList = super.list(lambdaQueryWrapper).stream().map(dictTableEntity -> dictTableEntity.getId()).collect(Collectors.toList());
-        if(CollectionUtils.isNotEmpty(tmpIdList)){
+        if (CollectionUtils.isNotEmpty(tmpIdList)) {
             childrenList.addAll(tmpIdList);
 
             getChildrenIdList(tmpIdList, childrenList);
@@ -300,50 +302,87 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     }
 
     @Override
-    public DictTableVo getDictTableThisAndNextLevelService(Long dictId, String id) throws Exception {
-        setDynamicTableName(dictId);
+    public DictTableVo getDictTableThisAndNextLevelService(Long dictId, Serializable id) throws Exception {
+        setDynamicTableName(dictId, false);
 
         // TODO 根据ID获取 获取本级及下一级数据字典列表对象
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
         return null;
     }
 
     @Override
-    public DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, String id) throws Exception {
-        setDynamicTableName(dictId);
+    public DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, Serializable id) throws Exception {
+        setDynamicTableName(dictId, false);
 
         // TODO 根据ID获取 获取本级及所有下级数据字典列表对象
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
         return null;
     }
 
+    /**
+     * 查询所有下级的id集合
+     *
+     * @param idList
+     * @return
+     */
+    private void getAllChildrenList(List<Long> idList, List<DictTableVo> childrenList) throws Exception {
+        DictTableListParam dictTableListParam = new DictTableListParam();
+        dictTableListParam.setIdList(idList);
+        List<DictTableVo> dictTableList = dictTableMapper.getDictTableServiceList(dictTableListParam);
+
+        List<Long> tmpIdList = dictTableList.stream().map(dictTableVo -> dictTableVo.getId()).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(tmpIdList)) {
+            Map<Long, List<DictTableVo>> listMap = dictTableList.stream().collect(Collectors.groupingBy(DictTableVo::getParentId));
+            childrenList.stream().forEach(dictTableVo -> {
+                Long id = dictTableVo.getId();
+                if(listMap.containsKey(id)){
+                    dictTableVo.setChildren(listMap.get(id));
+                }
+            });
+
+            getAllChildrenList(tmpIdList, dictTableList);
+        }
+    }
+
     @Override
-    public DictTableVo getDictTableParentService(Long dictId, String id) throws Exception {
-        setDynamicTableName(dictId);
+    public DictTableVo getDictTableParentService(Long dictId, Serializable id) throws Exception {
+        setDynamicTableName(dictId, false);
 
         // TODO 根据ID获取 获取上级数据字典对象
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
         return null;
     }
 
     @Override
-    public DictTableVo getDictTableAllParentService(Long dictId, String id) throws Exception {
-        setDynamicTableName(dictId);
+    public DictTableVo getDictTableAllParentService(Long dictId, Serializable id) throws Exception {
+        setDynamicTableName(dictId, false);
 
         // TODO 根据ID获取 获取所有上级数据字典对象
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
         return null;
     }
 
     @Override
-    public DictTableVo getDictTableThisAndParentService(Long dictId, String id) throws Exception {
-        setDynamicTableName(dictId);
+    public DictTableVo getDictTableThisAndParentService(Long dictId, Serializable id) throws Exception {
+        setDynamicTableName(dictId, false);
 
         // TODO 根据ID获取 获取本级和上级数据字典对象
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
         return null;
     }
 
     @Override
-    public DictTableVo getDictTableThisAndAllParentService(Long dictId, String id) throws Exception {
-        setDynamicTableName(dictId);
+    public DictTableVo getDictTableThisAndAllParentService(Long dictId, Serializable id) throws Exception {
+        setDynamicTableName(dictId, false);
 
         // TODO 根据ID获取 获取本级和所有上级数据字典对象
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
         return null;
     }
 
@@ -357,9 +396,11 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     @Override
     public List<DictTableVo> getDictTableAllChildrenService(DictTablePageParam dictTablePageParam) throws Exception {
-        setDynamicTableName(dictTablePageParam.getDictId());
+        setDynamicTableName(dictTablePageParam.getDictId(), false);
 
         // TODO 根据父ID获取 所有下级数据字典项集合
+        // 因为动态表名不是一次性使用，则需要手动remove
+        DynamicTableNameUtil.remove();
         return null;
     }
 
@@ -384,11 +425,11 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
         return processListToTree(dictTableVoList);
     }
 
-    private List<DictTableVo> processListToTree(List<DictTableVo> dictTableVoList){
+    private List<DictTableVo> processListToTree(List<DictTableVo> dictTableVoList) {
         Map<Long, List<DictTableVo>> dictTableMap = dictTableVoList.stream().filter(dictTableVo -> dictTableVo.getParentId() != null).collect(Collectors.groupingBy(DictTableVo::getParentId));
         List<DictTableVo> resultList = dictTableVoList.stream().map(dictTableVo -> {
             Long id = dictTableVo.getId();
-            if(dictTableMap.containsKey(id)){
+            if (dictTableMap.containsKey(id)) {
                 dictTableVo.setChildren(dictTableMap.get(id));
             }
             return dictTableVo;
