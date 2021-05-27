@@ -293,14 +293,15 @@ public class DictTableController extends BaseController {
     /**
      * 根据父ID获取 所有下级数据字典项集合
      *
-     * @param dictTablePageParam
+     * @param dictId
+     * @param id
      * @return
      * @throws Exception
      */
-    @PostMapping("/allChildren")
+    @GetMapping("/allChildren/{dictId}/{id}")
     @ApiOperation(value = "根据父ID获取 所有下级数据字典项集合")
-    public ApiResult<List<DictTableVo>> getDictTableAllChildrenController(@Valid @RequestBody DictTablePageParam dictTablePageParam) throws Exception {
-        List<DictTableVo> dictTableVoList = dictTableService.getDictTableAllChildrenService(dictTablePageParam);
+    public ApiResult<List<DictTableVo>> getDictTableAllChildrenController(@PathVariable(value = "dictId") Long dictId, @PathVariable(value = "id") Long id) throws Exception {
+        List<DictTableVo> dictTableVoList = dictTableService.getDictTableAllChildrenService(dictId, id);
         return ApiResult.ok(dictTableVoList);
     }
 

@@ -387,13 +387,11 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     }
 
     @Override
-    public List<DictTableVo> getDictTableAllChildrenService(DictTablePageParam dictTablePageParam) throws Exception {
-        setDynamicTableName(dictTablePageParam.getDictId(), false);
-        long id = Long.parseLong(String.valueOf(dictTablePageParam.getParentId()));
-
+    public List<DictTableVo> getDictTableAllChildrenService(Long dictId, Serializable id) throws Exception {
+        setDynamicTableName(dictId, false);
         // 查询所有下级的id集合
         List<Long> childrenList = Lists.newArrayList();
-        getChildrenIdList(Arrays.asList(id), childrenList);
+        getChildrenIdList(Arrays.asList(Long.parseLong(String.valueOf(id))), childrenList);
         // 查询所有下级的对象集合
         DictTableListParam dictTableListParam = new DictTableListParam();
         dictTableListParam.setIdList(childrenList);
