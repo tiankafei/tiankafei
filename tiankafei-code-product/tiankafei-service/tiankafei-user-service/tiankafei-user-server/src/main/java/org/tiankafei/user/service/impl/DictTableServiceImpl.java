@@ -303,12 +303,15 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     @Override
     public DictTableVo getDictTableThisAndNextLevelService(Long dictId, Serializable id) throws Exception {
-        setDynamicTableName(dictId, false);
-
-        // TODO 根据ID获取 获取本级及下一级数据字典列表对象
-        // 因为动态表名不是一次性使用，则需要手动remove
-        DynamicTableNameUtil.remove();
-        return null;
+        // 获取下一级
+        DictTablePageParam dictTablePageParam = new DictTablePageParam();
+        dictTablePageParam.setDictId(dictId);
+        dictTablePageParam.setParentId(Long.parseLong(String.valueOf(id)));
+        List<DictTableVo> childrenList = getDictTableChildrenService(dictTablePageParam);
+        // 查询本级
+        DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
+        dictTableVo.setChildren(childrenList);
+        return dictTableVo;
     }
 
     @Override
@@ -340,11 +343,11 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     @Override
     public DictTableVo getDictTableParentService(Long dictId, Serializable id) throws Exception {
-        setDynamicTableName(dictId, false);
-
-        // TODO 根据ID获取 获取上级数据字典对象
-        // 因为动态表名不是一次性使用，则需要手动remove
-        DynamicTableNameUtil.remove();
+        DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
+        Long parentId = dictTableVo.getParentId();
+        if(parentId != null){
+            return getDictTableServiceById(dictId, parentId);
+        }
         return null;
     }
 
@@ -360,12 +363,14 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     @Override
     public DictTableVo getDictTableThisAndParentService(Long dictId, Serializable id) throws Exception {
-        setDynamicTableName(dictId, false);
-
-        // TODO 根据ID获取 获取本级和上级数据字典对象
-        // 因为动态表名不是一次性使用，则需要手动remove
-        DynamicTableNameUtil.remove();
-        return null;
+        DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
+        Long parentId = dictTableVo.getParentId();
+        if(parentId != null){
+            DictTableVo parentDictTableVo = getDictTableServiceById(dictId, parentId);
+            parentDictTableVo.setChildren(Arrays.asList(dictTableVo));
+            return parentDictTableVo;
+        }
+        return dictTableVo;
     }
 
     @Override
