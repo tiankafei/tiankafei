@@ -314,36 +314,28 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     @Override
     public DictTableVo getDictTableThisAndAllNextLevelService(Long dictId, Serializable id) throws Exception {
         setDynamicTableName(dictId, false);
-
-        // TODO 根据ID获取 获取本级及所有下级数据字典列表对象
+        // 查询所有下级的id集合
+        List<Long> childrenList = Lists.newArrayList();
+        getChildrenIdList(Arrays.asList(Long.parseLong(String.valueOf(id))), childrenList);
+        // 查询所有下级的对象集合
+        DictTableListParam dictTableListParam = new DictTableListParam();
+        dictTableListParam.setIdList(childrenList);
+        List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableServiceList(dictTableListParam);
+        // 按照父id进行分组
+        Map<Long, List<DictTableVo>> listMap = dictTableVoList.stream().collect(Collectors.groupingBy(DictTableVo::getParentId));
+        List<DictTableVo> result = dictTableVoList.stream().map(dictTableVo -> {
+            Long idKey = dictTableVo.getId();
+            if (listMap.containsKey(idKey)) {
+                dictTableVo.setChildren(listMap.get(idKey));
+            }
+            return dictTableVo;
+        }).filter(dictTableVo -> dictTableVo.getParentId().equals(id)).collect(Collectors.toList());
+        // 查询本级
+        DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
+        dictTableVo.setChildren(result);
         // 因为动态表名不是一次性使用，则需要手动remove
         DynamicTableNameUtil.remove();
-        return null;
-    }
-
-    /**
-     * 查询所有下级的id集合
-     *
-     * @param idList
-     * @return
-     */
-    private void getAllChildrenList(List<Long> idList, List<DictTableVo> childrenList) throws Exception {
-        DictTableListParam dictTableListParam = new DictTableListParam();
-        dictTableListParam.setIdList(idList);
-        List<DictTableVo> dictTableList = dictTableMapper.getDictTableServiceList(dictTableListParam);
-
-        List<Long> tmpIdList = dictTableList.stream().map(dictTableVo -> dictTableVo.getId()).collect(Collectors.toList());
-        if (CollectionUtils.isNotEmpty(tmpIdList)) {
-            Map<Long, List<DictTableVo>> listMap = dictTableList.stream().collect(Collectors.groupingBy(DictTableVo::getParentId));
-            childrenList.stream().forEach(dictTableVo -> {
-                Long id = dictTableVo.getId();
-                if(listMap.containsKey(id)){
-                    dictTableVo.setChildren(listMap.get(id));
-                }
-            });
-
-            getAllChildrenList(tmpIdList, dictTableList);
-        }
+        return dictTableVo;
     }
 
     @Override
@@ -397,11 +389,27 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     @Override
     public List<DictTableVo> getDictTableAllChildrenService(DictTablePageParam dictTablePageParam) throws Exception {
         setDynamicTableName(dictTablePageParam.getDictId(), false);
+        long id = Long.parseLong(String.valueOf(dictTablePageParam.getParentId()));
 
-        // TODO 根据父ID获取 所有下级数据字典项集合
+        // 查询所有下级的id集合
+        List<Long> childrenList = Lists.newArrayList();
+        getChildrenIdList(Arrays.asList(id), childrenList);
+        // 查询所有下级的对象集合
+        DictTableListParam dictTableListParam = new DictTableListParam();
+        dictTableListParam.setIdList(childrenList);
+        List<DictTableVo> dictTableVoList = dictTableMapper.getDictTableServiceList(dictTableListParam);
+        // 按照父id进行分组
+        Map<Long, List<DictTableVo>> listMap = dictTableVoList.stream().collect(Collectors.groupingBy(DictTableVo::getParentId));
+        List<DictTableVo> result = dictTableVoList.stream().map(dictTableVo -> {
+            Long idKey = dictTableVo.getId();
+            if (listMap.containsKey(idKey)) {
+                dictTableVo.setChildren(listMap.get(idKey));
+            }
+            return dictTableVo;
+        }).filter(dictTableVo -> dictTableVo.getParentId().equals(id)).collect(Collectors.toList());
         // 因为动态表名不是一次性使用，则需要手动remove
         DynamicTableNameUtil.remove();
-        return null;
+        return result;
     }
 
     /**
