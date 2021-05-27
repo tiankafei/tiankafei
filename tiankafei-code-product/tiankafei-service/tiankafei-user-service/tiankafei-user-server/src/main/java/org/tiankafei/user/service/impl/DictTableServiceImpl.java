@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ruoyi.common.core.utils.DynamicTableNameUtil;
+import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import com.ruoyi.common.core.web.service.impl.QueryDbNameService;
 import java.io.Serializable;
@@ -345,7 +346,7 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
     public DictTableVo getDictTableParentService(Long dictId, Serializable id) throws Exception {
         DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
         Long parentId = dictTableVo.getParentId();
-        if(parentId != null){
+        if (parentId != null) {
             return getDictTableServiceById(dictId, parentId);
         }
         return null;
@@ -353,19 +354,44 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     @Override
     public DictTableVo getDictTableAllParentService(Long dictId, Serializable id) throws Exception {
-        setDynamicTableName(dictId, false);
+        DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
+        String allParentId = dictTableVo.getAllParentId();
+        if (StringUtils.isNotBlank(allParentId)) {
+            return getPrevDictTableVo(dictId, allParentId);
+        }
+        return dictTableVo;
+    }
 
-        // TODO 根据ID获取 获取所有上级数据字典对象
-        // 因为动态表名不是一次性使用，则需要手动remove
-        DynamicTableNameUtil.remove();
-        return null;
+    private DictTableVo getPrevDictTableVo(Long dictId, String ids) throws Exception {
+        // 所有父id拼成一个集合
+        String[] split = ids.split(",");
+        List<Long> idList = Arrays.asList(split).stream().map(key -> Long.valueOf(key)).collect(Collectors.toList());
+        // 查询所有上级
+        DictTableListParam dictTableListParam = new DictTableListParam();
+        dictTableListParam.setDictId(dictId);
+        dictTableListParam.setIdList(idList);
+        List<DictTableVo> dictTableList = getDictTableServiceList(dictTableListParam);
+        // 组装成id -> 对象的map集合
+        Map<Long, DictTableVo> dictTableVoMap = dictTableList.stream().collect(Collectors.toMap(DictTableVo::getId, dictTableVo1 -> dictTableVo1));
+
+        // 找到跟对象
+        Long rootId = idList.get(0);
+        DictTableVo rootDictTableVo = dictTableVoMap.get(rootId);
+        DictTableVo curDictTableVo = rootDictTableVo;
+        for (int index = 1, length = idList.size(); index < length; index++) {
+            Long tempId = idList.get(index);
+            DictTableVo tempDictTableVo = dictTableVoMap.get(tempId);
+            curDictTableVo.setChildren(Arrays.asList(tempDictTableVo));
+            curDictTableVo = tempDictTableVo;
+        }
+        return rootDictTableVo;
     }
 
     @Override
     public DictTableVo getDictTableThisAndParentService(Long dictId, Serializable id) throws Exception {
         DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
         Long parentId = dictTableVo.getParentId();
-        if(parentId != null){
+        if (parentId != null) {
             DictTableVo parentDictTableVo = getDictTableServiceById(dictId, parentId);
             parentDictTableVo.setChildren(Arrays.asList(dictTableVo));
             return parentDictTableVo;
@@ -375,12 +401,12 @@ public class DictTableServiceImpl extends BaseServiceImpl<DictTableMapper, DictT
 
     @Override
     public DictTableVo getDictTableThisAndAllParentService(Long dictId, Serializable id) throws Exception {
-        setDynamicTableName(dictId, false);
-
-        // TODO 根据ID获取 获取本级和所有上级数据字典对象
-        // 因为动态表名不是一次性使用，则需要手动remove
-        DynamicTableNameUtil.remove();
-        return null;
+        DictTableVo dictTableVo = getDictTableServiceById(dictId, id);
+        String allParentId = dictTableVo.getAllParentId();
+        if (StringUtils.isNotBlank(allParentId)) {
+            return getPrevDictTableVo(dictId, allParentId + "," + id);
+        }
+        return dictTableVo;
     }
 
     @Override
