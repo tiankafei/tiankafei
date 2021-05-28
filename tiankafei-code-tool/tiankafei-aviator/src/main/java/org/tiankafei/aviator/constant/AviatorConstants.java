@@ -35,4 +35,14 @@ public interface AviatorConstants {
      */
     String FUNCTION_MOD = "MOD";
 
+    /**
+     * 等于函数
+     */
+    String FUNCTION_EQUALS = "equals";
+
+    /**
+     * 不等于函数
+     */
+    String FUNCTION_NOT_EQUALS = "not_equals";
+
 }

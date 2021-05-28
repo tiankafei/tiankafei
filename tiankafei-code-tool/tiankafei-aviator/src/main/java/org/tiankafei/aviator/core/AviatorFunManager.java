@@ -11,10 +11,14 @@ import org.tiankafei.aviator.runtime.function.two.Add;
 import org.tiankafei.aviator.runtime.function.two.AddOp;
 import org.tiankafei.aviator.runtime.function.two.Div;
 import org.tiankafei.aviator.runtime.function.two.DivOp;
+import org.tiankafei.aviator.runtime.function.two.Equals;
+import org.tiankafei.aviator.runtime.function.two.EqualsOp;
 import org.tiankafei.aviator.runtime.function.two.Mod;
 import org.tiankafei.aviator.runtime.function.two.ModOp;
 import org.tiankafei.aviator.runtime.function.two.Mul;
 import org.tiankafei.aviator.runtime.function.two.MulOp;
+import org.tiankafei.aviator.runtime.function.two.NotEquals;
+import org.tiankafei.aviator.runtime.function.two.NotEqualsOp;
 import org.tiankafei.aviator.runtime.function.two.Sub;
 import org.tiankafei.aviator.runtime.function.two.SubOp;
 
@@ -35,14 +39,19 @@ public class AviatorFunManager implements IFunManager {
         addOpFunction(OperatorType.MULT, new MulOp());
         addOpFunction(OperatorType.DIV, new DivOp());
         addOpFunction(OperatorType.MOD, new ModOp());
+        addOpFunction(OperatorType.EQ, new EqualsOp());
+        addOpFunction(OperatorType.NEQ, new NotEqualsOp());
 
         // 增加自定义函数
-        addFunction(new AviatorFunctionProxy(new Abs()));
         addFunction(new AviatorFunctionProxy(new Add()));
         addFunction(new AviatorFunctionProxy(new Sub()));
         addFunction(new AviatorFunctionProxy(new Mul()));
         addFunction(new AviatorFunctionProxy(new Div()));
         addFunction(new AviatorFunctionProxy(new Mod()));
+        addFunction(new AviatorFunctionProxy(new Equals()));
+        addFunction(new AviatorFunctionProxy(new NotEquals()));
+
+        addFunction(new AviatorFunctionProxy(new Abs()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
