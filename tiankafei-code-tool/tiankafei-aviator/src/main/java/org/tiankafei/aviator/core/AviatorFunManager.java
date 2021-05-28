@@ -18,6 +18,11 @@ public class AviatorFunManager implements IFunManager {
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_INTEGRAL_NUMBER_INTO_DECIMAL, true);
     }
 
+    /**
+     * 增加函数
+     *
+     * @param aviatorFunctionProxy
+     */
     private void addFunction(final AviatorFunctionProxy aviatorFunctionProxy) {
         String name = aviatorFunctionProxy.getName();
         String lowerCase = name.toLowerCase();
@@ -32,6 +37,12 @@ public class AviatorFunManager implements IFunManager {
         }
     }
 
+    /**
+     * 验证函数是否存在
+     *
+     * @param funName
+     * @return
+     */
     public boolean checkFunctionExists(String funName) {
         AviatorFunction function = AviatorEvaluator.getFunction(funName);
         return "com.googlecode.aviator.RuntimeFunctionDelegator".equals(function.getClass().getName()) && !SymbolTable.isReservedKeyword(funName);
