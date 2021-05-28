@@ -13,6 +13,14 @@ import org.tiankafei.aviator.runtime.function.two.Div;
 import org.tiankafei.aviator.runtime.function.two.DivOp;
 import org.tiankafei.aviator.runtime.function.two.Equals;
 import org.tiankafei.aviator.runtime.function.two.EqualsOp;
+import org.tiankafei.aviator.runtime.function.two.GreaterThen;
+import org.tiankafei.aviator.runtime.function.two.GreaterThenEquals;
+import org.tiankafei.aviator.runtime.function.two.GreaterThenEqualsOp;
+import org.tiankafei.aviator.runtime.function.two.GreaterThenOp;
+import org.tiankafei.aviator.runtime.function.two.LessThen;
+import org.tiankafei.aviator.runtime.function.two.LessThenEquals;
+import org.tiankafei.aviator.runtime.function.two.LessThenEqualsOp;
+import org.tiankafei.aviator.runtime.function.two.LessThenOp;
 import org.tiankafei.aviator.runtime.function.two.Mod;
 import org.tiankafei.aviator.runtime.function.two.ModOp;
 import org.tiankafei.aviator.runtime.function.two.Mul;
@@ -41,6 +49,10 @@ public class AviatorFunManager implements IFunManager {
         addOpFunction(OperatorType.MOD, new ModOp());
         addOpFunction(OperatorType.EQ, new EqualsOp());
         addOpFunction(OperatorType.NEQ, new NotEqualsOp());
+        addOpFunction(OperatorType.LT, new LessThenOp());
+        addOpFunction(OperatorType.LE, new LessThenEqualsOp());
+        addOpFunction(OperatorType.GT, new GreaterThenOp());
+        addOpFunction(OperatorType.GE, new GreaterThenEqualsOp());
 
         // 增加自定义函数
         addFunction(new AviatorFunctionProxy(new Add()));
@@ -50,6 +62,10 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Mod()));
         addFunction(new AviatorFunctionProxy(new Equals()));
         addFunction(new AviatorFunctionProxy(new NotEquals()));
+        addFunction(new AviatorFunctionProxy(new LessThen()));
+        addFunction(new AviatorFunctionProxy(new LessThenEquals()));
+        addFunction(new AviatorFunctionProxy(new GreaterThen()));
+        addFunction(new AviatorFunctionProxy(new GreaterThenEquals()));
 
         addFunction(new AviatorFunctionProxy(new Abs()));
     }

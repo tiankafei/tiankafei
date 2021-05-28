@@ -45,4 +45,24 @@ public interface AviatorConstants {
      */
     String FUNCTION_NOT_EQUALS = "not_equals";
 
+    /**
+     * 小于函数
+     */
+    String FUNCTION_LESS_THEN = "less_then";
+
+    /**
+     * 小于等于函数
+     */
+    String FUNCTION_LESS_THEN_EQUALS = "less_then_equals";
+
+    /**
+     * 大于函数
+     */
+    String FUNCTION_GREATER_THEN = "greater_then";
+
+    /**
+     * 大于等于函数
+     */
+    String FUNCTION_GREATER_THEN_EQUALS = "greater_then_equals";
+
 }

@@ -211,4 +211,108 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testLessThen() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "less_then(a, b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testLessThenOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "a < b";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testLessThenEquals() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "less_then_equals(a, b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testLessThenEqualsOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "a <= b";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testGreaterThen() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "greater_then(a, b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testGreaterThenOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "a > b";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testGreaterThenEquals() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "greater_then_equals(a, b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testGreaterThenEqualsOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "a >= b";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }
