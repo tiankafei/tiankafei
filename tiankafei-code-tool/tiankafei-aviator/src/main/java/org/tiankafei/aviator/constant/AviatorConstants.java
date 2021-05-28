@@ -25,4 +25,14 @@ public interface AviatorConstants {
      */
     String FUNCTION_MUL = "MUL";
 
+    /**
+     * 除法函数
+     */
+    String FUNCTION_DIV = "DIV";
+
+    /**
+     * 求模函数
+     */
+    String FUNCTION_MOD = "MOD";
+
 }
