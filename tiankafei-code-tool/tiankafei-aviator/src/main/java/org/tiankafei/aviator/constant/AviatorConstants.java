@@ -10,4 +10,14 @@ public interface AviatorConstants {
      */
     String FUNCTION_ABS = "ABS";
 
+    /**
+     * 加法函数
+     */
+    String FUNCTION_ADD = "ADD";
+
+    /**
+     * 减法函数
+     */
+    String FUNCTION_SUB = "SUB";
+
 }

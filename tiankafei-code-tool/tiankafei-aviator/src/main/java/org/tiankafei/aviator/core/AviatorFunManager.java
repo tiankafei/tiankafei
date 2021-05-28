@@ -3,9 +3,14 @@ package org.tiankafei.aviator.core;
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.Options;
 import com.googlecode.aviator.lexer.SymbolTable;
+import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import org.tiankafei.aviator.runtime.function.AviatorFunctionProxy;
 import org.tiankafei.aviator.runtime.function.one.Abs;
+import org.tiankafei.aviator.runtime.function.two.Add;
+import org.tiankafei.aviator.runtime.function.two.AddOp;
+import org.tiankafei.aviator.runtime.function.two.Sub;
+import org.tiankafei.aviator.runtime.function.two.SubOp;
 
 /**
  * @author tiankafei
@@ -18,8 +23,18 @@ public class AviatorFunManager implements IFunManager {
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_INTEGRAL_NUMBER_INTO_DECIMAL, true);
 
+        // 重载操作符运算的函数
+        addOpFunction(OperatorType.ADD, new AddOp());
+        addOpFunction(OperatorType.SUB, new SubOp());
+
         // 增加自定义函数
         addFunction(new AviatorFunctionProxy(new Abs()));
+        addFunction(new AviatorFunctionProxy(new Add()));
+        addFunction(new AviatorFunctionProxy(new Sub()));
+    }
+
+    private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
+        AviatorEvaluator.getInstance().addOpFunction(operatorType, new AviatorFunctionProxy(function));
     }
 
     /**
