@@ -5,6 +5,7 @@ import com.googlecode.aviator.Options;
 import com.googlecode.aviator.lexer.SymbolTable;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import org.tiankafei.aviator.runtime.function.AviatorFunctionProxy;
+import org.tiankafei.aviator.runtime.function.one.Abs;
 
 /**
  * @author tiankafei
@@ -16,6 +17,9 @@ public class AviatorFunManager implements IFunManager {
         // 开启浮点型精度
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_INTEGRAL_NUMBER_INTO_DECIMAL, true);
+
+        // 增加自定义函数
+        addFunction(new AviatorFunctionProxy(new Abs()));
     }
 
     /**

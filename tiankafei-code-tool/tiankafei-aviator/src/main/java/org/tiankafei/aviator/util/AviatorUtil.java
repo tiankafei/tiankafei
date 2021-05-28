@@ -1,6 +1,10 @@
 package org.tiankafei.aviator.util;
 
+import com.googlecode.aviator.AviatorEvaluator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.tiankafei.aviator.core.IFunManager;
 import org.tiankafei.common.util.JdkSpiUtil;
@@ -8,6 +12,7 @@ import org.tiankafei.common.util.JdkSpiUtil;
 /**
  * @author tiankafei
  */
+@Slf4j
 public class AviatorUtil {
 
     /**
@@ -17,6 +22,35 @@ public class AviatorUtil {
         Iterator<IFunManager> providers = JdkSpiUtil.service(IFunManager.class);
         IFunManager funManager = providers.next();
         funManager.initialize();
+    }
+
+    /**
+     * 直接执行审核
+     *
+     * @param expression
+     */
+    public static void execute(String expression) {
+        execute(expression, new HashMap<>(0));
+    }
+
+    /**
+     * 直接执行审核
+     *
+     * @param expression
+     * @param dataMap
+     */
+    public static void execute(String expression, Map<String, Object> dataMap) {
+        try {
+            Object result = null;
+            if (dataMap != null) {
+                result = AviatorEvaluator.execute(expression, dataMap);
+            } else {
+                result = AviatorEvaluator.execute(expression);
+            }
+            log.info("表达式：{}的执行结果为：{}", expression, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
