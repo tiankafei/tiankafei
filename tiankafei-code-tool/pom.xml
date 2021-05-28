@@ -22,6 +22,7 @@
         <module>tiankafei-proxy</module>
         <module>tiankafei-common</module>
         <module>tiankafei-asm</module>
+        <module>tiankafei-aviator</module>
         <module>tiankafei-aviator-extend</module>
         <module>tiankafei-antlr4</module>
         <module>tiankafei-poi</module>
