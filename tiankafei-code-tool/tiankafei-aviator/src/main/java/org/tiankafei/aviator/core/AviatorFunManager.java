@@ -9,6 +9,8 @@ import org.tiankafei.aviator.runtime.function.AviatorFunctionProxy;
 import org.tiankafei.aviator.runtime.function.one.Abs;
 import org.tiankafei.aviator.runtime.function.two.Add;
 import org.tiankafei.aviator.runtime.function.two.AddOp;
+import org.tiankafei.aviator.runtime.function.two.Mul;
+import org.tiankafei.aviator.runtime.function.two.MulOp;
 import org.tiankafei.aviator.runtime.function.two.Sub;
 import org.tiankafei.aviator.runtime.function.two.SubOp;
 
@@ -26,11 +28,13 @@ public class AviatorFunManager implements IFunManager {
         // 重载操作符运算的函数
         addOpFunction(OperatorType.ADD, new AddOp());
         addOpFunction(OperatorType.SUB, new SubOp());
+        addOpFunction(OperatorType.MULT, new MulOp());
 
         // 增加自定义函数
         addFunction(new AviatorFunctionProxy(new Abs()));
         addFunction(new AviatorFunctionProxy(new Add()));
         addFunction(new AviatorFunctionProxy(new Sub()));
+        addFunction(new AviatorFunctionProxy(new Mul()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {

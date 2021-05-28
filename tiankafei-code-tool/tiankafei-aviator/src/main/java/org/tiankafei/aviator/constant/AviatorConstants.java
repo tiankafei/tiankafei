@@ -20,4 +20,9 @@ public interface AviatorConstants {
      */
     String FUNCTION_SUB = "SUB";
 
+    /**
+     * 乘法函数
+     */
+    String FUNCTION_MUL = "MUL";
+
 }

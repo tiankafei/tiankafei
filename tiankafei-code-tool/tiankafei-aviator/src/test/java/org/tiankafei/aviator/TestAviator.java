@@ -81,4 +81,30 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testMul() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "mul(a, b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-12");
+        dataMap.put("b", 2);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testMulOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "a * b";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", -3);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }
