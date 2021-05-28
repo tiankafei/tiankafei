@@ -7,8 +7,11 @@ import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import org.tiankafei.aviator.runtime.function.AviatorFunctionProxy;
 import org.tiankafei.aviator.runtime.function.one.Abs;
+import org.tiankafei.aviator.runtime.function.other.Or;
 import org.tiankafei.aviator.runtime.function.two.Add;
 import org.tiankafei.aviator.runtime.function.two.AddOp;
+import org.tiankafei.aviator.runtime.function.other.And;
+import org.tiankafei.aviator.runtime.function.two.AndOp;
 import org.tiankafei.aviator.runtime.function.two.Div;
 import org.tiankafei.aviator.runtime.function.two.DivOp;
 import org.tiankafei.aviator.runtime.function.two.Equals;
@@ -27,6 +30,7 @@ import org.tiankafei.aviator.runtime.function.two.Mul;
 import org.tiankafei.aviator.runtime.function.two.MulOp;
 import org.tiankafei.aviator.runtime.function.two.NotEquals;
 import org.tiankafei.aviator.runtime.function.two.NotEqualsOp;
+import org.tiankafei.aviator.runtime.function.two.OrOp;
 import org.tiankafei.aviator.runtime.function.two.Sub;
 import org.tiankafei.aviator.runtime.function.two.SubOp;
 
@@ -53,6 +57,8 @@ public class AviatorFunManager implements IFunManager {
         addOpFunction(OperatorType.LE, new LessThenEqualsOp());
         addOpFunction(OperatorType.GT, new GreaterThenOp());
         addOpFunction(OperatorType.GE, new GreaterThenEqualsOp());
+        addOpFunction(OperatorType.AND, new AndOp());
+        addOpFunction(OperatorType.OR, new OrOp());
 
         // 增加自定义函数
         addFunction(new AviatorFunctionProxy(new Add()));
@@ -66,6 +72,8 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new LessThenEquals()));
         addFunction(new AviatorFunctionProxy(new GreaterThen()));
         addFunction(new AviatorFunctionProxy(new GreaterThenEquals()));
+        addFunction(new AviatorFunctionProxy(new And()));
+        addFunction(new AviatorFunctionProxy(new Or()));
 
         addFunction(new AviatorFunctionProxy(new Abs()));
     }

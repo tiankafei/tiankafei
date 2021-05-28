@@ -315,4 +315,56 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testAnd() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "and(a > 0, b > 1, b > 5)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testAndOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "a >= 0 && b > 1 && b > 3";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "12");
+        dataMap.put("b", 12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testOr() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "or(a > 0, b > 1, b > 5)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-12");
+        dataMap.put("b", -12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testOrOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "a >= 0 || b > 1 || b > 3";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-12");
+        dataMap.put("b", -12);
+        System.out.println(expression.execute(dataMap));
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }

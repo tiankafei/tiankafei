@@ -65,4 +65,14 @@ public interface AviatorConstants {
      */
     String FUNCTION_GREATER_THEN_EQUALS = "greater_then_equals";
 
+    /**
+     * and函数
+     */
+    String FUNCTION_AND = "and";
+
+    /**
+     * or函数
+     */
+    String FUNCTION_OR = "or";
+
 }

@@ -83,4 +83,21 @@ public class AviatorUtil {
         return strResult;
     }
 
+    /**
+     * 转换成Boolean
+     *
+     * @param val
+     * @return
+     */
+    public static Boolean toBooleanObj(Object val) {
+        if (val == null) {
+            return Boolean.FALSE;
+        } else if (val instanceof Boolean) {
+            return ((Boolean) val);
+        } else if (val instanceof String) {
+            return Boolean.valueOf((String) val);
+        }
+        return Boolean.FALSE;
+    }
+
 }
