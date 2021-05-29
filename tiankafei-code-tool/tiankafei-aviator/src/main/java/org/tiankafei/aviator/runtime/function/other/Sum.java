@@ -24,7 +24,7 @@ public class Sum extends MoreParamFunction {
 
         for (int index = 1, length = valueList.size(); index < length; index++) {
             Double right = AviatorUtil.objectToDouble(valueList.get(index));
-            if(value != null && right != null){
+            if (value != null && right != null) {
                 result = result.add(new BigDecimal(right));
             }
         }

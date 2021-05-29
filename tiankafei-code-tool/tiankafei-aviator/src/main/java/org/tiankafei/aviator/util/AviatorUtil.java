@@ -102,6 +102,7 @@ public class AviatorUtil {
 
     /**
      * object 转 double类型
+     *
      * @param object
      * @return
      */

@@ -21,13 +21,13 @@ public class MinValue extends MoreParamFunction {
         Double value = AviatorUtil.objectToDouble(valueList.get(0));
         for (int index = 1, length = valueList.size(); index < length; index++) {
             Double right = AviatorUtil.objectToDouble(valueList.get(index));
-            if(value != null && right != null){
-                if(value > right){
+            if (value != null && right != null) {
+                if (value > right) {
                     value = right;
                 }
             }
         }
         return AviatorRuntimeJavaType.valueOf(AviatorUtil.parseNumber(value));
     }
-    
+
 }
