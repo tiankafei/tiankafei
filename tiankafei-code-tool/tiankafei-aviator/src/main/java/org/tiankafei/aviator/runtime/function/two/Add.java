@@ -6,6 +6,7 @@ import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import java.math.BigDecimal;
 import org.tiankafei.aviator.constant.AviatorConstants;
+import org.tiankafei.aviator.util.AviatorUtil;
 
 /**
  * @author tiankafei
@@ -45,7 +46,7 @@ public class Add extends TwoParamFunction {
     @Override
     public Object getReturnValue(Object object) {
         if (object instanceof Number) {
-            object = NumberUtil.parseNumber(object.toString());
+            object = AviatorUtil.parseNumber(object.toString());
         }
         return object;
     }

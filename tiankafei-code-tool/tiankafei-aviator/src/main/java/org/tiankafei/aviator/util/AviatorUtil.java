@@ -100,4 +100,45 @@ public class AviatorUtil {
         return Boolean.FALSE;
     }
 
+    /**
+     * @param l
+     * @return
+     */
+    public static Object parseNumber(long l) {
+        int i = (int) l;
+        if (i == l) {
+            return new Integer(i);
+        }
+        return new Long(l);
+    }
+
+    /**
+     * @param d
+     * @return
+     */
+    public static Object parseNumber(double d) {
+        long f = (long) d;
+        if (f == d) {
+            return parseNumber(f);
+        }
+        return new Double(d);
+    }
+
+    /**
+     * 将字符串转换成数值
+     *
+     * @param str
+     * @return
+     */
+    public static Object parseNumber(String str) {
+        if (str != null) {
+            String trimValue = str.trim();
+            try {
+                return parseNumber(Double.parseDouble(trimValue));
+            } catch (NumberFormatException e) {
+            }
+        }
+        return null;
+    }
+
 }

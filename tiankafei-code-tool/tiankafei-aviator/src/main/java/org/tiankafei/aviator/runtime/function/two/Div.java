@@ -61,7 +61,7 @@ public class Div extends TwoParamFunction {
     @Override
     public Object getReturnValue(Object object) {
         if (object instanceof Number) {
-            object = NumberUtil.parseNumber(object.toString());
+            object = AviatorUtil.parseNumber(object.toString());
         }
         return object;
     }

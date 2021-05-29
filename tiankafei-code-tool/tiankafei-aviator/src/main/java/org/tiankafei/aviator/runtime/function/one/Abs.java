@@ -1,9 +1,8 @@
 package org.tiankafei.aviator.runtime.function.one;
 
-import cn.hutool.core.util.NumberUtil;
-import com.googlecode.aviator.runtime.type.AviatorDecimal;
 import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
+import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
 import java.math.BigDecimal;
 import org.tiankafei.aviator.constant.AviatorConstants;
 import org.tiankafei.aviator.util.AviatorUtil;
@@ -32,7 +31,7 @@ public class Abs extends OneParamFunction {
         }
         if (bigDecimal != null) {
             Object value = Math.abs(bigDecimal.doubleValue());
-            return AviatorDecimal.valueOf(NumberUtil.parseNumber(value.toString()));
+            return AviatorRuntimeJavaType.valueOf(AviatorUtil.parseNumber(value.toString()));
         }
         return AviatorNil.NIL;
     }

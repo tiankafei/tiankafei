@@ -28,7 +28,7 @@ public class Sub extends TwoParamFunction {
             if (AviatorUtil.isNumerics(right)) {
                 BigDecimal bigDecimal = new BigDecimal(right.toString());
                 bigDecimal = bigDecimal.multiply(new BigDecimal("-1"));
-                return AviatorRuntimeJavaType.valueOf(NumberUtil.parseNumber(String.valueOf(bigDecimal.doubleValue())));
+                return AviatorRuntimeJavaType.valueOf(AviatorUtil.parseNumber(bigDecimal.doubleValue()));
             } else {
                 return AviatorNil.NIL;
             }
@@ -63,7 +63,7 @@ public class Sub extends TwoParamFunction {
     @Override
     public Object getReturnValue(Object object) {
         if (object instanceof Number) {
-            object = NumberUtil.parseNumber(object.toString());
+            object = AviatorUtil.parseNumber(object.toString());
         }
         return object;
     }

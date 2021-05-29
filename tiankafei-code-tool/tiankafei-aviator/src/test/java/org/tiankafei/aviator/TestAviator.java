@@ -6,6 +6,7 @@ import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.Expression;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.tiankafei.aviator.util.AviatorUtil;
@@ -25,7 +26,8 @@ public class TestAviator {
 
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "-12");
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 12);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
