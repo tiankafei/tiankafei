@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 import org.tiankafei.aviator.constant.AviatorConstants;
 
 /**
+ * matches:整个匹配，只有整个字符序列完全匹配成功，才返回True，否则返回False。但如果前部分匹配成功，将移动下次匹配的位置。
+ *
  * @author tiankafei
  */
 public class Match extends TwoParamFunction {

@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 import org.tiankafei.aviator.constant.AviatorConstants;
 
 /**
+ * lookingAt:部分匹配，总是从第一个字符进行匹配,匹配成功了不再继续匹配，匹配失败了,也不继续匹配。
+ *
  * @author tiankafei
  */
 public class Lookat extends TwoParamFunction {
