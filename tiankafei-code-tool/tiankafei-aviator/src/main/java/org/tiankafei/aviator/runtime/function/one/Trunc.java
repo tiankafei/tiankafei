@@ -8,6 +8,8 @@ import org.tiankafei.aviator.constant.AviatorConstants;
 import org.tiankafei.aviator.util.AviatorUtil;
 
 /**
+ * 去掉小数位：向下取证
+ *
  * @author tiankafei
  */
 public class Trunc extends OneParamFunction {

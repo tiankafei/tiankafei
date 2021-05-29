@@ -8,6 +8,8 @@ import org.tiankafei.aviator.constant.AviatorConstants;
 import org.tiankafei.aviator.util.AviatorUtil;
 
 /**
+ * 进一，向上取整
+ *
  * @author tiankafei
  */
 public class Ceil extends OneParamFunction {

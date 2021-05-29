@@ -19,19 +19,6 @@ public class TestAviator {
     }
 
     @Test
-    public void testAbs() {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        String exp = "abs(a)";
-        Expression expression = AviatorEvaluator.compile(exp);
-
-        Map<String, Object> dataMap = Maps.newHashMap();
-        dataMap.put("a", "-12");
-        Object value = expression.execute(dataMap);
-        Assert.assertEquals(value, 12);
-        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
-    }
-
-    @Test
     public void testAdd() {
         Stopwatch stopwatch = Stopwatch.createStarted();
         String exp = "add(a, b)";
@@ -444,6 +431,58 @@ public class TestAviator {
         dataMap.put("a", "北京同方软件有限公司");
         Object value = expression.execute(dataMap);
         Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testAbs() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "abs(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-12");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 12);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testCeil() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "ceil(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1.123);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 2);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testTrunc() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "trunc(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1.923);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 1);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testRound() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "round(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1.423);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 1);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
