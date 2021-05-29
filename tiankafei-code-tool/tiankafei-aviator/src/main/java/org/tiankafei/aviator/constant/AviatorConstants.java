@@ -75,4 +75,24 @@ public interface AviatorConstants {
      */
     String FUNCTION_OR = "or";
 
+    /**
+     * left函数
+     */
+    String FUNCTION_LEFT = "left";
+
+    /**
+     * right函数
+     */
+    String FUNCTION_RIGHT = "right";
+
+    /**
+     * lookat函数
+     */
+    String FUNCTION_LOOKAT = "lookat";
+
+    /**
+     * match函数
+     */
+    String FUNCTION_MATCH = "match";
+
 }

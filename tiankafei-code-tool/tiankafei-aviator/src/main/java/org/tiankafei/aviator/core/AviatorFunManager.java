@@ -20,10 +20,13 @@ import org.tiankafei.aviator.runtime.function.two.GreaterThen;
 import org.tiankafei.aviator.runtime.function.two.GreaterThenEquals;
 import org.tiankafei.aviator.runtime.function.two.GreaterThenEqualsOp;
 import org.tiankafei.aviator.runtime.function.two.GreaterThenOp;
+import org.tiankafei.aviator.runtime.function.two.Left;
 import org.tiankafei.aviator.runtime.function.two.LessThen;
 import org.tiankafei.aviator.runtime.function.two.LessThenEquals;
 import org.tiankafei.aviator.runtime.function.two.LessThenEqualsOp;
 import org.tiankafei.aviator.runtime.function.two.LessThenOp;
+import org.tiankafei.aviator.runtime.function.two.Lookat;
+import org.tiankafei.aviator.runtime.function.two.Match;
 import org.tiankafei.aviator.runtime.function.two.Mod;
 import org.tiankafei.aviator.runtime.function.two.ModOp;
 import org.tiankafei.aviator.runtime.function.two.Mul;
@@ -31,6 +34,7 @@ import org.tiankafei.aviator.runtime.function.two.MulOp;
 import org.tiankafei.aviator.runtime.function.two.NotEquals;
 import org.tiankafei.aviator.runtime.function.two.NotEqualsOp;
 import org.tiankafei.aviator.runtime.function.two.OrOp;
+import org.tiankafei.aviator.runtime.function.two.Right;
 import org.tiankafei.aviator.runtime.function.two.Sub;
 import org.tiankafei.aviator.runtime.function.two.SubOp;
 
@@ -76,6 +80,10 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Or()));
 
         addFunction(new AviatorFunctionProxy(new Abs()));
+        addFunction(new AviatorFunctionProxy(new Left()));
+        addFunction(new AviatorFunctionProxy(new Right()));
+        addFunction(new AviatorFunctionProxy(new Lookat()));
+        addFunction(new AviatorFunctionProxy(new Match()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {

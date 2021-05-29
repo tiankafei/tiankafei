@@ -395,4 +395,56 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testLeft() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "left(a, 3)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "北京同方软件有限公司");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, "同方软件有限公司");
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testRight() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "right(a, 4)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "北京同方软件有限公司");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, "有限公司");
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testLookat() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "lookat('北京', a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "北京同方软件有限公司");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testMatch() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "match('北京同方软件有限公司', a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "北京同方软件有限公司");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }
