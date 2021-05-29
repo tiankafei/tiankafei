@@ -1,8 +1,6 @@
 server:
   port: 7200
 spring:
-  autoconfigure:
-    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   profiles:
     active: dev, nacos
   application:

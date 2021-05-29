@@ -39,11 +39,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
@@ -66,10 +61,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
@@ -95,15 +86,23 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-log</artifactId>
         </dependency>
+
         <!-- RuoYi Common Security -->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-security</artifactId>
         </dependency>
+
         <!-- RuoYi Common Swagger -->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-swagger</artifactId>
+        </dependency>
+
+        <!-- RuoYi Common DataSource -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-datasource</artifactId>
         </dependency>
 
         <!--自己的工具包-->

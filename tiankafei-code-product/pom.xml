@@ -63,6 +63,12 @@
                 <artifactId>ruoyi-common-swagger</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+            <!-- RuoYi Common DataSource -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-common-datasource</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
 
             <!-- RuoYi tiankafei db -->
             <dependency>

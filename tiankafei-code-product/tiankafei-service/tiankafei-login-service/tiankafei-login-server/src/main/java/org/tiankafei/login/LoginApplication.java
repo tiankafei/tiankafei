@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EntityScan(basePackages = "org.tiankafei")
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
 @ComponentScan(basePackages = {"org.tiankafei"})
+@EnableFeignClients(basePackages = {"org.tiankafei", "com.ruoyi"})
 @EnableHystrixDashboard
 public class LoginApplication {
 

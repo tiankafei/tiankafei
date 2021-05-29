@@ -48,10 +48,6 @@
             <artifactId>ruoyi-api-business</artifactId>
         </dependency>
 
-        <!--<dependency>
-            <groupId>org.tiankafei.product</groupId>
-            <artifactId>tiankafei-user-cache</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-login-api</artifactId>
