@@ -40,7 +40,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 24);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -53,7 +54,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 1);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 13);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -66,7 +68,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 3);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 9);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -79,7 +82,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 2);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 10);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -92,7 +96,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "-12");
         dataMap.put("b", 2);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, -24);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -105,7 +110,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", -3);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, -36);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -118,7 +124,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "-12");
         dataMap.put("b", 2);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, -6);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -131,7 +138,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", -3);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, -4);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -144,7 +152,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", -9);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 3);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -157,7 +166,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", -9);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 3);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -168,9 +178,10 @@ public class TestAviator {
         Expression expression = AviatorEvaluator.compile(exp);
 
         Map<String, Object> dataMap = Maps.newHashMap();
-//        dataMap.put("a", "12");
+        dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -183,7 +194,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -196,7 +208,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -209,7 +222,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -222,7 +236,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -235,7 +250,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -248,7 +264,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -261,7 +278,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -274,7 +292,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -287,7 +306,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -300,7 +320,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -313,7 +334,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -326,7 +348,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -339,7 +362,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "12");
         dataMap.put("b", 12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -352,7 +376,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "-12");
         dataMap.put("b", -12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
@@ -365,7 +390,8 @@ public class TestAviator {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("a", "-12");
         dataMap.put("b", -12);
-        System.out.println(expression.execute(dataMap));
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
