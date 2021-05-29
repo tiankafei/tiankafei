@@ -822,4 +822,36 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testInRange() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "in_range(a, b, c)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 4);
+        dataMap.put("b", "3");
+        dataMap.put("c", "5");
+        Object value = expression.execute(dataMap);
+        System.out.println(value);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testReplaceall() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "replace_all(a, b, c)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "1234567891");
+        dataMap.put("b", "1");
+        dataMap.put("c", "0");
+        Object value = expression.execute(dataMap);
+        System.out.println(value);
+        Assert.assertEquals(value, "0234567890");
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }

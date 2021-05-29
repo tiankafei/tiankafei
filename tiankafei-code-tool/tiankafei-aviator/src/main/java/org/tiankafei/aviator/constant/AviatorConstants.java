@@ -246,4 +246,14 @@ public interface AviatorConstants {
      */
     String FUNCTION_IF = "IF";
 
+    /**
+     * in_range函数
+     */
+    String FUNCTION_IN_RANGE = "in_range";
+
+    /**
+     * replace_all函数
+     */
+    String FUNCTION_REPLACE_ALL = "replace_all";
+
 }

@@ -40,6 +40,8 @@ import org.tiankafei.aviator.runtime.function.other.MinValue;
 import org.tiankafei.aviator.runtime.function.other.Or;
 import org.tiankafei.aviator.runtime.function.other.Sum;
 import org.tiankafei.aviator.runtime.function.special.If;
+import org.tiankafei.aviator.runtime.function.special.InRange;
+import org.tiankafei.aviator.runtime.function.special.Replaceall;
 import org.tiankafei.aviator.runtime.function.two.Add;
 import org.tiankafei.aviator.runtime.function.two.AddOp;
 import org.tiankafei.aviator.runtime.function.two.AndOp;
@@ -150,6 +152,8 @@ public class AviatorFunManager implements IFunManager {
         delFunction("min");
         addFunction(new AviatorFunctionProxy(new Min()));
         addFunction(new AviatorFunctionProxy(new If()));
+        addFunction(new AviatorFunctionProxy(new InRange()));
+        addFunction(new AviatorFunctionProxy(new Replaceall()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
