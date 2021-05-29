@@ -205,4 +205,40 @@ public interface AviatorConstants {
      */
     String FUNCTION_IN_LIST = "in_list";
 
+    /**
+     * max_index函数
+     */
+    String FUNCTION_MAX_INDEX = "max_index";
+
+    /**
+     * min_index函数
+     */
+    String FUNCTION_MIN_INDEX = "min_index";
+
+    /**
+     * max_value函数
+     */
+    String FUNCTION_MAX_VALUE = "max_value";
+
+    /**
+     * min_value函数
+     */
+    String FUNCTION_MIN_VALUE = "min_value";
+
+
+    /**
+     * max函数
+     */
+    String FUNCTION_MAX = "max";
+
+    /**
+     * min函数
+     */
+    String FUNCTION_MIN = "min";
+
+    /**
+     * sum函数
+     */
+    String FUNCTION_SUM = "sum";
+
 }

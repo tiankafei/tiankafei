@@ -692,4 +692,118 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testMaxIndex() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "max_index(a, b, c, d, e, f, g)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1);
+        dataMap.put("b", 3);
+        dataMap.put("c", 5);
+        dataMap.put("d", 7);
+        dataMap.put("e", 9);
+        dataMap.put("f", 0);
+        dataMap.put("g", -10);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 4);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testMaxValue() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "max_value(a, b, c, d, e, f, g)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1);
+        dataMap.put("b", 3);
+        dataMap.put("c", 5);
+        dataMap.put("d", 7);
+        dataMap.put("e", 9);
+        dataMap.put("f", 0);
+        dataMap.put("g", -10);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 9);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testMinIndex() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "min_index(a, b, c, d, e, f, g)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1);
+        dataMap.put("b", 3);
+        dataMap.put("c", 5);
+        dataMap.put("d", 7);
+        dataMap.put("e", 9);
+        dataMap.put("f", 0);
+        dataMap.put("g", -10);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 6);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testMinValue() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "min_value(a, b, c, d, e, f, g)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1);
+        dataMap.put("b", 3);
+        dataMap.put("c", 5);
+        dataMap.put("d", 7);
+        dataMap.put("e", 9);
+        dataMap.put("f", 0);
+        dataMap.put("g", -10);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, -10);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testMin() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "min(a, b, c, d, e, f, g)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1);
+        dataMap.put("b", 3);
+        dataMap.put("c", 5);
+        dataMap.put("d", 7);
+        dataMap.put("e", 9);
+        dataMap.put("f", 0);
+        dataMap.put("g", -10);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, -10);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testMax() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "max(a, b, c, d, e, f, g)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1);
+        dataMap.put("b", 3);
+        dataMap.put("c", 5);
+        dataMap.put("d", 7);
+        dataMap.put("e", 9);
+        dataMap.put("f", 0);
+        dataMap.put("g", -10);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 9);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }

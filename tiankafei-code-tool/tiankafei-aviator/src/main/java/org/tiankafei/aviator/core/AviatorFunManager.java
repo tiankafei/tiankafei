@@ -31,7 +31,14 @@ import org.tiankafei.aviator.runtime.function.one.VerifyIdCard;
 import org.tiankafei.aviator.runtime.function.one.Verifycode;
 import org.tiankafei.aviator.runtime.function.other.And;
 import org.tiankafei.aviator.runtime.function.other.InList;
+import org.tiankafei.aviator.runtime.function.other.Max;
+import org.tiankafei.aviator.runtime.function.other.MaxIndex;
+import org.tiankafei.aviator.runtime.function.other.MaxValue;
+import org.tiankafei.aviator.runtime.function.other.Min;
+import org.tiankafei.aviator.runtime.function.other.MinIndex;
+import org.tiankafei.aviator.runtime.function.other.MinValue;
 import org.tiankafei.aviator.runtime.function.other.Or;
+import org.tiankafei.aviator.runtime.function.other.Sum;
 import org.tiankafei.aviator.runtime.function.two.Add;
 import org.tiankafei.aviator.runtime.function.two.AddOp;
 import org.tiankafei.aviator.runtime.function.two.AndOp;
@@ -131,6 +138,16 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new VerifyCreditCode()));
 
         addFunction(new AviatorFunctionProxy(new InList()));
+        addFunction(new AviatorFunctionProxy(new MaxIndex()));
+        addFunction(new AviatorFunctionProxy(new MinIndex()));
+        addFunction(new AviatorFunctionProxy(new Sum()));
+        addFunction(new AviatorFunctionProxy(new MaxValue()));
+        addFunction(new AviatorFunctionProxy(new MinValue()));
+
+        delFunction("max");
+        addFunction(new AviatorFunctionProxy(new Max()));
+        delFunction("min");
+        addFunction(new AviatorFunctionProxy(new Min()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {

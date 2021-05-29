@@ -101,6 +101,23 @@ public class AviatorUtil {
     }
 
     /**
+     * object 转 double类型
+     * @param object
+     * @return
+     */
+    public static Double objectToDouble(Object object) {
+        Double value = null;
+        if (AviatorUtil.isString(object)) {
+            if (AviatorUtil.isNumerics(object.toString())) {
+                value = Double.parseDouble(object.toString());
+            }
+        } else if (object instanceof Number) {
+            value = Double.parseDouble(object.toString());
+        }
+        return value;
+    }
+
+    /**
      * @param l
      * @return
      */
