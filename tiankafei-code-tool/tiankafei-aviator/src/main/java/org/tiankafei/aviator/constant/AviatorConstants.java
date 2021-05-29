@@ -180,4 +180,24 @@ public interface AviatorConstants {
      */
     String FUNCTION_TRIM = "trim";
 
+    /**
+     * current_time函数
+     */
+    String FUNCTION_CURRENT_TIME = "current_time";
+
+    /**
+     * verify_id_card：身份证号码校验函数
+     */
+    String FUNCTION_VERIFY_ID_CARD = "verify_id_card";
+
+    /**
+     * verify_code:组织机构代码校验函数
+     */
+    String FUNCTION_VERIFY_CODE = "verify_code";
+
+    /**
+     * verify_credit_code:统一社会信用代码校验函数
+     */
+    String FUNCTION_VERIFY_CREDIT_CODE = "verify_credit_code";
+
 }

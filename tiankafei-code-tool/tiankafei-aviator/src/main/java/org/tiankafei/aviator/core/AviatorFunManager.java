@@ -8,6 +8,7 @@ import com.googlecode.aviator.runtime.type.AviatorFunction;
 import org.tiankafei.aviator.runtime.function.AviatorFunctionProxy;
 import org.tiankafei.aviator.runtime.function.one.Abs;
 import org.tiankafei.aviator.runtime.function.one.Ceil;
+import org.tiankafei.aviator.runtime.function.one.CurrentTime;
 import org.tiankafei.aviator.runtime.function.one.IsNull;
 import org.tiankafei.aviator.runtime.function.one.IsNum;
 import org.tiankafei.aviator.runtime.function.one.IsNumber;
@@ -25,6 +26,9 @@ import org.tiankafei.aviator.runtime.function.one.Round;
 import org.tiankafei.aviator.runtime.function.one.Trim;
 import org.tiankafei.aviator.runtime.function.one.Trunc;
 import org.tiankafei.aviator.runtime.function.one.Upper;
+import org.tiankafei.aviator.runtime.function.one.VerifyCreditCode;
+import org.tiankafei.aviator.runtime.function.one.VerifyIdCard;
+import org.tiankafei.aviator.runtime.function.one.Verifycode;
 import org.tiankafei.aviator.runtime.function.other.And;
 import org.tiankafei.aviator.runtime.function.other.Or;
 import org.tiankafei.aviator.runtime.function.two.Add;
@@ -120,6 +124,10 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Round()));
         addFunction(new AviatorFunctionProxy(new Trunc()));
         addFunction(new AviatorFunctionProxy(new Trim()));
+        addFunction(new AviatorFunctionProxy(new CurrentTime()));
+        addFunction(new AviatorFunctionProxy(new VerifyIdCard()));
+        addFunction(new AviatorFunctionProxy(new Verifycode()));
+        addFunction(new AviatorFunctionProxy(new VerifyCreditCode()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
