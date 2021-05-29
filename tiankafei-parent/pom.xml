@@ -682,6 +682,11 @@
             </dependency>
             <dependency>
                 <groupId>org.tiankafei.tool</groupId>
+                <artifactId>tiankafei-aviator</artifactId>
+                <version>${org.tiankafei.tool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tiankafei.tool</groupId>
                 <artifactId>tiankafei-aviator-extend</artifactId>
                 <version>${org.tiankafei.tool.version}</version>
             </dependency>

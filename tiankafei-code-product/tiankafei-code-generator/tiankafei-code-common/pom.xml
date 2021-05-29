@@ -113,7 +113,7 @@
         </dependency>
         <dependency>
             <groupId>org.tiankafei.tool</groupId>
-            <artifactId>tiankafei-aviator-extend</artifactId>
+            <artifactId>tiankafei-aviator</artifactId>
         </dependency>
     </dependencies>
 

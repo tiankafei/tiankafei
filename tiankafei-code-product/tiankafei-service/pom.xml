@@ -27,6 +27,7 @@
         <module>tiankafei-user-common</module>
         <module>tiankafei-user-cache</module>
         <module>tiankafei-user-service</module>
+        <module>tiankafei-rule-service</module>
         <module>tiankafei-login-service</module>
         <module>tiankafei-questionnaire-service</module>
     </modules>
