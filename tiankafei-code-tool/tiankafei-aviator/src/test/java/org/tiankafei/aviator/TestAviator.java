@@ -499,4 +499,197 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testIsch() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "is_ch(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "你好");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testIsen() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "is_en(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "abcdefasdf");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testIslower() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "is_lower(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "abcdefasdf");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testIsupper() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "is_upper(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "ABCDEFASDF");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testIsnull() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "is_null(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testNotnull() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "not_null(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testIsNum() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "is_num(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-123456.123");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testIsNumber() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "is_number(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-123456.123");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testLen() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "len(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-123456.123");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 11);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testLength() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "length(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "-123456.123");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, 11);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testLower() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "lower(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "ABCDEFASDF");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, "abcdefasdf");
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testUpper() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "upper(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "abcdefasdf");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, "ABCDEFASDF");
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testNot() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "not(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", true);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testNotOp() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "!a";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", true);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, false);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testTrim() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "trim(a)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "           123          ");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, "123");
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }

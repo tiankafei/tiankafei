@@ -98,12 +98,12 @@ public interface AviatorConstants {
     /**
      * isupper函数
      */
-    String FUNCTION_ISUPPER = "isupper";
+    String FUNCTION_IS_UPPER = "is_upper";
 
     /**
      * islower函数
      */
-    String FUNCTION_ISLOWER = "islower";
+    String FUNCTION_IS_LOWER = "is_lower";
 
     /**
      * upper函数

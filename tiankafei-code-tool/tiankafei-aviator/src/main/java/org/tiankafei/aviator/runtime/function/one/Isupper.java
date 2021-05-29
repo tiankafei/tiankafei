@@ -11,7 +11,7 @@ public class Isupper extends OneParamFunction {
 
     @Override
     public String getName() {
-        return AviatorConstants.FUNCTION_ISUPPER;
+        return AviatorConstants.FUNCTION_IS_UPPER;
     }
 
     @Override

@@ -11,7 +11,7 @@ public class Islower extends OneParamFunction {
 
     @Override
     public String getName() {
-        return AviatorConstants.FUNCTION_ISLOWER;
+        return AviatorConstants.FUNCTION_IS_LOWER;
     }
 
     @Override
