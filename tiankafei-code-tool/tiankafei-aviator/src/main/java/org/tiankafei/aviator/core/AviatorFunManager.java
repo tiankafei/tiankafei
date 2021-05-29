@@ -40,6 +40,7 @@ import org.tiankafei.aviator.runtime.function.other.MinValue;
 import org.tiankafei.aviator.runtime.function.other.Or;
 import org.tiankafei.aviator.runtime.function.other.Sum;
 import org.tiankafei.aviator.runtime.function.special.Age;
+import org.tiankafei.aviator.runtime.function.special.Find;
 import org.tiankafei.aviator.runtime.function.special.If;
 import org.tiankafei.aviator.runtime.function.special.InRange;
 import org.tiankafei.aviator.runtime.function.special.Mid;
@@ -158,6 +159,7 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Replaceall()));
         addFunction(new AviatorFunctionProxy(new Mid()));
         addFunction(new AviatorFunctionProxy(new Age()));
+        addFunction(new AviatorFunctionProxy(new Find()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {

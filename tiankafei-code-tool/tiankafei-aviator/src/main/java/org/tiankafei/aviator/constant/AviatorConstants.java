@@ -266,4 +266,9 @@ public interface AviatorConstants {
      */
     String FUNCTION_AGE = "age";
 
+    /**
+     * find函数
+     */
+    String FUNCTION_FIND = "find";
+
 }
