@@ -22,6 +22,7 @@ import org.tiankafei.aviator.runtime.function.one.Not;
 import org.tiankafei.aviator.runtime.function.one.NotNull;
 import org.tiankafei.aviator.runtime.function.one.NotOp;
 import org.tiankafei.aviator.runtime.function.one.Round;
+import org.tiankafei.aviator.runtime.function.one.Trim;
 import org.tiankafei.aviator.runtime.function.one.Trunc;
 import org.tiankafei.aviator.runtime.function.one.Upper;
 import org.tiankafei.aviator.runtime.function.other.And;
@@ -118,6 +119,7 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Ceil()));
         addFunction(new AviatorFunctionProxy(new Round()));
         addFunction(new AviatorFunctionProxy(new Trunc()));
+        addFunction(new AviatorFunctionProxy(new Trim()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {

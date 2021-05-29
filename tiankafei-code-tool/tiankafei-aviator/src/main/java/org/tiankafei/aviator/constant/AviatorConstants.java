@@ -175,4 +175,9 @@ public interface AviatorConstants {
      */
     String FUNCTION_TRUNC = "trunc";
 
+    /**
+     * trim函数
+     */
+    String FUNCTION_TRIM = "trim";
+
 }
