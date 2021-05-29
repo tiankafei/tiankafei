@@ -30,7 +30,7 @@ public class Isen extends OneParamFunction {
         String regex = "^[A-Za-z]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(str);
-        return AviatorBoolean.valueOf(Boolean.valueOf(matcher.matches()));
+        return AviatorBoolean.valueOf(matcher.matches());
     }
 
 }

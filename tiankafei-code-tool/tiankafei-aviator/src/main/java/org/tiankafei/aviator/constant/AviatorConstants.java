@@ -141,6 +141,11 @@ public interface AviatorConstants {
     String FUNCTION_IS_EN = "is_en";
 
     /**
+     * is_ch函数
+     */
+    String FUNCTION_IS_CH = "is_ch";
+
+    /**
      * length函数
      */
     String FUNCTION_LENGTH = "length";
@@ -164,5 +169,10 @@ public interface AviatorConstants {
      * round函数
      */
     String FUNCTION_ROUND = "round";
+
+    /**
+     * trunc函数
+     */
+    String FUNCTION_TRUNC = "trunc";
 
 }

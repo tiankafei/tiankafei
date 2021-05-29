@@ -11,6 +11,7 @@ import org.tiankafei.aviator.runtime.function.one.Ceil;
 import org.tiankafei.aviator.runtime.function.one.IsNull;
 import org.tiankafei.aviator.runtime.function.one.IsNum;
 import org.tiankafei.aviator.runtime.function.one.IsNumber;
+import org.tiankafei.aviator.runtime.function.one.Isch;
 import org.tiankafei.aviator.runtime.function.one.Isen;
 import org.tiankafei.aviator.runtime.function.one.Islower;
 import org.tiankafei.aviator.runtime.function.one.Isupper;
@@ -21,6 +22,7 @@ import org.tiankafei.aviator.runtime.function.one.Not;
 import org.tiankafei.aviator.runtime.function.one.NotNull;
 import org.tiankafei.aviator.runtime.function.one.NotOp;
 import org.tiankafei.aviator.runtime.function.one.Round;
+import org.tiankafei.aviator.runtime.function.one.Trunc;
 import org.tiankafei.aviator.runtime.function.one.Upper;
 import org.tiankafei.aviator.runtime.function.other.And;
 import org.tiankafei.aviator.runtime.function.other.Or;
@@ -112,8 +114,10 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Length()));
         addFunction(new AviatorFunctionProxy(new Not()));
         addFunction(new AviatorFunctionProxy(new Isen()));
+        addFunction(new AviatorFunctionProxy(new Isch()));
         addFunction(new AviatorFunctionProxy(new Ceil()));
         addFunction(new AviatorFunctionProxy(new Round()));
+        addFunction(new AviatorFunctionProxy(new Trunc()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
