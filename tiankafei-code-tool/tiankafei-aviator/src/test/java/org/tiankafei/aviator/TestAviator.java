@@ -866,7 +866,7 @@ public class TestAviator {
         dataMap.put("c", 10);
         Object value = expression.execute(dataMap);
         System.out.println(value);
-        Assert.assertEquals(value, "34567891");
+        Assert.assertEquals(value, "234567891");
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 

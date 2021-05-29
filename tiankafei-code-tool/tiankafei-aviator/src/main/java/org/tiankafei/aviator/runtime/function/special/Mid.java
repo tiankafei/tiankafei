@@ -8,6 +8,9 @@ import org.tiankafei.aviator.constant.AviatorConstants;
 import org.tiankafei.aviator.util.AviatorUtil;
 
 /**
+ * 字符串截取：mid(a, 1, 3)
+ * 从哪个位置开始（从1开始），截取指定个数的字符串
+ *
  * @author tiankafei
  */
 public class Mid extends SpecialFunction {
@@ -38,7 +41,7 @@ public class Mid extends SpecialFunction {
                 count = length - start;
             }
         }
-        return new AviatorString(text.substring(start, start + count));
+        return new AviatorString(text.substring(start - 1, start + count));
     }
 
 }
