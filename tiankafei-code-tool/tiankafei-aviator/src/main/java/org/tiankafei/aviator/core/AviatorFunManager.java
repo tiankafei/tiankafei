@@ -10,6 +10,7 @@ import org.tiankafei.aviator.runtime.function.one.Abs;
 import org.tiankafei.aviator.runtime.function.one.IsNull;
 import org.tiankafei.aviator.runtime.function.one.IsNum;
 import org.tiankafei.aviator.runtime.function.one.IsNumber;
+import org.tiankafei.aviator.runtime.function.one.Isen;
 import org.tiankafei.aviator.runtime.function.one.Islower;
 import org.tiankafei.aviator.runtime.function.one.Isupper;
 import org.tiankafei.aviator.runtime.function.one.Len;
@@ -108,6 +109,7 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Len()));
         addFunction(new AviatorFunctionProxy(new Length()));
         addFunction(new AviatorFunctionProxy(new Not()));
+        addFunction(new AviatorFunctionProxy(new Isen()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {

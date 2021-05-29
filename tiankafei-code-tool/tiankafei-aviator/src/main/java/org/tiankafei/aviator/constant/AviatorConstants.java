@@ -136,6 +136,11 @@ public interface AviatorConstants {
     String FUNCTION_IS_NUM = "is_num";
 
     /**
+     * is_en函数
+     */
+    String FUNCTION_IS_EN = "is_en";
+
+    /**
      * length函数
      */
     String FUNCTION_LENGTH = "length";
