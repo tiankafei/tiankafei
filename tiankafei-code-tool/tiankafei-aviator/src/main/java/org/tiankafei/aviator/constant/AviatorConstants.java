@@ -200,4 +200,9 @@ public interface AviatorConstants {
      */
     String FUNCTION_VERIFY_CREDIT_CODE = "verify_credit_code";
 
+    /**
+     * in_list函数
+     */
+    String FUNCTION_IN_LIST = "in_list";
+
 }

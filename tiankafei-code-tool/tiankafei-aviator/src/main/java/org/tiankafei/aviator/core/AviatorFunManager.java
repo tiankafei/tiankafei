@@ -30,6 +30,7 @@ import org.tiankafei.aviator.runtime.function.one.VerifyCreditCode;
 import org.tiankafei.aviator.runtime.function.one.VerifyIdCard;
 import org.tiankafei.aviator.runtime.function.one.Verifycode;
 import org.tiankafei.aviator.runtime.function.other.And;
+import org.tiankafei.aviator.runtime.function.other.InList;
 import org.tiankafei.aviator.runtime.function.other.Or;
 import org.tiankafei.aviator.runtime.function.two.Add;
 import org.tiankafei.aviator.runtime.function.two.AddOp;
@@ -128,6 +129,8 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new VerifyIdCard()));
         addFunction(new AviatorFunctionProxy(new Verifycode()));
         addFunction(new AviatorFunctionProxy(new VerifyCreditCode()));
+
+        addFunction(new AviatorFunctionProxy(new InList()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
