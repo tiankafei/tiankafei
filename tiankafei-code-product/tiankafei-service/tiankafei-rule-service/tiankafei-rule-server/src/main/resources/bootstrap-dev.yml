@@ -1,0 +1,15 @@
+swagger:
+  enabled: true
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei
+  datasource:
+    dynamic:
+      datasource:
+        # 主库数据源
+        master:
+          url: jdbc:mysql://localhost:3306/db-rule?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+          username: root
+          password: tiankafei
