@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EntityScan(basePackages = "org.tiankafei")
 @MapperScan(basePackages = {"org.tiankafei.**.mapper"})
 @ComponentScan(basePackages = {"org.tiankafei"})
-@EnableFeignClients(basePackages = {"org.tiankafei"})
+@EnableFeignClients(basePackages = {"org.tiankafei", "com.ruoyi"})
 @EnableHystrixDashboard
 public class QuestionnaireApplication {
 

@@ -1,5 +1,19 @@
-#################################### Swagger start #################################
-# swagger配置
 swagger:
   enabled: true
-#################################### Swagger end ###################################
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password: tiankafei
+  datasource:
+    dynamic:
+      primary: blog
+      datasource:
+        blog:
+          url: jdbc:mysql://localhost:3306/db-blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+          username: root
+          password: tiankafei
+        user:
+          url: jdbc:mysql://localhost:3306/db-user?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+          username: root
+          password: tiankafei

@@ -29,18 +29,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-micro-depends-center</artifactId>
         </dependency>
         <dependency>
             <groupId>org.tiankafei.product</groupId>
             <artifactId>tiankafei-code-common</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                    <groupId>com.baomidou</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
