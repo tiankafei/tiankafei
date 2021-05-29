@@ -155,4 +155,14 @@ public interface AviatorConstants {
      */
     String FUNCTION_NOT = "not";
 
+    /**
+     * ceil函数
+     */
+    String FUNCTION_CEIL = "ceil";
+
+    /**
+     * round函数
+     */
+    String FUNCTION_ROUND = "round";
+
 }

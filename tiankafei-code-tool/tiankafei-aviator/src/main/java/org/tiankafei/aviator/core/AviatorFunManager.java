@@ -7,6 +7,7 @@ import com.googlecode.aviator.lexer.token.OperatorType;
 import com.googlecode.aviator.runtime.type.AviatorFunction;
 import org.tiankafei.aviator.runtime.function.AviatorFunctionProxy;
 import org.tiankafei.aviator.runtime.function.one.Abs;
+import org.tiankafei.aviator.runtime.function.one.Ceil;
 import org.tiankafei.aviator.runtime.function.one.IsNull;
 import org.tiankafei.aviator.runtime.function.one.IsNum;
 import org.tiankafei.aviator.runtime.function.one.IsNumber;
@@ -19,6 +20,7 @@ import org.tiankafei.aviator.runtime.function.one.Lower;
 import org.tiankafei.aviator.runtime.function.one.Not;
 import org.tiankafei.aviator.runtime.function.one.NotNull;
 import org.tiankafei.aviator.runtime.function.one.NotOp;
+import org.tiankafei.aviator.runtime.function.one.Round;
 import org.tiankafei.aviator.runtime.function.one.Upper;
 import org.tiankafei.aviator.runtime.function.other.And;
 import org.tiankafei.aviator.runtime.function.other.Or;
@@ -110,6 +112,8 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Length()));
         addFunction(new AviatorFunctionProxy(new Not()));
         addFunction(new AviatorFunctionProxy(new Isen()));
+        addFunction(new AviatorFunctionProxy(new Ceil()));
+        addFunction(new AviatorFunctionProxy(new Round()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {
