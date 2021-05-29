@@ -14,7 +14,7 @@ import org.tiankafei.aviator.util.AviatorUtil;
 public class TestAviator {
 
     @Before
-    public void before(){
+    public void before() {
         AviatorUtil.initFun();
     }
 

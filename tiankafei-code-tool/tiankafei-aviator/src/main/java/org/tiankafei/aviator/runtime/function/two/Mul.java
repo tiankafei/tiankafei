@@ -1,6 +1,5 @@
 package org.tiankafei.aviator.runtime.function.two;
 
-import cn.hutool.core.util.NumberUtil;
 import com.googlecode.aviator.runtime.type.AviatorNil;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import com.googlecode.aviator.runtime.type.AviatorRuntimeJavaType;
@@ -11,6 +10,7 @@ import org.tiankafei.aviator.util.AviatorUtil;
 
 /**
  * 乘法函数
+ *
  * @author tiankafei
  */
 @Slf4j
