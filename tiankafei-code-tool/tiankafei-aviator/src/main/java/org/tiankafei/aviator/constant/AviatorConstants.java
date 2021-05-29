@@ -95,4 +95,34 @@ public interface AviatorConstants {
      */
     String FUNCTION_MATCH = "match";
 
+    /**
+     * isupper函数
+     */
+    String FUNCTION_ISUPPER = "isupper";
+
+    /**
+     * islower函数
+     */
+    String FUNCTION_ISLOWER = "islower";
+
+    /**
+     * upper函数
+     */
+    String FUNCTION_UPPER = "upper";
+
+    /**
+     * lower函数
+     */
+    String FUNCTION_LOWER = "lower";
+
+    /**
+     * not_null函数
+     */
+    String FUNCTION_NOT_NULL = "not_null";
+
+    /**
+     * is_null函数
+     */
+    String FUNCTION_IS_NULL = "is_null";
+
 }
