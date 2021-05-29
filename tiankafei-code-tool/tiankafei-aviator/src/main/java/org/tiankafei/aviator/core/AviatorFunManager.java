@@ -8,10 +8,16 @@ import com.googlecode.aviator.runtime.type.AviatorFunction;
 import org.tiankafei.aviator.runtime.function.AviatorFunctionProxy;
 import org.tiankafei.aviator.runtime.function.one.Abs;
 import org.tiankafei.aviator.runtime.function.one.IsNull;
+import org.tiankafei.aviator.runtime.function.one.IsNum;
+import org.tiankafei.aviator.runtime.function.one.IsNumber;
 import org.tiankafei.aviator.runtime.function.one.Islower;
 import org.tiankafei.aviator.runtime.function.one.Isupper;
+import org.tiankafei.aviator.runtime.function.one.Len;
+import org.tiankafei.aviator.runtime.function.one.Length;
 import org.tiankafei.aviator.runtime.function.one.Lower;
+import org.tiankafei.aviator.runtime.function.one.Not;
 import org.tiankafei.aviator.runtime.function.one.NotNull;
+import org.tiankafei.aviator.runtime.function.one.NotOp;
 import org.tiankafei.aviator.runtime.function.one.Upper;
 import org.tiankafei.aviator.runtime.function.other.And;
 import org.tiankafei.aviator.runtime.function.other.Or;
@@ -69,6 +75,7 @@ public class AviatorFunManager implements IFunManager {
         addOpFunction(OperatorType.GE, new GreaterThenEqualsOp());
         addOpFunction(OperatorType.AND, new AndOp());
         addOpFunction(OperatorType.OR, new OrOp());
+        addOpFunction(OperatorType.NOT, new NotOp());
 
         // 增加自定义函数
         addFunction(new AviatorFunctionProxy(new Add()));
@@ -96,6 +103,11 @@ public class AviatorFunManager implements IFunManager {
         addFunction(new AviatorFunctionProxy(new Lower()));
         addFunction(new AviatorFunctionProxy(new NotNull()));
         addFunction(new AviatorFunctionProxy(new IsNull()));
+        addFunction(new AviatorFunctionProxy(new IsNum()));
+        addFunction(new AviatorFunctionProxy(new IsNumber()));
+        addFunction(new AviatorFunctionProxy(new Len()));
+        addFunction(new AviatorFunctionProxy(new Length()));
+        addFunction(new AviatorFunctionProxy(new Not()));
     }
 
     private static void addOpFunction(final OperatorType operatorType, final AviatorFunction function) {

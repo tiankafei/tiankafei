@@ -125,4 +125,29 @@ public interface AviatorConstants {
      */
     String FUNCTION_IS_NULL = "is_null";
 
+    /**
+     * is_number函数
+     */
+    String FUNCTION_IS_NUMBER = "is_number";
+
+    /**
+     * is_num函数
+     */
+    String FUNCTION_IS_NUM = "is_num";
+
+    /**
+     * length函数
+     */
+    String FUNCTION_LENGTH = "length";
+
+    /**
+     * len函数
+     */
+    String FUNCTION_LEN = "len";
+
+    /**
+     * not函数
+     */
+    String FUNCTION_NOT = "not";
+
 }
