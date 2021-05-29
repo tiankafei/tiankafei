@@ -256,4 +256,9 @@ public interface AviatorConstants {
      */
     String FUNCTION_REPLACE_ALL = "replace_all";
 
+    /**
+     * mid截取函数
+     */
+    String FUNCTION_MID = "mid";
+
 }

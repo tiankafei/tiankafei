@@ -854,4 +854,20 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testMid() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "mid(a, b, c)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "1234567891");
+        dataMap.put("b", 2);
+        dataMap.put("c", 10);
+        Object value = expression.execute(dataMap);
+        System.out.println(value);
+        Assert.assertEquals(value, "34567891");
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }
