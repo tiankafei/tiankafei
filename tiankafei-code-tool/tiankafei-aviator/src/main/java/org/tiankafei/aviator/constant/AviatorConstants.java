@@ -241,4 +241,9 @@ public interface AviatorConstants {
      */
     String FUNCTION_SUM = "sum";
 
+    /**
+     * if函数
+     */
+    String FUNCTION_IF = "IF";
+
 }

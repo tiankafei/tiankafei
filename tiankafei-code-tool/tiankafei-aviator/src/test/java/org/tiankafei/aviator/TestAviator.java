@@ -806,4 +806,20 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testIf() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "IF(a > b, c, d > 5)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1);
+        dataMap.put("b", 3);
+        dataMap.put("c", 5);
+        dataMap.put("d", 7);
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }
