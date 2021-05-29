@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import org.tiankafei.aviator.constant.AviatorConstants;
 
 /**
+ * 应用服务器当前时间
+ *
  * @author tiankafei
  */
 public class CurrentTime extends OneParamFunction {

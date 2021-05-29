@@ -486,4 +486,17 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testCurrentTime() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "current_time('yyyy年MM月dd日 hh时mm分ss秒')";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+//        dataMap.put("a", "yyyy年MM月dd日 hh时mm分ss秒");
+        Object value = expression.execute(dataMap);
+        System.out.println(value);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }
