@@ -870,4 +870,36 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testAge() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "age(a, b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1989);
+        dataMap.put("b", 9);
+        Object value = expression.execute(dataMap);
+        System.out.println(value);
+        Assert.assertEquals(value, 31);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testAge1() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "age(a, b, c, d)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 1989);
+        dataMap.put("b", 9);
+        dataMap.put("c", 2000);
+        dataMap.put("d", 9);
+        Object value = expression.execute(dataMap);
+        System.out.println(value);
+        Assert.assertEquals(value, 11);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }

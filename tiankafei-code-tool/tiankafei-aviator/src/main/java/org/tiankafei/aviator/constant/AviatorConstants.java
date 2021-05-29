@@ -261,4 +261,9 @@ public interface AviatorConstants {
      */
     String FUNCTION_MID = "mid";
 
+    /**
+     * age函数
+     */
+    String FUNCTION_AGE = "age";
+
 }
