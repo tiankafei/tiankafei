@@ -83,15 +83,13 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-            <!--<exclusions>
-                &lt;!&ndash;这个会把返回结果有json转成xml&ndash;&gt;
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.dataformat</groupId>
-                    <artifactId>jackson-dataformat-xml</artifactId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
 
+        <!-- RuoYi Common DataSource -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-datasource</artifactId>
+        </dependency>
 
         <!--使用 consul 注册中心时使用以下依赖-->
         <!--<dependency>
