@@ -1,7 +1,8 @@
 package org.tiankafei.rule.verify;
 
 import java.util.List;
-import org.apache.commons.compress.utils.Lists;
+import org.tiankafei.rule.ruledtos.RuleDesignDto;
+import org.tiankafei.rule.util.VerifyUtil;
 import org.tiankafei.rule.verify.model.VerifyResultModel;
 
 /**
@@ -9,9 +10,18 @@ import org.tiankafei.rule.verify.model.VerifyResultModel;
  */
 public class Verify {
 
-    public static List<VerifyResultModel> verify(String ruleType, IQuery query) {
-        List<VerifyResultModel> verifyResultModelList = Lists.newArrayList();
+    /**
+     * 执行审核
+     *
+     * @param ruleType
+     * @param ruleDesignDtoList
+     * @param query
+     * @return
+     */
+    public static List<VerifyResultModel> executeVerify(Integer ruleType, List<RuleDesignDto> ruleDesignDtoList, IQuery query) {
+        IVerify verifyInstance = VerifyUtil.getVerifyInstance(ruleType);
 
+        List<VerifyResultModel> verifyResultModelList = verifyInstance.executeVerify(ruleDesignDtoList, query);
 
         return verifyResultModelList;
     }
