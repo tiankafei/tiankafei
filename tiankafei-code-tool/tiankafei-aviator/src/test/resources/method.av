@@ -1,0 +1,13 @@
+fn add(x, y) {
+  return x + y;
+}
+
+b = 2;
+if ( a < 10 ){
+    add(a, b)
+} elsif ( a > 10 ) {
+    a + c
+} else {
+    10
+}
+

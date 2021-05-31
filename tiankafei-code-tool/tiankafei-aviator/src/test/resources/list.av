@@ -1,0 +1,17 @@
+## Iterate the collection by for..in loop
+println("list elements:");
+for x in list {
+  println(x.code + "--------" + x.name);
+}
+
+println("set elements:");
+for x in set {
+  println(x.code + "--------" + x.name);
+}
+
+println("map elements:");
+for x in map {
+  println(x.key + "====" + x.value.code + "---" + x.value.name);
+}
+
+return 12;
