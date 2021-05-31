@@ -1,4 +1,4 @@
-package org.tiankafei.rule.model;
+package org.tiankafei.rule.rulemodel;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +20,6 @@ public class TwoDimension {
     private String twoDimensionUniqueIdentifier;
 
     @ApiModelProperty(value = "二维行数据集合")
-    private List<TwoRowDimension> rowDimensionList;
+    private List<RowDimension> rowDimensionList;
 
 }

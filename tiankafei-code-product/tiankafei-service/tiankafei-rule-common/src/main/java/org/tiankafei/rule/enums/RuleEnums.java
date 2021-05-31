@@ -7,8 +7,8 @@ package org.tiankafei.rule.enums;
 public enum RuleEnums {
 
     VERIFY(1, "审核规则"),
-    COMPUTE(1, "计算规则"),
-    JUMP(1, "跳转规则"),
+    COMPUTE(2, "计算规则"),
+    JUMP(3, "跳转规则"),
     ;
 
     private int code;

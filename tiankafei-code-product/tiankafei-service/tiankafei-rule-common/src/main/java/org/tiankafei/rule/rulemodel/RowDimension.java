@@ -1,4 +1,4 @@
-package org.tiankafei.rule.model;
+package org.tiankafei.rule.rulemodel;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "二维行数据 对象", description = "二维行数据 对象")
-public class TwoRowDimension {
+public class RowDimension {
 
     @ApiModelProperty(value = "每一行的系统主键值")
     private String id;
