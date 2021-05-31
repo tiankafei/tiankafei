@@ -92,6 +92,12 @@
 
             <dependency>
                 <groupId>org.tiankafei.product</groupId>
+                <artifactId>tiankafei-rule-common</artifactId>
+                <version>${org.tiankafei.produce.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.tiankafei.product</groupId>
                 <artifactId>tiankafei-user-cache</artifactId>
                 <version>${org.tiankafei.produce.version}</version>
             </dependency>

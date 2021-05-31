@@ -1,12 +1,19 @@
 package org.tiankafei.user.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import javax.validation.constraints.Size;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.apache.commons.compress.utils.Lists;
 
+/**
+ * @author tiankafei
+ */
 @Data
+@Accessors(chain = true)
+@ApiModel(value = "目录 对象", description = "目录 对象")
 public class CatalogDto {
 
     @ApiModelProperty(value = "主键id")

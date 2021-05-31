@@ -24,6 +24,7 @@
         <module>tiankafei-multi-datasource-jpa-service</module>
         <module>tiankafei-multi-datasource-mp-service</module>
 
+        <module>tiankafei-rule-common</module>
         <module>tiankafei-user-common</module>
         <module>tiankafei-user-cache</module>
         <module>tiankafei-user-service</module>
