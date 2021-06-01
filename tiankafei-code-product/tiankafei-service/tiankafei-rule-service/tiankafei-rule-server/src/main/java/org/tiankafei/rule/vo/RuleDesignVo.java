@@ -2,6 +2,7 @@ package org.tiankafei.rule.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.sql.Timestamp;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -77,6 +78,27 @@ public class RuleDesignVo extends BaseQueryVo {
     @ApiModelProperty(value = "要锁的规则表达式生成的规则解析对象")
     private String lockExpressionDto;
 
+    @ApiModelProperty(value = "乐观锁版本")
+    private Integer version;
+
+    @ApiModelProperty(value = "逻辑删除字段")
+    private Integer deleteMark;
+
+    @ApiModelProperty(value = "创建时间")
+    private Timestamp createTime;
+
+    @ApiModelProperty(value = "修改时间")
+    private Timestamp updateTime;
+
+    @ApiModelProperty(value = "创建用户ID")
+    private Long createUserId;
+
+    @ApiModelProperty(value = "修改用户ID")
+    private Long updateUserId;
+
+    @ApiModelProperty(value = "租户ID")
+    private Long tenantId;
+
 
     public static final String ID = "id";
 
@@ -111,6 +133,20 @@ public class RuleDesignVo extends BaseQueryVo {
     public static final String LOCK_EXPRESSION = "lock_expression";
 
     public static final String LOCK_EXPRESSION_DTO = "lock_expression_dto";
+
+    public static final String VERSION = "version";
+
+    public static final String DELETE_MARK = "delete_mark";
+
+    public static final String CREATE_TIME = "create_time";
+
+    public static final String UPDATE_TIME = "update_time";
+
+    public static final String CREATE_USER_ID = "create_user_id";
+
+    public static final String UPDATE_USER_ID = "update_user_id";
+
+    public static final String TENANT_ID = "tenant_id";
 
 
 }

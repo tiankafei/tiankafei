@@ -21,6 +21,13 @@
         <result column="target_expression_dto" property="targetExpressionDto"/>
         <result column="lock_expression" property="lockExpression"/>
         <result column="lock_expression_dto" property="lockExpressionDto"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
@@ -43,13 +50,20 @@
         <result column="target_expression_dto" property="targetExpressionDto"/>
         <result column="lock_expression" property="lockExpression"/>
         <result column="lock_expression_dto" property="lockExpressionDto"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
         id
-        , code, name, type, status, expression, javascript, expression_dto, compile_error_message, error_expression, error_javascript_list, error_expression_list, error_compile_error_message, target_expression, target_expression_dto, lock_expression, lock_expression_dto
+        , code, name, type, status, expression, javascript, expression_dto, compile_error_message, error_expression, error_javascript_list, error_expression_list, error_compile_error_message, target_expression, target_expression_dto, lock_expression, lock_expression_dto, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id
     </sql>
 
     <!-- 校验 系统规则设计对象 是否已经存在 -->
