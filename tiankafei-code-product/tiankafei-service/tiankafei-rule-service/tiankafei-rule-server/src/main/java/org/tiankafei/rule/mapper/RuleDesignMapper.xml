@@ -8,6 +8,7 @@
         <result column="code" property="code"/>
         <result column="name" property="name"/>
         <result column="type" property="type"/>
+        <result column="status" property="status"/>
         <result column="expression" property="expression"/>
         <result column="javascript" property="javascript"/>
         <result column="expression_dto" property="expressionDto"/>
@@ -29,6 +30,7 @@
         <result column="code" property="code"/>
         <result column="name" property="name"/>
         <result column="type" property="type"/>
+        <result column="status" property="status"/>
         <result column="expression" property="expression"/>
         <result column="javascript" property="javascript"/>
         <result column="expression_dto" property="expressionDto"/>
@@ -47,7 +49,7 @@
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
         id
-        , code, name, type, expression, javascript, expression_dto, compile_error_message, error_expression, error_javascript_list, error_expression_list, error_compile_error_message, target_expression, target_expression_dto, lock_expression, lock_expression_dto
+        , code, name, type, status, expression, javascript, expression_dto, compile_error_message, error_expression, error_javascript_list, error_expression_list, error_compile_error_message, target_expression, target_expression_dto, lock_expression, lock_expression_dto
     </sql>
 
     <!-- 校验 系统规则设计对象 是否已经存在 -->

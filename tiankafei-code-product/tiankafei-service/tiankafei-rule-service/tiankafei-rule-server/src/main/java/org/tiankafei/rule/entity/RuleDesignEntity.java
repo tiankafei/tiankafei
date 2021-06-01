@@ -48,6 +48,10 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     @TableField("type")
     private Integer type;
 
+    @ApiModelProperty(value = "状态：0停用，1启用")
+    @TableField("status")
+    private Boolean status;
+
     @ApiModelProperty(value = "规则表达式")
     @TableField("expression")
     private String expression;
@@ -104,6 +108,8 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     public static final String NAME = "name";
 
     public static final String TYPE = "type";
+
+    public static final String STATUS = "status";
 
     public static final String EXPRESSION = "expression";
 

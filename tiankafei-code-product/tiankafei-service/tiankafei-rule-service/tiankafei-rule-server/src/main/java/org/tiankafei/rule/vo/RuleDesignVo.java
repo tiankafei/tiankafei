@@ -38,6 +38,9 @@ public class RuleDesignVo extends BaseQueryVo {
     @ApiModelProperty(value = "规则类型：1审核规则，2计算规则，3跳转规则")
     private Integer type;
 
+    @ApiModelProperty(value = "状态：0停用，1启用")
+    private Boolean status;
+
     @ApiModelProperty(value = "规则表达式")
     private String expression;
 
@@ -82,6 +85,8 @@ public class RuleDesignVo extends BaseQueryVo {
     public static final String NAME = "name";
 
     public static final String TYPE = "type";
+
+    public static final String STATUS = "status";
 
     public static final String EXPRESSION = "expression";
 
