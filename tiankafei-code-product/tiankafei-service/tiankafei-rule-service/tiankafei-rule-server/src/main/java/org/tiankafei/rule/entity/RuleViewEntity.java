@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 系统规则设计对象
+ * 系统规则设计表达式显示对象
  * </p>
  *
  * @author tiankafei
@@ -28,19 +28,15 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("sys_rule_design")
-@ApiModel(value = "RuleDesignEntity 对象", description = "系统规则设计对象")
-public class RuleDesignEntity extends Model<RuleDesignEntity> {
+@TableName("sys_rule_view")
+@ApiModel(value = "RuleViewEntity 对象", description = "系统规则设计表达式显示对象")
+public class RuleViewEntity extends Model<RuleViewEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty(value = "规则id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
-
-    @ApiModelProperty(value = "用户书写的规则id")
-    @TableField("view_rule_id")
-    private Long viewRuleId;
 
     @ApiModelProperty(value = "规则代码")
     @Size(max = 20, message = "规则代码长度不能超过 20 ！")
@@ -64,58 +60,26 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     @TableField("expression")
     private String expression;
 
-    @ApiModelProperty(value = "规则表达式生成的javascript的脚本")
-    @TableField("javascript")
-    private String javascript;
-
-    @ApiModelProperty(value = "规则表达式生成的规则解析对象")
-    @TableField("expression_dto")
-    private String expressionDto;
-
-    @ApiModelProperty(value = "编译不通过时的错误提示消息")
-    @TableField("compile_error_message")
-    private String compileErrorMessage;
-
     @ApiModelProperty(value = "错误规则表达式")
     @TableField("error_expression")
     private String errorExpression;
-
-    @ApiModelProperty(value = "错误规则表达式生成的javascript的脚本")
-    @TableField("error_javascript_list")
-    private String errorJavascriptList;
-
-    @ApiModelProperty(value = "错误规则表达式生成的规则解析对象集合")
-    @TableField("error_expression_list")
-    private String errorExpressionList;
-
-    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
-    @TableField("error_compile_error_message")
-    private String errorCompileErrorMessage;
 
     @ApiModelProperty(value = "目标表达式")
     @TableField("target_expression")
     private String targetExpression;
 
-    @ApiModelProperty(value = "目标规则表达式生成的规则解析对象")
-    @TableField("target_expression_dto")
-    private String targetExpressionDto;
-
     @ApiModelProperty(value = "要锁的规则表达式")
     @TableField("lock_expression")
     private String lockExpression;
 
-    @ApiModelProperty(value = "要锁的规则表达式生成的规则解析对象")
-    @TableField("lock_expression_dto")
-    private String lockExpressionDto;
-
     @ApiModelProperty(value = "乐观锁版本")
     @TableField("version")
-//    @Version
+    @Version
     private Integer version;
 
     @ApiModelProperty(value = "逻辑删除字段")
     @TableField("delete_mark")
-//    @TableLogic
+    @TableLogic
     private Integer deleteMark;
 
     @ApiModelProperty(value = "创建时间")
@@ -141,8 +105,6 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
 
     public static final String ID = "id";
 
-    public static final String VIEW_RULE_ID = "view_rule_id";
-
     public static final String CODE = "code";
 
     public static final String NAME = "name";
@@ -153,27 +115,11 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
 
     public static final String EXPRESSION = "expression";
 
-    public static final String JAVASCRIPT = "javascript";
-
-    public static final String EXPRESSION_DTO = "expression_dto";
-
-    public static final String COMPILE_ERROR_MESSAGE = "compile_error_message";
-
     public static final String ERROR_EXPRESSION = "error_expression";
-
-    public static final String ERROR_JAVASCRIPT_LIST = "error_javascript_list";
-
-    public static final String ERROR_EXPRESSION_LIST = "error_expression_list";
-
-    public static final String ERROR_COMPILE_ERROR_MESSAGE = "error_compile_error_message";
 
     public static final String TARGET_EXPRESSION = "target_expression";
 
-    public static final String TARGET_EXPRESSION_DTO = "target_expression_dto";
-
     public static final String LOCK_EXPRESSION = "lock_expression";
-
-    public static final String LOCK_EXPRESSION_DTO = "lock_expression_dto";
 
     public static final String VERSION = "version";
 
