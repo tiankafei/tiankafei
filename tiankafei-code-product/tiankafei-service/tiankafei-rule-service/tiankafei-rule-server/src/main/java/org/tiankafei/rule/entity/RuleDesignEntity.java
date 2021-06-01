@@ -60,6 +60,10 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     @TableField("expression_dto")
     private String expressionDto;
 
+    @ApiModelProperty(value = "编译不通过时的错误提示消息")
+    @TableField("compile_error_message")
+    private String compileErrorMessage;
+
     @ApiModelProperty(value = "错误规则表达式")
     @TableField("error_expression")
     private String errorExpression;
@@ -71,6 +75,10 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     @ApiModelProperty(value = "错误规则表达式生成的规则解析对象集合")
     @TableField("error_expression_list")
     private String errorExpressionList;
+
+    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
+    @TableField("error_compile_error_message")
+    private String errorCompileErrorMessage;
 
     @ApiModelProperty(value = "目标表达式")
     @TableField("target_expression")
@@ -103,11 +111,15 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
 
     public static final String EXPRESSION_DTO = "expression_dto";
 
+    public static final String COMPILE_ERROR_MESSAGE = "compile_error_message";
+
     public static final String ERROR_EXPRESSION = "error_expression";
 
     public static final String ERROR_JAVASCRIPT_LIST = "error_javascript_list";
 
     public static final String ERROR_EXPRESSION_LIST = "error_expression_list";
+
+    public static final String ERROR_COMPILE_ERROR_MESSAGE = "error_compile_error_message";
 
     public static final String TARGET_EXPRESSION = "target_expression";
 
