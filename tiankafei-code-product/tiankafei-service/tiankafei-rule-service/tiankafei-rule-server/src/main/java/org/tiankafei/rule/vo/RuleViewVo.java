@@ -45,8 +45,14 @@ public class RuleViewVo extends BaseQueryVo {
     @ApiModelProperty(value = "规则表达式")
     private String expression;
 
+    @ApiModelProperty(value = "编译不通过时的错误提示消息")
+    private String compileErrorMessage;
+
     @ApiModelProperty(value = "错误规则表达式")
     private String errorExpression;
+
+    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
+    private String errorCompileErrorMessage;
 
     @ApiModelProperty(value = "目标表达式")
     private String targetExpression;
@@ -88,7 +94,11 @@ public class RuleViewVo extends BaseQueryVo {
 
     public static final String EXPRESSION = "expression";
 
+    public static final String COMPILE_ERROR_MESSAGE = "compile_error_message";
+
     public static final String ERROR_EXPRESSION = "error_expression";
+
+    public static final String ERROR_COMPILE_ERROR_MESSAGE = "error_compile_error_message";
 
     public static final String TARGET_EXPRESSION = "target_expression";
 

@@ -60,9 +60,17 @@ public class RuleViewEntity extends Model<RuleViewEntity> {
     @TableField("expression")
     private String expression;
 
+    @ApiModelProperty(value = "编译不通过时的错误提示消息")
+    @TableField("compile_error_message")
+    private String compileErrorMessage;
+
     @ApiModelProperty(value = "错误规则表达式")
     @TableField("error_expression")
     private String errorExpression;
+
+    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
+    @TableField("error_compile_error_message")
+    private String errorCompileErrorMessage;
 
     @ApiModelProperty(value = "目标表达式")
     @TableField("target_expression")
@@ -115,7 +123,11 @@ public class RuleViewEntity extends Model<RuleViewEntity> {
 
     public static final String EXPRESSION = "expression";
 
+    public static final String COMPILE_ERROR_MESSAGE = "compile_error_message";
+
     public static final String ERROR_EXPRESSION = "error_expression";
+
+    public static final String ERROR_COMPILE_ERROR_MESSAGE = "error_compile_error_message";
 
     public static final String TARGET_EXPRESSION = "target_expression";
 

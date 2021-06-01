@@ -10,7 +10,9 @@
         <result column="type" property="type"/>
         <result column="status" property="status"/>
         <result column="expression" property="expression"/>
+        <result column="compile_error_message" property="compileErrorMessage"/>
         <result column="error_expression" property="errorExpression"/>
+        <result column="error_compile_error_message" property="errorCompileErrorMessage"/>
         <result column="target_expression" property="targetExpression"/>
         <result column="lock_expression" property="lockExpression"/>
         <result column="version" property="version"/>
@@ -31,7 +33,9 @@
         <result column="type" property="type"/>
         <result column="status" property="status"/>
         <result column="expression" property="expression"/>
+        <result column="compile_error_message" property="compileErrorMessage"/>
         <result column="error_expression" property="errorExpression"/>
+        <result column="error_compile_error_message" property="errorCompileErrorMessage"/>
         <result column="target_expression" property="targetExpression"/>
         <result column="lock_expression" property="lockExpression"/>
         <result column="version" property="version"/>
@@ -47,7 +51,7 @@
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
         id
-        , code, name, type, status, expression, error_expression, target_expression, lock_expression, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id
+        , code, name, type, status, expression, compile_error_message, error_expression, error_compile_error_message, target_expression, lock_expression, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id
     </sql>
 
     <!-- 校验 系统规则设计表达式显示对象 是否已经存在 -->
