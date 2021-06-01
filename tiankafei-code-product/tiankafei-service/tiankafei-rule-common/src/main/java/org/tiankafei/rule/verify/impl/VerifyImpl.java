@@ -1,7 +1,7 @@
 package org.tiankafei.rule.verify.impl;
 
 import java.util.List;
-import org.tiankafei.rule.ruledtos.RuleDesignDto;
+import org.tiankafei.rule.parsedto.RuleDesignDto;
 import org.tiankafei.rule.verify.IQuery;
 import org.tiankafei.rule.verify.model.VerifyResultModel;
 

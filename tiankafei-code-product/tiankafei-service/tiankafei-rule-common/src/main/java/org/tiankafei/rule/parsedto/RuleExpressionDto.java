@@ -1,4 +1,4 @@
-package org.tiankafei.rule.ruledtos;
+package org.tiankafei.rule.parsedto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

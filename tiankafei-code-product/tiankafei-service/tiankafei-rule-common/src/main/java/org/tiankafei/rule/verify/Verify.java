@@ -1,7 +1,7 @@
 package org.tiankafei.rule.verify;
 
 import java.util.List;
-import org.tiankafei.rule.ruledtos.RuleDesignDto;
+import org.tiankafei.rule.parsedto.RuleDesignDto;
 import org.tiankafei.rule.util.VerifyUtil;
 import org.tiankafei.rule.verify.model.VerifyResultModel;
 
