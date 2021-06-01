@@ -32,8 +32,8 @@ public class RuleCodeGenerator extends BaseCodeGenerator {
     public static void main(String[] args) throws Exception {
         RuleCodeGenerator tiankafeiCodeGenerator = new RuleCodeGenerator();
         List<String> tableNameList = Arrays.asList(
-                "sys_rule_view",
-                "sys_rule_design");
+                "sys_rule_design",
+                "sys_rule_execute");
         tiankafeiCodeGenerator.execute(tableNameList);
     }
 
