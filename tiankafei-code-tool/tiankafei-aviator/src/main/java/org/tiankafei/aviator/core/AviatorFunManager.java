@@ -81,9 +81,15 @@ public class AviatorFunManager implements IFunManager {
 
     @Override
     public void initialize() {
-        // 开启浮点型精度
+        // 是否将所有浮点数解析为 Decimal 类型，适合需要高精度运算的场景，并且不想为每个浮点数字指定 M 后缀（表示 Decimal 类型）。默认为 false 不开启。
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL, true);
+
+        // 是否将整型数字都解析为 BigDecimal，默认为 false，也就是不启用。在所有数字都是需要高精度计算的场景，
+        // 结合 ALWAYS_PARSE_FLOATING_POINT_NUMBER_INTO_DECIMAL 选项，可以减少一些类型转换。
         AviatorEvaluator.setOption(Options.ALWAYS_PARSE_INTEGRAL_NUMBER_INTO_DECIMAL, true);
+
+        // 默认值，以运行时的性能优先，编译会花费更多时间做优化，目前会做一些常量折叠、公共变量提取的优化。适合长期运行的表达式。
+        AviatorEvaluator.setOption(Options.OPTIMIZE_LEVEL, AviatorEvaluator.EVAL);
 
         // 重载操作符运算的函数
         addOpFunction(OperatorType.ADD, new AddOp());
