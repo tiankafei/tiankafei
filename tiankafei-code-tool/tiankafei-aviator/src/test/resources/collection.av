@@ -1,0 +1,13 @@
+fn add(x, y) {
+  return x + y;
+}
+
+b = 2;
+if ( a < 10 ){
+    【XXX字段1】 + b
+} elsif ( a > 10 ) {
+    【XXX字段1】 + 【XXX字段2】
+} else {
+    10
+}
+

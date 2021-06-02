@@ -113,4 +113,14 @@ public class TestAviatorScript {
         System.out.println(exp.execute(dataMap));
     }
 
+    @Test
+    public void test7() throws IOException {
+        Expression exp = AviatorEvaluator.getInstance().compileScript("collection.av");
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", 4);
+        dataMap.put("c", 11);
+        System.out.println(exp.execute(dataMap));
+    }
+
 }
