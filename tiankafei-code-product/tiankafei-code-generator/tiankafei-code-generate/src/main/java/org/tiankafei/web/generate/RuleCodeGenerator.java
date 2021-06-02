@@ -11,7 +11,7 @@ import org.tiankafei.web.generate.properties.CodeProperties;
 public class RuleCodeGenerator extends BaseCodeGenerator {
 
     private String author = "tiankafei";
-    private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-rule-service\\tiankafei-rule-server\\src\\main\\java";
+    private String outputDir = "E:\\gits\\tiankafei\\tiankafei-code-product\\tiankafei-service\\tiankafei-rule-common\\src\\main\\java";
 
     private boolean shiroAuthority = Boolean.FALSE;
     private boolean logFlag = Boolean.FALSE;
