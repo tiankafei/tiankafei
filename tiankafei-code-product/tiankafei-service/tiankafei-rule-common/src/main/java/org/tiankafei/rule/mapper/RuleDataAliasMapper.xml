@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tiankafei.rule.mapper.RuleDataAliasMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="org.tiankafei.rule.entity.RuleDataAliasEntity">
+        <id column="id" property="id"/>
+        <result column="dataset_unique_identifier" property="datasetUniqueIdentifier"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="source_dataset_unique_identifier" property="sourceDatasetUniqueIdentifier"/>
+        <result column="source_data_unique_identifier" property="sourceDataUniqueIdentifier"/>
+        <result column="row_unique_identifier" property="rowUniqueIdentifier"/>
+        <result column="col_unique_identifier" property="colUniqueIdentifier"/>
+        <result column="catalog_id" property="catalogId"/>
+        <result column="catalog_item" property="catalogItem"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="voResultMap" type="org.tiankafei.rule.vo.RuleDataAliasVo">
+        <id column="id" property="id"/>
+        <result column="dataset_unique_identifier" property="datasetUniqueIdentifier"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="source_dataset_unique_identifier" property="sourceDatasetUniqueIdentifier"/>
+        <result column="source_data_unique_identifier" property="sourceDataUniqueIdentifier"/>
+        <result column="row_unique_identifier" property="rowUniqueIdentifier"/>
+        <result column="col_unique_identifier" property="colUniqueIdentifier"/>
+        <result column="catalog_id" property="catalogId"/>
+        <result column="catalog_item" property="catalogItem"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="base_Column_List">
+        id
+        , dataset_unique_identifier, alias_name, source_dataset_unique_identifier, source_data_unique_identifier, row_unique_identifier, col_unique_identifier, catalog_id, catalog_item, version, delete_mark, create_time, update_time, create_user_id, update_user_id
+    </sql>
+
+    <!-- 校验 规则中用到的数据的别名 是否已经存在 -->
+    <select id="checkRuleDataAliasServiceExists" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 保存 规则中用到的数据的别名 -->
+    <select id="addRuleDataAliasService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 批量保存 规则中用到的数据的别名 -->
+    <select id="batchAddRuleDataAliasService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 删除 规则中用到的数据的别名 -->
+    <select id="deleteRuleDataAliasService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 批量删除 规则中用到的数据的别名 -->
+    <select id="batchDeleteRuleDataAliasService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据条件删除 规则中用到的数据的别名 -->
+    <select id="conditionDeleteRuleDataAliasService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 修改 规则中用到的数据的别名 -->
+    <select id="updateRuleDataAliasService" resultType="java.lang.Boolean">
+
+    </select>
+
+    <!-- 根据ID获取 规则中用到的数据的别名 对象 -->
+    <select id="getRuleDataAliasServiceById" resultMap="voResultMap">
+
+    </select>
+
+    <!-- 获取 规则中用到的数据的别名 对象列表 -->
+    <select id="getRuleDataAliasServiceList" resultMap="voResultMap">
+        select
+        <include refid="base_Column_List"/>
+        from sys_rule_data_alias
+        <where>
+            <if test="param.idList != null and param.idList.size != 0">
+                and id in
+                <foreach collection="param.idList" item="id" separator="," index="index" open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取 规则中用到的数据的别名 分页对象列表 -->
+    <select id="getRuleDataAliasServicePageList" resultMap="voResultMap">
+        select
+        id
+        from sys_rule_data_alias
+        <where>
+            <if test="param.deleteMark != null">
+                and delete_mark = #{param.deleteMark}
+            </if>
+        </where>
+    </select>
+
+    <!-- 计算 规则中用到的数据的别名 总记录数 -->
+    <select id="countRuleDataAliasService" resultType="java.lang.Integer">
+
+    </select>
+
+</mapper>

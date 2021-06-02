@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.tiankafei.rule.mapper.RuleAliasMapper">
+<mapper namespace="org.tiankafei.rule.mapper.RuleDatasetAliasMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="baseResultMap" type="org.tiankafei.rule.entity.RuleAliasEntity">
+    <resultMap id="baseResultMap" type="org.tiankafei.rule.entity.RuleDatasetAliasEntity">
         <id column="id" property="id"/>
         <result column="cur_dataset_unique_identifier" property="curDatasetUniqueIdentifier"/>
         <result column="step_dataset_unique_identifier" property="stepDatasetUniqueIdentifier"/>
@@ -18,7 +18,7 @@
 
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="voResultMap" type="org.tiankafei.rule.vo.RuleAliasVo">
+    <resultMap id="voResultMap" type="org.tiankafei.rule.vo.RuleDatasetAliasVo">
         <id column="id" property="id"/>
         <result column="cur_dataset_unique_identifier" property="curDatasetUniqueIdentifier"/>
         <result column="step_dataset_unique_identifier" property="stepDatasetUniqueIdentifier"/>
@@ -38,51 +38,51 @@
         , cur_dataset_unique_identifier, step_dataset_unique_identifier, alias_name, version, delete_mark, create_time, update_time, create_user_id, update_user_id
     </sql>
 
-    <!-- 校验 规则的别名 是否已经存在 -->
-    <select id="checkRuleAliasServiceExists" resultType="java.lang.Boolean">
+    <!-- 校验 规则数据集的别名 是否已经存在 -->
+    <select id="checkRuleDatasetAliasServiceExists" resultType="java.lang.Boolean">
 
     </select>
 
-    <!-- 保存 规则的别名 -->
-    <select id="addRuleAliasService" resultType="java.lang.Object">
+    <!-- 保存 规则数据集的别名 -->
+    <select id="addRuleDatasetAliasService" resultType="java.lang.Object">
 
     </select>
 
-    <!-- 批量保存 规则的别名 -->
-    <select id="batchAddRuleAliasService" resultType="java.lang.Object">
+    <!-- 批量保存 规则数据集的别名 -->
+    <select id="batchAddRuleDatasetAliasService" resultType="java.lang.Object">
 
     </select>
 
-    <!-- 删除 规则的别名 -->
-    <select id="deleteRuleAliasService" resultType="java.lang.Boolean">
+    <!-- 删除 规则数据集的别名 -->
+    <select id="deleteRuleDatasetAliasService" resultType="java.lang.Boolean">
 
     </select>
 
-    <!-- 批量删除 规则的别名 -->
-    <select id="batchDeleteRuleAliasService" resultType="java.lang.Boolean">
+    <!-- 批量删除 规则数据集的别名 -->
+    <select id="batchDeleteRuleDatasetAliasService" resultType="java.lang.Boolean">
 
     </select>
 
-    <!-- 根据条件删除 规则的别名 -->
-    <select id="conditionDeleteRuleAliasService" resultType="java.lang.Boolean">
+    <!-- 根据条件删除 规则数据集的别名 -->
+    <select id="conditionDeleteRuleDatasetAliasService" resultType="java.lang.Boolean">
 
     </select>
 
-    <!-- 修改 规则的别名 -->
-    <select id="updateRuleAliasService" resultType="java.lang.Boolean">
+    <!-- 修改 规则数据集的别名 -->
+    <select id="updateRuleDatasetAliasService" resultType="java.lang.Boolean">
 
     </select>
 
-    <!-- 根据ID获取 规则的别名 对象 -->
-    <select id="getRuleAliasServiceById" resultMap="voResultMap">
+    <!-- 根据ID获取 规则数据集的别名 对象 -->
+    <select id="getRuleDatasetAliasServiceById" resultMap="voResultMap">
 
     </select>
 
-    <!-- 获取 规则的别名 对象列表 -->
-    <select id="getRuleAliasServiceList" resultMap="voResultMap">
+    <!-- 获取 规则数据集的别名 对象列表 -->
+    <select id="getRuleDatasetAliasServiceList" resultMap="voResultMap">
         select
         <include refid="base_Column_List"/>
-        from sys_rule_alias
+        from sys_rule_dataset_alias
         <where>
             <if test="param.idList != null and param.idList.size != 0">
                 and id in
@@ -96,11 +96,11 @@
         </where>
     </select>
 
-    <!-- 获取 规则的别名 分页对象列表 -->
-    <select id="getRuleAliasServicePageList" resultMap="voResultMap">
+    <!-- 获取 规则数据集的别名 分页对象列表 -->
+    <select id="getRuleDatasetAliasServicePageList" resultMap="voResultMap">
         select
         id
-        from sys_rule_alias
+        from sys_rule_dataset_alias
         <where>
             <if test="param.deleteMark != null">
                 and delete_mark = #{param.deleteMark}
@@ -108,8 +108,8 @@
         </where>
     </select>
 
-    <!-- 计算 规则的别名 总记录数 -->
-    <select id="countRuleAliasService" resultType="java.lang.Integer">
+    <!-- 计算 规则数据集的别名 总记录数 -->
+    <select id="countRuleDatasetAliasService" resultType="java.lang.Integer">
 
     </select>
 

@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 跳转规则记录的数据唯一标识
+ * 规则数据集的别名
  * </p>
  *
  * @author tiankafei
@@ -28,9 +28,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("sys_rule_jump")
-@ApiModel(value = "RuleJumpEntity 对象", description = "跳转规则记录的数据唯一标识")
-public class RuleJumpEntity extends Model<RuleJumpEntity> {
+@TableName("sys_rule_dataset_alias")
+@ApiModel(value = "RuleDatasetAliasEntity 对象", description = "规则数据集的别名")
+public class RuleDatasetAliasEntity extends Model<RuleDatasetAliasEntity> {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,32 +38,15 @@ public class RuleJumpEntity extends Model<RuleJumpEntity> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
-    @TableField("dataset_unique_identifier")
-    private String datasetUniqueIdentifier;
+    @ApiModelProperty(value = "当前数据集的唯一标识符")
+    @Size(max = 64, message = "当前数据集的唯一标识符长度不能超过 64 ！")
+    @TableField("cur_dataset_unique_identifier")
+    private String curDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "数据的唯一标识符")
-    @Size(max = 64, message = "数据的唯一标识符长度不能超过 64 ！")
-    @TableField("data_unique_identifier")
-    private String dataUniqueIdentifier;
-
-    @ApiModelProperty(value = "规则的执行id")
-    @TableField("rule_execute_id")
-    private Long ruleExecuteId;
-
-    @ApiModelProperty(value = "报告期")
-    @TableField("reporting_period")
-    private String reportingPeriod;
-
-    @ApiModelProperty(value = "数据的唯一标识符类型：1表达式中的数据，2要锁的表达式中的数据")
-    @Size(max = 1, message = "数据的唯一标识符类型：1表达式中的数据，2要锁的表达式中的数据长度不能超过 1 ！")
-    @TableField("data_unique_identifier_type")
-    private String dataUniqueIdentifierType;
-
-    @ApiModelProperty(value = "是否需要清空格子的值：true清空，false不清空")
-    @TableField("clear_flag")
-    private Boolean clearFlag;
+    @ApiModelProperty(value = "要跨的数据集的唯一标识符")
+    @Size(max = 64, message = "要跨的数据集的唯一标识符长度不能超过 64 ！")
+    @TableField("step_dataset_unique_identifier")
+    private String stepDatasetUniqueIdentifier;
 
     @ApiModelProperty(value = "数据的别名")
     @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
@@ -99,17 +82,9 @@ public class RuleJumpEntity extends Model<RuleJumpEntity> {
 
     public static final String ID = "id";
 
-    public static final String DATASET_UNIQUE_IDENTIFIER = "dataset_unique_identifier";
+    public static final String CUR_DATASET_UNIQUE_IDENTIFIER = "cur_dataset_unique_identifier";
 
-    public static final String DATA_UNIQUE_IDENTIFIER = "data_unique_identifier";
-
-    public static final String RULE_EXECUTE_ID = "rule_execute_id";
-
-    public static final String REPORTING_PERIOD = "reporting_period";
-
-    public static final String DATA_UNIQUE_IDENTIFIER_TYPE = "data_unique_identifier_type";
-
-    public static final String CLEAR_FLAG = "clear_flag";
+    public static final String STEP_DATASET_UNIQUE_IDENTIFIER = "step_dataset_unique_identifier";
 
     public static final String ALIAS_NAME = "alias_name";
 

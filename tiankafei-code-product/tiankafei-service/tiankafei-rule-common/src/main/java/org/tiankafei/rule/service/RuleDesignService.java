@@ -1,16 +1,16 @@
 package org.tiankafei.rule.service;
 
+import com.ruoyi.common.core.web.page.Paging;
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.rule.entity.RuleDesignEntity;
 import org.tiankafei.rule.param.RuleDesignCheckParam;
 import org.tiankafei.rule.param.RuleDesignCountParam;
 import org.tiankafei.rule.param.RuleDesignDeleteParam;
-import org.tiankafei.rule.param.RuleDesignPageParam;
 import org.tiankafei.rule.param.RuleDesignListParam;
+import org.tiankafei.rule.param.RuleDesignPageParam;
 import org.tiankafei.rule.vo.RuleDesignVo;
-import com.ruoyi.common.core.web.service.BaseService;
-import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>
@@ -57,7 +57,7 @@ public interface RuleDesignService extends BaseService<RuleDesignEntity> {
      * @throws Exception
      */
     boolean deleteRuleDesignService(String id) throws Exception;
-	
+
     /**
      * 批量删除 规则设计表达式用户新增的对象
      *
@@ -120,5 +120,5 @@ public interface RuleDesignService extends BaseService<RuleDesignEntity> {
      * @throws Exception
      */
     Integer countRuleDesignService(RuleDesignCountParam ruleDesignCountParam) throws Exception;
-	
+
 }

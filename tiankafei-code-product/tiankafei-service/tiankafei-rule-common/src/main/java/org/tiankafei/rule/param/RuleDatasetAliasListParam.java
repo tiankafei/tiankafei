@@ -2,14 +2,14 @@ package org.tiankafei.rule.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.tiankafei.web.common.param.BaseOrderQueryParam;
 
 /**
  * <pre>
- * 规则设计执行的对象 分页参数对象
+ * 规则数据集的别名 分页参数对象
  * </pre>
  *
  * @author tiankafei
@@ -17,13 +17,14 @@ import org.tiankafei.web.common.param.BaseOrderQueryParam;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "规则设计执行的对象 分页列表参数对象")
-public class RuleExecutePageParam extends BaseOrderQueryParam {
+@ApiModel(value = "规则数据集的别名 列表参数对象")
+public class RuleDatasetAliasListParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键id集合")
+    private List<Long> idList;
+
     @ApiModelProperty(value = "逻辑删除字段：2已删除，0未删除")
     private Integer deleteMark;
-
 }

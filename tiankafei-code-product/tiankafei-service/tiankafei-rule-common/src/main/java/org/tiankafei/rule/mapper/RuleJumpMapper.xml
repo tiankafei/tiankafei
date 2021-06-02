@@ -4,91 +4,92 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="baseResultMap" type="org.tiankafei.rule.entity.RuleJumpEntity">
-        <id column="id" property="id" />
-        <result column="dataset_unique_identifier" property="datasetUniqueIdentifier" />
-        <result column="data_unique_identifier" property="dataUniqueIdentifier" />
-        <result column="rule_execute_id" property="ruleExecuteId" />
-        <result column="reporting_period" property="reportingPeriod" />
-        <result column="data_unique_identifier_type" property="dataUniqueIdentifierType" />
-        <result column="clear_flag" property="clearFlag" />
-        <result column="alias_name" property="aliasName" />
-        <result column="version" property="version" />
-        <result column="delete_mark" property="deleteMark" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="create_user_id" property="createUserId" />
-        <result column="update_user_id" property="updateUserId" />
+        <id column="id" property="id"/>
+        <result column="dataset_unique_identifier" property="datasetUniqueIdentifier"/>
+        <result column="data_unique_identifier" property="dataUniqueIdentifier"/>
+        <result column="rule_execute_id" property="ruleExecuteId"/>
+        <result column="reporting_period" property="reportingPeriod"/>
+        <result column="data_unique_identifier_type" property="dataUniqueIdentifierType"/>
+        <result column="clear_flag" property="clearFlag"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
     </resultMap>
 
 
     <!-- 通用查询映射结果 -->
     <resultMap id="voResultMap" type="org.tiankafei.rule.vo.RuleJumpVo">
-        <id column="id" property="id" />
-        <result column="dataset_unique_identifier" property="datasetUniqueIdentifier" />
-        <result column="data_unique_identifier" property="dataUniqueIdentifier" />
-        <result column="rule_execute_id" property="ruleExecuteId" />
-        <result column="reporting_period" property="reportingPeriod" />
-        <result column="data_unique_identifier_type" property="dataUniqueIdentifierType" />
-        <result column="clear_flag" property="clearFlag" />
-        <result column="alias_name" property="aliasName" />
-        <result column="version" property="version" />
-        <result column="delete_mark" property="deleteMark" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="create_user_id" property="createUserId" />
-        <result column="update_user_id" property="updateUserId" />
+        <id column="id" property="id"/>
+        <result column="dataset_unique_identifier" property="datasetUniqueIdentifier"/>
+        <result column="data_unique_identifier" property="dataUniqueIdentifier"/>
+        <result column="rule_execute_id" property="ruleExecuteId"/>
+        <result column="reporting_period" property="reportingPeriod"/>
+        <result column="data_unique_identifier_type" property="dataUniqueIdentifierType"/>
+        <result column="clear_flag" property="clearFlag"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="version" property="version"/>
+        <result column="delete_mark" property="deleteMark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="update_user_id" property="updateUserId"/>
     </resultMap>
 
 
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
-        id, dataset_unique_identifier, data_unique_identifier, rule_execute_id, reporting_period, data_unique_identifier_type, clear_flag, alias_name, version, delete_mark, create_time, update_time, create_user_id, update_user_id
+        id
+        , dataset_unique_identifier, data_unique_identifier, rule_execute_id, reporting_period, data_unique_identifier_type, clear_flag, alias_name, version, delete_mark, create_time, update_time, create_user_id, update_user_id
     </sql>
-	
+
     <!-- 校验 跳转规则记录的数据唯一标识 是否已经存在 -->
     <select id="checkRuleJumpServiceExists" resultType="java.lang.Boolean">
-        
-    </select>
-	
-	<!-- 保存 跳转规则记录的数据唯一标识 -->
-    <select id="addRuleJumpService" resultType="java.lang.Object">
-        
+
     </select>
 
-	<!-- 批量保存 跳转规则记录的数据唯一标识 -->
+    <!-- 保存 跳转规则记录的数据唯一标识 -->
+    <select id="addRuleJumpService" resultType="java.lang.Object">
+
+    </select>
+
+    <!-- 批量保存 跳转规则记录的数据唯一标识 -->
     <select id="batchAddRuleJumpService" resultType="java.lang.Object">
-        
+
     </select>
-	
-	<!-- 删除 跳转规则记录的数据唯一标识 -->
+
+    <!-- 删除 跳转规则记录的数据唯一标识 -->
     <select id="deleteRuleJumpService" resultType="java.lang.Boolean">
-        
+
     </select>
-	
-	<!-- 批量删除 跳转规则记录的数据唯一标识 -->
+
+    <!-- 批量删除 跳转规则记录的数据唯一标识 -->
     <select id="batchDeleteRuleJumpService" resultType="java.lang.Boolean">
-        
+
     </select>
-	
-	<!-- 根据条件删除 跳转规则记录的数据唯一标识 -->
+
+    <!-- 根据条件删除 跳转规则记录的数据唯一标识 -->
     <select id="conditionDeleteRuleJumpService" resultType="java.lang.Boolean">
-        
+
     </select>
-	
-	<!-- 修改 跳转规则记录的数据唯一标识 -->
+
+    <!-- 修改 跳转规则记录的数据唯一标识 -->
     <select id="updateRuleJumpService" resultType="java.lang.Boolean">
-        
+
     </select>
-	
-	<!-- 根据ID获取 跳转规则记录的数据唯一标识 对象 -->
+
+    <!-- 根据ID获取 跳转规则记录的数据唯一标识 对象 -->
     <select id="getRuleJumpServiceById" resultMap="voResultMap">
-        
+
     </select>
-	
-	<!-- 获取 跳转规则记录的数据唯一标识 对象列表 -->
+
+    <!-- 获取 跳转规则记录的数据唯一标识 对象列表 -->
     <select id="getRuleJumpServiceList" resultMap="voResultMap">
         select
-            <include refid="base_Column_List"/>
+        <include refid="base_Column_List"/>
         from sys_rule_jump
         <where>
             <if test="param.idList != null and param.idList.size != 0">
@@ -102,11 +103,11 @@
             </if>
         </where>
     </select>
-	
-	<!-- 获取 跳转规则记录的数据唯一标识 分页对象列表 -->
+
+    <!-- 获取 跳转规则记录的数据唯一标识 分页对象列表 -->
     <select id="getRuleJumpServicePageList" resultMap="voResultMap">
         select
-            id
+        id
         from sys_rule_jump
         <where>
             <if test="param.deleteMark != null">
@@ -114,10 +115,10 @@
             </if>
         </where>
     </select>
-	
-	<!-- 计算 跳转规则记录的数据唯一标识 总记录数 -->
+
+    <!-- 计算 跳转规则记录的数据唯一标识 总记录数 -->
     <select id="countRuleJumpService" resultType="java.lang.Integer">
-        
+
     </select>
 
 </mapper>

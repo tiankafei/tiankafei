@@ -11,8 +11,8 @@ import org.tiankafei.rule.entity.RuleAliasEntity;
 import org.tiankafei.rule.param.RuleAliasCheckParam;
 import org.tiankafei.rule.param.RuleAliasCountParam;
 import org.tiankafei.rule.param.RuleAliasDeleteParam;
-import org.tiankafei.rule.param.RuleAliasPageParam;
 import org.tiankafei.rule.param.RuleAliasListParam;
+import org.tiankafei.rule.param.RuleAliasPageParam;
 import org.tiankafei.rule.vo.RuleAliasVo;
 
 /**
@@ -61,7 +61,7 @@ public interface RuleAliasMapper extends BaseMapper<RuleAliasEntity> {
      * @throws Exception
      */
     boolean deleteRuleAliasService(@Param("param") String id) throws Exception;
-	
+
     /**
      * 批量删除 规则的别名
      *

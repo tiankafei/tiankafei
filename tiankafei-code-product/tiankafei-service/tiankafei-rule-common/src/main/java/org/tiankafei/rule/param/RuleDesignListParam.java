@@ -22,9 +22,9 @@ public class RuleDesignListParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-@ApiModelProperty(value = "主键id集合")
+    @ApiModelProperty(value = "主键id集合")
     private List<Long> idList;
 
-@ApiModelProperty(value = "逻辑删除字段：2已删除，0未删除")
+    @ApiModelProperty(value = "逻辑删除字段：2已删除，0未删除")
     private Integer deleteMark;
 }

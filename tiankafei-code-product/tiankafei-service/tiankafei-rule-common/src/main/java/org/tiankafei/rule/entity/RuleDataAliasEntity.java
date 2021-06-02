@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 规则设计表达式用户新增的对象
+ * 规则中用到的数据的别名
  * </p>
  *
  * @author tiankafei
@@ -28,13 +28,13 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("sys_rule_design")
-@ApiModel(value = "RuleDesignEntity 对象", description = "规则设计表达式用户新增的对象")
-public class RuleDesignEntity extends Model<RuleDesignEntity> {
+@TableName("sys_rule_data_alias")
+@ApiModel(value = "RuleDataAliasEntity 对象", description = "规则中用到的数据的别名")
+public class RuleDataAliasEntity extends Model<RuleDataAliasEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "规则id")
+    @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
@@ -43,51 +43,40 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     @TableField("dataset_unique_identifier")
     private String datasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "规则代码")
-    @Size(max = 20, message = "规则代码长度不能超过 20 ！")
-    @TableField("code")
-    private String code;
+    @ApiModelProperty(value = "数据的别名")
+    @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
+    @TableField("alias_name")
+    private String aliasName;
 
-    @ApiModelProperty(value = "规则名称")
-    @Size(max = 100, message = "规则名称长度不能超过 100 ！")
-    @TableField("name")
-    private String name;
+    @ApiModelProperty(value = "来源的数据集唯一标识符")
+    @Size(max = 64, message = "来源的数据集唯一标识符长度不能超过 64 ！")
+    @TableField("source_dataset_unique_identifier")
+    private String sourceDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "规则类型：1审核规则，2计算规则，3跳转规则")
-    @TableField("type")
-    private Integer type;
+    @ApiModelProperty(value = "来源的数据唯一标识符")
+    @Size(max = 64, message = "来源的数据唯一标识符长度不能超过 64 ！")
+    @TableField("source_data_unique_identifier")
+    private String sourceDataUniqueIdentifier;
 
-    @ApiModelProperty(value = "状态：0停用，1启用")
-    @TableField("status")
-    private Boolean status;
+    @ApiModelProperty(value = "行的唯一标识")
+    @Size(max = 64, message = "行的唯一标识长度不能超过 64 ！")
+    @TableField("row_unique_identifier")
+    private String rowUniqueIdentifier;
 
-    @ApiModelProperty(value = "是否支持离线审核")
-    @TableField("offline")
-    private Boolean offline;
+    @ApiModelProperty(value = "列的唯一标识")
+    @Size(max = 64, message = "列的唯一标识长度不能超过 64 ！")
+    @TableField("col_unique_identifier")
+    private String colUniqueIdentifier;
 
-    @ApiModelProperty(value = "规则表达式")
-    @TableField("expression")
-    private String expression;
+    @ApiModelProperty(value = "二维挂目录时的目录id")
+    @Size(max = 64, message = "二维挂目录时的目录id长度不能超过 64 ！")
+    @TableField("catalog_id")
+    private String catalogId;
 
-    @ApiModelProperty(value = "编译不通过时的错误提示消息")
-    @TableField("compile_error_message")
-    private String compileErrorMessage;
-
-    @ApiModelProperty(value = "错误规则表达式")
-    @TableField("error_expression")
-    private String errorExpression;
-
-    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
-    @TableField("error_compile_error_message")
-    private String errorCompileErrorMessage;
-
-    @ApiModelProperty(value = "目标表达式")
-    @TableField("target_expression")
-    private String targetExpression;
-
-    @ApiModelProperty(value = "要锁的规则表达式")
-    @TableField("lock_expression")
-    private String lockExpression;
+    @ApiModelProperty(value = "二维挂目录时的目录项id")
+    @Size(max = 64, message = "二维挂目录时的目录项id长度不能超过 64 ！")
+    @TableField("catalog_item")
+    private String catalogItem;
 
     @ApiModelProperty(value = "乐观锁版本")
     @TableField("version")
@@ -115,36 +104,24 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     @TableField(value = "update_user_id", fill = FieldFill.UPDATE)
     private Long updateUserId;
 
-    @ApiModelProperty(value = "租户ID")
-    @TableField("tenant_id")
-    private Long tenantId;
-
 
     public static final String ID = "id";
 
     public static final String DATASET_UNIQUE_IDENTIFIER = "dataset_unique_identifier";
 
-    public static final String CODE = "code";
+    public static final String ALIAS_NAME = "alias_name";
 
-    public static final String NAME = "name";
+    public static final String SOURCE_DATASET_UNIQUE_IDENTIFIER = "source_dataset_unique_identifier";
 
-    public static final String TYPE = "type";
+    public static final String SOURCE_DATA_UNIQUE_IDENTIFIER = "source_data_unique_identifier";
 
-    public static final String STATUS = "status";
+    public static final String ROW_UNIQUE_IDENTIFIER = "row_unique_identifier";
 
-    public static final String OFFLINE = "offline";
+    public static final String COL_UNIQUE_IDENTIFIER = "col_unique_identifier";
 
-    public static final String EXPRESSION = "expression";
+    public static final String CATALOG_ID = "catalog_id";
 
-    public static final String COMPILE_ERROR_MESSAGE = "compile_error_message";
-
-    public static final String ERROR_EXPRESSION = "error_expression";
-
-    public static final String ERROR_COMPILE_ERROR_MESSAGE = "error_compile_error_message";
-
-    public static final String TARGET_EXPRESSION = "target_expression";
-
-    public static final String LOCK_EXPRESSION = "lock_expression";
+    public static final String CATALOG_ITEM = "catalog_item";
 
     public static final String VERSION = "version";
 
@@ -157,8 +134,6 @@ public class RuleDesignEntity extends Model<RuleDesignEntity> {
     public static final String CREATE_USER_ID = "create_user_id";
 
     public static final String UPDATE_USER_ID = "update_user_id";
-
-    public static final String TENANT_ID = "tenant_id";
 
     @Override
     protected Serializable pkVal() {

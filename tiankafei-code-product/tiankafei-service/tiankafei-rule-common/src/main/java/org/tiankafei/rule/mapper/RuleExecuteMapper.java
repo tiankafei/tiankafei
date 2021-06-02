@@ -11,8 +11,8 @@ import org.tiankafei.rule.entity.RuleExecuteEntity;
 import org.tiankafei.rule.param.RuleExecuteCheckParam;
 import org.tiankafei.rule.param.RuleExecuteCountParam;
 import org.tiankafei.rule.param.RuleExecuteDeleteParam;
-import org.tiankafei.rule.param.RuleExecutePageParam;
 import org.tiankafei.rule.param.RuleExecuteListParam;
+import org.tiankafei.rule.param.RuleExecutePageParam;
 import org.tiankafei.rule.vo.RuleExecuteVo;
 
 /**
@@ -61,7 +61,7 @@ public interface RuleExecuteMapper extends BaseMapper<RuleExecuteEntity> {
      * @throws Exception
      */
     boolean deleteRuleExecuteService(@Param("param") String id) throws Exception;
-	
+
     /**
      * 批量删除 规则设计执行的对象
      *

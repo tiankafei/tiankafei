@@ -11,8 +11,8 @@ import org.tiankafei.rule.entity.RuleDesignEntity;
 import org.tiankafei.rule.param.RuleDesignCheckParam;
 import org.tiankafei.rule.param.RuleDesignCountParam;
 import org.tiankafei.rule.param.RuleDesignDeleteParam;
-import org.tiankafei.rule.param.RuleDesignPageParam;
 import org.tiankafei.rule.param.RuleDesignListParam;
+import org.tiankafei.rule.param.RuleDesignPageParam;
 import org.tiankafei.rule.vo.RuleDesignVo;
 
 /**
@@ -61,7 +61,7 @@ public interface RuleDesignMapper extends BaseMapper<RuleDesignEntity> {
      * @throws Exception
      */
     boolean deleteRuleDesignService(@Param("param") String id) throws Exception;
-	
+
     /**
      * 批量删除 规则设计表达式用户新增的对象
      *

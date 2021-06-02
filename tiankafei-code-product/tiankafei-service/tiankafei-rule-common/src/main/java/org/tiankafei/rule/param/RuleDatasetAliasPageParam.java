@@ -9,7 +9,7 @@ import org.tiankafei.web.common.param.BaseOrderQueryParam;
 
 /**
  * <pre>
- * 规则的别名 分页参数对象
+ * 规则数据集的别名 分页参数对象
  * </pre>
  *
  * @author tiankafei
@@ -18,12 +18,12 @@ import org.tiankafei.web.common.param.BaseOrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "规则的别名 分页列表参数对象")
-public class RuleAliasPageParam extends BaseOrderQueryParam {
+@ApiModel(value = "规则数据集的别名 分页列表参数对象")
+public class RuleDatasetAliasPageParam extends BaseOrderQueryParam {
 
     private static final long serialVersionUID = 1L;
 
-@ApiModelProperty(value = "逻辑删除字段：2已删除，0未删除")
-private Integer deleteMark;
+    @ApiModelProperty(value = "逻辑删除字段：2已删除，0未删除")
+    private Integer deleteMark;
 
 }

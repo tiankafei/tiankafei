@@ -11,8 +11,8 @@ import org.tiankafei.rule.entity.RuleJumpEntity;
 import org.tiankafei.rule.param.RuleJumpCheckParam;
 import org.tiankafei.rule.param.RuleJumpCountParam;
 import org.tiankafei.rule.param.RuleJumpDeleteParam;
-import org.tiankafei.rule.param.RuleJumpPageParam;
 import org.tiankafei.rule.param.RuleJumpListParam;
+import org.tiankafei.rule.param.RuleJumpPageParam;
 import org.tiankafei.rule.vo.RuleJumpVo;
 
 /**
@@ -61,7 +61,7 @@ public interface RuleJumpMapper extends BaseMapper<RuleJumpEntity> {
      * @throws Exception
      */
     boolean deleteRuleJumpService(@Param("param") String id) throws Exception;
-	
+
     /**
      * 批量删除 跳转规则记录的数据唯一标识
      *

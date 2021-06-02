@@ -1,13 +1,14 @@
 package org.tiankafei.rule.param;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
  * <pre>
- * 规则设计执行的对象 分页参数对象
+ * 规则中用到的数据的别名 分页参数对象
  * </pre>
  *
  * @author tiankafei
@@ -15,10 +16,12 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "规则设计执行的对象 求记录数参数对象")
-public class RuleExecuteCountParam implements Serializable {
+@ApiModel(value = "规则中用到的数据的别名 检查是否存在参数对象")
+public class RuleDataAliasCheckParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键id")
+    private Long id;
 
 }

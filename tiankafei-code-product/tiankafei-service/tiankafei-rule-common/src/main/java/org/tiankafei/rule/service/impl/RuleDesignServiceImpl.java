@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.ruoyi.common.core.web.page.Paging;
+import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -13,19 +15,17 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tiankafei.rule.entity.RuleDesignEntity;
+import org.tiankafei.rule.mapper.RuleDesignMapper;
 import org.tiankafei.rule.param.RuleDesignCheckParam;
 import org.tiankafei.rule.param.RuleDesignCountParam;
 import org.tiankafei.rule.param.RuleDesignDeleteParam;
-import org.tiankafei.rule.param.RuleDesignPageParam;
 import org.tiankafei.rule.param.RuleDesignListParam;
-import org.tiankafei.rule.vo.RuleDesignVo;
-import org.tiankafei.rule.mapper.RuleDesignMapper;
+import org.tiankafei.rule.param.RuleDesignPageParam;
 import org.tiankafei.rule.service.RuleDesignService;
-import com.ruoyi.common.core.web.service.impl.BaseServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.common.core.web.page.Paging;
+import org.tiankafei.rule.vo.RuleDesignVo;
 
 /**
  * <p>
@@ -50,18 +50,18 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public boolean checkRuleDesignServiceExists(RuleDesignCheckParam ruleDesignCheckParam) throws Exception {
-		LambdaQueryWrapper<RuleDesignEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (ruleDesignCheckParam != null) {
-			Long id = ruleDesignCheckParam.getId();
-			if(id != null){
-				lambdaQueryWrapper.ne(RuleDesignEntity::getId, id);
-			}
-		}
-		int count = super.count(lambdaQueryWrapper);
-		return count > 0;
-	}
+        LambdaQueryWrapper<RuleDesignEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (ruleDesignCheckParam != null) {
+            Long id = ruleDesignCheckParam.getId();
+            if (id != null) {
+                lambdaQueryWrapper.ne(RuleDesignEntity::getId, id);
+            }
+        }
+        int count = super.count(lambdaQueryWrapper);
+        return count > 0;
+    }
 
     /**
      * 保存 规则设计表达式用户新增的对象
@@ -70,13 +70,13 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public Long addRuleDesignService(RuleDesignVo ruleDesignVo) throws Exception {
-		RuleDesignEntity ruleDesignEntity = new RuleDesignEntity();
-		BeanUtils.copyProperties(ruleDesignVo, ruleDesignEntity);
-		super.save(ruleDesignEntity);
-		return ruleDesignEntity.getId();
-	}
+        RuleDesignEntity ruleDesignEntity = new RuleDesignEntity();
+        BeanUtils.copyProperties(ruleDesignVo, ruleDesignEntity);
+        super.save(ruleDesignEntity);
+        return ruleDesignEntity.getId();
+    }
 
     /**
      * 保存 规则设计表达式用户新增的对象 集合
@@ -85,21 +85,21 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public List<Long> batchAddRuleDesignService(List<RuleDesignVo> ruleDesignVoList) throws Exception {
-		if (CollectionUtils.isNotEmpty(ruleDesignVoList)) {
-			List<RuleDesignEntity> ruleDesignEntityList = Lists.newArrayList();
-			for (RuleDesignVo ruleDesignVo : ruleDesignVoList) {
-				RuleDesignEntity ruleDesignEntity = new RuleDesignEntity();
-				BeanUtils.copyProperties(ruleDesignVo, ruleDesignEntity);
-				ruleDesignEntityList.add(ruleDesignEntity);
-			}
-			super.saveBatch(ruleDesignEntityList);
+        if (CollectionUtils.isNotEmpty(ruleDesignVoList)) {
+            List<RuleDesignEntity> ruleDesignEntityList = Lists.newArrayList();
+            for (RuleDesignVo ruleDesignVo : ruleDesignVoList) {
+                RuleDesignEntity ruleDesignEntity = new RuleDesignEntity();
+                BeanUtils.copyProperties(ruleDesignVo, ruleDesignEntity);
+                ruleDesignEntityList.add(ruleDesignEntity);
+            }
+            super.saveBatch(ruleDesignEntityList);
 
-			return ruleDesignEntityList.stream().map(ruleDesignEntity -> ruleDesignEntity.getId()).collect(Collectors.toList());
-		}
-		return Lists.newArrayList();
-	}
+            return ruleDesignEntityList.stream().map(ruleDesignEntity -> ruleDesignEntity.getId()).collect(Collectors.toList());
+        }
+        return Lists.newArrayList();
+    }
 
     /**
      * 删除 规则设计表达式用户新增的对象
@@ -108,14 +108,14 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public boolean deleteRuleDesignService(String id) throws Exception {
-		if(StringUtils.isNotBlank(id)){
-			return super.removeById(id);
-		}
-		return Boolean.TRUE;
-	}
-	
+        if (StringUtils.isNotBlank(id)) {
+            return super.removeById(id);
+        }
+        return Boolean.TRUE;
+    }
+
     /**
      * 批量删除 规则设计表达式用户新增的对象
      *
@@ -123,14 +123,14 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public boolean batchDeleteRuleDesignService(String ids) throws Exception {
-		if(StringUtils.isNotBlank(ids)){
-			List<String> idList = Arrays.asList(ids.split(","));
-			return super.removeByIds(idList);
-		}
-		return Boolean.TRUE;
-	}
+        if (StringUtils.isNotBlank(ids)) {
+            List<String> idList = Arrays.asList(ids.split(","));
+            return super.removeByIds(idList);
+        }
+        return Boolean.TRUE;
+    }
 
     /**
      * 根据条件删除 规则设计表达式用户新增的对象
@@ -139,14 +139,14 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public boolean conditionDeleteRuleDesignService(RuleDesignDeleteParam ruleDesignDeleteParam) throws Exception {
-		LambdaQueryWrapper<RuleDesignEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (ruleDesignDeleteParam != null) {
+        LambdaQueryWrapper<RuleDesignEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (ruleDesignDeleteParam != null) {
 
-		}
-		return super.remove(lambdaQueryWrapper);
-	}
+        }
+        return super.remove(lambdaQueryWrapper);
+    }
 
     /**
      * 修改 规则设计表达式用户新增的对象
@@ -155,12 +155,12 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public boolean updateRuleDesignService(RuleDesignVo ruleDesignVo) throws Exception {
-		RuleDesignEntity ruleDesignEntity = new RuleDesignEntity();
-		BeanUtils.copyProperties(ruleDesignVo, ruleDesignEntity);
-		return super.updateById(ruleDesignEntity);
-	}
+        RuleDesignEntity ruleDesignEntity = new RuleDesignEntity();
+        BeanUtils.copyProperties(ruleDesignVo, ruleDesignEntity);
+        return super.updateById(ruleDesignEntity);
+    }
 
     /**
      * 根据ID获取 规则设计表达式用户新增的对象 对象
@@ -169,16 +169,16 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public RuleDesignVo getRuleDesignServiceById(Serializable id) throws Exception {
-		RuleDesignEntity ruleDesignEntity = super.getById(id);
-		if (ruleDesignEntity == null) {
-			return null;
-		}
-		RuleDesignVo ruleDesignVo = new RuleDesignVo();
-		BeanUtils.copyProperties(ruleDesignEntity, ruleDesignVo);
-		return ruleDesignVo;
-	}
+        RuleDesignEntity ruleDesignEntity = super.getById(id);
+        if (ruleDesignEntity == null) {
+            return null;
+        }
+        RuleDesignVo ruleDesignVo = new RuleDesignVo();
+        BeanUtils.copyProperties(ruleDesignEntity, ruleDesignVo);
+        return ruleDesignVo;
+    }
 
     /**
      * 获取 规则设计表达式用户新增的对象 对象列表
@@ -187,10 +187,10 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public List<RuleDesignVo> getRuleDesignServiceList(RuleDesignListParam ruleDesignListParam) throws Exception {
-		return ruleDesignMapper.getRuleDesignServiceList(ruleDesignListParam);
-	}
+        return ruleDesignMapper.getRuleDesignServiceList(ruleDesignListParam);
+    }
 
     /**
      * 获取 规则设计表达式用户新增的对象 分页对象列表
@@ -199,24 +199,24 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public Paging<RuleDesignVo> getRuleDesignServicePageList(RuleDesignPageParam ruleDesignPageParam) throws Exception {
-		Page page = setPageParam(ruleDesignPageParam, OrderItem.desc("create_time"));
-		// 分页查询先查询主键id
-		IPage<RuleDesignVo> iPage = ruleDesignMapper.getRuleDesignServicePageList(page, ruleDesignPageParam);
-		List<Long> idList = iPage.getRecords().stream().map(ruleDesignVo -> ruleDesignVo.getId()).collect(Collectors.toList());
+        Page page = setPageParam(ruleDesignPageParam, OrderItem.desc("create_time"));
+        // 分页查询先查询主键id
+        IPage<RuleDesignVo> iPage = ruleDesignMapper.getRuleDesignServicePageList(page, ruleDesignPageParam);
+        List<Long> idList = iPage.getRecords().stream().map(ruleDesignVo -> ruleDesignVo.getId()).collect(Collectors.toList());
 
-		// 再根据查到的主键id查询数据
-		Paging<RuleDesignVo> paging = new Paging();
-		paging.setTotal(iPage.getTotal());
-		if (CollectionUtils.isNotEmpty(idList)) {
-			RuleDesignListParam ruleDesignListParam = new RuleDesignListParam();
-			ruleDesignListParam.setIdList(idList);
-			List<RuleDesignVo> ruleDesignVoList = this.getRuleDesignServiceList(ruleDesignListParam);
-			paging.setRecords(ruleDesignVoList);
-		}
-		return paging;
-	}
+        // 再根据查到的主键id查询数据
+        Paging<RuleDesignVo> paging = new Paging();
+        paging.setTotal(iPage.getTotal());
+        if (CollectionUtils.isNotEmpty(idList)) {
+            RuleDesignListParam ruleDesignListParam = new RuleDesignListParam();
+            ruleDesignListParam.setIdList(idList);
+            List<RuleDesignVo> ruleDesignVoList = this.getRuleDesignServiceList(ruleDesignListParam);
+            paging.setRecords(ruleDesignVoList);
+        }
+        return paging;
+    }
 
     /**
      * 计算 规则设计表达式用户新增的对象 总记录数
@@ -225,14 +225,14 @@ public class RuleDesignServiceImpl extends BaseServiceImpl<RuleDesignMapper, Rul
      * @return
      * @throws Exception
      */
-	@Override
+    @Override
     public Integer countRuleDesignService(RuleDesignCountParam ruleDesignCountParam) throws Exception {
-		LambdaQueryWrapper<RuleDesignEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
-		if (ruleDesignCountParam != null) {
+        LambdaQueryWrapper<RuleDesignEntity> lambdaQueryWrapper = new LambdaQueryWrapper();
+        if (ruleDesignCountParam != null) {
 
-		}
-		return super.count(lambdaQueryWrapper);
-	}
-	
+        }
+        return super.count(lambdaQueryWrapper);
+    }
+
 
 }

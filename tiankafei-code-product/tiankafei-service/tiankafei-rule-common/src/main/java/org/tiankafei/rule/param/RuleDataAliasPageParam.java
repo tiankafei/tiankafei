@@ -9,7 +9,7 @@ import org.tiankafei.web.common.param.BaseOrderQueryParam;
 
 /**
  * <pre>
- * 规则设计执行的对象 分页参数对象
+ * 规则中用到的数据的别名 分页参数对象
  * </pre>
  *
  * @author tiankafei
@@ -18,8 +18,8 @@ import org.tiankafei.web.common.param.BaseOrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "规则设计执行的对象 分页列表参数对象")
-public class RuleExecutePageParam extends BaseOrderQueryParam {
+@ApiModel(value = "规则中用到的数据的别名 分页列表参数对象")
+public class RuleDataAliasPageParam extends BaseOrderQueryParam {
 
     private static final long serialVersionUID = 1L;
 

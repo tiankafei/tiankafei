@@ -1,16 +1,16 @@
 package org.tiankafei.rule.service;
 
+import com.ruoyi.common.core.web.page.Paging;
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.rule.entity.RuleJumpEntity;
 import org.tiankafei.rule.param.RuleJumpCheckParam;
 import org.tiankafei.rule.param.RuleJumpCountParam;
 import org.tiankafei.rule.param.RuleJumpDeleteParam;
-import org.tiankafei.rule.param.RuleJumpPageParam;
 import org.tiankafei.rule.param.RuleJumpListParam;
+import org.tiankafei.rule.param.RuleJumpPageParam;
 import org.tiankafei.rule.vo.RuleJumpVo;
-import com.ruoyi.common.core.web.service.BaseService;
-import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>
@@ -57,7 +57,7 @@ public interface RuleJumpService extends BaseService<RuleJumpEntity> {
      * @throws Exception
      */
     boolean deleteRuleJumpService(String id) throws Exception;
-	
+
     /**
      * 批量删除 跳转规则记录的数据唯一标识
      *
@@ -120,5 +120,5 @@ public interface RuleJumpService extends BaseService<RuleJumpEntity> {
      * @throws Exception
      */
     Integer countRuleJumpService(RuleJumpCountParam ruleJumpCountParam) throws Exception;
-	
+
 }

@@ -1,16 +1,16 @@
 package org.tiankafei.rule.service;
 
+import com.ruoyi.common.core.web.page.Paging;
+import com.ruoyi.common.core.web.service.BaseService;
 import java.io.Serializable;
 import java.util.List;
 import org.tiankafei.rule.entity.RuleExecuteEntity;
 import org.tiankafei.rule.param.RuleExecuteCheckParam;
 import org.tiankafei.rule.param.RuleExecuteCountParam;
 import org.tiankafei.rule.param.RuleExecuteDeleteParam;
-import org.tiankafei.rule.param.RuleExecutePageParam;
 import org.tiankafei.rule.param.RuleExecuteListParam;
+import org.tiankafei.rule.param.RuleExecutePageParam;
 import org.tiankafei.rule.vo.RuleExecuteVo;
-import com.ruoyi.common.core.web.service.BaseService;
-import com.ruoyi.common.core.web.page.Paging;
 
 /**
  * <p>
@@ -57,7 +57,7 @@ public interface RuleExecuteService extends BaseService<RuleExecuteEntity> {
      * @throws Exception
      */
     boolean deleteRuleExecuteService(String id) throws Exception;
-	
+
     /**
      * 批量删除 规则设计执行的对象
      *
@@ -120,5 +120,5 @@ public interface RuleExecuteService extends BaseService<RuleExecuteEntity> {
      * @throws Exception
      */
     Integer countRuleExecuteService(RuleExecuteCountParam ruleExecuteCountParam) throws Exception;
-	
+
 }

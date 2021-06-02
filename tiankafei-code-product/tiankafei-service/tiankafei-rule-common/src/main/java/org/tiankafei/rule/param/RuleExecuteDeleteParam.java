@@ -1,7 +1,6 @@
 package org.tiankafei.rule.param;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -20,7 +19,6 @@ import lombok.experimental.Accessors;
 public class RuleExecuteDeleteParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
 
 
 }

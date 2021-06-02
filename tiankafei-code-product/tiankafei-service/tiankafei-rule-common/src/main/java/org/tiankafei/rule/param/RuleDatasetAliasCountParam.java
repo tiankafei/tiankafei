@@ -1,14 +1,13 @@
 package org.tiankafei.rule.param;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
  * <pre>
- * 规则的别名 分页参数对象
+ * 规则数据集的别名 分页参数对象
  * </pre>
  *
  * @author tiankafei
@@ -16,11 +15,10 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "规则的别名 删除参数对象")
-public class RuleAliasDeleteParam implements Serializable {
+@ApiModel(value = "规则数据集的别名 求记录数参数对象")
+public class RuleDatasetAliasCountParam implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
 
 
 }
