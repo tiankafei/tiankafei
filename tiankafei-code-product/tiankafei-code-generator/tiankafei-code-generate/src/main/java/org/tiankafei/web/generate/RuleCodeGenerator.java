@@ -33,6 +33,8 @@ public class RuleCodeGenerator extends BaseCodeGenerator {
         RuleCodeGenerator tiankafeiCodeGenerator = new RuleCodeGenerator();
         List<String> tableNameList = Arrays.asList(
                 "sys_rule_design",
+                "sys_rule_alias",
+                "sys_rule_jump",
                 "sys_rule_execute");
         tiankafeiCodeGenerator.execute(tableNameList);
     }
