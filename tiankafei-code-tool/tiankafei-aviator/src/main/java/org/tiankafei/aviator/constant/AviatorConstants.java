@@ -271,4 +271,23 @@ public interface AviatorConstants {
      */
     String FUNCTION_FIND = "find";
 
+    /**
+     * 转成long类型，非数字为0，否则为数字
+     */
+    String FUNCTION_TO_LONG = "to_long";
+
+    /**
+     * 转成long类型，非数字为0，否则为数字
+     */
+    String FUNCTION_TO_DOUBLE = "to_double";
+
+    /**
+     * 转成long类型，非true为false，否则为true
+     */
+    String FUNCTION_TO_BOOLEAN = "to_boolean";
+
+    /**
+     * 转成long类型，非数字为0，否则为数字
+     */
+    String FUNCTION_TO_NUMBER = "to_number";
 }
