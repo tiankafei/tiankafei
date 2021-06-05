@@ -1,4 +1,4 @@
-package org.tiankafei.user;
+package org.tiankafei.rule;
 
 /**
  * @author tiankafei
