@@ -10,6 +10,6 @@ spring:
       datasource:
         # 主库数据源
         master:
-          url: jdbc:mysql://localhost:3306/db-rule?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+          url: jdbc:mysql://localhost:3306/db-ry-cloud?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
           username: root
           password: tiankafei
