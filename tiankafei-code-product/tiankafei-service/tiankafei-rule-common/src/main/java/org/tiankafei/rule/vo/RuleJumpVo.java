@@ -28,12 +28,12 @@ public class RuleJumpVo extends BaseQueryVo {
     @ApiModelProperty(value = "规则id")
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据集的唯一标识")
+    @Size(max = 64, message = "数据集的唯一标识长度不能超过 64 ！")
     private String datasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "数据的唯一标识符")
-    @Size(max = 64, message = "数据的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据唯一标识")
+    @Size(max = 64, message = "数据唯一标识长度不能超过 64 ！")
     private String dataUniqueIdentifier;
 
     @ApiModelProperty(value = "规则的执行id")
@@ -42,15 +42,15 @@ public class RuleJumpVo extends BaseQueryVo {
     @ApiModelProperty(value = "报告期")
     private String reportingPeriod;
 
-    @ApiModelProperty(value = "数据的唯一标识符类型：1表达式中的数据，2要锁的表达式中的数据")
-    @Size(max = 1, message = "数据的唯一标识符类型：1表达式中的数据，2要锁的表达式中的数据长度不能超过 1 ！")
+    @ApiModelProperty(value = "数据唯一标识类型：1目标表达式中的，2要锁的表达式中的")
+    @Size(max = 1, message = "数据唯一标识类型：1目标表达式中的，2要锁的表达式中的长度不能超过 1 ！")
     private String dataUniqueIdentifierType;
 
     @ApiModelProperty(value = "是否需要清空格子的值：true清空，false不清空")
     private Boolean clearFlag;
 
-    @ApiModelProperty(value = "数据的别名")
-    @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
+    @ApiModelProperty(value = "数据唯一标识的别名")
+    @Size(max = 30, message = "数据唯一标识的别名长度不能超过 30 ！")
     private String aliasName;
 
     @ApiModelProperty(value = "乐观锁版本")

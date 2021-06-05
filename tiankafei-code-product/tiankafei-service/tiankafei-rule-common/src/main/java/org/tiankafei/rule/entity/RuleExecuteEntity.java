@@ -38,8 +38,8 @@ public class RuleExecuteEntity extends Model<RuleExecuteEntity> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据集唯一标识")
+    @Size(max = 64, message = "数据集唯一标识长度不能超过 64 ！")
     @TableField("dataset_unique_identifier")
     private String datasetUniqueIdentifier;
 
@@ -65,51 +65,55 @@ public class RuleExecuteEntity extends Model<RuleExecuteEntity> {
     @TableField("status")
     private Boolean status;
 
-    @ApiModelProperty(value = "规则表达式")
+    @ApiModelProperty(value = "是否支持离线审核")
+    @TableField("offline")
+    private Boolean offline;
+
+    @ApiModelProperty(value = "程序用的规则表达式")
     @TableField("expression")
     private String expression;
 
-    @ApiModelProperty(value = "规则表达式生成的javascript的脚本")
+    @ApiModelProperty(value = "程序用的规则表达式生成的前端js脚本")
     @TableField("javascript")
     private String javascript;
 
-    @ApiModelProperty(value = "规则表达式生成的规则解析对象")
+    @ApiModelProperty(value = "程序用的规则表达式解析的结构化数据")
     @TableField("expression_dto")
     private String expressionDto;
 
-    @ApiModelProperty(value = "编译不通过时的错误提示消息")
+    @ApiModelProperty(value = "程序用的规则规则表达式编译错误的提示消息")
     @TableField("compile_error_message")
     private String compileErrorMessage;
 
-    @ApiModelProperty(value = "错误规则表达式")
+    @ApiModelProperty(value = "程序用的错误表达式")
     @TableField("error_expression")
     private String errorExpression;
 
-    @ApiModelProperty(value = "错误规则表达式生成的javascript的脚本")
+    @ApiModelProperty(value = "程序用的错误规则表达式生成的前端js脚本")
     @TableField("error_javascript_list")
     private String errorJavascriptList;
 
-    @ApiModelProperty(value = "错误规则表达式生成的规则解析对象集合")
+    @ApiModelProperty(value = "程序用的错误规则表达式解析的结构化数据")
     @TableField("error_expression_list")
     private String errorExpressionList;
 
-    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
+    @ApiModelProperty(value = "程序用的错误表达式编译错误的提示消息")
     @TableField("error_compile_error_message")
     private String errorCompileErrorMessage;
 
-    @ApiModelProperty(value = "目标表达式")
+    @ApiModelProperty(value = "程序用的目标表达式")
     @TableField("target_expression")
     private String targetExpression;
 
-    @ApiModelProperty(value = "目标规则表达式生成的规则解析对象")
+    @ApiModelProperty(value = "程序用的目标表达式解析的结构化数据")
     @TableField("target_expression_dto")
     private String targetExpressionDto;
 
-    @ApiModelProperty(value = "要锁的规则表达式")
+    @ApiModelProperty(value = "程序用的要锁的表达式")
     @TableField("lock_expression")
     private String lockExpression;
 
-    @ApiModelProperty(value = "要锁的规则表达式生成的规则解析对象")
+    @ApiModelProperty(value = "程序用的要锁的表达式解析的结构化数据")
     @TableField("lock_expression_dto")
     private String lockExpressionDto;
 
@@ -157,6 +161,8 @@ public class RuleExecuteEntity extends Model<RuleExecuteEntity> {
     public static final String TYPE = "type";
 
     public static final String STATUS = "status";
+
+    public static final String OFFLINE = "offline";
 
     public static final String EXPRESSION = "expression";
 

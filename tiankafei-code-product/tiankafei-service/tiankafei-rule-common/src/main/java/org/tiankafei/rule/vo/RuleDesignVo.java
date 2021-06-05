@@ -28,8 +28,8 @@ public class RuleDesignVo extends BaseQueryVo {
     @ApiModelProperty(value = "规则id")
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据集唯一标识")
+    @Size(max = 64, message = "数据集唯一标识长度不能超过 64 ！")
     private String datasetUniqueIdentifier;
 
     @ApiModelProperty(value = "规则代码")
@@ -49,22 +49,22 @@ public class RuleDesignVo extends BaseQueryVo {
     @ApiModelProperty(value = "是否支持离线审核")
     private Boolean offline;
 
-    @ApiModelProperty(value = "规则表达式")
+    @ApiModelProperty(value = "用户书写的规则表达式")
     private String expression;
 
-    @ApiModelProperty(value = "编译不通过时的错误提示消息")
+    @ApiModelProperty(value = "用户书写的规则规则表达式编译错误的提示消息")
     private String compileErrorMessage;
 
-    @ApiModelProperty(value = "错误规则表达式")
+    @ApiModelProperty(value = "用户书写的错误表达式")
     private String errorExpression;
 
-    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
+    @ApiModelProperty(value = "用户书写的错误表达式编译错误的提示消息")
     private String errorCompileErrorMessage;
 
-    @ApiModelProperty(value = "目标表达式")
+    @ApiModelProperty(value = "用户书写的目标表达式")
     private String targetExpression;
 
-    @ApiModelProperty(value = "要锁的规则表达式")
+    @ApiModelProperty(value = "用户书写的要锁的表达式")
     private String lockExpression;
 
     @ApiModelProperty(value = "乐观锁版本")

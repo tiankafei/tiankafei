@@ -38,18 +38,18 @@ public class RuleDatasetAliasEntity extends Model<RuleDatasetAliasEntity> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "当前数据集的唯一标识符")
-    @Size(max = 64, message = "当前数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "当前数据集的唯一标识")
+    @Size(max = 64, message = "当前数据集的唯一标识长度不能超过 64 ！")
     @TableField("cur_dataset_unique_identifier")
     private String curDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "要跨的数据集的唯一标识符")
-    @Size(max = 64, message = "要跨的数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "要跨的数据集的唯一标识")
+    @Size(max = 64, message = "要跨的数据集的唯一标识长度不能超过 64 ！")
     @TableField("step_dataset_unique_identifier")
     private String stepDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "数据的别名")
-    @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
+    @ApiModelProperty(value = "给要跨的数据集起的别名")
+    @Size(max = 30, message = "给要跨的数据集起的别名长度不能超过 30 ！")
     @TableField("alias_name")
     private String aliasName;
 

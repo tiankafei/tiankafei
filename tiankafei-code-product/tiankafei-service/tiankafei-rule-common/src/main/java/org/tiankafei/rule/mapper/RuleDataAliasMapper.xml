@@ -12,7 +12,7 @@
         <result column="row_unique_identifier" property="rowUniqueIdentifier"/>
         <result column="col_unique_identifier" property="colUniqueIdentifier"/>
         <result column="catalog_id" property="catalogId"/>
-        <result column="catalog_item" property="catalogItem"/>
+        <result column="catalog_item_id" property="catalogItemId"/>
         <result column="version" property="version"/>
         <result column="delete_mark" property="deleteMark"/>
         <result column="create_time" property="createTime"/>
@@ -32,7 +32,7 @@
         <result column="row_unique_identifier" property="rowUniqueIdentifier"/>
         <result column="col_unique_identifier" property="colUniqueIdentifier"/>
         <result column="catalog_id" property="catalogId"/>
-        <result column="catalog_item" property="catalogItem"/>
+        <result column="catalog_item_id" property="catalogItemId"/>
         <result column="version" property="version"/>
         <result column="delete_mark" property="deleteMark"/>
         <result column="create_time" property="createTime"/>
@@ -45,7 +45,7 @@
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
         id
-        , dataset_unique_identifier, alias_name, source_dataset_unique_identifier, source_data_unique_identifier, row_unique_identifier, col_unique_identifier, catalog_id, catalog_item, version, delete_mark, create_time, update_time, create_user_id, update_user_id
+        , dataset_unique_identifier, alias_name, source_dataset_unique_identifier, source_data_unique_identifier, row_unique_identifier, col_unique_identifier, catalog_id, catalog_item_id, version, delete_mark, create_time, update_time, create_user_id, update_user_id
     </sql>
 
     <!-- 校验 规则中用到的数据的别名 是否已经存在 -->

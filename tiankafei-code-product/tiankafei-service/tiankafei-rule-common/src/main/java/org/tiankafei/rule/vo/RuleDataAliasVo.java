@@ -28,20 +28,20 @@ public class RuleDataAliasVo extends BaseQueryVo {
     @ApiModelProperty(value = "主键")
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据集的唯一标识")
+    @Size(max = 64, message = "数据集的唯一标识长度不能超过 64 ！")
     private String datasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "数据的别名")
-    @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
+    @ApiModelProperty(value = "别名")
+    @Size(max = 30, message = "别名长度不能超过 30 ！")
     private String aliasName;
 
-    @ApiModelProperty(value = "来源的数据集唯一标识符")
-    @Size(max = 64, message = "来源的数据集唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "指定的数据集的唯一标识")
+    @Size(max = 64, message = "指定的数据集的唯一标识长度不能超过 64 ！")
     private String sourceDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "来源的数据唯一标识符")
-    @Size(max = 64, message = "来源的数据唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "指定的数据唯一标识")
+    @Size(max = 64, message = "指定的数据唯一标识长度不能超过 64 ！")
     private String sourceDataUniqueIdentifier;
 
     @ApiModelProperty(value = "行的唯一标识")
@@ -52,13 +52,13 @@ public class RuleDataAliasVo extends BaseQueryVo {
     @Size(max = 64, message = "列的唯一标识长度不能超过 64 ！")
     private String colUniqueIdentifier;
 
-    @ApiModelProperty(value = "二维挂目录时的目录id")
-    @Size(max = 64, message = "二维挂目录时的目录id长度不能超过 64 ！")
+    @ApiModelProperty(value = "目录id")
+    @Size(max = 64, message = "目录id长度不能超过 64 ！")
     private String catalogId;
 
-    @ApiModelProperty(value = "二维挂目录时的目录项id")
-    @Size(max = 64, message = "二维挂目录时的目录项id长度不能超过 64 ！")
-    private String catalogItem;
+    @ApiModelProperty(value = "目录项代码")
+    @Size(max = 64, message = "目录项代码长度不能超过 64 ！")
+    private String catalogItemId;
 
     @ApiModelProperty(value = "乐观锁版本")
     private Integer version;
@@ -95,7 +95,7 @@ public class RuleDataAliasVo extends BaseQueryVo {
 
     public static final String CATALOG_ID = "catalog_id";
 
-    public static final String CATALOG_ITEM = "catalog_item";
+    public static final String CATALOG_ITEM_ID = "catalog_item_id";
 
     public static final String VERSION = "version";
 

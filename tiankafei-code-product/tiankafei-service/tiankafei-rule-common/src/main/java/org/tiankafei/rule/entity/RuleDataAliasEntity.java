@@ -38,23 +38,23 @@ public class RuleDataAliasEntity extends Model<RuleDataAliasEntity> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据集的唯一标识")
+    @Size(max = 64, message = "数据集的唯一标识长度不能超过 64 ！")
     @TableField("dataset_unique_identifier")
     private String datasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "数据的别名")
-    @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
+    @ApiModelProperty(value = "别名")
+    @Size(max = 30, message = "别名长度不能超过 30 ！")
     @TableField("alias_name")
     private String aliasName;
 
-    @ApiModelProperty(value = "来源的数据集唯一标识符")
-    @Size(max = 64, message = "来源的数据集唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "指定的数据集的唯一标识")
+    @Size(max = 64, message = "指定的数据集的唯一标识长度不能超过 64 ！")
     @TableField("source_dataset_unique_identifier")
     private String sourceDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "来源的数据唯一标识符")
-    @Size(max = 64, message = "来源的数据唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "指定的数据唯一标识")
+    @Size(max = 64, message = "指定的数据唯一标识长度不能超过 64 ！")
     @TableField("source_data_unique_identifier")
     private String sourceDataUniqueIdentifier;
 
@@ -68,15 +68,15 @@ public class RuleDataAliasEntity extends Model<RuleDataAliasEntity> {
     @TableField("col_unique_identifier")
     private String colUniqueIdentifier;
 
-    @ApiModelProperty(value = "二维挂目录时的目录id")
-    @Size(max = 64, message = "二维挂目录时的目录id长度不能超过 64 ！")
+    @ApiModelProperty(value = "目录id")
+    @Size(max = 64, message = "目录id长度不能超过 64 ！")
     @TableField("catalog_id")
     private String catalogId;
 
-    @ApiModelProperty(value = "二维挂目录时的目录项id")
-    @Size(max = 64, message = "二维挂目录时的目录项id长度不能超过 64 ！")
-    @TableField("catalog_item")
-    private String catalogItem;
+    @ApiModelProperty(value = "目录项代码")
+    @Size(max = 64, message = "目录项代码长度不能超过 64 ！")
+    @TableField("catalog_item_id")
+    private String catalogItemId;
 
     @ApiModelProperty(value = "乐观锁版本")
     @TableField("version")
@@ -121,7 +121,7 @@ public class RuleDataAliasEntity extends Model<RuleDataAliasEntity> {
 
     public static final String CATALOG_ID = "catalog_id";
 
-    public static final String CATALOG_ITEM = "catalog_item";
+    public static final String CATALOG_ITEM_ID = "catalog_item_id";
 
     public static final String VERSION = "version";
 

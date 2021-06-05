@@ -28,16 +28,16 @@ public class RuleDatasetAliasVo extends BaseQueryVo {
     @ApiModelProperty(value = "规则id")
     private Long id;
 
-    @ApiModelProperty(value = "当前数据集的唯一标识符")
-    @Size(max = 64, message = "当前数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "当前数据集的唯一标识")
+    @Size(max = 64, message = "当前数据集的唯一标识长度不能超过 64 ！")
     private String curDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "要跨的数据集的唯一标识符")
-    @Size(max = 64, message = "要跨的数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "要跨的数据集的唯一标识")
+    @Size(max = 64, message = "要跨的数据集的唯一标识长度不能超过 64 ！")
     private String stepDatasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "数据的别名")
-    @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
+    @ApiModelProperty(value = "给要跨的数据集起的别名")
+    @Size(max = 30, message = "给要跨的数据集起的别名长度不能超过 30 ！")
     private String aliasName;
 
     @ApiModelProperty(value = "乐观锁版本")

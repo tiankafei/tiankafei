@@ -28,8 +28,8 @@ public class RuleExecuteVo extends BaseQueryVo {
     @ApiModelProperty(value = "主键")
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据集唯一标识")
+    @Size(max = 64, message = "数据集唯一标识长度不能超过 64 ！")
     private String datasetUniqueIdentifier;
 
     @ApiModelProperty(value = "用户书写的规则id")
@@ -49,40 +49,43 @@ public class RuleExecuteVo extends BaseQueryVo {
     @ApiModelProperty(value = "状态：0停用，1启用")
     private Boolean status;
 
-    @ApiModelProperty(value = "规则表达式")
+    @ApiModelProperty(value = "是否支持离线审核")
+    private Boolean offline;
+
+    @ApiModelProperty(value = "程序用的规则表达式")
     private String expression;
 
-    @ApiModelProperty(value = "规则表达式生成的javascript的脚本")
+    @ApiModelProperty(value = "程序用的规则表达式生成的前端js脚本")
     private String javascript;
 
-    @ApiModelProperty(value = "规则表达式生成的规则解析对象")
+    @ApiModelProperty(value = "程序用的规则表达式解析的结构化数据")
     private String expressionDto;
 
-    @ApiModelProperty(value = "编译不通过时的错误提示消息")
+    @ApiModelProperty(value = "程序用的规则规则表达式编译错误的提示消息")
     private String compileErrorMessage;
 
-    @ApiModelProperty(value = "错误规则表达式")
+    @ApiModelProperty(value = "程序用的错误表达式")
     private String errorExpression;
 
-    @ApiModelProperty(value = "错误规则表达式生成的javascript的脚本")
+    @ApiModelProperty(value = "程序用的错误规则表达式生成的前端js脚本")
     private String errorJavascriptList;
 
-    @ApiModelProperty(value = "错误规则表达式生成的规则解析对象集合")
+    @ApiModelProperty(value = "程序用的错误规则表达式解析的结构化数据")
     private String errorExpressionList;
 
-    @ApiModelProperty(value = "错误表达式编译不通过时的错误提示消息")
+    @ApiModelProperty(value = "程序用的错误表达式编译错误的提示消息")
     private String errorCompileErrorMessage;
 
-    @ApiModelProperty(value = "目标表达式")
+    @ApiModelProperty(value = "程序用的目标表达式")
     private String targetExpression;
 
-    @ApiModelProperty(value = "目标规则表达式生成的规则解析对象")
+    @ApiModelProperty(value = "程序用的目标表达式解析的结构化数据")
     private String targetExpressionDto;
 
-    @ApiModelProperty(value = "要锁的规则表达式")
+    @ApiModelProperty(value = "程序用的要锁的表达式")
     private String lockExpression;
 
-    @ApiModelProperty(value = "要锁的规则表达式生成的规则解析对象")
+    @ApiModelProperty(value = "程序用的要锁的表达式解析的结构化数据")
     private String lockExpressionDto;
 
     @ApiModelProperty(value = "乐观锁版本")
@@ -120,6 +123,8 @@ public class RuleExecuteVo extends BaseQueryVo {
     public static final String TYPE = "type";
 
     public static final String STATUS = "status";
+
+    public static final String OFFLINE = "offline";
 
     public static final String EXPRESSION = "expression";
 

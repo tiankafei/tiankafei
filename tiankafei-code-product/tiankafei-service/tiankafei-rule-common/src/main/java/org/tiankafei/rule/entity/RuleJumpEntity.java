@@ -38,13 +38,13 @@ public class RuleJumpEntity extends Model<RuleJumpEntity> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty(value = "数据集的唯一标识符")
-    @Size(max = 64, message = "数据集的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据集的唯一标识")
+    @Size(max = 64, message = "数据集的唯一标识长度不能超过 64 ！")
     @TableField("dataset_unique_identifier")
     private String datasetUniqueIdentifier;
 
-    @ApiModelProperty(value = "数据的唯一标识符")
-    @Size(max = 64, message = "数据的唯一标识符长度不能超过 64 ！")
+    @ApiModelProperty(value = "数据唯一标识")
+    @Size(max = 64, message = "数据唯一标识长度不能超过 64 ！")
     @TableField("data_unique_identifier")
     private String dataUniqueIdentifier;
 
@@ -56,8 +56,8 @@ public class RuleJumpEntity extends Model<RuleJumpEntity> {
     @TableField("reporting_period")
     private String reportingPeriod;
 
-    @ApiModelProperty(value = "数据的唯一标识符类型：1表达式中的数据，2要锁的表达式中的数据")
-    @Size(max = 1, message = "数据的唯一标识符类型：1表达式中的数据，2要锁的表达式中的数据长度不能超过 1 ！")
+    @ApiModelProperty(value = "数据唯一标识类型：1目标表达式中的，2要锁的表达式中的")
+    @Size(max = 1, message = "数据唯一标识类型：1目标表达式中的，2要锁的表达式中的长度不能超过 1 ！")
     @TableField("data_unique_identifier_type")
     private String dataUniqueIdentifierType;
 
@@ -65,8 +65,8 @@ public class RuleJumpEntity extends Model<RuleJumpEntity> {
     @TableField("clear_flag")
     private Boolean clearFlag;
 
-    @ApiModelProperty(value = "数据的别名")
-    @Size(max = 30, message = "数据的别名长度不能超过 30 ！")
+    @ApiModelProperty(value = "数据唯一标识的别名")
+    @Size(max = 30, message = "数据唯一标识的别名长度不能超过 30 ！")
     @TableField("alias_name")
     private String aliasName;
 
