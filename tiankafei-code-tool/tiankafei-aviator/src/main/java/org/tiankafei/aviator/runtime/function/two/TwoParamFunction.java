@@ -37,6 +37,8 @@ public abstract class TwoParamFunction extends AbstractFunction {
             }
         } else if (left instanceof Number && right instanceof Number) {
             result = evlNormalOperation(left, right);
+        } else if (left instanceof Boolean && right instanceof Boolean) {
+            result = evlAbnormalOperation(left, right);
         }
 
         return AviatorRuntimeJavaType.valueOf(getReturnValue(result));

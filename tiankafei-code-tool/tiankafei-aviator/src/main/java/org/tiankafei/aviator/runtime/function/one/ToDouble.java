@@ -19,7 +19,7 @@ public class ToDouble extends OneParamFunction {
     protected AviatorObject apply(Object object) {
         Boolean numerics = AviatorUtil.isNumerics(object);
         if (numerics) {
-            AviatorRuntimeJavaType.valueOf(Double.valueOf(object.toString()));
+            return AviatorRuntimeJavaType.valueOf(Double.valueOf(object.toString()));
         }
         return AviatorRuntimeJavaType.valueOf(0.0);
     }

@@ -902,4 +902,60 @@ public class TestAviator {
         System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
+    @Test
+    public void testToLong() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "to_long(a) == to_long(b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "qwe");
+        dataMap.put("b", "asfd");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testToDouble() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "to_double(a) == to_double(b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "1989");
+        dataMap.put("b", "1989");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testToNumber() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "to_number(a) == to_number(b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "asdf");
+        dataMap.put("b", "dfgd");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
+    @Test
+    public void testToBoolean() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String exp = "to_boolean(a) == to_boolean(b)";
+        Expression expression = AviatorEvaluator.compile(exp);
+
+        Map<String, Object> dataMap = Maps.newHashMap();
+        dataMap.put("a", "false");
+        dataMap.put("b", "false");
+        Object value = expression.execute(dataMap);
+        Assert.assertEquals(value, true);
+        System.out.println("执行需要时间：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+    }
+
 }

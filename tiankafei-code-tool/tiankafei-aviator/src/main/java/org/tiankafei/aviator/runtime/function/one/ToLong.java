@@ -19,7 +19,7 @@ public class ToLong extends OneParamFunction {
     protected AviatorObject apply(Object object) {
         Boolean numerics = AviatorUtil.isNumerics(object);
         if (numerics) {
-            AviatorRuntimeJavaType.valueOf(Long.valueOf(object.toString()));
+            return AviatorRuntimeJavaType.valueOf(Long.valueOf(object.toString()));
         }
         return AviatorRuntimeJavaType.valueOf(0L);
     }

@@ -19,7 +19,7 @@ public class ToNumber extends OneParamFunction {
     protected AviatorObject apply(Object object) {
         Boolean numerics = AviatorUtil.isNumerics(object);
         if (numerics) {
-            AviatorRuntimeJavaType.valueOf(AviatorUtil.parseNumber(object.toString()));
+            return AviatorRuntimeJavaType.valueOf(AviatorUtil.parseNumber(object.toString()));
         }
         return AviatorRuntimeJavaType.valueOf(0);
     }
