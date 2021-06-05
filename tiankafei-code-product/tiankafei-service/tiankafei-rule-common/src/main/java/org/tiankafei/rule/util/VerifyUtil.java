@@ -4,6 +4,7 @@ import org.tiankafei.rule.enums.RuleEnums;
 import org.tiankafei.rule.verify.IVerify;
 import org.tiankafei.rule.verify.impl.ComputeImpl;
 import org.tiankafei.rule.verify.impl.JumpImpl;
+import org.tiankafei.rule.verify.impl.TableVerifyImpl;
 import org.tiankafei.rule.verify.impl.VerifyImpl;
 
 /**
@@ -25,6 +26,8 @@ public class VerifyUtil {
             verify = new ComputeImpl();
         } else if (RuleEnums.JUMP.getCode() == ruleType) {
             verify = new JumpImpl();
+        } else if (RuleEnums.TABLE_VERIFY.getCode() == ruleType) {
+            verify = new TableVerifyImpl();
         }
         return verify;
     }

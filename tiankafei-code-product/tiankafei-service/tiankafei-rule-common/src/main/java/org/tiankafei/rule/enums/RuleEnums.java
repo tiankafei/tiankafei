@@ -9,6 +9,7 @@ public enum RuleEnums {
     VERIFY(1, "审核规则"),
     COMPUTE(2, "计算规则"),
     JUMP(3, "跳转规则"),
+    TABLE_VERIFY(4, "基于物理表的审核规则"),
     ;
 
     private int code;
