@@ -49,6 +49,9 @@ public class RuleDesignVo extends BaseQueryVo {
     @ApiModelProperty(value = "是否支持离线审核")
     private Boolean offline;
 
+    @ApiModelProperty(value = "预计算规则的执行类型：true需要，false不需要")
+    private Boolean preComputeRuleExecuteType;
+
     @ApiModelProperty(value = "用户书写的规则表达式")
     private String expression;
 
@@ -102,6 +105,8 @@ public class RuleDesignVo extends BaseQueryVo {
     public static final String STATUS = "status";
 
     public static final String OFFLINE = "offline";
+
+    public static final String PRE_COMPUTE_RULE_EXECUTE_TYPE = "pre_compute_rule_execute_type";
 
     public static final String EXPRESSION = "expression";
 

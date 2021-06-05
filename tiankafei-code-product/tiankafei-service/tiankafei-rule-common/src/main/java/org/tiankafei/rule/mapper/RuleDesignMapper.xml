@@ -11,6 +11,7 @@
         <result column="type" property="type"/>
         <result column="status" property="status"/>
         <result column="offline" property="offline"/>
+        <result column="pre_compute_rule_execute_type" property="preComputeRuleExecuteType"/>
         <result column="expression" property="expression"/>
         <result column="compile_error_message" property="compileErrorMessage"/>
         <result column="error_expression" property="errorExpression"/>
@@ -36,6 +37,7 @@
         <result column="type" property="type"/>
         <result column="status" property="status"/>
         <result column="offline" property="offline"/>
+        <result column="pre_compute_rule_execute_type" property="preComputeRuleExecuteType"/>
         <result column="expression" property="expression"/>
         <result column="compile_error_message" property="compileErrorMessage"/>
         <result column="error_expression" property="errorExpression"/>
@@ -55,7 +57,7 @@
     <!-- 通用查询结果列 -->
     <sql id="base_Column_List">
         id
-        , dataset_unique_identifier, code, name, type, status, offline, expression, compile_error_message, error_expression, error_compile_error_message, target_expression, lock_expression, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id
+        , dataset_unique_identifier, code, name, type, status, offline, pre_compute_rule_execute_type, expression, compile_error_message, error_expression, error_compile_error_message, target_expression, lock_expression, version, delete_mark, create_time, update_time, create_user_id, update_user_id, tenant_id
     </sql>
 
     <!-- 校验 规则设计表达式用户新增的对象 是否已经存在 -->
