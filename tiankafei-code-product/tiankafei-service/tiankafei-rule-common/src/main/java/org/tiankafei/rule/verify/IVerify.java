@@ -1,7 +1,7 @@
 package org.tiankafei.rule.verify;
 
 import java.util.List;
-import org.tiankafei.rule.parsedto.RuleDesignDto;
+import org.tiankafei.rule.entity.RuleExecuteEntity;
 import org.tiankafei.rule.verify.model.VerifyResultModel;
 
 /**
@@ -18,6 +18,6 @@ public interface IVerify {
      * @param query
      * @return
      */
-    List<VerifyResultModel> executeVerify(List<RuleDesignDto> ruleDesignDtoList, IQuery query);
+    List<VerifyResultModel> executeVerify(List<RuleExecuteEntity> ruleDesignDtoList, IQuery query);
 
 }

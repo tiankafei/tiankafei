@@ -1,7 +1,7 @@
 package org.tiankafei.rule.verify.impl;
 
 import java.util.List;
-import org.tiankafei.rule.parsedto.RuleDesignDto;
+import org.tiankafei.rule.entity.RuleExecuteEntity;
 import org.tiankafei.rule.verify.IQuery;
 import org.tiankafei.rule.verify.model.VerifyResultModel;
 
@@ -11,8 +11,10 @@ import org.tiankafei.rule.verify.model.VerifyResultModel;
  * @author tiankafei
  */
 public class VerifyImpl extends BaseVerify {
+
     @Override
-    public List<VerifyResultModel> executeVerify(List<RuleDesignDto> ruleDesignDtoList, IQuery query) {
+    public List<VerifyResultModel> executeVerify(List<RuleExecuteEntity> ruleExecuteEntityList, IQuery query) {
         return null;
     }
+
 }
